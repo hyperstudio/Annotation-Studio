@@ -58,11 +58,11 @@ class DocumentsController < ApplicationController
   # PUT /documents/1
   # PUT /documents/1.json
   def update
-    @document = @collection.documents.find(params[:id])
+    @document = Document.find(params[:id])
 
     respond_to do |format|
       if @document.update_attributes(params[:document])
-        format.html { redirect_to @document, notice: 'Document was successfully updated.' }
+        format.html { redirect_to @collection, notice: 'Document was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

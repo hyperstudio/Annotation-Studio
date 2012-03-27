@@ -2,7 +2,7 @@ class CollectionsController < ApplicationController
   # GET /collections
   # GET /collections.json
   def index
-    @collections = Collection.find(:all, :include => :documents)
+    @collections = Collection.all
 
     respond_to do |format|
       format.html # index.html.erb

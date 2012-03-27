@@ -1,8 +1,9 @@
 class DocumentsController < ApplicationController
+  before_filter :get_collection
+
   # GET /documents
   # GET /documents.json
   def index
-    @collection = Collection.find(params[:collection_id])
     @documents = @collection.documents
 
     respond_to do |format|
@@ -14,8 +15,7 @@ class DocumentsController < ApplicationController
   # GET /documents/1
   # GET /documents/1.json
   def show
-    @collection = Collection.find(params[:collection_id])
-    @document = @collection.documents.find(params[:id])
+    @document = Document.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -26,7 +26,6 @@ class DocumentsController < ApplicationController
   # GET /documents/new
   # GET /documents/new.json
   def new
-    @collection = Collection.find(params[:collection_id])
     @document = @collection.document.build
 
     respond_to do |format|
@@ -37,14 +36,12 @@ class DocumentsController < ApplicationController
 
   # GET /documents/1/edit
   def edit
-    @collection = Collection.find(params[:collection_id])
     @document = @collection.documents.find(params[:id])
   end
 
   # POST /documents
   # POST /documents.json
   def create
-    @collection = Collection.find(params[:collection_id])
     @document = @collection.documents.build(params[:document])
 
     respond_to do |format|
@@ -61,7 +58,6 @@ class DocumentsController < ApplicationController
   # PUT /documents/1
   # PUT /documents/1.json
   def update
-    @collection = Collection.find(params[:collection_id])
     @document = @collection.documents.find(params[:id])
 
     respond_to do |format|
@@ -78,7 +74,6 @@ class DocumentsController < ApplicationController
   # DELETE /documents/1
   # DELETE /documents/1.json
   def destroy
-    @collection = Collection.find(params[:collection_id])
     @document = @collection.documents.find(params[:id])
     @document.destroy
 
@@ -86,5 +81,9 @@ class DocumentsController < ApplicationController
       format.html { redirect_to documents_url }
       format.json { head :no_content }
     end
+  end
+  
+  def get_collection
+  	@collection = Collection.find(params[:collection_id])
   end
 end

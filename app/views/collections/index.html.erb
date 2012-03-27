@@ -1,0 +1,27 @@
+<h1>Collections</h1>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Title</th>
+      <th>Created at</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @collections.each do |collection| %>
+      <tr>
+        <td><%= collection.id %></td>
+        <td><%= link_to collection.title, collection_path(collection) %></td>
+        <td><%= collection.created_at %></td>
+        <td>
+          <%= link_to 'Docs', collection_documents_path(collection), :class => 'btn btn-mini' %>
+          <%= link_to 'Edit', edit_collection_path(collection), :class => 'btn btn-mini' %>
+          <%= link_to 'Destroy', collection_path(collection), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'New', new_collection_path, :class => 'btn btn-primary' %>

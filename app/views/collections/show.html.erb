@@ -1,0 +1,17 @@
+<h1>Collection</h1>
+
+<p>
+  <b>Title</b><br>
+  <%= @collection.title %>
+</p>
+
+<p>
+  <b>Description</b><br>
+  <%= @collection.description %>
+</p>
+
+<div class="form-actions">
+  <%= link_to 'Back', collections_path, :class => 'btn'  %>
+  <%= link_to 'Edit', edit_collection_path(@collection), :class => 'btn' %>
+  <%= link_to 'Delete', collection_path(@collection), :method => 'delete', :confirm => 'Are you sure?', :class => 'btn btn-danger' %>
+</div>

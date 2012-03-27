@@ -36,7 +36,7 @@ class DocumentsController < ApplicationController
 
   # GET /documents/1/edit
   def edit
-    @document = @collection.documents.find(params[:id])
+    @document = Document.find(params[:id])
   end
 
   # POST /documents

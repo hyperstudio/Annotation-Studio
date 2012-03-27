@@ -4,7 +4,7 @@ This app is a simple exploration of the Ruby on Rails concept of nested RESTful 
 It uses twitter bootstrap, which looks clean and simple out of the box with no changes.
 
 == To do
-*General
+=== General
 - Use friendly IDs?
 - Create lightweight configurations
 - 118N/L10N?
@@ -16,10 +16,10 @@ It uses twitter bootstrap, which looks clean and simple out of the box with no c
 - Add Explorations (teacher activities)
 - Add Projects (student work)
 
-*Collections
+=== Collections
 - Make documents addable to, removeable from collections
 
-*Documents
+=== Documents
 - Add actions to documents list
 - Delete action should actually:
 	- Remove official documents from collection;

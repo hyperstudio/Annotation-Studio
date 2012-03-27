@@ -1,0 +1,17 @@
+<h1>Document</h1>
+
+<p>
+  <b>Title</b><br>
+  <%= @document.title %>
+</p>
+
+<p>
+  <b>Description</b><br>
+  <%= @document.description %>
+</p>
+
+<div class="form-actions">
+  <%= link_to 'Back', collection_documents_path, :class => 'btn'  %>
+  <%= link_to 'Edit', edit_collection_document_path(@document), :class => 'btn' %>
+  <%= link_to 'Delete', collection_document_path(@document), :method => 'delete', :confirm => 'Are you sure?', :class => 'btn btn-danger' %>
+</div>

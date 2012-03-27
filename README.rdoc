@@ -4,11 +4,28 @@ This app is a simple exploration of the Ruby on Rails concept of nested RESTful 
 It uses twitter bootstrap, which looks clean and simple out of the box with no changes.
 
 == To do
+*General
+- Use friendly IDs?
+- Create lightweight configurations
+- 118N/L10N?
+- Accessibility
+- Responsive UI versions?
+- Create distinction between official and custom content
 - Use shallow routing for documents?
 - Add Users and Authentication (Devise)
 - Add Explorations (teacher activities)
 - Add Projects (student work)
-- 
+
+*Collections
+- Make documents addable to, removeable from collections
+
+*Documents
+- Add actions to documents list
+- Delete action should actually:
+	- Remove official documents from collection;
+	- Make custom documents inactive (for students/teachers);
+	- Make official documents inactive (for admins);
+	- Delete custom documents (for teachers/admins);
 
 == Issues
-None known currently.
+- None known currently.

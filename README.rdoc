@@ -1,7 +1,14 @@
-== Test
-This app currently contains two resources, documents and collections.
+== Nested Resources and Routes
+This app is a simple exploration of the Ruby on Rails concept of nested RESTful resources and routes to go along with them. I looked at a lot of stackoverflow questions and blog posts and so on as I worked on this for the last day or so, and didn't find any sample apps.
 
-Collections has many documents, and the documents route is nested in the collections route.
+It uses twitter bootstrap, which looks clean and simple out of the box with no changes.
+
+== To do
+- Use shallow routing for documents?
+- Add Users and Authentication (Devise)
+- Add Explorations (teacher activities)
+- Add Projects (student work)
+- 
 
 == Issues
-The "Docs" button on the collections index throws a routing error.
+None known currently.

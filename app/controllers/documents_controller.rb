@@ -26,7 +26,7 @@ class DocumentsController < ApplicationController
   # GET /documents/new
   # GET /documents/new.json
   def new
-    @document = @collection.document.build
+    @document = Document.new
 
     respond_to do |format|
       format.html # new.html.erb

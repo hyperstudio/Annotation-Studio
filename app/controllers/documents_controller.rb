@@ -1,8 +1,8 @@
 class DocumentsController < ApplicationController
   before_filter :get_collection
 
-  # GET /documents
-  # GET /documents.json
+  # GET /collection/1/collection/1/documents
+  # GET /collection/1/documents.json
   def index
     @documents = @collection.documents
 
@@ -12,8 +12,8 @@ class DocumentsController < ApplicationController
     end
   end
 
-  # GET /documents/1
-  # GET /documents/1.json
+  # GET /collection/1/documents/1
+  # GET /collection/1/documents/1.json
   def show
     @document = Document.find(params[:id])
 
@@ -23,8 +23,8 @@ class DocumentsController < ApplicationController
     end
   end
 
-  # GET /documents/new
-  # GET /documents/new.json
+  # GET /collection/1/documents/new
+  # GET /collection/1/documents/new.json
   def new
     @document = Document.new
 
@@ -34,13 +34,13 @@ class DocumentsController < ApplicationController
     end
   end
 
-  # GET /documents/1/edit
+  # GET /collection/1/documents/1/edit
   def edit
     @document = Document.find(params[:id])
   end
 
-  # POST /documents
-  # POST /documents.json
+  # POST /collection/1/documents
+  # POST /collection/1/documents.json
   def create
     @document = @collection.documents.build(params[:document])
 
@@ -55,8 +55,8 @@ class DocumentsController < ApplicationController
     end
   end
 
-  # PUT /documents/1
-  # PUT /documents/1.json
+  # PUT /collection/1/documents/1
+  # PUT /collection/1/documents/1.json
   def update
     @document = Document.find(params[:id])
 
@@ -71,8 +71,8 @@ class DocumentsController < ApplicationController
     end
   end
 
-  # DELETE /documents/1
-  # DELETE /documents/1.json
+  # DELETE /collection/1/documents/1
+  # DELETE /collection/1/documents/1.json
   def destroy
     @document = @collection.documents.find(params[:id])
     @document.destroy

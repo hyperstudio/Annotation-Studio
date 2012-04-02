@@ -1,7 +1,7 @@
 class DocumentsController < ApplicationController
   before_filter :get_collection
 
-  # GET /collection/1/collection/1/documents
+  # GET /collection/1/documents
   # GET /collection/1/documents.json
   def index
     @documents = @collection.documents

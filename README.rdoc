@@ -27,5 +27,5 @@ It uses twitter bootstrap, which looks clean and simple out of the box with no c
 	- Make official documents inactive (for admins);
 	- Delete custom documents (for teachers/admins);
 
-== Issues
-- None known currently.
+== Known Issues
+- None currently.

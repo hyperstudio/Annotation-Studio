@@ -23,7 +23,17 @@
     <link href="images/apple-touch-icon.png" rel="apple-touch-icon">
     <link href="images/apple-touch-icon-72x72.png" rel="apple-touch-icon" sizes="72x72">
     <link href="images/apple-touch-icon-114x114.png" rel="apple-touch-icon" sizes="114x114">
-  </head>
+
+	<script src="http://assets.annotateit.org/annotator/v1.1.0/annotator-full.min.js"></script>
+	<link rel="stylesheet" href="http://assets.annotateit.org/annotator/v1.1.0/annotator.min.css">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+	<script type="text/javascript" charset="utf-8">
+		jQuery(function ($) {
+		    $('.content').annotator()
+		                 .annotator('setupPlugins');
+		});
+	</script>
+	</head>
   <body>
 
     <div class="navbar navbar-fixed-top">

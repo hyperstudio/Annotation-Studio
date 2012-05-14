@@ -11,4 +11,5 @@
  *= require_self
  *# require_tree .
  *= require "bootstrap.min.css"
+ *= require "annotator.min.css"
 */

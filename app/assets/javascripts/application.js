@@ -14,3 +14,6 @@
 //= require jquery_ujs
 //= require twitter/bootstrap
 //= require_tree .
+//= require xpath.min
+//= require json2.min
+//= require annotator-full.min

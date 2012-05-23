@@ -22,9 +22,9 @@ Platform on which to test tools and ideas. Twitter bootstrap with simplex bootsw
 - Add document categories (topics, etc)
 - Add actions to documents list
 - Delete action should actually:
-	- Remove official documents from collection;
-	- Make custom documents inactive (for students/teachers);
-	- Make official documents inactive (for admins);
-	- Delete custom documents (for teachers/admins);
+  - Remove official documents from collection;
+  - Make custom documents inactive (for students/teachers);
+  - Make official documents inactive (for admins);
+  - Delete custom documents (for teachers/admins);
 
 == Known Issues

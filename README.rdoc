@@ -1,25 +1,25 @@
-== Nested Resources and Routes
-This app is a simple exploration of the Ruby on Rails concept of nested RESTful resources and routes to go along with them. I looked at a lot of stackoverflow questions and blog posts and so on as I worked on this for the last day or so, and didn't find any sample apps.
-
-It uses twitter bootstrap, which looks clean and simple out of the box with no changes.
+== Sandbox
+Platform on which to test tools and ideas. Twitter bootstrap with simplex bootswatch.
 
 == To do
+
 === General
 - Use friendly IDs?
 - Create lightweight configurations
 - 118N/L10N?
 - Accessibility
-- Responsive UI versions?
 - Create distinction between official and custom content
 - Use shallow routing for documents?
 - Add Users and Authentication (Devise)
-- Add Explorations (teacher activities)
+- Add Groups (teacher-created)
 - Add Projects (student work)
 
 === Collections
 - Make documents addable to, removeable from collections
 
 === Documents
+- Add document types (text, image, video)
+- Add document categories (topics, etc)
 - Add actions to documents list
 - Delete action should actually:
 	- Remove official documents from collection;
@@ -28,4 +28,3 @@ It uses twitter bootstrap, which looks clean and simple out of the box with no c
 	- Delete custom documents (for teachers/admins);
 
 == Known Issues
-- None currently.

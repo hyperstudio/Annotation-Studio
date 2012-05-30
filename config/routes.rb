@@ -1,4 +1,4 @@
-Monticello::Application.routes.draw do
+Sandbox::Application.routes.draw do
   resources :collections do
     resources :documents
   end

@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-Monticello::Application.load_tasks
+Sandbox::Application.load_tasks

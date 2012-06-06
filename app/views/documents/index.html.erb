@@ -1,4 +1,9 @@
 <h1>Documents for <em><%= @collection.title %></em></h1>
+<p>
+  <b>Description</b><br>
+  <%= @collection.description %>
+</p>
+
 <table class="table table-striped">
   <thead>
     <tr>
@@ -8,15 +13,15 @@
       <th>Actions</th>
     </tr>
   </thead>
-  <tbody>
+  <tbody>    
     <% @collection.documents.each do |document| %>
       <tr>
         <td><%= document.id %></td>
         <td><%= link_to document.title, collection_document_path(@collection.id, document.id) %></td>
         <td><%= document.created_at %></td>
         <td>
-          <% link_to 'Edit', edit_collection_document_path(@collection.id, document.id), :class => 'btn btn-mini' %>
-          <% link_to 'Destroy', collection_document_path(@collection.id, document.id), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini btn-danger' %>
+          <%= link_to 'Edit', edit_collection_document_path(@collection.id, document.id), :class => 'btn btn-mini' %>
+          <%= link_to 'Destroy', collection_document_path(@collection.id, document.id), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini btn-danger' %>
         </td>
       </tr>
     <% end %>

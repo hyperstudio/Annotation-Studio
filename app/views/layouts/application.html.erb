@@ -54,6 +54,7 @@
             <div class="span3">
               <div class="well sidebar-nav">
                 <h3>Sidebar</h3>
+				<p id="cors"></p>
                 <ul class="nav nav-list">
                   <li class="nav-header">Sidebar</li>
                     <li><%= link_to "Home", "/"  %></li>
@@ -76,10 +77,33 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <%= javascript_include_tag "application" %>
 	<script type="text/javascript" charset="utf-8">
+		$("p#cors").html("This frame supports CORS: <span>" +
+	                jQuery.support.cors + "</span>");
+	</script>
+	<script type="text/javascript" charset="utf-8">
+	/*
 		jQuery(function ($) {
 		    // Customise the default plugin options with the third argument.
 		    $('.content').annotator()
-            	.annotator('setupPlugins');
+				// .annotator('setupPlugins');
+                 .annotator('setupPlugins', {}, {
+					Tags: false,
+					Filter: false,
+             });
+		});
+		*/
+		jQuery(function ($) {
+		    $('.content').annotator()
+                 .annotator('setupPlugins', {}, {
+					Tags: false,
+					Filter: false,
+					Store: {
+						prefix: 'http://furious-night-5419.herokuapp.com/api',
+					},
+					Auth: {
+						tokenUrl: "/auth/token"
+					}
+             });
 		});
 	</script>
   </body>

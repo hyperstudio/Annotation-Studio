@@ -33,6 +33,8 @@ gem 'jbuilder'
 
 gem 'roar-rails'
 
+gem "jwt", "~> 0.1.4"
+
 # Use unicorn as the web server
 # gem 'unicorn'
 

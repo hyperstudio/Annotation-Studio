@@ -1,4 +1,6 @@
 class DocumentsController < ApplicationController
+
+  before_filter :authenticate
   before_filter :get_collection
 
   # GET /collection/1/documents

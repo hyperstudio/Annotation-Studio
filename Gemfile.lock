@@ -54,6 +54,8 @@ GEM
       railties (>= 3.2.0, < 5.0)
       thor (~> 0.14)
     json (1.7.2)
+    jwt (0.1.4)
+      json (>= 1.2.4)
     less (2.2.1)
       commonjs (~> 0.2.6)
     less-rails (2.2.2)
@@ -143,6 +145,7 @@ DEPENDENCIES
   coffee-rails (~> 3.2.1)
   jbuilder
   jquery-rails
+  jwt (~> 0.1.4)
   pg
   rails (= 3.2.1)
   roar-rails

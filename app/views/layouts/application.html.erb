@@ -81,30 +81,22 @@
 	                jQuery.support.cors + "</span>");
 	</script>
 	<script type="text/javascript" charset="utf-8">
-	/*
+		/*
 		jQuery(function ($) {
 		    // Customise the default plugin options with the third argument.
 		    $('.content').annotator()
-				// .annotator('setupPlugins');
-                 .annotator('setupPlugins', {}, {
-					Tags: false,
-					Filter: false,
-             });
+				.annotator('setupPlugins');
 		});
 		*/
 		jQuery(function ($) {
-			$('.content').annotator().annotator('setupPlugins', null, {
-				/*
-				Auth: {
-					token: '<%= @jwt %>'
-				},
-				*/
-				Store {
-					prefix: 'http://furious-night-5419.herokuapp.com/api'
-				},
-				Permissions: false,
-				Tags: false,
-				Filter: false
+			$('.content').annotator()
+				.annotator('setupPlugins', {}, {
+					Store: {
+						// prefix: 'http://furious-night-5419.herokuapp.com/api'
+						prefix: 'http://localhost:5000/api'
+					},
+					Tags: false,
+					Filter: false
 			});
 		});
 	</script>

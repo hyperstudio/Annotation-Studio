@@ -65,7 +65,7 @@
           </div>
         </div><!--/row-->
       <footer>
-        <p>&copy; MIT 2012</p>
+        <p>&copy; MIT <%= @now %></p>
       </footer>
       </div><!--/content-->
 
@@ -91,15 +91,24 @@
 		jQuery(function ($) {
 			$('.content').annotator()
 				.annotator('setupPlugins', {}, {
+					Auth: {
+						token: '<%= @jwt %>'
+			        },
 					Store: {
 						// prefix: 'http://furious-night-5419.herokuapp.com/api'
 						prefix: 'http://localhost:5000/api',
 					},
-					Tags: false,
 					Filter: false,
-					Permissions: false
+					Permissions: {
+					  permissions: {
+					    'read':   ['group:__world__'],
+					    'update': ['group:__world__'],
+					    'delete': ['group:__world__'],
+					    'admin':  ['group:__world__']
+					  }
+					}
+				});
 			});
-		});
 	</script>
   </body>
 </html>

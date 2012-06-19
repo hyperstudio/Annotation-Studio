@@ -2,11 +2,12 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
 
   def signed_in?
+    @now = DateTime.current().to_time.iso8601
     @jwt = JWT.encode(
         {
             'consumerKey' => "CONSUMER_KEY",
             'userId' => "jfolsom",
-            'issuedAt' => "2012-06-14",
+            'issuedAt' => @now,
             'ttl' => 86400
         }, 
         "secretgoeshere"

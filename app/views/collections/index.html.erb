@@ -12,7 +12,7 @@
     <% @collections.each do |collection| %>
       <tr>
         <td><%= collection.id %></td>
-        <td><%= link_to collection.title, collection_path(collection) %></td>
+        <td><%= link_to collection.title, collection_documents_path(collection) %></td>
         <td><%= collection.created_at %></td>
         <td>
           <%= link_to 'Docs', collection_documents_path(collection), :class => 'btn btn-mini' %>

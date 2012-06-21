@@ -1,4 +1,7 @@
 class CollectionsController < ApplicationController
+
+  before_filter :authenticate
+
   # GET /collections
   # GET /collections.json
   def index

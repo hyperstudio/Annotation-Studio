@@ -3,10 +3,11 @@ class ApplicationController < ActionController::Base
 
   def signed_in?
     @now = DateTime.current().to_time.iso8601
+    # @now = '20120621'
     @jwt = JWT.encode(
         {
-            'consumerKey' => "CONSUMER_KEY",
-            'userId' => "jfolsom",
+            'consumerKey' => "annotationstudio.org",
+            'userId' => "jfolsom@mit.edu",
             'issuedAt' => @now,
             'ttl' => 86400
         }, 

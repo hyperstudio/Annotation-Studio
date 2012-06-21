@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-Sandbox::Application.load_tasks
+AnnotationStudio::Application.load_tasks

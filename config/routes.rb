@@ -1,4 +1,4 @@
-Sandbox::Application.routes.draw do
+AnnotationStudio::Application.routes.draw do
   resources :collections do
     resources :documents
   end

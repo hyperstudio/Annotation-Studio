@@ -76,6 +76,7 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <%= javascript_include_tag "application" %>
+	<%# script src="http://assets.annotateit.org/annotator/v1.2.4/annotator-full.js"></script %>
 	<script type="text/javascript" charset="utf-8">
 		$("p#cors").html("This frame supports CORS: <span>" +
 	                jQuery.support.cors + "</span>");
@@ -95,18 +96,10 @@
 						token: '<%= @jwt %>'
 			        },
 					Store: {
-						prefix: 'http://furious-night-5419.herokuapp.com/api'
-						// prefix: 'http://localhost:5000/api',
+ 						// prefix: 'http://furious-night-5419.herokuapp.com/api'
+						prefix: 'http://localhost:5000/api',
 					},
-					Filter: false,
-					Permissions: {
-					  permissions: {
-					    'read':   ['group:__world__'],
-					    'update': ['group:__world__'],
-					    'delete': ['group:__world__'],
-					    'admin':  ['group:__world__']
-					  }
-					}
+					Filter: false
 				});
 			});
 	</script>

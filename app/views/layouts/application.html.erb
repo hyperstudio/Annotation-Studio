@@ -9,14 +9,10 @@
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
     <![endif]-->
+	 <%= csrf_meta_tags %>
 
-    <!-- Le styles -->
-    <style>
-      body {
-        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
-      }
-    </style>
-    <%= stylesheet_link_tag "application", :media => "all" %>
+	 <%= stylesheet_link_tag    "application", :media => "all" %>
+	 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Le fav and touch icons -->
     <%# link href="images/favicon.ico" rel="shortcut icon" %>
@@ -53,12 +49,11 @@
           <div class="span1">&nbsp;</div>
             <div class="span3">
               <div class="well sidebar-nav">
-                <h3>Tools</h3>
-				<p id="cors"></p>
-                <ul class="nav nav-list">
-                    <li><%= link_to "Home", "/"  %></li>
-                    <li><%= link_to "Collections", "/collections"  %></li>
-                </ul>
+                <h3>Annotations</h3>
+				<script type="text/template" id="annotation-template">
+			        <p>{{quote}}</p>
+			        <p>{{text}}</p>
+			    </script>
               </div>
             </div>
           </div>
@@ -74,7 +69,7 @@
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <%= javascript_include_tag "application" %>
+	 <%= javascript_include_tag "application" %>
 	<%# script src="http://assets.annotateit.org/annotator/v1.2.4/annotator-full.js"></script %>
 	<%# script type="text/javascript" charset="utf-8">
 		$("p#cors").html("This frame supports CORS: <span>" +

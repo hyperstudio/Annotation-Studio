@@ -9,8 +9,6 @@ gem 'thin'
 
 gem 'pg'
 
-gem "twitter-bootstrap-rails"
-
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
@@ -21,6 +19,7 @@ group :assets do
   # gem 'therubyracer'
 
   gem 'uglifier', '>= 1.0.3'
+  gem "twitter-bootstrap-rails"
 end
 
 gem 'jquery-rails'
@@ -31,7 +30,7 @@ gem 'jquery-rails'
 # To use Jbuilder templates for JSON
 gem 'jbuilder'
 
-gem 'roar-rails'
+# gem 'roar-rails'
 
 gem "jwt", "~> 0.1.4"
 

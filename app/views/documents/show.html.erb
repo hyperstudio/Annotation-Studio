@@ -1,7 +1,7 @@
 <h1><%= @document.title %></h1>
 
 <p>
-  <%= @document.description %>
+  <%= @document.description.html_safe %>
 </p>
 
 <div class="form-actions">

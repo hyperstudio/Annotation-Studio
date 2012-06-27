@@ -20,8 +20,8 @@
     <link href="images/apple-touch-icon-72x72.png" rel="apple-touch-icon" sizes="72x72">
     <link href="images/apple-touch-icon-114x114.png" rel="apple-touch-icon" sizes="114x114">
 	</head>
-  <body>
-
+	<body data-spy="scroll" data-target=".subnav" data-offset="50" offset="50">
+	
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
           <div class="container">
@@ -39,7 +39,6 @@
         </div>
       </div>
     </div>
-
     <div class="container">
       <div class="content">
         <div class="row">
@@ -49,11 +48,7 @@
           <div class="span1">&nbsp;</div>
             <div class="span3">
               <div class="well sidebar-nav">
-                <h3>Annotations</h3>
-				<script type="text/template" id="annotation-template">
-			        <p>{{quote}}</p>
-			        <p>{{text}}</p>
-			    </script>
+                <h3>Tools</h3>
               </div>
             </div>
           </div>
@@ -70,11 +65,6 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
 	<%= javascript_include_tag "application" %>
-	<%# script src="http://assets.annotateit.org/annotator/v1.2.4/annotator-full.js"></script %>
-	<%# script type="text/javascript" charset="utf-8">
-		$("p#cors").html("This frame supports CORS: <span>" +
-	                jQuery.support.cors + "</span>");
-	</script %>
 	<script type="text/javascript" charset="utf-8">
 		jQuery(function ($) {
 			$('.content').annotator()
@@ -83,8 +73,8 @@
 						token: '<%= @jwt %>'
 			        },
 					Store: {
-						prefix: 'http://furious-night-5419.herokuapp.com/api'
-						// prefix: 'http://localhost:5000/api',
+						// prefix: 'http://furious-night-5419.herokuapp.com/api'
+						prefix: 'http://localhost:5000/api',
 					},
 					Filter: false
 				});

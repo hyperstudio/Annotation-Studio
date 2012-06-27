@@ -1,8 +1,6 @@
 <h1><%= @document.title %></h1>
 
-<p>
-  <%= @document.description.html_safe %>
-</p>
+<%= @document.description.html_safe %>
 
 <div class="form-actions">
   <%= link_to 'Back', collection_documents_path, :class => 'btn'  %>

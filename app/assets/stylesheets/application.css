@@ -13,4 +13,6 @@
  *= require "bootstrap_and_overrides.css"
  *= require "bootstrap.min.css"
  *= require "annotator.min.css"
+ *= require "boot-docs.css"
+
 */

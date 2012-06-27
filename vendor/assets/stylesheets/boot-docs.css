@@ -5,7 +5,14 @@
   Special styles for presenting Bootstrap's documentation and examples
 */
 
+body{background-color:#ffffff;}
+
 .chapter {
+	font: normal normal normal 1.3em Serif;
+	line-height: 2em;
+}
+
+.chapter h4 {
 	margin-top:40px;
 }
 

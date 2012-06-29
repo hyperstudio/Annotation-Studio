@@ -80,7 +80,7 @@ class DocumentsController < ApplicationController
     @document.destroy
 
     respond_to do |format|
-      format.html { redirect_to documents_url }
+      format.html { redirect_to @collection }
       format.json { head :no_content }
     end
   end

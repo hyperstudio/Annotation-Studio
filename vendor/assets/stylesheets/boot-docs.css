@@ -5,15 +5,35 @@
   Special styles for presenting Bootstrap's documentation and examples
 */
 
-body{background-color:#ffffff;}
+@import url(http://fonts.googleapis.com/css?family=Esteban);
+
+body{background-color:#4A525A;}
+
+#targettext h1 {
+	color:#DDD;
+}
 
 .chapter {
-	font: normal normal normal 1.3em Serif;
+	font-size: 1.3em;
+	/* font-family: 'Esteban', serif; */
+	font-family: "fertigo-pro";
 	line-height: 2em;
+	color:#DDD;
+}
+
+ul .nav li a.texttitle {
+	font-weight: bold;
 }
 
 .chapter h4 {
+	color:#DDD;
 	margin-top:40px;
+	font-size: 18px;
+	font-weight: bold;
+}
+
+.annotator-hl {
+	background-color:rgba(34, 34, 34, 0.45);
 }
 
 /* Subnav */

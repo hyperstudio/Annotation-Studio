@@ -1,12 +1,51 @@
-<h1><%= @collection.title %></h1>
+<h1>Collection</h1>
+
+<!-- Collection page displays a title, description, and listing of any documents in the collection -->
+<p>
+  <b>Title</b><br>
+  <%= @collection.title %>
+</p>
 
 <p>
   <b>Description</b><br>
   <%= @collection.description %>
 </p>
 
+
+<!-- Displays the documents in a collection and gives actions on those documents -->
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Title</th>
+      <th>Created at</th>
+      <th>Updated at</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @collection.documents.each do |document| %>
+      <tr>
+        <td><%= document.id %></td>
+        <td><%= link_to document.title, collection_document_path(@collection.id, document.id) %></td>
+        <td><%= document.created_at %></td>
+        <td><%= document.updated_at %></td>
+        <td>
+          <%= link_to 'Edit', edit_collection_document_path(@collection.id, document.id), :class => 'btn btn-mini' %>
+          <%= link_to 'Destroy', collection_document_path(@collection.id, document.id), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<!-- Added the "new document" functionality to the collection page -->
+<%= link_to 'New', new_collection_document_path(@collection), :class => 'btn btn-primary' %>
+
 <div class="form-actions">
   <%= link_to 'Back', collections_path, :class => 'btn'  %>
-  <%= link_to 'Edit', edit_collection_path(@collection), :class => 'btn' %>
+  <%= link_to 'Edit Description', edit_collection_path(@collection), :class => 'btn' %>
   <%= link_to 'Delete', collection_path(@collection), :method => 'delete', :confirm => 'Are you sure?', :class => 'btn btn-danger' %>
 </div>
+
+
+      

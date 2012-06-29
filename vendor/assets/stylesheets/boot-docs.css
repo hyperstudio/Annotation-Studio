@@ -12,16 +12,22 @@ body{background-color:#4A525A;}
 .annotator-hl {
 	background-color:rgba(34, 34, 34, 0.45);
 }
+
+*/
+
+
+@import url(http://fonts.googleapis.com/css?family=EB+Garamond);
+
 .chapter {
 	font-size: 1.3em;
-	font-family: 'Esteban', serif;
+	font-family: 'EB Garamond', serif;
 	line-height: 2em;
 	color:#000;
 }
-*/
 
-ul .nav li a.texttitle {
-	font-weight: bold;
+a.texttitle {
+	font-size: 1.1em !important;
+	font-weight: bold !important;
 }
 
 .chapter h4 {

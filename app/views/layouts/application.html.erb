@@ -51,11 +51,10 @@
             <%= yield %>
           </div>
             <div class="span4">
-				<%#
 	              <div class="well sidebar-nav">
-	                <h3>Tools</h3>
+	                <h3>Annotations</h3>
+					<%= render "documents/annotation_list" %>
 	              </div>
-				%>
             </div>
           </div>
         </div><!--/row-->
@@ -71,6 +70,7 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
 	<%= javascript_include_tag "application" %>
+	<script src="http://d3js.org/d3.v2.js"></script>
 	<script type="text/javascript" charset="utf-8">
 		jQuery(function ($) {
 			$('#textcontent').annotator()
@@ -79,11 +79,11 @@
 						token: '<%= @jwt %>'
 			        },
 					Store: {
-						prefix: 'http://furious-night-5419.herokuapp.com/api'
-						// prefix: 'http://localhost:5000/api',
-					},
-					Filter: false
+						//prefix: 'http://furious-night-5419.herokuapp.com/api'
+						prefix: 'http://localhost:5000/api',
+					}
 				});
+				//.annotator('addPlugin', 'heatmap');
 			});
 	</script>
   </body>

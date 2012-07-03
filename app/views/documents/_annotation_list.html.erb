@@ -1,0 +1,122 @@
+<script type="text/template" id="annotation-template">
+	<ul>
+			{{#rows}}
+				<li>{{quote}} :: <a href="#highlight/{{#ranges}}{{start}}{{/ranges}}" class="highlightlink">#</a></li>
+			{{/rows}}
+	</ul>
+</script>
+
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.1/underscore-min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/0.9.0/backbone-min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/mustache.js/0.3.0/mustache.min.js"></script>
+
+<script>
+	PX = window.PX || {};
+
+	// model
+	PX.Annotation = Backbone.Model.extend({
+		defaults: {
+			quote: null,
+			text: null,
+			start: null
+		}
+	});
+
+	// collection
+	(function () {
+		var AnnotationList;
+
+		AnnotationList = Backbone.Collection.extend({
+			model: PX.Annotation,
+			url: 'http://localhost:5000/api/search?uri=' + window.location,
+			initialize: function () {
+				this.fetch({
+					  success: this.fetchSuccess,
+					  error: this.fetchError
+				});
+				this.deferred = new $.Deferred();
+			},
+			deferred: Function.constructor.prototype,
+			fetchSuccess: function (collection, response) {
+				collection.deferred.resolve();
+			},
+			fetchError: function (collection, response) {
+				throw new Error("Annotations fetch did get collection from API");
+			}
+		});
+
+		PX.annotations = new AnnotationList();
+		AnnotationList = null;
+	}());
+
+
+	PX.AnnotationView = Backbone.View.extend({
+		className: "annotation",
+		initialize: function (options) {
+			this.template = $('#annotation-template').html();
+		},
+		render: function () {
+			var markup = Mustache.to_html(this.template, this.model.toJSON());
+			this.$el.html(markup).attr('id',this.model.get('_id'));
+			return this;
+		}
+	});
+
+	PX.AnnotationListView = Backbone.View.extend({
+		className: "annotations",
+		// initialize: function (options) {
+		//     this.well = options.well;
+		// },
+		render: function () {
+			var i, len = this.collection.length;
+			for (i=0; i < len; i++) {
+				this.renderItem(this.collection.models[i]);
+			};
+			$(this.well).find(this.className).remove();
+			this.$el.appendTo(this.options.well);
+			return this;
+		},
+		renderItem: function (model) {
+			var item = new PX.AnnotationView({
+				"model": model
+			});
+			item.render().$el.appendTo(this.$el);
+		}
+	});
+
+	// application
+	PX.App = Backbone.Router.extend({
+		routes: {
+			"/": "listAnnotations",
+			"list": "listAnnotations", 
+			'highlight/*start':  'highlight',
+			'*path':  'defaultRoute',
+		},
+		//initialize: function (options) {},
+		listAnnotations: function () {
+			var annotationsList = new PX.AnnotationListView({
+				"well": $('.well'),
+				"collection": PX.annotations
+			});
+			PX.annotations.deferred.done(function () {
+				annotationsList.render();
+			});
+		},
+		// TODO:: Convert xpath to css selector.
+		// Maybe fork annotator to use CSS selectors instead of xpath to store location of annotation?
+		highlight: function(start) {
+			var textblock = '//*[@id="textcontent"]';
+			var fullpath = textblock + start;
+			var rowpos = $('fullpath').position();
+			$('#textcontent').scrollTop(rowpos.top);
+		},
+		defaultRoute: function(path) {
+			this.listAnnotations();
+		}
+	});
+
+	// bootstrap
+	PX.app = new PX.App();
+	Backbone.history.start();
+</script>

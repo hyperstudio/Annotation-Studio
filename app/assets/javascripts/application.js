@@ -17,6 +17,7 @@
 //= require xpath.min
 //= require json2.min
 //= require annotator-full.min
-//= require annotator.touch.min
-//= require heatmap
+// require annotator.touch.min
+// require heatmap
+//= require cssify
 //= require boot-docs

@@ -72,6 +72,7 @@
 	<%= javascript_include_tag "application" %>
 	<script src="http://d3js.org/d3.v2.js"></script>
 	<script type="text/javascript" charset="utf-8">
+		var pathtoselection: $(window).selectedText().getPath();
 		jQuery(function ($) {
 			$('#textcontent').annotator()
 				.annotator('setupPlugins', {}, {
@@ -81,10 +82,10 @@
 					Store: {
 						//prefix: 'http://furious-night-5419.herokuapp.com/api'
 						prefix: 'http://localhost:5000/api',
+						annotationData: {
+						    cssselect: pathtoselection.toString(),
+						}
 					},
-					annotationData: {
-					    'cssselect': "div#ch1.chapter",
-					}
 				});
 				//.annotator('addPlugin', 'heatmap');
 			});

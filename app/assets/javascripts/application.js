@@ -20,4 +20,6 @@
 // require annotator.touch.min
 // require heatmap
 //= require cssify
+//= require getPath
+//= require selectedText
 //= require boot-docs

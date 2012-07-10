@@ -37,6 +37,29 @@ a.texttitle {
 	font-weight: bold;
 }
 
+
+/* Sidebar, see: http://stackoverflow.com/questions/9350818/fixed-sidebar-navigation-in-fluid-twitter-bootstrap-2-0 */
+.sidebar-nav-fixed {
+    position:fixed;
+    top:100px;
+    width:21.97%;
+	height:80%;
+	overflow: auto;
+}
+
+@media (max-width: 767px) {
+    .sidebar-nav-fixed {
+        position:static;
+        width:auto;
+    }
+}
+
+@media (max-width: 979px) {
+    .sidebar-nav-fixed {
+        top:70px;
+    }
+}
+
 /* Subnav */
 .subnav {
   width: 100%;

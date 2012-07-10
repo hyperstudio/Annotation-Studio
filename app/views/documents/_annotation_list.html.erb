@@ -1,7 +1,7 @@
 <script type="text/template" id="annotation-template">
 	<ul>
 			{{#rows}}
-				<li><a href="#highlight/{{#ranges}}{{start}}{{/ranges}}" class="highlightlink">{{text}}</a> :: {{user}}</li>
+				<li><a href="#highlight:{{#ranges}}{{start}}{{/ranges}}" class="highlightlink">{{quote}}</a></li>
 			{{/rows}}
 	</ul>
 </script>
@@ -67,9 +67,9 @@
 
 	PX.AnnotationListView = Backbone.View.extend({
 		className: "annotations",
-		// initialize: function (options) {
-		//     this.well = options.well;
-		// },
+		initialize: function (options) {
+		    this.well = options.well;
+		},
 		render: function () {
 			var i, len = this.collection.length;
 			for (i=0; i < len; i++) {
@@ -93,7 +93,7 @@
 			"/": "listAnnotations",
 			"list": "listAnnotations", 
 			'highlight:*start':  'highlight',
-			'*path':  'defaultRoute',
+			//'#*path':  'defaultRoute',
 		},
 		//initialize: function (options) {},
 		listAnnotations: function () {
@@ -108,7 +108,7 @@
 		// TODO:: Convert xpath to css selector.
 		highlight: function(start) {
 			// var textblock = '//*[@id="textcontent"]';
-			// var fullpath = textblock + start;
+			// var path = textblock + start;
 			// var fullpath = '//*[@id="ch5"]';
 			// var cssselect = cssify(fullpath);
 			// var rowpos = $(cssselect).position();

@@ -32,7 +32,7 @@
 
 		AnnotationList = Backbone.Collection.extend({
 			model: PX.Annotation,
-			url: 'http://localhost:5000/api/search?uri=' + window.location,
+			url: 'http://furious-night-5419.herokuapp.com/api/search?uri=' + window.location,
 			initialize: function () {
 				this.fetch({
 					  success: this.fetchSuccess,

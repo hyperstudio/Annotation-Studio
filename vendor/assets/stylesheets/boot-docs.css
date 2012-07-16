@@ -39,11 +39,16 @@ a.texttitle {
 
 .chapter h4 {
 	color:#000;
-	margin-top:40px;
+	margin-op:40px;
 	font-size: 18px;
 	font-weight: bold;
 }
 
+.well a.trigger {
+	float:right;
+	display:inline;
+	margin-top:5px;
+}
 
 /* Sidebar, see: http://stackoverflow.com/questions/9350818/fixed-sidebar-navigation-in-fluid-twitter-bootstrap-2-0 */
 .sidebar-nav-fixed {

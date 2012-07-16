@@ -12,3 +12,11 @@
 /log/*
 tmp/
 .DS_Store
+public/assets/application-41d4d1621368157374afbc41b9650d63.css
+public/assets/application-41d4d1621368157374afbc41b9650d63.css.gz
+public/assets/application-f0ae9d3d3e094e1c5717be07a39a3ce1.js
+public/assets/application-f0ae9d3d3e094e1c5717be07a39a3ce1.js.gz
+public/assets/application.css.gz
+public/assets/application.js.gz
+public/assets/manifest.yml
+vendor/assets/javascripts/annotator.js

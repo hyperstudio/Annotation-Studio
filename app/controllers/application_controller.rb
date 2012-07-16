@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
     @jwt = JWT.encode(
         {
             'consumerKey' => "annotationstudio.org",
-            'userId' => "jamiefolsom@gmail.com",
+            'userId' => "mithyperstudio@gmail.com",
             'issuedAt' => @now,
             'ttl' => 86400
         }, 

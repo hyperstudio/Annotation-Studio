@@ -1,7 +1,7 @@
 <script type="text/template" id="annotation-template">
 	<ul>
 			{{#rows}}
-				<li><a href="#highlight:{{#ranges}}{{start}}{{/ranges}}" class="highlightlink">{{quote}}</a></li>
+				<li><a href="#highlight:{{id}}" class="highlightlink">{{quote}}</a></li>
 			{{/rows}}
 	</ul>
 </script>
@@ -21,6 +21,7 @@
 			user: null,
 			quote: null,
 			text: null,
+			id: null,
 			start: null
 		}
 	});
@@ -92,7 +93,7 @@
 		routes: {
 			"/": "listAnnotations",
 			"list": "listAnnotations", 
-			'highlight:*start':  'highlight',
+			'highlight:*id':  'highlight',
 			//'#*path':  'defaultRoute',
 		},
 		//initialize: function (options) {},

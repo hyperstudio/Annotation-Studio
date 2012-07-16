@@ -1,24 +1,21 @@
 <%= form_for @collection, :html => { :class => 'form-horizontal' } do |f| %>
+  <h1><%= controller.action_name.capitalize %> Collection</h1>
   <fieldset>
-    <legend><%= controller.action_name.capitalize %> Collection</legend>
-
     <div class="control-group">
       <%= f.label :title, :class => 'control-label' %>
       <div class="controls">
         <%= f.text_field :title, :class => 'text_field' %>
       </div>
     </div>
-
     <div class="control-group">
       <%= f.label :description, :class => 'control-label' %>
       <div class="controls">
         <%= f.text_area :description, :class => 'text_area' %>
       </div>
     </div>
-
-    <div class="form-actions">
+   <div class="form-actions">
       <%= f.submit nil, :class => 'btn btn-primary' %>
-      <%= link_to 'Cancel', collection_path, :class => 'btn' %>
+      <%= link_to 'Cancel', collections_path, :class => 'btn' %>
     </div>
   </fieldset>
 <% end %>

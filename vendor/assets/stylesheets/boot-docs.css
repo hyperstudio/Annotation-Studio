@@ -18,6 +18,13 @@ body{background-color:#4A525A;}
 
 @import url(http://fonts.googleapis.com/css?family=EB+Garamond);
 
+.logo img {
+	max-height:30px;
+	display:inline;
+	float:right !important;
+	margin-top: 10px;
+}
+
 .chapter {
 	font-size: 1.3em;
 	font-family: 'EB+Garamond', serif;

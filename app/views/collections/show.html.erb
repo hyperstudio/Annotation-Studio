@@ -1,49 +1,41 @@
-<h1>Collection</h1>
+<div class="span12">
+	<h1><%= @collection.title %></h1>
+	<!-- Collection page displays a title, description, and listing of any documents in the collection -->
 
-<!-- Collection page displays a title, description, and listing of any documents in the collection -->
-<p>
-  <b>Title</b><br>
-  <%= @collection.title %>
-</p>
+	<p>
+	  <%= @collection.description %>
+	</p>
 
-<p>
-  <b>Description</b><br>
-  <%= @collection.description %>
-</p>
+	<!-- Displays the documents in a collection and gives actions on those documents -->
+	<table class="table table-striped">
+	  <thead>
+	    <tr>
+	      <th>Title</th>
+	      <th>Created</th>
+	      <th>Updated</th>
+	      <th>Actions</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+	    <% @collection.documents.each do |document| %>
+	      <tr>
+	        <td><%= link_to document.title, collection_document_path(@collection.id, document.id) %></td>
+	        <td><%= time_ago_in_words(document.created_at) %> ago</td>
+	        <td><%= time_ago_in_words(document.updated_at) %> ago</td>
+	        <td>
+	          <%= link_to 'Edit', edit_collection_document_path(@collection.id, document.id), :class => 'btn btn-mini' %>
+	          <%= link_to 'Delete', collection_document_path(@collection.id, document.id), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini btn-danger' %>
+	        </td>
+	      </tr>
+	    <% end %>
+	  </tbody>
+	</table>
+	<!-- Added the "new document" functionality to the collection page -->
+	<%= link_to 'New Document', new_collection_document_path(@collection), :class => 'btn btn-primary' %>
 
-
-<!-- Displays the documents in a collection and gives actions on those documents -->
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Created</th>
-      <th>Updated</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @collection.documents.each do |document| %>
-      <tr>
-        <td><%= link_to document.title, collection_document_path(@collection.id, document.id) %></td>
-        <td><%= time_ago_in_words(document.created_at) %> ago</td>
-        <td><%= time_ago_in_words(document.updated_at) %> ago</td>
-        <td>
-          <%= link_to 'Edit', edit_collection_document_path(@collection.id, document.id), :class => 'btn btn-mini' %>
-          <%= link_to 'Delete', collection_document_path(@collection.id, document.id), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini btn-danger' %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-<!-- Added the "new document" functionality to the collection page -->
-<%= link_to 'New Document', new_collection_document_path(@collection), :class => 'btn btn-primary' %>
-
-<div class="form-actions">
-  <%= link_to 'Back', collections_path, :class => 'btn'  %>
-  <%= link_to 'Edit Description', edit_collection_path(@collection), :class => 'btn' %>
-  <%= link_to 'Delete', collection_path(@collection), :method => 'delete', :confirm => 'Are you sure?', :class => 'btn btn-danger' %>
-</div>
-
-
-      
+	<div class="form-actions">
+	  <%= link_to 'Back', collections_path, :class => 'btn'  %>
+	  <%= link_to 'Edit Description', edit_collection_path(@collection), :class => 'btn' %>
+	  <%= link_to 'Delete', collection_path(@collection), :method => 'delete', :confirm => 'Are you sure?', :class => 'btn btn-danger' %>
+	</div>
+</div><!--/span12 -->

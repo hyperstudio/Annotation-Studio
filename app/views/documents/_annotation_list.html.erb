@@ -114,10 +114,10 @@
 			// var cssselect = cssify(fullpath);
 			// var rowpos = $(cssselect).position();
 			// $('#textcontent').scrollTop(rowpos.top);
-			var path, node, hash = decodeURIComponent( location.hash||'' );
-			if((path = /^#highlight:(.+)/.exec( hash )) && (node = document.evaluate( path[1], document, null, 0, null ).iterateNext())) {
-				node.scrollIntoView();
-			}
+			// var path, node, hash = decodeURIComponent( location.hash||'' );
+			// if((path = /^#highlight:(.+)/.exec( hash )) && (node = document.evaluate( path[1], document, null, 0, null ).iterateNext())) {
+				// node.scrollIntoView();
+			// }
 		},
 		defaultRoute: function(path) {
 			this.listAnnotations();

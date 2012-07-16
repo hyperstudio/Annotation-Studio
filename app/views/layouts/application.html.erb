@@ -38,6 +38,7 @@
 					<ul class="nav">
 						<li><%= link_to "Collections", "/collections"	%></li>
 					</ul>
+					<a class="logo" href="/"><img src="/assets/hs-logo-trans-horiz.png"></a>
 				</div><!--/.nav-collapse -->
 			</div><!--/.container -->
 		</div><!--/.navbar-inner -->
@@ -45,15 +46,7 @@
 	<div class="container">
 		<div class="content">
 			<div class="row-fluid">
-				<div class="span8">
 					<%= yield %>
-				</div><!--/span8 -->
-				<div class="span4">
-					<div class="well sidebar-nav sidebar-nav-fixed">
-							<h3>Annotations</h3>
-						<%= render "documents/annotation_list" %>
-						</div><!--/well -->
-				</div><!--/span4 -->
 			</div><!--/row-fluid -->
 		<footer>
 			<p>&copy; MIT 2012</p>
@@ -74,8 +67,9 @@
 						token: '<%= @jwt %>'
 					},
 					Store: {
-						//prefix: 'http://furious-night-5419.herokuapp.com/api'
+						// prefix: 'http://furious-night-5419.herokuapp.com/api'
 						prefix: 'http://localhost:5000/api',
+						// prefix: 'http://slebinos.mit.edu:5000/api',
 						annotationData: {
 							cssselect: "div#ch1",
 						}

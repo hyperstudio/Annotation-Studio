@@ -59,6 +59,40 @@ a.texttitle {
 	overflow: auto;
 }
 
+.well ul.annotation-list {
+	position: relative;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	float: left;
+	left: 22.5%;
+	list-style: none;
+	margin-left: -22.5%;
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-o-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+.well ul.annotation-list li {
+	font-size: 12px;
+	font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
+	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.3);	
+	padding: 10px;
+	background-color: #efefef;
+	border-top: 1px solid rgba(255, 255, 255, 0.2);
+	border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+	color: #868686;
+}
+
+.well ul.annotation-list li.selected, 
+.annotator-hl.selected {
+	color: #5b4001;
+	background-color: #fadb3b;
+}
+
+
 @media (max-width: 767px) {
     .sidebar-nav-fixed {
         position:static;

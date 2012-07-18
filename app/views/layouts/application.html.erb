@@ -49,8 +49,9 @@
 	</div><!--/.navbar-fixed-top -->
 	<div class="container">
 		<div class="content">
-			<p class="notice"><%= notice %></p>
-			<p class="alert"><%= alert %></p>
+		      <%- flash.each do |name, msg| -%>
+		        <%= content_tag :div, msg, :class => "alert alert-#{name}" if msg.is_a?(String) %>
+		      <%- end -%>
 			<div class="row-fluid">
 					<%= yield %>
 			</div><!--/row-fluid -->

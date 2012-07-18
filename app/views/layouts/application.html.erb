@@ -39,12 +39,18 @@
 						<li><%= link_to "Collections", "/collections"	%></li>
 					</ul>
 					<a class="logo" href="/"><img src="/assets/hs-logo-trans-horiz.png"></a>
+					<ul class="nav" id="accountlinks">
+						<%= render 'devise/menu/registration_items' %>
+						<%= render 'devise/menu/login_items' %>
+					</ul>
 				</div><!--/.nav-collapse -->
 			</div><!--/.container -->
 		</div><!--/.navbar-inner -->
 	</div><!--/.navbar-fixed-top -->
 	<div class="container">
 		<div class="content">
+			<p class="notice"><%= notice %></p>
+			<p class="alert"><%= alert %></p>
 			<div class="row-fluid">
 					<%= yield %>
 			</div><!--/row-fluid -->

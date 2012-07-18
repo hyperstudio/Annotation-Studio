@@ -1,4 +1,6 @@
 AnnotationStudio::Application.routes.draw do
+  devise_for :users
+
   resources :collections do
     resources :documents
   end

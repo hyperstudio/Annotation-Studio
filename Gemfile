@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.1'
+gem 'rails' #, '3.2.1'
 
 gem 'thin'
 
@@ -9,16 +9,21 @@ gem 'thin'
 
 gem 'pg'
 
+gem 'devise'
+gem 'cancan'
+
+#gem 'repertoire-groups', :git => 'git@github.com:repertoire/Repertoire-Groups.git'
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
-  gem 'coffee-rails', '~> 3.2.1'
+  gem 'sass-rails' #,   '~> 3.2.3'
+  gem 'coffee-rails' #, '~> 3.2.1'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer'
 
-  gem 'uglifier', '>= 1.0.3'
+  gem 'uglifier' #, '>= 1.0.3'
   gem "twitter-bootstrap-rails"
 end
 
@@ -32,7 +37,7 @@ gem 'jbuilder'
 
 # gem 'roar-rails'
 
-gem "jwt", "~> 0.1.4"
+gem "jwt" #, "~> 0.1.4"
 
 # Use unicorn as the web server
 # gem 'unicorn'

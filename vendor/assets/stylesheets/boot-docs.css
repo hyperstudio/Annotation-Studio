@@ -18,11 +18,22 @@ body{background-color:#4A525A;}
 
 @import url(http://fonts.googleapis.com/css?family=EB+Garamond);
 
-.logo img {
+p.notice, p.alert {
+	display: none;
+}
+
+a.logo {
+	float:right;
+	display: block;
+}
+
+a.logo img {
 	max-height:30px;
-	display:inline;
-	float:right !important;
 	margin-top: 10px;
+}
+
+ul#accountlinks {
+	float:right;
 }
 
 .chapter {

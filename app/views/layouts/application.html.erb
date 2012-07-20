@@ -39,12 +39,19 @@
 						<li><%= link_to "Collections", "/collections"	%></li>
 					</ul>
 					<a class="logo" href="/"><img src="/assets/hs-logo-trans-horiz.png"></a>
+					<ul class="nav" id="accountlinks">
+						<%= render 'devise/menu/registration_items' %>
+						<%= render 'devise/menu/login_items' %>
+					</ul>
 				</div><!--/.nav-collapse -->
 			</div><!--/.container -->
 		</div><!--/.navbar-inner -->
 	</div><!--/.navbar-fixed-top -->
 	<div class="container">
 		<div class="content">
+		      <%- flash.each do |name, msg| -%>
+		        <%= content_tag :div, msg, :class => "alert alert-#{name}" if msg.is_a?(String) %>
+		      <%- end -%>
 			<div class="row-fluid">
 					<%= yield %>
 			</div><!--/row-fluid -->

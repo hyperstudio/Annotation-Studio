@@ -15,9 +15,9 @@
 	 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 	<!-- Le fav and touch icons -->
-	<%# link href="images/favicon.ico" rel="shortcut icon" %>
-	<%# link href="images/apple-touch-icon.png" rel="apple-touch-icon" %>
-	<%# link href="images/apple-touch-icon-72x72.png" rel="apple-touch-icon" sizes="72x72" %>
+	<link href="images/favicon.ico" rel="shortcut icon" />
+	<link href="images/apple-touch-icon.png" rel="apple-touch-icon" />
+	<link href="images/apple-touch-icon-72x72.png" rel="apple-touch-icon" sizes="72x72" />
 	<%# link href="images/apple-touch-icon-114x114.png" rel="apple-touch-icon" sizes="114x114" %>
 
 	<%#
@@ -64,9 +64,7 @@
 	================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
 	<%= javascript_include_tag "application" %>
-	<script src="http://d3js.org/d3.v2.js"></script>
 	<script type="text/javascript" charset="utf-8">
-		// var pathtoselection = $(window).selectedText().getPath();
 		jQuery(function ($) {
 			$('#textcontent').annotator()
 				.annotator('setupPlugins', {}, {
@@ -76,7 +74,6 @@
 					Store: {
 						prefix: 'http://annotations.herokuapp.com/api',
 						// prefix: 'http://localhost:5000/api',
-						// prefix: 'http://slebinos.mit.edu:5000/api',
 						annotationData: {
 							cssselect: "div#ch1",
 						}

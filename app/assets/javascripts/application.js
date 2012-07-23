@@ -16,11 +16,6 @@
 //= require_tree .
 //= require xpath.min
 //= require json2.min
-// require annotator
 //= require annotator-full.min
-// require annotator.touch.min
-// require heatmap
-// require cssify
-// require getPath
-// require selectedText
+//= require annotator.touch.min
 //= require boot-docs

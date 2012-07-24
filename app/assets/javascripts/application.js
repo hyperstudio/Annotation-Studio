@@ -19,3 +19,4 @@
 //= require annotator-full.min
 //= require annotator.touch.min
 //= require boot-docs
+// require jquery.scrollintoview.min

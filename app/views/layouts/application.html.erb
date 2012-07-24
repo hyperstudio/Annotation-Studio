@@ -90,8 +90,9 @@
 				    return a.highlights[0].id = a.id;
 				  }
 				}, this);
-				studio.subscribe('annotationsLoaded', __bind(function(annotations) {}, this));
-				marginalia.map(addHighlightId);
+				studio.subscribe('annotationsLoaded', __bind(function(annotations) {
+					annotations.map(addHighlightId);
+				}, this));
 				studio.subscribe('annotationUpdated', addHighlightId);
 			});
 		});

@@ -15,7 +15,7 @@
 	 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 	<!-- Le fav and touch icons -->
-	<link href="favicon.ico" rel="shortcut icon" />
+	<link href="/favicon.ico" rel="shortcut icon" />
 	<link href="images/apple-touch-icon.png" rel="apple-touch-icon" />
 	<link href="images/apple-touch-icon-72x72.png" rel="apple-touch-icon" sizes="72x72" />
 	<%# link href="images/apple-touch-icon-114x114.png" rel="apple-touch-icon" sizes="114x114" %>
@@ -87,7 +87,7 @@
 				var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 				addHighlightId = __bind(function(a) {
 				  if (a.highlights[0] != null) {
-				    return a.highlights[0].id = a.id;
+				    return a.highlights[0].id = "hl"+ a.id;
 				  }
 				}, this);
 				studio.subscribe('annotationsLoaded', __bind(function(annotations) {

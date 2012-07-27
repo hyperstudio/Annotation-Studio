@@ -16,6 +16,7 @@ body{background-color:#4A525A;}
 */
 
 
+
 @import url(http://fonts.googleapis.com/css?family=EB+Garamond);
 
 p.notice, p.alert {
@@ -50,7 +51,7 @@ a.texttitle {
 
 .chapter h4 {
 	color:#000;
-	margin-op:40px;
+	margin-top:40px;
 	font-size: 18px;
 	font-weight: bold;
 }
@@ -68,6 +69,7 @@ a.texttitle {
     width:21.97%;
 	height:80%;
 	overflow: auto;
+	background-color: #fefefe;
 }
 
 .well ul.annotation-list {
@@ -91,8 +93,7 @@ a.texttitle {
 	font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
 	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.3);	
 	padding: 2px 5px;
-	background-color: #efefef;
-	border-top: 1px solid rgba(255, 255, 255, 0.2);
+	border-top: 1px solid rgba(0, 0, 0, 0.05);
 	border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 	color: #868686;
 }
@@ -102,8 +103,8 @@ a.texttitle {
 }
 
 .well ul.annotation-list li a {
-	text-decoration:underline;
-	color:#009;
+	text-decoration:none;
+	color: #111;
 }
 
 .well ul.annotation-list li.selected, 

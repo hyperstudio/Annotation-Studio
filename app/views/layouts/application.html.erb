@@ -15,9 +15,9 @@
 	 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 	<!-- Le fav and touch icons -->
-	<%# link href="images/favicon.ico" rel="shortcut icon" %>
-	<%# link href="images/apple-touch-icon.png" rel="apple-touch-icon" %>
-	<%# link href="images/apple-touch-icon-72x72.png" rel="apple-touch-icon" sizes="72x72" %>
+	<link href="/favicon.ico" rel="shortcut icon" />
+	<link href="images/apple-touch-icon.png" rel="apple-touch-icon" />
+	<link href="images/apple-touch-icon-72x72.png" rel="apple-touch-icon" sizes="72x72" />
 	<%# link href="images/apple-touch-icon-114x114.png" rel="apple-touch-icon" sizes="114x114" %>
 
 	<%#
@@ -64,27 +64,38 @@
 	================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
 	<%= javascript_include_tag "application" %>
-	<script src="http://d3js.org/d3.v2.js"></script>
 	<script type="text/javascript" charset="utf-8">
-		// var pathtoselection = $(window).selectedText().getPath();
 		jQuery(function ($) {
 			$('#textcontent').annotator()
 				.annotator('setupPlugins', {}, {
-					Auth: {
-						token: '<%= @jwt %>'
-					},
-					Store: {
-						prefix: 'http://annotations.herokuapp.com/api',
-						// prefix: 'http://localhost:5000/api',
-						// prefix: 'http://slebinos.mit.edu:5000/api',
-						annotationData: {
-							cssselect: "div#ch1",
-						}
-					},
-					Filter: false
-				});
-				//.annotator('addPlugin', 'heatmap');
+				Auth: {
+					token: '<%= @jwt %>'
+				},
+				Store: {
+					prefix: 'http://annotations.herokuapp.com/api',
+					// prefix: 'http://localhost:5000/api',
+					annotationData: {
+						cssselect: "div#ch1",
+					}
+				},
+				Filter: false
 			});
+			$(document).ready(function () {
+				var studio = $('#textcontent').annotator().data('annotator');
+				// var marginalia = studio.plugins.Store.annotations;
+				var addHighlightId;
+				var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+				addHighlightId = __bind(function(a) {
+				  if (a.highlights[0] != null) {
+				    return a.highlights[0].id = "hl"+ a.id;
+				  }
+				}, this);
+				studio.subscribe('annotationsLoaded', __bind(function(annotations) {
+					annotations.map(addHighlightId);
+				}, this));
+				studio.subscribe('annotationUpdated', addHighlightId);
+			});
+		});
 	</script>
 	</body>
 </html>

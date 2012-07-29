@@ -14,5 +14,6 @@
  *= require "bootstrap.min.css"
  *= require "annotator.min.css"
  *= require "annotator.touch.css"
+ *= require 'user_set'
  *= require "boot-docs.css"
 */

@@ -12,7 +12,9 @@ gem 'pg'
 gem 'devise'
 gem 'cancan'
 
-#gem 'repertoire-groups', :git => 'git@github.com:repertoire/Repertoire-Groups.git'
+gem 'repertoire-groups', :git => 'git@github.com:repertoire/Repertoire-Groups.git', :branch => "bootstrap-flavor"
+
+gem 'acts-as-taggable-on', '~> 2.3.1'
 
 # Gems used only for assets and not required
 # in production environments by default.

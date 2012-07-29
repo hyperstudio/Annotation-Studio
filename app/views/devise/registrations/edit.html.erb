@@ -3,6 +3,16 @@
 <fieldset>
 <legend>Edit Account</legend>
 	<div class="control-group">
+		<%= f.label :firstname, :class => "control-label" %>
+		<div class="controls">
+		<%= f.text_field :firstname %>
+		</div>
+
+		<%= f.label :lastname, :class => "control-label" %>
+		<div class="controls">
+		<%= f.text_field :lastname %>
+		</div>
+
 		<%= f.label :email, :class => "control-label" %>
 		<div class="controls">
 		<%= f.email_field :email %>

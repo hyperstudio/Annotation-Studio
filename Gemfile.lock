@@ -1,3 +1,10 @@
+GIT
+  remote: git@github.com:repertoire/Repertoire-Groups.git
+  revision: 9620deecebc016706c177a179a875c34790eb3ce
+  branch: bootstrap-flavor
+  specs:
+    repertoire-groups (0.0.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -28,6 +35,8 @@ GEM
     activesupport (3.2.7)
       i18n (~> 0.6)
       multi_json (~> 1.0)
+    acts-as-taggable-on (2.3.3)
+      rails (~> 3.0)
     arel (3.0.2)
     bcrypt-ruby (3.0.1)
     blankslate (2.1.2.4)
@@ -139,6 +148,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  acts-as-taggable-on (~> 2.3.1)
   cancan
   coffee-rails
   devise
@@ -147,6 +157,7 @@ DEPENDENCIES
   jwt
   pg
   rails
+  repertoire-groups!
   sass-rails
   thin
   twitter-bootstrap-rails

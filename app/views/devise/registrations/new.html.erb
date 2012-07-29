@@ -3,26 +3,34 @@
 <fieldset>
 <legend>Sign up</legend>
 	<div class="control-group">
-	  <%= f.label :email, :class => "control-label" %>
-	  <div class="controls">
+		<%= f.label :firstname, :class => "control-label" %>
+		<div class="controls">
+		<%= f.text_field :firstname %>
+		</div>
+		
+		<%= f.label :lastname, :class => "control-label" %>
+		<div class="controls">
+		<%= f.text_field :lastname %>
+		</div>
+		
+		<%= f.label :email, :class => "control-label" %>
+		<div class="controls">
 		<%= f.email_field :email %>
-	  </div>
-
-	  <%= f.label :password, :class => "control-label" %>
-	  <div class="controls">
-	  	<%= f.password_field :password %>
-	  </div>
-
-	  <%= f.label :password_confirmation, :class => "control-label" %>
-	  <div class="controls">
-	  	<%= f.password_field :password_confirmation %>
-	  </div>
+		</div>
+		
+		<%= f.label :password, :class => "control-label" %>
+		<div class="controls">
+		<%= f.password_field :password %>
+		</div>
+		
+		<%= f.label :password_confirmation, :class => "control-label" %>
+		<div class="controls">
+		<%= f.password_field :password_confirmation %>
+		</div>
 		<br>
-	  <div class="controls">
-		  <div><%= f.submit "Sign up", :class => "btn btn-primary" %></div>
-	  </div>
-
+		<div class="controls">
+		<div><%= f.submit "Sign up", :class => "btn btn-primary" %></div>
+	</div>
 </fieldset>
 <% end %>
-
 <%= render "links" %>

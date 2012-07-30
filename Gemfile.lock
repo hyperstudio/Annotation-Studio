@@ -1,5 +1,5 @@
 GIT
-  remote: git@github.com:repertoire/Repertoire-Groups.git
+  remote: https://jamiefolsom:tr3m3nd0@github.com/repertoire/Repertoire-Groups.git
   revision: 9620deecebc016706c177a179a875c34790eb3ce
   branch: bootstrap-flavor
   specs:

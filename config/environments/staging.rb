@@ -35,5 +35,5 @@ AnnotationStudio::Application.configure do
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
 
-  config.action_mailer.default_url_options = { :host => 'floating-snow-6358.herokuapp.com' }
+  config.action_mailer.default_url_options = { :host => 'staging-annotationstudio.herokuapp.com' }
 end

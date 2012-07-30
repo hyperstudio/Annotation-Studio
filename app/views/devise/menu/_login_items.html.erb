@@ -2,6 +2,11 @@
   <li>
   <%= link_to('Logout', destroy_user_session_path) %>        
   </li>
+  <% if can? :manage, UserSet %>
+  <li>
+	  <%= link_to('Manage Users', user_sets_path) %>
+  </li>
+  <% end %>
 <% else %>
   <li>
   <%= link_to('Login', new_user_session_path)  %>  

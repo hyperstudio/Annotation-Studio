@@ -62,6 +62,11 @@ a.texttitle {
 	margin-top:5px;
 }
 
+.annotator-widget img {
+	max-width:150px;
+	display:inline;
+}
+
 /* Sidebar, see: http://stackoverflow.com/questions/9350818/fixed-sidebar-navigation-in-fluid-twitter-bootstrap-2-0 */
 .sidebar-nav-fixed {
     position:fixed;

@@ -53,7 +53,6 @@
 
 
 	PX.AnnotationView = Backbone.View.extend({
-		className: "annotation",
 		initialize: function (options) {
 			this.template = $('#annotation-template').html();
 		},
@@ -79,6 +78,7 @@
 			$('a.highlightlink').tooltip({placement:'right'});
 			$("a.highlightlink").click(function(event){		
 				event.preventDefault();
+				$(this).tooltip('hide');
 				$('html,body').animate({scrollTop:$(this.hash).offset().top - 85}, 2000);
 			});
 			

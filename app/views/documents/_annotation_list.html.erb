@@ -77,6 +77,11 @@
 			$(this.well).find(this.className).remove();
 			this.$el.appendTo(this.options.well);
 			$('a.highlightlink').tooltip({placement:'right'});
+			$("a.highlightlink").click(function(event){		
+				event.preventDefault();
+				$('html,body').animate({scrollTop:$(this.hash).offset().top - 85}, 500);
+			});
+			
 			return this;
 		},
 		renderItem: function (model) {

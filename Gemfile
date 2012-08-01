@@ -8,6 +8,7 @@ gem 'thin'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'pg'
+gem 'newrelic_rpm'
 
 gem 'devise'
 gem 'cancan'

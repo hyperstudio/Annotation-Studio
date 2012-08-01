@@ -107,6 +107,11 @@ a.texttitle {
 	background-color: #ddd;
 }
 
+.well ul.annotation-list li.hover {
+	background-color: #ddd;
+}
+
+
 .well ul.annotation-list li a {
 	text-decoration:none;
 	color: #111;

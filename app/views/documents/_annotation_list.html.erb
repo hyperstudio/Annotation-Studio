@@ -1,7 +1,7 @@
 <script type="text/template" id="annotation-template">
 	<ul class="annotation-list">
 			{{#rows}}
-				<li><a href="#hl{{id}}" rel="tooltip" title="{{user}}" class="highlightlink">{{quote}}</a></li>
+				<li><a id="sb{{id}}" href="#hl{{id}}" rel="tooltip" title="{{user}}" class="highlightlink">{{quote}}</a></li>
 			{{/rows}}
 	</ul>
 </script>
@@ -76,9 +76,12 @@
 			$(this.well).find(this.className).remove();
 			this.$el.appendTo(this.options.well);
 			$('a.highlightlink').tooltip({placement:'right'});
+
+			// TODO: make the LI the click target, not the finicky little a tag.
 			$("a.highlightlink").click(function(event){		
 				event.preventDefault();
-				$(this).tooltip('hide');
+				$("a.highlightlink").tooltip('hide');
+				$("ul.annotation-list li").removeClass('hover');
 				$('html,body').animate({scrollTop:$(this.hash).offset().top - 85}, 2000);
 			});
 			

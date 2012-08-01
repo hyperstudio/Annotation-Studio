@@ -95,6 +95,25 @@
 					annotations.map(addHighlightId);
 				}, this));
 				studio.subscribe('annotationUpdated', addHighlightId);
+				$("span.annotator-hl").click(function(event){		
+					event.preventDefault();
+					var str = this.id.toString();
+					var parts = str.match(/(hl)(.+)/).slice(1);
+					var targetid = "#sb" + parts[1];
+
+					// Move the main text to the top
+					//$('html,body').animate({scrollTop:$(this).offset().top - 85}, 2000);
+
+					// Move the annotation sidebar to the top doesn't work most of the time, due to the height of the sidebar.
+					// TODO: deal with the events in a more organized way (recompose them in functions)
+					// Currently, highlight and hover events are confused (appearing, disappearing, scrolling, not happening, etc.)
+					$('div.well').animate({scrollTop:$(targetid).offset().top - 150}, 100, function (){
+						$("ul.annotation-list li").removeClass('hover');
+						$(targetid).parent().toggleClass('hover');
+						$("a.highlightlink").tooltip('hide');
+						$(targetid).tooltip('show');
+					});
+				});
 			});
 		});
 	</script>

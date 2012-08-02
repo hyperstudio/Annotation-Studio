@@ -75,14 +75,20 @@
 			};
 			$(this.well).find(this.className).remove();
 			this.$el.appendTo(this.options.well);
+
 			$('a.highlightlink').tooltip({placement:'right'});
 
 			// TODO: make the LI the click target, not the finicky little a tag.
 			$("a.highlightlink").click(function(event){		
 				event.preventDefault();
 				$("a.highlightlink").tooltip('hide');
+				// $(".annotator-hl").tooltip('hide');
 				$("ul.annotation-list li").removeClass('hover');
-				$('html,body').animate({scrollTop:$(this.hash).offset().top - 85}, 2000);
+				var idtarget = this.hash;
+				$('html,body').animate({scrollTop: $(idtarget).offset().top - 85}, 2000, function() {
+					// var tipTarget = "span"+idtarget+".annotator-hl"; 
+					// $(tipTarget).tooltip('show'); // to show a tooltip on click -- instead, let's show the annotator viewer.
+				});
 			});
 			
 			return this;

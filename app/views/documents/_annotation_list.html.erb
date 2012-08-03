@@ -82,7 +82,10 @@
 			for (i=0; i < len; i++) {
 				this.renderItem(this.collection.models[i]);
 			};
-			$(this.well).find(this.className).remove();
+			// For some reason, this doesn't work:
+			// $(this.well).find(this.className).remove();
+			// So for now, I'll hard-code the class to remove.
+			$(this.well).find(".annotations").remove();
 			this.$el.appendTo(this.options.well);
 
 			$('a.highlightlink').tooltip({placement:'right'});
@@ -94,7 +97,7 @@
 				// $(".annotator-hl").tooltip('hide');
 				$("ul.annotation-list li").removeClass('hover');
 				var idtarget = this.hash;
-				$('html,body').animate({scrollTop: $(idtarget).offset().top - 85}, 2000, function() {
+				$('html,body').animate({scrollTop: $(idtarget).offset().top - 150}, 2000, function() {
 					// var tipTarget = "span"+idtarget+".annotator-hl"; 
 					// $(tipTarget).tooltip('show'); // to show a tooltip on click -- instead, let's show the annotator viewer.
 				});

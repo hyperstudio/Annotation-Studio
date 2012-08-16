@@ -40,7 +40,7 @@ Sidebar.Annotation = Backbone.Model.extend({
 			collection.deferred.resolve();
 		},
 		fetchError: function (collection, response) {
-			throw new Error("Annotations fetch did get collection from API");
+			throw new Error("Annotations fetch did not get a collection from the API");
 		}
 	});
 

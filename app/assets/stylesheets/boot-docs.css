@@ -103,6 +103,10 @@ a.texttitle {
 	color: #868686;
 }
 
+.highlightlink.highlight {
+	background: rgba(255, 255, 10, 0.3);
+}
+
 .well ul#annotation-list li:hover {
 	background-color: #ddd;
 }
@@ -112,7 +116,7 @@ a.texttitle {
 }
 
 
-.well ul#annotation-list li a {
+.well ul#annotation-list li span {
 	text-decoration:none;
 	color: #111;
 }

@@ -1,124 +1,83 @@
 Sidebar = window.Sidebar || {};
 
-// model
+// Model
 Sidebar.Annotation = Backbone.Model.extend({
 	defaults: {
 		user: null,
 		quote: null,
 		text: null,
 		id: null,
-		start: null, 
-		_id: null,
-		annotator_schema_version: "v1.0",
-		consumer: "annotationstudio.org",
-		created: null,
-		updated: null,
-		highlights: {},
-		permissions: {},
-		ranges: {},
-		tags: {},
-		uri: null
 	}
 });
 
-// collection
-(function () {
-	var AnnotationList;
+// Collection
+Sidebar.AnnotationList = Backbone.Collection.extend({
+	model: Sidebar.Annotation,
+	comparator: function(annotation) {
+		return annotation.get("created"); // change to startOffset
+	},
+	initialize: function (annotations) {
+		// Dump in a whole array of JSON objects -- necessary?
+		// this.add(annotations); // don't think it is 
+		// console.info("First annotation: " + this.shift().get("quote"));
+		this.sort();
+	},
+});
 
-	AnnotationList = Backbone.Collection.extend({
-		model: Sidebar.Annotation,
-		url: 'http://annotations.herokuapp.com/api/search?uri=' + window.location,
-		initialize: function () {
-			this.fetch({
-				  success: this.fetchSuccess,
-				  error: this.fetchError
-			});
-			this.deferred = new $.Deferred();
-		},
-		deferred: Function.constructor.prototype,
-		fetchSuccess: function (collection, response) {
-			collection.deferred.resolve();
-		},
-		fetchError: function (collection, response) {
-			throw new Error("Annotations fetch did not get a collection from the API");
-		}
-	});
-
-	Sidebar.annotations = new AnnotationList();
-	AnnotationList = null;
-}());
-
-
+// Annotation View
 Sidebar.AnnotationView = Backbone.View.extend({
+	tagName: 'li',
+	className: 'annotation-item',
+	initialize: function () {
+		this.template = $('#annotation-template').html();
+		//this.mdconverter = $('#textcontent').annotator().data('annotator').plugins.Markdown.converter;
+	},
+	render: function () {
+		$(this.el).html(Mustache.to_html(this.template, this.model.toJSON())); // instead of console.info: 
+		return this;
+	},
+	mdConvert: function () {
+		var userComment = this.model.text;
+		if (userComment != null) {
+			this.model.text = this.mdconverter.makeHtml(userComment);
+		}
+		return this;
+	}
+});
+
+// Annotation List View
+Sidebar.AnnotationListView = Backbone.View.extend({
+	el: $("div#annotation-well"),
 	initialize: function (options) {
 		this.template = $('#annotation-template').html();
 	},
 	render: function () {
-		var markup = Mustache.to_html(this.template, this.model.toJSON());
-		this.$el.html(markup).attr('id',this.model.get('_id'));
-		return this;
-	}
-});
-
-Sidebar.AnnotationListView = Backbone.View.extend({
-	className: "annotations",
-	initialize: function (options) {
-	    this.well = options.well;
-	},
-	render: function () {
-		var i, len = this.collection.length;
-		for (i=0; i < len; i++) {
-			this.renderItem(this.collection.models[i]);
-		};
-		// For some reason, this doesn't work:
-		// $(this.well).find(this.className).remove();
-		// So for now, I'll hard-code the class to remove.
+		// Clear out existing annotations
 		$(this.well).find(".annotations").remove();
-		this.$el.appendTo(this.options.well);
 
-		$('a.highlightlink').tooltip({placement:'right'});
-
-		// TODO: make the LI the click target, not the finicky little a tag.
-		$("a.highlightlink").click(function(event){		
-			event.preventDefault();
-			$("a.highlightlink").tooltip('hide');
-			$("ul.annotation-list li").removeClass('hover');
-			var idtarget = this.hash;
-			// var linkTop = $(this).offset().top
-			$('html,body').animate({scrollTop: $(idtarget).offset().top - 150}, 2000); // Can add a callback parameter to run when animation completes.
+		// Walk throught the list, and render markdown in the user comment first.
+		this.collection.sort();
+		this.collection.each(function(ann) {
+			var annView = new Sidebar.AnnotationView({model: ann});
+			$("ul#annotation-list").append(annView.render().el);
+			// console.info(annView);
 		});
-		
-		return this;
-	},
-	renderItem: function (model) {
-		var item = new Sidebar.AnnotationView({
-			"model": model
-		});
-		item.render().$el.appendTo(this.$el);
 	}
 });
 
-// application
+// Application
 Sidebar.App = Backbone.Router.extend({
+	// Not invoked by user actions; only called from the page script.
 	routes: {
-		'list':  'listAnnotations',
-		'*path':  'defaultRoute',
+		'list':  'listAnnotations'
 	},
-	listAnnotations: function () {
+	listAnnotations: function (annotationArray) {
+		Sidebar.annotations = new Sidebar.AnnotationList(annotationArray);
 		var annotationsList = new Sidebar.AnnotationListView({
-			"well": $('.well'),
+			"container": $('.well'),
 			"collection": Sidebar.annotations
 		});
-		Sidebar.annotations.deferred.done(function () {
-			annotationsList.render();
-		});
+		annotationsList.render();
 		return "Rendered annotationsList";
-	},
-	defaultRoute: function(path) {
-		this.listAnnotations();
 	}
 });
-
-// bootstrap
-Sidebar.app = new Sidebar.App();
-Backbone.history.start({pushState: true, root: window.location})

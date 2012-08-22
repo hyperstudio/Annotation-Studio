@@ -14,12 +14,9 @@ Sidebar.Annotation = Backbone.Model.extend({
 Sidebar.AnnotationList = Backbone.Collection.extend({
 	model: Sidebar.Annotation,
 	comparator: function(annotation) {
-		return annotation.get("created"); // change to startOffset
+		return annotation.get("ranges")[0].startOffset; // change to startOffset
 	},
 	initialize: function (annotations) {
-		// Dump in a whole array of JSON objects -- necessary?
-		// this.add(annotations); // don't think it is 
-		// console.info("First annotation: " + this.shift().get("quote"));
 		this.sort();
 	},
 });
@@ -29,18 +26,28 @@ Sidebar.AnnotationView = Backbone.View.extend({
 	tagName: 'li',
 	className: 'annotation-item',
 	initialize: function () {
-		this.template = $('#annotation-template').html();
-		//this.mdconverter = $('#textcontent').annotator().data('annotator').plugins.Markdown.converter;
+		this.commenttemplate = $('#comment-template').html();
+		this.highlighttemplate = $('#highlight-template').html();
+		this.mdconverter = new Showdown.converter();
 	},
 	render: function () {
-		$(this.el).html(Mustache.to_html(this.template, this.model.toJSON())); // instead of console.info: 
+		if (this.model.get("text") != "") {
+			this.mdConvert();
+			$(this.el).html(Mustache.to_html(this.commenttemplate, this.model.toJSON())); // instead of console.info: 
+		}
+		else {
+			$(this.el).html(Mustache.to_html(this.highlighttemplate, this.model.toJSON())); // instead of console.info: 
+		}
+		console.info(this.model.get("ranges")[0].startOffset);
 		return this;
 	},
 	mdConvert: function () {
-		var userComment = this.model.text;
-		if (userComment != null) {
-			this.model.text = this.mdconverter.makeHtml(userComment);
+		var userComment = this.model.get("text");
+		// console.info("Raw:" + userComment);
+		if (userComment != "") {
+			this.model.set("text", this.mdconverter.makeHtml(userComment));
 		}
+		// console.info("Converted:" + this.model.get("text"));
 		return this;
 	}
 });
@@ -53,14 +60,43 @@ Sidebar.AnnotationListView = Backbone.View.extend({
 	},
 	render: function () {
 		// Clear out existing annotations
-		$(this.well).find(".annotations").remove();
+		$("ul#annotation-list").find(".annotation-item").remove();
 
 		// Walk throught the list, and render markdown in the user comment first.
 		this.collection.sort();
 		this.collection.each(function(ann) {
 			var annView = new Sidebar.AnnotationView({model: ann});
 			$("ul#annotation-list").append(annView.render().el);
-			// console.info(annView);
+		});
+
+		// Bind some events to links
+		$("span.annotator-hl").click(function(event){
+			$("ul#annotation-list li").removeClass('hover');
+			$("span.highlightlink").tooltip('hide');
+			var str = this.id.toString();
+			var parts = str.match(/(hl)(.+)/).slice(1);
+			var targetid = "#sb" + parts[1];
+
+			// TODO: deal with the events in a more organized way (recompose them in functions)
+			$('div.well').animate({scrollTop:$(targetid).offset().top}, 100, function (){
+				$(targetid).parent().addClass('hover');
+				// $(targetid).tooltip('show');
+			});
+		});
+
+		// Bind some events to links
+		// $('span.highlightlink').tooltip({placement:'right'});
+
+		// Bind some events to links
+		$("li.annotation-item").click(function(event){
+			var idtarget = $(this).find("span.highlightlink").attr("data-target");
+			console.info(idtarget);
+			$("span.highlightlink").tooltip('hide');
+			$(this).removeClass('hover');
+			// var linkTop = $(this).offset().top
+			// Note: we can add a callback parameter to run when animation completes.
+			$('html,body').animate({scrollTop: $(idtarget).offset().top - 85}, 500);
+			event.stopPropagation();		
 		});
 	}
 });
@@ -78,6 +114,6 @@ Sidebar.App = Backbone.Router.extend({
 			"collection": Sidebar.annotations
 		});
 		annotationsList.render();
-		return "Rendered annotationsList";
+		// return "Rendered annotationsList";
 	}
 });

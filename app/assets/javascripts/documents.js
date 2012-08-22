@@ -1,4 +1,3 @@
-//= require twitter/bootstrap
 //= require xpath.min
 //= require json2.min
 //= require showdown

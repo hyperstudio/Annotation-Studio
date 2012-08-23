@@ -60,6 +60,7 @@ GEM
     eventmachine (0.12.10)
     execjs (1.4.0)
       multi_json (~> 1.0)
+    friendly_id (4.0.8)
     hike (1.2.1)
     i18n (0.6.0)
     jbuilder (0.4.3)
@@ -153,6 +154,7 @@ DEPENDENCIES
   cancan
   coffee-rails
   devise
+  friendly_id (~> 4.0.1)
   jbuilder
   jquery-rails
   jwt

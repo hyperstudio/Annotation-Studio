@@ -1,24 +1,65 @@
-<%= form_for ([@collection,@document]), :html => { :class => 'form-horizontal' } do |f| %>
-  <fieldset>
-    <legend><%= controller.action_name.capitalize %> Document</legend>
+<div class="row">
+	<div class="span12">
+		<%= form_for (@document), :html => { :class => 'form-horizontal' } do |f| %>
+		  <fieldset>
+		    <legend><%= controller.action_name.capitalize %> Document</legend>
+			<div class="row">
+			<div class="span6">
+			    <div class="control-group">
+			      <%= f.label :title, :class => 'control-label' %>
+			      <div class="controls">
+			        <%= f.text_field :title, :class => 'text_field input-xlarge' %>
+			      </div>
+			    </div>
 
-    <div class="control-group">
-      <%= f.label :title, :class => 'control-label' %>
-      <div class="controls">
-        <%= f.text_field :title, :class => 'text_field' %>
-      </div>
-    </div>
+			    <div class="control-group">
+			      <%= f.label :author, :class => 'control-label' %>
+			      <div class="controls">
+			        <%= f.text_field :author, :class => 'text_field input-xlarge' %>
+			      </div>
+			    </div>
 
-    <div class="control-group">
-      <%= f.label :description, :class => 'control-label' %>
-      <div class="controls">
-        <%= f.text_area :description, :class => 'text_area' %>
-      </div>
-    </div>
+			    <div class="control-group">
+			      <%= f.label :edition, :class => 'control-label' %>
+			      <div class="controls">
+			        <%= f.text_field :edition, :class => 'text_field input-xlarge' %>
+			      </div>
+			    </div>
+			</div><!-- end span 6 -->
+			<div class="span6">
+			    <div class="control-group">
+			      <%= f.label :publisher, :class => 'control-label' %>
+			      <div class="controls">
+			        <%= f.text_field :publisher, :class => 'text_field input-xlarge' %>
+			      </div>
+			    </div>
+			    <div class="control-group">
+			      <%= f.label :source, :class => 'control-label' %>
+			      <div class="controls">
+			        <%= f.text_field :source, :class => 'text_field input-xlarge' %>
+			      </div>
+			    </div>
 
-    <div class="form-actions">
-      <%= f.submit nil, :class => 'btn btn-primary' %>
-      <%= link_to 'Cancel', [@collection,@document], :class => 'btn' %>
-    </div>
-  </fieldset>
-<% end %>
+			    <div class="control-group">
+			      <%= f.label :rights_status, :class => 'control-label' %>
+			      <div class="controls">
+			        <%= f.text_field :rights_status, :class => 'text_field input-xlarge' %>
+			      </div>
+			    </div>
+			</div><!-- end span 6 -->
+		</div><!-- end row -->
+		    <div class="control-group">
+		      <%= f.label "Text", :class => 'control-label' %>
+		      <div class="controls">
+		        <%= f.text_area :description, :class => 'text_area' %>
+		      </div>
+		    </div>
+
+		    <div class="form-actions">
+		      <%= f.submit nil, :class => 'btn btn-primary' %>
+		      <%= link_to 'Cancel', documents_url, :class => 'btn' %>
+		    </div>
+		  </fieldset>
+		<% end %>
+	</div><!-- end span12 -->
+</div><!-- end row -->

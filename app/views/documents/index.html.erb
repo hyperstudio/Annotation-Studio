@@ -3,22 +3,21 @@
 	<table class="table table-striped">
 	  <thead>
 	    <tr>
-	      <th>ID</th>
 	      <th>Title</th>
-	      <th>Created at</th>
+	      <th>Author</th>
+	      <th>Created</th>
 	      <th>Actions</th>
 	    </tr>
 	  </thead>
 	  <tbody>    
 	    <% @documents.each do |document| %>
 	      <tr>
-	        <td><%= document.id %></td>
-	        <td><%= link_to document.title, document_path(document.id) %></td>
-	        <td><%= document.created_at %></td>
-	        <td><%= document.updated_at %></td>
+	        <td><%= link_to document.title, document_path(document.friendly_id) %></td>
+	        <td><%= document.author %></td>
+	        <td><%= time_ago_in_words(document.created_at) %></td>
 	        <td>
-	          <%= link_to 'Edit', edit_document_path(document.id), :class => 'btn btn-mini' %>
-	          <%= link_to 'Destroy', document_path(document.id), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini btn-danger' %>
+	          <%= link_to 'Edit', edit_document_path(document.friendly_id), :class => 'btn btn-mini' %>
+	          <%= link_to 'Delete', document_path(document.friendly_id), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini btn-danger' %>
 	        </td>
 	      </tr>
 	    <% end %>

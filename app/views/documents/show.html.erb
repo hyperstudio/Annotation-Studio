@@ -6,9 +6,9 @@
 	</div>
 
 	<div class="form-actions">
-	  <%= link_to 'Back', collection_documents_path, :class => 'btn'  %>
-	  <%= link_to 'Edit', edit_collection_document_path(@collection, @document), :class => 'btn' %>
-	  <%= link_to 'Delete', collection_document_path(@collection, @document), :method => 'delete', :confirm => 'Are you sure?', :class => 'btn btn-danger'%>
+	  <%= link_to 'Back', documents_path, :class => 'btn'  %>
+	  <%= link_to 'Edit', edit_document_path(@document), :class => 'btn' %>
+	  <%= link_to 'Delete', document_path(@document), :method => 'delete', :confirm => 'Are you sure?', :class => 'btn btn-danger'%>
 	</div>
 </div><!--/span8 -->
 <%# javascript_include_tag "documents" %>
@@ -34,8 +34,8 @@ jQuery(function ($) {
 				token: '<%= @jwt %>'
 			},
 			Store: {
-				prefix: 'http://annotations.herokuapp.com/api',
-				// prefix: 'http://localhost:5000/api',
+				// prefix: 'http://annotations.herokuapp.com/api',
+				prefix: 'http://localhost:5000/api',
 			},
 			Filter: false,
 			Markdown: true

@@ -1,9 +1,7 @@
 AnnotationStudio::Application.routes.draw do
   devise_for :users
 
-  resources :collections do
-    resources :documents
-  end
+  resources :documents
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
@@ -54,7 +52,7 @@ AnnotationStudio::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  root :to => 'collections#index'
+  root :to => 'documents#index'
 
   # See how all your routes lay out with "rake routes"
 

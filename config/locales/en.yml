@@ -4,11 +4,16 @@
 en:
     unauthorized:
         manage:
-            all: "Not authorized to %{action} %{subject}."
-            user: "Not allowed to manage other user accounts."
-            document: "Not allowed to manage this document."
+            all: "You don't have permission to %{action} %{subject}."
+            user: "You don't have permission to manage other user accounts."
+            document: "You don't have permission to manage this document."
+        read:
+            user: "You don't have permission to view other user accounts."
+            document: "You don't have permission to view this document."
         update:
-            document: "Not allowed to update this document."
+            user: "You don't have permission to modify other user accounts."
+            document: "You don't have permission to modify this document."
         destroy:
-            document: "Not allowed to delete this document."
+            user: "You don't have permission to delete other user accounts."
+            document: "You don't have permission to delete this document."
             

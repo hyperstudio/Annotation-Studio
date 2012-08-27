@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120823204608) do
+ActiveRecord::Schema.define(:version => 20120827183632) do
 
   create_table "assignments", :force => true do |t|
     t.integer  "user_id"
@@ -20,19 +20,11 @@ ActiveRecord::Schema.define(:version => 20120823204608) do
     t.datetime "updated_at", :null => false
   end
 
-  create_table "collections", :force => true do |t|
-    t.string   "title"
-    t.text     "description"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-  end
-
   create_table "documents", :force => true do |t|
     t.string   "title"
-    t.text     "description"
+    t.text     "text"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
-    t.integer  "collection_id"
     t.string   "author"
     t.datetime "year_published"
     t.string   "edition"
@@ -40,6 +32,7 @@ ActiveRecord::Schema.define(:version => 20120823204608) do
     t.string   "source"
     t.string   "rights_status"
     t.string   "slug"
+    t.integer  "user_id"
   end
 
   add_index "documents", ["slug"], :name => "index_documents_on_slug", :unique => true

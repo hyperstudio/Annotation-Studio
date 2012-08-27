@@ -21,6 +21,9 @@ class ApplicationController < ActionController::Base
     redirect_to root_path, notice: "You need to be signed in" unless signed_in?
   end
 
+  # Copied from Miximize!
+  # https://github.com/ryanb/cancan/wiki/Exception-Handling
+  rescue_from CanCan::AccessDenied do |exception|
+    redirect_to root_url, :alert => exception.message
+  end
 end
-
-

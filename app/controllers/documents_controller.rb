@@ -6,7 +6,8 @@ class DocumentsController < ApplicationController
   # GET /documents
   # GET /documents.json
   def index
-    @documents = Document.all
+    @documents = filter_by_can_read(Document.all)
+    #@documents = Document.all
 
     respond_to do |format|
       format.html # index.html.erb
@@ -87,5 +88,13 @@ class DocumentsController < ApplicationController
   
   def get_collection
   	@collection = Collection.find(params[:collection_id])
+  end
+
+  # Helper which accepts an array of items and filters out those you are not allowed to read, according to CanCan abilities.
+  # From Miximize.
+  def filter_by_can_read(items)
+    items.collect do |i|
+      i unless cannot? :read, i
+    end
   end
 end

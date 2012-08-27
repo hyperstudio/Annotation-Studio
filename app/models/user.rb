@@ -8,9 +8,6 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me, :firstname, :lastname
 
   acts_as_role_user
-
-  acts_as_tagger  
-  
   acts_as_taggable_on :rep_group
   
   def fullname

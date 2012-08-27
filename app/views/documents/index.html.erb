@@ -10,17 +10,21 @@
 	    </tr>
 	  </thead>
 	  <tbody>    
-	    <% @documents.each do |document| %>
-	      <tr>
-	        <td><%= link_to document.title, document_path(document.friendly_id) %></td>
-	        <td><%= document.author %></td>
-	        <td><%= time_ago_in_words(document.created_at) %></td>
-	        <td>
-	          <%= link_to 'Edit', edit_document_path(document.friendly_id), :class => 'btn btn-mini' %>
-	          <%= link_to 'Delete', document_path(document.friendly_id), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini btn-danger' %>
-	        </td>
-	      </tr>
-	    <% end %>
+		<% unless @documents.empty? || @documents.nil? %>
+			<% @documents.sort {|a, b| a.title.downcase <=> b.title.downcase }.each do |document| %>
+		      <tr>
+		        <td><%= link_to document.title, document_path(document.friendly_id) %></td>
+		        <td><%= document.author %></td>
+		        <td><%= time_ago_in_words(document.created_at) %></td>
+		        <td>
+				<% if can? :manage, document %>
+		          <%= link_to 'Edit', edit_document_path(document.friendly_id), :class => 'btn btn-mini' %>
+		          <%= link_to 'Delete', document_path(document.friendly_id), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini btn-danger' %>
+				<% end %>
+		        </td>
+		      </tr>
+	    	<% end %>
+		<% end %>
 	  </tbody>
 	</table>
 	<%= link_to 'New', new_document_path, :class => 'btn btn-primary' %>

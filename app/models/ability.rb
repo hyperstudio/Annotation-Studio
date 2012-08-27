@@ -20,10 +20,18 @@ class Ability
       cannot :read, [Document] do |tors|
         tors.rep_privacy_list.detect {|t| t == 'review'}
       end
-      cannot :create, Document
-      can :update, Document do |tors|
+      can :read, Document do |tors|
         !(user.rep_group_list & tors.rep_group_list).empty?
       end
+
+      # Why not?
+      # cannot :create, Document
+      can :create, Document
+
+      # This on the other hand, should not happen...
+      # can :update, Document do |tors|
+      #   !(user.rep_group_list & tors.rep_group_list).empty?
+      # end
     else
       cannot :manage, :all
       can :read, [Document] do |tors|

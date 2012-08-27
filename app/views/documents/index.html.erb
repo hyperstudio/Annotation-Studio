@@ -10,7 +10,7 @@
 	    </tr>
 	  </thead>
 	  <tbody>    
-		<% unless @documents.empty? || @documents.nil? %>
+		<% unless @documents.blank? %>
 			<% @documents.sort {|a, b| a.title.downcase <=> b.title.downcase }.each do |document| %>
 		      <tr>
 		        <td><%= link_to document.title, document_path(document.friendly_id) %></td>

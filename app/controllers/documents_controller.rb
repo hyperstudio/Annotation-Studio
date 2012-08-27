@@ -1,7 +1,6 @@
 class DocumentsController < ApplicationController
 
   before_filter :authenticate
-  # before_filter :get_collection
 
   # GET /documents
   # GET /documents.json
@@ -15,8 +14,8 @@ class DocumentsController < ApplicationController
     end
   end
 
-  # GET /collection/1/documents/1
-  # GET /collection/1/documents/1.json
+  # GET /documents/1
+  # GET /documents/1.json
   def show
     @document = Document.find(params[:id])
 
@@ -45,7 +44,7 @@ class DocumentsController < ApplicationController
   # POST /documents
   # POST /documents.json
   def create
-    @document = @collection.documents.build(params[:document])
+    @document = Document.new(params[:document])
 
     respond_to do |format|
       if @document.save
@@ -86,10 +85,6 @@ class DocumentsController < ApplicationController
     end
   end
   
-  def get_collection
-  	@collection = Collection.find(params[:collection_id])
-  end
-
   # Helper which accepts an array of items and filters out those you are not allowed to read, according to CanCan abilities.
   # From Miximize.
   def filter_by_can_read(items)

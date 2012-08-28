@@ -112,6 +112,10 @@ a.texttitle {
 	background: rgba(255, 255, 10, 0.3);
 }
 
+span.highlightborder {
+	border-left: 2px solid #000;
+}
+
 .well ul#annotation-list li:hover {
 	background-color: #ddd;
 }

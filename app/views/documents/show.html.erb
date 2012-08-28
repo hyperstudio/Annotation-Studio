@@ -2,7 +2,9 @@
 	<h1><%= @document.title %></h1>
 
 	<div id="textcontent">
-		<%= @document.text.html_safe %>
+		<div><!-- Required for cases in which there's no HTML in the text -->
+			<%= @document.text.html_safe %>
+		</div>
 	</div>
 
 	<div class="form-actions">
@@ -33,8 +35,8 @@ jQuery(function ($) {
 				token: '<%= @jwt %>'
 			},
 			Store: {
-				prefix: 'http://annotations.mit.edu/api',
-				// prefix: 'http://localhost:5000/api',
+				// prefix: 'http://annotations.mit.edu/api',
+				prefix: 'http://localhost:5000/api',
 			},
 			Filter: false,
 			Markdown: true

@@ -113,7 +113,7 @@ a.texttitle {
 }
 
 span.highlightborder {
-	border-left: 2px solid #000;
+	border-left: 5px solid #F00;
 }
 
 .well ul#annotation-list li:hover {

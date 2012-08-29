@@ -29,3 +29,10 @@
 	</table>
 	<%= link_to 'New', new_document_path, :class => 'btn btn-primary' %>
 </div><!--/span12 -->
+<script type="text/javascript" charset="utf-8">
+mixpanel.people.set({
+    "$email": "<%= current_user.email %>",    // only special properties need the $
+    "$last_login": new Date(),         // properties can be dates...
+});
+mixpanel.people.identify("<%= current_user.id %>");
+</script>

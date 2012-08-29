@@ -9,11 +9,8 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
- * require_tree .
  *= require "bootstrap_and_overrides.css"
  *= require "bootstrap.min.css"
  *= require "annotator.min.css"
- *= require "annotator.touch.css"
- *= require 'user_set'
  *= require "boot-docs.css"
 */

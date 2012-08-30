@@ -31,52 +31,39 @@
 <%= javascript_include_tag "sidebar" %>
 <script type="text/javascript" charset="utf-8">
 jQuery(function ($) {
-	$('#textcontent').annotator()
-		.annotator('setupPlugins', {}, {
-			Auth: {
-				token: '<%= @jwt %>'
-			},
-			Store: {
-				prefix: 'http://annotations.mit.edu/api',
-				// prefix: 'http://localhost:5000/api',
-			},
-			Filter: false,
-			Markdown: true,
-			// Permissions: false
-		});
-
 	// Get a reference to the Annotator for event callback subscriptions //
-	var studio = $('#textcontent').annotator().data('annotator');
+	var studio = $('#textcontent').annotator();
 
-	// studio.addPlugin('Permissions', {
-	//   user: {
-	//     id: '<%= current_user.id %>',
-	//     name:'<%= current_user.firstname %>',
-	//     group: 'Admin'
-	//   },
-	// 
-	//   // Either current_user or the group admin can perform actions on these annotations.
-	//   permissions: {
-	//     'read':   ['<%= current_user.id %>', 'group:Admin'],
-	//     'update': ['<%= current_user.id %>', 'group:Admin'],
-	//     'delete': ['<%= current_user.id %>', 'group:Admin'],
-	//     'admin':  ['<%= current_user.id %>', 'group:Admin']
-	//   }, 
-	// 
-	//   userAuthorize: function (user, token) {
-	//     // If the token is our admin token and the user
-	//     // is in the admin group then authorise.
-	//     if (token === 'group:Admin' && user.group === 'Admin') {
-	//       return true;
-	//     }
-	// 
-	//     // If it's not an admin token check the id.
-	//     return user.id === token;
-	//   }
-	// });
-	// 
-	// studio.plugins.Permissions.authorize({ id: '<%= current_user.id %>', group: 'Admin' },  'group:Admin');
-	
+	studio.annotator('addPlugin','Auth', {
+		token: '<%= @jwt %>'
+	});
+
+	studio.annotator('addPlugin','Store', {
+		prefix: 'http://localhost:5000/api',
+		annotationData: {
+		  'uri': window.location.href
+		},
+
+		loadFromSearch: {
+		  'limit': 1000,
+		  'uri': window.location.href
+		}		
+	});
+
+	studio.annotator('addPlugin', 'Markdown');
+
+	studio.annotator('addPlugin', 'Permissions', {
+		user: '<%= current_user.email %>',
+		permissions: {
+			'read': [],
+			'update': ['<%= current_user.email %>'],
+			'delete': ['<%= current_user.email %>', 'group:Admin'],
+			'admin': ['<%= current_user.email %>', 'group:Admin']
+		}
+	});
+
+	var subscriber = $('#textcontent').annotator().data('annotator');
+
 	// Bootstrap Backbone Sidebar //
 	var sidebar = new Sidebar.App();
 	Backbone.history.start({pushState: true, root: window.location})
@@ -90,25 +77,25 @@ jQuery(function ($) {
 			a.highlights[0].title = a.user;
 		}
 	}, this);
-
+	
 	// Subscribe to annotator events for ID additions. //
-	studio.subscribe('annotationUpdated', addHighlightId);
-	studio.subscribe('annotationCreated', addHighlightId);
-	studio.subscribe('annotationsLoaded', __bind(function(annotations) {
+	subscriber.subscribe('annotationUpdated', addHighlightId);
+	subscriber.subscribe('annotationCreated', addHighlightId);
+	subscriber.subscribe('annotationsLoaded', __bind(function(annotations) {
 		annotations.map(addHighlightId);
 	}, this));
-
+	
 	// Callback to update the sidebar. //
 	var updateSidebar =	function(annotation) {
-		sidebar.listAnnotations(studio.dumpAnnotations());
+		sidebar.listAnnotations(subscriber.dumpAnnotations());
 	};
-
+	
 	// Subscribe to annotator events to update sidebar. //
-	studio.subscribe('annotationsLoaded', updateSidebar);
-	studio.subscribe('annotationUpdated', updateSidebar);
-	studio.subscribe('annotationCreated', updateSidebar);
-	studio.subscribe('annotationDeleted', updateSidebar);
-
+	subscriber.subscribe('annotationsLoaded', updateSidebar);
+	subscriber.subscribe('annotationUpdated', updateSidebar);
+	subscriber.subscribe('annotationCreated', updateSidebar);
+	subscriber.subscribe('annotationDeleted', updateSidebar);
+	
 	mixpanel.track("Loaded Document");
 });
 </script>

@@ -95,9 +95,11 @@ Sidebar.AnnotationListView = Backbone.View.extend({
 			$(this).removeClass('hover');
 			// var linkTop = $(this).offset().top
 			// Note: we can add a callback parameter to run when animation completes.
-			$('html,body').animate({scrollTop: $(idtarget).offset().top - 85}, 500);
-			$(".highlightborder").removeClass("highlightborder");
-			$(idtarget).addClass("highlightborder");
+			console.info("This offset top "+$(this).offset().top);
+			console.info("IdTarget offset top "+$(idtarget).offset().top);
+			$('html,body').animate({scrollTop: $(idtarget).offset().top - 150}, 500);
+			$(".icon-comment").remove();
+			$(idtarget).prepend('<i class="icon-comment"></i>');
 			event.stopPropagation();		
 		});
 	}

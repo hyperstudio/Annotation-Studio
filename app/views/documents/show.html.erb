@@ -8,9 +8,11 @@
 	</div>
 
 	<div class="form-actions">
-	  <%= link_to 'Back', documents_path, :class => 'btn'  %>
-	  <%= link_to 'Edit', edit_document_path(@document), :class => 'btn' %>
-	  <%= link_to 'Delete', document_path(@document), :method => 'delete', :confirm => 'Are you sure?', :class => 'btn btn-danger'%>
+		<%= link_to 'Back', documents_path, :class => 'btn'  %>
+		<% if can? :manage, @document %>
+		<%= link_to 'Edit', edit_document_path(@document), :class => 'btn' %>
+		<%= link_to 'Delete', document_path(@document), :method => 'delete', :confirm => 'Are you sure?', :class => 'btn btn-danger'%>
+		<% end %>	
 	</div>
 </div><!--/span8 -->
 <%# javascript_include_tag "documents" %>
@@ -39,12 +41,42 @@ jQuery(function ($) {
 				// prefix: 'http://localhost:5000/api',
 			},
 			Filter: false,
-			Markdown: true
+			Markdown: true,
+			// Permissions: false
 		});
 
 	// Get a reference to the Annotator for event callback subscriptions //
 	var studio = $('#textcontent').annotator().data('annotator');
 
+	// studio.addPlugin('Permissions', {
+	//   user: {
+	//     id: '<%= current_user.id %>',
+	//     name:'<%= current_user.firstname %>',
+	//     group: 'Admin'
+	//   },
+	// 
+	//   // Either current_user or the group admin can perform actions on these annotations.
+	//   permissions: {
+	//     'read':   ['<%= current_user.id %>', 'group:Admin'],
+	//     'update': ['<%= current_user.id %>', 'group:Admin'],
+	//     'delete': ['<%= current_user.id %>', 'group:Admin'],
+	//     'admin':  ['<%= current_user.id %>', 'group:Admin']
+	//   }, 
+	// 
+	//   userAuthorize: function (user, token) {
+	//     // If the token is our admin token and the user
+	//     // is in the admin group then authorise.
+	//     if (token === 'group:Admin' && user.group === 'Admin') {
+	//       return true;
+	//     }
+	// 
+	//     // If it's not an admin token check the id.
+	//     return user.id === token;
+	//   }
+	// });
+	// 
+	// studio.plugins.Permissions.authorize({ id: '<%= current_user.id %>', group: 'Admin' },  'group:Admin');
+	
 	// Bootstrap Backbone Sidebar //
 	var sidebar = new Sidebar.App();
 	Backbone.history.start({pushState: true, root: window.location})

@@ -53,7 +53,9 @@
 				<div class="container nav-collapse">
 					<ul class="nav">
 						<li><%= link_to "Documents", "/documents"	%></li>
+						<% if params[:controller] == 'documents' && params[:action] == 'show' %>
 						<li><a data-toggle="modal" href="#markdown" >Formatting annotations</a></li>
+						<% end %>
 					</ul>
 					<a class="logo" href="/"><img src="/assets/hs-logo-trans-horiz.png"></a>
 					<ul class="nav" id="accountlinks">

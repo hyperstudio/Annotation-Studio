@@ -1,4 +1,4 @@
-// This is a manifest file that'll be compiled into application.js, which will include all the files
+// This is a manifest file that'll be compiled into application, which will include all the files
 // listed below.
 //
 // Any JavaScript/Coffee file within this directory, lib/assets/javascripts, vendor/assets/javascripts,
@@ -14,5 +14,15 @@
 //= require jquery_ujs
 //= require twitter/bootstrap
 //= require showdown
-//= require annotator-full.min
+//= require gettext
+//= require xpath
+//= require json2.min
+//= require annotator.min
+//= require annotator.filter.min
+//= require annotator.store.min
+//= require annotator.auth.min
+//= require annotator.permissions.min
+//= require annotator.tags.min
+//= require annotator.markdown.min
+//= require annotator.unsupported.min
 //= require boot-docs

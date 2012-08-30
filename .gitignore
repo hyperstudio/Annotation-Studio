@@ -57,3 +57,12 @@ vendor/assets/javascripts/_archive/viewer.coffee
 vendor/assets/javascripts/_archive/widget.coffee
 vendor/assets/javascripts/_archive/xpath.js
 vendor/assets/javascripts/_archive/xpath.min.js
+vendor/assets/javascripts/_archive/js-annotator-files/annotator-full.min.js
+vendor/assets/javascripts/_archive/js-annotator-files/annotator.auth.min.js
+vendor/assets/javascripts/_archive/js-annotator-files/annotator.filter.min.js
+vendor/assets/javascripts/_archive/js-annotator-files/annotator.markdown.min.js
+vendor/assets/javascripts/_archive/js-annotator-files/annotator.permissions.min.js
+vendor/assets/javascripts/_archive/js-annotator-files/annotator.store.min.js
+vendor/assets/javascripts/_archive/js-annotator-files/annotator.tags.min.js
+vendor/assets/javascripts/_archive/js-annotator-files/annotator.unsupported.min.js
+vendor/assets/javascripts/_archive/js-annotator-files/json2.js

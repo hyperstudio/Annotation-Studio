@@ -19,6 +19,11 @@ body{background-color:#4A525A;}
 
 @import url(http://fonts.googleapis.com/css?family=EB+Garamond);
 
+
+.highlightlink.comment {
+	font-style: italic;
+}
+
 .text_area {
 	width:600px;
 	height:300px;

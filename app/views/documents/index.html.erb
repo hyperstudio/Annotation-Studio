@@ -10,7 +10,7 @@
 	    </tr>
 	  </thead>
 	  <tbody>    
-		<% if !@documents.blank? %>
+		<% unless @documents.empty? || @documents.nil? %>
 			<% @documents.sort {|a, b| a.title.downcase <=> b.title.downcase }.each do |document| %>
 		      <tr>
 		        <td><%= link_to document.title, document_path(document.friendly_id) %></td>
@@ -27,7 +27,9 @@
 		<% end %>
 	  </tbody>
 	</table>
-	<%= link_to 'New', new_document_path, :class => 'btn btn-primary' %>
+	<% if can? :create, Document %>
+		<%= link_to 'New', new_document_path, :class => 'btn btn-primary' %>
+	<% end %>	
 </div><!--/span12 -->
 <script type="text/javascript" charset="utf-8">
 mixpanel.people.set({

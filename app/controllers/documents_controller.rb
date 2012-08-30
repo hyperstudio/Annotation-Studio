@@ -1,11 +1,13 @@
 class DocumentsController < ApplicationController
-  load_and_authorize_resource
+  # before_filter :authenticate_user!
   before_filter :authenticate
+  load_and_authorize_resource
   
   # GET /documents
   # GET /documents.json
   def index
-    #@documents = filter_by_can_read(Document.all)
+    # @documents = filter_by_can_read(Document.all)
+
     @documents = Document.all
 
     respond_to do |format|

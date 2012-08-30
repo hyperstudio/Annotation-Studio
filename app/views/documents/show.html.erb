@@ -40,7 +40,7 @@ jQuery(function ($) {
 
 	studio.annotator('addPlugin','Store', {
 		prefix: 'http://annotations.mit.edu/api',
-		//prefix: 'http://localhost:5000/api',
+		// prefix: 'http://localhost:5000/api',
 		annotationData: {
 		  'uri': window.location.href
 		},
@@ -52,6 +52,8 @@ jQuery(function ($) {
 	});
 
 	studio.annotator('addPlugin', 'Markdown');
+	studio.annotator('addPlugin', 'Tags');
+	studio.annotator('addPlugin', 'Unsupported');
 
 	studio.annotator('addPlugin', 'Permissions', {
 		user: '<%= current_user.email %>',

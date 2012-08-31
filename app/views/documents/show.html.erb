@@ -24,8 +24,15 @@
 		<script src="http://cdnjs.cloudflare.com/ajax/libs/mustache.js/0.4.2/mustache.min.js"></script>
 
 		<ul id="annotation-list"></ul>
-		<script type="text/template" id="comment-template"><span id="sb{{id}}" data-target="#hl{{id}}" rel="tooltip" title="{{user}}" class="highlightlink comment">{{{text}}}</span></script>
-		<script type="text/template" id="highlight-template"><span id="sb{{id}}" data-target="#hl{{id}}" rel="tooltip" title="{{user}}" class="highlightlink highlight">{{{quote}}}</span></script>
+		<script type="text/template" id="comment-template">
+			<span id="sb{{id}}" data-toggle="collapse" data-parent="#annotation-list" href="#full{{id}}" data-highlight="#hl{{id}}" rel="tooltip" title="{{user}}" class="highlightlink comment">{{{text}}}</span>
+			<span id="quote{{id}}" class="sbquote details">{{{quote}}}</span>
+			<span id="text{{id}}" class="sbtext details">{{{text}}}</span>
+			<div id="tags{{id}}" class="sbtags details">{{#tags}}<span class="label">{{.}}</span> {{/tags}}</div>
+		</script>
+		<script type="text/template" id="highlight-template">
+			<span id="sb{{id}}" data-highlight="#hl{{id}}" rel="tooltip" title="{{user}}" class="highlightlink highlight">{{{quote}}}</span>
+		</script>
 	</div><!--/well -->
 </div><!--/span4 -->
 <%= javascript_include_tag "sidebar" %>

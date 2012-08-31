@@ -29,16 +29,23 @@ Sidebar.AnnotationView = Backbone.View.extend({
 		this.commenttemplate = $('#comment-template').html();
 		this.highlighttemplate = $('#highlight-template').html();
 		this.mdconverter = new Showdown.converter();
+		this.href="#full"+this.model.get("id");
 	},
 	render: function () {
+		$(this.el).find("highlight.comment img").addClass("thumbnail");
+
+		// This annotation contains a comment
 		if (this.model.get("text") != "") {
 			this.mdConvert();
 			$(this.el).html(Mustache.to_html(this.commenttemplate, this.model.toJSON())); // instead of console.info: 
 		}
+
+		// This is just a highlight -- no contents
 		else {
 			$(this.el).html(Mustache.to_html(this.highlighttemplate, this.model.toJSON())); // instead of console.info: 
+			$(this.el).find(".highlight").append('<div class="okfnyellow clearfix"><img /></div> ');
 		}
-		console.info(this.model.get("ranges")[0].startOffset);
+		$(this.el).find(".details").hide();
 		return this;
 	},
 	mdConvert: function () {
@@ -89,14 +96,26 @@ Sidebar.AnnotationListView = Backbone.View.extend({
 
 		// Bind some events to links
 		$("li.annotation-item").click(function(event){
-			var idtarget = $(this).find("span.highlightlink").attr("data-target");
-			console.info(idtarget);
+			var idtarget = $(this).find("span.highlightlink").attr("data-highlight");
+
+			// Hide all details
+			$("ul#annotation-list li .details").hide();
+
+			// Show all comments
+			$("ul#annotation-list li .highlightlink.comment").show();
+
+			// Hide these comments
+			$(this).find(".comment").hide();
+
+			// Show these details
+			$(this).find(".details").show(200);
+
+			// console.info(idtarget);
 			$("span.highlightlink").tooltip('hide');
 			$(this).removeClass('hover');
-			// var linkTop = $(this).offset().top
-			// Note: we can add a callback parameter to run when animation completes.
-			console.info("This offset top "+$(this).offset().top);
-			console.info("IdTarget offset top "+$(idtarget).offset().top);
+
+			// console.info("This offset top "+$(this).offset().top);
+			// console.info("IdTarget offset top "+$(idtarget).offset().top);
 			$('html,body').animate({scrollTop: $(idtarget).offset().top - 150}, 500);
 			$(".icon-comment").remove();
 			$(idtarget).prepend('<i class="icon-comment"></i>');

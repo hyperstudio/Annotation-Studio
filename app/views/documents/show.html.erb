@@ -32,6 +32,8 @@
 		</script>
 		<script type="text/template" id="highlight-template">
 			<span id="sb{{id}}" data-highlight="#hl{{id}}" rel="tooltip" title="{{user}}" class="highlightlink highlight">{{{quote}}}</span>
+			<span id="quote{{id}}" class="sbquote details">{{{quote}}}</span>
+			<div id="tags{{id}}" class="sbtags details">{{#tags}}<span class="label">{{.}}</span> {{/tags}}</div>
 		</script>
 	</div><!--/well -->
 </div><!--/span4 -->
@@ -46,16 +48,18 @@ jQuery(function ($) {
 	});
 
 	studio.annotator('addPlugin','Store', {
-		prefix: 'http://annotations.mit.edu/api',
-		// prefix: 'http://localhost:5000/api',
+		// prefix: 'http://annotations.mit.edu/api',
+		prefix: 'http://localhost:5000/api',
 		annotationData: {
-		  'uri': window.location.href
+			'uri': window.location.href,
+			'group': '<%= current_user.rep_group %>'
 		},
-
 		loadFromSearch: {
-		  'limit': 1000,
-		  'uri': window.location.href
-		}		
+			'limit': 1000,
+			'user':'<%= current_user.email %>',
+			// 'group':'<%= current_user.rep_group %>',
+			'uri': window.location.href
+		}
 	});
 
 	studio.annotator('addPlugin', 'Markdown');
@@ -65,11 +69,13 @@ jQuery(function ($) {
 	studio.annotator('addPlugin', 'Permissions', {
 		user: '<%= current_user.email %>',
 		permissions: {
-			'read': [],
+			'read': ['<%= current_user.email %>'],
 			'update': ['<%= current_user.email %>'],
-			'delete': ['<%= current_user.email %>', 'group:Admin'],
-			'admin': ['<%= current_user.email %>', 'group:Admin']
-		}
+			'delete': ['<%= current_user.email %>'],
+			'admin': ['<%= current_user.email %>']
+		},
+		showViewPermissionsCheckbox: true,
+		showEditPermissionsCheckbox: false
 	});
 
 	var subscriber = $('#textcontent').annotator().data('annotator');
@@ -99,6 +105,13 @@ jQuery(function ($) {
 	var updateSidebar =	function(annotation) {
 		sidebar.listAnnotations(subscriber.dumpAnnotations());
 	};
+	
+	// Callback to update the sidebar. //
+	var updateAnnotation =	function(annotation) {
+		sidebar.listAnnotations(subscriber.dumpAnnotations());
+	};
+	
+	
 	
 	// Subscribe to annotator events to update sidebar. //
 	subscriber.subscribe('annotationsLoaded', updateSidebar);

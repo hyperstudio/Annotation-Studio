@@ -30,6 +30,16 @@ body{background-color:#4A525A;}
 	max-width:100px;
 }
 
+.sbquote, .sbtext {
+	display: block;
+	border-bottom: 1px solid #999;
+	padding-bottom: 10px;
+}
+
+.sbtext {
+	font-style: italic;
+}
+
 .well ul#annotation-list li span.label, .well ul#annotation-list li span.badge {
 	color: #fff;
 }

@@ -94,4 +94,10 @@ class DocumentsController < ApplicationController
       i unless cannot? :read, i
     end
   end
+
+  def filter_by_samegroup(items)
+    items.collect do |i|
+      i unless cannot? :read, i
+    end
+  end
 end

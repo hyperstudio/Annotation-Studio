@@ -99,13 +99,13 @@ Sidebar.AnnotationListView = Backbone.View.extend({
 			var idtarget = $(this).find("span.highlightlink").attr("data-highlight");
 
 			// Hide all details
-			$("ul#annotation-list li .details").hide();
+			$("ul#annotation-list li .details").hide(100);
 
 			// Show all comments
-			$("ul#annotation-list li .highlightlink.comment").show();
+			$("ul#annotation-list li .highlightlink.comment, ul#annotation-list li .highlightlink.highlight").show(100);
 
 			// Hide these comments
-			$(this).find(".comment").hide();
+			$(this).find(".comment, .highlight").hide(100);
 
 			// Show these details
 			$(this).find(".details").show(200);
@@ -138,5 +138,12 @@ Sidebar.App = Backbone.Router.extend({
 		});
 		annotationsList.render();
 		// return "Rendered annotationsList";
+	},
+	renderAnnotation: function (annotationObject) {
+		Sidebar.annotation = new Sidebar.Annotation(annotationObject);
+		var annotation = new Sidebar.AnnotationView({
+			"model": Sidebar.annotation
+		});
+		annotation.render();
 	}
 });

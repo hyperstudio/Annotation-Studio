@@ -47,22 +47,23 @@ jQuery(function ($) {
 		token: '<%= @jwt %>'
 	});
 
+	var groups = "<%= current_user.rep_group_list %>".split(/, /);
+	
 	studio.annotator('addPlugin','Store', {
 		// prefix: 'http://annotations.mit.edu/api',
 		prefix: 'http://localhost:5000/api',
 		annotationData: {
 			'uri': window.location.href,
-			'group': '<%= current_user.rep_group %>'
+			"groups": groups
 		},
 		loadFromSearch: {
 			'limit': 1000,
 
-			// Should load all of ones own annotations, 
-			// plus all group-shared annotations
-			// Current default is private
+			// Should load all of one's own annotations, 
+			// plus all non-private group-shared annotations
+			// Current default is only private
 			'user':'<%= current_user.email %>',
-
-			// 'group':'<%= current_user.rep_group %>',
+			'groups': groups,
 			'uri': window.location.href
 		}
 	});

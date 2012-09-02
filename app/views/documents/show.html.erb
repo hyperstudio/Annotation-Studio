@@ -56,7 +56,12 @@ jQuery(function ($) {
 		},
 		loadFromSearch: {
 			'limit': 1000,
+
+			// Should load all of ones own annotations, 
+			// plus all group-shared annotations
+			// Current default is private
 			'user':'<%= current_user.email %>',
+
 			// 'group':'<%= current_user.rep_group %>',
 			'uri': window.location.href
 		}
@@ -74,7 +79,10 @@ jQuery(function ($) {
 			'delete': ['<%= current_user.email %>'],
 			'admin': ['<%= current_user.email %>']
 		},
+		// Private/Public setting per-annotation
 		showViewPermissionsCheckbox: true,
+		
+		// Review checkbox??
 		showEditPermissionsCheckbox: false
 	});
 

@@ -50,8 +50,8 @@ jQuery(function ($) {
 	var groups = "<%= current_user.rep_group_list %>".split(/, /);
 	
 	studio.annotator('addPlugin','Store', {
-		// prefix: 'http://annotations.mit.edu/api',
-		prefix: 'http://localhost:5000/api',
+		prefix: 'http://annotations.mit.edu/api',
+		// prefix: 'http://localhost:5000/api',
 		annotationData: {
 			'uri': window.location.href,
 			"groups": groups

@@ -1,28 +1,35 @@
 <div class="span12">
-	<h1>Documents</h1>
+	<h1><%= current_user.rep_group_list %></h1>
 	<table class="table table-striped">
 	  <thead>
 	    <tr>
-	      <th>Title</th>
-	      <th>Author</th>
-	      <th>Created</th>
-	      <th>Actions</th>
+			<th>Title</th>
+			<th>Author</th>
+			<th>Course</th>
+			<th>Date Created</th>
+			<% if can? :manage, Document %>
+			<th>Actions</th>
+			<% end %>
 	    </tr>
 	  </thead>
 	  <tbody>    
 		<% unless @documents.empty? || @documents.nil? %>
 			<% @documents.sort {|a, b| a.title.downcase <=> b.title.downcase }.each do |document| %>
-		      <tr>
-		        <td><%= link_to document.title, document_path(document.friendly_id) %></td>
-		        <td><%= document.author %></td>
-		        <td><%= time_ago_in_words(document.created_at) %></td>
-		        <td>
-				<% if can? :manage, document %>
-		          <%= link_to 'Edit', edit_document_path(document.friendly_id), :class => 'btn btn-mini' %>
-		          <%= link_to 'Delete', document_path(document.friendly_id), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini btn-danger' %>
-				<% end %>
-		        </td>
-		      </tr>
+				<% if can? :read, document %>
+			      <tr>
+			        <td><%= link_to document.title, document_path(document.friendly_id) %></td>
+			        <td><%= document.author %></td>
+					<td><% document.rep_group_list.each do |group| %><span class="label"><%= group %></span> <% end %></td>
+			        <td><%= time_ago_in_words(document.created_at) %></td>
+					<% if can? :manage, Document %>
+			        <td>
+			          <%= link_to 'Edit', edit_document_path(document.friendly_id), :class => 'btn btn-mini' %>
+			          <%# link_to 'Groups', "/documents/groups/:id", :method => :get, :class => 'btn btn-mini' %>
+			          <%= link_to 'Delete', document_path(document.friendly_id), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini btn-danger' %>
+			        </td>
+					<% end %>
+			      </tr>
+		     	<% end %>
 	    	<% end %>
 		<% end %>
 	  </tbody>

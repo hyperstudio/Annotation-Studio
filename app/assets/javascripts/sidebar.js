@@ -99,16 +99,18 @@ Sidebar.AnnotationListView = Backbone.View.extend({
 			var idtarget = $(this).find("span.highlightlink").attr("data-highlight");
 
 			// Hide all details
-			$("ul#annotation-list li .details").hide(100);
+			$("ul#annotation-list li .details").hide();
 
 			// Show all comments
-			$("ul#annotation-list li .highlightlink.comment, ul#annotation-list li .highlightlink.highlight").show(100);
+			$("ul#annotation-list li .highlightlink.comment, ul#annotation-list li .highlightlink.highlight").show();
 
 			// Hide these comments
-			$(this).find(".comment, .highlight").hide(100);
+			$(this).find(".comment, .highlight").hide();
 
 			// Show these details
 			$(this).find(".details").show(200);
+
+			$(this).addClass('hover');
 
 			// console.info(idtarget);
 			$("span.highlightlink").tooltip('hide');

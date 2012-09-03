@@ -25,6 +25,15 @@
 			        <%= f.text_field :edition, :class => 'text_field input-xlarge' %>
 			      </div>
 			    </div>
+
+				<div class="control-group">
+			      <%= f.label "Groups", :class => 'control-label' %>
+					<div class="controls">
+		        		<%= f.text_field :rep_group_list, :class => 'text_field input-xlarge' %>
+						<p class="help-block">Enter the groups to whom you wish to assign this document, separated by commas.</p>
+					</div>
+				</div>
+
 			</div><!-- end span 6 -->
 			<div class="span6">
 			    <div class="control-group">
@@ -48,6 +57,8 @@
 			    </div>
 			</div><!-- end span 6 -->
 		</div><!-- end row -->
+
+			<br />
 		    <div class="control-group">
 		      <%= f.label "Text", :class => 'control-label' %>
 		      <div class="controls">

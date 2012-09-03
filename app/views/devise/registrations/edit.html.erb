@@ -1,11 +1,11 @@
 <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :class => "form-horizontal"}) do |f| %> 
 <%= devise_error_messages! %>
+<legend>Edit Account for <%= resource.firstname %> </legend>
 <fieldset>
-<legend>Edit Account</legend>
-	<div class="control-group">
+	<div class="control-group well">
 		<%= f.label :firstname, :class => "control-label" %>
 		<div class="controls">
-		<%= f.text_field :firstname %>
+		<%= f.text_field :firstname, :value =>  resource.firstname %>
 		</div>
 
 		<%= f.label :lastname, :class => "control-label" %>
@@ -33,14 +33,19 @@
 		<%= f.password_field :current_password %>
 		<p class="help-block">(we need your current password to confirm your changes)</p>
 		</div>
+	
+		<br />
 
-	  <div class="controls">
-		<div><%= f.submit "Update", :class => "btn btn-primary" %></div>
-	  </div>
+		<div class="control-group">
+	      <%= f.label "Groups", :class => 'control-label' %>
+			<div class="controls">
+        		<%= f.text_field :rep_group_list, :class => 'text_field input-xlarge' %>
+			</div>
+		</div>
+
 	</div>
+	
+	<div class="form-actions">
+		<div><%= f.submit "Update", :class => "btn btn-primary" %></div>
+  	</div>
 <% end %>
-
-<div class="well">
-	<h3>Account Deletion</h3>
-	<p><%= link_to "Delete my account", registration_path(resource_name), :confirm => "Are you sure?", :method => :delete, :class => "btn btn-danger" %></p>
-</div>

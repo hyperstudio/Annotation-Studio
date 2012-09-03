@@ -27,7 +27,13 @@
 		<div class="controls">
 		<%= f.password_field :password_confirmation %>
 		</div>
-		<br>
+
+		<%= f.label :Class, :class => "control-label" %>
+		<div class="controls">
+		<%= collection_select(:resource, :rep_group_list, get_group_list, :name, :name, :include_blank => true) %><br />
+		</div>
+		<br />
+
 		<div class="controls">
 		<div><%= f.submit "Sign up", :class => "btn btn-primary" %></div>
 	</div>

@@ -14,3 +14,7 @@
  *= require "annotator.min.css"
  *= require "boot-docs.css"
 */
+
+footer {
+	margin-top:20px;
+}

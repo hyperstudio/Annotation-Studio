@@ -1,12 +1,13 @@
 <div class="span12">
 	<h1><%= current_user.rep_group_list %></h1>
-	<table class="table table-striped">
+	<br />
+	<table class="table table-striped table-bordered">
 	  <thead>
 	    <tr>
 			<th>Title</th>
 			<th>Author</th>
 			<th>Course</th>
-			<th>Date Created</th>
+			<th>Created</th>
 			<% if can? :manage, Document %>
 			<th>Actions</th>
 			<% end %>

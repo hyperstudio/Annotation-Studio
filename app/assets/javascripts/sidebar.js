@@ -89,10 +89,10 @@ Sidebar.AnnotationListView = Backbone.View.extend({
 
 			// TODO: deal with the events in a more organized way (recompose them in functions)
 			$('div.well').animate({scrollTop:$(targetid).offset().top}, 100
-			// , function (){
-			// 	$(targetid).parent().addClass('hover');
-			// 	// $(targetid).tooltip('show');
-			// }
+			, function (){
+				$(targetid).parent().addClass('hover');
+				// $(targetid).tooltip('show'); // disappears after 1 sec?
+			}
 			);
 		});
 

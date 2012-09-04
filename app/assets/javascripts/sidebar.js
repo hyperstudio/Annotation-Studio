@@ -2,6 +2,9 @@ Sidebar = window.Sidebar || {};
 
 // Model
 Sidebar.Annotation = Backbone.Model.extend({
+	initialize: function (annotationObject) {
+		this.set(annotationObject);
+	},
 	defaults: {
 		user: null,
 		quote: null,
@@ -25,7 +28,7 @@ Sidebar.AnnotationList = Backbone.Collection.extend({
 Sidebar.AnnotationView = Backbone.View.extend({
 	tagName: 'li',
 	className: 'annotation-item',
-	initialize: function () {
+	initialize: function (annotation) {
 		this.commenttemplate = $('#comment-template').html();
 		this.highlighttemplate = $('#highlight-template').html();
 		this.mdconverter = new Showdown.converter();
@@ -43,7 +46,7 @@ Sidebar.AnnotationView = Backbone.View.extend({
 		// This is just a highlight -- no contents
 		else {
 			$(this.el).html(Mustache.to_html(this.highlighttemplate, this.model.toJSON())); // instead of console.info: 
-			$(this.el).find(".highlight").append('<div class="okfnyellow clearfix"><img /></div> ');
+			// $(this.el).find(".highlight").append('<div class="okfnyellow clearfix"><img /></div> ');
 		}
 		$(this.el).find(".details").hide();
 		return this;
@@ -85,10 +88,12 @@ Sidebar.AnnotationListView = Backbone.View.extend({
 			var targetid = "#sb" + parts[1];
 
 			// TODO: deal with the events in a more organized way (recompose them in functions)
-			$('div.well').animate({scrollTop:$(targetid).offset().top}, 100, function (){
-				$(targetid).parent().addClass('hover');
-				// $(targetid).tooltip('show');
-			});
+			$('div.well').animate({scrollTop:$(targetid).offset().top}, 100
+			// , function (){
+			// 	$(targetid).parent().addClass('hover');
+			// 	// $(targetid).tooltip('show');
+			// }
+			);
 		});
 
 		// Bind some events to links
@@ -110,11 +115,11 @@ Sidebar.AnnotationListView = Backbone.View.extend({
 			// Show these details
 			$(this).find(".details").show(200);
 
-			$(this).addClass('hover');
+			//$(this).addClass('hover');
 
 			// console.info(idtarget);
 			$("span.highlightlink").tooltip('hide');
-			$(this).removeClass('hover');
+			// $(this).removeClass('hover');
 
 			// console.info("This offset top "+$(this).offset().top);
 			// console.info("IdTarget offset top "+$(idtarget).offset().top);
@@ -142,10 +147,19 @@ Sidebar.App = Backbone.Router.extend({
 		// return "Rendered annotationsList";
 	},
 	renderAnnotation: function (annotationObject) {
-		Sidebar.annotation = new Sidebar.Annotation(annotationObject);
-		var annotation = new Sidebar.AnnotationView({
-			"model": Sidebar.annotation
+		var annotation = new Sidebar.Annotation(annotationObject);
+		var annotationView = new Sidebar.AnnotationView({
+			"model": annotation
 		});
-		annotation.render();
+		annotationView.render();
+		Sidebar.App.listAnnotations();
 	}
 });
+
+
+
+
+
+
+
+

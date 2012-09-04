@@ -14,7 +14,7 @@ class Ability
 
     elsif user.has_role? :teacher
       can :create, Document
-      can :update, Document do |tors|
+      can :manage, Document do |tors|
         tors.user.id == user.id
       end
 

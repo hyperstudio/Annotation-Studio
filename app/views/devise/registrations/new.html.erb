@@ -28,10 +28,14 @@
 		<%= f.password_field :password_confirmation %>
 		</div>
 
-		<%= f.label :Class, :class => "control-label" %>
-		<div class="controls">
-		<%= collection_select(:resource, :rep_group_list, get_group_list, :id, :name, :include_blank => true) %><br />
+		<div class="control-group">
+	      <%= f.label "Subject number", :class => 'control-label' %>
+			<div class="controls">
+        		<%= f.text_field :rep_group_list, :class => 'text_field' %>
+				<p class="help-block">Enter the subject number of the course you're taking, eg: <code>21F.414</code> for <em>German Culture, Media, and Society</em></p>
+			</div>
 		</div>
+
 		<br />
 
 		<div class="controls">

@@ -40,7 +40,6 @@
 <%= javascript_include_tag "sidebar" %>
 <script type="text/javascript" charset="utf-8">
 jQuery(function ($) {
-	// Get a reference to the Annotator for event callback subscriptions //
 	var studio = $('#textcontent').annotator();
 
 	studio.annotator('addPlugin','Auth', {
@@ -58,14 +57,8 @@ jQuery(function ($) {
 		},
 		loadFromSearch: {
 			'limit': 1000,
-
-			// Should load all of one's own annotations, 
-			// plus all non-private group-shared annotations
-
-			// Currently: only my own annotations.
-			// And I must be in a group to see
-			// That is, "show to all" setting is ignored.
-
+			// Should load all of one's own annotations, plus all non-private group-shared annotations
+			// Currently: only my own annotations, and I must be in a group to see; "show to all" setting is ignored.
 			'user':'<%= current_user.email %>',
 			"groups": groups,
 			'uri': window.location.href

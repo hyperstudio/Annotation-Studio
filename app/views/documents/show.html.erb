@@ -61,10 +61,11 @@ jQuery(function ($) {
 
 			// Should load all of one's own annotations, 
 			// plus all non-private group-shared annotations
+
 			// Currently: all annotations within the group
 			// That is, privacy considerations are ignored.
 
-			// 'user':'<%= current_user.email %>',
+			'user':'<%= current_user.email %>',
 			"groups": groups,
 			'uri': window.location.href
 		}
@@ -113,22 +114,32 @@ jQuery(function ($) {
 	}, this));
 	
 	// Callback to update the sidebar. //
-	var updateSidebar =	function(annotation) {
+	var loadSidebar =	function() {
 		sidebar.listAnnotations(subscriber.dumpAnnotations());
 	};
 	
 	// Callback to update the sidebar. //
-	var updateAnnotation =	function(annotation) {
+	var reloadSidebar =	function(annotation) {
 		sidebar.listAnnotations(subscriber.dumpAnnotations());
+
+		// subscriber.plugins.Store.loadAnnotationsFromSearch({
+		// 	'limit': 1000,
+		// 	'user':'<%= current_user.email %>',
+		// 	"groups": groups,
+		// 	'uri': window.location.href
+		// });
 	};
 	
-	
+	var showAnnId =  function(annotation) {
+		var newAnn = new Sidebar.Annotation(annotation);
+		console.info(newAnn.get("id"));
+	};
 	
 	// Subscribe to annotator events to update sidebar. //
-	subscriber.subscribe('annotationsLoaded', updateSidebar);
-	subscriber.subscribe('annotationUpdated', updateSidebar);
-	subscriber.subscribe('annotationCreated', updateSidebar);
-	subscriber.subscribe('annotationDeleted', updateSidebar);
+	subscriber.subscribe('annotationsLoaded', loadSidebar);
+	subscriber.subscribe('annotationUpdated', reloadSidebar);
+	subscriber.subscribe('annotationCreated', reloadSidebar);
+	subscriber.subscribe('annotationDeleted', reloadSidebar);
 	
 	mixpanel.track("Loaded Document");
 });

@@ -20,7 +20,7 @@
 			        <td><%= link_to document.title, document_path(document.friendly_id) %></td>
 			        <td><%= document.author %></td>
 					<td><% document.rep_group_list.each do |group| %><span class="label"><%= group %></span> <% end %></td>
-			        <td><%= time_ago_in_words(document.created_at) %></td>
+			        <td><%= time_ago_in_words(document.created_at) %> ago</td>
 					<% if can? :manage, Document %>
 			        <td>
 			          <%= link_to 'Edit', edit_document_path(document.friendly_id), :class => 'btn btn-mini' %>

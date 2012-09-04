@@ -1,6 +1,13 @@
 Sidebar = window.Sidebar || {};
 
-// Model
+// Models
+Sidebar.AnnotationRows = Backbone.Model.extend({
+	defaults: {
+		rows: null,
+	}
+});
+
+// Models
 Sidebar.Annotation = Backbone.Model.extend({
 	initialize: function (annotationObject) {
 		this.set(annotationObject);
@@ -16,12 +23,26 @@ Sidebar.Annotation = Backbone.Model.extend({
 // Collection
 Sidebar.AnnotationList = Backbone.Collection.extend({
 	model: Sidebar.Annotation,
-	comparator: function(annotation) {
-		return annotation.get("ranges")[0].startOffset; // change to startOffset
+    url: 'http://annotations.mit.edu/api/search',
+	// comparator: function(annotation) {
+	// 	return annotation.get("ranges")[0].startOffset; // change to startOffset
+	// },
+	initialize: function (options) {
+		//console.info(options);
+		this.fetch({
+			data: options,
+			success: this.fetchSuccess,
+			error: this.fetchError
+		});
+		this.deferred = new $.Deferred();
 	},
-	initialize: function (annotations) {
-		this.sort();
-	},
+    deferred: Function.constructor.prototype,
+    fetchSuccess: function (collection, response) {
+        collection.deferred.resolve();
+    },
+    fetchError: function (collection, response) {
+        throw new Error("Fetch did not get annotations from the API");
+    }
 });
 
 // Annotation View
@@ -46,18 +67,15 @@ Sidebar.AnnotationView = Backbone.View.extend({
 		// This is just a highlight -- no contents
 		else {
 			$(this.el).html(Mustache.to_html(this.highlighttemplate, this.model.toJSON())); // instead of console.info: 
-			// $(this.el).find(".highlight").append('<div class="okfnyellow clearfix"><img /></div> ');
 		}
 		$(this.el).find(".details").hide();
 		return this;
 	},
 	mdConvert: function () {
 		var userComment = this.model.get("text");
-		// console.info("Raw:" + userComment);
 		if (userComment != "") {
 			this.model.set("text", this.mdconverter.makeHtml(userComment));
 		}
-		// console.info("Converted:" + this.model.get("text"));
 		return this;
 	}
 });
@@ -73,7 +91,7 @@ Sidebar.AnnotationListView = Backbone.View.extend({
 		$("ul#annotation-list").find(".annotation-item").remove();
 
 		// Walk throught the list, and render markdown in the user comment first.
-		this.collection.sort();
+		// this.collection.sort();
 		this.collection.each(function(ann) {
 			var annView = new Sidebar.AnnotationView({model: ann});
 			$("ul#annotation-list").append(annView.render().el);
@@ -137,29 +155,38 @@ Sidebar.App = Backbone.Router.extend({
 	routes: {
 		'list':  'listAnnotations'
 	},
-	listAnnotations: function (annotationArray) {
-		Sidebar.annotations = new Sidebar.AnnotationList(annotationArray);
+	// listAnnotations: function (annotationArray) {
+	// 	Sidebar.annotations = new Sidebar.AnnotationList(annotationArray, false);
+	// 	var annotationsList = new Sidebar.AnnotationListView({
+	// 		"container": $('.well'),
+	// 		"collection": Sidebar.annotations
+	// 	});
+	// 	annotationsList.render();
+	// },
+	updateAnnotations: function (options) {
+		Sidebar.annotations = new Sidebar.AnnotationList(options);
 		var annotationsList = new Sidebar.AnnotationListView({
 			"container": $('.well'),
 			"collection": Sidebar.annotations
 		});
-		annotationsList.render();
-		// return "Rendered annotationsList";
-	},
-	renderAnnotation: function (annotationObject) {
-		var annotation = new Sidebar.Annotation(annotationObject);
-		var annotationView = new Sidebar.AnnotationView({
-			"model": annotation
+		Sidebar.annotations.deferred.done(function () {
+			console.info(Sidebar.annotations.toJSON());
 		});
-		annotationView.render();
-		Sidebar.App.listAnnotations();
-	}
+
+		// console.info(annotationsList);
+		
+		// annotationsList.render();
+	},
+	// renderAnnotation: function (annotationObject) {
+	// 	var annotation = new Sidebar.Annotation(annotationObject);
+	// 	var annotationView = new Sidebar.AnnotationView({
+	// 		"model": annotation
+	// 	});
+	// 	annotationView.render();
+	// 	Sidebar.App.listAnnotations();
+	// },
+	// deleteAnnotation: function (annotationObject) {
+	// 	annotationView.render();
+	// 	Sidebar.App.listAnnotations();
+	// }
 });
-
-
-
-
-
-
-
-

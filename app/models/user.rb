@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
   end
 
   def first_name_last_initial
-     "#{first_name}. #{last_name.first}"
+     "#{first_name} #{last_name.first}."
    end
      
 end

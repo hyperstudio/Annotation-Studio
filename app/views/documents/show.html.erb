@@ -59,7 +59,7 @@ jQuery(function ($) {
 			'limit': 1000,
 			// Should load all of one's own annotations, plus all non-private group-shared annotations
 			// Currently: only my own annotations, and I must be in a group to see; "show to all" setting is ignored.
-			'user':'<%= current_user.email %>',
+			// 'user':'<%= current_user.email %>',
 			"groups": groups,
 			'uri': window.location.href
 		}
@@ -111,29 +111,45 @@ jQuery(function ($) {
 	var loadSidebar =	function() {
 		sidebar.listAnnotations(subscriber.dumpAnnotations());
 	};
-	
-	// Callback to update the sidebar. //
-	var reloadSidebar =	function(annotation) {
-		sidebar.listAnnotations(subscriber.dumpAnnotations());
 
-		// subscriber.plugins.Store.loadAnnotationsFromSearch({
-		// 	'limit': 1000,
-		// 	'user':'<%= current_user.email %>',
-		// 	"groups": groups,
-		// 	'uri': window.location.href
-		// });
+	// Update the sidebar with //
+	var updateSidebar =	function() {
+		var options = {
+			'limit': 1000,
+			'user':'<%= current_user.email %>',
+			"groups": groups,
+			'uri': window.location.href
+		};
+		sidebar.updateAnnotations(options);
 	};
 	
-	var showAnnId =  function(annotation) {
-		var newAnn = new Sidebar.Annotation(annotation);
-		console.info(newAnn.get("id"));
-	};
+	// // Callback to update the sidebar. //
+	// var deleteFromSidebar =	function(annotation) {
+	// 	$(".icon-comment").remove();
+	// 	sidebar.deleteAnnotation(annotation);
+	// };
+	// 
+	// // Callback to update the sidebar. //
+	// var reloadSidebar =	function(annotation) {
+	// 	sidebar.listAnnotations(subscriber.dumpAnnotations());
+	// 	// subscriber.plugins.Store.loadAnnotationsFromSearch({
+	// 	// 	'limit': 1000,
+	// 	// 	'user':'<%= current_user.email %>',
+	// 	// 	"groups": groups,
+	// 	// 	'uri': window.location.href
+	// 	// });
+	// };
+	// 
+	// var showAnnId =  function(annotation) {
+	// 	var newAnn = new Sidebar.Annotation(annotation);
+	// 	console.info(newAnn.get("id"));
+	// };
 	
 	// Subscribe to annotator events to update sidebar. //
-	subscriber.subscribe('annotationsLoaded', loadSidebar);
-	subscriber.subscribe('annotationUpdated', reloadSidebar);
-	subscriber.subscribe('annotationCreated', reloadSidebar);
-	subscriber.subscribe('annotationDeleted', reloadSidebar);
+	subscriber.subscribe('annotationsLoaded', updateSidebar);
+	subscriber.subscribe('annotationUpdated', updateSidebar);
+	subscriber.subscribe('annotationCreated', updateSidebar);
+	subscriber.subscribe('annotationDeleted', updateSidebar);
 	
 	mixpanel.track("Loaded Document");
 });

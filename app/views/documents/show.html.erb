@@ -62,8 +62,9 @@ jQuery(function ($) {
 			// Should load all of one's own annotations, 
 			// plus all non-private group-shared annotations
 
-			// Currently: all annotations within the group
-			// That is, privacy considerations are ignored.
+			// Currently: only my own annotations.
+			// And I must be in a group to see
+			// That is, "show to all" setting is ignored.
 
 			'user':'<%= current_user.email %>',
 			"groups": groups,

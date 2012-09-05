@@ -21,9 +21,10 @@ Sidebar.Annotation = Backbone.Model.extend({
 });
 
 // Collection
-Sidebar.AnnotationList = Backbone.Collection.extend({
+Sidebar.RemoteAnnotationList = Backbone.Collection.extend({
 	model: Sidebar.Annotation,
     url: 'http://annotations.mit.edu/api/search',
+    // url: 'http://localhost:5000/api/search',
 	// comparator: function(annotation) {
 	// 	return annotation.get("ranges")[0].startOffset; // change to startOffset
 	// },
@@ -43,6 +44,16 @@ Sidebar.AnnotationList = Backbone.Collection.extend({
     fetchError: function (collection, response) {
         throw new Error("Fetch did not get annotations from the API");
     }
+});
+
+Sidebar.LocalAnnotationList = Backbone.Collection.extend({
+	model: Sidebar.Annotation,
+	comparator: function(annotation) {
+		return annotation.get("ranges")[0].startOffset; // change to startOffset
+	},
+	initialize: function (annotations) {
+		this.sort();
+	},
 });
 
 // Annotation View
@@ -115,11 +126,11 @@ Sidebar.AnnotationListView = Backbone.View.extend({
 		});
 
 		// Bind some events to links
-		// $('span.highlightlink').tooltip({placement:'right'});
-
-		// Bind some events to links
 		$("li.annotation-item").click(function(event){
 			var idtarget = $(this).find("span.highlightlink").attr("data-highlight");
+
+			// Hide all details
+			// $("ul#annotation-list li").removeClass('hover');
 
 			// Hide all details
 			$("ul#annotation-list li .details").hide();
@@ -137,6 +148,7 @@ Sidebar.AnnotationListView = Backbone.View.extend({
 
 			// console.info(idtarget);
 			$("span.highlightlink").tooltip('hide');
+			
 			// $(this).removeClass('hover');
 
 			// console.info("This offset top "+$(this).offset().top);
@@ -144,49 +156,38 @@ Sidebar.AnnotationListView = Backbone.View.extend({
 			$('html,body').animate({scrollTop: $(idtarget).offset().top - 150}, 500);
 			$(".icon-comment").remove();
 			$(idtarget).prepend('<i class="icon-comment"></i>');
-			event.stopPropagation();		
+			// event.stopPropagation();
 		});
 	}
 });
 
 // Application
 Sidebar.App = Backbone.Router.extend({
-	// Not invoked by user actions; only called from the page script.
+	// Not currently being invoked.
 	routes: {
-		'list':  'listAnnotations'
+		'list':  'listAnnotations', 
+		'update':  'updateAnnotations'
 	},
-	// listAnnotations: function (annotationArray) {
-	// 	Sidebar.annotations = new Sidebar.AnnotationList(annotationArray, false);
-	// 	var annotationsList = new Sidebar.AnnotationListView({
-	// 		"container": $('.well'),
-	// 		"collection": Sidebar.annotations
-	// 	});
-	// 	annotationsList.render();
-	// },
+	// takes an array of existing annotation object literals.
+	listAnnotations: function (annotationArray) {
+		Sidebar.annotations = new Sidebar.LocalAnnotationList(annotationArray);
+		var annotationsList = new Sidebar.AnnotationListView({
+			"container": $('.well'),
+			"collection": Sidebar.annotations
+		});
+		annotationsList.render();
+		console.info("Local: "+ Sidebar.annotations.toJSON());
+	},
+	// takes an object literal of options for an XHR request.
 	updateAnnotations: function (options) {
-		Sidebar.annotations = new Sidebar.AnnotationList(options);
+		Sidebar.annotations = new Sidebar.RemoteAnnotationList(options);
 		var annotationsList = new Sidebar.AnnotationListView({
 			"container": $('.well'),
 			"collection": Sidebar.annotations
 		});
 		Sidebar.annotations.deferred.done(function () {
-			console.info(Sidebar.annotations.toJSON());
+			annotationsList.render();
+			console.info("Remote: "+ Sidebar.annotations.toJSON());
 		});
-
-		// console.info(annotationsList);
-		
-		// annotationsList.render();
 	},
-	// renderAnnotation: function (annotationObject) {
-	// 	var annotation = new Sidebar.Annotation(annotationObject);
-	// 	var annotationView = new Sidebar.AnnotationView({
-	// 		"model": annotation
-	// 	});
-	// 	annotationView.render();
-	// 	Sidebar.App.listAnnotations();
-	// },
-	// deleteAnnotation: function (annotationObject) {
-	// 	annotationView.render();
-	// 	Sidebar.App.listAnnotations();
-	// }
 });

@@ -124,7 +124,7 @@ jQuery(function ($) {
 			'user':'<%= current_user.email %>',
 			"groups": groups,
 			"sidebar": true,
-			'uri': window.location.href
+			'uri': [location.protocol, '//', location.host, location.pathname].join(''),
 		};
 		setTimeout(function() {
 		    sidebar.updateAnnotations(options);

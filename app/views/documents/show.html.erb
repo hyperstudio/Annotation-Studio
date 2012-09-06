@@ -52,7 +52,7 @@ jQuery(function ($) {
 		prefix: 'http://annotations.mit.edu/api',
 		// prefix: 'http://localhost:5000/api',
 		annotationData: {
-			'uri': window.location.href,
+			'uri': [location.protocol, '//', location.host, location.pathname].join(''),
 			"groups": groups
 		},
 		loadFromSearch: {
@@ -61,7 +61,7 @@ jQuery(function ($) {
 			// Currently: only my own annotations, and I must be in a group to see; "show to all" setting is ignored.
 			// 'user':'<%= current_user.email %>',
 			"groups": groups,
-			'uri': window.location.href
+			'uri': [location.protocol, '//', location.host, location.pathname].join(''),
 		}
 	});
 

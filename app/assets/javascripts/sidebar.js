@@ -64,7 +64,7 @@ Sidebar.AnnotationView = Backbone.View.extend({
 		this.commenttemplate = $('#comment-template').html();
 		this.highlighttemplate = $('#highlight-template').html();
 		this.mdconverter = new Showdown.converter();
-		this.href="#full"+this.model.get("id");
+		this.href="#full"+this.model.get("uuid");
 	},
 	render: function () {
 		$(this.el).find("highlight.comment img").addClass("thumbnail");
@@ -109,7 +109,7 @@ Sidebar.AnnotationListView = Backbone.View.extend({
 		});
 
 		// Bind some events to links
-		$("span.annotator-hl").click(function(event){
+		$("span.annotator-hl").click(function(event) {
 			$("ul#annotation-list li").removeClass('hover');
 			$("span.highlightlink").tooltip('hide');
 			var str = this.id.toString();
@@ -130,7 +130,7 @@ Sidebar.AnnotationListView = Backbone.View.extend({
 			var idtarget = $(this).find("span.highlightlink").attr("data-highlight");
 
 			// Hide all details
-			// $("ul#annotation-list li").removeClass('hover');
+			$("ul#annotation-list li").removeClass('hover');
 
 			// Hide all details
 			$("ul#annotation-list li .details").hide();
@@ -146,7 +146,7 @@ Sidebar.AnnotationListView = Backbone.View.extend({
 
 			//$(this).addClass('hover');
 
-			// console.info(idtarget);
+			console.info("ID target attr from list item click function: "+idtarget);
 			$("span.highlightlink").tooltip('hide');
 			
 			// $(this).removeClass('hover');

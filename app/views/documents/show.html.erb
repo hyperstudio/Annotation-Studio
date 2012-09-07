@@ -1,12 +1,10 @@
 <div class="span8">
 	<h1><%= @document.title %></h1>
-
 	<div id="textcontent">
 		<div><!-- Required for cases in which there's no HTML in the text -->
 			<%= @document.text.html_safe %>
 		</div>
 	</div>
-
 	<div class="form-actions">
 		<%= link_to 'Back', documents_path, :class => 'btn'  %>
 		<% if can? :manage, @document %>
@@ -25,21 +23,26 @@
 
 		<ul id="annotation-list"></ul>
 		<script type="text/template" id="comment-template">
-			<span id="sb{{id}}" data-toggle="collapse" data-parent="#annotation-list" href="#full{{id}}" data-highlight="#hl{{id}}" rel="tooltip" title="{{user}}" class="highlightlink comment">{{{text}}}</span>
-			<span id="quote{{id}}" class="sbquote details">{{{quote}}}</span>
-			<span id="text{{id}}" class="sbtext details">{{{text}}}</span>
-			<div id="tags{{id}}" class="sbtags details">{{#tags}}<span class="label">{{.}}</span> {{/tags}}</div>
+			<span id="sb{{uuid}}" data-toggle="collapse" data-parent="#annotation-list" href="#full{{uuid}}" data-highlight="#hl{{uuid}}" rel="tooltip" title="{{user}}" class="highlightlink comment">{{{text}}}</span>
+			<span id="quote{{uuid}}" class="sbquote details">{{{quote}}}</span>
+			<span id="text{{uuid}}" class="sbtext details">{{{text}}}</span>
+			<div id="tags{{uuid}}" class="sbtags details">{{#tags}}<span class="label">{{.}}</span> {{/tags}}</div>
 		</script>
 		<script type="text/template" id="highlight-template">
-			<span id="sb{{id}}" data-highlight="#hl{{id}}" rel="tooltip" title="{{user}}" class="highlightlink highlight">{{{quote}}}</span>
-			<span id="quote{{id}}" class="sbquote details">{{{quote}}}</span>
-			<div id="tags{{id}}" class="sbtags details">{{#tags}}<span class="label">{{.}}</span> {{/tags}}</div>
+			<span id="sb{{uuid}}" data-highlight="#hl{{uuid}}" rel="tooltip" title="{{user}}" class="highlightlink highlight">{{{quote}}}</span>
+			<span id="quote{{uuid}}" class="sbquote details">{{{quote}}}</span>
+			<div id="tags{{uuid}}" class="sbtags details">{{#tags}}<span class="label">{{.}}</span> {{/tags}}</div>
 		</script>
 	</div><!--/well -->
 </div><!--/span4 -->
 <%= javascript_include_tag "sidebar" %>
 <script type="text/javascript" charset="utf-8">
 jQuery(function ($) {
+
+	// Bootstrap Backbone Sidebar //
+	var sidebar = new Sidebar.App();
+	Backbone.history.start({pushState: true, root: window.location})
+
 	var studio = $('#textcontent').annotator();
 
 	studio.annotator('addPlugin','Auth', {
@@ -53,13 +56,13 @@ jQuery(function ($) {
 		// prefix: 'http://localhost:5000/api',
 		annotationData: {
 			'uri': [location.protocol, '//', location.host, location.pathname].join(''),
-			"groups": groups
+			"groups": groups,
 		},
 		loadFromSearch: {
 			'limit': 1000,
 			// Should load all of one's own annotations, plus all non-private group-shared annotations
 			// Currently: only my own annotations, and I must be in a group to see; "show to all" setting is ignored.
-			// 'user':'<%= current_user.email %>',
+			'user':'<%= current_user.email %>',
 			"groups": groups,
 			'uri': [location.protocol, '//', location.host, location.pathname].join(''),
 		}
@@ -68,7 +71,6 @@ jQuery(function ($) {
 	studio.annotator('addPlugin', 'Markdown');
 	studio.annotator('addPlugin', 'Tags');
 	studio.annotator('addPlugin', 'Unsupported');
-
 	studio.annotator('addPlugin', 'Permissions', {
 		user: '<%= current_user.email %>',
 		permissions: {
@@ -77,80 +79,83 @@ jQuery(function ($) {
 			'delete': ['<%= current_user.email %>'],
 			'admin': ['<%= current_user.email %>']
 		},
-		// Private/Public setting per-annotation
+		// Permissions settings per-annotation
 		showViewPermissionsCheckbox: true,
-		
-		// Review checkbox??
 		showEditPermissionsCheckbox: false
 	});
 
 	var subscriber = $('#textcontent').annotator().data('annotator');
 
-	// Bootstrap Backbone Sidebar //
-	var sidebar = new Sidebar.App();
-	Backbone.history.start({pushState: true, root: window.location})
+	// Create a UUID for a given annotation if needed.
+	// Once created, this shouldn't be changed.
+	var createUuid = function(annotation) {
+		if (annotation.uuid == null) {
+			annotation.uuid = Math.uuid(8, 16);
+			console.info("New uuid for annotation: '"+annotation.quote+"': "+ annotation.uuid);
+		}
+		else {
+			console.info("Existing uuid for annotation: '"+annotation.quote+"': "+ annotation.uuid);
+		}
+	};
 
-	// Callback for Annotator subscriptions: add ids to highlights. //
-	var addHighlightId;
+	// addLinkId(annotation);
+
+	// Add UUIDs to highlights so sidebar and highlights can link to one another.
+	var addUuid;
 	var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
-	addHighlightId = __bind(function(a) {
+	addUuid = __bind(function(a) {
 		if (a.highlights[0] != null) {
-			a.highlights[0].id = "hl"+ a.id;
+			a.highlights[0].id = "hl"+ a.uuid;
 			a.highlights[0].title = a.user;
 		}
 		else {
-			console.info("No ID to add.");
+			console.info("Err...");
 		}
 	}, this);
 	
-	// Subscribe to annotator events for ID additions. //
-	subscriber.subscribe('annotationUpdated', addHighlightId);
-	subscriber.subscribe('annotationCreated', addHighlightId);
-	subscriber.subscribe('annotationsLoaded', __bind(function(annotations) {
-		annotations.map(addHighlightId);
-	}, this));
-	
-	// Callback to update the sidebar. //
+	var createAndAddUuid = function(annotation){
+		createUuid(annotation);
+		addUuid(annotation);
+	}
+
+	// Update the sidebar with local annotation data
 	var loadSidebar = function(annotation) {
 		setTimeout(function() {
 		    sidebar.listAnnotations(subscriber.dumpAnnotations());
-		}, 100);		
-	};
-
-	// Update the sidebar with //
-	var updateSidebar =	function(annotation) {
-		var options = {
-			'limit': 1000,
-			'user':'<%= current_user.email %>',
-			"groups": groups,
-			"sidebar": true,
-			'uri': [location.protocol, '//', location.host, location.pathname].join(''),
-		};
-		setTimeout(function() {
-		    sidebar.updateAnnotations(options);
 		}, 100);
-		// subscriber.plugins.Store.loadAnnotationsFromSearch(options);
-		// loadSidebar();
 	};
 	
-	// Callback to update the sidebar. //
+	// Remove all comment icons and load sidebar with local data
 	var deleteFromSidebar =	function(annotation) {
 		$(".icon-comment").remove();
 		setTimeout(function() {
 		    sidebar.listAnnotations(subscriber.dumpAnnotations());
-		}, 100);		
+		}, 100);
 	};
 
-	// var showAnnId =  function(annotation) {
-	// 	var newAnn = new Sidebar.Annotation(annotation);
-	// 	console.info(newAnn.get("id"));
-	// };
+	var showAnnId =  function(annotation) {
+		var newAnn = new Sidebar.Annotation(annotation);
+		console.info(newAnn.get("uuid"));
+	};
 	
-	// Subscribe to annotator events to update sidebar. //
+	// When the annotator loads remote data, update sidebar
 	subscriber.subscribe('annotationsLoaded', loadSidebar);
+
+	// Update all highlights with UUIDs
+	subscriber.subscribe('annotationsLoaded', __bind(function(annotations) {
+		annotations.map(addUuid); // copies the UUID value from the object field to the highlight spans attribute value.
+	}, this));
+
+	// Add the UUID to the local annotation object and to the highlight span before saving
+	subscriber.subscribe('beforeAnnotationCreated', createUuid); // creates, if need be, and adds, both to object, and to highlight.
+
+	// Once the local object has been created, load the sidebar from local data (already contains UUID)
+	subscriber.subscribe('annotationCreated', loadSidebar);
+	subscriber.subscribe('annotationCreated', addUuid);
+
+	// When the local object is updated (contains previously created/stored UUID), load the sidebar from local data
+	subscriber.subscribe('annotationUpdated', loadSidebar);
 	subscriber.subscribe('annotationDeleted', deleteFromSidebar);
-	subscriber.subscribe('annotationUpdated', updateSidebar);
-	subscriber.subscribe('annotationCreated', updateSidebar);
 	
 	mixpanel.track("Loaded Document");
 });

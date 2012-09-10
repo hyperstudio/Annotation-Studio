@@ -14,31 +14,21 @@ class Ability
 
     elsif user.has_role? :teacher
       can :create, Document
-      can :manage, Document do |tors|
-        tors.user.id == user.id
-      end
+      can :manage, Document, :user_id => user.id
 
     elsif user.has_role? :student
-      # Why not?
-      cannot :manage, Document
-      # can :create, Document
-
-      # can :manage, Document do |tors|
-      #   tors.user.id == user.id
-      # end
-
+      can :create, Document
+      can :manage, Document, :user_id => user.id
       can :read, Document do |tors|
         !(user.rep_group_list & tors.rep_group_list).empty?
       end
 
-      # cannot :read, [Document] do |tors|
-      #   tors.rep_privacy_list.detect {|t| t == 'review'}
-      # end
     else
       cannot :manage, :all
       can :read, [Document] do |tors|
         tors.rep_privacy_list.detect {|t| t == 'public'}
       end
+
     end
     can :index, Document
   end

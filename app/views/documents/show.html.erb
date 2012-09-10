@@ -23,13 +23,14 @@
 
 		<ul id="annotation-list"></ul>
 		<script type="text/template" id="comment-template">
-			<span id="sb{{uuid}}" data-toggle="collapse" data-parent="#annotation-list" href="#full{{uuid}}" data-highlight="#hl{{uuid}}" rel="tooltip" title="{{user}}" class="highlightlink comment">{{{text}}}</span>
+			<span id="sb{{uuid}}" data-toggle="collapse" data-parent="#annotation-list" href="#full{{uuid}}" data-highlight="#hl{{uuid}}" rel="tooltip" title="{{username}}" class="highlightlink comment">{{{text}}}</span>
 			<span id="quote{{uuid}}" class="sbquote details">{{{quote}}}</span>
 			<span id="text{{uuid}}" class="sbtext details">{{{text}}}</span>
+			<span id="info{{uuid}}" class="sbinfo details">By: {{username}} at: </span>
 			<div id="tags{{uuid}}" class="sbtags details">{{#tags}}<span class="label">{{.}}</span> {{/tags}}</div>
 		</script>
 		<script type="text/template" id="highlight-template">
-			<span id="sb{{uuid}}" data-highlight="#hl{{uuid}}" rel="tooltip" title="{{user}}" class="highlightlink highlight">{{{quote}}}</span>
+			<span id="sb{{uuid}}" data-highlight="#hl{{uuid}}" rel="tooltip" title="{{username}}" class="highlightlink highlight">{{{quote}}}</span>
 			<span id="quote{{uuid}}" class="sbquote details">{{{quote}}}</span>
 			<div id="tags{{uuid}}" class="sbtags details">{{#tags}}<span class="label">{{.}}</span> {{/tags}}</div>
 		</script>
@@ -57,6 +58,7 @@ jQuery(function ($) {
 		annotationData: {
 			'uri': [location.protocol, '//', location.host, location.pathname].join(''),
 			"groups": groups,
+			"username": '<%= current_user.first_name_last_initial %>',
 		},
 		loadFromSearch: {
 			'limit': 1000,

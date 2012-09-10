@@ -28,7 +28,7 @@ class Ability
 
       # Why not?
       cannot :create, Document
-      # cannot :manage, Document
+      cannot :manage, Document
 
       # This on the other hand, should not happen...
       # can :update, Document do |tors|

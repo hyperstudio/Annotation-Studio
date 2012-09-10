@@ -19,20 +19,20 @@ class Ability
       end
 
     elsif user.has_role? :student
-      cannot :read, [Document] do |tors|
-        tors.rep_privacy_list.detect {|t| t == 'review'}
-      end
+      # Why not?
+      cannot :manage, Document
+      # can :create, Document
+
+      # can :manage, Document do |tors|
+      #   tors.user.id == user.id
+      # end
+
       can :read, Document do |tors|
         !(user.rep_group_list & tors.rep_group_list).empty?
       end
 
-      # Why not?
-      cannot :create, Document
-      # cannot :manage, Document
-
-      # This on the other hand, should not happen...
-      # can :update, Document do |tors|
-      #   !(user.rep_group_list & tors.rep_group_list).empty?
+      # cannot :read, [Document] do |tors|
+      #   tors.rep_privacy_list.detect {|t| t == 'review'}
       # end
     else
       cannot :manage, :all

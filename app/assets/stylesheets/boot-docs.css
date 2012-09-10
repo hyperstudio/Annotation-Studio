@@ -71,8 +71,8 @@ ul#accountlinks {
 	float:right;
 }
 
-.chapter {
-	font-size: 1.3em;
+.chapter, .chapter p {
+	font-size: 1.1em;
 	font-family: 'EB+Garamond', serif;
 	line-height: 2em;
 	color:#000;

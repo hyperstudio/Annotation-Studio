@@ -10,12 +10,14 @@ class User < ActiveRecord::Base
   acts_as_role_user
   acts_as_taggable_on :rep_group, :rep_privacy
   
+  # Doesn't handle missing values.
   def fullname
     "#{firstname} #{lastname}"
   end
 
+  # Doesn't handle missing values.
   def first_name_last_initial
-     "#{first_name} #{last_name.first}."
+     "#{firstname} #{lastname.first}."
    end
      
 end

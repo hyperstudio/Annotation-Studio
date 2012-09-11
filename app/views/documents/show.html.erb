@@ -26,7 +26,7 @@
 			<span id="sb{{uuid}}" data-toggle="collapse" data-parent="#annotation-list" href="#full{{uuid}}" data-highlight="#hl{{uuid}}" rel="tooltip" title="{{username}}" class="highlightlink comment">{{{text}}}</span>
 			<span id="quote{{uuid}}" class="sbquote details">{{{quote}}}</span>
 			<span id="text{{uuid}}" class="sbtext details">{{{text}}}</span>
-			<span id="info{{uuid}}" class="sbinfo details">By: {{username}} at: </span>
+			<span id="info{{uuid}}" class="sbinfo details">{{username}}</span>
 			<div id="tags{{uuid}}" class="sbtags details">{{#tags}}<span class="label">{{.}}</span> {{/tags}}</div>
 		</script>
 		<script type="text/template" id="highlight-template">
@@ -50,7 +50,9 @@ jQuery(function ($) {
 		token: '<%= @jwt %>'
 	});
 
+	var userEmail = "<%= current_user.email %>";
 	var groups = "<%= current_user.rep_group_list %>".split(/, /);
+	// var userSearch = "<%= current_user.has_role?(:teacher) ? '' : 'userEmail' %>";
 	
 	studio.annotator('addPlugin','Store', {
 		prefix: 'http://annotations.mit.edu/api',
@@ -63,8 +65,10 @@ jQuery(function ($) {
 		loadFromSearch: {
 			'limit': 1000,
 			// Should load all of one's own annotations, plus all non-private group-shared annotations
-			// Currently: only my own annotations, and I must be in a group to see; "show to all" setting is ignored.
-			'user':'<%= current_user.email %>',
+			// Currently: only my own annotations if I'm not an admin, and I'm in a group;
+			// "show to all" setting is ignored.
+			// admins can see all annotations within a group
+			'user': "<%= current_user.has_role?(:admin) ? '' : current_user.email %>",
 			"groups": groups,
 			'uri': [location.protocol, '//', location.host, location.pathname].join(''),
 		}

@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require twitter/bootstrap
 //= require redactor-rails
+//= require redactor-rails/config
 //= require showdown
 //= require gettext
 //= require xpath

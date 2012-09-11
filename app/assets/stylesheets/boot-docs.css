@@ -24,6 +24,10 @@ body{background-color:#4A525A;}
 	font-style: italic;
 	display: block;
 	width:100%;
+	height:1.4em;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 .highlightlink.comment img{
@@ -147,9 +151,12 @@ div.okfnyellow {
 }
 
 .highlightlink.highlight {
-	/*background: rgba(255, 255, 10, 0.3);*/
 	display: block;
 	width:100%;
+	height:1.4em;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 span.highlightborder {

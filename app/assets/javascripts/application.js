@@ -13,8 +13,8 @@
 //= require jquery
 //= require jquery_ujs
 //= require twitter/bootstrap
-//= require redactor-rails
-//= require redactor-rails/config
+//= require redactor-rails/redactor.min
+//= require redactor-config
 //= require showdown
 //= require gettext
 //= require xpath

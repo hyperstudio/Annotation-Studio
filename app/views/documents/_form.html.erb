@@ -62,8 +62,7 @@
 		    <div class="control-group">
 		      <%= f.label "Text", :class => 'control-label' %>
 		      <div class="controls">
-		        <%# f.text_area :text, :class => 'text_area' %>
-				<%= text_area_tag :text, @document.text, :class => "redactor", :rows => 40, :cols => 120 %>
+				<%= f.text_area :text, :class => 'redactor text_area' %>
 		      </div>
 		    </div>
 

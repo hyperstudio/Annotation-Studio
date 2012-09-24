@@ -18,6 +18,10 @@ class User < ActiveRecord::Base
   # Doesn't handle missing values.
   def first_name_last_initial
      "#{firstname} #{lastname.first}."
-   end
+  end
      
+  # Doesn't handle missing values.
+  def first_initial_last_name
+     "#{firstname.first}. #{lastname}"
+  end
 end

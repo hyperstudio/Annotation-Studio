@@ -21,7 +21,7 @@
 			        <td><%= document.author %></td>
 					<td><% document.rep_group_list.each do |group| %><span class="label"><%= group %></span> <% end %></td>
 			        <td><%= time_ago_in_words(document.created_at) %> ago</td>
-			        <td><%= document.user.try(:first_name_last_initial) %></td>
+			        <td><%= document.user.try(:first_initial_last_name) %></td>
 			        <td>
 					<% if can? [:update, :destroy], document %>
 			          <%= link_to 'Edit', edit_document_path(document.friendly_id), :class => 'btn btn-mini' %>

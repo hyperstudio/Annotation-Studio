@@ -146,7 +146,7 @@ Sidebar.AnnotationListView = Backbone.View.extend({
 
 			//$(this).addClass('hover');
 
-			console.info("ID target attr from list item click function: "+idtarget);
+			// console.info("ID target attr from list item click function: "+idtarget);
 			$("span.highlightlink").tooltip('hide');
 			
 			// $(this).removeClass('hover');
@@ -176,7 +176,7 @@ Sidebar.App = Backbone.Router.extend({
 			"collection": Sidebar.annotations
 		});
 		annotationsList.render();
-		console.info("Local: "+ Sidebar.annotations.toJSON());
+		// console.info("Local: "+ Sidebar.annotations.toJSON());
 	},
 	// takes an object literal of options for an XHR request.
 	updateAnnotations: function (options) {
@@ -187,7 +187,7 @@ Sidebar.App = Backbone.Router.extend({
 		});
 		Sidebar.annotations.deferred.done(function () {
 			annotationsList.render();
-			console.info("Remote: "+ Sidebar.annotations.toJSON());
+			// console.info("Remote: "+ Sidebar.annotations.toJSON());
 		});
 	},
 });

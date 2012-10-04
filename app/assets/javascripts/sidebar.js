@@ -108,6 +108,8 @@ Sidebar.AnnotationListView = Backbone.View.extend({
 			$("ul#annotation-list").append(annView.render().el);
 		});
 
+		$("li.annotation-item span").tooltip();
+
 		// Bind some events to links
 		$("span.annotator-hl").click(function(event) {
 			$("ul#annotation-list li").removeClass('hover');

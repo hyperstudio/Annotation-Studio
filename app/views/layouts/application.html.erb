@@ -40,7 +40,8 @@
 	</script>
 	</head>
 
-	<body data-spy="scroll" data-target=".subnav" data-offset="50" offset="50">
+	<body data-spy="scroll" data-target="#chapters">
+
 	<div class="navbar navbar-fixed-top">
 		<div class="navbar-inner">
 			<div class="container">
@@ -57,7 +58,7 @@
 						<li><a data-toggle="modal" href="#help">Help</a></li>
 						<% end %>
 					</ul>
-					<a class="logo" href="/"><img src="/assets/hs-logo-trans-horiz.png"></a>
+					<a class="hidden-phone logo" href="/"><img src="/assets/hs-logo-trans-horiz.png"></a>
 					<ul class="nav" id="accountlinks">
 						<%= render 'devise/menu/registration_items' %>
 						<%= render 'devise/menu/login_items' %>
@@ -71,9 +72,9 @@
 		      <%- flash.each do |name, msg| -%>
 		        <%= content_tag :div, msg, :class => "alert alert-#{name}" if msg.is_a?(String) %>
 		      <%- end -%>
-			<div class="row-fluid">
+			<div class="row">
 					<%= yield %>
-			</div><!--/row-fluid -->
+			</div><!--/row -->
 		<footer>
 			<p>&copy; MIT 2012</p>
 		</footer>

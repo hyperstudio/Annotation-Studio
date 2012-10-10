@@ -50,7 +50,12 @@ body{background-color:#4A525A;}
 	background-color: #DDD;
 }
 
-.well ul#annotation-list li span.label, .well ul#annotation-list li span.badge {
+#annotation-well {
+	width:240px;
+	padding:0 15px;
+}
+
+#annotation-well ul#annotation-list li span.label, #annotation-well ul#annotation-list li span.badge {
 	color: #fff;
 }
 
@@ -70,7 +75,7 @@ a.logo {
 
 a.logo img {
 	max-height:30px;
-	margin-top: 10px;
+	margin-top: 5px;
 }
 
 ul#accountlinks {
@@ -96,7 +101,7 @@ a.texttitle {
 	font-weight: bold;
 }
 
-.well a.trigger {
+#annotation-well a.trigger {
 	float:right;
 	display:inline;
 	margin-top:5px;
@@ -108,7 +113,7 @@ a.texttitle {
 }
 
 /* Sidebar, see: http://stackoverflow.com/questions/9350818/fixed-sidebar-navigation-in-fluid-twitter-bootstrap-2-0 */
-.sidebar-nav-fixed {
+/*.sidebar-nav {
     position:fixed;
     top:100px;
     width:21.97%;
@@ -116,8 +121,8 @@ a.texttitle {
 	overflow: auto;
 	background-color: #fefefe;
 }
-
-.well ul#annotation-list {
+*/
+#annotation-well ul#annotation-list {
 	position: relative;
 	margin: 0;
 	padding: 0;
@@ -133,7 +138,7 @@ a.texttitle {
 	box-sizing: border-box;
 }
 
-.well ul#annotation-list li {
+#annotation-well ul#annotation-list li {
 	font-size: 12px;
 	font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
 	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.3);	
@@ -165,62 +170,66 @@ span.highlightborder {
 	border-left: 5px solid #F00;
 }
 
-.well ul#annotation-list li:hover {
+#annotation-well ul#annotation-list li:hover {
 	background-color: #ddd;
 }
 
-.well ul#annotation-list li.hover {
+#annotation-well ul#annotation-list li.hover {
 	background-color: #ddd;
 }
 
 
-.well ul#annotation-list li span {
+#annotation-well ul#annotation-list li span {
 	text-decoration:none;
 	color: #111;
 }
 
-.well ul#annotation-list li.selected, 
+#annotation-well ul#annotation-list li.selected, 
 .annotator-hl.selected {
 	color: #5b4001;
 	background-color: #fadb3b;
 }
 
 
-@media (max-width: 767px) {
-    .sidebar-nav-fixed {
+/*@media (max-width: 767px) {
+    .sidebar-nav {
         position:static;
         width:auto;
     }
 }
-
+*/
 @media (max-width: 979px) {
-    .sidebar-nav-fixed {
+/*    .sidebar-nav {
         top:70px;
     }
-}
+*/}
 
 /* Subnav */
-.subnav {
-  width: 100%;
+#chapters {
+	width:240px;
+/*  width: 100%;
   height: 36px;
-  background-color: #eeeeee; /* Old browsers */
-  background-repeat: repeat-x; /* Repeat the gradient */
-  background-image: -moz-linear-gradient(top, #f5f5f5 0%, #eeeeee 100%); /* FF3.6+ */
-  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f5f5f5), color-stop(100%,#eeeeee)); /* Chrome,Safari4+ */
-  background-image: -webkit-linear-gradient(top, #f5f5f5 0%,#eeeeee 100%); /* Chrome 10+,Safari 5.1+ */
-  background-image: -ms-linear-gradient(top, #f5f5f5 0%,#eeeeee 100%); /* IE10+ */
-  background-image: -o-linear-gradient(top, #f5f5f5 0%,#eeeeee 100%); /* Opera 11.10+ */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f5f5f5', endColorstr='#eeeeee',GradientType=0 ); /* IE6-9 */
-  background-image: linear-gradient(top, #f5f5f5 0%,#eeeeee 100%); /* W3C */
+  background-color: #eeeeee; 
+  background-repeat: repeat-x;
+  background-image: -moz-linear-gradient(top, #f5f5f5 0%, #eeeeee 100%); 
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f5f5f5), color-stop(100%,#eeeeee)); 
+  background-image: -webkit-linear-gradient(top, #f5f5f5 0%,#eeeeee 100%); 
+  background-image: -ms-linear-gradient(top, #f5f5f5 0%,#eeeeee 100%); 
+  background-image: -o-linear-gradient(top, #f5f5f5 0%,#eeeeee 100%); 
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f5f5f5', endColorstr='#eeeeee',GradientType=0 );
+  background-image: linear-gradient(top, #f5f5f5 0%,#eeeeee 100%);
   border: 1px solid #e5e5e5;
   -webkit-border-radius: 4px;
      -moz-border-radius: 4px;
           border-radius: 4px;
+*/
 }
-.subnav .nav {
+
+/*#chapters .nav {
   margin-bottom: 0;
 }
-.subnav .nav > li > a {
+
+#chapters .nav > li > a {
   margin: 0;
   padding-top:    11px;
   padding-bottom: 11px;
@@ -230,8 +239,8 @@ span.highlightborder {
      -moz-border-radius: 0;
           border-radius: 0;
 }
-.subnav .nav > .active > a,
-.subnav .nav > .active > a:hover {
+#chapters .nav > .active > a,
+#chapters .nav > .active > a:hover {
   padding-left: 13px;
   color: #777;
   background-color: #e9e9e9;
@@ -241,54 +250,58 @@ span.highlightborder {
      -moz-box-shadow: inset 0 3px 5px rgba(0,0,0,.05);
           box-shadow: inset 0 3px 5px rgba(0,0,0,.05);
 }
-.subnav .nav > .active > a .caret,
-.subnav .nav > .active > a:hover .caret {
+#chapters .nav > .active > a .caret,
+#chapters .nav > .active > a:hover .caret {
   border-top-color: #777;
 }
-.subnav .nav > li:first-child > a,
-.subnav .nav > li:first-child > a:hover {
+#chapters .nav > li:first-child > a,
+#chapters .nav > li:first-child > a:hover {
   border-left: 0;
   padding-left: 12px;
   -webkit-border-radius: 4px 0 0 4px;
      -moz-border-radius: 4px 0 0 4px;
           border-radius: 4px 0 0 4px;
 }
-.subnav .nav > li:last-child > a {
+#chapters .nav > li:last-child > a {
   border-right: 0;
 }
-.subnav .dropdown-menu {
+#chapters .dropdown-menu {
   -webkit-border-radius: 0 0 4px 4px;
      -moz-border-radius: 0 0 4px 4px;
           border-radius: 0 0 4px 4px;
 }
+*/
 
 /* Fixed subnav on scroll, but only for 980px and up (sorry IE!) */
-@media (min-width: 980px) {
+/*@media (min-width: 980px) {
   .subnav-fixed {
     position: fixed;
     top: 40px;
     left: 0;
     right: 0;
-    z-index: 1020; /* 10 less than .navbar-fixed to prevent any overlap */
+    z-index: 1020;
     border-color: #d5d5d5;
-    border-width: 0 0 1px; /* drop the border on the fixed edges */
+    border-width: 0 0 1px; 
     -webkit-border-radius: 0;
        -moz-border-radius: 0;
             border-radius: 0;
     -webkit-box-shadow: inset 0 1px 0 #fff, 0 1px 5px rgba(0,0,0,.1);
        -moz-box-shadow: inset 0 1px 0 #fff, 0 1px 5px rgba(0,0,0,.1);
             box-shadow: inset 0 1px 0 #fff, 0 1px 5px rgba(0,0,0,.1);
-    filter: progid:DXImageTransform.Microsoft.gradient(enabled=false); /* IE6-9 */
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
   }
   .subnav-fixed .nav {
     width: 938px;
     margin: 0 auto;
     padding: 0 1px;
   }
-  .subnav .nav > li:first-child > a,
-  .subnav .nav > li:first-child > a:hover {
+  #chapters .nav > li:first-child > a,
+  #chapters .nav > li:first-child > a:hover {
     -webkit-border-radius: 0;
        -moz-border-radius: 0;
             border-radius: 0;
   }
 }
+*/
+
+.nav-list >.active >a,.nav-list>.active>a:hover{color:#ffffff;text-shadow:0 -1px 0 rgba(0, 0, 0, 0.2);background-color: #7E7E7E;}

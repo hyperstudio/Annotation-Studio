@@ -37,7 +37,7 @@ jQuery(function ($) {
 
 	studio.annotator('addPlugin', 'Markdown');
 	<% if current_user.has_role?(:admin) %>
-	// studio.annotator('addPlugin', 'Filter');
+	studio.annotator('addPlugin', 'Filter');
 	<% end %>
 	studio.annotator('addPlugin', 'Tags');
 	studio.annotator('addPlugin', 'Unsupported');

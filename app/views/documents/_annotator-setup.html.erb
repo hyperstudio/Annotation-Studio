@@ -45,8 +45,8 @@ jQuery(function ($) {
 		token: '<%= @jwt %>'
 	});
 	studio.annotator('addPlugin', 'Store', {
-		// prefix: 'http://annotations.mit.edu/api',
-		prefix: 'http://localhost:5000/api',
+		prefix: 'http://annotations.mit.edu/api',
+		// prefix: 'http://localhost:5000/api',
 		annotationData: {
 			'uri': [location.protocol, '//', location.host, location.pathname].join(''),
 			"groups": groups,

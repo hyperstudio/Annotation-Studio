@@ -6,7 +6,7 @@ gem 'pg'
 gem 'newrelic_rpm'
 gem 'devise'
 gem 'cancan'
-gem 'repertoire-groups', :git => 'https://jamiefolsom:tr3m3nd0@github.com/repertoire/Repertoire-Groups.git', :branch => "bootstrap-flavor"
+gem 'repertoire-groups', :git => 'https://jamiefolsom:tr3m3nd0@github.com/repertoire/Repertoire-Groups.git', :branch => "public"
 gem 'acts-as-taggable-on', '~> 2.3.1'
 gem "friendly_id", "~> 4.0.1"
 

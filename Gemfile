@@ -23,3 +23,7 @@ gem 'jquery-rails'
 gem 'redactor-rails'
 gem 'jbuilder'
 gem "jwt" #, "~> 0.1.4"
+
+gem 'activeadmin'
+gem 'sass-rails'
+gem "meta_search",    '>= 1.1.0.pre'

@@ -7,9 +7,9 @@
 			<th>Title</th>
 			<th>Author</th>
 			<th>Course</th>
-			<th>Created</th>
-	        <td>Owner</td>
-			<th>Actions</th>
+			<th class="hidden-phone">Created</th>
+			<th class="hidden-phone">Owner</th>
+			<th class="hidden-phone">Actions</th>
 	    </tr>
 	  </thead>
 	  <tbody>    
@@ -20,9 +20,9 @@
 			        <td><%= link_to document.title, document_path(document.friendly_id) %></td>
 			        <td><%= document.author %></td>
 					<td><% document.rep_group_list.each do |group| %><span class="label"><%= group %></span> <% end %></td>
-			        <td><%= time_ago_in_words(document.created_at) %> ago</td>
-			        <td><%= document.user.try(:first_initial_last_name) %></td>
-			        <td>
+			        <td class="hidden-phone"><%= time_ago_in_words(document.created_at) %> ago</td>
+			        <td class="hidden-phone"><%= document.user.try(:first_initial_last_name) %></td>
+			        <td class="hidden-phone">
 					<% if can? [:update, :destroy], document %>
 			          <%= link_to 'Edit', edit_document_path(document.friendly_id), :class => 'btn btn-mini' %>
 			          <%= link_to 'Delete', document_path(document.friendly_id), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini btn-danger' %>

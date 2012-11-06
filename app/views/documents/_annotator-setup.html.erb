@@ -40,6 +40,7 @@ jQuery(function ($) {
 	studio.annotator('addPlugin', 'Filter');
 	<% end %>
 	studio.annotator('addPlugin', 'Tags');
+    studio.annotator('addPlugin', 'AnnotoriousImagePlugin');
 	studio.annotator('addPlugin', 'Unsupported');
 	studio.annotator('addPlugin', 'Auth', {
 		token: '<%= @jwt %>'

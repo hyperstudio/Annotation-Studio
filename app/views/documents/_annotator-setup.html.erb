@@ -26,7 +26,7 @@ jQuery(function ($) {
 
 	// Some personalization variables.
 	var userEmail = "<%= current_user.email %>";
-	var groups = "<%= current_user.rep_group_list %>".split(/, /);
+	var userGroups = "<%= current_user.rep_group_list %>".split(/, /);
 	// var userSearch = "<%= current_user.has_role?(:teacher) ? '' : 'userEmail' %>";
 
 	// Bootstrap Backbone Sidebar //
@@ -40,18 +40,21 @@ jQuery(function ($) {
 	 // studio.annotator('addPlugin', 'Filter');
 	<% end %>
 	studio.annotator('addPlugin', 'Tags');
-    studio.annotator('addPlugin', 'AnnotoriousImagePlugin');
+	   // studio.annotator('addPlugin', 'AnnotoriousImagePlugin');
 	studio.annotator('addPlugin', 'Unsupported');
 	studio.annotator('addPlugin', 'Auth', {
 		token: '<%= @jwt %>'
 	});
+	
+	// how to interact with the backend store
 	studio.annotator('addPlugin', 'Store', {
 		prefix: 'http://annotations.mit.edu/api',
 		// prefix: 'http://localhost:5000/api',
 		annotationData: {
 			'uri': [location.protocol, '//', location.host, location.pathname].join(''),
-			"groups": groups,
-			// "username": '<%= current_user.first_name_last_initial %>',
+			'groups': userGroups,
+			'username': '<%= current_user.first_name_last_initial %>',
+			'user': "<%= current_user.id %>",
 		},
 		loadFromSearch: {
 			'limit': 1000,
@@ -59,21 +62,58 @@ jQuery(function ($) {
 			// Currently: only my own annotations if I'm not an admin, and I'm in a group;
 			// "show to all" setting is ignored.
 			// admins can see all annotations within a group
-			<% unless current_user.has_role?(:admin) %>
-			'user': "<%= current_user.email %>",
-			<% end %>
-			"groups": groups,
+			// <% unless current_user.has_role?(:admin) %>
+			// 'user': "<%= current_user.id %>",
+			// <% end %>
+			// 'groups': userGroups,
 			'uri': [location.protocol, '//', location.host, location.pathname].join(''),
 		}
 	});
+
+	// settings to store with each annotation
 	studio.annotator('addPlugin', 'Permissions', {
-		user: '<%= current_user.email %>',
-		permissions: {
-			'read': ['<%= current_user.email %>'],
-			'update': ['<%= current_user.email %>'],
-			'delete': ['<%= current_user.email %>'],
-			'admin': ['<%= current_user.email %>']
+		// Set the permissions for all new annotation objects.
+		// Doing this server side for now, probably preferable to do client side, 
+		// like the openshakespeare example
+		user: {
+			'id': "<%= current_user.id %>",
+			'username': "<%= current_user.first_name_last_initial %>",
+			'groups': userGroups,
 		},
+
+		permissions: {
+			'read': ['<%= current_user.id %>', 'group:Admin'], // default: review mode; this is what users will need to control
+			'update': ['<%= current_user.id %>'], // no one else can ever update
+			'delete': ['<%= current_user.id %>'], // no one else can ever delete
+			'admin': ['<%= current_user.id %>'] // no one else can ever admin
+		},
+
+		// Callback to return an id for the user
+		userId: function (user) {
+			if (user && user.id) { 
+				return user.id;
+			}
+			return user;
+		},
+
+		// Callback to return a string for the user
+		userString: function (user) {
+			if (user && user.username) {
+				return user.username;
+			}
+			return user;
+		},
+
+		userAuthorize: function (user, token) {
+			// If the token is our admin token and the user
+			// is in the admin group then authorise.
+			if (token === 'group:Admin' && user.group === 'Admin') {
+				return true;
+			}
+			// If it's not an admin token check the id.
+			return user.id === token;
+		},
+
 		// Permissions settings per-annotation
 		showViewPermissionsCheckbox: true,
 		showEditPermissionsCheckbox: false

@@ -1,6 +1,9 @@
 AnnotationStudio::Application.routes.draw do
   devise_for :users
 
+  # Allow annotators to view their work
+  match 'users/:id' => 'users#show'
+
   resources :documents
 
   # The priority is based upon order of creation:

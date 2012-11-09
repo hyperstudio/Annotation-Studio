@@ -29,7 +29,12 @@ Sidebar.RemoteAnnotationList = Backbone.Collection.extend({
 		try {
 			var startOffset = annotation.get("ranges")[0].startOffset;
 		}
-		return startOffset; // change to startOffset
+		catch {
+			console.info("startOffset issue.");
+		}
+		finally {
+			return startOffset; // change to startOffset
+		}
 	},
 	initialize: function (options) {
 		//console.info(options);

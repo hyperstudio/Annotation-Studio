@@ -26,7 +26,10 @@ Sidebar.RemoteAnnotationList = Backbone.Collection.extend({
     url: 'http://annotations.mit.edu/api/search',
     // url: 'http://localhost:5000/api/search',
 	comparator: function(annotation) {
-		return annotation.get("ranges")[0].startOffset; // change to startOffset
+		try {
+			var startOffset = annotation.get("ranges")[0].startOffset;
+		}
+		return startOffset; // change to startOffset
 	},
 	initialize: function (options) {
 		//console.info(options);

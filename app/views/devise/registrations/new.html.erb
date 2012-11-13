@@ -29,10 +29,10 @@
 		</div>
 
 		<div class="control-group">
-	      <%= f.label "Subject number", :class => 'control-label' %>
+	      <%= f.label "Group", :class => 'control-label' %>
 			<div class="controls">
-        		<%= f.text_field :rep_group_list, :class => 'text_field' %>
-				<p class="help-block">Enter the subject number of the course you're taking, eg: <code>21F.414</code> for <em>German Culture, Media, and Society</em></p>
+        		<%= f.text_field :rep_group_list, :class => 'text_field' :value=> 'demo' %>
+				<p class="help-block">This field lets users opt into groups; we've put you in the demo group.</p>
 			</div>
 		</div>
 

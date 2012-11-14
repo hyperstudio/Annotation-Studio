@@ -9,7 +9,12 @@ ActiveAdmin.register User, :as => "Student" do
   end
 
   form do |f|
-        f.inputs
-        f.buttons
+    f.inputs "Details" do
+      f.input :firstname, :as => :string
+      f.input :lastname, :as => :string
+      f.input :email, :as => :string
+      f.input :rep_group_list, :hint => 'Comma separated'
+    end
+    f.buttons
   end
 end

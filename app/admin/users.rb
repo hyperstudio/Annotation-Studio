@@ -9,11 +9,7 @@ ActiveAdmin.register User, :as => "Student" do
   end
 
   form do |f|
-        f.inputs "Details" do
-          f.input :firstname
-          f.input :lastname
-          f.input :created_at, :label => "Signup Date"
-        end
+        f.inputs
         f.buttons
-      end
+  end
 end

@@ -1,5 +1,14 @@
 <div class="span8">
 	<h1><%= @document.title %></h1>
+	<!-- Required for cases in which there's no HTML in the text -->
+	<p>
+		Author: <%= @document.title %><br>
+		Publisher: <%= @document.publisher %><br>
+		Publication Date: <%= @document.publication_date %><br>
+		Source: <%= @document.source %><br>
+		Edition: <%= @document.edition %><br>
+		Copyright: <%= @document.rights_status %><br>
+	</p>
 	<div id="textcontent">
 		<div><!-- Required for cases in which there's no HTML in the text -->
 			<%= @document.text.html_safe %>

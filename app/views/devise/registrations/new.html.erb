@@ -28,13 +28,7 @@
 		<%= f.password_field :password_confirmation %>
 		</div>
 
-		<div class="control-group">
-	      <%= f.label "Group", :class => 'control-label' %>
-			<div class="controls">
-        		<%= f.text_field :rep_group_list, :class => 'text_field', :value => 'demo', :disabled => "disabled" %>
-				<p class="help-block">This field lets users opt into groups; we've put you in the demo group.</p>
-			</div>
-		</div>
+		<%= f.hidden_field :rep_group_list, :class => 'hidden', :value => 'demo' %>
 
 		<br />
 

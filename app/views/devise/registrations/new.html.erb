@@ -29,12 +29,19 @@
 		</div>
 
 		<%= f.hidden_field :rep_group_list, :class => 'hidden', :value => 'demo' %>
-
-		<br />
-
+		
+		<br>
 		<div class="controls">
-		<div><%= f.submit "Sign up", :class => "btn btn-primary" %></div>
+		<%= f.submit "Sign up", :class => "btn btn-primary" %>
+		</div>
+
+		<br>
+		<div class="controls">
+		<%= render "links" %>
+		</div>
 	</div>
+
 </fieldset>
 <% end %>
-<%= render "links" %>
+
+

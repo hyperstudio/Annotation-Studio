@@ -48,11 +48,11 @@ Sidebar.RemoteAnnotationList = Backbone.Collection.extend({
 
 Sidebar.LocalAnnotationList = Backbone.Collection.extend({
 	model: Sidebar.Annotation,
-	comparator: function(annotation) {
-		return annotation.get("ranges")[0].startOffset; // change to startOffset
-	},
+	// comparator: function(annotation) {
+	// 	return annotation.get("ranges")[0].startOffset; // change to startOffset
+	// },
 	initialize: function (annotations) {
-		this.sort();
+		// this.sort();
 	},
 });
 

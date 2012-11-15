@@ -6,7 +6,7 @@
 development:
   adapter: postgresql
   encoding: unicode
-  database: sandbox
+  database: ans_live
   pool: 5
   username: jfolsom
   password: th0rium

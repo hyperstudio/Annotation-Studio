@@ -25,17 +25,17 @@ Sidebar.RemoteAnnotationList = Backbone.Collection.extend({
 	model: Sidebar.Annotation,
     url: 'http://annotations.mit.edu/api/search',
     // url: 'http://localhost:5000/api/search',
-	comparator: function(annotation) {
-		try {
-			var startOffset = annotation.get("ranges")[0].startOffset;
-		}
-		catch(e) {
-			console.info("startOffset issue." + e.toString());
-		}
-		finally {
-			return startOffset; // change to startOffset
-		}
-	},
+	// comparator: function(annotation) {
+	// 	try {
+	// 		var startOffset = annotation.get("ranges")[0].startOffset;
+	// 	}
+	// 	catch(e) {
+	// 		console.info("startOffset issue." + e.toString());
+	// 	}
+	// 	finally {
+	// 		return startOffset; // change to startOffset
+	// 	}
+	// },
 	initialize: function (options) {
 		//console.info(options);
 		this.fetch({
@@ -44,7 +44,7 @@ Sidebar.RemoteAnnotationList = Backbone.Collection.extend({
 			error: this.fetchError
 		});
 		this.deferred = new $.Deferred();
-		this.sort();
+		// this.sort();
 	},
     deferred: Function.constructor.prototype,
     fetchSuccess: function (collection, response) {
@@ -61,7 +61,7 @@ Sidebar.LocalAnnotationList = Backbone.Collection.extend({
 		return annotation.get("ranges")[0].startOffset; // change to startOffset
 	},
 	initialize: function (annotations) {
-		this.sort();
+		// this.sort();
 	},
 });
 
@@ -115,7 +115,7 @@ Sidebar.AnnotationListView = Backbone.View.extend({
 			var annView = new Sidebar.AnnotationView({model: ann});
 			$("ul#annotation-list").append(annView.render().el);
 		});
-		this.collection.sort();
+		// this.collection.sort();
 
 		$("li.annotation-item span").tooltip();
 

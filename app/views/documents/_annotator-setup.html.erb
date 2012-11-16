@@ -25,7 +25,7 @@ jQuery(function ($) {
 
 	// Some personalization variables.
 	var userEmail = "<%= current_user.email %>";
-	var userGroups = "<%= current_user.rep_group_list %>".split(/, /);
+	var groups = "<%= current_user.rep_group_list %>".split(/, /);
 	// var userSearch = "<%= current_user.has_role?(:teacher) ? '' : 'userEmail' %>";
 
 	// Bootstrap Backbone Sidebar //
@@ -52,9 +52,9 @@ jQuery(function ($) {
 		// prefix: 'http://localhost:5000/api',
 		annotationData: {
 			'uri': [location.protocol, '//', location.host, location.pathname].join(''),
-			'groups': userGroups,
-			'username': '<%= current_user.first_name_last_initial %>',
-			'user': "<%= current_user.id %>",
+			'groups': groups,
+			// 'username': '<%= current_user.first_name_last_initial %>',
+			// 'user': "<%= current_user.id %>",
 		},
 		loadFromSearch: {
 			'limit': 1000,
@@ -62,10 +62,10 @@ jQuery(function ($) {
 			// Currently: only my own annotations if I'm not an admin, and I'm in a group;
 			// "show to all" setting is ignored.
 			// admins can see all annotations within a group
-			// <% unless current_user.has_role?(:admin) %>
-			// 'user': "<%= current_user.id %>",
-			// <% end %>
-			// 'groups': userGroups,
+			<% unless current_user.has_role?(:admin) %>
+			'user': "<%= current_user.id %>",
+			<% end %>
+			'groups': groups,
 			'uri': [location.protocol, '//', location.host, location.pathname].join(''),
 		}
 	});
@@ -75,44 +75,52 @@ jQuery(function ($) {
 		// Set the permissions for all new annotation objects.
 		// Doing this server side for now, probably preferable to do client side, 
 		// like the openshakespeare example
-		user: {
-			'id': "<%= current_user.id %>",
-			'username': "<%= current_user.first_name_last_initial %>",
-			'groups': userGroups,
-		},
+		user: '<%= current_user.email %>',
+		// user: {
+		// 	'id': "<%= current_user.id %>",
+		// 	'username': "<%= current_user.first_name_last_initial %>",
+		// 	'groups': userGroups,
+		// },
 
 		permissions: {
-			'read': ['<%= current_user.id %>', 'group:Admin'], // default: review mode; this is what users will need to control
-			'update': ['<%= current_user.id %>'], // no one else can ever update
-			'delete': ['<%= current_user.id %>'], // no one else can ever delete
-			'admin': ['<%= current_user.id %>'] // no one else can ever admin
+			'read': ['<%= current_user.email %>'], // default: review mode; this is what users will need to control
+			'update': ['<%= current_user.email %>'], // no one else can ever update
+			'delete': ['<%= current_user.email %>'], // no one else can ever delete
+			'admin': ['<%= current_user.email %>'] // no one else can ever admin
 		},
 
-		// Callback to return an id for the user
-		userId: function (user) {
-			if (user && user.id) { 
-				return user.id;
-			}
-			return user;
-		},
+		// permissions: {
+		// 	'read': ['<%= current_user.id %>', 'group:Admin'], // default: review mode; this is what users will need to control
+		// 	'update': ['<%= current_user.id %>'], // no one else can ever update
+		// 	'delete': ['<%= current_user.id %>'], // no one else can ever delete
+		// 	'admin': ['<%= current_user.id %>'] // no one else can ever admin
+		// },
 
-		// Callback to return a string for the user
-		userString: function (user) {
-			if (user && user.username) {
-				return user.username;
-			}
-			return user;
-		},
-
-		userAuthorize: function (user, token) {
-			// If the token is our admin token and the user
-			// is in the admin group then authorise.
-			if (token === 'group:Admin' && user.group === 'Admin') {
-				return true;
-			}
-			// If it's not an admin token check the id.
-			return user.id === token;
-		},
+		// // Callback to return an id for the user
+		// userId: function (user) {
+		// 	if (user && user.id) { 
+		// 		return user.id;
+		// 	}
+		// 	return user;
+		// },
+		// 
+		// // Callback to return a string for the user
+		// userString: function (user) {
+		// 	if (user && user.username) {
+		// 		return user.username;
+		// 	}
+		// 	return user;
+		// },
+		// 
+		// userAuthorize: function (user, token) {
+		// 	// If the token is our admin token and the user
+		// 	// is in the admin group then authorise.
+		// 	if (token === 'group:Admin' && user.group === 'Admin') {
+		// 		return true;
+		// 	}
+		// 	// If it's not an admin token check the id.
+		// 	return user.id === token;
+		// },
 
 		// Permissions settings per-annotation
 		showViewPermissionsCheckbox: true,

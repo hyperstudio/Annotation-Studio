@@ -142,6 +142,7 @@ Sidebar.AnnotationListView = Backbone.View.extend({
 
 			// Hide all details
 			$("ul#annotation-list li").removeClass('hover');
+			$("#annotation-well ul#annotation-list li").removeClass('focuswhite');
 
 			// Hide all details
 			$("ul#annotation-list li .details").hide();
@@ -154,6 +155,8 @@ Sidebar.AnnotationListView = Backbone.View.extend({
 
 			// Show these details
 			$(this).find(".details").show(200);
+
+			$(this).addClass("focuswhite");
 
 			//$(this).addClass('hover');
 

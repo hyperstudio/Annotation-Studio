@@ -39,7 +39,7 @@ div#textcontent {
 			box-shadow: 0px 6px 6px 6px #ddd;
 }
 
-#textcontent a[name~=2HCH] {
+#textcontent a[name] {
 	position:relative; top:-200px;
 }
 

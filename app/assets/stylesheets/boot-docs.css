@@ -32,7 +32,7 @@ pre {
 	display: block;
 	padding: 12px;
 	background-color: whiteSmoke;
-	border: none
+	border: none;
 	word-break: normal;
 	word-wrap: normal;
 	white-space: normal;
@@ -300,6 +300,20 @@ span.highlightborder {
           border-radius: 4px;
 */
 }
+
+#chapters a {
+	color:#000;
+	font-family: "source-sans-pro",sans-serif;
+	font-style: normal;
+	font-weight: 300;
+	line-height:1.1em;
+}
+
+
+#chapters li.active a {
+	color:#fff;
+}
+
 
 /*#chapters .nav {
   margin-bottom: 0;

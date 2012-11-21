@@ -30,4 +30,3 @@
 //= require annotator.markdown.min
 //= require annotator.unsupported.min
 //= require annotorious.okfn.js
-//= require boot-docs

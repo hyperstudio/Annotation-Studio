@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120827183632) do
+ActiveRecord::Schema.define(:version => 20121121165006) do
 
   create_table "assignments", :force => true do |t|
     t.integer  "user_id"
@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(:version => 20120827183632) do
     t.string   "rights_status"
     t.string   "slug"
     t.integer  "user_id"
+    t.text     "chapters"
   end
 
   add_index "documents", ["slug"], :name => "index_documents_on_slug", :unique => true

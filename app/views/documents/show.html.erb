@@ -2,7 +2,7 @@
 	<div class="affix-top" data-spy="affix" id="chapters" style="overflow:auto;">
 		<h4>Chapters</h4>
 		<ul class="nav nav-list nav-collapse" id="chapternav">
-			<%= @document.chapters.html_safe %>
+			<%= @document.chapters.try(:html_safe) %>
 		</ul>
 		<script type="text/javascript" charset="utf-8">
 			$("#chapternav a").click(function(event){

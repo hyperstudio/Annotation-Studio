@@ -1,28 +1,19 @@
 <div class="span3 hidden-phone hidden-tablet">
 	<div id="annotation-well" class="affix">
-		<div class="btn-group" data-toggle="buttons-radio" id="view-chooser">
-			<button class="viewchoice btn btn-small active" id="userview">Mine</button>
-			<button class="viewchoice btn btn-small" id="groupview">Group</button>
-			<button class="viewchoice btn btn-small" id="classview">Class</button>
-			<% if current_user.has_role?(:admin) %>
-			<button class="viewchoice btn btn-small btn-inverse" id="adminview">All</button>
-			<% end %>
-		</div>
-
 		<script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.3/underscore-min.js"></script>
 		<script src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/0.9.2/backbone-min.js"></script>
 		<script src="http://cdnjs.cloudflare.com/ajax/libs/mustache.js/0.4.2/mustache.min.js"></script>
 
 		<ul id="annotation-list"></ul>
 		<script type="text/template" id="comment-template">
-			<span id="sb{{uuid}}" href="#full{{uuid}}" data-highlight="#hl{{uuid}}" rel="tooltip" title="{{username}}" class="highlightlink comment">{{{text}}}</span>
+			<span id="sb{{uuid}}" data-toggle="collapse" data-parent="#annotation-list" href="#full{{uuid}}" data-highlight="#hl{{uuid}}" rel="tooltip" title="{{user.username}}" class="highlightlink comment">{{{text}}}</span>
 			<span id="quote{{uuid}}" class="sbquote details">&quot;{{{quote}}}&quot;</span>
 			<span id="text{{uuid}}" class="sbtext details">{{{text}}}</span>
 			<span id="info{{uuid}}" class="sbinfo details">{{username}}</span>
 			<div id="tags{{uuid}}" class="sbtags details">{{#tags}}<span class="label">{{.}}</span> {{/tags}}</div>
 		</script>
 		<script type="text/template" id="highlight-template">
-			<span id="sb{{uuid}}" data-highlight="#hl{{uuid}}" rel="tooltip" title="{{username}}" class="highlightlink highlight sbquote">&quot;{{{quote}}}&quot;</span>
+			<span id="sb{{uuid}}" data-highlight="#hl{{uuid}}" rel="tooltip" title="{{user.username}}" class="highlightlink highlight sbquote">&quot;{{{quote}}}&quot;</span>
 			<span id="quote{{uuid}}" class="sbquote details">&quot;{{{quote}}}&quot;</span>
 			<div id="tags{{uuid}}" class="sbtags details">{{#tags}}<span class="label">{{.}}</span> {{/tags}}</div>
 		</script>
@@ -31,11 +22,11 @@
 <%= javascript_include_tag "sidebar" %>
 <script type="text/javascript" charset="utf-8">
 jQuery(function ($) {
-	// $('#spinnermodal').modal('show');
-
+	// Some personalization variables.
+	// var userEmail = "<%= current_user.email %>";
+	// var userSearch = "<%= current_user.has_role?(:teacher) ? '' : 'userEmail' %>";
+	// Used to determine which annotations the current user can see.
 	var groups = "<%= current_user.rep_group_list %>".split(/, /);
-	var subgroups = "<%= current_user.rep_subgroup_list %>".split(/, /);
-
 	// Bootstrap Backbone Sidebar //
 	var sidebar = new Sidebar.App();
 	Backbone.history.start({pushState: true, root: window.location})
@@ -43,9 +34,9 @@ jQuery(function ($) {
 	var studio = $('#textcontent').annotator();
 
 	studio.annotator('addPlugin', 'Markdown');
-	<%# if current_user.has_role?(:admin) %>
+	<% if current_user.has_role?(:admin) %>
 	 // studio.annotator('addPlugin', 'Filter');
-	<%# end %>
+	<% end %>
 	studio.annotator('addPlugin', 'Tags');
 	   // studio.annotator('addPlugin', 'AnnotoriousImagePlugin');
 	studio.annotator('addPlugin', 'Unsupported');
@@ -53,40 +44,118 @@ jQuery(function ($) {
 		token: '<%= @jwt %>'
 	});
 	
-
+	// how to interact with the backend store
 	studio.annotator('addPlugin', 'Store', {
-		prefix: '<%= ENV["API_URL"] %>',
+		// prefix: 'http://annotations.mit.edu/api',
+		// prefix: 'http://staging-annotations.herokuapp.com/api',
+		prefix: 'http://localhost:5000/api',
 		annotationData: {
 			'uri': [location.protocol, '//', location.host, location.pathname].join(''),
-			"groups": groups,
-			"subgroups": subgroups,
-			// "username": 'Jamie F.',
+			'user': {
+				'id': <%= current_user.id %>,
+				'username': "<%= current_user.first_name_last_initial %>",
+				'groups': groups,
+			}
 		},
 		loadFromSearch: {
 			'limit': 1000,
-			"groups": groups,
-			"subgroups": subgroups,
-			'user': "<%= current_user.email %>",
-			'mode': 'user', // default mode -- user can switch via sidebar button.
-			'uri': [location.protocol, '//', location.host, location.pathname].join('')
+			
+			// Loads group annotations
+			'user[groups]': groups,
+
+			// Limits annotations to this document
+			'uri': [location.protocol, '//', location.host, location.pathname].join(''),
+			
+			// Limits annotations to this user unless user is an admin
+			<% unless current_user.has_role?(:admin) %>
+			'user[id]': "<%= current_user.id %>",
+			<% end %>
+			
 		}
 	});
-	studio.annotator('addPlugin', 'Permissions', {
-		user: "<%= current_user.email %>",
-		permissions: {
-			'read': ['<%= current_user.email %>'], // default: review mode; this is what users will need to control
-			'update': ['<%= current_user.email %>'], // no one else can ever update
-			'delete': ['<%= current_user.email %>'], // no one else can ever delete
-			'admin': ['<%= current_user.email %>'] // no one else can ever admin
-		},
-		// Permissions settings per-annotation
-		showViewPermissionsCheckbox: true,
-		showEditPermissionsCheckbox: false
-	});
-
-
 
 	var subscriber = $('#textcontent').annotator().data('annotator');
+	
+	var groups = "<%= current_user.rep_group_list %>".split(/, /);
+	var readPermitArray = ['<%= current_user.id %>'];
+	readPermitArray = readPermitArray.concat(groups);
+	console.info("readPermitArray: ");
+	console.info(readPermitArray);
+	
+	// settings to store with each annotation
+	studio.annotator('addPlugin', 'Permissions', {
+		user: {
+			'id': <%= current_user.id %>,
+			'username': "<%= current_user.first_name_last_initial %>",
+			// groups in which this user has read access to annotations
+			'read': groups,
+			'delete': groups,
+			'update': groups,
+			'admin': groups,
+		},
+
+		permissions: {
+			'read': readPermitArray, // by default, the current user and all his/her groups can see annotations they create
+			'update': ['<%= current_user.id %>'], // no one else can ever update
+			'delete': ['<%= current_user.id %>'], // no one else can ever delete
+			'admin': ['<%= current_user.id %>'] // no one else can ever admin
+		},
+
+		// Callback to return an id for the user
+		userId: function (user) {
+			console.info("userId called.");
+			if (user && user.id) { 
+				return user.id;
+			}
+			return user;
+		},
+
+		// Callback to return a string for the user
+		userString: function (user) {
+			console.info("userString called.");
+			if (user && user.username) {
+				return user.username;
+			}
+			return user;
+		},
+
+		userAuthorize: function (action, annotation, user) {
+			// console.info("userAuthorize called with: ");
+			// console.info("action: ");
+			// console.info(action);
+			// console.info("annotation: ");
+			// console.info(annotation);
+			// console.info("user: ");
+			// console.info(user);
+			// If no user is passed, the annotator is asking whether the annotation
+			// allows any user to do that action. An annotation denotes world access by storing 
+			// a zero-length array of tokens for that action's permission value
+			if (user == null) { 
+				// evaluates to true if the annotation stores no constraints.
+				return (annotation.permissions[action].length == 0);
+			}
+
+			// Otherwise, the annotator is asking whether a specific user has a specific 
+			// permission, so we return true only if the user stores a value for that action
+			// that matches what the annotation stores for that action
+			if (annotation.permissions[action].length > 0) { // the action is restricted to certain users
+				// using the Underscore.js intersection method to find out if this user has this token for this action
+				// return true if the annotation and the user share at least one token value for this action
+				return (_.intersection(user[action],annotation.permissions[action]).length > 0);
+			}
+			else { // the action is not restricted to certain users
+				return true;
+			}
+
+			// Failing all those tests, if the annotation.user.id is the current user.id, 
+			// we return true; the current user has all permissions on his/her own annotations.
+			return user.id === annotation.user.id;
+		},
+
+		// Permissions settings per-annotation
+		showViewPermissionsCheckbox: true,
+		showEditPermissionsCheckbox: true
+	});
 
 	// Create a UUID for a given annotation if needed.
 	// Once created, this shouldn't be changed.
@@ -116,22 +185,17 @@ jQuery(function ($) {
 	addUuid = __bind(function(a) {
 		if (a.highlights[0] != null) {
 			a.highlights[0].id = "hl"+ a.uuid;
-			a.highlights[0].title = a.user;
+			a.highlights[0].title = a.user.username;
 		}
 		else {
 			console.info("Err...");
 		}
 	}, this);
 	
-	
-	var stopSpinner = function(){
-		$('#spinnermodal').modal('hide');
-	};
-	
 	var createAndAddUuid = function(annotation){
 		createUuid(annotation);
 		addUuid(annotation);
-	};
+	}
 
 	// Update the sidebar with local annotation data
 	var loadSidebar = function(annotation) {
@@ -153,82 +217,8 @@ jQuery(function ($) {
 		console.info(newAnn.get("uuid"));
 	};
 	
-
-	$('#userview').on('click', function (e) {
-		// $('#spinnermodal').modal('show');
-		console.info('Clicked userview');
-		$('.viewchoice').removeClass("active");
-		var hilites = $('.annotator-hl');
-		hilites.contents().unwrap();
-		$(this).addClass("active");
-		var loadOptions = {
-			'limit': 1000,
-			"groups": groups,
-			"subgroups": subgroups,
-			'user': "<%= current_user.email %>",
-			'mode': 'user',
-			'uri': [location.protocol, '//', location.host, location.pathname].join('')
-		}
-		subscriber.plugins.Store.loadAnnotationsFromSearch(loadOptions);
-	});
-	$('#groupview').on('click', function (e) {
-		$('#spinnermodal').modal('show');
-		console.info('Clicked groupview');
-		$('.viewchoice').removeClass("active");
-		var hilites = $('.annotator-hl');
-		hilites.contents().unwrap();
-		$(this).addClass("active");
-		var loadOptions = {
-			'limit': 1000,
-			"groups": groups,
-			"subgroups": subgroups,
-			'user': "<%= current_user.email %>",
-			'mode': 'group',
-			'uri': [location.protocol, '//', location.host, location.pathname].join('')
-		}
-		subscriber.plugins.Store.loadAnnotationsFromSearch(loadOptions);
-	});
-	$('#classview').on('click', function (e) {
-		$('#spinnermodal').modal('show');
-		console.info('Clicked classview');
-		$('.viewchoice').removeClass("active");
-		var hilites = $('.annotator-hl');
-		hilites.contents().unwrap();
-		$(this).addClass("active");
-		var loadOptions = {
-			'limit': 1000,
-			"groups": groups,
-			"subgroups": subgroups,
-			'user': "<%= current_user.email %>",
-			'mode': 'class',
-			'uri': [location.protocol, '//', location.host, location.pathname].join('')
-		}
-		subscriber.plugins.Store.loadAnnotationsFromSearch(loadOptions);
-	});
-
-	<%# if current_user.has_role?(:admin) %>
-	$('#adminview').on('click', function (e) {
-		$('#spinnermodal').modal('show');
-		console.info('Clicked adminview');
-		$('.viewchoice').removeClass("active");
-		var hilites = $('.annotator-hl');
-		hilites.contents().unwrap();
-		$(this).addClass("active");
-		var loadOptions = {
-			'limit': 1000,
-			"groups": groups,
-			"subgroups": subgroups,
-			'user': "<%= current_user.email %>",
-			'mode': 'admin',
-			'uri': [location.protocol, '//', location.host, location.pathname].join('')
-		}
-		subscriber.plugins.Store.loadAnnotationsFromSearch(loadOptions);
-	});
-	<%# end %>
-
 	// When the annotator loads remote data, update sidebar
 	subscriber.subscribe('annotationsLoaded', loadSidebar);
-	subscriber.subscribe('annotationsLoaded', stopSpinner);
 
 	// Update all highlights with UUIDs
 	subscriber.subscribe('annotationsLoaded', __bind(function(annotations) {

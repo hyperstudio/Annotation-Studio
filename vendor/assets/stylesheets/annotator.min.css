@@ -254,8 +254,8 @@ display: inline;
 margin: 0 4px 0 0;
 cursor: pointer
 }
-.annotator-editor .annotator-checkbox {
-padding: 8px 6px
+.annotator-editor .annotator-checkbox, .annotator-editor .annotator-radio {
+padding: 2px 6px
 }
 .annotator-filter,.annotator-filter .annotator-filter-navigation button,.annotator-editor .annotator-controls {
 text-align: right;

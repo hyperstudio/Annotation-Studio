@@ -228,6 +228,7 @@ class Annotator.Editor extends Annotator.Widget
   addField: (options) ->
     field = $.extend({
       id:     'annotator-field-' + util.uuid()
+      name:   'permission-chooser'
       type:   'input'
       label:  ''
       load:   ->
@@ -250,6 +251,7 @@ class Annotator.Editor extends Annotator.Widget
     })
 
     if field.type == 'radio'
+      input[0].name = 'permission-chooser'
       input[0].type = 'radio'
       element.addClass('annotator-radio')
       element.append($('<label />', {for: field.id, html: field.label}))

@@ -47,13 +47,15 @@ class Annotator.Plugin.MITPermissions extends Annotator.Plugin.Permissions
 
     @annotator.editor.addField({
       type:   'radio'
-      label:  Annotator._t('Public')
+      name:   'permission-chooser'
+      label:  Annotator._t('Group')
       load:   createCallback('updatePermissionsField', 'read')
       submit: createCallback('updateAnnotationPermissions', 'read')
     })
 
     @annotator.editor.addField({
       type:   'radio'
+      name:   'permission-chooser'
       label:  Annotator._t('Review')
       load:   createCallback('updatePermissionsField', 'update')
       submit: createCallback('updateAnnotationPermissions', 'update')
@@ -61,6 +63,7 @@ class Annotator.Plugin.MITPermissions extends Annotator.Plugin.Permissions
 
     @annotator.editor.addField({
       type:   'radio'
+      name:   'permission-chooser'
       label:  Annotator._t('Private')
       load:   createCallback('updatePermissionsField', 'update')
       submit: createCallback('updateAnnotationPermissions', 'update')
@@ -165,7 +168,10 @@ class Annotator.Plugin.MITPermissions extends Annotator.Plugin.Permissions
   #
   # Returns nothing.
   updateAnnotationPermissions: (type, field, annotation) =>
-    annotation.permissions = @options.permissions unless annotation.permissions
+    console.log type
+    # console.log field
+    # console.log annotation
+	annotation.permissions = @options.permissions unless annotation.permissions
 
     dataKey = type + '-permissions'
 

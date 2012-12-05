@@ -83,7 +83,7 @@ jQuery(function ($) {
 	console.info(readPermitArray);
 	
 	// settings to store with each annotation
-	studio.annotator('addPlugin', 'Permissions', {
+	studio.annotator('addPlugin', 'MITPermissions', {
 		user: {
 			'id': <%= current_user.id %>,
 			'username': "<%= current_user.first_name_last_initial %>",
@@ -120,19 +120,26 @@ jQuery(function ($) {
 		},
 
 		userAuthorize: function (action, annotation, user) {
-			// console.info("userAuthorize called with: ");
-			// console.info("action: ");
+			console.info("action: "+ action);
 			// console.info(action);
 			// console.info("annotation: ");
 			// console.info(annotation);
 			// console.info("user: ");
 			// console.info(user);
-			// If no user is passed, the annotator is asking whether the annotation
+
+			// If no user is passed, it's because the annotator is asking whether the annotation
 			// allows any user to do that action. An annotation denotes world access by storing 
 			// a zero-length array of tokens for that action's permission value
-			if (user == null) { 
+			if (user === null) { 
 				// evaluates to true if the annotation stores no constraints.
-				return (annotation.permissions[action].length == 0);
+				if (annotation.permissions[action].length == 0) {
+					console.info("returning true: user === null; annotation.permissions[action].length === " + annotation.permissions[action].length);
+					return true
+				}
+				else {
+					console.info("returning false: user === null; annotation.permissions[action].length === " + annotation.permissions[action].length);
+					return false
+				}
 			}
 
 			// Otherwise, the annotator is asking whether a specific user has a specific 
@@ -141,20 +148,31 @@ jQuery(function ($) {
 			if (annotation.permissions[action].length > 0) { // the action is restricted to certain users
 				// using the Underscore.js intersection method to find out if this user has this token for this action
 				// return true if the annotation and the user share at least one token value for this action
-				return (_.intersection(user[action],annotation.permissions[action]).length > 0);
+				var userActionArray = user[action];
+				console.info("userActionArray: " + userActionArray);
+				var annotationActionArray = annotation.permissions[action];
+				console.info("annotationActionArray: " + annotationActionArray);
+				if (_.intersection(userActionArray,annotationActionArray).length > 0) {
+					console.info("returning true: annotation.permissions[action].length is "+ annotation.permissions[action].length +"and annotation.permissions[action].length is" + annotation.permissions[action].length);
+					return true;
+				}
 			}
 			else { // the action is not restricted to certain users
+				console.info("returning true: annotation.permissions[action].length is "+ annotation.permissions[action].length);
 				return true;
 			}
 
 			// Failing all those tests, if the annotation.user.id is the current user.id, 
 			// we return true; the current user has all permissions on his/her own annotations.
-			return user.id === annotation.user.id;
+			if (user.id === annotation.user.id) {
+				console.info("returning true: return user.id === annotation.user.id");
+				return true;
+			}
 		},
 
 		// Permissions settings per-annotation
-		showViewPermissionsCheckbox: true,
-		showEditPermissionsCheckbox: true
+		showViewPermissionsCheckbox: false,
+		showEditPermissionsCheckbox: false
 	});
 
 	// Create a UUID for a given annotation if needed.

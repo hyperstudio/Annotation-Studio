@@ -90,10 +90,10 @@ jQuery(function ($) {
 		},
 
 		permissions: {
-			'read': ['<%= current_user.email %>'], // default: review mode; this is what users will need to control
-			'update': ['<%= current_user.email %>'], // no one else can ever update
-			'delete': ['<%= current_user.email %>'], // no one else can ever delete
-			'admin': ['<%= current_user.email %>'] // no one else can ever admin
+			'read': ['<%= current_user.id %>'], // default: review mode; this is what users will need to control
+			'update': ['<%= current_user.id %>'], // no one else can ever update
+			'delete': ['<%= current_user.id %>'], // no one else can ever delete
+			'admin': ['<%= current_user.id %>'] // no one else can ever admin
 		},
 
 		// permissions: {
@@ -103,31 +103,30 @@ jQuery(function ($) {
 		// 	'admin': ['<%= current_user.id %>'] // no one else can ever admin
 		// },
 
-		// // Callback to return an id for the user
-		// userId: function (user) {
-		// 	if (user && user.id) { 
-		// 		return user.id;
-		// 	}
-		// 	return user;
-		// },
-		// 
-		// // Callback to return a string for the user
-		// userString: function (user) {
-		// 	if (user && user.username) {
-		// 		return user.username;
-		// 	}
-		// 	return user;
-		// },
-		// 
-		// userAuthorize: function (user, token) {
-		// 	// If the token is our admin token and the user
-		// 	// is in the admin group then authorise.
-		// 	if (token === 'group:Admin' && user.group === 'Admin') {
-		// 		return true;
-		// 	}
-		// 	// If it's not an admin token check the id.
-		// 	return user.id === token;
-		// },
+		// Callback to return an id for the user
+		userId: function (user) {
+			if (user && user.id) { 
+				return user.id;
+			}
+			return user;
+		},
+		
+		// Callback to return a string for the user
+		userString: function (user) {
+			if (user && user.username) {
+				return user.username;
+			}
+			return user;
+		},
+
+		userAuthorize: function (action, annotation, user) {
+			if (user === null) {
+				return annotation.permissions[action].length === 0;
+			}
+			else {
+				return user.id === annotation.user.id;
+			}
+		},
 
 		// Permissions settings per-annotation
 		showViewPermissionsCheckbox: true,

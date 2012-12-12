@@ -64,9 +64,11 @@ jQuery(function ($) {
 			// Currently: only my own annotations if I'm not an admin, and I'm in a group;
 			// "show to all" setting is ignored.
 			// admins can see all annotations within a group
-			<% unless current_user.has_role?(:admin) %>
-			'user[id]': "<%= current_user.id %>",
-			<% end %>
+			'user': {
+				// 'groups': groups,
+				'username': '<%= current_user.first_name_last_initial %>',
+				'id': "<%= current_user.id %>",
+			},
 			'groups': groups,
 			'uri': [location.protocol, '//', location.host, location.pathname].join(''),
 		}

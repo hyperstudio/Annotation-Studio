@@ -52,9 +52,11 @@ jQuery(function ($) {
 		// prefix: 'http://localhost:5000/api',
 		annotationData: {
 			'uri': [location.protocol, '//', location.host, location.pathname].join(''),
-			'groups': groups,
-			// 'username': '<%= current_user.first_name_last_initial %>',
-			// 'user': "<%= current_user.id %>",
+			'user' : {
+				'groups': groups,
+				'username': '<%= current_user.first_name_last_initial %>',
+				'id': "<%= current_user.id %>",
+			}
 		},
 		loadFromSearch: {
 			'limit': 1000,
@@ -63,7 +65,7 @@ jQuery(function ($) {
 			// "show to all" setting is ignored.
 			// admins can see all annotations within a group
 			<% unless current_user.has_role?(:admin) %>
-			'user': "<%= current_user.id %>",
+			'user[id]': "<%= current_user.id %>",
 			<% end %>
 			'groups': groups,
 			'uri': [location.protocol, '//', location.host, location.pathname].join(''),
@@ -75,12 +77,12 @@ jQuery(function ($) {
 		// Set the permissions for all new annotation objects.
 		// Doing this server side for now, probably preferable to do client side, 
 		// like the openshakespeare example
-		user: '<%= current_user.email %>',
-		// user: {
-		// 	'id': "<%= current_user.id %>",
-		// 	'username': "<%= current_user.first_name_last_initial %>",
-		// 	'groups': userGroups,
-		// },
+		// user: '<%= current_user.email %>',
+		user: {
+			'id': "<%= current_user.id %>",
+			'username': "<%= current_user.first_name_last_initial %>",
+			'groups': groups,
+		},
 
 		permissions: {
 			'read': ['<%= current_user.email %>'], // default: review mode; this is what users will need to control

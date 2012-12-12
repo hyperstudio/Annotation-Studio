@@ -65,7 +65,10 @@ jQuery(function ($) {
 			// "show to all" setting is ignored.
 			// admins can see all annotations within a group
 			'user': {
-				// 'groups': groups,
+				<% if current_user.has_role?(:admin) %>
+				'role': "admin",
+				<% end %>
+				'groups': groups,
 				'username': '<%= current_user.first_name_last_initial %>',
 				'id': "<%= current_user.id %>",
 			},

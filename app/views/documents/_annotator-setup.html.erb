@@ -68,11 +68,11 @@ jQuery(function ($) {
 				<% if current_user.has_role?(:admin) %>
 				'role': "admin",
 				<% end %>
-				'groups': groups,
-				'username': '<%= current_user.first_name_last_initial %>',
+				// 'groups': groups,
+				// 'username': '<%= current_user.first_name_last_initial %>',
 				'id': "<%= current_user.id %>",
 			},
-			'groups': groups,
+			// 'groups': groups,
 			'uri': [location.protocol, '//', location.host, location.pathname].join(''),
 		}
 	});

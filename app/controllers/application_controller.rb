@@ -14,6 +14,7 @@ class ApplicationController < ActionController::Base
         }, 
         "secretgoeshere"
     )
+    gon.current_user = current_user
   end
   helper_method :signed_in?
 

@@ -22,11 +22,8 @@
 <%= javascript_include_tag "sidebar" %>
 <script type="text/javascript" charset="utf-8">
 jQuery(function ($) {
-
-	// Some personalization variables.
-	var userEmail = "<%= current_user.email %>";
-	var groups = "<%= current_user.rep_group_list %>".split(/, /);
-	// var userSearch = "<%= current_user.has_role?(:teacher) ? '' : 'userEmail' %>";
+	var currentUser = serverExports.blah;
+	console.info(currentUser);
 
 	// Bootstrap Backbone Sidebar //
 	var sidebar = new Sidebar.App();
@@ -105,6 +102,7 @@ jQuery(function ($) {
 
 		// Callback to return an id for the user
 		userId: function (user) {
+			console.log(user);
 			if (user && user.id) { 
 				return user.id;
 			}
@@ -113,6 +111,7 @@ jQuery(function ($) {
 		
 		// Callback to return a string for the user
 		userString: function (user) {
+			console.log(user);
 			if (user && user.username) {
 				return user.username;
 			}
@@ -120,6 +119,7 @@ jQuery(function ($) {
 		},
 
 		userAuthorize: function (action, annotation, user) {
+			console.log(user);
 			if (user === null) {
 				return annotation.permissions[action].length === 0;
 			}
@@ -173,7 +173,7 @@ jQuery(function ($) {
 	var createAndAddUuid = function(annotation){
 		createUuid(annotation);
 		addUuid(annotation);
-	}
+	};
 
 	// Update the sidebar with local annotation data
 	var loadSidebar = function(annotation) {

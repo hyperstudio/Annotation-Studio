@@ -25,3 +25,5 @@ gem 'jquery-rails'
 gem 'redactor-rails'
 gem 'jbuilder'
 gem "jwt" #, "~> 0.1.4"
+gem "rabl"
+gem "gon"

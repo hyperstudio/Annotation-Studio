@@ -50,7 +50,7 @@ jQuery(function ($) {
 		annotationData: {
 			'uri': [location.protocol, '//', location.host, location.pathname].join(''),
 			'user' : {
-				'groups': groups,
+				// 'groups': groups,
 				'username': '<%= current_user.first_name_last_initial %>',
 				'id': "<%= current_user.id %>",
 			}
@@ -83,7 +83,7 @@ jQuery(function ($) {
 		user: {
 			'id': "<%= current_user.id %>",
 			'username': "<%= current_user.first_name_last_initial %>",
-			'groups': groups,
+			// 'groups': groups,
 		},
 
 		permissions: {

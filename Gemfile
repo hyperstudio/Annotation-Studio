@@ -21,6 +21,10 @@ group :assets do
   gem "twitter-bootstrap-rails"
 end
 
+group :development do
+  gem 'meta_request', '0.2.1'
+end
+
 gem 'jquery-rails'
 gem 'redactor-rails'
 gem 'jbuilder'

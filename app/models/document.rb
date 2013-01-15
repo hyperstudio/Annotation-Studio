@@ -9,5 +9,4 @@ class Document < ActiveRecord::Base
   def new_group=(group_name)
     rep_group_list << group_name unless group_name.nil? || group_name.empty?
   end
-
 end

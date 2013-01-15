@@ -20,7 +20,10 @@ class DocumentsController < ApplicationController
   # GET /documents/1.json
   def show
     @document = Document.find(params[:id])
-
+    if request.path != document_path(@document)
+      redirect_to @document, status: :moved_permanently
+    end
+    
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @document }

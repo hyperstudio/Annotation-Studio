@@ -10,6 +10,11 @@ gem 'repertoire-groups', :git => 'https://jamiefolsom:tr3m3nd0@github.com/repert
 gem 'acts-as-taggable-on', '~> 2.3.1'
 gem "friendly_id", ">= 4.0.9"
 
+
+group :development do
+  gem 'sextant'
+end
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do

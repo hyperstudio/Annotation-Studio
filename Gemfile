@@ -27,7 +27,7 @@ group :development do
   gem 'sextant'
 end
 
-gem 'jquery-rails'
+gem 'jquery-rails',   '~> 2.1.4'
 gem 'redactor-rails'
 gem 'jbuilder'
 gem "jwt" #, "~> 0.1.4"

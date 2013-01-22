@@ -24,6 +24,7 @@ gem "twitter-bootstrap-rails" # https://github.com/seyhunak/twitter-bootstrap-ra
 
 group :development do
   gem 'meta_request', '0.2.1'
+  gem 'sextant'
 end
 
 gem 'jquery-rails'
@@ -32,3 +33,9 @@ gem 'jbuilder'
 gem "jwt" #, "~> 0.1.4"
 gem "rabl"
 gem "gon"
+
+gem 'activeadmin'
+gem 'sass-rails'
+gem "meta_search",    '>= 1.1.0.pre'
+
+gem "figaro"

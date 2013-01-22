@@ -10,9 +10,9 @@ gem 'repertoire-groups', :git => 'https://jamiefolsom:tr3m3nd0@github.com/repert
 gem 'acts-as-taggable-on', '~> 2.3.1'
 gem "friendly_id", ">= 4.0.9"
 
-
 group :development do
   gem 'sextant'
+  gem 'meta_request', '0.2.1'
 end
 
 # Gems used only for assets and not required
@@ -32,3 +32,5 @@ gem "jwt" #, "~> 0.1.4"
 gem 'activeadmin'
 gem 'sass-rails'
 gem "meta_search",    '>= 1.1.0.pre'
+
+gem "figaro"

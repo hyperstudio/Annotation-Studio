@@ -1,4 +1,8 @@
 AnnotationStudio::Application.routes.draw do
+  ActiveAdmin.routes(self)
+
+  devise_for :admin_users, ActiveAdmin::Devise.config
+
   devise_for :users
 
   # Allow annotators to view their work

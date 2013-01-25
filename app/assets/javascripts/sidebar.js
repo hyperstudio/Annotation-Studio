@@ -26,7 +26,15 @@ Sidebar.RemoteAnnotationList = Backbone.Collection.extend({
     url: 'http://annotations.mit.edu/api/search',
     // url: 'http://localhost:5000/api/search',
 	// comparator: function(annotation) {
-	// 	return annotation.get("ranges")[0].startOffset; // change to startOffset
+	// 	try {
+	// 		var startOffset = annotation.get("ranges")[0].startOffset;
+	// 	}
+	// 	catch(e) {
+	// 		console.info("startOffset issue." + e.toString());
+	// 	}
+	// 	finally {
+	// 		return startOffset; // change to startOffset
+	// 	}
 	// },
 	initialize: function (options) {
 		//console.info(options);
@@ -36,6 +44,7 @@ Sidebar.RemoteAnnotationList = Backbone.Collection.extend({
 			error: this.fetchError
 		});
 		this.deferred = new $.Deferred();
+		// this.sort();
 	},
     deferred: Function.constructor.prototype,
     fetchSuccess: function (collection, response) {
@@ -52,7 +61,7 @@ Sidebar.LocalAnnotationList = Backbone.Collection.extend({
 		return annotation.get("ranges")[0].startOffset; // change to startOffset
 	},
 	initialize: function (annotations) {
-		this.sort();
+		// this.sort();
 	},
 });
 
@@ -102,11 +111,13 @@ Sidebar.AnnotationListView = Backbone.View.extend({
 		$("ul#annotation-list").find(".annotation-item").remove();
 
 		// Walk throught the list, and render markdown in the user comment first.
-		// this.collection.sort();
 		this.collection.each(function(ann) {
 			var annView = new Sidebar.AnnotationView({model: ann});
 			$("ul#annotation-list").append(annView.render().el);
 		});
+		// this.collection.sort();
+
+		$("li.annotation-item span").tooltip();
 
 		// Bind some events to links
 		$("span.annotator-hl").click(function(event) {
@@ -117,7 +128,7 @@ Sidebar.AnnotationListView = Backbone.View.extend({
 			var targetid = "#sb" + parts[1];
 
 			// TODO: deal with the events in a more organized way (recompose them in functions)
-			$('div.well').animate({scrollTop:$(targetid).offset().top}, 100
+			$('div#annotation-well').animate({scrollTop:$(targetid).offset().top}, 100
 			, function (){
 				$(targetid).parent().addClass('hover');
 				// $(targetid).tooltip('show'); // disappears after 1 sec?
@@ -131,6 +142,7 @@ Sidebar.AnnotationListView = Backbone.View.extend({
 
 			// Hide all details
 			$("ul#annotation-list li").removeClass('hover');
+			$("#annotation-well ul#annotation-list li").removeClass('focuswhite');
 
 			// Hide all details
 			$("ul#annotation-list li .details").hide();
@@ -144,9 +156,11 @@ Sidebar.AnnotationListView = Backbone.View.extend({
 			// Show these details
 			$(this).find(".details").show(200);
 
+			$(this).addClass("focuswhite");
+
 			//$(this).addClass('hover');
 
-			console.info("ID target attr from list item click function: "+idtarget);
+			// console.info("ID target attr from list item click function: "+idtarget);
 			$("span.highlightlink").tooltip('hide');
 			
 			// $(this).removeClass('hover');
@@ -172,22 +186,22 @@ Sidebar.App = Backbone.Router.extend({
 	listAnnotations: function (annotationArray) {
 		Sidebar.annotations = new Sidebar.LocalAnnotationList(annotationArray);
 		var annotationsList = new Sidebar.AnnotationListView({
-			"container": $('.well'),
+			"container": $('#annotation-well'),
 			"collection": Sidebar.annotations
 		});
 		annotationsList.render();
-		console.info("Local: "+ Sidebar.annotations.toJSON());
+		// console.info("Local: "+ Sidebar.annotations.toJSON());
 	},
 	// takes an object literal of options for an XHR request.
 	updateAnnotations: function (options) {
 		Sidebar.annotations = new Sidebar.RemoteAnnotationList(options);
 		var annotationsList = new Sidebar.AnnotationListView({
-			"container": $('.well'),
+			"container": $('#annotation-well'),
 			"collection": Sidebar.annotations
 		});
 		Sidebar.annotations.deferred.done(function () {
 			annotationsList.render();
-			console.info("Remote: "+ Sidebar.annotations.toJSON());
+			// console.info("Remote: "+ Sidebar.annotations.toJSON());
 		});
 	},
 });

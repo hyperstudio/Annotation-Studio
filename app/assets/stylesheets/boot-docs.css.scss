@@ -1,0 +1,397 @@
+/* Add additional stylesheets below
+-------------------------------------------------- */
+/*
+  Bootstrap's documentation styles
+  Special styles for presenting Bootstrap's documentation and examples
+*/
+
+/* 
+body{background-color:#4A525A;}
+#targettext h1 {	color:#DDD;}
+.annotator-hl {
+	background-color:rgba(34, 34, 34, 0.45);
+}
+@import url(http://fonts.googleapis.com/css?family=Esteban);
+@import url(http://fonts.googleapis.com/css?family=Balthazar);
+*/
+
+h1, h2, h3, h4, h5, h6, blockquote {
+	font-family: "source-sans-pro",sans-serif;
+	font-style: normal;
+	font-weight: 300;
+}
+
+body {
+	background-color: #eee;
+}
+
+pre {
+	font-family: "source-sans-pro",sans-serif;
+	font-style: normal;
+	font-weight: 400;
+	display: block;
+	padding: 12px;
+	background-color: whiteSmoke;
+	border: none;
+	word-break: normal;
+	word-wrap: normal;
+	white-space: normal;
+}
+
+
+
+div#textcontent {
+	margin-top:60px;
+	font-family: "calluna";
+	padding: 60px;
+	background-color: #fff;
+	-webkit-box-shadow: 0px 6px 6px 6px #ddd;
+			box-shadow: 0px 6px 6px 6px #ddd;
+}
+
+#textcontent a[name] {
+	position:relative; top:-100px;
+}
+
+#textcontent h4 {
+	padding-top:40px;
+}
+
+#document-title {
+	margin-top:40px;
+}
+
+#document-title h2 {
+	position:relative;
+	top:10px;
+	display:inline;
+}
+
+#document-title h4 {
+	display:inline;
+	margin:20px 160px 20px 0;
+}
+
+
+
+.annotator-filter{
+	margin-top: 4px;
+}
+
+.highlightlink.comment {
+	font-family: "source-sans-pro",sans-serif;
+	font-style: normal;
+	font-weight: 400;
+	display: block;
+	width:100%;
+	height:1.6em;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.highlightlink.comment img{
+	max-width:100px;
+}
+
+.sbtext, .sbinfo, .sbtags {
+	display: block;
+	border-top: 1px solid #ccc;
+	padding-bottom: 10px;
+	font-family: "source-sans-pro",sans-serif;
+	font-style: normal;
+	font-weight: 400;
+}
+
+.sbquote {
+	font-family: "calluna";
+}
+
+.details {
+	background-color: #fff;
+}
+
+li.annotation-item.focuswhite {
+	background-color:#fff;
+}
+
+#annotation-well {
+	width:240px;
+	padding:0 15px;
+  	padding-top: 60px;
+}
+
+#annotation-well ul#annotation-list li span.label, #annotation-well ul#annotation-list li span.badge {
+	color: #fff;
+	font-family: "source-sans-pro",sans-serif;
+	font-style: normal;
+	font-weight: 400;
+}
+
+.text_area {
+	width:600px;
+	height:300px;
+}
+
+p.notice, p.alert {
+	display: none;
+}
+
+a.logo {
+	float:right;
+	display: block;
+}
+
+a.logo img {
+	max-height:30px;
+	margin-top: 5px;
+}
+
+ul#accountlinks {
+	float:right;
+}
+
+.chapter, .chapter p {
+	font-size: 1.1em;
+	line-height: 2em;
+	color:#000;
+}
+
+a.texttitle {
+	font-size: 1.1em !important;
+	font-weight: bold !important;
+}
+
+.chapter h4 {
+	color:#000;
+	margin-top:40px;
+	font-size: 18px;
+	font-weight: bold;
+}
+
+#annotation-well a.trigger {
+	float:right;
+	display:inline;
+	margin-top:5px;
+}
+
+.annotator-widget img {
+	max-width:150px;
+	display:inline;
+}
+
+/* Sidebar, see: http://stackoverflow.com/questions/9350818/fixed-sidebar-navigation-in-fluid-twitter-bootstrap-2-0 */
+/*.sidebar-nav {
+    position:fixed;
+    top:100px;
+    width:21.97%;
+	height:80%;
+	overflow: auto;
+	background-color: #fefefe;
+}
+*/
+#annotation-well ul#annotation-list {
+	position: relative;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	float: left;
+	left: 22.5%;
+	list-style: none;
+	margin-left: -22.5%;
+/*	border: 1px solid rgba(0, 0, 0, 0.2);
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-o-box-sizing: border-box;
+	box-sizing: border-box;
+*/
+}
+
+#annotation-well ul#annotation-list li {
+	font-size: 12px;
+	font-style: normal;
+	font-weight: 400;
+	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.3);	
+	padding: 2px 5px;
+	margin: 4px 0 0 0;
+	color: #868686;
+	-webkit-border-radius: 4px;
+			border-radius: 4px;
+	-moz-background-clip: padding; -webkit-background-clip: padding-box; background-clip: padding-box;
+	-webkit-box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.1), 0 1px 10px rgba(0, 0, 0, 0.1);
+	-moz-box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.1), 0 1px 10px rgba(0, 0, 0, 0.1);
+	box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.1), 0 1px 10px rgba(0, 0, 0, 0.1);
+}
+
+div.okfnyellow {
+	background-color: rgba(255, 255, 10, 0.3);	
+	border: 1px solid #999;
+    width:10px;
+    height:10px;
+	padding: 0;
+	margin: 0;
+}
+
+.highlightlink.highlight {
+	display: block;
+	width:100%;
+	height:1.6em;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+span.highlightborder {
+	border-left: 5px solid #F00;
+}
+
+#annotation-well ul#annotation-list li:hover {
+/*	background-color: #ddd;*/
+}
+
+#annotation-well ul#annotation-list li.hover {
+/*	background-color: #ddd;*/
+}
+
+
+#annotation-well ul#annotation-list li span {
+	text-decoration:none;
+	color: #111;
+}
+
+#annotation-well ul#annotation-list li.selected, 
+.annotator-hl.selected {
+	color: #5b4001;
+	background-color: #fadb3b;
+}
+
+
+/*@media (max-width: 767px) {
+    .sidebar-nav {
+        position:static;
+        width:auto;
+    }
+}
+*/
+@media (max-width: 979px) {
+/*    .sidebar-nav {
+        top:70px;
+    }
+*/}
+
+/* Subnav */
+#chapters {
+	width:240px;
+	padding-top:60px;
+/*  width: 100%;
+  height: 36px;
+  background-color: #eeeeee; 
+  background-repeat: repeat-x;
+  background-image: -moz-linear-gradient(top, #f5f5f5 0%, #eeeeee 100%); 
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f5f5f5), color-stop(100%,#eeeeee)); 
+  background-image: -webkit-linear-gradient(top, #f5f5f5 0%,#eeeeee 100%); 
+  background-image: -ms-linear-gradient(top, #f5f5f5 0%,#eeeeee 100%); 
+  background-image: -o-linear-gradient(top, #f5f5f5 0%,#eeeeee 100%); 
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f5f5f5', endColorstr='#eeeeee',GradientType=0 );
+  background-image: linear-gradient(top, #f5f5f5 0%,#eeeeee 100%);
+  border: 1px solid #e5e5e5;
+  -webkit-border-radius: 4px;
+     -moz-border-radius: 4px;
+          border-radius: 4px;
+*/
+}
+
+#chapters a {
+	color:#000;
+	font-family: "source-sans-pro",sans-serif;
+	font-style: normal;
+	font-weight: 300;
+	line-height:1.1em;
+}
+
+
+#chapters li.active a {
+	color:#fff;
+}
+
+
+/*#chapters .nav {
+  margin-bottom: 0;
+}
+
+#chapters .nav > li > a {
+  margin: 0;
+  padding-top:    11px;
+  padding-bottom: 11px;
+  border-left: 1px solid #f5f5f5;
+  border-right: 1px solid #e5e5e5;
+  -webkit-border-radius: 0;
+     -moz-border-radius: 0;
+          border-radius: 0;
+}
+#chapters .nav > .active > a,
+#chapters .nav > .active > a:hover {
+  padding-left: 13px;
+  color: #777;
+  background-color: #e9e9e9;
+  border-right-color: #ddd;
+  border-left: 0;
+  -webkit-box-shadow: inset 0 3px 5px rgba(0,0,0,.05);
+     -moz-box-shadow: inset 0 3px 5px rgba(0,0,0,.05);
+          box-shadow: inset 0 3px 5px rgba(0,0,0,.05);
+}
+#chapters .nav > .active > a .caret,
+#chapters .nav > .active > a:hover .caret {
+  border-top-color: #777;
+}
+#chapters .nav > li:first-child > a,
+#chapters .nav > li:first-child > a:hover {
+  border-left: 0;
+  padding-left: 12px;
+  -webkit-border-radius: 4px 0 0 4px;
+     -moz-border-radius: 4px 0 0 4px;
+          border-radius: 4px 0 0 4px;
+}
+#chapters .nav > li:last-child > a {
+  border-right: 0;
+}
+#chapters .dropdown-menu {
+  -webkit-border-radius: 0 0 4px 4px;
+     -moz-border-radius: 0 0 4px 4px;
+          border-radius: 0 0 4px 4px;
+}
+*/
+
+/* Fixed subnav on scroll, but only for 980px and up (sorry IE!) */
+/*@media (min-width: 980px) {
+  .subnav-fixed {
+    position: fixed;
+    top: 40px;
+    left: 0;
+    right: 0;
+    z-index: 1020;
+    border-color: #d5d5d5;
+    border-width: 0 0 1px; 
+    -webkit-border-radius: 0;
+       -moz-border-radius: 0;
+            border-radius: 0;
+    -webkit-box-shadow: inset 0 1px 0 #fff, 0 1px 5px rgba(0,0,0,.1);
+       -moz-box-shadow: inset 0 1px 0 #fff, 0 1px 5px rgba(0,0,0,.1);
+            box-shadow: inset 0 1px 0 #fff, 0 1px 5px rgba(0,0,0,.1);
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+  }
+  .subnav-fixed .nav {
+    width: 938px;
+    margin: 0 auto;
+    padding: 0 1px;
+  }
+  #chapters .nav > li:first-child > a,
+  #chapters .nav > li:first-child > a:hover {
+    -webkit-border-radius: 0;
+       -moz-border-radius: 0;
+            border-radius: 0;
+  }
+}
+*/
+
+.nav-list >.active >a,.nav-list>.active>a:hover{color:#ffffff;text-shadow:0 -1px 0 rgba(0, 0, 0, 0.2);background-color: #7E7E7E;}

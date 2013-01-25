@@ -2,6 +2,8 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
 
   before_filter :authenticate_user!
+
+  # add_breadcrumb :index, :root_path
   
   def signed_in?
     @now = DateTime.current().to_time.iso8601
@@ -14,6 +16,7 @@ class ApplicationController < ActionController::Base
         }, 
         "secretgoeshere"
     )
+    gon.current_user = current_user
   end
   helper_method :signed_in?
 
@@ -26,4 +29,5 @@ class ApplicationController < ActionController::Base
   rescue_from CanCan::AccessDenied do |exception|
     redirect_to root_url, :alert => exception.message
   end
+  
 end

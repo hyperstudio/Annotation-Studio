@@ -2,8 +2,9 @@
 <html lang="en">
 	<head>
 	<meta charset="utf-8">
-	<title>Demo :: Annotation Studio :: MIT Hyperstudio</title>
-
+	<title>Staging :: Annotation Studio :: MIT Hyperstudio</title>
+	<%= include_gon(:namespace => 'serverExports') %>
+	
 	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
 	<!--[if lt IE 9]>
 		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
@@ -23,13 +24,12 @@
 	
 	<!-- start Mixpanel --><script type="text/javascript">(function(c,a){window.mixpanel=a;var b,d,h,e;b=c.createElement("script");b.type="text/javascript";b.async=!0;b.src=("https:"===c.location.protocol?"https:":"http:")+'//cdn.mxpnl.com/libs/mixpanel-2.1.min.js';d=c.getElementsByTagName("script")[0];d.parentNode.insertBefore(b,d);a._i=[];a.init=function(b,c,f){function d(a,b){var c=b.split(".");2==c.length&&(a=a[c[0]],b=c[1]);a[b]=function(){a.push([b].concat(Array.prototype.slice.call(arguments,0)))}}var g=a;"undefined"!==typeof f?
 	g=a[f]=[]:f="mixpanel";g.people=g.people||[];h="disable track track_pageview track_links track_forms register register_once unregister identify name_tag set_config people.identify people.set people.increment".split(" ");for(e=0;e<h.length;e++)d(g,h[e]);a._i.push([b,c,f])};a.__SV=1.1})(document,window.mixpanel||[]);
-	mixpanel.init("58aae6abad6c408b139e77bf4f65342e");</script><!-- end Mixpanel -->
-	
+	mixpanel.init("750ff8a7a4de7e1b9adc97508f85c878");</script><!-- end Mixpanel -->
+
 	<script type="text/javascript">
 
 	  var _gaq = _gaq || [];
-	  _gaq.push(['_setAccount', 'UA-34437604-3']);
-	  _gaq.push(['_setDomainName', 'annotationstudio.org']);
+	  _gaq.push(['_setAccount', '<%= ENV["GOOGLE_ANALYTICS_CODE"] %>']);
 	  _gaq.push(['_trackPageview']);
 
 	  (function() {
@@ -39,9 +39,13 @@
 	  })();
 
 	</script>
+
+	<script type="text/javascript" src="//use.typekit.net/wod1jtz.js"></script>
+	<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 	</head>
 
-	<body data-spy="scroll" data-target=".subnav" data-offset="50" offset="50">
+	<body data-spy="scroll" data-target="#chapters">
+
 	<div class="navbar navbar-fixed-top">
 		<div class="navbar-inner">
 			<div class="container">
@@ -58,7 +62,7 @@
 						<li><a data-toggle="modal" href="#help">Help</a></li>
 						<% end %>
 					</ul>
-					<a class="logo" href="/"><img src="/assets/hs-logo-trans-horiz.png"></a>
+					<a class="hidden-phone logo" href="/"><img src="/assets/hs-logo-trans-horiz.png"></a>
 					<ul class="nav" id="accountlinks">
 						<%= render 'devise/menu/registration_items' %>
 						<%= render 'devise/menu/login_items' %>
@@ -69,14 +73,13 @@
 	</div><!--/.navbar-fixed-top -->
 	<div class="container">
 		<div class="content">
-		      <%- flash.each do |name, msg| -%>
-		        <%= content_tag :div, msg, :class => "alert alert-#{name}" if msg.is_a?(String) %>
-		      <%- end -%>
-			<div class="row-fluid">
+			<%= bootstrap_flash %>
+
+			<div class="row">
 					<%= yield %>
-			</div><!--/row-fluid -->
+			</div><!--/row -->
 		<footer>
-			<p>&copy; MIT 2012</p>
+			<p>&copy; MIT <%= Time.now.year %></p>
 		</footer>
 		</div><!--/content -->
 	</div><!-- /container -->

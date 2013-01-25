@@ -571,5 +571,5 @@ background-position: 0 -255px
 background: rgba(255,255,10,0.8)
 }
 .annotator-hl-filtered {
-background: #0ff;
+background: transparent;
 }

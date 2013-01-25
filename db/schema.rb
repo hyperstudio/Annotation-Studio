@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121018184226) do
+ActiveRecord::Schema.define(:version => 20130122200956) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -56,8 +56,8 @@ ActiveRecord::Schema.define(:version => 20121018184226) do
   create_table "documents", :force => true do |t|
     t.string   "title"
     t.text     "text"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
     t.string   "author"
     t.datetime "year_published"
     t.string   "edition"
@@ -66,7 +66,7 @@ ActiveRecord::Schema.define(:version => 20121018184226) do
     t.string   "rights_status"
     t.string   "slug"
     t.integer  "user_id"
-    t.date     "publication_date"
+    t.text     "chapters"
   end
 
   add_index "documents", ["slug"], :name => "index_documents_on_slug", :unique => true

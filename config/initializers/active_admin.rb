@@ -116,12 +116,12 @@ ActiveAdmin.setup do |config|
   # Enable and disable Batch Actions
   #
   config.batch_actions = true
-  
+
 
   # == Controller Filters
   #
   # You can add before, after and around filters to all of your
-  # Active Admin resources from here.
+  # Active Admin resources and pages from here.
   #
   # config.before_filter :do_something_awesome
 
@@ -134,7 +134,7 @@ ActiveAdmin.setup do |config|
   #
   # To load a stylesheet:
   #   config.register_stylesheet 'my_stylesheet.css'
-  
+
   # You can provide an options hash for more control, which is passed along to stylesheet_link_tag():
   #   config.register_stylesheet 'my_print_stylesheet.css', :media => :print
   #
@@ -146,4 +146,7 @@ ActiveAdmin.setup do |config|
   #
   # Set the CSV builder separator (default is ",")
   # config.csv_column_separator = ','
+  #
+  # Set the CSV builder options (default is {})
+  # config.csv_options = {}
 end

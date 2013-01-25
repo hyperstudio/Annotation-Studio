@@ -1,0 +1,88 @@
+development:
+    DEFAULT_NEW_USER_GROUP: student
+    GOOGLE_ANALYTICS_CODE: development 
+    ENVIRONMENT_TAG: Development
+    API_URL: http://localhost:5000/api
+    DEFAULT_USERS_CAN_CHOOSE_GROUPS: true
+    DEFAULT_USERS_CAN_CONTROL_PERMISSIONS: true
+    DEFAULT_USERS_CAN_CREATE_TEXTS: true
+    DEFAULT_USERS_CAN_SEE_OTHERS_WORK: true
+    GMAIL_USER: jamiefolsom@gmail.com
+    GMAIL_PASS: ph0t0synth
+staging:
+    DEFAULT_NEW_USER_GROUP: student
+    GOOGLE_ANALYTICS_CODE: 
+    ENVIRONMENT_TAG: Staging
+    API_URL: http://staging-annotations.herokuapp.com/api
+    DEFAULT_USERS_CAN_CHOOSE_GROUPS: true
+    DEFAULT_USERS_CAN_CONTROL_PERMISSIONS: true
+    DEFAULT_USERS_CAN_CREATE_TEXTS: true
+    DEFAULT_USERS_CAN_SEE_OTHERS_WORK: true
+    # Heroku values
+    # DATABASE_URL:                   postgres://scftvdqajhrvql:Ku0nShe2ED-14dsgza_dn4lQtU@ec2-23-23-201-251.compute-1.amazonaws.com:5432/da8ahehj8jistv
+    # GEM_PATH:                       vendor/bundle/ruby/1.9.1
+    # HEROKU_POSTGRESQL_CHARCOAL_URL: postgres://scftvdqajhrvql:Ku0nShe2ED-14dsgza_dn4lQtU@ec2-23-23-201-251.compute-1.amazonaws.com:5432/da8ahehj8jistv
+    # HEROKU_POSTGRESQL_VIOLET_URL:   postgres://phvilcnithofoa:4EMAMq_0Os11oqP9mipJqDWcuK@ec2-107-21-118-162.compute-1.amazonaws.com:5432/d9i6jci0kufmn7
+    # LANG:                           en_US.UTF-8
+    # MAINTENANCE_PAGE_URL:           http://hyperstudio.mit.edu/
+    # PAPERTRAIL_API_TOKEN:           orny6K5W7vihUlNkZTC
+    # PATH:                           bin:vendor/bundle/ruby/1.9.1/bin:/usr/local/bin:/usr/bin:/bin
+    # PGBACKUPS_URL:                  https://25761:41cq3shrgo6npmzlpskjs922r@pgbackups.heroku.com/client
+    # RACK_ENV:                       staging
+    # RAILS_ENV:                      staging
+    SENDGRID_PASSWORD:              rvat9sac
+    SENDGRID_USERNAME:              app4754350@heroku.com
+production:
+    DEFAULT_NEW_USER_GROUP: unapproved
+    GOOGLE_ANALYTICS_CODE: UA-34437604-1
+    ENVIRONMENT_TAG: Production
+    API_URL: http://annotations.mit.edu/api
+    DEFAULT_USERS_CAN_CHOOSE_GROUPS: true
+    DEFAULT_USERS_CAN_CONTROL_PERMISSIONS: true
+    DEFAULT_USERS_CAN_CREATE_TEXTS: true
+    DEFAULT_USERS_CAN_SEE_OTHERS_WORK: true
+    # Heroku values
+    # ADMINIUM_URL:                 https://adminium.herokuapp.com/heroku/accounts/c1e2a65fe
+    # BLITZ_API_KEY:                888068a1-379c2414-ee29a27d-3f0f2ccf
+    # BLITZ_API_USER:               jfolsom@mit.edu
+    # DATABASE_URL:                 postgres://yhigxaseyuhzbj:_M54CPqS85y53lkHioIfDJPw8A@ec2-23-21-85-231.compute-1.amazonaws.com:5432/d9vdaoo80tuvoq
+    # GEM_PATH:                     vendor/bundle/ruby/1.9.1
+    # GITHUB_USERNAME:              jamiefolsom
+    # HEROKU_POSTGRESQL_BLUE_URL:   postgres://csliqjwslwgsnx:06ZprkixHYt84DjLG_lELOMTmu@ec2-54-243-212-154.compute-1.amazonaws.com:5662/d5hskf312d0ftk
+    # HEROKU_POSTGRESQL_COBALT_URL: postgres://yhigxaseyuhzbj:_M54CPqS85y53lkHioIfDJPw8A@ec2-23-21-85-231.compute-1.amazonaws.com:5432/d9vdaoo80tuvoq
+    # LANG:                         en_US.UTF-8
+    # LOGGLY_URL:                   http://herokuapp5991505.loggly.com/heroku/resources/herokuapp5991505
+    # NEW_RELIC_APP_NAME:           staging-annotationstudio
+    # NEW_RELIC_ID:                 142602
+    # NEW_RELIC_LICENSE_KEY:        8b0f4039143c4d2ee82b1c7643d52a3327d87ff4
+    # NEW_RELIC_LOG:                stdout
+    # PATH:                         bin:vendor/bundle/ruby/1.9.1/bin:/usr/local/bin:/usr/bin:/bin
+    # PGBACKUPS_URL:                https://26228:51srxilnwq6t2oamg9t6tnlsz@pgbackups.heroku.com/client
+    # RACK_ENV:                     production
+    # RAILS_ENV:                    production
+    # SENDGRID_PASSWORD:            baujtc8s
+    # SENDGRID_USERNAME:            app5991505@heroku.com
+public:
+    DEFAULT_NEW_USER_GROUP: student
+    GOOGLE_ANALYTICS_CODE: UA-34437604-3
+    ENVIRONMENT_TAG: Public
+    API_URL: http://annotations.mit.edu/api
+    DEFAULT_USERS_CAN_CHOOSE_GROUPS: false
+    DEFAULT_USERS_CAN_CONTROL_PERMISSIONS: false
+    DEFAULT_USERS_CAN_CREATE_TEXTS: false
+    DEFAULT_USERS_CAN_SEE_OTHERS_WORK: false
+    # Heroku values
+    # DATABASE_URL:                   postgres://aeqeoecuoytpmg:UkHSiOMca5Lbp6LS1luF5jkPiS@ec2-23-21-93-247.compute-1.amazonaws.com:5432/d7g9q4fhor5jej
+    # GEM_PATH:                       vendor/bundle/ruby/1.9.1
+    # HEROKU_POSTGRESQL_CHARCOAL_URL: postgres://aeqeoecuoytpmg:UkHSiOMca5Lbp6LS1luF5jkPiS@ec2-23-21-93-247.compute-1.amazonaws.com:5432/d7g9q4fhor5jej
+    # LANG:                           en_US.UTF-8
+    # NEW_RELIC_APP_NAME:             young-sierra-3858
+    # NEW_RELIC_ID:                   160326
+    # NEW_RELIC_LICENSE_KEY:          837cee75bf84f1a0e13d0efe586515daf2279e30
+    # NEW_RELIC_LOG:                  stdout
+    # PATH:                           bin:vendor/bundle/ruby/1.9.1/bin:/usr/local/bin:/usr/bin:/bin
+    # PGBACKUPS_URL:                  https://55981:4bdeord9zuxlcjh73yc73cg87@pgbackups.heroku.com/client
+    # RACK_ENV:                       public
+    # RAILS_ENV:                      public
+    # SENDGRID_PASSWORD:              kdkui92o
+    # SENDGRID_USERNAME:              app7500921@heroku.com

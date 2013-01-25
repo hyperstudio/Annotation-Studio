@@ -29,4 +29,4 @@
 //= require annotator.tags.min
 //= require annotator.markdown.min
 //= require annotator.unsupported.min
-//= require boot-docs
+//= require annotorious.okfn.js

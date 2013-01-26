@@ -35,7 +35,7 @@ staging:
 production:
     DEFAULT_NEW_USER_GROUP: unapproved
     GOOGLE_ANALYTICS_CODE: UA-34437604-1
-    ENVIRONMENT_TAG: Production
+    ENVIRONMENT_TAG: Welcome
     API_URL: http://annotations.mit.edu/api
     DEFAULT_USERS_CAN_CHOOSE_GROUPS: true
     DEFAULT_USERS_CAN_CONTROL_PERMISSIONS: true
@@ -65,7 +65,7 @@ production:
 public:
     DEFAULT_NEW_USER_GROUP: student
     GOOGLE_ANALYTICS_CODE: UA-34437604-3
-    ENVIRONMENT_TAG: Public
+    ENVIRONMENT_TAG: Welcome
     API_URL: http://annotations.mit.edu/api
     DEFAULT_USERS_CAN_CHOOSE_GROUPS: false
     DEFAULT_USERS_CAN_CONTROL_PERMISSIONS: false

@@ -1,8 +1,8 @@
 <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :class => "form-horizontal"}) do |f| %>
 <%= devise_error_messages! %>
+<legend>Edit Account for <%= resource.firstname %>  <%= resource.lastname %> </legend>
 <fieldset>
-<legend>Sign up</legend>
-	<div class="control-group">
+	<div class="control-group well">
 		<%= f.label :firstname, :class => "control-label" %>
 		<div class="controls">
 		<%= f.text_field :firstname %>

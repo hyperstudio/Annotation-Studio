@@ -1,6 +1,6 @@
 <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :class => "form-horizontal"}) do |f| %> 
 <%= devise_error_messages! %>
-<legend>Edit Account for <%= resource.firstname %> </legend>
+<legend>Edit Account for <%= resource.firstname %>  <%= resource.lastname %> </legend>
 <fieldset>
 	<div class="control-group well">
 		<%= f.label :firstname, :class => "control-label" %>

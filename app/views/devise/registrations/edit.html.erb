@@ -10,17 +10,17 @@
 
 		<%= f.label :lastname, :class => "control-label" %>
 		<div class="controls">
-		<%= f.text_field :lastname %>
+		<%= f.text_field :lastname, :value =>  resource.lastname %>
 		</div>
 
 		<%= f.label :email, :class => "control-label" %>
 		<div class="controls">
-		<%= f.email_field :email %>
+		<%= f.email_field :email, :value =>  resource.email %>
 		</div>
 
 		<%= f.label :affiliation, :class => "control-label" %>
 		<div class="controls">
-		<%= f.text_field :affiliation %>
+		<%= f.text_field :affiliation, :value =>  resource.affiliation %>
 		</div>
 
 		<%= f.label :password, :class => "control-label" %>

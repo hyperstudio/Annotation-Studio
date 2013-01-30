@@ -67,7 +67,7 @@ public:
     GOOGLE_ANALYTICS_CODE: UA-34437604-3
     ENVIRONMENT_TAG: Welcome
     DOCUMENT_SECTION_STRING: 
-    API_URL: http://annotations.mit.edu/api
+    API_URL: http://staging-annotations.herokuapp.com/api
     DEFAULT_USERS_CAN_CHOOSE_GROUPS: false
     DEFAULT_USERS_CAN_CONTROL_PERMISSIONS: false
     DEFAULT_USERS_CAN_CREATE_TEXTS: false

@@ -22,8 +22,8 @@
 <%= javascript_include_tag "sidebar" %>
 <script type="text/javascript" charset="utf-8">
 jQuery(function ($) {
-	var currentUser = serverExports.blah;
-	console.info(currentUser);
+	// var currentUser = serverExports.blah;
+	// console.info(currentUser);
 
 	// Bootstrap Backbone Sidebar //
 	var sidebar = new Sidebar.App();
@@ -127,7 +127,7 @@ jQuery(function ($) {
 		},
 
 		// Permissions settings per-annotation
-		showViewPermissionsCheckbox: true,
+		showViewPermissionsCheckbox: false,
 		showEditPermissionsCheckbox: false
 	});
 

@@ -31,11 +31,17 @@ pre {
 	font-weight: 400;
 	display: block;
 	padding: 12px;
-	background-color: whiteSmoke;
+	background-color: #fff;
 	border: none;
-	word-break: normal;
+/*	word-break: normal;
 	word-wrap: normal;
-/*	white-space: normal;*/
+	white-space: normal; */
+	background-color: #fff;
+	border: 0px solid #ccc;
+	border: 0px solid rgba(0, 0, 0, 0.15);
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+	border-radius: 0;
 }
 
 

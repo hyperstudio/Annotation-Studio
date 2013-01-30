@@ -9,6 +9,16 @@ AnnotationStudio::Application.configure do
 
   # Configure static asset server for tests with Cache-Control for performance
   config.serve_static_assets = true
+
+  # Compress JavaScripts and CSS
+  config.assets.compress = true
+
+  # Don't fallback to assets pipeline if a precompiled asset is missed
+  config.assets.compile = true
+
+  # Generate digests for assets URLs
+  config.assets.digest = true
+
   config.static_cache_control = "public, max-age=3600"
 
   # Log error messages when you accidentally call methods on nil

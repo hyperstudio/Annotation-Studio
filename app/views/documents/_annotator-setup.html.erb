@@ -42,16 +42,14 @@ jQuery(function ($) {
 		token: '<%= @jwt %>'
 	});
 	
-	// how to interact with the backend store
+
 	studio.annotator('addPlugin', 'Store', {
-		prefix: '<%= ENV["API_URL"] %>',
+		prefix: 'http://annotations.mit.edu/api',
+		// prefix: '<%= ENV["API_URL"] %>',
 		annotationData: {
 			'uri': [location.protocol, '//', location.host, location.pathname].join(''),
-			'user' : {
-				// 'groups': groups,
-				'username': '<%= current_user.first_name_last_initial %>',
-				'id': "<%= current_user.id %>",
-			}
+			// "groups": groups,
+			// "username": 'Jamie F.',
 		},
 		loadFromSearch: {
 			'limit': 1000,
@@ -59,77 +57,24 @@ jQuery(function ($) {
 			// Currently: only my own annotations if I'm not an admin, and I'm in a group;
 			// "show to all" setting is ignored.
 			// admins can see all annotations within a group
-			'user': {
-				<% if current_user.has_role?(:admin) %>
-				'role': "admin",
-				<% end %>
-				// 'groups': groups,
-				// 'username': '<%= current_user.first_name_last_initial %>',
-				'id': "<%= current_user.id %>",
-			},
-			// 'groups': groups,
+			// "groups": groups,
 			'uri': [location.protocol, '//', location.host, location.pathname].join(''),
 		}
 	});
-
-	// settings to store with each annotation
 	studio.annotator('addPlugin', 'Permissions', {
-		// Set the permissions for all new annotation objects.
-		// Doing this server side for now, probably preferable to do client side, 
-		// like the openshakespeare example
-		// user: '<%= current_user.email %>',
-		user: {
-			'id': "<%= current_user.id %>",
-			'username': "<%= current_user.first_name_last_initial %>",
-			// 'groups': groups,
-		},
-
+		user: "<%= current_user.email %>",
 		permissions: {
-			'read': ['<%= current_user.id %>'], // default: review mode; this is what users will need to control
-			'update': ['<%= current_user.id %>'], // no one else can ever update
-			'delete': ['<%= current_user.id %>'], // no one else can ever delete
-			'admin': ['<%= current_user.id %>'] // no one else can ever admin
+			'read': ['<%= current_user.email %>'], // default: review mode; this is what users will need to control
+			'update': ['<%= current_user.email %>'], // no one else can ever update
+			'delete': ['<%= current_user.email %>'], // no one else can ever delete
+			'admin': ['<%= current_user.email %>'] // no one else can ever admin
 		},
-
-		// permissions: {
-		// 	'read': ['<%= current_user.id %>', 'group:Admin'], // default: review mode; this is what users will need to control
-		// 	'update': ['<%= current_user.id %>'], // no one else can ever update
-		// 	'delete': ['<%= current_user.id %>'], // no one else can ever delete
-		// 	'admin': ['<%= current_user.id %>'] // no one else can ever admin
-		// },
-
-		// Callback to return an id for the user
-		userId: function (user) {
-			console.log(user);
-			if (user && user.id) { 
-				return user.id;
-			}
-			return user;
-		},
-		
-		// Callback to return a string for the user
-		userString: function (user) {
-			console.log(user);
-			if (user && user.username) {
-				return user.username;
-			}
-			return user;
-		},
-
-		userAuthorize: function (action, annotation, user) {
-			console.log(user);
-			if (user === null) {
-				return annotation.permissions[action].length === 0;
-			}
-			else {
-				return user.id === annotation.user.id;
-			}
-		},
-
 		// Permissions settings per-annotation
 		showViewPermissionsCheckbox: false,
 		showEditPermissionsCheckbox: false
 	});
+
+
 
 	var subscriber = $('#textcontent').annotator().data('annotator');
 

@@ -272,18 +272,18 @@ span.highlightborder {
 }
 
 
-/*@media (max-width: 767px) {
+@media (max-width: 767px) {
     .sidebar-nav {
         position:static;
         width:auto;
     }
 }
-*/
+
 @media (max-width: 979px) {
-/*    .sidebar-nav {
+    .sidebar-nav {
         top:70px;
     }
-*/}
+}
 
 /* Subnav */
 #chapters {
@@ -369,7 +369,7 @@ span.highlightborder {
 */
 
 /* Fixed subnav on scroll, but only for 980px and up (sorry IE!) */
-/*@media (min-width: 980px) {
+@media (min-width: 980px) {
   .subnav-fixed {
     position: fixed;
     top: 40px;
@@ -398,7 +398,7 @@ span.highlightborder {
             border-radius: 0;
   }
 }
-*/
+
 
 .nav-list >.active >a,.nav-list>.active>a:hover{color:#ffffff;text-shadow:0 -1px 0 rgba(0, 0, 0, 0.2);background-color: #7E7E7E;}
 

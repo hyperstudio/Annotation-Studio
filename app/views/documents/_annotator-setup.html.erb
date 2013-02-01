@@ -44,8 +44,7 @@ jQuery(function ($) {
 	
 
 	studio.annotator('addPlugin', 'Store', {
-		prefix: 'http://annotations.mit.edu/api',
-		// prefix: '<%= ENV["API_URL"] %>',
+		prefix: '<%= ENV["API_URL"] %>',
 		annotationData: {
 			'uri': [location.protocol, '//', location.host, location.pathname].join(''),
 			// "groups": groups,

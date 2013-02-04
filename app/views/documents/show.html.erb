@@ -1,5 +1,5 @@
 <div class="span3">
-	<div class="affix-top" data-spy="affix" id="chapters" style="overflow:auto;">
+	<div class="affix-top" data-spy="affix" id="chapters">
 		<h4><%= ENV["DOCUMENT_SECTION_STRING"] %></h4>
 		<ul class="nav nav-list nav-collapse" id="chapternav">
 			<%= @document.chapters.try(:html_safe) %>

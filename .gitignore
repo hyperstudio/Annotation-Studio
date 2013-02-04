@@ -66,3 +66,6 @@ vendor/assets/javascripts/_archive/js-annotator-files/annotator.store.min.js
 vendor/assets/javascripts/_archive/js-annotator-files/annotator.tags.min.js
 vendor/assets/javascripts/_archive/js-annotator-files/annotator.unsupported.min.js
 vendor/assets/javascripts/_archive/js-annotator-files/json2.js
+
+# Ignore application configuration
+/config/application.yml

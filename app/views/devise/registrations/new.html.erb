@@ -1,14 +1,14 @@
 <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :class => "form-horizontal"}) do |f| %>
 <%= devise_error_messages! %>
+<legend>Register</legend>
 <fieldset>
-<legend>Sign up</legend>
-	<div class="control-group">
-		<%= f.label :firstname, :class => "control-label" %>
+	<div class="control-group well">
+		<%= f.label :firstname, "First Name", :class => "control-label" %>
 		<div class="controls">
 		<%= f.text_field :firstname %>
 		</div>
 		
-		<%= f.label :lastname, :class => "control-label" %>
+		<%= f.label :lastname, "Last Name", :class => "control-label" %>
 		<div class="controls">
 		<%= f.text_field :lastname %>
 		</div>
@@ -16,6 +16,11 @@
 		<%= f.label :email, :class => "control-label" %>
 		<div class="controls">
 		<%= f.email_field :email %>
+		</div>
+		
+		<%= f.label :affiliation, :class => "control-label" %>
+		<div class="controls">
+		<%= f.text_field :affiliation %>
 		</div>
 		
 		<%= f.label :password, :class => "control-label" %>
@@ -28,19 +33,21 @@
 		<%= f.password_field :password_confirmation %>
 		</div>
 
-		<div class="control-group">
-	      <%= f.label "Subject number", :class => 'control-label' %>
-			<div class="controls">
-        		<%= f.text_field :rep_group_list, :class => 'text_field' %>
-				<p class="help-block">Enter the subject number of the course you're taking, eg: <code>21F.414</code> for <em>German Culture, Media, and Society</em></p>
-			</div>
+		<%= f.hidden_field :rep_group_list, :multiple => true, :class => 'hidden', :value => 'public' %>
+		<%= f.hidden_field :rep_group_list, :multiple => true, :class => 'hidden', :value => 'ans-iap' %>
+		
+		<br>
+		<div class="controls">
+		<%= f.submit "Register", :class => "btn btn-primary" %>
 		</div>
 
-		<br />
-
+		<br>
 		<div class="controls">
-		<div><%= f.submit "Sign up", :class => "btn btn-primary" %></div>
+		<%= render "links" %>
+		</div>
 	</div>
+
 </fieldset>
 <% end %>
-<%= render "links" %>
+
+

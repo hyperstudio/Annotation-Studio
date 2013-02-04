@@ -26,7 +26,15 @@ Sidebar.RemoteAnnotationList = Backbone.Collection.extend({
     url: 'http://annotations.mit.edu/api/search',
     // url: 'http://localhost:5000/api/search',
 	// comparator: function(annotation) {
-	// 	return annotation.get("ranges")[0].startOffset; // change to startOffset
+	// 	try {
+	// 		var startOffset = annotation.get("ranges")[0].startOffset;
+	// 	}
+	// 	catch(e) {
+	// 		console.info("startOffset issue." + e.toString());
+	// 	}
+	// 	finally {
+	// 		return startOffset; // change to startOffset
+	// 	}
 	// },
 	initialize: function (options) {
 		//console.info(options);
@@ -36,6 +44,7 @@ Sidebar.RemoteAnnotationList = Backbone.Collection.extend({
 			error: this.fetchError
 		});
 		this.deferred = new $.Deferred();
+		// this.sort();
 	},
     deferred: Function.constructor.prototype,
     fetchSuccess: function (collection, response) {
@@ -102,11 +111,11 @@ Sidebar.AnnotationListView = Backbone.View.extend({
 		$("ul#annotation-list").find(".annotation-item").remove();
 
 		// Walk throught the list, and render markdown in the user comment first.
-		// this.collection.sort();
 		this.collection.each(function(ann) {
 			var annView = new Sidebar.AnnotationView({model: ann});
 			$("ul#annotation-list").append(annView.render().el);
 		});
+		// this.collection.sort();
 
 		$("li.annotation-item span").tooltip();
 
@@ -119,7 +128,7 @@ Sidebar.AnnotationListView = Backbone.View.extend({
 			var targetid = "#sb" + parts[1];
 
 			// TODO: deal with the events in a more organized way (recompose them in functions)
-			$('div.well').animate({scrollTop:$(targetid).offset().top}, 100
+			$('div#annotation-well').animate({scrollTop:$(targetid).offset().top}, 100
 			, function (){
 				$(targetid).parent().addClass('hover');
 				// $(targetid).tooltip('show'); // disappears after 1 sec?
@@ -133,6 +142,7 @@ Sidebar.AnnotationListView = Backbone.View.extend({
 
 			// Hide all details
 			$("ul#annotation-list li").removeClass('hover');
+			$("#annotation-well ul#annotation-list li").removeClass('focuswhite');
 
 			// Hide all details
 			$("ul#annotation-list li .details").hide();
@@ -145,6 +155,8 @@ Sidebar.AnnotationListView = Backbone.View.extend({
 
 			// Show these details
 			$(this).find(".details").show(200);
+
+			$(this).addClass("focuswhite");
 
 			//$(this).addClass('hover');
 
@@ -174,7 +186,7 @@ Sidebar.App = Backbone.Router.extend({
 	listAnnotations: function (annotationArray) {
 		Sidebar.annotations = new Sidebar.LocalAnnotationList(annotationArray);
 		var annotationsList = new Sidebar.AnnotationListView({
-			"container": $('.well'),
+			"container": $('#annotation-well'),
 			"collection": Sidebar.annotations
 		});
 		annotationsList.render();
@@ -184,7 +196,7 @@ Sidebar.App = Backbone.Router.extend({
 	updateAnnotations: function (options) {
 		Sidebar.annotations = new Sidebar.RemoteAnnotationList(options);
 		var annotationsList = new Sidebar.AnnotationListView({
-			"container": $('.well'),
+			"container": $('#annotation-well'),
 			"collection": Sidebar.annotations
 		});
 		Sidebar.annotations.deferred.done(function () {

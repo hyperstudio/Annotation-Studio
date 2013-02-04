@@ -43,8 +43,8 @@ AnnotationStudio::Application.configure do
     :address  => "smtp.gmail.com",
     :domain  => "mit.edu",
     :port  => 587,
-    :user_name  => "jamiefolsom@gmail.com",
-    :password  => "ph0t0synth",
+    :user_name  => ENV['GMAIL_USER'],
+    :password  => ENV['GMAIL_PASS'],
     :authentication  => :plain,
     :enable_starttls_auto => true
   }  

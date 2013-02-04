@@ -13,6 +13,7 @@
  *= require "bootstrap_and_overrides.css"
  *= require "bootstrap.min.css"
  *= require "annotator.min.css"
+ *= require "annotorious.css"
  *= require "boot-docs.css"
 */
 
@@ -22,4 +23,19 @@ footer {
 
 h1 {
 	font-size: 70%;
+}
+
+body {
+	background-color:#eee;
+}
+
+// Document edit form.
+.redactor_editor {
+	height: 200px;
+	width: 1000px;
+}
+
+p.help-block {
+	font-style: italic;
+	margin-top:10px;
 }

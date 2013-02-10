@@ -57,6 +57,9 @@ jQuery(function ($) {
 			// "show to all" setting is ignored.
 			// admins can see all annotations within a group
 			// "groups": groups,
+			<% unless current_user.has_role?(:admin) %>
+			'user': "<%= current_user.email %>",
+			<% end %>
 			'uri': [location.protocol, '//', location.host, location.pathname].join(''),
 		}
 	});

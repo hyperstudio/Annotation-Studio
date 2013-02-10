@@ -10,7 +10,7 @@ class UsersController < ApplicationController
     #   format.json { render json: @user }
     # end
     
-    gon.rabl "app/views/users/show.rabl", as: "user"
+    gon.rabl "app/views/users/show.rabl", as: "userabl"
   end
 
 end

@@ -6,14 +6,14 @@
 
 		<ul id="annotation-list"></ul>
 		<script type="text/template" id="comment-template">
-			<span id="sb{{uuid}}" data-toggle="collapse" data-parent="#annotation-list" href="#full{{uuid}}" data-highlight="#hl{{uuid}}" rel="tooltip" title="{{user.username}}" class="highlightlink comment">{{{text}}}</span>
+			<span id="sb{{uuid}}" data-toggle="collapse" data-parent="#annotation-list" href="#full{{uuid}}" data-highlight="#hl{{uuid}}" rel="tooltip" title="{{username}}" class="highlightlink comment">{{{text}}}</span>
 			<span id="quote{{uuid}}" class="sbquote details">&quot;{{{quote}}}&quot;</span>
 			<span id="text{{uuid}}" class="sbtext details">{{{text}}}</span>
 			<span id="info{{uuid}}" class="sbinfo details">{{username}}</span>
 			<div id="tags{{uuid}}" class="sbtags details">{{#tags}}<span class="label">{{.}}</span> {{/tags}}</div>
 		</script>
 		<script type="text/template" id="highlight-template">
-			<span id="sb{{uuid}}" data-highlight="#hl{{uuid}}" rel="tooltip" title="{{user.username}}" class="highlightlink highlight sbquote">&quot;{{{quote}}}&quot;</span>
+			<span id="sb{{uuid}}" data-highlight="#hl{{uuid}}" rel="tooltip" title="{{username}}" class="highlightlink highlight sbquote">&quot;{{{quote}}}&quot;</span>
 			<span id="quote{{uuid}}" class="sbquote details">&quot;{{{quote}}}&quot;</span>
 			<div id="tags{{uuid}}" class="sbtags details">{{#tags}}<span class="label">{{.}}</span> {{/tags}}</div>
 		</script>
@@ -22,11 +22,9 @@
 <%= javascript_include_tag "sidebar" %>
 <script type="text/javascript" charset="utf-8">
 jQuery(function ($) {
-	// Some personalization variables.
-	// var userEmail = "<%= current_user.email %>";
-	// var userSearch = "<%= current_user.has_role?(:teacher) ? '' : 'userEmail' %>";
-	// Used to determine which annotations the current user can see.
-	var groups = "<%= current_user.rep_group_list %>".split(/, /);
+	var currentUser = serverExports.userabl;
+	console.info(currentUser);
+
 	// Bootstrap Backbone Sidebar //
 	var sidebar = new Sidebar.App();
 	Backbone.history.start({pushState: true, root: window.location})
@@ -46,73 +44,72 @@ jQuery(function ($) {
 	
 	// how to interact with the backend store
 	studio.annotator('addPlugin', 'Store', {
-		// prefix: 'http://annotations.mit.edu/api',
-		// prefix: 'http://staging-annotations.herokuapp.com/api',
-		prefix: 'http://localhost:5000/api',
+		prefix: '<%= ENV["API_URL"] %>',
 		annotationData: {
 			'uri': [location.protocol, '//', location.host, location.pathname].join(''),
-			'user': {
-				'id': <%= current_user.id %>,
-				'username': "<%= current_user.first_name_last_initial %>",
-				'groups': groups,
+			'user' : {
+				// 'groups': groups,
+				'username': '<%= current_user.first_name_last_initial %>',
+				'id': "<%= current_user.id %>",
 			}
 		},
 		loadFromSearch: {
 			'limit': 1000,
-			
-			// Loads group annotations
-			'user[groups]': groups,
-
-			// Limits annotations to this document
+			// Should load all of one's own annotations, plus all non-private group-shared annotations
+			// Currently: only my own annotations if I'm not an admin, and I'm in a group;
+			// "show to all" setting is ignored.
+			// admins can see all annotations within a group
+			'user': {
+				<% if current_user.has_role?(:admin) %>
+				'role': "admin",
+				<% end %>
+				// 'groups': groups,
+				// 'username': '<%= current_user.first_name_last_initial %>',
+				'id': "<%= current_user.id %>",
+			},
+			// 'groups': groups,
 			'uri': [location.protocol, '//', location.host, location.pathname].join(''),
-			
-			// Limits annotations to this user unless user is an admin
-			<% unless current_user.has_role?(:admin) %>
-			'user[id]': "<%= current_user.id %>",
-			<% end %>
-			
 		}
 	});
 
-	var subscriber = $('#textcontent').annotator().data('annotator');
-	
-	var groups = "<%= current_user.rep_group_list %>".split(/, /);
-	var readPermitArray = ['<%= current_user.id %>'];
-	readPermitArray = readPermitArray.concat(groups);
-	console.info("readPermitArray: ");
-	console.info(readPermitArray);
-	
 	// settings to store with each annotation
-	studio.annotator('addPlugin', 'MITPermissions', {
+	studio.annotator('addPlugin', 'Permissions', {
+		// Set the permissions for all new annotation objects.
+		// Doing this server side for now, probably preferable to do client side, 
+		// like the openshakespeare example
+		// user: '<%= current_user.email %>',
 		user: {
-			'id': <%= current_user.id %>,
+			'id': "<%= current_user.id %>",
 			'username': "<%= current_user.first_name_last_initial %>",
-			// groups in which this user has read access to annotations
-			'read': groups,
-			'delete': groups,
-			'update': groups,
-			'admin': groups,
+			// 'groups': groups,
 		},
 
 		permissions: {
-			'read': readPermitArray, // by default, the current user and all his/her groups can see annotations they create
+			'read': ['<%= current_user.id %>'], // default: review mode; this is what users will need to control
 			'update': ['<%= current_user.id %>'], // no one else can ever update
 			'delete': ['<%= current_user.id %>'], // no one else can ever delete
 			'admin': ['<%= current_user.id %>'] // no one else can ever admin
 		},
 
+		// permissions: {
+		// 	'read': ['<%= current_user.id %>', 'group:Admin'], // default: review mode; this is what users will need to control
+		// 	'update': ['<%= current_user.id %>'], // no one else can ever update
+		// 	'delete': ['<%= current_user.id %>'], // no one else can ever delete
+		// 	'admin': ['<%= current_user.id %>'] // no one else can ever admin
+		// },
+
 		// Callback to return an id for the user
 		userId: function (user) {
-			console.info("userId called.");
+			console.log(user);
 			if (user && user.id) { 
 				return user.id;
 			}
 			return user;
 		},
-
+		
 		// Callback to return a string for the user
 		userString: function (user) {
-			console.info("userString called.");
+			console.log(user);
 			if (user && user.username) {
 				return user.username;
 			}
@@ -120,60 +117,21 @@ jQuery(function ($) {
 		},
 
 		userAuthorize: function (action, annotation, user) {
-			console.info("action: "+ action);
-			// console.info(action);
-			// console.info("annotation: ");
-			// console.info(annotation);
-			// console.info("user: ");
-			// console.info(user);
-
-			// If no user is passed, it's because the annotator is asking whether the annotation
-			// allows any user to do that action. An annotation denotes world access by storing 
-			// a zero-length array of tokens for that action's permission value
-			if (user === null) { 
-				// evaluates to true if the annotation stores no constraints.
-				if (annotation.permissions[action].length == 0) {
-					console.info("returning true: user === null; annotation.permissions[action].length === " + annotation.permissions[action].length);
-					return true
-				}
-				else {
-					console.info("returning false: user === null; annotation.permissions[action].length === " + annotation.permissions[action].length);
-					return false
-				}
+			console.log(user);
+			if (user === null) {
+				return annotation.permissions[action].length === 0;
 			}
-
-			// Otherwise, the annotator is asking whether a specific user has a specific 
-			// permission, so we return true only if the user stores a value for that action
-			// that matches what the annotation stores for that action
-			if (annotation.permissions[action].length > 0) { // the action is restricted to certain users
-				// using the Underscore.js intersection method to find out if this user has this token for this action
-				// return true if the annotation and the user share at least one token value for this action
-				var userActionArray = user[action];
-				console.info("userActionArray: " + userActionArray);
-				var annotationActionArray = annotation.permissions[action];
-				console.info("annotationActionArray: " + annotationActionArray);
-				if (_.intersection(userActionArray,annotationActionArray).length > 0) {
-					console.info("returning true: annotation.permissions[action].length is "+ annotation.permissions[action].length +"and annotation.permissions[action].length is" + annotation.permissions[action].length);
-					return true;
-				}
-			}
-			else { // the action is not restricted to certain users
-				console.info("returning true: annotation.permissions[action].length is "+ annotation.permissions[action].length);
-				return true;
-			}
-
-			// Failing all those tests, if the annotation.user.id is the current user.id, 
-			// we return true; the current user has all permissions on his/her own annotations.
-			if (user.id === annotation.user.id) {
-				console.info("returning true: return user.id === annotation.user.id");
-				return true;
+			else {
+				return user.id === annotation.user.id;
 			}
 		},
 
 		// Permissions settings per-annotation
-		showViewPermissionsCheckbox: false,
+		showViewPermissionsCheckbox: true,
 		showEditPermissionsCheckbox: false
 	});
+
+	var subscriber = $('#textcontent').annotator().data('annotator');
 
 	// Create a UUID for a given annotation if needed.
 	// Once created, this shouldn't be changed.
@@ -203,7 +161,7 @@ jQuery(function ($) {
 	addUuid = __bind(function(a) {
 		if (a.highlights[0] != null) {
 			a.highlights[0].id = "hl"+ a.uuid;
-			a.highlights[0].title = a.user.username;
+			a.highlights[0].title = a.user;
 		}
 		else {
 			console.info("Err...");
@@ -213,7 +171,7 @@ jQuery(function ($) {
 	var createAndAddUuid = function(annotation){
 		createUuid(annotation);
 		addUuid(annotation);
-	}
+	};
 
 	// Update the sidebar with local annotation data
 	var loadSidebar = function(annotation) {

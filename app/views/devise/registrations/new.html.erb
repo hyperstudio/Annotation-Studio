@@ -33,8 +33,13 @@
 		<%= f.password_field :password_confirmation %>
 		</div>
 
-		<%= f.hidden_field :rep_group_list, :multiple => true, :class => 'hidden', :value => 'public' %>
-		<%= f.hidden_field :rep_group_list, :multiple => true, :class => 'hidden', :value => 'ans-iap' %>
+		<%# f.hidden_field :rep_group_list, :multiple => true, :class => 'hidden', :value => 'public' %>
+		<%# f.hidden_field :rep_group_list, :multiple => true, :class => 'hidden', :value => 'ans-iap' %>
+
+		<%= f.label :rep_group_list, "Group", :class => "control-label" %>
+		<div class="controls">
+		<%= f.text_field :rep_group_list %>
+		</div>
 		
 		<br>
 		<div class="controls">

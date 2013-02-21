@@ -24,6 +24,7 @@
 jQuery(function ($) {
 	// var currentUser = serverExports.blah;
 	// console.info(currentUser);
+	var groups = "<%= current_user.rep_group_list %>".split(/, /);
 
 	// Bootstrap Backbone Sidebar //
 	var sidebar = new Sidebar.App();
@@ -32,9 +33,9 @@ jQuery(function ($) {
 	var studio = $('#textcontent').annotator();
 
 	studio.annotator('addPlugin', 'Markdown');
-	<% if current_user.has_role?(:admin) %>
+	<%# if current_user.has_role?(:admin) %>
 	 // studio.annotator('addPlugin', 'Filter');
-	<% end %>
+	<%# end %>
 	studio.annotator('addPlugin', 'Tags');
 	   // studio.annotator('addPlugin', 'AnnotoriousImagePlugin');
 	studio.annotator('addPlugin', 'Unsupported');
@@ -47,7 +48,7 @@ jQuery(function ($) {
 		prefix: '<%= ENV["API_URL"] %>',
 		annotationData: {
 			'uri': [location.protocol, '//', location.host, location.pathname].join(''),
-			// "groups": groups,
+			"groups": groups,
 			// "username": 'Jamie F.',
 		},
 		loadFromSearch: {
@@ -56,10 +57,10 @@ jQuery(function ($) {
 			// Currently: only my own annotations if I'm not an admin, and I'm in a group;
 			// "show to all" setting is ignored.
 			// admins can see all annotations within a group
-			// "groups": groups,
-			<% unless current_user.has_role?(:admin) %>
-			'user': "<%= current_user.email %>",
-			<% end %>
+			"groups": groups,
+			<%# unless current_user.has_role?(:admin) %>
+			// 'user': "<%= current_user.email %>",
+			<%# end %>
 			'uri': [location.protocol, '//', location.host, location.pathname].join(''),
 		}
 	});

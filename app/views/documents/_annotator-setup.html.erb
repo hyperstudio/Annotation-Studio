@@ -1,5 +1,11 @@
 <div class="span3 hidden-phone hidden-tablet">
 	<div id="annotation-well" class="affix">
+		<div class="btn-group" data-toggle="buttons-radio" id="view-chooser">
+		  <button class="viewchoice btn btn-small active" id="userview">My own</button>
+		  <button class="viewchoice btn btn-small disabled" id="groupview">Work group</button>
+		  <button class="viewchoice btn btn-small" id="classview">Class</button>
+		</div>
+
 		<script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.3/underscore-min.js"></script>
 		<script src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/0.9.2/backbone-min.js"></script>
 		<script src="http://cdnjs.cloudflare.com/ajax/libs/mustache.js/0.4.2/mustache.min.js"></script>
@@ -22,8 +28,10 @@
 <%= javascript_include_tag "sidebar" %>
 <script type="text/javascript" charset="utf-8">
 jQuery(function ($) {
-	// var currentUser = serverExports.blah;
+	// var currentUser = serverExports.current_user;
 	// console.info(currentUser);
+	var groups = "<%= current_user.rep_group_list %>".split(/, /);
+
 
 	// Bootstrap Backbone Sidebar //
 	var sidebar = new Sidebar.App();
@@ -47,20 +55,15 @@ jQuery(function ($) {
 		prefix: '<%= ENV["API_URL"] %>',
 		annotationData: {
 			'uri': [location.protocol, '//', location.host, location.pathname].join(''),
-			// "groups": groups,
+			"groups": groups,
 			// "username": 'Jamie F.',
 		},
 		loadFromSearch: {
 			'limit': 1000,
-			// Should load all of one's own annotations, plus all non-private group-shared annotations
-			// Currently: only my own annotations if I'm not an admin, and I'm in a group;
-			// "show to all" setting is ignored.
-			// admins can see all annotations within a group
-			// "groups": groups,
-			<% unless current_user.has_role?(:admin) %>
+			"groups": groups,
 			'user': "<%= current_user.email %>",
-			<% end %>
-			'uri': [location.protocol, '//', location.host, location.pathname].join(''),
+			'mode': 'user', // default mode -- user can switch via sidebar button.
+			'uri': [location.protocol, '//', location.host, location.pathname].join('')
 		}
 	});
 	studio.annotator('addPlugin', 'Permissions', {
@@ -140,6 +143,55 @@ jQuery(function ($) {
 		console.info(newAnn.get("uuid"));
 	};
 	
+
+	$('#userview').on('click', function (e) {
+		console.info('Clicked userview');
+		$('.viewchoice').removeClass("active");
+		var hilites = $('.annotator-hl');
+		hilites.contents().unwrap();
+		$(this).addClass("active");
+		var loadOptions = {
+			'limit': 1000,
+			"groups": groups,
+			'user': "<%= current_user.email %>",
+			'mode': 'user',
+			'uri': [location.protocol, '//', location.host, location.pathname].join('')
+		}
+		subscriber.plugins.Store.loadAnnotationsFromSearch(loadOptions);
+	});
+	$('#groupview').on('click', function (e) {
+		console.info('Clicked groupview');
+		$('.viewchoice').removeClass("active");
+		var hilites = $('.annotator-hl');
+		hilites.contents().unwrap();
+		$(this).addClass("active");
+		var loadOptions = {
+			'limit': 1000,
+			"groups": groups,
+			'user': "<%= current_user.email %>",
+			'mode': 'group',
+			'uri': [location.protocol, '//', location.host, location.pathname].join('')
+		}
+		subscriber.plugins.Store.loadAnnotationsFromSearch(loadOptions);
+	});
+	$('#classview').on('click', function (e) {
+		console.info('Clicked classview');
+		// add loading spinner
+		$('.viewchoice').removeClass("active");
+		var hilites = $('.annotator-hl');
+		hilites.contents().unwrap();
+		$(this).addClass("active");
+		var loadOptions = {
+			'limit': 1000,
+			"groups": groups,
+			'user': "<%= current_user.email %>",
+			'mode': 'class',
+			'uri': [location.protocol, '//', location.host, location.pathname].join('')
+		}
+		subscriber.plugins.Store.loadAnnotationsFromSearch(loadOptions);
+		// remove loading spinner
+	});
+
 	// When the annotator loads remote data, update sidebar
 	subscriber.subscribe('annotationsLoaded', loadSidebar);
 

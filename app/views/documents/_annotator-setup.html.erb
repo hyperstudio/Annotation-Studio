@@ -61,7 +61,6 @@ jQuery(function ($) {
 		loadFromSearch: {
 			'limit': 1000,
 			"groups": groups,
-			<%# unless current_user.has_role?(:admin) %>
 			'user': "<%= current_user.email %>",
 			'mode': 'user', // default mode -- user can switch via sidebar button.
 			'uri': [location.protocol, '//', location.host, location.pathname].join('')

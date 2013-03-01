@@ -2,7 +2,7 @@
 	<div id="annotation-well" class="affix">
 		<div class="btn-group" data-toggle="buttons-radio" id="view-chooser">
 			<button class="viewchoice btn btn-small active btn-success" id="userview">Mine</button>
-			<button class="viewchoice btn btn-small btn-warning" id="groupview">Group</button>
+			<button class="viewchoice btn btn-small btn-warning disabled" id="groupview">Group</button>
 			<button class="viewchoice btn btn-small btn-warning" id="classview">Class</button>
 			<% if current_user.has_role?(:admin) %>
 			<button class="viewchoice btn btn-small btn-danger" id="adminview">All</button>

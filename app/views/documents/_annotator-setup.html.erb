@@ -1,11 +1,11 @@
 <div class="span3 hidden-phone hidden-tablet">
 	<div id="annotation-well" class="affix">
 		<div class="btn-group" data-toggle="buttons-radio" id="view-chooser">
-			<button class="viewchoice btn btn-small active btn-success" id="userview">Mine</button>
-			<button class="viewchoice btn btn-small btn-warning" id="groupview">Group</button>
-			<button class="viewchoice btn btn-small btn-warning" id="classview">Class</button>
+			<button class="viewchoice btn btn-small active" id="userview">Mine</button>
+			<button class="viewchoice btn btn-small disabled" id="groupview">Group</button>
+			<button class="viewchoice btn btn-small" id="classview">Class</button>
 			<% if current_user.has_role?(:admin) %>
-			<button class="viewchoice btn btn-small btn-danger" id="adminview">All</button>
+			<button class="viewchoice btn btn-small btn-inverse" id="adminview">All</button>
 			<% end %>
 		</div>
 

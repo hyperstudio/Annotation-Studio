@@ -31,8 +31,6 @@
 <%= javascript_include_tag "sidebar" %>
 <script type="text/javascript" charset="utf-8">
 jQuery(function ($) {
-	$('#spinnermodal').modal('show');
-
 	var groups = "<%= current_user.rep_group_list %>".split(/, /);
 
 	// Bootstrap Backbone Sidebar //
@@ -152,7 +150,6 @@ jQuery(function ($) {
 	
 
 	$('#userview').on('click', function (e) {
-		$('#spinnermodal').modal('show');
 		console.info('Clicked userview');
 		$('.viewchoice').removeClass("active");
 		var hilites = $('.annotator-hl');
@@ -200,7 +197,7 @@ jQuery(function ($) {
 		subscriber.plugins.Store.loadAnnotationsFromSearch(loadOptions);
 	});
 
-	<%# if current_user.has_role?(:admin) %>
+	<% if current_user.has_role?(:admin) %>
 	$('#adminview').on('click', function (e) {
 		$('#spinnermodal').modal('show');
 		console.info('Clicked adminview');
@@ -217,7 +214,7 @@ jQuery(function ($) {
 		}
 		subscriber.plugins.Store.loadAnnotationsFromSearch(loadOptions);
 	});
-	<%# end %>
+	<% end %>
 
 	// When the annotator loads remote data, update sidebar
 	subscriber.subscribe('annotationsLoaded', loadSidebar);

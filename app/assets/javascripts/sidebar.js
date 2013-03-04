@@ -128,12 +128,12 @@ Sidebar.AnnotationListView = Backbone.View.extend({
 			var targetid = "#sb" + parts[1];
 
 			// TODO: deal with the events in a more organized way (recompose them in functions)
-			$('div#annotation-well').animate({scrollTop:$(targetid).offset().top}, 100
-			, function (){
-				$(targetid).parent().addClass('hover');
+			$('div#annotation-well').animate({scrollTop:$(targetid).offset().top}, 100, function (){
+				console.info("Scroll to: "+targetid);
+				// $(targetid).parent().addClass('hover');
+				$(targetid).trigger("click");
 				// $(targetid).tooltip('show'); // disappears after 1 sec?
-			}
-			);
+			});
 		});
 
 		// Bind some events to links

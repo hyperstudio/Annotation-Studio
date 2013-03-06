@@ -21,9 +21,12 @@
 		<div class="navbar-inner">
 			<div class="container">
 				<div class="container nav-collapse">
-					<h2 id="document-title" href="#" data-toggle="popover" data-content="" title=""><%= @document.title %></h2>
+					<h2 id="doctit" href="#" data-toggle="popover" data-content="" title=""><%= @document.title %></h2>
 					<script type="text/javascript" charset="utf-8">
 						var docMetaInfo = "";
+						if ("<%= @document.author %>" != "") {
+							docMetaInfo = docMetaInfo + "<li>Author: <%= @document.author %></li>";
+						}
 						if ("<%= @document.publisher %>" != "") {
 							docMetaInfo = docMetaInfo + "<li>Publisher: <%= @document.publisher %></li>";
 						}
@@ -39,14 +42,12 @@
 						if (docMetaInfo != "") {
 							docMetaInfo = "<ul>"+ docMetaInfo + "</ul>";
 						}
-						$('#document-title').popover({
-							'animation': 'true',
+						$('#doctit').popover({
 							'html': 'true', 
 							'placement': 'bottom',
-							'selector': '#document-title',
-							'trigger': 'click',
-							'title': "<%= @document.author %>" === "" ? "Additional information" : "<%= @document.author %>",
-							'content': docMetaInfo === "" ? "No additional information" : docMetaInfo,
+							'trigger': 'hover',
+							'title': "Additional information",
+							'content': docMetaInfo === "" ? "None at this time" : docMetaInfo,
 						});
 					</script>
 					<h4 class="pull-right">Annotations</h4>

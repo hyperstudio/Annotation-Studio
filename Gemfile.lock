@@ -159,8 +159,7 @@ GEM
     rake (10.0.3)
     rdoc (3.12.2)
       json (~> 1.4)
-    redactor-rails (0.3.3)
-      devise
+    redactor-rails (0.3.2)
       mime-types
       orm_adapter
     ref (1.0.2)
@@ -225,7 +224,7 @@ DEPENDENCIES
   pg
   rabl
   rails (>= 3.2.11)
-  redactor-rails
+  redactor-rails (= 0.3.2)
   repertoire-groups!
   sass-rails
   sextant

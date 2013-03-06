@@ -65,6 +65,7 @@ div#textcontent {
 
 #document-title {
 	margin-top:40px;
+	z-index:1010;
 }
 
 #document-title h2 {
@@ -79,6 +80,9 @@ div#textcontent {
 }
 
 
+#doctit {
+	cursor: pointer;
+}
 
 .annotator-filter{
 	margin-top: 4px;
@@ -418,3 +422,7 @@ span.highlightborder {
 .popover.bottom .arrow:after {
   margin-left: -1px;
 }
+
+/*#user-account-name {
+	z-index:100000000;
+}*/

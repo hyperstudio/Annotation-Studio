@@ -1,9 +1,17 @@
 <% if user_signed_in? %>
-  <li>
-  <%= link_to("#{current_user.firstname} #{current_user.lastname}", edit_user_registration_path) %>
-  </li>
+  	<li><%= link_to("#{current_user.firstname} #{current_user.lastname}", edit_user_registration_path, :id => "user-account-name", :data => { :toggle => "popover", :content => ""}, :title =>"Groups") %></li>
+	<script type="text/javascript" charset="utf-8">
+		$('#user-account-name').popover({
+			'html': 'true',
+			'animation': 'true',
+			'placement': 'bottom',
+			'trigger': 'hover',
+			'title': "Groups",
+			'content': "<ul><li>Course: <%= current_user.rep_group_list %></li></ul>",
+		}).data('popover').tip().css('z-index', 1040);
+	</script>
 <% else %>
-  <li>
-  <%= link_to('Register', new_user_registration_path)  %>
-  </li>
+	<li>
+  		<%= link_to('Register', new_user_registration_path)  %>
+	</li>
 <% end %>

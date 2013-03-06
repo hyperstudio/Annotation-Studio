@@ -7,7 +7,7 @@
 			'placement': 'bottom',
 			'trigger': 'hover',
 			'title': "Groups",
-			'content': "<ul><li>Course: <%= current_user.rep_group_list %></li></ul>",
+			'content': "<ul><li><%= current_user.rep_group_list %></li></ul>",
 		}).data('popover').tip().css('z-index', 1040);
 	</script>
 <% else %>

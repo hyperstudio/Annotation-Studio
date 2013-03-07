@@ -16,4 +16,8 @@ en:
         destroy:
             user: "You don't have permission to delete other user accounts."
             document: "You don't have permission to delete this document."
-            
+en:
+    active_admin:
+      batch_actions:
+        labels:
+          make_admin: "Create admins w/"

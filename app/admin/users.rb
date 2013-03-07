@@ -26,10 +26,11 @@ ActiveAdmin.register User, :as => "Student" do
   index do |t|
     selectable_column
     id_column
-    column :fullname
+    column "First name", :firstname
+    column "Last name", :lastname
     column :affiliation
-    column "Groups", :rep_group_list
-    column :created_at
+    column "Groups", :rep_group_list, :sortable => false
+    column "Creation date", :created_at
     default_actions
   end
 

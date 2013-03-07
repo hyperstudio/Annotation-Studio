@@ -12,12 +12,14 @@ ActiveAdmin.register User, :as => "Student" do
   batch_action :approve do |selection|
     User.find(selection).each do |user|
       user.set_roles = ['student']
+      redirect_to collection_path, :notice => "Users approved!"
     end
   end
 
   batch_action :make_admin do |selection|
     User.find(selection).each do |user|
       user.set_roles = ['admin']
+      redirect_to collection_path, :notice => "Admins created!"
     end
   end
     

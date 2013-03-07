@@ -53,11 +53,11 @@ ActiveAdmin.register User, :as => "Student" do
         :as => :check_boxes,
         # :multiple => :true,
         :collection => ActsAsTaggableOn::Tag.all.map(&:name)
-      f.input :rep_group_list, 
-        :value => nil,
-        :placeholder_text => "Type new group here",
-        :as => :string,
-        :label => "Create (and add user to) a new group"
+      # f.input :rep_group_list, 
+      #   :value => nil,
+      #   :placeholder_text => "Type new group here",
+      #   :as => :string,
+      #   :label => "Create (and add user to) a new group"
     end
     f.buttons
   end

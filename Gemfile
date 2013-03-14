@@ -3,7 +3,10 @@ source 'https://rubygems.org'
 gem 'rails', '>= 3.2.11'
 gem 'thin'
 gem 'pg'
-gem "newrelic_rpm", "~> 3.5.5.38"
+#gem "newrelic_rpm", "~> 3.5.5.38"
+gem "newrelic_rpm", "~> 3.5.7.59"
+gem 'heroku-true-relic'
+
 gem 'devise', '>= 2.2.2'
 gem 'cancan'
 gem 'repertoire-groups', :git => 'https://jamiefolsom:tr3m3nd0@github.com/repertoire/Repertoire-Groups.git', :branch => "public"

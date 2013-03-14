@@ -1,6 +1,16 @@
 ActiveAdmin.register Document do
+
   scope :all, :default => true
-    
+
+  # scope :due_this_week do |documents|
+  #   documents.where('due_date > ? and due_date < ?', Time.now, 1.week.from_now)
+  # end
+
+  scope :mine do |documents|
+    documents.where(:user_id => current_user.id)
+  end
+  
+      
   filter :title
   filter :publisher
   filter :publication_date

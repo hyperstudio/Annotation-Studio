@@ -31,7 +31,7 @@
 <%= javascript_include_tag "sidebar" %>
 <script type="text/javascript" charset="utf-8">
 jQuery(function ($) {
-	// $('#spinnermodal').modal('show');
+	$('#spinnermodal').modal('show');
 
 	var groups = "<%= current_user.rep_group_list %>".split(/, /);
 
@@ -152,7 +152,7 @@ jQuery(function ($) {
 	
 
 	$('#userview').on('click', function (e) {
-		// $('#spinnermodal').modal('show');
+		$('#spinnermodal').modal('show');
 		console.info('Clicked userview');
 		$('.viewchoice').removeClass("active");
 		var hilites = $('.annotator-hl');

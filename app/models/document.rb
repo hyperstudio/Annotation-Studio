@@ -1,4 +1,4 @@
-require "babosa"
+require "babosa" # allows cyrillic, other characters in titles (transliterates titles for URL use)
 
 class Document < ActiveRecord::Base
   belongs_to :user, :autosave => true

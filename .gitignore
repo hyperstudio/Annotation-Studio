@@ -68,4 +68,4 @@ vendor/assets/javascripts/_archive/js-annotator-files/annotator.unsupported.min.
 vendor/assets/javascripts/_archive/js-annotator-files/json2.js
 
 # Ignore application configuration
-/config/application.yml
+config/application.yml

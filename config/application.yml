@@ -10,6 +10,7 @@ development:
     DEFAULT_USERS_CAN_SEE_OTHERS_WORK: true
     GMAIL_USER: jamiefolsom@gmail.com
     GMAIL_PASS: ph0t0synth
+    UNICORN_BACKLOG: 16
 staging:
     DEFAULT_NEW_USER_GROUP: student
     GOOGLE_ANALYTICS_CODE: 
@@ -19,6 +20,7 @@ staging:
     DEFAULT_USERS_CAN_CONTROL_PERMISSIONS: true
     DEFAULT_USERS_CAN_CREATE_TEXTS: true
     DEFAULT_USERS_CAN_SEE_OTHERS_WORK: true
+    UNICORN_BACKLOG: 16
     # Heroku values
     # DATABASE_URL:                   postgres://scftvdqajhrvql:Ku0nShe2ED-14dsgza_dn4lQtU@ec2-23-23-201-251.compute-1.amazonaws.com:5432/da8ahehj8jistv
     # GEM_PATH:                       vendor/bundle/ruby/1.9.1
@@ -31,8 +33,8 @@ staging:
     # PGBACKUPS_URL:                  https://25761:41cq3shrgo6npmzlpskjs922r@pgbackups.heroku.com/client
     # RACK_ENV:                       staging
     # RAILS_ENV:                      staging
-    SENDGRID_PASSWORD:              rvat9sac
-    SENDGRID_USERNAME:              app4754350@heroku.com
+    # SENDGRID_PASSWORD:              rvat9sac
+    # SENDGRID_USERNAME:              app4754350@heroku.com
 production:
     DEFAULT_USER_GROUP: student
     GOOGLE_ANALYTICS_CODE: UA-34437604-1
@@ -43,6 +45,7 @@ production:
     DEFAULT_USERS_CAN_CONTROL_PERMISSIONS: true
     DEFAULT_USERS_CAN_CREATE_TEXTS: true
     DEFAULT_USERS_CAN_SEE_OTHERS_WORK: true
+    UNICORN_BACKLOG: 16
     # Heroku values
     # ADMINIUM_URL:                 https://adminium.herokuapp.com/heroku/accounts/c1e2a65fe
     # BLITZ_API_KEY:                888068a1-379c2414-ee29a27d-3f0f2ccf
@@ -75,6 +78,7 @@ public:
     DEFAULT_USERS_CAN_CONTROL_PERMISSIONS: false
     DEFAULT_USERS_CAN_CREATE_TEXTS: false
     DEFAULT_USERS_CAN_SEE_OTHERS_WORK: false
+    UNICORN_BACKLOG: 16
     # Heroku values
     # DATABASE_URL:                   postgres://aeqeoecuoytpmg:UkHSiOMca5Lbp6LS1luF5jkPiS@ec2-23-21-93-247.compute-1.amazonaws.com:5432/d7g9q4fhor5jej
     # GEM_PATH:                       vendor/bundle/ruby/1.9.1

@@ -1,7 +1,9 @@
 source 'https://rubygems.org'
 
 gem 'rails', '>= 3.2.11'
-gem 'thin'
+#gem 'thin'
+gem 'unicorn'
+
 gem 'pg'
 #gem "newrelic_rpm", "~> 3.5.5.38"
 gem "newrelic_rpm", "~> 3.5.7.59"

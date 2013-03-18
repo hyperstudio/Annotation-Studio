@@ -33,8 +33,9 @@
 		<%= f.password_field :password_confirmation %>
 		</div>
 
-		<%# f.hidden_field :rep_group_list, :multiple => true, :class => 'hidden', :value => 'public' %>
-		<%# f.hidden_field :rep_group_list, :multiple => true, :class => 'hidden', :value => 'ans-iap' %>
+		<% if ENV["DEFAULT_USER_GROUP"] != nil %>
+		<%= f.hidden_field :rep_group_list, :multiple => true, :class => 'hidden', :value => ENV["DEFAULT_USER_GROUP"] %>
+		<% end %>
 
 		<%= f.label :rep_group_list, "Group", :class => "control-label" %>
 		<div class="controls">

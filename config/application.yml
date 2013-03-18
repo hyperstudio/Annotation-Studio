@@ -1,4 +1,5 @@
 development:
+    GOOGLE_VERIFICATION_CODE: xmQoO8qtk5DuGh8eWu5j6P4e4SEpkHac-4nmbQJiLAE
     DEFAULT_USER_GROUP: student
     GOOGLE_ANALYTICS_CODE: development 
     ENVIRONMENT_TAG: Development
@@ -33,9 +34,10 @@ staging:
     SENDGRID_PASSWORD:              rvat9sac
     SENDGRID_USERNAME:              app4754350@heroku.com
 production:
-    DEFAULT_NEW_USER_GROUP: unapproved
+    DEFAULT_USER_GROUP: student
     GOOGLE_ANALYTICS_CODE: UA-34437604-1
     ENVIRONMENT_TAG: Welcome
+    GOOGLE_VERIFICATION_CODE: xmQoO8qtk5DuGh8eWu5j6P4e4SEpkHac-4nmbQJiLAE
     API_URL: http://annotations.mit.edu/api
     DEFAULT_USERS_CAN_CHOOSE_GROUPS: true
     DEFAULT_USERS_CAN_CONTROL_PERMISSIONS: true

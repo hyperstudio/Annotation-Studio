@@ -2,7 +2,7 @@
 	<div id="annotation-well" class="affix">
 		<div class="btn-group" data-toggle="buttons-radio" id="view-chooser">
 			<button class="viewchoice btn btn-small active" id="userview">Mine</button>
-			<button class="viewchoice btn btn-small disabled" id="groupview">Group</button>
+			<button class="viewchoice btn btn-small" id="groupview">Group</button>
 			<button class="viewchoice btn btn-small" id="classview">Class</button>
 			<% if current_user.has_role?(:admin) %>
 			<button class="viewchoice btn btn-small btn-inverse" id="adminview">All</button>
@@ -34,6 +34,7 @@ jQuery(function ($) {
 	// $('#spinnermodal').modal('show');
 
 	var groups = "<%= current_user.rep_group_list %>".split(/, /);
+	var subgroups = "<%= current_user.rep_subgroup_list %>".split(/, /);
 
 	// Bootstrap Backbone Sidebar //
 	var sidebar = new Sidebar.App();
@@ -58,11 +59,13 @@ jQuery(function ($) {
 		annotationData: {
 			'uri': [location.protocol, '//', location.host, location.pathname].join(''),
 			"groups": groups,
+			"subgroups": subgroups,
 			// "username": 'Jamie F.',
 		},
 		loadFromSearch: {
 			'limit': 1000,
 			"groups": groups,
+			"subgroups": subgroups,
 			'user': "<%= current_user.email %>",
 			'mode': 'user', // default mode -- user can switch via sidebar button.
 			'uri': [location.protocol, '//', location.host, location.pathname].join('')
@@ -161,6 +164,7 @@ jQuery(function ($) {
 		var loadOptions = {
 			'limit': 1000,
 			"groups": groups,
+			"subgroups": subgroups,
 			'user': "<%= current_user.email %>",
 			'mode': 'user',
 			'uri': [location.protocol, '//', location.host, location.pathname].join('')
@@ -177,6 +181,7 @@ jQuery(function ($) {
 		var loadOptions = {
 			'limit': 1000,
 			"groups": groups,
+			"subgroups": subgroups,
 			'user': "<%= current_user.email %>",
 			'mode': 'group',
 			'uri': [location.protocol, '//', location.host, location.pathname].join('')
@@ -193,6 +198,7 @@ jQuery(function ($) {
 		var loadOptions = {
 			'limit': 1000,
 			"groups": groups,
+			"subgroups": subgroups,
 			'user': "<%= current_user.email %>",
 			'mode': 'class',
 			'uri': [location.protocol, '//', location.host, location.pathname].join('')
@@ -211,6 +217,7 @@ jQuery(function ($) {
 		var loadOptions = {
 			'limit': 1000,
 			"groups": groups,
+			"subgroups": subgroups,
 			'user': "<%= current_user.email %>",
 			'mode': 'admin',
 			'uri': [location.protocol, '//', location.host, location.pathname].join('')

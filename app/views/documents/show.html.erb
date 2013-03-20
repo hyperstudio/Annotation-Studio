@@ -17,7 +17,7 @@
 	</div>
 </div><!--/span3 -->
 <div class="span6">
-	<div class="navbar navbar-fixed-top" id="document-title">
+	<div class="navbar navbar-fixed-top hidden-phone hidden-tablet" id="document-title">
 		<div class="navbar-inner">
 			<div class="container">
 				<div class="container nav-collapse">
@@ -55,7 +55,7 @@
 			</div><!--/.container -->
 		</div><!--/.navbar-inner -->
 	</div>
-	<div id="textcontent">
+	<div id="textcontent"> 
 		<div><!-- Required for cases in which there's no HTML in the text -->
 			<%= @document.text.html_safe %>
 		</div>

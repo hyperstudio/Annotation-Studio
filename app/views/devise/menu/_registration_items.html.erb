@@ -6,8 +6,8 @@
 			'animation': 'true',
 			'placement': 'bottom',
 			'trigger': 'hover',
-			'title': "Groups",
-			'content': "<ul><li><%= current_user.rep_group_list %></li></ul>",
+			'title': "Work groups",
+			'content': "<ul><li><%= current_user.rep_subgroup_list %></li></ul>",
 		}).data('popover').tip().css('z-index', 1040);
 	</script>
 <% else %>

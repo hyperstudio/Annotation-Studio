@@ -1,35 +1,44 @@
-<%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :class => "form-horizontal"}) do |f| %>
-<%= devise_error_messages! %>
-<fieldset>
-<legend>Sign in</legend>
-	<div class="control-group">
-	  <%= f.label :email, :class => "control-label" %>
-	  <div class="controls">
-		<%= f.email_field :email %>
-	  </div>
-
-	  <%= f.label :password, :class => "control-label" %>
-	  <div class="controls">
-	  	<%= f.password_field :password %>
-	  </div>
-
-	  <% if devise_mapping.rememberable? -%>
-	      <div class="controls">
-			<%= label_tag :remember_me, :class => "checkbox" do %>
-				<%= f.check_box :remember_me %> Remember me
-			<% end %>
+<div class="span8" id="blurb">
+	<p>
+		<legend>
+		Annotation Studio is a web application that supports close reading and collaborative interpretation of online documents. It's designed primarily for use by students of the humanities. <a href="http://www.annotationstudio.org/">Learn more here</a>, or <a href="/users/sign_up">register</a> and <a href="/users/sign_in">sign in</a> to try it out.
+		</legend>
+	</p>
+</div>
+<div class="span4" id="login">
+	<div class="alert">This is the public demo of Annotation Studio. MIT affiliates should go <a href="http://annotationstudio.mit.edu/"><strong>here</strong></a>.</div>
+	<h4>Sign in</h4>
+	<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+	<%= devise_error_messages! %>
+	<fieldset>
+		<div class="control-group well">
+		  <%= f.label :email, :class => "control-label" %>
+		  <div class="controls">
+			<%= f.email_field :email %>
 		  </div>
-	  <% end -%>
 
-	  <div class="controls">
-		  <div><%= f.submit "Sign in", :class => "btn btn-primary" %></div>
-	  </div>
+		  <%= f.label :password, :class => "control-label" %>
+		  <div class="controls">
+		  	<%= f.password_field :password %>
+		  </div>
 
-		<br>
-		<div class="controls">
-			  <div><%= render "links" %></div>
+		  <% if devise_mapping.rememberable? -%>
+		      <div class="controls">
+				<%= label_tag :remember_me, :class => "checkbox" do %>
+					<%= f.check_box :remember_me %> Remember me
+				<% end %>
+			  </div>
+		  <% end -%>
+
+		  <div class="controls">
+			  <div><%= f.submit "Sign in", :class => "btn btn-primary" %></div>
+		  </div>
+
+			<div class="controls">
+			<%= render "links" %>
+			</div>
+
 		</div>
-
-	</div>
-</fieldset>
-<% end %>
+	</fieldset>
+	<% end %>
+</div>

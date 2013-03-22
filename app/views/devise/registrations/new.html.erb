@@ -43,7 +43,7 @@
 			</div>
 
 			<% if ENV["DEFAULT_USER_GROUP"] != nil %>
-			<%= f.hidden_field :rep_group_list, :multiple => true, :class => 'hidden', :value => ENV["DEFAULT_USER_GROUP"] %>
+			<%= f.hidden_field :rep_group_list, :class => 'hidden', :value => ENV["DEFAULT_USER_GROUP"] %>
 			<% end %>
 
 			<%= f.label :rep_group_list, "Group", :class => "control-label" %>

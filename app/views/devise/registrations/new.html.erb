@@ -8,6 +8,8 @@
 <div class="span4" id="login">
 	<% if ENV["RAILS_ENV"] == "public" %>
 	<div class="alert">This is the public demo of Annotation Studio. MIT affiliates should go <a href="http://annotationstudio.mit.edu/"><strong>here</strong></a>.</div>
+	<% elsif ENV["RAILS_ENV"] == "development" %>
+	<div class="alert">This is the development version of Annotation Studio.</div>
 	<% elsif ENV["RAILS_ENV"] == "staging" %>
 	<div class="alert">This is the staging site for Annotation Studio. MIT affiliates should go <a href="http://annotationstudio.mit.edu/"><strong>here</strong></a> instead. Affiliates of other institutions and the general public should go <a href="http://app.annotationstudio.org/"><strong>here</strong></a> instead.</div>
 	<% elsif ENV["RAILS_ENV"] == "live" %>

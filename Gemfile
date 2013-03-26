@@ -17,6 +17,7 @@ gem "friendly_id", ">= 4.0.9"
 gem "babosa"
 
 group :development do
+  gem 'rails-footnotes', '>= 3.7.9'
   gem 'sextant'
   gem 'meta_request', '0.2.1'
 end

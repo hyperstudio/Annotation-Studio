@@ -1,5 +1,6 @@
 <div class="span12">
 	<h1>Documents</h1>
+	<%# will_paginate @documents, :class => "pull-right pagination", :style => "margin:-40px 0 0 0;" %>
 	<table class="table table-striped table-bordered">
 	  <thead>
 	    <tr>
@@ -15,7 +16,6 @@
 		<% unless @documents.empty? || @documents.nil? %>
 			<% @documents.sort {|a, b| a.title.downcase <=> b.title.downcase }.each do |document| %>
 				<% if can? :read, document %>
-				<%= will_paginate @documents, :class => "pull-right pagination", :style => "margin:-40px 0 0 0;" %>
 			      <tr>
 			        <td><%= link_to document.title, document_path(document.friendly_id) %></td>
 			        <td><%= document.author %></td>

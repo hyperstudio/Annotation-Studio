@@ -8,10 +8,6 @@ https://github.com/hyperstudio/MIT-Annotation-Data-Store
 Set the data store up first, then rename application.sample.yml to application.yml
 and point your annotation studio instance to the API in that config file.
 
-## Dependencies
-### OKFN Annotator
-https://github.com/okfn/annotator/
-
 ## Installation
 Set up rails and postgres (if you haven't yet, try: https://github.com/thoughtbot/laptop)
 
@@ -23,6 +19,10 @@ Then:
 - ```Rake db migrate```
 - ```rails s```
 
+## Thanks
+### @OKFN and @nickstenning
+For the Annotator: https://github.com/okfn/annotator/ which is bundled here.
+
 ## Author
 - Lab: MIT HyperStudio
 - http://hyperstudio.mit.edu/
@@ -31,4 +31,4 @@ Then:
 
 ## License
 GPL2
-&copy; MIT 2013
+http://www.gnu.org/licenses/gpl-2.0.html

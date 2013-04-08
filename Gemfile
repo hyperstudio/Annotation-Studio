@@ -42,11 +42,11 @@ end
 gem 'jquery-rails',   '~> 2.1.4'
 gem 'redactor-rails', '0.3.2'
 gem 'jbuilder'
-gem "jwt" , "0.1.7"
+gem "jwt", "0.1.7"
 gem "rabl"
 gem "gon"
 
-gem 'activeadmin'
+gem 'activeadmin', "0.5.1"
 gem 'sass-rails'
 gem "meta_search",    '>= 1.1.0.pre'
 

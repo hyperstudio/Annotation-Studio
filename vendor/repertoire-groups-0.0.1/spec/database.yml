@@ -1,0 +1,12 @@
+sqlite3:
+  adapter: sqlite3
+  database: repertoire_groups_test.sqlite3
+
+# MySQL ?
+
+postgresql:
+  adapter: postgresql
+  hostname: localhost
+  username: postgres
+  password:
+  database: repertoire_groups_test

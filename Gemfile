@@ -42,7 +42,7 @@ end
 gem 'jquery-rails',   '~> 2.1.4'
 gem 'redactor-rails', '0.3.2'
 gem 'jbuilder'
-gem "jwt", "0.1.7"
+gem "jwt", "0.1.4"
 gem "rabl"
 gem "gon"
 

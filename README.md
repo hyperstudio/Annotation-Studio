@@ -16,13 +16,12 @@ https://github.com/okfn/annotator/
 Set up rails and postgres (if you haven't yet, try: https://github.com/thoughtbot/laptop)
 
 Then:
-
-```mkdir annotation-studio```
-```cd annotation-studio```
-```git clone git@github.com:hyperstudio/Annotation-Studio.git```
-```bundle install```
-```Rake db migrate```
-```rails s```
+- ```mkdir annotation-studio```
+- ```cd annotation-studio```
+- ```git clone git@github.com:hyperstudio/Annotation-Studio.git```
+- ```bundle install```
+- ```Rake db migrate```
+- ```rails s```
 
 ## Author
 - Lab: MIT HyperStudio

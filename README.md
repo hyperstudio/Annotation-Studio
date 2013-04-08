@@ -5,8 +5,8 @@ Hyperstudio Annotation Application.
 ### Compatible with the MIT Annotation Data Store
 https://github.com/hyperstudio/MIT-Annotation-Data-Store
 
-Set the data store up first, then point your annotation studio instance to the API
-in the application config file: application.sample.yml
+Set the data store up first, then rename application.sample.yml to application.yml
+and point your annotation studio instance to the API in that config file.
 
 ## Dependencies
 ### OKFN Annotator

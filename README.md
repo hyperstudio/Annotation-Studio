@@ -16,12 +16,13 @@ Then:
 - ```cd annotation-studio```
 - ```git clone git@github.com:hyperstudio/Annotation-Studio.git```
 - ```bundle install```
+- Create a PostgreSQL database, add the connection information into database.sample.yml and copy that file to database.yml.
+- Update application.yml with your configuration preferences (Note that we deploy on Heroku, so our configuration system is compatible with that hosting environment).
 - ```Rake db migrate```
 - ```rails s```
 
 ## Thanks
-### @OKFN and @nickstenning
-For the Annotator: https://github.com/okfn/annotator/ which is bundled here.
+Thanks to @OKFN and @nickstenning for creating The Annotator: https://github.com/okfn/annotator/ which is bundled here.
 
 ## Author
 - Lab: MIT HyperStudio
@@ -31,4 +32,5 @@ For the Annotator: https://github.com/okfn/annotator/ which is bundled here.
 
 ## License
 GPL2
+
 http://www.gnu.org/licenses/gpl-2.0.html

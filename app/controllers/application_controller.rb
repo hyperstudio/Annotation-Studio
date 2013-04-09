@@ -9,12 +9,12 @@ class ApplicationController < ActionController::Base
     @now = DateTime.current().to_time.iso8601
     @jwt = JWT.encode(
         {
-            'consumerKey' => "annotationstudio.org",
+            'consumerKey' => ENV["API_CONSUMER"],
             'userId' => current_user.email,
             'issuedAt' => @now,
             'ttl' => 86400
         }, 
-        "secretgoeshere"
+        ENV["API_SECRET"]
     )
     gon.current_user = current_user
   end

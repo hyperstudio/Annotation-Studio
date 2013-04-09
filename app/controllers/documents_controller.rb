@@ -7,10 +7,9 @@ class DocumentsController < ApplicationController
   # GET /documents.json
   def index
     # @documents = filter_by_can_read(Document.all)
-
-    # @documents = Document.all
     @documents = Document.order("title").page(params[:page]).per_page(10)
-
+    @documents = filter_by_can_read(@documents)
+    
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @documents }

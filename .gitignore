@@ -69,3 +69,4 @@ vendor/assets/javascripts/_archive/js-annotator-files/json2.js
 
 # Ignore application configuration
 config/application.yml
+db/backups/

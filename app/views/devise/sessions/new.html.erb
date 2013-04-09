@@ -12,6 +12,7 @@
 			<% end %>
 		</legend>
 	</p>
+	<%= render "techreqs" %>
 </div>
 <div class="span4" id="login">
 	<div class="alert">
@@ -30,32 +31,31 @@
 	<%= devise_error_messages! %>
 	<fieldset>
 		<div class="control-group well">
-		  <%= f.label :email, :class => "control-label" %>
-		  <div class="controls">
+			<%= f.label :email, :class => "control-label" %>
+			<div class="controls">
 			<%= f.email_field :email %>
-		  </div>
+			</div>
 
-		  <%= f.label :password, :class => "control-label" %>
-		  <div class="controls">
-		  	<%= f.password_field :password %>
-		  </div>
+			<%= f.label :password, :class => "control-label" %>
+			<div class="controls">
+			<%= f.password_field :password %>
+			</div>
 
-		  <% if devise_mapping.rememberable? -%>
-		      <div class="controls">
-				<%= label_tag :remember_me, :class => "checkbox" do %>
-					<%= f.check_box :remember_me %> Remember me
-				<% end %>
-			  </div>
-		  <% end -%>
+			<% if devise_mapping.rememberable? -%>
+			 <div class="controls">
+			<%= label_tag :remember_me, :class => "checkbox" do %>
+			<%= f.check_box :remember_me %> Remember me
+			<% end %>
+			</div>
+			<% end -%>
 
-		  <div class="controls">
-			  <div><%= f.submit "Sign in", :class => "btn btn-primary" %></div>
-		  </div>
+			<div class="controls">
+			<div><%= f.submit "Sign in", :class => "btn btn-primary" %></div>
+			</div>
 
 			<div class="controls">
 			<%= render "links" %>
 			</div>
-
 		</div>
 	</fieldset>
 	<% end %>

@@ -1,2 +1,0 @@
-== Annotation Studio
-Hyperstudio Annotation Application.

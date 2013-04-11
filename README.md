@@ -1,15 +1,14 @@
-## Annotation Studio
-Hyperstudio Annotation Application.
+# Annotation Studio
+An annotation platform designed for teaching and learning in the humanities, and with aspirations to more general use.
 
-##  
-### Compatible with the MIT Annotation Data Store
+## Dependency: MIT Annotation Data Store
 https://github.com/hyperstudio/MIT-Annotation-Data-Store
 
 Set the data store up first, then rename application.sample.yml to application.yml
 and point your annotation studio instance to the API in that config file.
 
 ## Installation
-Set up rails and postgres (if you haven't yet, try: https://github.com/thoughtbot/laptop)
+Set up Rails and Postgres (if you haven't yet, try: https://github.com/thoughtbot/laptop)
 
 Then:
 - ```mkdir annotation-studio```
@@ -17,7 +16,7 @@ Then:
 - ```git clone git@github.com:hyperstudio/Annotation-Studio.git```
 - ```bundle install```
 - Create a PostgreSQL database, add the connection information into database.sample.yml and copy that file to database.yml.
-- Update application.yml with your configuration preferences (Note that we deploy on Heroku, so our configuration system is compatible with that hosting environment).
+- Update application.yml and database.yml with your configuration preference.
 - ```Rake db migrate```
 - ```rails s```
 

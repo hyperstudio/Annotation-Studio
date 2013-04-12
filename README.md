@@ -21,7 +21,7 @@ Then:
 - ```rails s```
 
 ## Thanks
-Thanks to @OKFN and @nickstenning for creating The Annotator: https://github.com/okfn/annotator/ which is bundled here.
+Thanks to [OKFN](https://github.com/okfn/) and [Nick Stenning](https://github.com/nickstenning/) for creating The Annotator: https://github.com/okfn/annotator/ which is bundled here.
 
 ## Author
 - Lab: MIT HyperStudio

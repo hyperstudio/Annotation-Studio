@@ -26,6 +26,7 @@
 //= require annotator.store.min
 //= require annotator.auth.min
 //= require annotator.permissions.min
+//= require mitpermissions
 //= require annotator.tags.min
 //= require annotator.markdown.min
 //= require annotator.unsupported.min

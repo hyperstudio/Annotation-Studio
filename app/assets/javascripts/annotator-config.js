@@ -1,0 +1,240 @@
+(function ($) {
+	console.log(user);
+	// // Some personalization variables.
+	// // var userEmail = "<%= current_user.email %>";
+	// // var userSearch = "<%= current_user.has_role?(:teacher) ? '' : 'userEmail' %>";
+	// // Used to determine which annotations the current user can see.
+	// var groups = "<%= current_user.rep_group_list %>".split(/, /);
+	// // Bootstrap Backbone Sidebar //
+	// var sidebar = new Sidebar.App();
+	// Backbone.history.start({ pushState: true, root: window.location })
+	// 
+	// var studio = $('#textcontent').annotator();
+	// 
+	// studio.annotator('addPlugin', 'Markdown');
+	// <% if current_user.has_role?(:admin) %>
+	//  // studio.annotator('addPlugin', 'Filter');
+	// <% end %>
+	// studio.annotator('addPlugin', 'Tags');
+	//    // studio.annotator('addPlugin', 'AnnotoriousImagePlugin');
+	// studio.annotator('addPlugin', 'Unsupported');
+	// studio.annotator('addPlugin', 'Auth', {
+	// 	token: '<%= @jwt %>'
+	// });
+	// 
+	// // how to interact with the backend store
+	// studio.annotator('addPlugin', 'Store', {
+	// 	// prefix: 'http://annotations.mit.edu/api',
+	// 	// prefix: 'http://staging-annotations.herokuapp.com/api',
+	// 	prefix: 'http://localhost:5000/api',
+	// 	annotationData: {
+	// 		'uri': [location.protocol, '//', location.host, location.pathname].join(''),
+	// 		'user': {
+	// 			'id': <%= current_user.id %>,
+	// 			'username': "<%= current_user.first_name_last_initial %>",
+	// 			'groups': groups,
+	// 		}
+	// 	},
+	// 	loadFromSearch: {
+	// 		'limit': 1000,
+	// 		
+	// 		// Loads group annotations
+	// 		'user[groups]': groups,
+	// 
+	// 		// Limits annotations to this document
+	// 		'uri': [location.protocol, '//', location.host, location.pathname].join(''),
+	// 		
+	// 		// Limits annotations to this user unless user is an admin
+	// 		<% unless current_user.has_role?(:admin) %>
+	// 		'user[id]': "<%= current_user.id %>",
+	// 		<% end %>
+	// 		
+	// 	}
+	// });
+	// 
+	// var subscriber = $('#textcontent').annotator().data('annotator');
+	// 
+	// var groups = "<%= current_user.rep_group_list %>".split(/, /);
+	// var readPermitArray = ['<%= current_user.id %>'];
+	// readPermitArray = readPermitArray.concat(groups);
+	// console.info("readPermitArray: ");
+	// console.info(readPermitArray);
+	// 
+	// // settings to store with each annotation
+	// studio.annotator('addPlugin', 'MITPermissions', {
+	// 	user: {
+	// 		'id': <%= current_user.id %>,
+	// 		'username': "<%= current_user.first_name_last_initial %>",
+	// 		// groups in which this user has read access to annotations
+	// 		'read': groups,
+	// 		'delete': groups,
+	// 		'update': groups,
+	// 		'admin': groups,
+	// 	},
+	// 
+	// 	permissions: {
+	// 		'read': readPermitArray, // by default, the current user and all his/her groups can see annotations they create
+	// 		'update': ['<%= current_user.id %>'], // no one else can ever update
+	// 		'delete': ['<%= current_user.id %>'], // no one else can ever delete
+	// 		'admin': ['<%= current_user.id %>'] // no one else can ever admin
+	// 	},
+	// 
+	// 	// Callback to return an id for the user
+	// 	userId: function (user) {
+	// 		console.info("userId called.");
+	// 		if (user && user.id) { 
+	// 			return user.id;
+	// 		}
+	// 		return user;
+	// 	},
+	// 
+	// 	// Callback to return a string for the user
+	// 	userString: function (user) {
+	// 		console.info("userString called.");
+	// 		if (user && user.username) {
+	// 			return user.username;
+	// 		}
+	// 		return user;
+	// 	},
+	// 
+	// 	userAuthorize: function (action, annotation, user) {
+	// 		console.info("action: "+ action);
+	// 		// console.info(action);
+	// 		// console.info("annotation: ");
+	// 		// console.info(annotation);
+	// 		// console.info("user: ");
+	// 		// console.info(user);
+	// 
+	// 		// If no user is passed, it's because the annotator is asking whether the annotation
+	// 		// allows any user to do that action. An annotation denotes world access by storing 
+	// 		// a zero-length array of tokens for that action's permission value
+	// 		if (user === null) { 
+	// 			// evaluates to true if the annotation stores no constraints.
+	// 			if (annotation.permissions[action].length == 0) {
+	// 				console.info("returning true: user === null; annotation.permissions[action].length === " + annotation.permissions[action].length);
+	// 				return true
+	// 			}
+	// 			// evaluates to false if the annotation stores any constraint for that action (might be you have the permission, but we don't know who you are).
+	// 			else {
+	// 				console.info("returning false: user === null; annotation.permissions[action].length === " + annotation.permissions[action].length);
+	// 				return false
+	// 			}
+	// 		}
+	// 
+	// 		// Otherwise, the annotator is asking whether a specific user has a specific 
+	// 		// permission, so we return true only if the user stores a value for that action
+	// 		// that matches what the annotation stores for that action
+	// 		if (annotation.permissions[action].length > 0) { // the action is restricted to certain users
+	// 			// using the Underscore.js intersection method to find out if this user has this token for this action
+	// 			// return true if the annotation and the user share at least one token value for this action
+	// 			var userActionArray = user[action];
+	// 			console.info("userActionArray: " + userActionArray);
+	// 			var annotationActionArray = annotation.permissions[action];
+	// 			console.info("annotationActionArray: " + annotationActionArray);
+	// 			if (_.intersection(userActionArray,annotationActionArray).length > 0) {
+	// 				console.info("returning true: annotation.permissions[action].length is "+ annotation.permissions[action].length +"and annotation.permissions[action].length is" + annotation.permissions[action].length);
+	// 				return true;
+	// 			}
+	// 		}
+	// 		else { // the action is not restricted to certain users
+	// 			console.info("returning true: annotation.permissions[action].length is "+ annotation.permissions[action].length);
+	// 			return true;
+	// 		}
+	// 
+	// 		// Failing all those tests, if the annotation.user.id is the current user.id, 
+	// 		// we return true; the current user has all permissions on his/her own annotations.
+	// 		if (user.id === annotation.user.id) {
+	// 			console.info("returning true: return user.id === annotation.user.id");
+	// 			return true;
+	// 		}
+	// 	},
+	// 
+	// 	// Permissions settings per-annotation
+	// 	showViewPermissionsCheckbox: false,
+	// 	showEditPermissionsCheckbox: true,
+	// });
+	// 
+	// // Create a UUID for a given annotation if needed.
+	// // Once created, this shouldn't be changed.
+	// var createUuid = function(annotation) {
+	// 	if (annotation.uuid == null) {
+	// 		annotation.uuid = Math.uuid(8, 16);
+	// 		console.info("New uuid for annotation: '"+annotation.quote+"': "+ annotation.uuid);
+	// 	}
+	// 	else {
+	// 		console.info("Existing uuid for annotation: '"+annotation.quote+"': "+ annotation.uuid);
+	// 	}
+	// };
+	// 
+	// // Create username for a given annotation if needed.
+	// var addUserName = function(annotation) {
+	// 	if (annotation.username == null) {
+	// 		annotation.username = "<%= current_user.first_name_last_initial %>";
+	// 		console.info("New username for annotation: <%= current_user.first_name_last_initial %>");
+	// 	}
+	// };
+	// 
+	// // addLinkId(annotation);
+	// 
+	// // Add UUIDs to highlights so sidebar and highlights can link to one another.
+	// var addUuid;
+	// var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+	// addUuid = __bind(function(a) {
+	// 	if (a.highlights[0] != null) {
+	// 		a.highlights[0].id = "hl"+ a.uuid;
+	// 		a.highlights[0].title = a.user.username;
+	// 	}
+	// 	else {
+	// 		console.info("Err...");
+	// 	}
+	// }, this);
+	// 
+	// var createAndAddUuid = function(annotation){
+	// 	createUuid(annotation);
+	// 	addUuid(annotation);
+	// }
+	// 
+	// // Update the sidebar with local annotation data
+	// var loadSidebar = function(annotation) {
+	// 	setTimeout(function() {
+	// 	    sidebar.listAnnotations(subscriber.dumpAnnotations());
+	// 	}, 100);
+	// };
+	// 
+	// // Remove all comment icons and load sidebar with local data
+	// var deleteFromSidebar =	function(annotation) {
+	// 	$(".icon-comment").remove();
+	// 	setTimeout(function() {
+	// 	    sidebar.listAnnotations(subscriber.dumpAnnotations());
+	// 	}, 100);
+	// };
+	// 
+	// var showAnnId =  function(annotation) {
+	// 	var newAnn = new Sidebar.Annotation(annotation);
+	// 	console.info(newAnn.get("uuid"));
+	// };
+	// 
+	// // When the annotator loads remote data, update sidebar
+	// subscriber.subscribe('annotationsLoaded', loadSidebar);
+	// 
+	// // Update all highlights with UUIDs
+	// subscriber.subscribe('annotationsLoaded', __bind(function(annotations) {
+	// 	annotations.map(addUuid); // copies the UUID value from the object field to the highlight spans attribute value.
+	// }, this));
+	// 
+	// // Add the UUID to the local annotation object and to the highlight span before saving
+	// subscriber.subscribe('beforeAnnotationCreated', createUuid); // creates, if need be, and adds, both to object, and to highlight.
+	// subscriber.subscribe('beforeAnnotationCreated', addUserName); // creates, if need be, and adds, both to object, and to highlight.
+	// 
+	// 
+	// // Once the local object has been created, load the sidebar from local data (already contains UUID)
+	// subscriber.subscribe('annotationCreated', loadSidebar);
+	// subscriber.subscribe('annotationCreated', addUuid);
+	// 
+	// // When the local object is updated (contains previously created/stored UUID), load the sidebar from local data
+	// subscriber.subscribe('annotationUpdated', loadSidebar);
+	// subscriber.subscribe('annotationDeleted', deleteFromSidebar);
+	// 
+	// 
+	// mixpanel.track("Loaded Document");
+});

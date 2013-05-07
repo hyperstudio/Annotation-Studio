@@ -1,7 +1,5 @@
-GIT
-  remote: https://jamiefolsom:tr3m3nd0@github.com/repertoire/Repertoire-Groups.git
-  revision: ce5d5cd5ef2ffd130f0106e3a1b8469d77d06c5a
-  branch: public
+PATH
+  remote: vendor/repertoire-groups-0.0.1
   specs:
     repertoire-groups (0.0.1)
 
@@ -229,7 +227,7 @@ DEPENDENCIES
   rabl
   rails (>= 3.2.11)
   redactor-rails (= 0.3.2)
-  repertoire-groups!
+  repertoire-groups (= 0.0.1)!
   sass-rails
   sextant
   therubyracer

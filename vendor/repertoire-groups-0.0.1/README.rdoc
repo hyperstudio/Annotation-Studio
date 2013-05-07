@@ -1,0 +1,130 @@
+= Repertoire Groups
+
+Repertoire Groups is a Rails 3 engine which extends CanCan to provide Role-based authorization, and includes basic views for administration of user roles.  It also implements a basic group and privacy setting system using acts_as_taggable_on tag lists, and the default abilities be easily extended or changed (or not used) in your application's Ability class.
+
+
+== Installation:
+
+Add to Gemfile:
+
+  gem 'repertoire-groups'
+
+Run generator for DB migration and run migration:
+
+  rails generate repertoire:groups_migration
+  rake db:migrate
+
+Repertoire Groups expects your application to provide a User model.  To use this User with Repertoire Groups add the line
+
+  acts_as_role_user
+
+and define the necessary privacy and group tag sets:
+
+  attr_accessible :rep_privacy_list
+  acts_as_taggable_on :rep_privacy
+
+in your User model.
+
+In order to apply the default Repertoire Groups group settings to your application's models (for example, in order to allow Users in a group to access a Document with/in the same group), you must simply add two (acts_as_annotatable_on) tag lists to the Objects you want to apply rules to:
+
+  attr_accessible :rep_privacy_list, :rep_group_list
+  acts_as_taggable_on :rep_privacy, :rep_group
+
+Finally, you must also implement your own Ability class, per CanCan's instructions:
+
+https://github.com/ryanb/cancan/wiki/Defining-Abilities
+
+But this can be quite simple if you use Repertoire Groups default settings.  You must
+
+  include Repertoire::Groups::Ability
+
+...and call the defaults_for method supplied by Repertoire Groups in your initialize method, which is otherwise the same as that described by the above CanCan docs link:
+
+  class Ability
+    include CanCan::Ability
+    include Repertoire::Groups::Ability
+
+    def initialize(user)
+      defaults_for user
+    end
+  end
+
+
+== Default Privacy/Group settings
+
+The defaults_for method provided by the Repertoire::Groups::Ability module implements a very specific authorization scheme:
+
+- An 'admin' Role is assumed.  This Role can do anything within the system.
+
+Otherwise, a User other than an admin
+
+- can manage anything they have created,
+- can read anything if they are in the same group (that is, if they have the same rep_group_list tags as an arbitrary model in your application),
+- can read anything if the model is public (that is, if the model has the 'public' rep_privacy_list tag), but
+- cannot destroy any model other than their own by default,
+- cannot manage any aspects of any model by default, and
+- cannot manage any aspects of UserSets by default
+
+The UserSet ability is placed at the bottom of the abilities, so it does not get overridden by any of the above abilities, whereas the generic ability disallowing management of all models is overridden by all the public, group and user-owned related abilities (it is placed at the top of the abilities).
+
+It is very simple to not use this default set of rules--simply do not call the defaults_for method, and implement your own set of abilities per CanCan's documentation (as above):
+
+https://github.com/ryanb/cancan/wiki/Defining-Abilities
+
+A note: the choice was made to allow models to have their own group settings so models could belong to multiple groups, and because Users may also belong to multiple groups.  It is easy enough in your application to implement a system where a model inherits a User's group settings however, so hopefully this implementation allows for the greatest flexibility in implementing groups and permissions across different groups.
+
+
+== Administrative Interface
+
+Repertoire Groups implements a very simple Administrative interface using a UserSet model, only available to Users with the "admin" role as described in the "Default Privacy/Group settings" section, which lets you apply Role and Group settings to your Users.  This admininstration interface is set up in Repertoire Groups automatically to be found at the path '/user_sets' and a default resource is set up in Repertoire Groups routes.rb file for this.
+
+Also, for now you will need to add the stylesheet file to your app's application.css file:
+
+  //= require 'user_set'
+
+
+== User/Role API
+
+Repertoire Groups adds some methods to your User to aid in identifying and setting a User's Roles.  Note that by default the 'unapproved' role is added to the User after initialization, but it is very easy to modify, add and remove roles.  For example:
+
+  > @user = User.new(:email => 'fake@example.com', :firstname => 'Bob', :lastname => 'Dobbs', :password => 'bad_password')
+  > @user.roles
+  => [#<Role id: 1, name: "unapproved", description: nil>]
+  > @user.set_roles = ['admin']
+  > @user.roles
+  => [#<Role id: 2, name: "admin", description: nil>]
+
+It is also easy to determine if a User has a specific Role:
+
+  > @user.has_role?(:teacher)
+  => false
+  > @user.has_role?(:student)
+  => false
+  > @user.has_role?(:admin)
+  => true
+
+Users are also validated on having at least one Role.
+
+Adding new Roles to the system is similarly simple:
+
+  > Role.find_or_create_new(:teacher)
+  => #<Role id: 5, name: "teacher", description: nil>
+
+If this Role already exists, no new Roles will be created, but if not it will be created for you, and subsequently show up in the Roles list in the UserSet admin.
+
+There are also two view helper methods for providing lists of all available Groups and Privacy settings: get_group_list and get_privacy_list.  These return unique lists of tags for each of these default tag collections.
+
+
+== TODO
+
+- provide generator to dump user_sets views into application filepath?
+- figure out how to add CanCan exception handling defaults to application controller in application by default? see app/controllers/application_controller_extension.rb, currently you must add this manually to your own Application's application_controller.rb
+- avoid having to add stylesheet to application.css?
+
+== Authors
+
+For questions, please contact:
+
+* Dave Della Costa, dfd@mit.edu
+
+All rights reserved, 2011 MIT HyperStudio

@@ -1,11 +1,9 @@
 source 'https://rubygems.org'
 
 gem 'rails', '>= 3.2.11'
-#gem 'thin'
 gem 'unicorn'
 
 gem 'pg'
-#gem "newrelic_rpm", "~> 3.5.5.38"
 gem "newrelic_rpm", "~> 3.5.7.59"
 gem 'heroku-true-relic'
 
@@ -21,8 +19,6 @@ group :development do
   gem 'meta_request', '0.2.1'
 end
 
-# Gems used only for assets and not required
-# in production environments by default.
 group :assets do
   gem "therubyracer"
   gem 'less-rails' #,   '~> 3.2.3'
@@ -32,11 +28,6 @@ group :assets do
 end
 
 gem "twitter-bootstrap-rails" # https://github.com/seyhunak/twitter-bootstrap-rails/issues/401 ?
-
-group :development do
-  gem 'meta_request', '0.2.1'
-  gem 'sextant'
-end
 
 gem 'jquery-rails',   '~> 2.1.4'
 gem 'redactor-rails', '0.3.2'

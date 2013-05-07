@@ -43,9 +43,9 @@ jQuery(function ($) {
 	var studio = $('#textcontent').annotator();
 
 	studio.annotator('addPlugin', 'Markdown');
-	<%# if current_user.has_role?(:admin) %>
-	 // studio.annotator('addPlugin', 'Filter');
-	<%# end %>
+	<% if current_user.has_role?(:admin) && ENV["ANNOTATOR_FILTER"] == 'true' %>
+	studio.annotator('addPlugin', 'Filter');
+	<% end %>
 	studio.annotator('addPlugin', 'Tags');
 	   // studio.annotator('addPlugin', 'AnnotoriousImagePlugin');
 	studio.annotator('addPlugin', 'Unsupported');

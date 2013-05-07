@@ -63,16 +63,17 @@
 
 			<% if ENV["DEFAULT_USER_GROUP"] != nil %>
 			<%= f.hidden_field :rep_group_list, :class => 'hidden', :value => ENV["DEFAULT_USER_GROUP"] %>
-			<% end %>
-
+			<% else %>
 			<%= f.label :rep_group_list, "Group", :class => "control-label" %>
 			<div class="controls">
 			<%= f.text_field :rep_group_list %>
 			</div>
+			<% end %>
 
 			<%= f.label :rep_subgroup_list, "Working Group", :class => "control-label" %>
 			<div class="controls">
 			<%= f.text_field :rep_subgroup_list %>
+			<span class="help-block">Put a secret word here. Give it to anyone you want to share with. If they add it to their account, you'll be able to see one another's visible annotations</span>
 			</div>
 
 			<br>

@@ -89,6 +89,10 @@ Sidebar.AnnotationView = Backbone.View.extend({
 			$(this.el).html(Mustache.to_html(this.highlighttemplate, this.model.toJSON())); // instead of console.info: 
 		}
 		$(this.el).find(".details").hide();
+	 	$(this.el).find("a").click(function(){
+		  window.open(this.href, '_blank');
+		  return false;
+		});
 		return this;
 	},
 	mdConvert: function () {

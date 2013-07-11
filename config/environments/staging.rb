@@ -45,10 +45,10 @@ AnnotationStudio::Application.configure do
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
 
-  config.action_mailer.default_url_options = { :host => 'staging-annotationstudio.herokuapp.com' }
+  config.action_mailer.default_url_options = { :host => ENV['API_CONSUMER'] }
   config.action_mailer.perform_deliveries = true
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.default :charset => "utf-8"  
+  config.action_mailer.default :charset => "utf-8"
   config.action_mailer.smtp_settings = {
     :address        => "smtp.sendgrid.net",
     :port           => "587",
@@ -56,5 +56,5 @@ AnnotationStudio::Application.configure do
     :user_name      => ENV['SENDGRID_USERNAME'],
     :password       => ENV['SENDGRID_PASSWORD'],
     :domain         => ENV['SENDGRID_DOMAIN']
-  }  
+  }
 end

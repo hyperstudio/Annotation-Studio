@@ -9,11 +9,12 @@ development:
     DEFAULT_USERS_CAN_CREATE_TEXTS: true
     DEFAULT_USERS_CAN_SEE_OTHERS_WORK: true
     GMAIL_USER: # to send user emails while in development
-    GMAIL_PASS: # to send user emails while in development 
+    GMAIL_PASS: # to send user emails while in development
     UNICORN_BACKLOG: 16
     API_SECRET: 
     API_CONSUMER: localhost
     CONFIRMATION_GRACE_PERIOD: 2
+    SITE_DOMAIN: example.com # the site you are hosting, used in email templates
 
 production:
     DEFAULT_NEW_USER_GROUP: public
@@ -31,3 +32,4 @@ production:
     CONFIRMATION_GRACE_PERIOD: 2
     GMAIL_USER: # or an SMTP account if you prefer
     GMAIL_PASS: # or an SMTP account if you prefer
+    SITE_DOMAIN: example.com # the site you are hosting, used in email templates

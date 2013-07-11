@@ -3,7 +3,6 @@ development:
     DEFAULT_USER_GROUP: 
     GOOGLE_ANALYTICS_CODE: 
     ENVIRONMENT_TAG: 
-    API_URL: http://localhost:5000/api
     DEFAULT_USERS_CAN_CHOOSE_GROUPS: true
     DEFAULT_USERS_CAN_CONTROL_PERMISSIONS: true
     DEFAULT_USERS_CAN_CREATE_TEXTS: true
@@ -11,6 +10,8 @@ development:
     GMAIL_USER: # to send user emails while in development
     GMAIL_PASS: # to send user emails while in development 
     UNICORN_BACKLOG: 16
+    # make the following the path to your local (or hosted) instance of the MIT-Annotation-Data-Store
+    API_URL: http://localhost:5000/
     API_SECRET: 
     API_CONSUMER: localhost
     CONFIRMATION_GRACE_PERIOD: 2
@@ -19,15 +20,19 @@ production:
     DEFAULT_NEW_USER_GROUP: public
     GOOGLE_ANALYTICS_CODE:
     ENVIRONMENT_TAG: Welcome
-    API_URL: http://path.to.your/api
     DEFAULT_USER_GROUP:
     DEFAULT_USERS_CAN_CHOOSE_GROUPS: false
     DEFAULT_USERS_CAN_CONTROL_PERMISSIONS: false
     DEFAULT_USERS_CAN_CREATE_TEXTS: false
     DEFAULT_USERS_CAN_SEE_OTHERS_WORK: false
     UNICORN_BACKLOG: 16
+    # Url to a running instance of MIT-Annotation-data-store
+    API_URL: http://path.to.your.api.com/
+    # Shared secret key between the Annotation Studio and Annotation Store
+    # Make up a <32 character random string
     API_SECRET:
-    API_CONSUMER: app.annotationstudio.org
+    # domain name of the current website
+    API_CONSUMER: http://your.site.domain.com
     CONFIRMATION_GRACE_PERIOD: 2
     GMAIL_USER: # or an SMTP account if you prefer
     GMAIL_PASS: # or an SMTP account if you prefer

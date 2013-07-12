@@ -10,3 +10,6 @@ vendor/assets/javascripts/_archive/*
 config/application.yml
 db/backups/*
 config/database.yml
+
+# Ignore application configuration
+/config/application.yml

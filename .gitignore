@@ -11,5 +11,6 @@ config/application.yml
 db/backups/*
 config/database.yml
 
-# Ignore application configuration
+# Ignore application & database configuration
 /config/application.yml
+/config/database.yml

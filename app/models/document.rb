@@ -25,7 +25,7 @@ class Document < ActiveRecord::Base
     api = GoogleDriver::Api.new(ENV['scope'], ENV['issuer'], ENV['p12_path'])
     doc = api.upload(file_path)
     self.text = doc.download('text/html')
-
+    self.save
   end
 
 end

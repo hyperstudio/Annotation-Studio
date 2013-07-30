@@ -49,4 +49,6 @@ gem 'will_paginate', '> 3.0'
 
 gem 'google_driver', '0.0.3'
 gem 'delayed_job_active_record'
+gem 'sanitize'
+
 

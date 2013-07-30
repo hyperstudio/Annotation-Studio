@@ -1,5 +1,6 @@
 require "babosa" # allows cyrillic, other characters in titles (transliterates titles for URL use)
 require "google_driver"
+require "sanitize"
 
 class Document < ActiveRecord::Base
   belongs_to :user, :autosave => true
@@ -21,11 +22,23 @@ class Document < ActiveRecord::Base
     input.to_s.to_slug.normalize(transliterations: :russian).to_s
   end
 
+  # for delayed jobs
+  def max_attempts
+    return 3
+  end
+
   def g_process_file (file_path)
     api = GoogleDriver::Api.new(ENV['scope'], ENV['issuer'], ENV['p12_path'])
     doc = api.upload(file_path)
     self.text = doc.download('text/html')
+    self.sanitize_html
     self.save
+  end
+
+  def sanitize_html
+    rules = Sanitize::Config::RESTRICTED
+    rules[:remove_contents] = ['head', 'style']
+    self.text = Sanitize.clean(self.text, rules)
   end
 
 end

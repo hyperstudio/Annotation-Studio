@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="span12">
-		<%= form_for (@document), :html => { :class => 'form-horizontal' } do |f| %>
+		<%= form_for (@document), :html => { :class => 'form-horizontal', multipart: true  } do |f| %>
 		  <fieldset>
 		    <legend><%= controller.action_name.capitalize %> Document</legend>
 			<div class="row">
@@ -83,7 +83,9 @@
 		    </div>
 
 		    <div class="form-actions">
-              <%= f.file_field :attachment %>
+
+          <%= file_field_tag "attachment" %>
+
 		      <%= f.submit nil, :class => 'btn btn-primary' %>
 		      <%= link_to 'Cancel', documents_url, :class => 'btn' %>
 		    </div>

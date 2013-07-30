@@ -15,6 +15,10 @@ development:
     API_SECRET: 
     API_CONSUMER: localhost
     CONFIRMATION_GRACE_PERIOD: 2
+    GOOGLE_REDIRECT_URI: 
+    GOOGLE_CLIENT_ID: 
+    GOOGLE_CLIENT_SECRET: 
+    GOOGLE_DRIVE_EMAIL:
 
 production:
     DEFAULT_NEW_USER_GROUP: public
@@ -36,3 +40,7 @@ production:
     CONFIRMATION_GRACE_PERIOD: 2
     GMAIL_USER: # or an SMTP account if you prefer
     GMAIL_PASS: # or an SMTP account if you prefer
+    GOOGLE_REDIRECT_URI: 
+    GOOGLE_CLIENT_ID: 
+    GOOGLE_CLIENT_SECRET: 
+    GOOGLE_DRIVE_EMAIL:

@@ -1,4 +1,5 @@
 require "babosa" # allows cyrillic, other characters in titles (transliterates titles for URL use)
+require "google_driver"
 
 class Document < ActiveRecord::Base
   belongs_to :user, :autosave => true
@@ -18,6 +19,13 @@ class Document < ActiveRecord::Base
 
   def normalize_friendly_id(input)
     input.to_s.to_slug.normalize(transliterations: :russian).to_s
+  end
+
+  def g_process_file (file_path)
+    api = GoogleDriver::Api.new(ENV['scope'], ENV['issuer'], ENV['p12_path'])
+    doc = api.upload(file_path)
+    self.text = doc.download('text/html')
+
   end
 
 end

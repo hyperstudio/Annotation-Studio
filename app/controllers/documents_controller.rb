@@ -1,3 +1,4 @@
+
 class DocumentsController < ApplicationController
   # before_filter :authenticate_user!
   before_filter :authenticate
@@ -50,11 +51,19 @@ class DocumentsController < ApplicationController
   # POST /documents
   # POST /documents.json
   def create
+
     @document = Document.new(params[:document])
     @document.user = current_user
 
     respond_to do |format|
+
+      if params[:attachment]
+        file = params[:attachment]
+        @document.text = @document.g_process_file(file.path)
+      end
+
       if @document.save
+
         format.html { redirect_to documents_url, notice: 'Document was successfully created.' }
         format.json { render json: @document, status: :created, location: @document }
       else

@@ -24,7 +24,7 @@ These are rough instructions on how to get Annotation Studio working on your loc
 
 - Install and setup PostgreSQL-server (see Laptop repo above)
 - Create a PostgreSQL database
-- Copy `config/database.sample.yml` to `config/database.yml`
+- Copy `config/database.sample.yml` to `config/database.yml` _Do not check this into git_
 - Add PostgreSQL connection URI into database.yml
 - `Rake db migrate`
 - `rake db:seed`

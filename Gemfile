@@ -19,6 +19,7 @@ gem "babosa"
 group :development do
   gem 'sextant'
   gem 'meta_request', '0.2.1'
+    gem 'pry-rails'
 end
 
 group :assets do
@@ -45,3 +46,9 @@ gem "meta_search",    '>= 1.1.0.pre'
 gem "figaro"
 
 gem 'will_paginate', '> 3.0'
+
+gem 'google_driver', '0.0.3'
+gem 'delayed_job_active_record'
+gem 'sanitize'
+
+

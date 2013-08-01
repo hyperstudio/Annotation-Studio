@@ -1,8 +1,10 @@
+require 'fileutils'
+
 class DocumentsController < ApplicationController
   # before_filter :authenticate_user!
   before_filter :authenticate
   load_and_authorize_resource
-  
+
   # GET /documents
   # GET /documents.json
   def index
@@ -24,7 +26,7 @@ class DocumentsController < ApplicationController
     if request.path != document_path(@document)
       redirect_to @document, status: :moved_permanently
     end
-    
+
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @document }
@@ -50,11 +52,22 @@ class DocumentsController < ApplicationController
   # POST /documents
   # POST /documents.json
   def create
+
     @document = Document.new(params[:document])
     @document.user = current_user
 
     respond_to do |format|
+
       if @document.save
+
+        if params[:attachment]
+          file = params[:attachment]
+          # take the full current path, append '.keep', pass that to job worker
+          longer_tmp_file = '%s.keep' % file.path
+          FileUtils.move(file.path, longer_tmp_file)
+          @document.text = @document.delay.g_process_file(longer_tmp_file)
+        end
+
         format.html { redirect_to documents_url, notice: 'Document was successfully created.' }
         format.json { render json: @document, status: :created, location: @document }
       else
@@ -91,7 +104,7 @@ class DocumentsController < ApplicationController
       format.json { head :no_content }
     end
   end
-  
+
   # Helper which accepts an array of items and filters out those you are not allowed to read, according to CanCan abilities.
   # From Miximize.
   def filter_by_can_read(items)

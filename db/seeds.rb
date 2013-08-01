@@ -10,3 +10,4 @@
 Role.where(name: 'admin').first_or_create
 Role.where(name: 'editor').first_or_create
 Role.where(name: 'student').first_or_create
+Role.where(name: 'teacher').first_or_create

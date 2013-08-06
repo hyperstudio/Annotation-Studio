@@ -20,7 +20,7 @@
 //= require xpath
 //= require json2.min
 //= require Math.uuid
-//= require moment.min
+//# require moment.min
 //= require annotator.min
 //= require annotator.filter.min
 //= require annotator.store.min
@@ -29,4 +29,4 @@
 //= require annotator.tags.min
 //= require annotator.markdown.min
 //= require annotator.unsupported.min
-//= require annotorious.okfn.js
+// require annotorious.okfn.js

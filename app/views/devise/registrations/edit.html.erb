@@ -1,63 +1,67 @@
-<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :class => "form-horizontal"}) do |f| %> 
-<%= devise_error_messages! %>
-<legend>Edit Account for <%= resource.firstname %>  <%= resource.lastname %> </legend>
-<fieldset>
-	<div class="control-group well">
-		<%= f.label :firstname, "First Name", :class => "control-label" %>
-		<div class="controls">
-		<%= f.text_field :firstname, :value =>  resource.firstname %>
-		</div>
+<div class="row">
+	<div class="span12">
+		<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :class => "form-horizontal"}) do |f| %> 
+		<%= devise_error_messages! %>
+		<legend>Edit Account for <%= resource.firstname %>  <%= resource.lastname %> </legend>
+		<fieldset>
+			<div class="control-group well">
+				<%= f.label :firstname, "First Name", :class => "control-label" %>
+				<div class="controls">
+				<%= f.text_field :firstname, :value =>  resource.firstname %>
+				</div>
 
-		<%= f.label :lastname, "Last Name", :class => "control-label" %>
-		<div class="controls">
-		<%= f.text_field :lastname, :value =>  resource.lastname %>
-		</div>
+				<%= f.label :lastname, "Last Name", :class => "control-label" %>
+				<div class="controls">
+				<%= f.text_field :lastname, :value =>  resource.lastname %>
+				</div>
 
-		<%= f.label :email, :class => "control-label" %>
-		<div class="controls">
-		<%= f.email_field :email, :value =>  resource.email %>
-		</div>
+				<%= f.label :email, :class => "control-label" %>
+				<div class="controls">
+				<%= f.email_field :email, :value =>  resource.email %>
+				</div>
 
-		<%= f.label :affiliation, :class => "control-label" %>
-		<div class="controls">
-		<%= f.text_field :affiliation, :value =>  resource.affiliation %>
-		</div>
+				<%= f.label :affiliation, :class => "control-label" %>
+				<div class="controls">
+				<%= f.text_field :affiliation, :value =>  resource.affiliation %>
+				</div>
 
-		<%= f.label :password, :class => "control-label" %>
-		<div class="controls">
-		<%= f.password_field :password %>
-		</div>
+				<%= f.label :password, :class => "control-label" %>
+				<div class="controls">
+				<%= f.password_field :password %>
+				</div>
 
-		<%= f.label :password_confirmation, :class => "control-label" %>
-		<div class="controls">
-		<%= f.password_field :password_confirmation %>
-		</div>
+				<%= f.label :password_confirmation, :class => "control-label" %>
+				<div class="controls">
+				<%= f.password_field :password_confirmation %>
+				</div>
 
-		<%= f.label :current_password, :class => "control-label" %>
-		<div class="controls">
-		<%= f.password_field :current_password %>
-		<p class="help-block">(we need your current password to confirm your changes)</p>
-		</div>
+				<%= f.label :current_password, :class => "control-label" %>
+				<div class="controls">
+				<%= f.password_field :current_password %>
+				<p class="help-block">(we need your current password to confirm your changes)</p>
+				</div>
 	
-		<br />
+				<br />
 
-		<div class="control-group">
-	      <%= f.label "Groups", :class => 'control-label' %>
-			<div class="controls">
-        		<%= f.text_field :rep_group_list, :class => 'text_field input-xlarge' %>
+				<div class="control-group">
+			      <%= f.label "Groups", :class => 'control-label' %>
+					<div class="controls">
+		        		<%= f.text_field :rep_group_list, :class => 'text_field input-xlarge' %>
+					</div>
+				</div>
+
+				<div class="control-group">
+			      <%= f.label "Working Groups", :class => 'control-label' %>
+					<div class="controls">
+		        		<%= f.text_field :rep_subgroup_list, :class => 'text_field input-xlarge' %>
+					</div>
+				</div>
+
 			</div>
-		</div>
-
-		<div class="control-group">
-	      <%= f.label "Working Groups", :class => 'control-label' %>
-			<div class="controls">
-        		<%= f.text_field :rep_subgroup_list, :class => 'text_field input-xlarge' %>
-			</div>
-		</div>
-
-	</div>
 	
-	<div class="form-actions">
-		<div><%= f.submit "Update", :class => "btn btn-primary" %></div>
-  	</div>
-<% end %>
+			<div class="form-actions">
+				<div><%= f.submit "Update", :class => "btn btn-primary" %></div>
+		  	</div>
+		<% end %>
+	</div><!--/span12 -->
+</div><!--/row -->

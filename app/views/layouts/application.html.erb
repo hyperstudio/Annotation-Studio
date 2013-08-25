@@ -57,7 +57,7 @@
 						<a class="brand" href="/">Annotation Studio</a>
 						<div class="container nav-collapse">
 							<ul class="nav">
-								<li><%= link_to "Documents", "/documents"	%></li>
+								<li><%= link_to "Documents", "/documents" %></li>
 								<% if params[:controller] == 'documents' && params[:action] == 'show' %>
 								<li><a data-toggle="modal" href="#help">Help</a></li>
 								<% end %>
@@ -75,9 +75,9 @@
 			<noscript>
 				<div class="alert alert-error">For Annotation Studio to work, it is necessary to enable JavaScript. Here are <a href="http://www.enable-javascript.com/" target="_blank"> instructions how to enable JavaScript in your web browser</a>.</div>
 			</noscript>
-			<div class="row">
-				<%= yield %>
-			</div><!--/row -->
+
+			<%= yield %>
+
 			<footer>
 				<p>&copy; MIT <%= Time.now.year %></p>
 			</footer>

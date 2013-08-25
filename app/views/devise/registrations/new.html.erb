@@ -1,91 +1,93 @@
-<div class="span8" id="blurb">
-	<p>
-		<legend>
-			<% if Rails.env.public? %>
-				Annotation Studio is a web application that supports close reading and collaborative interpretation of online documents. It's designed primarily for use by students of the humanities. <a href="http://www.annotationstudio.org/">Learn more here</a>, or <a href="/users/sign_up">register</a> and <a href="/users/sign_in">sign in</a> to try it out.
-			<% elsif Rails.env.development? %>
-				Welcome to Annotation Studio, a tool to support close reading and collaborative interpretation of online documents. <a href="/users/sign_up">Register</a> and <a href="/users/sign_in">sign in</a> to use it, or <a href="http://www.annotationstudio.org/">click here</a> to learn more.
-			<% elsif Rails.env.staging? %>
-				Annotation Studio is a web application that supports close reading and collaborative interpretation of online documents. It's designed primarily for use by students of the humanities. <a href="http://www.annotationstudio.org/">Learn more here</a>, or <a href="/users/sign_up">register</a> and <a href="/users/sign_in">sign in</a> to try it out.
-			<% elsif Rails.env.production? %>
-				Welcome to Annotation Studio, a tool to support close reading and collaborative interpretation of online documents. <a href="/users/sign_up">Register</a> and <a href="/users/sign_in">sign in</a> to use it, or <a href="http://www.annotationstudio.org/">click here</a> to learn more.
-			<% end %>
-		</legend>
-	</p>
-	<%= render "techreqs" %>
-</div>
-<div class="span4" id="login">
-	<div class="alert">
-	<% if Rails.env.public? %>
-		This is the public demo of Annotation Studio. MIT affiliates should go <a href="http://annotationstudio.mit.edu/"><strong>here</strong></a>.
-	<% elsif Rails.env.development? %>
-		This is the development version of Annotation Studio.
-	<% elsif Rails.env.staging? %>
-		This is the staging site for Annotation Studio. MIT affiliates should go <a href="http://annotationstudio.mit.edu/"><strong>here</strong></a> instead. Affiliates of other institutions and the general public should go <a href="http://app.annotationstudio.org/"><strong>here</strong></a> instead.
-	<% elsif Rails.env.production? %>
-		This is the internal MIT instance of Annotation Studio. Non-MIT affiliates should go <a href="http://app.annotationstudio.org/"><strong>here</strong></a> instead.
-	<% end %>
+<div class="row">
+	<div class="span8" id="blurb">
+		<p>
+			<legend>
+				<% if Rails.env.public? %>
+					Annotation Studio is a web application that supports close reading and collaborative interpretation of online documents. It's designed primarily for use by students of the humanities. <a href="http://www.annotationstudio.org/">Learn more here</a>, or <a href="/users/sign_up">register</a> and <a href="/users/sign_in">sign in</a> to try it out.
+				<% elsif Rails.env.development? %>
+					Welcome to Annotation Studio, a tool to support close reading and collaborative interpretation of online documents. <a href="/users/sign_up">Register</a> and <a href="/users/sign_in">sign in</a> to use it, or <a href="http://www.annotationstudio.org/">click here</a> to learn more.
+				<% elsif Rails.env.staging? %>
+					Annotation Studio is a web application that supports close reading and collaborative interpretation of online documents. It's designed primarily for use by students of the humanities. <a href="http://www.annotationstudio.org/">Learn more here</a>, or <a href="/users/sign_up">register</a> and <a href="/users/sign_in">sign in</a> to try it out.
+				<% elsif Rails.env.production? %>
+					Welcome to Annotation Studio, a tool to support close reading and collaborative interpretation of online documents. <a href="/users/sign_up">Register</a> and <a href="/users/sign_in">sign in</a> to use it, or <a href="http://www.annotationstudio.org/">click here</a> to learn more.
+				<% end %>
+			</legend>
+		</p>
+		<%= render "techreqs" %>
 	</div>
-	<h4>Register</h4>
-	<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
-	<%= devise_error_messages! %>
-	<fieldset>
-		<div class="control-group well">
-			<%= f.label :firstname, "First Name", :class => "control-label" %>
-			<div class="controls">
-			<%= f.text_field :firstname %>
-			</div>
-
-			<%= f.label :lastname, "Last Name", :class => "control-label" %>
-			<div class="controls">
-			<%= f.text_field :lastname %>
-			</div>
-
-			<%= f.label :email, :class => "control-label" %>
-			<div class="controls">
-			<%= f.email_field :email %>
-			</div>
-
-			<%= f.label :affiliation, :class => "control-label" %>
-			<div class="controls">
-			<%= f.text_field :affiliation %>
-			</div>
-
-			<%= f.label :password, :class => "control-label" %>
-			<div class="controls">
-			<%= f.password_field :password %>
-			</div>
-
-			<%= f.label :password_confirmation, :class => "control-label" %>
-			<div class="controls">
-			<%= f.password_field :password_confirmation %>
-			</div>
-
-			<% if ENV["DEFAULT_USER_GROUP"] != nil %>
-			<%= f.hidden_field :rep_group_list, :class => 'hidden', :value => ENV["DEFAULT_USER_GROUP"] %>
-			<% else %>
-			<%= f.label :rep_group_list, "Group", :class => "control-label" %>
-			<div class="controls">
-			<%= f.text_field :rep_group_list %>
-			</div>
-			<% end %>
-
-			<%= f.label :rep_subgroup_list, "Working Group", :class => "control-label" %>
-			<div class="controls">
-			<%= f.text_field :rep_subgroup_list %>
-			<span class="help-block">Put a secret word here. Give it to anyone you want to share with. If they add it to their account, you'll be able to see one another's visible annotations</span>
-			</div>
-
-			<br>
-			<div class="controls">
-			<%= f.submit "Register", :class => "btn btn-primary" %>
-			</div>
-
-			<br>
-			<div class="controls">
-			<%= render "links" %>
-			</div>
+	<div class="span4" id="login">
+		<div class="alert">
+		<% if Rails.env.public? %>
+			This is the public demo of Annotation Studio. MIT affiliates should go <a href="http://annotationstudio.mit.edu/"><strong>here</strong></a>.
+		<% elsif Rails.env.development? %>
+			This is the development version of Annotation Studio.
+		<% elsif Rails.env.staging? %>
+			This is the staging site for Annotation Studio. MIT affiliates should go <a href="http://annotationstudio.mit.edu/"><strong>here</strong></a> instead. Affiliates of other institutions and the general public should go <a href="http://app.annotationstudio.org/"><strong>here</strong></a> instead.
+		<% elsif Rails.env.production? %>
+			This is the internal MIT instance of Annotation Studio. Non-MIT affiliates should go <a href="http://app.annotationstudio.org/"><strong>here</strong></a> instead.
+		<% end %>
 		</div>
-	</fieldset>
-	<% end %>
-</div>
+		<h4>Register</h4>
+		<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
+		<%= devise_error_messages! %>
+		<fieldset>
+			<div class="control-group well">
+				<%= f.label :firstname, "First Name", :class => "control-label" %>
+				<div class="controls">
+				<%= f.text_field :firstname %>
+				</div>
+
+				<%= f.label :lastname, "Last Name", :class => "control-label" %>
+				<div class="controls">
+				<%= f.text_field :lastname %>
+				</div>
+
+				<%= f.label :email, :class => "control-label" %>
+				<div class="controls">
+				<%= f.email_field :email %>
+				</div>
+
+				<%= f.label :affiliation, :class => "control-label" %>
+				<div class="controls">
+				<%= f.text_field :affiliation %>
+				</div>
+
+				<%= f.label :password, :class => "control-label" %>
+				<div class="controls">
+				<%= f.password_field :password %>
+				</div>
+
+				<%= f.label :password_confirmation, :class => "control-label" %>
+				<div class="controls">
+				<%= f.password_field :password_confirmation %>
+				</div>
+
+				<% if ENV["DEFAULT_USER_GROUP"] != nil %>
+				<%= f.hidden_field :rep_group_list, :class => 'hidden', :value => ENV["DEFAULT_USER_GROUP"] %>
+				<% else %>
+				<%= f.label :rep_group_list, "Group", :class => "control-label" %>
+				<div class="controls">
+				<%= f.text_field :rep_group_list %>
+				</div>
+				<% end %>
+
+				<%= f.label :rep_subgroup_list, "Working Group", :class => "control-label" %>
+				<div class="controls">
+				<%= f.text_field :rep_subgroup_list %>
+				<span class="help-block">Put a secret word here. Give it to anyone you want to share with. If they add it to their account, you'll be able to see one another's visible annotations</span>
+				</div>
+
+				<br>
+				<div class="controls">
+				<%= f.submit "Register", :class => "btn btn-primary" %>
+				</div>
+
+				<br>
+				<div class="controls">
+				<%= render "links" %>
+				</div>
+			</div>
+		</fieldset>
+		<% end %>
+	</div>
+</div><!--/row -->

@@ -1,35 +1,160 @@
-<div class="span12">
-	<h1><%= @user.fullname %></h1>
+<style type="text/css" media="screen">
+.nav-tabs {
+	border-bottom: 1px solid #eee;
+}
 
-	<script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.3/underscore-min.js"></script>
-	<script src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/0.9.2/backbone-min.js"></script>
-	<script src="http://cdnjs.cloudflare.com/ajax/libs/mustache.js/0.4.2/mustache.min.js"></script>
-
-	<ul id="annotation-list"></ul>
-	<script type="text/template" id="comment-template">
-		<span id="sb{{uuid}}" href="#full{{uuid}}" data-highlight="#hl{{uuid}}" rel="tooltip" title="{{username}}" class="highlightlink comment">{{{text}}}</span>
-		<span id="quote{{uuid}}" class="sbquote details">&quot;{{{quote}}}&quot;</span>
-		<span id="text{{uuid}}" class="sbtext details">{{{text}}}</span>
-		<span id="info{{uuid}}" class="sbinfo details">{{username}}</span>
-		<div id="tags{{uuid}}" class="sbtags details">{{#tags}}<span class="label">{{.}}</span> {{/tags}}</div>
-	</script>
-	<script type="text/template" id="highlight-template">
-		<span id="sb{{uuid}}" data-highlight="#hl{{uuid}}" rel="tooltip" title="{{username}}" class="highlightlink highlight sbquote">&quot;{{{quote}}}&quot;</span>
-		<span id="quote{{uuid}}" class="sbquote details">&quot;{{{quote}}}&quot;</span>
-		<div id="tags{{uuid}}" class="sbtags details">{{#tags}}<span class="label">{{.}}</span> {{/tags}}</div>
-	</script>
-
-
-</div><!--/span12 -->
-<%= javascript_include_tag "sidebar" %>
+.nav-tabs > li.active a, .nav-tabs > li.active a:hover {
+	background-color: #fefefe;
+	border-bottom: 1px solid #fefefe;
+}
+.nav {
+	margin-bottom:0;
+}
+.tab-pane {
+	background-color: #fefefe;
+}
+</style>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.1/underscore-min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.0.0/backbone-min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/mustache.js/0.7.2/mustache.min.js"></script>
+<%= javascript_include_tag "widget" %>
 <script type="text/javascript" charset="utf-8">
-// Bootstrap Backbone Sidebar //
-var sidebar = new Sidebar.App();
-Backbone.history.start({pushState: true, root: window.location})
+jQuery(function ($) {
+	var widget = new Widget.App();
+	// Backbone.history.start({pushState: true, root: window.location})
 
-mixpanel.people.set({
-    "$email": "<%= current_user.email %>",    // only special properties need the $
-    "$last_login": new Date(),         // properties can be dates...
+	var loadOptions = {
+		'limit': 1000,
+		'groups': "<%= current_user.rep_group_list %>".split(/, /);
+		'subgroups': "<%= current_user.rep_subgroup_list %>".split(/, /);
+		'user': "<%= current_user.email %>",
+		'mode': 'user',
+		'uri': [location.protocol, '//', location.host, location.pathname].join('')
+		'token': '<%= @jwt %>';
+		'apiURL': '<%= ENV["API_URL"] %>';
+	};
+	widget.listAnnotations(loadOptions);
 });
-mixpanel.people.identify("<%= current_user.id %>");
 </script>
+
+<div class="row">
+	<div class="span12">
+		<h1>Dashboard for <%= @user.fullname %></h1>
+	</div><!--/span12 -->
+</div><!--/row -->
+<div class="row">
+	<div class="span4">
+<h4>Documents</h4>
+<ul class="nav nav-tabs" id="document-tabs">
+  <li class="active"><a href="#assigned" data-toggle="tab"><span class="badge"><%= Document.tagged_with(current_user.rep_group_list).size %></span> Assigned</a></li>
+  <li><a href="#created" data-toggle="tab"><span class="badge"><%= current_user.documents.size %></span> Created</a></li>
+</ul>
+
+<div class="tab-content">
+  <div class="tab-pane active" id="assigned">
+		<table class="table table-hover">
+			<% unless Document.tagged_with(current_user.rep_group_list).empty? || Document.tagged_with(current_user.rep_group_list).nil? %>
+				<% Document.tagged_with(current_user.rep_group_list).sort {|a, b| a.title.downcase <=> b.title.downcase }.each do |document| %>
+				      <tr>
+				        <td><%= link_to document.title, document_path(document.friendly_id), target: 'blank' %></td>
+				      </tr>
+		    	<% end %>
+			<% else %>
+		      <tr>
+		        <td>No documents to view. (Your account maybe be pending approval).</td>
+		      </tr>
+			<% end %>
+		</table>
+</div>
+  <div class="tab-pane" id="created">
+		<table class="table table-hover">
+			<% unless current_user.documents.empty? || current_user.documents.nil? %>
+				<% current_user.documents.sort {|a, b| a.title.downcase <=> b.title.downcase }.each do |document| %>
+					<% if can? :read, document %>
+				      <tr>
+				        <td><%= link_to document.title, document_path(document.friendly_id), target: 'blank' %></td>
+				      </tr>
+			     	<% end %>
+		    	<% end %>
+			<% else %>
+		      <tr>
+		        <td>No documents to view. (Your account maybe be pending approval).</td>
+		      </tr>
+			<% end %>
+		</table>
+  </div>
+</div>
+
+	</div><!--/span4 -->
+	<div class="span4">
+		<h4>Annotations</h4>
+		<ul class="nav nav-tabs" id="document-tabs">
+		  <li class="active"><a href="#mine" data-toggle="tab"><span class="badge">45</span> Mine</a></li>
+		  <li><a href="#group" data-toggle="tab"><span class="badge">234</span> Groups</a></li>
+		  <li><a href="#class" data-toggle="tab"><span class="badge">2345</span> Classes</a></li>
+		</ul>
+
+		<div class="tab-content">
+			<div class="tab-pane active" id="mine">
+			<table class="table table-hover">
+				<tr>
+				  <td>No annotations</td>
+				</tr>
+				<script type="text/template" id="comment-template">
+					<span id="sb{{uuid}}" href="#full{{uuid}}" data-highlight="#hl{{uuid}}" rel="tooltip" title="{{username}}" class="highlightlink comment">{{{text}}}</span>
+					<span id="quote{{uuid}}" class="sbquote details">&quot;{{{quote}}}&quot;</span>
+					<span id="text{{uuid}}" class="sbtext details">{{{text}}}</span>
+					<span id="info{{uuid}}" class="sbinfo details">{{username}}</span>
+					<div id="tags{{uuid}}" class="sbtags details">{{#tags}}<span class="label">{{.}}</span> {{/tags}}</div>
+				</script>
+				<script type="text/template" id="annotation-template">
+					<span id="sb{{uuid}}" data-highlight="#hl{{uuid}}" rel="tooltip" title="{{username}}" class="highlightlink highlight sbquote">&quot;{{{quote}}}&quot;</span>
+					<span id="quote{{uuid}}" class="sbquote details">&quot;{{{quote}}}&quot;</span>
+					<div id="tags{{uuid}}" class="sbtags details">{{#tags}}<span class="label">{{.}}</span> {{/tags}}</div>
+				</script>
+			</table>
+			</div>
+			<div class="tab-pane" id="group">
+			<table class="table table-hover">
+			      <tr>
+			        <td>No annotations</td>
+			      </tr>
+			</table>
+			</div>
+			<div class="tab-pane" id="class">
+			<table class="table table-hover">
+			      <tr>
+			        <td>No annotations</td>
+			      </tr>
+			</table>
+			</div>
+		</div>
+	</div><!--/span4 -->
+	<div class="span4">
+		<h4>Groups</h4>
+		<ul class="nav nav-tabs" id="group-tabs">
+		  <li class="active"><a href="#groups" data-toggle="tab"><span class="badge"><%= current_user.rep_group_list.size %></span> Class Groups</a></li>
+		  <li><a href="#subgroups" data-toggle="tab"><span class="badge"><%= current_user.rep_subgroup_list.size %></span> Working groups</a></li>
+		</ul>
+		<div class="tab-content">
+		  <div class="tab-pane active" id="groups">
+				<table class="table table-hover">
+				<% current_user.rep_group_list.each do |group| %>
+			      <tr>
+			        <td><%= group %></td>
+			      </tr>
+		    	<% end %>
+				</table>
+		</div>
+		  <div class="tab-pane" id="subgroups">
+				<table class="table table-hover">
+				<% current_user.rep_subgroup_list.each do |group| %>
+			      <tr>
+			        <td><%= group %></td>
+			      </tr>
+		    	<% end %>
+				</table>
+		  </div>
+		</div>
+	</div><!--/span4 -->
+</div><!--/row -->

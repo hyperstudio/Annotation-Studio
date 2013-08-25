@@ -16,4 +16,7 @@ class UsersController < ApplicationController
     gon.rabl "app/views/users/show.rabl", as: "user"
   end
 
+  def edit
+    @user = find_by_username(username)
+  end
 end

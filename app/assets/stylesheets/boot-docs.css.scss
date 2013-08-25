@@ -141,7 +141,7 @@ li.annotation-item.focuswhite {
 }
 
 .text_area {
-	width:600px;
+	width:400px;
 	height:300px;
 }
 
@@ -426,3 +426,8 @@ span.highlightborder {
 /*#user-account-name {
 	z-index:100000000;
 }*/
+
+footer {
+	padding-top:10px;
+	border-top:1px solid #ddd;
+}

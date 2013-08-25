@@ -6,6 +6,9 @@ AnnotationStudio::Application.routes.draw do
 
   authenticated :user do
     root :to => "users#show"
+    get 'dashboard', to: 'users#show', as: :dashboard
+    get ':username', to: 'users#show', as: :user
+    # get ':username/edit', to: 'users#edit', as: :user
   end
 
   unauthenticated :user do

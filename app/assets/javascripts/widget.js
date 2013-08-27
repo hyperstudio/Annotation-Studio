@@ -26,19 +26,11 @@ Widget.RemoteAnnotationList = Backbone.Collection.extend({
     // url: 'http://annotations.mit.edu/api/search',
     url: 'http://localhost:5000/api/search',
 	comparator: function(annotation) {
-		try {
-			var startOffset = annotation.get("ranges")[0].startOffset;
-		}
-		catch(e) {
-			console.info("startOffset issue." + e.toString());
-		}
-		finally {
-			return startOffset; // change to startOffset
-		}
+		return - moment(annotation.get("created"));
 	},
-	initialize: function (options) {
-		console.info(options);
+	initialize: function (options, token) {
 		this.fetch({
+			headers: {'x-annotator-auth-token': token},
 			data: options,
 			success: this.fetchSuccess,
 			error: this.fetchError
@@ -51,38 +43,31 @@ Widget.RemoteAnnotationList = Backbone.Collection.extend({
         collection.deferred.resolve();
     },
     fetchError: function (collection, response) {
-        throw new Error("Fetch did not get annotations from the API");
+        throw new Error("Fetch did not get annotations from the API" + response);
     }
 });
 
 // Annotation View
 Widget.AnnotationView = Backbone.View.extend({
-	tagName: 'td',
+	tagName: 'li',
 	className: 'annotation-item',
 	initialize: function (annotation) {
-		this.commenttemplate = $('#comment-template').html();
-		this.highlighttemplate = $('#highlight-template').html();
+		this.commenttemplate = $('#user-comment-template').html();
+		this.highlighttemplate = $('#user-highlight-template').html();
 		this.mdconverter = new Showdown.converter();
 		this.href="#full"+this.model.get("uuid");
 	},
 	render: function () {
 		$(this.el).find("highlight.comment img").addClass("thumbnail");
-
-		// This annotation contains a comment
-		if (this.model.get("text") != "") {
+		if (this.model.get("text") != "") { // This annotation contains a comment
 			this.mdConvert();
-			$(this.el).html(Mustache.to_html(this.commenttemplate, this.model.toJSON())); // instead of console.info: 
+			$(this.el).html(Mustache.to_html(this.commenttemplate, this.model.toJSON()));
 		}
-
-		// This is just a highlight -- no contents
-		else {
-			$(this.el).html(Mustache.to_html(this.highlighttemplate, this.model.toJSON())); // instead of console.info: 
+		else { // This is just a highlight -- no contents
+			if (this.model.get("quote") != "") { // This annotation contains a comment
+				$(this.el).html(Mustache.to_html(this.highlighttemplate, this.model.toJSON()));
+			}
 		}
-		$(this.el).find(".details").hide();
-	 	$(this.el).find("a").click(function(){
-		  window.open(this.href, '_blank');
-		  return false;
-		});
 		return this;
 	},
 	mdConvert: function () {
@@ -96,7 +81,7 @@ Widget.AnnotationView = Backbone.View.extend({
 
 // Annotation List View
 Widget.AnnotationListView = Backbone.View.extend({
-	el: $("div#annotation-well"),
+	el: $("ul#annotation-list"),
 	initialize: function (options) {
 		this.template = $('#annotation-template').html();
 	},
@@ -109,11 +94,6 @@ Widget.AnnotationListView = Backbone.View.extend({
 			var annView = new Widget.AnnotationView({model: ann});
 			$("ul#annotation-list").append(annView.render().el);
 		});
-		// this.collection.sort();
-
-		$("li.annotation-item span").tooltip();
-		// Bind some events to links
-		$("li.annotation-item").click(function(event){});
 	}
 });
 
@@ -123,10 +103,10 @@ Widget.App = Backbone.Router.extend({
 		'list':  'listAnnotations', 
 	},
 	// takes an object literal of options for an XHR request.
-	listAnnotations: function (options) {
-		Widget.annotations = new Widget.RemoteAnnotationList(options);
+	listAnnotations: function (options, token) {
+		Widget.annotations = new Widget.RemoteAnnotationList(options, token);
 		var annotationsList = new Widget.AnnotationListView({
-			"container": $('#annotation-well'),
+			"container": $('#annotation-list'),
 			"collection": Widget.annotations
 		});
 		Widget.annotations.deferred.done(function () {

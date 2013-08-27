@@ -68,6 +68,7 @@ jQuery(function ($) {
 			"subgroups": subgroups,
 			'user': "<%= current_user.email %>",
 			'mode': 'user', // default mode -- user can switch via sidebar button.
+			'context': 'document',
 			'uri': [location.protocol, '//', location.host, location.pathname].join('')
 		}
 	});
@@ -167,6 +168,7 @@ jQuery(function ($) {
 			"subgroups": subgroups,
 			'user': "<%= current_user.email %>",
 			'mode': 'user',
+			'context': 'document',
 			'uri': [location.protocol, '//', location.host, location.pathname].join('')
 		}
 		subscriber.plugins.Store.loadAnnotationsFromSearch(loadOptions);
@@ -184,6 +186,7 @@ jQuery(function ($) {
 			"subgroups": subgroups,
 			'user': "<%= current_user.email %>",
 			'mode': 'group',
+			'context': 'document',
 			'uri': [location.protocol, '//', location.host, location.pathname].join('')
 		}
 		subscriber.plugins.Store.loadAnnotationsFromSearch(loadOptions);
@@ -201,6 +204,7 @@ jQuery(function ($) {
 			"subgroups": subgroups,
 			'user': "<%= current_user.email %>",
 			'mode': 'class',
+			'context': 'document',
 			'uri': [location.protocol, '//', location.host, location.pathname].join('')
 		}
 		subscriber.plugins.Store.loadAnnotationsFromSearch(loadOptions);
@@ -220,6 +224,7 @@ jQuery(function ($) {
 			"subgroups": subgroups,
 			'user': "<%= current_user.email %>",
 			'mode': 'admin',
+			'context': 'document',
 			'uri': [location.protocol, '//', location.host, location.pathname].join('')
 		}
 		subscriber.plugins.Store.loadAnnotationsFromSearch(loadOptions);

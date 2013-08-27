@@ -23,12 +23,11 @@ Widget.Annotation = Backbone.Model.extend({
 // Collection
 Widget.RemoteAnnotationList = Backbone.Collection.extend({
 	model: Widget.Annotation,
-    // url: 'http://annotations.mit.edu/api/search',
-    url: 'http://localhost:5000/api/search',
 	comparator: function(annotation) {
 		return - moment(annotation.get("created"));
 	},
-	initialize: function (options, token) {
+	initialize: function (options, endpoint, token) {
+		this.url = endpoint + "/search";
 		this.fetch({
 			headers: {'x-annotator-auth-token': token},
 			data: options,
@@ -103,8 +102,8 @@ Widget.App = Backbone.Router.extend({
 		'list':  'listAnnotations', 
 	},
 	// takes an object literal of options for an XHR request.
-	listAnnotations: function (options, token) {
-		Widget.annotations = new Widget.RemoteAnnotationList(options, token);
+	listAnnotations: function (options, endpoint, token) {
+		Widget.annotations = new Widget.RemoteAnnotationList(options, endpoint, token);
 		var annotationsList = new Widget.AnnotationListView({
 			"container": $('#annotation-list'),
 			"collection": Widget.annotations

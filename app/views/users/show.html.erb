@@ -20,8 +20,8 @@
 }
 */
 #annotation-list li {
-	margin:0 10px;
-	padding: 10px;
+	margin:0 8px;
+	padding: 8px;
 	border-bottom: 1px solid #ddd;
 }
 #annotation-list {
@@ -55,6 +55,7 @@ jQuery(function ($) {
 	};
 	widget.listAnnotations(loadOptions, token);
 });
+
 </script>
 
 <div class="row">
@@ -118,10 +119,10 @@ jQuery(function ($) {
 			<div class="tab-pane active" id="mine">
 				<ul id="annotation-list" class="unstyled">
 					<script type="text/template" id="user-comment-template">
-						<span class="user-comment"><a href="{{uri}}#{{uuid}}">{{{text}}}</a></span>
+						<span class="user-comment"><a href="{{uri}}#hl{{uuid}}" target="_blank">{{{text}}}</a></span>
 					</script>
 					<script type="text/template" id="user-highlight-template">
-						<span class="user-highlight"><a href="{{uri}}#{{uuid}}">{{{quote}}}</a></span>
+						<span class="user-highlight"><a href="{{uri}}#hl{{uuid}}" target="_blank">{{{quote}}}</a></span>
 					</script>
 				</ul>
 			</div>

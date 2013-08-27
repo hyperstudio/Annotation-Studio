@@ -231,9 +231,22 @@ jQuery(function ($) {
 	});
 	<%# end %>
 
+
+	var handleHash = function(annotation) {
+		var hash = window.location.hash
+		if (hash.length > 0){
+			console.info(hash);
+			setTimeout(function(){
+				$('html,body').animate({scrollTop: $(hash).offset().top - 150}, 500);
+			},1000);
+		}
+	};
+
+
 	// When the annotator loads remote data, update sidebar
 	subscriber.subscribe('annotationsLoaded', loadSidebar);
 	subscriber.subscribe('annotationsLoaded', stopSpinner);
+	subscriber.subscribe('annotationsLoaded', handleHash);
 
 	// Update all highlights with UUIDs
 	subscriber.subscribe('annotationsLoaded', __bind(function(annotations) {

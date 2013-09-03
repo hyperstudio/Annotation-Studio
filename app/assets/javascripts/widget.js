@@ -58,12 +58,27 @@ Widget.AnnotationView = Backbone.View.extend({
 	},
 	render: function () {
 		$(this.el).find("highlight.comment img").addClass("thumbnail");
-		if (this.model.get("text") != "") { // This annotation contains a comment
+		var txt = this.model.get("text");
+		var qt = this.model.get("quote");
+		
+		if (txt != "") { // This annotation contains a comment
 			this.mdConvert();
+			if (txt.length > 50) {
+				this.model.set("text" , txt.substring(0,50) + "...");
+			}
+			else{
+				this.model.set("text" , txt);
+			}
 			$(this.el).html(Mustache.to_html(this.commenttemplate, this.model.toJSON()));
 		}
 		else { // This is just a highlight -- no contents
-			if (this.model.get("quote") != "") { // This annotation contains a comment
+			if (qt != "") { // This annotation contains a comment
+				if (qt.length > 50) {
+					this.model.set("quote" , qt.substring(0,50) + "...");
+				}
+				else {
+					this.model.set("quote" , qt);
+				}
 				$(this.el).html(Mustache.to_html(this.highlighttemplate, this.model.toJSON()));
 			}
 		}

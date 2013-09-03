@@ -17,6 +17,6 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @user = find_by_username(username)
+    @user = User.find(params[:id])
   end
 end

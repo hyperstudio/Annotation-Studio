@@ -1,5 +1,6 @@
 <% if user_signed_in? %>
-  	<li><%= link_to("Dashboard", "/dashboard", :id => "user-account-name", :data => { :toggle => "popover", :content => ""}, :title => current_user.fullname) %></li>
+	<li><%= link_to("Dashboard", "/dashboard", :id => "dashboard-link") %></li>
+	<li><%= link_to("Edit profile", edit_user_registration_path, :id => "user-account-edit", :data => { :toggle => "popover", :content => ""}, :title => current_user.fullname) %></li>
 	<script type="text/javascript" charset="utf-8">
 		$('#user-account-name').popover({
 			'html': 'true',

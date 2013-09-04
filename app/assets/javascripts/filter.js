@@ -1,14 +1,14 @@
-Widget = window.Widget || {};
+Filter = window.Filter || {};
 
 // Models
-Widget.AnnotationRows = Backbone.Model.extend({
+Filter.AnnotationRows = Backbone.Model.extend({
 	defaults: {
 		rows: null,
 	}
 });
 
 // Models
-Widget.Annotation = Backbone.Model.extend({
+Filter.Annotation = Backbone.Model.extend({
 	initialize: function (annotationObject) {
 		this.set(annotationObject);
 	},
@@ -21,8 +21,8 @@ Widget.Annotation = Backbone.Model.extend({
 });
 
 // Collection
-Widget.RemoteAnnotationList = Backbone.Collection.extend({
-	model: Widget.Annotation,
+Filter.RemoteAnnotationList = Backbone.Collection.extend({
+	model: Filter.Annotation,
 	comparator: function(annotation) {
 		return - moment(annotation.get("created"));
 	},
@@ -47,7 +47,7 @@ Widget.RemoteAnnotationList = Backbone.Collection.extend({
 });
 
 // Annotation View
-Widget.AnnotationView = Backbone.View.extend({
+Filter.AnnotationView = Backbone.View.extend({
 	tagName: 'li',
 	className: 'annotation-item',
 	initialize: function (annotation) {
@@ -63,22 +63,10 @@ Widget.AnnotationView = Backbone.View.extend({
 		
 		if (txt != "") { // This annotation contains a comment
 			this.mdConvert(txt);
-			if (txt.length > 50) {
-				this.model.set("text" , txt.substring(0,50) + "...");
-			}
-			else{
-				this.model.set("text" , txt);
-			}
 			$(this.el).html(Mustache.to_html(this.commenttemplate, this.model.toJSON()));
 		}
 		else { // This is just a highlight -- no contents
 			if (qt != "") { // This annotation contains a comment
-				if (qt.length > 50) {
-					this.model.set("quote" , qt.substring(0,50) + "...");
-				}
-				else {
-					this.model.set("quote" , qt);
-				}
 				$(this.el).html(Mustache.to_html(this.highlighttemplate, this.model.toJSON()));
 			}
 		}
@@ -93,7 +81,7 @@ Widget.AnnotationView = Backbone.View.extend({
 });
 
 // Annotation List View
-Widget.AnnotationListView = Backbone.View.extend({
+Filter.AnnotationListView = Backbone.View.extend({
 	el: $("ul#annotation-list"),
 	initialize: function (options) {
 		this.template = $('#annotation-template').html();
@@ -104,27 +92,27 @@ Widget.AnnotationListView = Backbone.View.extend({
 
 		// Walk throught the list, and render markdown in the user comment first.
 		this.collection.each(function(ann) {
-			var annView = new Widget.AnnotationView({model: ann});
+			var annView = new Filter.AnnotationView({model: ann});
 			$("ul#annotation-list").append(annView.render().el);
 		});
 	}
 });
 
 // Application
-Widget.App = Backbone.Router.extend({
+Filter.App = Backbone.Router.extend({
 	routes: {
 		'list':  'listAnnotations', 
 	},
 	// takes an object literal of options for an XHR request.
 	listAnnotations: function (options, endpoint, token) {
-		Widget.annotations = new Widget.RemoteAnnotationList(options, endpoint, token);
-		var annotationsList = new Widget.AnnotationListView({
+		Filter.annotations = new Filter.RemoteAnnotationList(options, endpoint, token);
+		var annotationsList = new Filter.AnnotationListView({
 			"container": $('#annotation-list'),
-			"collection": Widget.annotations
+			"collection": Filter.annotations
 		});
-		Widget.annotations.deferred.done(function () {
+		Filter.annotations.deferred.done(function () {
 			annotationsList.render();
-			// console.info("Remote: "+ Widget.annotations.toJSON());
+			// console.info("Remote: "+ Filter.annotations.toJSON());
 		});
 	},
 });

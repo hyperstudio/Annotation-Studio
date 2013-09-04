@@ -12,6 +12,11 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery.ui.core
+//= require jquery.ui.position
+//= require jquery.ui.widget
+//= require jquery.ui.autocomplete
+//= require jquery.ui.menu
 //= require twitter/bootstrap
 //= require redactor-rails/redactor.min
 //= require redactor-config
@@ -30,3 +35,7 @@
 //= require annotator.markdown.min
 //= require annotator.unsupported.min
 // require annotorious.okfn.js
+//= require underscore
+//= require backbone
+//= require mustache
+//= require visualsearch

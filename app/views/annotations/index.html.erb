@@ -35,19 +35,16 @@
 
 
 </style>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.1/underscore-min.js"></script>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.0.0/backbone-min.js"></script>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/mustache.js/0.7.2/mustache.min.js"></script>
-<%= javascript_include_tag "widget" %>
+<%= javascript_include_tag "filter" %>
 <script type="text/javascript" charset="utf-8">
 jQuery(function ($) {
-	var widget = new Widget.App();
+	var filter = new Filter.App();
 	var endpoint = '<%= ENV["API_URL"] %>';
 	var token = '<%= @jwt %>';
 	// Backbone.history.start({pushState: true, root: window.location})
 
 	var loadOptions = {
-		'limit': 20,
+		'limit': 200,
 		// 'groups': "<%= current_user.rep_group_list %>".split(/, /),
 		// 'subgroups': "<%= current_user.rep_subgroup_list %>".split(/, /),
 		'host': location.host,
@@ -55,7 +52,7 @@ jQuery(function ($) {
 		'mode': 'user',
 		'context': 'search',
 	};
-	widget.listAnnotations(loadOptions, endpoint, token);
+	filter.listAnnotations(loadOptions, endpoint, token);
 });
 
 </script>
@@ -67,6 +64,65 @@ jQuery(function ($) {
 </div><!--/row -->
 <div class="row">
 	<div class="span12">
+		<div id="visual_search"></div>
+		<div id="search_query"></div>
+
+		<script type="text/javascript" charset="utf-8">
+		  $(document).ready(function() {
+		    var visualSearch = VS.init({
+		      container : $('#visual_search'),
+	          query      : 'user: "jfolsom@mit.edu" group: "1" tag:"a"',
+	          showFacets : true,
+	          unquotable : [
+	            'user',
+	            'group',
+	            'tag'
+	          ],
+			callbacks  : {
+	            search : function(query, searchCollection) {
+	              var $query = $('#search_query');
+	              var count  = searchCollection.size();
+	              $query.stop().animate({opacity : 1}, {duration: 300, queue: false});
+	              $query.html('<span class="raquo">&raquo;</span> You searched for: ' +
+	                          '<b>' + (query || '<i>nothing</i>') + '</b>. ' +
+	                          '(' + count + ' facet' + (count==1 ? '' : 's') + ')');
+	              clearTimeout(window.queryHideDelay);
+	              window.queryHideDelay = setTimeout(function() {
+	                $query.animate({
+	                  opacity : 0
+	                }, {
+	                  duration: 1000,
+	                  queue: false
+	                });
+	              }, 2000);
+	            },
+	            facetMatches : function(callback) {
+	              callback([
+	                'user', 'group', 'tag'
+	              ]);
+	            },
+	            valueMatches : function(facet, searchTerm, callback) {
+	              switch (facet) {
+	              case 'user':
+	                  callback([
+	                    { value: 'jfolsom@mit.edu', label: 'Jamie' },
+	                    { value: 'fendt@mit.edu', label: 'Kurt' },
+	                    { value: 'wkelley@mit.edu', label: 'Wyn' },
+	                  ]);
+	                  break;
+	                case 'group':
+	                  callback(['1', '2', '3']);
+	                  break;
+	                case 'tag':
+	                  callback(['a', 'b', 'c']);
+	                  break;
+	              }
+	            }
+	          }
+		    });
+		  });
+		</script>
+
 		<div class="tab-content">
 			<ul id="annotation-list" class="unstyled">
 				<script type="text/template" id="user-comment-template">

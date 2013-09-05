@@ -10,13 +10,13 @@
  *
  *= require_self
  *= require "redactor-rails"
- *= require "bootstrap_and_overrides.css"
- *= require "bootstrap.min.css"
- *= require "annotator.min.css"
- * require "annotorious.css"
- *= require "boot-docs.css"
- *= require visualsearch-datauri.css
- *= require visualsearch.css
+ *= require "bootstrap_and_overrides"
+ *= require "bootstrap.min"
+ *= require "annotator.min"
+ * require "annotorious"
+ *= require "boot-docs"
+ *= require visualsearch-datauri
+ *= require visualsearch
 */
 
 footer {

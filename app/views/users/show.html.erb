@@ -67,7 +67,12 @@ jQuery(function ($) {
 </div><!--/row -->
 <div class="row">
 	<div class="span4">
-<h4>Documents</h4>
+		<% if current_user.has_role?(:admin) %>
+		<h4><a href="/documents/">Documents</a></h4>
+		<% else %>
+		<h4>Documents</h4>
+		<% end %>
+
 <ul class="nav nav-tabs" id="document-tabs">
   <li class="active"><a href="#assigned" data-toggle="tab"><span class="badge"><%= Document.tagged_with(current_user.rep_group_list).size %></span> Assigned</a></li>
   <li><a href="#created" data-toggle="tab"><span class="badge"><%= current_user.documents.size %></span> Created</a></li>
@@ -110,7 +115,11 @@ jQuery(function ($) {
 
 	</div><!--/span4 -->
 	<div class="span4">
+		<% if current_user.has_role?(:admin) %>
+		<h4><a href="/annotations/">Annotations</a></h4>
+		<% else %>
 		<h4>Annotations</h4>
+		<% end %>
 		<ul class="nav nav-tabs" id="document-tabs">
 		  <li class="active"><a href="#mine" data-toggle="tab"><span class="badge"></span> Mine</a></li>
 		  <li><a href="#group" data-toggle="tab"><span class="badge"></span> Groups</a></li>

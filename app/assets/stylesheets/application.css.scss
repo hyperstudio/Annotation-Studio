@@ -9,7 +9,7 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
- *= require "redactor-rails"
+ * require "redactor-rails"
  *= require "bootstrap_and_overrides"
  *= require "bootstrap.min"
  *= require "annotator.min"
@@ -33,10 +33,10 @@ body {
 }
 
 // Document edit form.
-.redactor_editor {
-	height: 200px;
-	width: 1000px;
-}
+//.redactor_editor {
+//	height: 200px;
+//	width: 1000px;
+//}
 
 p.help-block {
 	font-style: italic;

@@ -18,8 +18,8 @@
 //= require jquery.ui.autocomplete
 //= require jquery.ui.menu
 //= require twitter/bootstrap
-//= require redactor-rails/redactor.min
-//= require redactor-config
+// require redactor-rails/redactor.min
+// require redactor-config
 //= require showdown
 //= require gettext
 //= require xpath

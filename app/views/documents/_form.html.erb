@@ -1,8 +1,3 @@
-<style type="text/css" media="screen">
-.redactor_box, .redactor_text_area, .redactor_editorm, .text_area {
-	width: 850px;
-}
-</style>
 <%= form_for (@document), :html => { :class => 'form-horizontal' } do |f| %>
   <fieldset>
     <legend><%= controller.action_name.capitalize %> Document</legend>
@@ -91,7 +86,7 @@
     <div class="control-group" id="document-chapters">
       <%= f.label "Chapters", :class => 'control-label' %>
       <div class="controls">
-		<%= f.text_area :chapters, :class => 'chapter-editor text_area', :size => "18x6" %>
+		<%= f.text_area :chapters, :class => 'text_area', :size => "18x6" %>
 		<p class="help-block">Put chapters links in the field above, in the form:"&lt;li&gt;&lt;a href=&quot;#2HCH0001&quot;&gt;1. Loomings.&lt;/a&gt;&lt;/li&gt;"</p>
       </div>
     </div>
@@ -100,7 +95,7 @@
     <div class="control-group" id="document-text">
       <%= f.label "Text", :class => 'control-label' %>
       <div class="controls">
-		<%= f.text_area :text, :class => 'redactor text_area', :size => "18x6" %>
+		<%= f.text_area :text, :class => 'text_area', :size => "18x6" %>
 		<p class="help-block">For chapters links to work, insert named anchors in the text above, in the form:"&lt;a name=&quot;2HCH0001&quot; id=&quot;2HCH0001&quot;&gt;&lt;/a&gt;"</p>
       </div>
     </div>

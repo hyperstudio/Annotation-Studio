@@ -35,9 +35,6 @@
 
 
 </style>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.1/underscore-min.js"></script>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.0.0/backbone-min.js"></script>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/mustache.js/0.7.2/mustache.min.js"></script>
 <%= javascript_include_tag "widget" %>
 <script type="text/javascript" charset="utf-8">
 jQuery(function ($) {
@@ -81,7 +78,7 @@ jQuery(function ($) {
 <div class="tab-content">
   <div class="tab-pane active" id="assigned">
 		<table class="table table-bordered">
-			<% unless Document.tagged_with(current_user.rep_group_list).empty? || Document.tagged_with(current_user.rep_group_list).nil? %>
+			<% unless Document.tagged_with(current_user.rep_group_list, :any => true).empty? || Document.tagged_with(current_user.rep_group_list, :any => true).nil? %>
 				<% Document.tagged_with(current_user.rep_group_list).sort {|a, b| a.title.downcase <=> b.title.downcase }.each do |document| %>
 				      <tr>
 				        <td><%= link_to document.title, document_path(document.friendly_id), target: 'blank' %></td>

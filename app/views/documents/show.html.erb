@@ -1,76 +1,78 @@
-<div class="span3 hidden-phone hidden-tablet">
-	<div class="affix-top" data-spy="affix" id="chapters">
-		<h4><%= ENV["DOCUMENT_SECTION_STRING"] %></h4>
-		<ul class="nav nav-list nav-collapse" id="chapternav">
-			<%= @document.chapters.try(:html_safe) %>
-		</ul>
-		<script type="text/javascript" charset="utf-8">
-			$("#chapternav a").click(function(event){
-				event.preventDefault();				
-				var idtarget = $(this).attr("href");
-				$('html,body').animate({scrollTop: $(idtarget).offset().top}, 500);
-				// $(idtarget).prepend('<i class="icon-comment"></i>');
-				// event.stopPropagation();
-			});
+<div class="row">
+	<div class="span3 hidden-phone hidden-tablet">
+		<div class="affix-top" data-spy="affix" id="chapters">
+			<h4><%= ENV["DOCUMENT_SECTION_STRING"] %></h4>
+			<ul class="nav nav-list nav-collapse" id="chapternav">
+				<%= @document.chapters.try(:html_safe) %>
+			</ul>
+			<script type="text/javascript" charset="utf-8">
+				$("#chapternav a").click(function(event){
+					event.preventDefault();				
+					var idtarget = $(this).attr("href");
+					$('html,body').animate({scrollTop: $(idtarget).offset().top}, 500);
+					// $(idtarget).prepend('<i class="icon-comment"></i>');
+					// event.stopPropagation();
+				});
 
-		</script>
-	</div>
-</div><!--/span3 -->
-<div class="span6">
-	<div class="navbar navbar-fixed-top hidden-phone hidden-tablet" id="document-title">
-		<div class="navbar-inner">
-			<div class="container">
-				<div class="container nav-collapse">
-					<h2 id="doctit" href="#" data-toggle="popover" data-content="" title=""><%= @document.title %></h2>
-					<script type="text/javascript" charset="utf-8">
-						var docMetaInfo = "";
-						if ("<%= @document.author %>" != "") {
-							docMetaInfo = docMetaInfo + "<li>Author: <%= @document.author %></li>";
-						}
-						if ("<%= @document.publisher %>" != "") {
-							docMetaInfo = docMetaInfo + "<li>Publisher: <%= @document.publisher %></li>";
-						}
-						if ("<%= @document.publication_date %>" != "") {
-							docMetaInfo = docMetaInfo + "<li>Publication date: <%= @document.publication_date %></li>";
-						}
-						if ("<%= @document.edition %>" != "") {
-							docMetaInfo = docMetaInfo + "<li>Edition: <%= @document.edition %></li>";
-						}
-						if ("<%= @document.source %>" != "") {
-							docMetaInfo = docMetaInfo + "<li>Source: <%= @document.source %></li>";
-						}
-						if (docMetaInfo != "") {
-							docMetaInfo = "<ul>"+ docMetaInfo + "</ul>";
-						}
-						$('#doctit').popover({
-							'html': 'true', 
-							'placement': 'bottom',
-							'trigger': 'hover',
-							'title': "Additional information",
-							'content': docMetaInfo === "" ? "None at this time" : docMetaInfo,
-						});
-					</script>
-					<h4 class="pull-right">Annotations</h4>
-				</div><!--/.nav-collapse -->
-			</div><!--/.container -->
-		</div><!--/.navbar-inner -->
-	</div>
-	<div id="textcontent"> 
-		<div><!-- Required for cases in which there's no HTML in the text -->
-			<%= @document.text.html_safe %>
+			</script>
 		</div>
+	</div><!--/span3 -->
+	<div class="span6">
+		<div class="navbar navbar-fixed-top hidden-phone hidden-tablet" id="document-title">
+			<div class="navbar-inner">
+				<div class="container">
+					<div class="container nav-collapse">
+						<h2 id="doctit" href="#" data-toggle="popover" data-content="" title=""><%= @document.title %></h2>
+						<script type="text/javascript" charset="utf-8">
+							var docMetaInfo = "";
+							if ("<%= @document.author %>" != "") {
+								docMetaInfo = docMetaInfo + "<li>Author: <%= @document.author %></li>";
+							}
+							if ("<%= @document.publisher %>" != "") {
+								docMetaInfo = docMetaInfo + "<li>Publisher: <%= @document.publisher %></li>";
+							}
+							if ("<%= @document.publication_date %>" != "") {
+								docMetaInfo = docMetaInfo + "<li>Publication date: <%= @document.publication_date %></li>";
+							}
+							if ("<%= @document.edition %>" != "") {
+								docMetaInfo = docMetaInfo + "<li>Edition: <%= @document.edition %></li>";
+							}
+							if ("<%= @document.source %>" != "") {
+								docMetaInfo = docMetaInfo + "<li>Source: <%= @document.source %></li>";
+							}
+							if (docMetaInfo != "") {
+								docMetaInfo = "<ul>"+ docMetaInfo + "</ul>";
+							}
+							$('#doctit').popover({
+								'html': 'true', 
+								'placement': 'bottom',
+								'trigger': 'hover',
+								'title': "Additional information",
+								'content': docMetaInfo === "" ? "None at this time" : docMetaInfo,
+							});
+						</script>
+						<h4 class="pull-right">Annotations</h4>
+					</div><!--/.nav-collapse -->
+				</div><!--/.container -->
+			</div><!--/.navbar-inner -->
+		</div>
+		<div id="textcontent"> 
+			<div><!-- Required for cases in which there's no HTML in the text -->
+				<%= @document.text.html_safe %>
+			</div>
+		</div>
+		<div class="form-actions">
+			<%= link_to 'Back', documents_path, :class => 'btn'  %>
+			<% if can? :manage, @document %>
+			<%= link_to 'Edit', edit_document_path(@document), :class => 'btn' %>
+			<%= link_to 'Delete', document_path(@document), :method => 'delete', :confirm => 'Are you sure?', :class => 'btn btn-danger'%>
+			<% end %>	
+		</div>
+	</div><!--/span6 -->
+	<%= render "documents/annotator-setup" %>
+	<%# render "documents/annotator-sidebar" %>
+	<%= render "documents/help" %>
+	<div id="spinnermodal" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="spinnermodallabel" aria-hidden="true">
+	  <div class="modal-body" id="spinnerdiv"><em>Loading annotations...</em></div>
 	</div>
-	<div class="form-actions">
-		<%= link_to 'Back', documents_path, :class => 'btn'  %>
-		<% if can? :manage, @document %>
-		<%= link_to 'Edit', edit_document_path(@document), :class => 'btn' %>
-		<%= link_to 'Delete', document_path(@document), :method => 'delete', :confirm => 'Are you sure?', :class => 'btn btn-danger'%>
-		<% end %>	
-	</div>
-</div><!--/span6 -->
-<%= render "documents/annotator-setup" %>
-<%# render "documents/annotator-sidebar" %>
-<%= render "documents/help" %>
-<div id="spinnermodal" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="spinnermodallabel" aria-hidden="true">
-  <div class="modal-body" id="spinnerdiv"><em>Loading annotations...</em></div>
-</div>
+</div><!--/row -->

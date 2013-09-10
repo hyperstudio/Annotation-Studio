@@ -58,6 +58,10 @@ GEM
     builder (3.0.4)
     callsite (0.0.11)
     cancan (1.6.10)
+    carrierwave (0.9.0)
+      activemodel (>= 3.2.0)
+      activesupport (>= 3.2.0)
+      json (>= 1.7)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
       railties (~> 3.2.0)
@@ -72,12 +76,24 @@ GEM
       railties (>= 3.2.6, < 5)
       warden (~> 1.2.3)
     erubis (2.7.0)
+    excon (0.13.4)
     execjs (1.4.0)
       multi_json (~> 1.0)
     fastercsv (1.5.5)
     figaro (0.7.0)
       bundler (~> 1.0)
       rails (>= 3, < 5)
+    fog (1.3.1)
+      builder
+      excon (~> 0.13.0)
+      formatador (~> 0.2.0)
+      mime-types
+      multi_json (~> 1.0)
+      net-scp (~> 1.0.4)
+      net-ssh (>= 2.1.3)
+      nokogiri (~> 1.5.0)
+      ruby-hmac
+    formatador (0.2.4)
     formtastic (2.2.1)
       actionpack (>= 3.0)
     friendly_id (4.0.9)
@@ -126,8 +142,14 @@ GEM
       activesupport (~> 3.1)
       polyamorous (~> 0.5.0)
     mime-types (1.23)
+    mini_magick (3.6.0)
+      subexec (~> 0.2.1)
     multi_json (1.7.9)
+    net-scp (1.0.4)
+      net-ssh (>= 1.99.1)
+    net-ssh (2.6.8)
     newrelic_rpm (3.6.6.147)
+    nokogiri (1.5.10)
     orm_adapter (0.4.0)
     pg (0.16.0)
     polyamorous (0.5.0)
@@ -170,6 +192,7 @@ GEM
     ref (1.0.5)
     responders (1.0.0.rc)
       railties (>= 3.2, < 5)
+    ruby-hmac (0.4.0)
     sass (3.2.10)
     sass-rails (3.2.6)
       railties (~> 3.2.0)
@@ -182,6 +205,7 @@ GEM
       multi_json (~> 1.0)
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
+    subexec (0.2.3)
     therubyracer (0.11.4)
       libv8 (~> 3.11.8.12)
       ref
@@ -215,9 +239,11 @@ DEPENDENCIES
   acts-as-taggable-on
   babosa
   cancan
+  carrierwave
   coffee-rails
   devise
   figaro
+  fog (~> 1.3.1)
   friendly_id
   gon
   heroku-true-relic
@@ -227,6 +253,7 @@ DEPENDENCIES
   less-rails
   meta_request
   meta_search
+  mini_magick
   newrelic_rpm
   pg
   rabl

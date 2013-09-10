@@ -32,6 +32,11 @@ end
 gem "twitter-bootstrap-rails" # https://github.com/seyhunak/twitter-bootstrap-rails/issues/401 ?
 
 gem 'jquery-rails', '~> 2.3.0'
+
+gem "fog", "~> 1.3.1"
+gem "carrierwave"
+gem "mini_magick"
+
 gem 'redactor-rails' # '0.3.2'
 gem 'jbuilder'
 gem "jwt" #, "~> 0.1.4"

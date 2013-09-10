@@ -32,7 +32,7 @@ jQuery(function ($) {
 		<% end %>
 
 <ul class="nav nav-tabs" id="document-tabs">
-  <li class="active"><a href="#assigned" data-toggle="tab"><span class="badge"><%= Document.tagged_with(current_user.rep_group_list, :any => true).size %></span> Assigned</a></li>
+  <li class="active"><a href="#assigned" data-toggle="tab"><span class="badge"><%= Document.tagged_with(current_user.rep_group_list, :any => true).length %></span> Assigned</a></li>
   <li><a href="#created" data-toggle="tab"><span class="badge"><%= current_user.documents.size %></span> Created</a></li>
 </ul>
 

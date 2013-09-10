@@ -27,3 +27,4 @@ pg_upgrade_dump_globals.sql
 pg_upgrade_internal.log
 pg_upgrade_restore.log
 pg_upgrade_server.log
+public/system

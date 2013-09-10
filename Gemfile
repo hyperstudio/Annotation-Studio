@@ -34,8 +34,11 @@ gem "twitter-bootstrap-rails" # https://github.com/seyhunak/twitter-bootstrap-ra
 gem 'jquery-rails', '~> 2.3.0'
 
 gem "fog", "~> 1.3.1"
-gem "carrierwave"
 gem "mini_magick"
+gem "carrierwave"
+# gem "carrierwave_direct"
+# gem "sidekiq"
+
 
 gem 'redactor-rails' # '0.3.2'
 gem 'jbuilder'

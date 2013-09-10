@@ -2,15 +2,13 @@
 class RedactorRailsDocumentUploader < CarrierWave::Uploader::Base
   include RedactorRails::Backend::CarrierWave
 
+  # include CarrierWave::MimeTypes
+  # process :set_content_type
+
   storage :fog
-  # storage :file
 
   def cache_dir
     "#{Rails.root}/tmp/uploads"
-  end
-
-  def store_dir
-    "system/redactor_assets/documents/#{model.id}"
   end
 
   def extension_white_list

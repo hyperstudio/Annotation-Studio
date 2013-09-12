@@ -13,3 +13,5 @@ config/database.yml
 
 # Ignore application configuration
 /config/application.yml
+public/system
+*.p12

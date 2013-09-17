@@ -45,3 +45,4 @@ gem "meta_search",    '>= 1.1.0.pre'
 gem "figaro"
 
 gem 'will_paginate', '> 3.0'
+gem 'intercom-rails'

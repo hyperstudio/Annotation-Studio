@@ -1,0 +1,81 @@
+<style type="text/css" media="screen">
+.user-highlight {
+	font-style: italic;
+}
+
+.nav-tabs > li.active a, .nav-tabs > li.active a:hover {
+	background-color: rgb(238, 238, 238);
+}
+.tab-pane {
+/*	border-right: 1px solid #ddd;
+	border-left: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
+*/}
+
+/*.nav-tabs {
+	border-bottom: 1px solid #eee;
+}
+.nav {
+	margin-bottom:0;
+}
+*/
+#annotation-list li {
+	margin:0 8px;
+	padding: 8px;
+	border-bottom: 1px solid #ddd;
+}
+#annotation-list {
+	border: 1px solid #dddddd;
+	border-collapse: separate;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;	
+}
+
+
+
+</style>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.1/underscore-min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.0.0/backbone-min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/mustache.js/0.7.2/mustache.min.js"></script>
+<%= javascript_include_tag "widget" %>
+<script type="text/javascript" charset="utf-8">
+jQuery(function ($) {
+	var widget = new Widget.App();
+	var endpoint = '<%= ENV["API_URL"] %>';
+	var token = '<%= @jwt %>';
+	// Backbone.history.start({pushState: true, root: window.location})
+
+	var loadOptions = {
+		'limit': 20,
+		// 'groups': "<%= current_user.rep_group_list %>".split(/, /),
+		// 'subgroups': "<%= current_user.rep_subgroup_list %>".split(/, /),
+		'host': location.host,
+		'user': "<%= current_user.email %>",
+		'mode': 'user',
+		'context': 'search',
+	};
+	widget.listAnnotations(loadOptions, endpoint, token);
+});
+
+</script>
+
+<div class="row">
+	<div class="span12">
+		<h1>Annotations</h1>
+	</div><!--/span12 -->
+</div><!--/row -->
+<div class="row">
+	<div class="span12">
+		<div class="tab-content">
+			<ul id="annotation-list" class="unstyled">
+				<script type="text/template" id="user-comment-template">
+					<span class="user-comment"><a href="{{uri}}#hl{{uuid}}" target="_blank">{{{text}}}</a></span>
+				</script>
+				<script type="text/template" id="user-highlight-template">
+					<span class="user-highlight"><a href="{{uri}}#hl{{uuid}}" target="_blank">{{{quote}}}</a></span>
+				</script>
+			</ul>
+		</div>
+	</div><!--/span12 -->
+</div><!--/row -->

@@ -17,7 +17,9 @@ class Ability
       can :manage, Document, :user_id => user.id
 
     elsif user.has_role? :student
-      cannot :manage, :all
+      # cannot :manage, :all
+      can :create, Document
+      can :manage, Document, :user_id => user.id
       can :read, Document do |tors|
         !(user.rep_group_list & tors.rep_group_list).empty?
       end

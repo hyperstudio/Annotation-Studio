@@ -1,14 +1,8 @@
 <% if user_signed_in? %>
-  <li>
-  <%= link_to('Logout', destroy_user_session_path) %>        
-  </li>
+  <li class="<%= 'active' if current_page?(destroy_user_session_path) %>"><%= link_to('Logout', destroy_user_session_path) %></li>
   <% if can? :manage, UserSet %>
-  <li>
-	  <%= link_to('Manage Users', admin_students_path) %>
-  </li>
+  <li class="<%= 'active' if current_page?(admin_students_path) %>"><%= link_to('Manage Users', admin_students_path) %></li>
   <% end %>
 <% else %>
-  <li>
-  <%= link_to('Sign in', new_user_session_path)  %>  
-  </li>
+  <li class="<%= 'active' unless current_page?(new_user_registration_path) %>"><%= link_to('Login', new_user_session_path)  %></li>
 <% end %>

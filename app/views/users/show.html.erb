@@ -31,7 +31,7 @@ jQuery(function ($) {
 </div><!--/row -->
 <div class="row">
 	<div class="span4">
-<h4>Documents</h4>
+<h4><%= link_to "Documents", documents_path %>	</h4>
 <ul class="nav nav-tabs" id="document-tabs">
   <li class="active"><a href="#assigned" data-toggle="tab"><span class="badge"><%= Document.tagged_with(current_user.rep_group_list).size %></span> Assigned</a></li>
   <li><a href="#created" data-toggle="tab"><span class="badge"><%= current_user.documents.size %></span> Created</a></li>

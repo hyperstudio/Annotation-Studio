@@ -119,10 +119,3 @@
 		<% end %>	
 	</div><!--/span12 -->
 </div><!--/row -->
-<script type="text/javascript" charset="utf-8">
-	mixpanel.people.set({
-    "$email": "<%= current_user.email %>",    // only special properties need the $
-    "$last_login": new Date(),         // properties can be dates...
-});
-	mixpanel.people.identify("<%= current_user.id %>");
-</script>

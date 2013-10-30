@@ -30,3 +30,4 @@ pg_upgrade_restore.log
 pg_upgrade_server.log
 public/system
 *.rej
+.rvmrc

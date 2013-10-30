@@ -16,6 +16,8 @@ gem 'acts-as-taggable-on'#, '~> 2.3.3'
 gem "friendly_id"#, ">= 4.0.9"
 gem "babosa"
 gem "paperclip"
+gem "delayed_job_active_record"
+gem 'google-api-client'
 
 group :development do
   gem 'sextant'

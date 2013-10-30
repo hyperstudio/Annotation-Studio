@@ -2,11 +2,12 @@ require 'spec_helper'
 
 feature 'A user uploads a document' do
   include UserHelper
+  before :each do
+    sign_in_user
+  end
 
   context "with text only" do
     scenario "they see a page including their text" do
-      user = sign_in_user
-
       upload_a_document do
         fill_in 'Text', with: 'Call me Ishmael'
       end
@@ -16,23 +17,27 @@ feature 'A user uploads a document' do
   end
 
   context 'with an attached document' do
-    context 'before the document is processed' do
-      scenario "they see a notice about process status" do
-        user = sign_in_user
 
-        upload_a_document do
-          attach_file 'Pick a file from your computer', 'spec/support/example_files/example.docx'
-        end
-
-        expect(page).to have_content 'Please wait. The document is being converted'
+    scenario "they can't annotate a document and they know it before processing" do
+      upload_a_document do
+        attach_file 'Pick a file from your computer', 'spec/support/example_files/example.docx'
       end
+
+      expect(page).to have_content 'Please wait. The document is being converted'
+      expect(page).not_to have_annotator
     end
 
-    context "after a document is processed" do
-      scenario "they can annotate the document" do
-        pending
+    scenario "they can annotate the document after processing" do
+      upload_a_document do
+        attach_file 'Pick a file from your computer', 'spec/support/example_files/example.docx'
       end
+      process_last_document
+
+      visit current_path
+
+      expect(page).to have_annotator
     end
+
   end
 
   def upload_a_document
@@ -42,5 +47,13 @@ feature 'A user uploads a document' do
     choose 'Draft'
     yield
     click_on 'Create Document'
+  end
+
+  def have_annotator
+    have_css('#annotation-well')
+  end
+
+  def process_last_document
+    Document.last.update_attribute(:processed_at, DateTime.now)
   end
 end

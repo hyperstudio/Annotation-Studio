@@ -247,6 +247,7 @@ DEPENDENCIES
   friendly_id
   gon
   heroku-true-relic
+  intercom-rails
   jbuilder
   jquery-rails (~> 2.3.0)
   jwt

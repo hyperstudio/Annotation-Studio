@@ -62,7 +62,7 @@ Widget.AnnotationView = Backbone.View.extend({
 		var qt = this.model.get("quote");
 		
 		if (txt != "") { // This annotation contains a comment
-			this.mdConvert(txt);
+			this.mdConvert();
 			if (txt.length > 50) {
 				this.model.set("text" , txt.substring(0,50) + "...");
 			}
@@ -84,9 +84,10 @@ Widget.AnnotationView = Backbone.View.extend({
 		}
 		return this;
 	},
-	mdConvert: function (txt) {
-		if (txt != "") {
-			this.model.set("text", this.mdconverter.makeHtml(txt));
+	mdConvert: function () {
+		var userComment = this.model.get("text");
+		if (userComment != "") {
+			this.model.set("text", this.mdconverter.makeHtml(userComment));
 		}
 		return this;
 	}

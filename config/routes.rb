@@ -1,6 +1,4 @@
 AnnotationStudio::Application.routes.draw do
-  mount RedactorRails::Engine => '/redactor_rails'
-
   devise_for :users
 
   resources :documents

@@ -14,12 +14,12 @@ class Ability
 
     elsif user.has_role? :teacher
       can :create, Document
-      can :manage, Document, :user_id => user.id
+      can [:read, :update, :destroy], Document, :user_id => user.id
 
     elsif user.has_role? :student
-      # cannot :manage, :all
+      cannot :manage, Document
       can :create, Document
-      can :manage, Document, :user_id => user.id
+      can [:read, :update, :destroy], Document, :user_id => user.id
       can :read, Document do |tors|
         !(user.rep_group_list & tors.rep_group_list).empty?
       end

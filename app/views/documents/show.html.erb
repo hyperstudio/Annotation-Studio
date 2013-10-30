@@ -1,3 +1,4 @@
+<%= stylesheet_link_tag "documents" %>
 <div class="row">
 	<div class="span3 hidden-phone hidden-tablet">
 		<div class="affix-top" data-spy="affix" id="chapters">
@@ -63,9 +64,11 @@
 		</div>
 		<div class="form-actions">
 			<%= link_to 'Back', documents_path, :class => 'btn'  %>
-			<% if can? :manage, @document %>
-			<%= link_to 'Edit', edit_document_path(@document), :class => 'btn' %>
-			<%= link_to 'Delete', document_path(@document), :method => 'delete', :confirm => 'Are you sure?', :class => 'btn btn-danger'%>
+			<% if can? [:edit], @document %>
+			<%= link_to 'Edit', edit_document_path(@document.friendly_id), :class => 'btn' %>
+			<% end %>	
+			<% if can? [:delete], @document %>
+			<%= link_to 'Delete', document_path(@document.friendly_id), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-danger' %>
 			<% end %>	
 		</div>
 	</div><!--/span6 -->

@@ -1,3 +1,7 @@
+<%= stylesheet_link_tag "users" %>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.1/underscore-min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.0.0/backbone-min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/mustache.js/0.7.2/mustache.min.js"></script>
 <%= javascript_include_tag "widget" %>
 <script type="text/javascript" charset="utf-8">
 jQuery(function ($) {
@@ -7,9 +11,9 @@ jQuery(function ($) {
 	// Backbone.history.start({pushState: true, root: window.location})
 
 	var loadOptions = {
-		'limit': 20,
-		// 'groups': "<%= current_user.rep_group_list %>".split(/, /),
-		// 'subgroups': "<%= current_user.rep_subgroup_list %>".split(/, /),
+		'limit': 5,
+		'groups': "<%= current_user.rep_group_list %>".split(/, /),
+		'subgroups': "<%= current_user.rep_subgroup_list %>".split(/, /),
 		'host': location.host,
 		'user': "<%= current_user.email %>",
 		'mode': 'user',
@@ -17,7 +21,9 @@ jQuery(function ($) {
 	};
 	widget.listAnnotations(loadOptions, endpoint, token);
 });
+
 </script>
+
 <div class="row">
 	<div class="span12">
 		<h1>Dashboard for <%= @user.fullname %></h1>
@@ -25,22 +31,17 @@ jQuery(function ($) {
 </div><!--/row -->
 <div class="row">
 	<div class="span4">
-		<% if current_user.has_role?(:admin) %>
-		<h4><a href="/documents/">Documents</a></h4>
-		<% else %>
-		<h4>Documents</h4>
-		<% end %>
-
+<h4><%= link_to "Documents", documents_path %>	</h4>
 <ul class="nav nav-tabs" id="document-tabs">
-  <li class="active"><a href="#assigned" data-toggle="tab"><span class="badge"><%= Document.tagged_with(current_user.rep_group_list, :any => true).length %></span> Assigned</a></li>
+  <li class="active"><a href="#assigned" data-toggle="tab"><span class="badge"><%= Document.tagged_with(current_user.rep_group_list).size %></span> Assigned</a></li>
   <li><a href="#created" data-toggle="tab"><span class="badge"><%= current_user.documents.size %></span> Created</a></li>
 </ul>
 
 <div class="tab-content">
   <div class="tab-pane active" id="assigned">
 		<table class="table table-bordered">
-			<% unless Document.tagged_with(current_user.rep_group_list, :any => true).empty? || Document.tagged_with(current_user.rep_group_list, :any => true).nil? %>
-				<% Document.tagged_with(current_user.rep_group_list, :any => true).sort {|a, b| a.title.downcase <=> b.title.downcase }.each do |document| %>
+			<% unless Document.tagged_with(current_user.rep_group_list).empty? || Document.tagged_with(current_user.rep_group_list).nil? %>
+				<% Document.tagged_with(current_user.rep_group_list).sort {|a, b| a.title.downcase <=> b.title.downcase }.each do |document| %>
 				      <tr>
 				        <td><%= link_to document.title, document_path(document.friendly_id), target: 'blank' %></td>
 				      </tr>
@@ -73,11 +74,7 @@ jQuery(function ($) {
 
 	</div><!--/span4 -->
 	<div class="span4">
-		<% if current_user.has_role?(:admin) %>
-		<h4><a href="/annotations/">Annotations</a></h4>
-		<% else %>
 		<h4>Annotations</h4>
-		<% end %>
 		<ul class="nav nav-tabs" id="document-tabs">
 		  <li class="active"><a href="#mine" data-toggle="tab"><span class="badge"></span> Mine</a></li>
 		  <li><a href="#group" data-toggle="tab"><span class="badge"></span> Groups</a></li>

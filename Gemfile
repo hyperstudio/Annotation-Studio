@@ -29,6 +29,13 @@ group :assets do
   gem 'uglifier' #, '>= 1.0.3'
 end
 
+group :test, :development do
+  gem 'factory_girl_rails'
+  gem 'rspec-rails'
+  gem 'pry-rails'
+  gem 'capybara-webkit'
+end
+
 gem "twitter-bootstrap-rails" # https://github.com/seyhunak/twitter-bootstrap-rails/issues/401 ?
 
 gem 'jquery-rails', '~> 2.3.0'

@@ -15,6 +15,7 @@ gem 'repertoire-groups', '0.0.1', :path => 'vendor/repertoire-groups-0.0.1' #, :
 gem 'acts-as-taggable-on'#, '~> 2.3.3'
 gem "friendly_id"#, ">= 4.0.9"
 gem "babosa"
+gem "paperclip"
 
 group :development do
   gem 'sextant'

@@ -37,6 +37,7 @@ group :test, :development do
   gem 'rspec-rails'
   gem 'pry-rails'
   gem 'capybara-webkit'
+  gem 'simplecov'
 end
 
 gem "twitter-bootstrap-rails" # https://github.com/seyhunak/twitter-bootstrap-rails/issues/401 ?

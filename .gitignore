@@ -31,3 +31,4 @@ pg_upgrade_server.log
 public/system
 *.rej
 .rvmrc
+coverage/

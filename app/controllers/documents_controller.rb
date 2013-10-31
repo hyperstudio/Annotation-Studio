@@ -55,7 +55,9 @@ class DocumentsController < ApplicationController
 
     respond_to do |format|
       if @document.save
-        Delayed::Job.enqueue GoogleDocumentProcessor.new(@document.id)
+        if params[:document][:upload].present?
+          Delayed::Job.enqueue GoogleDocumentProcessor.new(@document.id)
+        end
         format.html { redirect_to @document, notice: 'Document was successfully created.' }
         format.json { render json: @document, status: :created, location: @document }
       else

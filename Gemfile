@@ -17,7 +17,7 @@ gem "friendly_id"#, ">= 4.0.9"
 gem "babosa"
 gem "paperclip"
 gem "delayed_job_active_record"
-gem 'google-api-client'
+gem 'google_drive'
 
 group :development do
   gem 'sextant'

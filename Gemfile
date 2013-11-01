@@ -23,6 +23,7 @@ gem 'google_drive'
 group :development do
   gem 'sextant'
   gem 'meta_request'#, '0.2.1'
+  gem 'highline'
 end
 
 group :assets do

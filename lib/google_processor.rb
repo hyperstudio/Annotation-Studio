@@ -26,35 +26,37 @@ class GoogleProcessor
 
 	private 
 
+	# def create_session
+	# 	# GoogleDrive.login(ENV['GOOGLE_USER'], ENV['GOOGLE_PASS'])
+	# 	client = OAuth2::Client.new(
+	# 		ENV['GOOGLE_CLIENT_ID'], 
+	# 		ENV['GOOGLE_SECRET'],
+	# 		:site => "https://accounts.google.com",
+	# 		:token_url => "/o/oauth2/token",
+	# 		:authorize_url => "/o/oauth2/auth"
+	# 	)
+	# 	auth_url = client.auth_code.authorize_url(
+	# 		:redirect_uri => "urn:ietf:wg:oauth:2.0:oob",
+	# 		:scope =>
+	# 			"https://docs.google.com/feeds/ " +
+	# 			"https://docs.googleusercontent.com/ " +
+	# 			"https://spreadsheets.google.com/feeds/"
+	# 	)
+
+	# 	# Redirect the user to auth_url and get authorization code from redirect URL.
+	# 	auth_token = client.auth_code.get_token(
+	# 		authorization_code, :redirect_uri => "http://localhost"
+	# 	)
+
+	# 	binding.pry
+
+	# 	puts auth_token.token
+	# 	puts auth_token.inspect
+
+	# 	session = GoogleDrive.login_with_oauth(auth_token.token)
+	# end
+
 	def create_session
-		# GoogleDrive.login(ENV['GOOGLE_USER'], ENV['GOOGLE_PASS'])
-		client = OAuth2::Client.new(
-			ENV['GOOGLE_CLIENT_ID'], 
-			ENV['GOOGLE_SECRET'],
-			:site => "https://accounts.google.com",
-			:token_url => "/o/oauth2/token",
-			:authorize_url => "/o/oauth2/auth"
-		)
-		auth_url = client.auth_code.authorize_url(
-			:redirect_uri => "urn:ietf:wg:oauth:2.0:oob",
-			:scope =>
-				"https://docs.google.com/feeds/ " +
-				"https://docs.googleusercontent.com/ " +
-				"https://spreadsheets.google.com/feeds/"
-		)
-
-		# authorization_code = ''
-
-		# Redirect the user to auth_url and get authorization code from redirect URL.
-		auth_token = client.auth_code.get_token(
-			'authorization_code', :redirect_uri => "http://localhost"
-		)
-
-		binding.pry
-
-		puts auth_token.token
-		puts auth_token.inspect
-
-		session = GoogleDrive.login_with_oauth(auth_token.token)
+		GoogleDrive.login(ENV['GOOGLE_USER'], ENV['GOOGLE_PASS'])
 	end
 end

@@ -13,11 +13,10 @@
  *= require "bootstrap_and_overrides"
  *= require "bootstrap.min"
  *= require "annotator.min"
- * require "annotorious"
  *= require "boot-docs"
  *= require "users"
- *= require visualsearch-datauri
- * require visualsearch
+ *= require "richText-annotator.css"
+ *= require "jquery.ui.all"
 */
 
 footer {

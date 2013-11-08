@@ -32,3 +32,4 @@ public/system
 *.rej
 .rvmrc
 coverage/
+.powenv

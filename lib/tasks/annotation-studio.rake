@@ -6,7 +6,7 @@ namespace :annotationstudio do
   task drive_conversion_test: :environment do
 
     document = Document.create(
-      title: 'I am a test', author: 'Test Author',
+      title: 'Today\'s Date: ' + Time.now.to_s, author: 'Test Author',
       upload: File.open('spec/support/example_files/annotation-studio-white-paper.docx'),
       user_id: 2,
       rep_group_list: "public",

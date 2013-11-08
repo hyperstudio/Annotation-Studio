@@ -1,4 +1,6 @@
 class ImagesController < ApplicationController
+  before_filter :authenticate
+  #load_and_authorize_resource
   def index
     @images = Image.all()
   end

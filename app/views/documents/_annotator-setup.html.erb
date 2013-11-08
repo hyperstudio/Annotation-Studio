@@ -26,6 +26,8 @@
 			<span id="quote{{uuid}}" class="sbquote details">&quot;{{{quote}}}&quot;</span>
 			<div id="tags{{uuid}}" class="sbtags details">{{#tags}}<span class="label">{{.}}</span> {{/tags}}</div>
 		</script>
+		<link rel="stylesheet" href="/assets/annotorious.css" type="text/css" />
+		<script type="text/javascript" src="/assets/annotorious.okfn.js"></script>
 	</div><!--/well -->
 </div><!--/span3 -->
 <%= javascript_include_tag "sidebar" %>
@@ -47,7 +49,7 @@ window.onload = function() {
 	studio.annotator('addPlugin', 'Filter');
 	<% end %>
 	studio.annotator('addPlugin', 'Tags');
-	   // studio.annotator('addPlugin', 'AnnotoriousImagePlugin');
+	studio.annotator('addPlugin', 'AnnotoriousImagePlugin');
 	studio.annotator('addPlugin', 'Unsupported');
 	studio.annotator('addPlugin', 'Auth', {
 		token: '<%= @jwt %>'

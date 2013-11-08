@@ -18,3 +18,7 @@
 	<% end %>
   </tbody>
 </table>
+<% if can? :create, Image %>
+  <%= link_to 'New', new_image_path, :class => 'btn btn-primary' %>
+<% end %>	
+

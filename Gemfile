@@ -31,12 +31,13 @@ end
 
 group :test, :development do
   gem 'factory_girl_rails'
+  gem 'rspec'
   gem 'rspec-rails'
   gem 'pry-rails'
+  gem 'capybara'
   gem 'capybara-webkit', '0.13.1'
 
   gem 'database_cleaner'
-  gem 'capybara'
   gem 'selenium-webdriver'
   gem 'puffing-billy'
   gem 'simplecov', :require => false

@@ -30,7 +30,7 @@
 </div><!--/span3 -->
 <%= javascript_include_tag "sidebar" %>
 <script type="text/javascript" charset="utf-8">
-jQuery(function ($) {
+window.onload = function() {
 	// $('#spinnermodal').modal('show');
 
 	var groups = "<%= current_user.rep_group_list %>".split(/, /);
@@ -267,5 +267,5 @@ jQuery(function ($) {
 	subscriber.subscribe('annotationDeleted', deleteFromSidebar);
 	
 	mixpanel.track("Loaded Document");
-});
+};
 </script>

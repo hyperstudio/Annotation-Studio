@@ -39,7 +39,7 @@ group :test, :development do
   gem 'capybara'
   gem 'selenium-webdriver'
   gem 'puffing-billy'
-
+  gem 'simplecov', :require => false
   gem 'cucumber-rails'
   gem 'cucumber-rails-training-wheels'
 end

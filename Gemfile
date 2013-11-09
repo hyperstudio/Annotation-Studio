@@ -6,6 +6,9 @@ gem 'rails', '>= 3.2.12'
 gem 'unicorn'
 
 gem 'pg'
+
+gem 'aws-s3', :require => 'aws/s3' 
+
 gem "newrelic_rpm"#, "~> 3.5.7.59"
 gem 'heroku-true-relic'
 

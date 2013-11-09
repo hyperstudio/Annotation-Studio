@@ -59,5 +59,13 @@ module AnnotationStudio
     config.assets.version = '1.0'
     
     config.assets.initialize_on_precompile = false
+    
+    AWS::S3::Base.establish_connection!(  
+      :access_key_id     => 'AKIAJYJACGFCX4CBHHEA',  
+      :secret_access_key => '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'  
+    ) 
+    
+    BUCKET='annotations3'
+    
   end
 end

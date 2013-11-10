@@ -85,7 +85,14 @@ jQuery(function ($) {
 		showEditPermissionsCheckbox: false
 	});
 
-
+  // Load annotator.touch plugin here if necessary
+  var forceMobile = location.search.indexOf('forceMobile');
+  if (jQuery.browser.mobile || forceMobile > -1) {
+    studio.annotator('addPlugin', 'Touch', {
+      force: true,
+      useHighlighter: true
+    });
+  }
 
 	var subscriber = $('#textcontent').annotator().data('annotator');
 

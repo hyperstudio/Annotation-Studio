@@ -1,7 +1,7 @@
-/*  Touch Annotator Plugin - v1.1.0
- *  Copyright 2012, Compendio <www.compendio.ch>
+/*  Annotator Touch Plugin - v1.1.1
+ *  Copyright 2012-2013, Compendio <www.compendio.ch>
  *  Released under the MIT license
- *  More Information: http://github.com/aron/annotator.touch.js
+ *  More Information: https://github.com/aron/annotator.touch.js
  */
 .annotator-viewer .annotator-touch-controls .annotator-edit::after {
 	/* Assign the image once to ensure data uri is not repeated. */

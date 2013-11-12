@@ -58,6 +58,7 @@ gem 'jbuilder'
 gem "jwt" #, "~> 0.1.4"
 gem "rabl"
 gem "gon"
+gem "nokogiri"
 
 gem 'activeadmin'
 gem 'sass-rails'

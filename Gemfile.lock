@@ -342,6 +342,7 @@ DEPENDENCIES
   meta_search
   mini_magick
   newrelic_rpm
+  nokogiri
   paperclip
   pg
   pry-rails

@@ -15,10 +15,15 @@ gem 'repertoire-groups', '0.0.1', :path => 'vendor/repertoire-groups-0.0.1' #, :
 gem 'acts-as-taggable-on'#, '~> 2.3.3'
 gem "friendly_id"#, ">= 4.0.9"
 gem "babosa"
+gem "aws-sdk"
+gem "paperclip"
+gem "delayed_job_active_record"
+gem 'google_drive'
 
 group :development do
   gem 'sextant'
   gem 'meta_request'#, '0.2.1'
+  gem 'highline'
 end
 
 group :assets do
@@ -34,6 +39,7 @@ group :test, :development do
   gem 'rspec-rails'
   gem 'pry-rails'
   gem 'capybara-webkit'
+  gem 'simplecov'
 end
 
 gem "twitter-bootstrap-rails" # https://github.com/seyhunak/twitter-bootstrap-rails/issues/401 ?
@@ -52,6 +58,7 @@ gem 'jbuilder'
 gem "jwt" #, "~> 0.1.4"
 gem "rabl"
 gem "gon"
+gem "nokogiri"
 
 gem 'activeadmin'
 gem 'sass-rails'

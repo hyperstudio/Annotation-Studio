@@ -8,6 +8,8 @@ require 'capybara/rspec'
 # in spec/support/ and its subdirectories.
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
+SimpleCov.start
+
 RSpec.configure do |config|
   # ## Mock Framework
   #

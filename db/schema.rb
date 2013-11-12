@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130910111145) do
+ActiveRecord::Schema.define(:version => 20131030202337) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -53,11 +53,27 @@ ActiveRecord::Schema.define(:version => 20130910111145) do
     t.datetime "updated_at", :null => false
   end
 
+  create_table "delayed_jobs", :force => true do |t|
+    t.integer  "priority",   :default => 0, :null => false
+    t.integer  "attempts",   :default => 0, :null => false
+    t.text     "handler",                   :null => false
+    t.text     "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string   "locked_by"
+    t.string   "queue"
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+  end
+
+  add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
+
   create_table "documents", :force => true do |t|
     t.string   "title"
     t.text     "text"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
     t.string   "author"
     t.datetime "year_published"
     t.string   "edition"
@@ -69,6 +85,11 @@ ActiveRecord::Schema.define(:version => 20130910111145) do
     t.date     "publication_date"
     t.text     "chapters"
     t.string   "state"
+    t.string   "upload_file_name"
+    t.string   "upload_content_type"
+    t.integer  "upload_file_size"
+    t.datetime "upload_updated_at"
+    t.datetime "processed_at"
   end
 
   add_index "documents", ["slug"], :name => "index_documents_on_slug", :unique => true

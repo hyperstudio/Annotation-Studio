@@ -2,13 +2,18 @@ require "babosa" # allows cyrillic, other characters in titles (transliterates t
 
 class Document < ActiveRecord::Base
   belongs_to :user, :autosave => true
-  attr_accessible :title, :state, :chapters, :text, :user_id, :rep_privacy_list, :rep_group_list, :new_group, :author, :edition, :publisher, :publication_date, :source, :rights_status
+  attr_accessible :title, :state, :chapters, :text, :user_id, 
+    :rep_privacy_list, :rep_group_list, :new_group, :author, :edition, 
+    :publisher, :publication_date, :source, :rights_status, :upload
+
   extend FriendlyId
   friendly_id :title, use: [:slugged, :history]
   # acts_as_taggable_on :rep_group, :courses, :semesters, :genres, :categories
   acts_as_taggable_on :rep_privacy, :rep_group
 
-  STATES = %w{ draft published deleted }
+  has_attached_file :upload
+
+  STATES = %w{ pending draft published deleted }
 
   STATES.each do |state|
     define_method("#{state}?") do
@@ -30,6 +35,10 @@ class Document < ActiveRecord::Base
 
   def normalize_friendly_id(input)
     input.to_s.to_slug.normalize(transliterations: :russian).to_s
+  end
+
+  def processed?
+    processed_at.present?
   end
 
 end

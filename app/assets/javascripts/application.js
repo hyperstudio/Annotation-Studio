@@ -18,6 +18,7 @@
 //= require jquery.ui.autocomplete
 //= require jquery.ui.menu
 //= require twitter/bootstrap
+//= require jasny-fileinput
 //= require redactor-rails/redactor.min
 //= require redactor-config
 //= require showdown

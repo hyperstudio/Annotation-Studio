@@ -21,10 +21,10 @@ class GoogleProcessor
 
 	unprocessed = File.read(converted_copy.path)
 	complete = Nokogiri::HTML(unprocessed)
-	body = complete.css("body")
-	body_contents = complete.css("body").inner_html
+	# body = complete.css("body")
+	# body_contents = complete.css("body").inner_html
 	
-	@document.text = body_contents.to_html
+	@document.text = complete.css("body").inner_html
 	@document.processed_at = DateTime.now
 	@document.save
   end

@@ -40,17 +40,22 @@
 		<div class="control-group">
 	      <%= f.label "Status", :class => 'control-label' %>
 			<div class="controls">
-				<label class="radio inline">
+				<label class="radio inline"><i class="glyphicon icon-time"></i> 
+				<%= f.radio_button :state, value: "pending", :checked => "checked" %>
+				Pending
+				</label>
+
+				<label class="radio inline"><i class="glyphicon icon-pencil"></i> 
 				<%= f.radio_button :state, value: "draft" %>
 				Draft
 				</label>
 
-				<label class="radio inline">
+				<label class="radio inline"><i class="glyphicon icon-ok"></i> 
 				<%= f.radio_button :state, value: "published" %>
 				Published
 				</label>
 
-				<label class="radio inline">
+				<label class="radio inline"><i class="glyphicon icon-folder-close"></i> 
 				<%= f.radio_button :state, value: "archived" %>
 				Archived
 				</label>
@@ -94,9 +99,9 @@
       <div class="controls">
 	    <div class="fileinput fileinput-new" data-provides="fileinput">
 	    	<div class="input-group">
-	    		<div class="form-control uneditable-input span6" data-trigger="fileinput"><i class="glyphicon glyphicon-file fileinput-exists"></i> <span class="fileinput-filename"></span></div>
-	    		<span class="input-group-addon btn btn-default btn-file"><span class="fileinput-new">Select file</span><span class="fileinput-exists">Change</span><%= f.file_field :upload %></span>
-	    		<a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
+	    		<div class="form-control uneditable-input span6" data-trigger="fileinput"><i class="glyphicon icon-file fileinput-exists"></i> <span class="fileinput-filename"></span></div>
+	    		<span class="input-group-addon btn btn-default btn-file"><span class="fileinput-new"><i class="glyphicon icon-hdd"></i> Select file</span><span class="fileinput-exists"><i class="glyphicon icon-hdd"></i> Different file</span><%= f.file_field :upload %></span>
+	    		<a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput"><i class="glyphicon icon-trash"></i> Clear file</a>
 	    	</div>
 	    </div>
 

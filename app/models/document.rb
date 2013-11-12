@@ -13,7 +13,7 @@ class Document < ActiveRecord::Base
 
   has_attached_file :upload
 
-  STATES = %w{ draft published deleted }
+  STATES = %w{ pending draft published deleted }
 
   STATES.each do |state|
     define_method("#{state}?") do

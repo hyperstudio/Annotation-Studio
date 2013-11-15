@@ -76,24 +76,29 @@ jQuery(function ($) {
                 'delete': ['<%= current_user.email %>'], // no one else can ever delete
                 'admin': ['<%= current_user.email %>'] // no one else can ever admin
         	},
+        	userString: function (user) {
+        		return "<%= current_user.first_name_last_initial %>";
+            },
 	        // Permissions settings per-annotation
 	        showViewPermissionsCheckbox: true,
 	        showEditPermissionsCheckbox: false
         }
     });
 
-    var optionsRichText = {
-        tinymce: {
-            selector: "li.annotator-item textarea",
-            plugins: "media image insertdatetime link code",
-            menubar: false,
-            statusbar: false,
-            toolbar_items_size: 'small',
-            extended_valid_elements : "iframe[src|frameborder|style|scrolling|class|width|height|name|align|id]",
-            toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media | code"
-        }
-    };
-    studio.annotator('addPlugin','RichText',optionsRichText)
+	<% if ENV["ANNOTATOR_RICHTEXT"] == 'true' %>
+	    var optionsRichText = {
+	        tinymce: {
+	            selector: "li.annotator-item textarea",
+	            plugins: "media image insertdatetime link code",
+	            menubar: false,
+	            statusbar: false,
+	            toolbar_items_size: 'small',
+	            extended_valid_elements : "iframe[src|frameborder|style|scrolling|class|width|height|name|align|id]",
+	            toolbar: ENV["ANNOTATOR_RICHTEXT_CONFIG"]
+	        }
+	    };
+	    studio.annotator('addPlugin','RichText',optionsRichText)
+    <% end %>
 
 
 	var subscriber = $('#textcontent').annotator().data('annotator');

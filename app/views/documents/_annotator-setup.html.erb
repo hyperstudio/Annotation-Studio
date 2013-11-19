@@ -67,7 +67,8 @@ jQuery(function ($) {
                 'uri': [location.protocol, '//', location.host, location.pathname].join('')
             }
         },
-        AnnotateItPermissions: false,
+        Markdown: false, // use RichText instead
+        AnnotateItPermissions: false, // this is built into the kitchen sink, so cancel it
         Permissions: {
         	user: "<%= current_user.email %>",
         	permissions: {
@@ -84,21 +85,13 @@ jQuery(function ($) {
 	        showEditPermissionsCheckbox: false
         }
     });
-
-	<% if ENV["ANNOTATOR_RICHTEXT"] == 'true' %>
-	    var optionsRichText = {
-	        tinymce: {
-	            selector: "li.annotator-item textarea",
-	            plugins: "media image insertdatetime link code",
-	            menubar: false,
-	            statusbar: false,
-	            toolbar_items_size: 'small',
-	            extended_valid_elements : "iframe[src|frameborder|style|scrolling|class|width|height|name|align|id]",
-	            toolbar: ENV["ANNOTATOR_RICHTEXT_CONFIG"]
-	        }
-	    };
-	    studio.annotator('addPlugin','RichText',optionsRichText)
-    <% end %>
+	var optionsRichText = {
+		richtext_enabled: <%= ENV["ANNOTATOR_RICHTEXT"] %>,
+		tinymce: {
+			'toolbar': '<%= ENV["ANNOTATOR_RICHTEXT_CONFIG"] %>'
+		}
+	}
+	studio.annotator('addPlugin', 'RichText', optionsRichText)
 
 
 	var subscriber = $('#textcontent').annotator().data('annotator');

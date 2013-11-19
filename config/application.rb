@@ -66,6 +66,7 @@ module AnnotationStudio
     ) 
     
     BUCKET='annotations3'
-    
+    VIDEO_BUCKET='annotations3vid'
+    AUDIO_BUCKET='annotations3audio' 
   end
 end

@@ -1,6 +1,6 @@
 <%= form_tag({action: :create}, multipart: true) do %>
-	<p>Name: <%= text_field(:image, :name) %></p>
-	<p>Group: <%= text_field(:image, :group) %></p>
+	<p>Name: <%= text_field_tag :name %></p>
+	<p>Group: <%= text_field_tag :group %></p>
 	<p>Image File: <%= file_field 'upload', 'image_file' %></p>
 	<%= submit_tag("Upload") %>
 <% end %>

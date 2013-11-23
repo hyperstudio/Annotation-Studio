@@ -7,7 +7,7 @@ class ImagesController < S3Controller
   end
   
   def show
-    @image_path = Image.find(params[:id]).path
+    @image = Image.find(params[:id])
   end
   
   def new

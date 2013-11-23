@@ -6,14 +6,14 @@
   </thead>
   <tbody>    
 	<% unless @images.empty? || @images.nil? %>
-	  <% @images.sort {|a, b| a.name.downcase <=> b.name.downcase }.each do |image| %>
+	  <% @images.sort {|a, b| a.nickname.downcase <=> b.nickname.downcase }.each do |image| %>
         <tr>
-          <td><%= link_to image.name, image_path(image.id) %></td>
+          <td><%= link_to image.nickname, image_path(image.id) %></td>
         </tr>
 	  <% end %>
 	<% else %>
       <tr>
-        <td colspan="5">No images to view. (Your account maybe be pending approval).</td>
+        <td colspan="5">No images to view. (Your account may be pending approval).</td>
       </tr>
 	<% end %>
   </tbody>

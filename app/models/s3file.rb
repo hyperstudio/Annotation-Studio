@@ -17,6 +17,10 @@ class S3File < Document
     AnnotationStudio::Application::BUCKET
   end
 
+  def url
+    AWS::S3::S3Object.url_for(filename, bucket)
+  end
+
   # S3 Related Exception
   class S3FileExistsError < Exception
   end

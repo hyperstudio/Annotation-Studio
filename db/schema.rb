@@ -11,7 +11,11 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(:version => 20130910111145) do
+=======
+ActiveRecord::Schema.define(:version => 20131118203129) do
+>>>>>>> f4867de... Add schema back
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -69,6 +73,13 @@ ActiveRecord::Schema.define(:version => 20130910111145) do
     t.date     "publication_date"
     t.text     "chapters"
     t.string   "state"
+<<<<<<< HEAD
+=======
+    t.string   "type"
+    t.string   "filename"
+    t.string   "bucket"
+    t.string   "nickname"
+>>>>>>> f4867de... Add schema back
   end
 
   add_index "documents", ["slug"], :name => "index_documents_on_slug", :unique => true
@@ -84,6 +95,16 @@ ActiveRecord::Schema.define(:version => 20130910111145) do
   add_index "friendly_id_slugs", ["sluggable_id"], :name => "index_friendly_id_slugs_on_sluggable_id"
   add_index "friendly_id_slugs", ["sluggable_type"], :name => "index_friendly_id_slugs_on_sluggable_type"
 
+<<<<<<< HEAD
+=======
+  create_table "images", :force => true do |t|
+    t.string   "name"
+    t.string   "path"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+>>>>>>> f4867de... Add schema back
   create_table "redactor_assets", :force => true do |t|
     t.integer  "user_id"
     t.string   "data_file_name",                  :null => false

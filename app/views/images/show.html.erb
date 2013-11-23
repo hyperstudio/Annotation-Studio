@@ -3,8 +3,7 @@
 	<div class="span6">
 		<div id="textcontent"> 
 			<div>
-				Ahahas
-				<%= image_tag @image.url, :class => 'annotatable' %>
+				<%= image_tag @image.url, :class => "annotatable"%>
 			</div>
 		</div>
 		<div class="form-actions">
@@ -16,21 +15,4 @@
 	  <div class="modal-body" id="spinnerdiv"><em>Loading annotations...</em></div>
 	</div>
 </div>
-<!--
-		<link rel="stylesheet" href="/assets/annotorious.css" type="text/css" />
-    <link href="http://assets.annotateit.org/annotator/v1.2.5/annotator.min.css" rel="stylesheet">
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
-    <script src="http://assets.annotateit.org/annotator/v1.2.5/annotator.min.js"></script>	
-    <script src="http://annotorious.github.com/latest/annotorious.okfn.js"></script>
-<script type="text/javascript">
-	window.onload = function() {
-		var studio = $('#test').annotator().annotator('addPlugin', 'AnnotoriousImagePlugin');
-      }
-</script>
 
-		<div id="test"> 
-			<div>
-				<%= image_tag @image_path, :class => 'annotatable' %>
-			</div>
-		</div>
-	-->

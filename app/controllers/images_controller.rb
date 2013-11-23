@@ -1,8 +1,9 @@
-class ImagesController < ApplicationController
+class ImagesController < S3Controller
   before_filter :authenticate
-  #load_and_authorize_resource
+  load_and_authorize_resource
+
   def index
-    @images = Image.all()
+    @images = Image.tagged_with(current_user.rep_group_list)
   end
   
   def show
@@ -18,9 +19,17 @@ class ImagesController < ApplicationController
       flash[:error] = "File is not an image."
       redirect_to images_path and return
     end
-    path = ImageFile.save(params[:upload])
-    params[:image][:path] = path
-    @image = Image.create!(params[:image])
+
+    new_params = {
+      :filename => S3File.create_file_name(params[:name], sanitize_filename(params[:upload][:image_file].original_filename)),
+      :bucket => Image.BASE_BUCKET,
+      :nickname => params[:name],
+      :rep_group_list => params[:group]
+    }
+    check_duplicate_s3_object(new_params)
+    new_image = Image.create(new_params)
+    new_params[:data] = params[:upload][:image_file].read
+    create_new_s3_object(new_params)
     redirect_to images_path
   end
 end

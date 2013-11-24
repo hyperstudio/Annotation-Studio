@@ -154,6 +154,104 @@ window.onload = function() {
 
 	// Update the sidebar with local annotation data
 	var loadSidebar = function(annotation) {
+    var allAnnotations = subscriber.dumpAnnotations();
+    var allTags = [];
+    var BreakException = {};
+  
+    // Remove all existing tag choices.
+    $('#tag-options').empty();
+
+    // Go through all annotations and determine all the possible
+    // tags
+    allAnnotations.forEach(function(element, index, arr) {
+      if (element.tags.length > 0) {
+        allTags = allTags.concat(element.tags);
+      } else {
+        allTags = allTags.concat("Invalid");
+        // Make sure this annotation remembers that its new tag is
+        // set properly
+        allAnnotations[index].tags = ["Invalid"];
+      }
+    });
+    allTags = jQuery.unique(allTags);
+    allTagsHelper = new Object();
+
+    // Make sure all tags get selected here.
+    $('#selectalltags').click(function(e) {
+      allTags.forEach(function(tagChoice, tagIdx, tagArr) {
+        if (!$('#tag-' + tagChoice).data('clicked')) {
+          $('#tag-' + tagChoice).click(); 
+        }
+      });
+    });
+
+    var searchTerm = "";
+    
+    function PerformFilter() {
+        newAnnotations = [];
+        // Go through all annotations -- check their tags to see
+        // whether or not they should be displayed
+        // If none of an annotation's tags are enabled, then
+        // don't show it
+        allAnnotations.forEach(function(ele, idx, inn_ar) {
+          try {
+            ele.tags.forEach(function(tag) {
+              if ((tag in allTagsHelper) && allTagsHelper[tag]) {
+                throw BreakException;
+              } else if (!(tag in allTagsHelper)) {
+                throw BreakException;
+              }
+            });
+          } catch (e) {
+            if (e !== BreakException) throw e;
+            if (jQuery.trim(searchTerm) != "") {
+              if (ele.text.search(jQuery.trim(searchTerm)) >= 0) {
+                newAnnotations = newAnnotations.concat(ele);
+              }
+            } else {
+              newAnnotations = newAnnotations.concat(ele);
+            }
+          }
+        });
+        setTimeout(function() {
+            sidebar.listAnnotations(newAnnotations);
+
+            // If we're looking at images... 
+
+        }, 100);
+    }
+
+    // VisualSearch.js related initialization.
+    var visualSearch = VS.init({
+      container: $('.visual_search'),
+      query: '', 
+      callbacks: {
+        search: function(query, searchCollection) {
+          searchTerm = query;
+          PerformFilter();
+        }
+      }
+    });
+
+
+    // Add button to #tag-options using the tag as the text and id
+    allTags.forEach(function(element, index, arr) {
+      $('#tag-options').append(
+        '<button class="viewchoice btn btn-small active" id="tag-' + element
+        + '">' + element + '</button>').button();
+      $('#tag-' + element).data('clicked', true);
+      $('#tag-' + element).click(function() {
+        // Note that this tag got its state flipped
+        if (!(element in allTagsHelper)) {
+          allTagsHelper[element] = true;
+        }
+        allTagsHelper[element] = !allTagsHelper[element];
+        $('#tag-' + element).data('clicked', allTagsHelper[element]);
+        PerformFilter();
+      });
+    });
+
+    // Default show all annotations.
 		setTimeout(function() {
 		    sidebar.listAnnotations(subscriber.dumpAnnotations());
 		}, 100);
@@ -275,6 +373,20 @@ window.onload = function() {
 	subscriber.subscribe('beforeAnnotationCreated', createUuid); // creates, if need be, and adds, both to object, and to highlight.
 	subscriber.subscribe('beforeAnnotationCreated', addUserName); // creates, if need be, and adds, both to object, and to highlight.
 
+  var handleImageAnnotation = function(annotation) {
+    if (annotation.l != null) {
+      // Datstore expects shapes that have 
+      // one string named type (already included) and 
+      // another named "geometry" which should replace the
+      // included "a"
+      annotation["shapes"] = annotation.l
+      for(var i=0;i < annotation["shapes"].length;++i) {
+        annotation["shapes"][0]["geometry"] = annotation["shapes"][0].a
+      }
+    }
+  } 
+
+  subscriber.subscribe('beforeAnnotationCreated', handleImageAnnotation);
 
 	// Once the local object has been created, load the sidebar from local data (already contains UUID)
 	subscriber.subscribe('annotationCreated', loadSidebar);

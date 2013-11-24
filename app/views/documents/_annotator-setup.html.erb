@@ -215,9 +215,6 @@ window.onload = function() {
         });
         setTimeout(function() {
             sidebar.listAnnotations(newAnnotations);
-
-            // If we're looking at images... 
-
         }, 100);
     }
 
@@ -252,9 +249,7 @@ window.onload = function() {
     });
 
     // Default show all annotations.
-		setTimeout(function() {
-		    sidebar.listAnnotations(subscriber.dumpAnnotations());
-		}, 100);
+    PerformFilter();
 	};
 	
 	// Remove all comment icons and load sidebar with local data
@@ -363,7 +358,6 @@ window.onload = function() {
 	subscriber.subscribe('annotationsLoaded', loadSidebar);
 	subscriber.subscribe('annotationsLoaded', stopSpinner);
 	subscriber.subscribe('annotationsLoaded', handleHash);
-
 	// Update all highlights with UUIDs
 	subscriber.subscribe('annotationsLoaded', __bind(function(annotations) {
 		annotations.map(addUuid); // copies the UUID value from the object field to the highlight spans attribute value.
@@ -374,6 +368,10 @@ window.onload = function() {
 	subscriber.subscribe('beforeAnnotationCreated', addUserName); // creates, if need be, and adds, both to object, and to highlight.
 
   var handleImageAnnotation = function(annotation) {
+    // Image URL -- THIS IS ONLY CALLED IF IMAGE EXISTS
+    <% if @image %>
+      annotation["src"] = "<%= @image.clean_url %>";
+    <% end %>
     if (annotation.l != null) {
       // Datstore expects shapes that have 
       // one string named type (already included) and 

@@ -18,7 +18,13 @@ class S3File < Document
   end
 
   def url
-    AWS::S3::S3Object.url_for(filename, bucket)
+    AWS::S3::S3Object.url_for(filename, bucket, :authenticated => false)
+  end
+
+  def clean_url
+    ret = AWS::S3::S3Object.url_for(filename, bucket, :authenticated => false)
+    arr = ret.split('?')
+    return arr[0]
   end
 
   # S3 Related Exception

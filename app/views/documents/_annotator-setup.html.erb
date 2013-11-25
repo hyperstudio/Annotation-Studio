@@ -86,7 +86,7 @@ jQuery(function ($) {
         }
     });
 	var optionsRichText = {
-		richtext_enabled: <%= ENV["ANNOTATOR_RICHTEXT"] %>,
+		editor_enabled: <%= ENV["ANNOTATOR_RICHTEXT"] %>,
 		tinymce: {
 			'toolbar': '<%= ENV["ANNOTATOR_RICHTEXT_CONFIG"] %>'
 		}

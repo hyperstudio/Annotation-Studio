@@ -3,7 +3,7 @@
 class Annotator.Plugin.RichText extends Annotator.Plugin
   # Events to be bound to the @element.
   options:
-    richtext_enabled: true
+    editor_enabled: true
     tinymce:
       selector: "li.annotator-item textarea",
       plugins: "media image insertdatetime link code",
@@ -16,14 +16,13 @@ class Annotator.Plugin.RichText extends Annotator.Plugin
   pluginInit: ->
     annotator = @annotator
     editor = @annotator.editor
-    customText = @customText
     
     #Check that annotator is working
     return unless Annotator.supported()
     
     #Viewer setup
     annotator.viewer.addField load: @updateViewer
-    return unless @options.richtext_enabled
+    return unless @options.editor_enabled
 
     #Editor Setup
     annotator.editor.addField
@@ -51,10 +50,6 @@ class Annotator.Plugin.RichText extends Annotator.Plugin
 
     tinymce.init @options.tinymce
 
-  customText: (annotation_text) =>
-    console.log annotation_text
-    if @options.richtext_enabled then annotation_text else annotation_text.replace(/<(?:.|\n)*?>/gm, '')
-
   updateEditor: (field, annotation) =>
     text = (if typeof annotation.text isnt "undefined" then annotation.text else "")
     tinymce.activeEditor.setContent text
@@ -62,7 +57,6 @@ class Annotator.Plugin.RichText extends Annotator.Plugin
 
   updateViewer: (field, annotation) =>
     textDiv = $(field.parentNode).find("div:first-of-type")[0]
-    # strip html tags if the richtext viewer is not enabled
     textDiv.innerHTML = annotation.text
     $(textDiv).addClass "richText-annotation"
     $(field).remove() #this is the auto create field by annotator and it is not necessary

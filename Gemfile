@@ -39,6 +39,7 @@ end
 gem "twitter-bootstrap-rails" # https://github.com/seyhunak/twitter-bootstrap-rails/issues/401 ?
 
 gem 'jquery-rails', '~> 2.3.0'
+gem 'jquery-ui-rails'
 
 gem "fog", "~> 1.3.1"
 gem "mini_magick"

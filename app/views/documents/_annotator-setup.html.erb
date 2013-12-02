@@ -40,51 +40,58 @@ jQuery(function ($) {
 	var sidebar = new Sidebar.App();
 	Backbone.history.start({pushState: true, root: window.location})
 
-	var studio = $('#textcontent').annotator();
 
-	studio.annotator('addPlugin', 'Markdown');
-	<% if current_user.has_role?(:admin) && ENV["ANNOTATOR_FILTER"] == 'true' %>
-	studio.annotator('addPlugin', 'Filter');
-	<% end %>
-	studio.annotator('addPlugin', 'Tags');
-	   // studio.annotator('addPlugin', 'AnnotoriousImagePlugin');
-	studio.annotator('addPlugin', 'Unsupported');
-	studio.annotator('addPlugin', 'Auth', {
-		token: '<%= @jwt %>'
-	});
-	
-
-	studio.annotator('addPlugin', 'Store', {
-		prefix: '<%= ENV["API_URL"] %>',
-		annotationData: {
-			'uri': [location.protocol, '//', location.host, location.pathname].join(''),
-			"groups": groups,
-			"subgroups": subgroups,
-			// "username": 'Jamie F.',
-		},
-		loadFromSearch: {
-			'limit': 5,
-			"groups": groups,
-			"subgroups": subgroups,
-			'user': "<%= current_user.email %>",
-			'mode': 'user', // default mode -- user can switch via sidebar button.
-			'context': 'document',
-			'uri': [location.protocol, '//', location.host, location.pathname].join('')
+    var studio = $('#textcontent').annotator().annotator('setupPlugins', {}, {
+        <% if current_user.has_role?(:admin) && ENV["ANNOTATOR_FILTER"] == 'true' %>
+        <% else %>
+        Filter: false,
+        <% end %>
+        Auth: {
+        	token: '<%= @jwt %>'
+        },
+        Store: {
+            prefix: '<%= ENV["API_URL"] %>',
+            annotationData: {
+                'uri': [location.protocol, '//', location.host, location.pathname].join(''),
+                "groups": groups,
+                "subgroups": subgroups,
+                // "username": 'Jamie F.',
+            },
+            loadFromSearch: {
+                'limit': 5,
+                "groups": groups,
+                "subgroups": subgroups,
+                'user': "<%= current_user.email %>",
+                'mode': 'user', // default mode -- user can switch via sidebar button.
+                'context': 'document',
+                'uri': [location.protocol, '//', location.host, location.pathname].join('')
+            }
+        },
+        Markdown: false, // use RichText instead
+        AnnotateItPermissions: false, // this is built into the kitchen sink, so cancel it
+        Permissions: {
+        	user: "<%= current_user.email %>",
+        	permissions: {
+                'read': ['<%= current_user.email %>'], // default: review mode; this is what users will need to control
+                'update': ['<%= current_user.email %>'], // no one else can ever update
+                'delete': ['<%= current_user.email %>'], // no one else can ever delete
+                'admin': ['<%= current_user.email %>'] // no one else can ever admin
+        	},
+        	userString: function (user) {
+        		return "<%= current_user.first_name_last_initial %>";
+            },
+	        // Permissions settings per-annotation
+	        showViewPermissionsCheckbox: true,
+	        showEditPermissionsCheckbox: false
+        }
+    });
+	var optionsRichText = {
+		editor_enabled: <%= ENV["ANNOTATOR_RICHTEXT"] %>,
+		tinymce: {
+			'toolbar': '<%= ENV["ANNOTATOR_RICHTEXT_CONFIG"] %>'
 		}
-	});
-	studio.annotator('addPlugin', 'Permissions', {
-		user: "<%= current_user.email %>",
-		permissions: {
-			'read': ['<%= current_user.email %>'], // default: review mode; this is what users will need to control
-			'update': ['<%= current_user.email %>'], // no one else can ever update
-			'delete': ['<%= current_user.email %>'], // no one else can ever delete
-			'admin': ['<%= current_user.email %>'] // no one else can ever admin
-		},
-		// Permissions settings per-annotation
-		showViewPermissionsCheckbox: true,
-		showEditPermissionsCheckbox: false
-	});
-
+	}
+	studio.annotator('addPlugin', 'RichText', optionsRichText)
 
 
 	var subscriber = $('#textcontent').annotator().data('annotator');
@@ -266,6 +273,6 @@ jQuery(function ($) {
 	subscriber.subscribe('annotationUpdated', loadSidebar);
 	subscriber.subscribe('annotationDeleted', deleteFromSidebar);
 	
-	mixpanel.track("Loaded Document");
+	// mixpanel.track("Loaded Document");
 });
 </script>

@@ -17,6 +17,7 @@
 //= require jquery.ui.widget
 //= require jquery.ui.autocomplete
 //= require jquery.ui.menu
+//= require jquery-migrate.min
 //= require twitter/bootstrap
 //= require redactor-rails/redactor.min
 //= require redactor-config
@@ -34,8 +35,8 @@
 //= require annotator.tags.min
 //= require annotator.markdown.min
 //= require annotator.unsupported.min
-// require annotorious.okfn.js
 //= require underscore
 //= require backbone
 //= require mustache
 //= require visualsearch
+//= require annotorious.okfn

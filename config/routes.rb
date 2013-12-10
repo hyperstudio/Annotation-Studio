@@ -2,6 +2,7 @@ AnnotationStudio::Application.routes.draw do
   devise_for :users
 
   resources :documents
+  resources :images
   resources :users, only: [:show, :edit]
 
   authenticated :user do

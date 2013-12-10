@@ -1,0 +1,24 @@
+<table class="table table-striped table-bordered">
+  <thead>
+    <tr>
+	  <th>Name</th>
+    </tr>
+  </thead>
+  <tbody>    
+	<% unless @images.empty? || @images.nil? %>
+	  <% @images.sort {|a, b| a.nickname.downcase <=> b.nickname.downcase }.each do |image| %>
+        <tr>
+          <td><%= link_to image.nickname, image_path(image.id) %></td>
+        </tr>
+	  <% end %>
+	<% else %>
+      <tr>
+        <td colspan="5">No images to view. (Your account may be pending approval).</td>
+      </tr>
+	<% end %>
+  </tbody>
+</table>
+<% if can? :create, Image %>
+  <%= link_to 'New', new_image_path, :class => 'btn btn-primary' %>
+<% end %>	
+

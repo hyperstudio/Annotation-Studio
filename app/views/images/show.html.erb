@@ -1,0 +1,18 @@
+
+<div class="row">
+	<div class="span6">
+		<div id="textcontent"> 
+			<div>
+				<%= image_tag @image.clean_url, :class => "annotatable"%>
+			</div>
+		</div>
+		<div class="form-actions">
+			<%= link_to 'Back', images_path, :class => 'btn'  %>
+		</div>
+	</div>
+	<%= render "documents/annotator-setup" %>
+	<div id="spinnermodal" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="spinnermodallabel" aria-hidden="true">
+	  <div class="modal-body" id="spinnerdiv"><em>Loading annotations...</em></div>
+	</div>
+</div>
+

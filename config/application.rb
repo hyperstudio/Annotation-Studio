@@ -64,10 +64,11 @@ module AnnotationStudio
       :access_key_id     => 'AKIAJYJACGFCX4CBHHEA',  
       :secret_access_key => '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'  
     ) 
+
+    IMAGE_BUCKET='annotations3img'
     
     BUCKET='annotations3'
     VIDEO_BUCKET='annotations3vid'
     AUDIO_BUCKET='annotations3audio' 
-    IMAGE_BUCKET='annotations3img'
   end
 end

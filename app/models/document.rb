@@ -2,7 +2,7 @@ require "babosa" # allows cyrillic, other characters in titles (transliterates t
 
 class Document < ActiveRecord::Base
   belongs_to :user, :autosave => true
-  attr_accessible :title, :state, :chapters, :text, :user_id, :rep_privacy_list, :rep_group_list, :new_group, :author, :edition, :publisher, :publication_date, :source, :rights_status
+  attr_accessible :title, :state, :chapters, :text, :user_id, :rep_privacy_list, :rep_group_list, :new_group, :author, :edition, :publisher, :publication_date, :source, :rights_status, :type
   extend FriendlyId
   friendly_id :title, use: [:slugged, :history]
   # acts_as_taggable_on :rep_group, :courses, :semesters, :genres, :categories

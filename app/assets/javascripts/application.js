@@ -26,6 +26,8 @@
 //= require json2.min
 //= require Math.uuid
 //= require moment.min
+//= require handlebars
+//= require highlighter
 //= require annotator.min
 //= require annotator.filter.min
 //= require annotator.store.min
@@ -34,8 +36,10 @@
 //= require annotator.tags.min
 //= require annotator.markdown.min
 //= require annotator.unsupported.min
+//= require annotator.touch.min
 // require annotorious.okfn.js
 //= require underscore
 //= require backbone
 //= require mustache
 //= require visualsearch
+//= require detectmobilebrowser

@@ -31,9 +31,18 @@ end
 
 group :test, :development do
   gem 'factory_girl_rails'
+  gem 'rspec'
   gem 'rspec-rails'
   gem 'pry-rails'
-  gem 'capybara-webkit'
+  gem 'capybara'
+  gem 'capybara-webkit', '0.13.1'
+
+  gem 'database_cleaner'
+  gem 'selenium-webdriver'
+  gem 'puffing-billy'
+  gem 'simplecov', :require => false
+  gem 'cucumber-rails'
+  gem 'cucumber-rails-training-wheels'
 end
 
 gem "twitter-bootstrap-rails" # https://github.com/seyhunak/twitter-bootstrap-rails/issues/401 ?

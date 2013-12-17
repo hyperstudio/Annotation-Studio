@@ -12,11 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require jquery.ui.core
-//= require jquery.ui.position
-//= require jquery.ui.widget
-//= require jquery.ui.autocomplete
-//= require jquery.ui.menu
+//= require jquery.ui.all
 //= require twitter/bootstrap
 //= require jasny-fileinput
 //= require redactor-rails/redactor.min
@@ -27,16 +23,9 @@
 //= require json2.min
 //= require Math.uuid
 //= require moment.min
+//= require tinymce/tinymce.min
 //= require annotator.min
-//= require annotator.filter.min
-//= require annotator.store.min
-//= require annotator.auth.min
-//= require annotator.permissions.min
-//= require annotator.tags.min
-//= require annotator.markdown.min
-//= require annotator.unsupported.min
-// require annotorious.okfn.js
+//= require richText-annotator
 //= require underscore
 //= require backbone
 //= require mustache
-//= require visualsearch

@@ -14,11 +14,10 @@
  *= require "bootstrap.min"
  *= require "annotator.min"
  *= require "jasny-fileinput"
- * require "annotorious"
  *= require "boot-docs"
  *= require "users"
- *= require visualsearch-datauri
- * require visualsearch
+ *= require "richText-annotator.css"
+ *= require "jquery.ui.all"
 */
 
 footer {

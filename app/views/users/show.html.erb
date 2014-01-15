@@ -33,23 +33,23 @@ jQuery(function ($) {
 	<div class="span4">
 <h4><%= link_to "Documents", documents_path %>	</h4>
 <ul class="nav nav-tabs" id="document-tabs">
-  <li class="active"><a href="#assigned" data-toggle="tab"><span class="badge"><%= Document.tagged_with(current_user.rep_group_list, :any => true).size %></span> Assigned</a></li>
+  <li class="active"><a href="#assigned" data-toggle="tab"><span class="badge"><%= Document.tagged_with(current_user.rep_group_list).size %></span> Assigned</a></li>
   <li><a href="#created" data-toggle="tab"><span class="badge"><%= current_user.documents.size %></span> Created</a></li>
 </ul>
 
 <div class="tab-content">
   <div class="tab-pane active" id="assigned">
 		<table class="table table-bordered">
-			<% if Document.tagged_with(current_user.rep_group_list, :any => true).empty? || Document.tagged_with(current_user.rep_group_list, :any => true).nil? %>
-		      <tr>
-		        <td>No documents to view. (Your account maybe be pending approval).</td>
-		      </tr>
+			<% unless Document.tagged_with(current_user.rep_group_list).empty? || Document.tagged_with(current_user.rep_group_list).nil? %>
+				<% Document.tagged_with(current_user.rep_group_list).sort {|a, b| a.title.downcase <=> b.title.downcase }.each do |document| %>
+					<tr>
+						<td><%= link_to document.title, document_path(document.friendly_id), target: 'blank' %></td>
+					</tr>
+				<% end %>
 			<% else %>
-				<% Document.tagged_with(current_user.rep_group_list, :any => true).sort {|a, b| a.title.downcase <=> b.title.downcase }.each do |document| %>
-				      <tr>
-				        <td><%= link_to document.title, document_path(document.friendly_id), target: 'blank' %></td>
-				      </tr>
-		    	<% end %>
+				<tr>
+					<td>No documents to view. (Your account maybe be pending approval).</td>
+				</tr>
 			<% end %>
 		</table>
 </div>

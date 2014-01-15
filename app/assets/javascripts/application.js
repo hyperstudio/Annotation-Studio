@@ -23,7 +23,7 @@
 //= require json2.min
 //= require Math.uuid
 //= require moment.min
-//= require tinymce/tinymce.min
+//= require tinymce
 //= require annotator.min
 //= require richText-annotator
 //= require underscore

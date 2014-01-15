@@ -46,6 +46,7 @@ gem "twitter-bootstrap-rails" # https://github.com/seyhunak/twitter-bootstrap-ra
 
 gem 'jquery-rails', '~> 2.3.0'
 gem 'jquery-ui-rails'
+gem 'tinymce-rails'
 
 gem "fog", "~> 1.3.1"
 gem "mini_magick"

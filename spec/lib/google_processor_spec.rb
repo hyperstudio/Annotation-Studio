@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe GoogleProcessor do
 
-  it "creates temp files before processing" do
+  pending it "creates temp files before processing" do
     session = double('session').as_null_object
     drive = GoogleDrive.stub(:login).and_return(session)
     file = Tempfile.new('foo')

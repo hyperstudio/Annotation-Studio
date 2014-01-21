@@ -65,10 +65,10 @@ AnnotationStudio::Application.configure do
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
 
-  config.action_mailer.default_url_options = { :host => ENV['API_CONSUMER'] }
+  config.action_mailer.default_url_options = { :host => ENV['EMAIL_DOMAIN'] }
   config.action_mailer.perform_deliveries = true
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.default :charset => "utf-8"  
+  config.action_mailer.default :charset => "utf-8"
   config.action_mailer.smtp_settings = {
     :address        => "smtp.sendgrid.net",
     :port           => "587",
@@ -77,5 +77,5 @@ AnnotationStudio::Application.configure do
     :password       => ENV['SENDGRID_PASSWORD'],
     :domain         => ENV['SENDGRID_DOMAIN'],
     :enable_starttls_auto => true
-  }  
+  }
 end

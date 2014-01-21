@@ -45,7 +45,7 @@ AnnotationStudio::Application.configure do
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
 
-  config.action_mailer.default_url_options = { :host => ENV['API_CONSUMER'] }
+  config.action_mailer.default_url_options = { :host => ENV['EMAIL_DOMAIN'] }
   config.action_mailer.perform_deliveries = true
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.default :charset => "utf-8"

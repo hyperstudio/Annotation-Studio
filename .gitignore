@@ -38,3 +38,4 @@ Gemfile.lock.rej
 Gemfile.rej
 app/assets/javascripts/application.js.rej
 app/views/documents/index.html.erb.rej
+patch.diff

@@ -3,11 +3,11 @@
 	<div class="span12">
 		<h1>Documents</h1>
 		<ul class="nav nav-tabs" id="document-tabs">
-			<li class="active"><a href="#assigned" data-toggle="tab"><span class="badge"><%= Document.tagged_with(current_user.rep_group_list).size %></span> Assigned</a></li>
+			<li class="active"><a href="#assigned" data-toggle="tab"><span class="badge"><%= Document.tagged_with(current_user.rep_group_list, :any => true).size %></span> Assigned</a></li>
 			<li><a href="#created" data-toggle="tab"><span class="badge"><%= current_user.documents.size %></span> Created</a></li>
 			<% if can? :manage, Document %>
 			<li><a href="#all" data-toggle="tab"><span class="badge"><%= Document.all.length %></span> All</a></li>
-			<% end %>	
+			<% end %>
 		</ul>
 		<div class="tab-content">
 			<div class="tab-pane active" id="assigned">
@@ -18,10 +18,10 @@
 						<th>Groups</th>
 						<% if can? :manage, Document %>
 						<th>Actions</th>
-						<% end %>	
+						<% end %>
 					</tr>
-					<% unless Document.tagged_with(current_user.rep_group_list).empty? || Document.tagged_with(current_user.rep_group_list).nil? %>
-					<% Document.tagged_with(current_user.rep_group_list).sort {|a, b| a.title.downcase <=> b.title.downcase }.each do |document| %>
+					<% unless Document.tagged_with(current_user.rep_group_list, :any => true).empty? || Document.tagged_with(current_user.rep_group_list, :any => true).nil? %>
+					<% Document.tagged_with(current_user.rep_group_list, :any => true).sort {|a, b| a.title.downcase <=> b.title.downcase }.each do |document| %>
 					<tr>
 						<td><%= link_to document.title, document_path(document.friendly_id), target: 'blank' %></td>
 						<td><%= document.author %></td>
@@ -29,10 +29,10 @@
 						<td>
 							<% if can? [:edit], document %>
 							<%= link_to 'Edit', edit_document_path(document.friendly_id), :class => 'btn btn-mini' %>
-							<% end %>	
+							<% end %>
 							<% if can? [:delete], document %>
 							<%= link_to 'Delete', document_path(document.friendly_id), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini btn-danger' %>
-							<% end %>	
+							<% end %>
 						</td>
 					</tr>
 					<% end %>
@@ -51,7 +51,7 @@
 						<th>Groups</th>
 						<% if can? :manage, Document %>
 						<th>Actions</th>
-						<% end %>	
+						<% end %>
 					</tr>
 					<% unless current_user.documents.empty? || current_user.documents.nil? %>
 					<% current_user.documents.sort {|a, b| a.title.downcase <=> b.title.downcase }.each do |document| %>
@@ -63,10 +63,10 @@
 						<td>
 							<% if can? [:edit], document %>
 							<%= link_to 'Edit', edit_document_path(document.friendly_id), :class => 'btn btn-mini' %>
-							<% end %>	
+							<% end %>
 							<% if can? [:delete], document %>
 							<%= link_to 'Delete', document_path(document.friendly_id), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini btn-danger' %>
-							<% end %>	
+							<% end %>
 						</td>
 					</tr>
 					<% end %>
@@ -87,7 +87,7 @@
 						<th>Groups</th>
 						<% if can? :manage, Document %>
 						<th>Actions</th>
-						<% end %>	
+						<% end %>
 					</tr>
 					<% unless current_user.documents.empty? || current_user.documents.nil? %>
 					<% Document.all.sort {|a, b| a.title.downcase <=> b.title.downcase }.each do |document| %>
@@ -98,10 +98,10 @@
 						<td>
 							<% if can? [:edit], document %>
 							<%= link_to 'Edit', edit_document_path(document.friendly_id), :class => 'btn btn-mini' %>
-							<% end %>	
+							<% end %>
 							<% if can? [:delete], document %>
 							<%= link_to 'Delete', document_path(document.friendly_id), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini btn-danger' %>
-							<% end %>	
+							<% end %>
 						</td>
 					</tr>
 					<% end %>
@@ -116,6 +116,6 @@
 		</div>
 		<% if can? :create, Document %>
 		<%= link_to 'New', new_document_path, :class => 'btn btn-primary' %>
-		<% end %>	
+		<% end %>
 	</div><!--/span12 -->
 </div><!--/row -->

@@ -7,6 +7,7 @@ ActiveAdmin.register User, :as => "Student" do
   filter :affiliation
   filter :created_at
   filter :updated_at
+  filter :last_sign_in_at
   filter :taggings_tag_name, :as => :check_boxes, :collection => proc { User.rep_group_counts.map{|t| t.name} }
 
   batch_action :approve do |selection|

@@ -78,8 +78,8 @@ jQuery(function ($) {
                 'admin': ['<%= current_user.email %>'] // no one else can ever admin
         	},
         	userString: function (user) {
-        		return "<%= current_user.first_name_last_initial %>";
-            },
+        		return user.split("@")[0]
+        	},
 	        // Permissions settings per-annotation
 	        showViewPermissionsCheckbox: true,
 	        showEditPermissionsCheckbox: false
@@ -249,7 +249,6 @@ jQuery(function ($) {
 		}
 	};
 
-
 	// When the annotator loads remote data, update sidebar
 	subscriber.subscribe('annotationsLoaded', loadSidebar);
 	subscriber.subscribe('annotationsLoaded', stopSpinner);
@@ -272,7 +271,7 @@ jQuery(function ($) {
 	// When the local object is updated (contains previously created/stored UUID), load the sidebar from local data
 	subscriber.subscribe('annotationUpdated', loadSidebar);
 	subscriber.subscribe('annotationDeleted', deleteFromSidebar);
-	
+
 	// mixpanel.track("Loaded Document");
 });
 </script>

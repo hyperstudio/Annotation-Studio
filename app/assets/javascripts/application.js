@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require jquery.ui.all
 //= require twitter/bootstrap
+//= require bootstrap-tagsinput
 //= require jasny-fileinput
 //= require redactor-rails/redactor.min
 //= require redactor-config

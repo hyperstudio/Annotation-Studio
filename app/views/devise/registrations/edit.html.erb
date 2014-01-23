@@ -19,20 +19,21 @@
         <div class="control-group">
           <%= f.label "Class Groups", :class => 'control-label' %>
           <div class="controls">
-              <%= f.text_field :rep_group_list, :class => 'text_field input-xlarge' %>
-              <p class="help-block">Enter the group names of any class groups you're in, separated by commas.</p>
+              <%= f.text_field :rep_group_list, :class => 'text_field input-xxlarge', 'data-role' => "tagsinput", 'placeholder'=> "Enter Class Groups" %>
+              <p class="help-block">Enter the group names of any class groups you're in, and press enter after each.</p>
           </div>
           <%= f.label "Working Groups", :class => 'control-label' %>
           <div class="controls">
-              <%= f.text_field :rep_subgroup_list, :class => 'text_field input-xlarge' %>
-              <p class="help-block">Enter the group names of any working groups you're in, separated by commas.</p>
+              <%= f.text_field :rep_subgroup_list, :class => 'text_field input-xxlarge', 'data-role' => "tagsinput", 'placeholder'=> "Enter Working Groups" %>
+              <p class="help-block">Enter the group names of any working groups you're in, and press enter after each</p>
           </div>
         </div>
 
         <div class="control-group">
 				<%= f.label :email, :class => "control-label" %>
 				<div class="controls">
-				<%= f.email_field :email, :value =>  resource.email %>
+				<%= f.email_field :email, :value =>  resource.email, :disabled => true %>
+        <p class="help-block">Your email is your username, and cannot be changed.</p>
 				</div>
 
 				<%= f.label :affiliation, :class => "control-label" %>
@@ -42,12 +43,13 @@
         </div>
 
         <div class="control-group">
-				<%= f.label :current_password, :class => "control-label" %>
-				<div class="controls">
-				<%= f.password_field :current_password %>
-				<p class="help-block">(we need your current password to confirm your changes)</p>
+        <%= f.label :current_password, :class => "control-label" %>
+        <div class="controls">
+        <%= f.password_field :current_password %>
+        <p class="help-block">(we need your current password to confirm your changes)</p>
         </div>
         </div>
+
 
 			<div class="form-actions">
 				<div><%= f.submit "Update", :class => "btn btn-primary" %></div>

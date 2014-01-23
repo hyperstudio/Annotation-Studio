@@ -7,7 +7,7 @@
 <%= form_for (@document), :html => { :class => 'form-horizontal' } do |f| %>
 <fieldset>
 	<legend><%= controller.action_name.capitalize %> Document</legend>
-	
+
 	<h4>Content</h4>
 
 
@@ -128,25 +128,25 @@
 
 	<h4>Status</h4>
 			<p class="help-block">Only published documents may be annotated</p>
-	
+
 			<div class="control-group">
 				<div class="controls">
-					<label class="radio inline"><i class="glyphicon icon-time"></i> 
+					<label class="radio inline"><i class="glyphicon icon-time"></i>
 						<%= f.radio_button :state, value: "pending", :checked => "checked" %>
 						Pending
 					</label>
 
-					<label class="radio inline"><i class="glyphicon icon-pencil"></i> 
+					<label class="radio inline"><i class="glyphicon icon-pencil"></i>
 						<%= f.radio_button :state, value: "draft" %>
 						Draft
 					</label>
 
-					<label class="radio inline"><i class="glyphicon icon-ok"></i> 
+					<label class="radio inline"><i class="glyphicon icon-ok"></i>
 						<%= f.radio_button :state, value: "published" %>
 						Published
 					</label>
 
-					<label class="radio inline"><i class="glyphicon icon-folder-close"></i> 
+					<label class="radio inline"><i class="glyphicon icon-folder-close"></i>
 						<%= f.radio_button :state, value: "archived" %>
 						Archived
 					</label>
@@ -154,11 +154,11 @@
 			</div>
 
 	<h4>Groups</h4>
-					<p class="help-block">Enter the groups to whom you wish to assign this document, separated by commas.</p>
+					<p class="help-block">Enter the groups to whom you wish to assign this document, and press enter after each.</p>
 
 			<div class="control-group">
 				<div class="controls">
-					<%= f.text_field :rep_group_list, :class => 'text_field input-xlarge' %>
+					<%= f.text_field :rep_group_list, :class => 'text_field input-xlarge', 'data-role' => "tagsinput", 'placeholder' => "Enter group name(s)" %>
 				</div>
 			</div>
 

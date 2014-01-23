@@ -1,10 +1,10 @@
 <div class="row">
 	<div class="span12">
-		<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :class => "form-horizontal"}) do |f| %> 
+		<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :class => "form-horizontal"}) do |f| %>
 		<%= devise_error_messages! %>
-		<legend>Edit Account for <%= resource.firstname %>  <%= resource.lastname %> </legend>
+		<legend>Edit Profile for <%= resource.firstname %>  <%= resource.lastname %> </legend>
 		<fieldset>
-			<div class="control-group well">
+			<div class="control-group">
 				<%= f.label :firstname, "First Name", :class => "control-label" %>
 				<div class="controls">
 				<%= f.text_field :firstname, :value =>  resource.firstname %>
@@ -13,8 +13,23 @@
 				<%= f.label :lastname, "Last Name", :class => "control-label" %>
 				<div class="controls">
 				<%= f.text_field :lastname, :value =>  resource.lastname %>
-				</div>
+        </div>
+      </div>
 
+        <div class="control-group">
+          <%= f.label "Class Groups", :class => 'control-label' %>
+          <div class="controls">
+              <%= f.text_field :rep_group_list, :class => 'text_field input-xlarge' %>
+              <p class="help-block">Enter the group names of any class groups you're in, separated by commas.</p>
+          </div>
+          <%= f.label "Working Groups", :class => 'control-label' %>
+          <div class="controls">
+              <%= f.text_field :rep_subgroup_list, :class => 'text_field input-xlarge' %>
+              <p class="help-block">Enter the group names of any working groups you're in, separated by commas.</p>
+          </div>
+        </div>
+
+        <div class="control-group">
 				<%= f.label :email, :class => "control-label" %>
 				<div class="controls">
 				<%= f.email_field :email, :value =>  resource.email %>
@@ -23,42 +38,17 @@
 				<%= f.label :affiliation, :class => "control-label" %>
 				<div class="controls">
 				<%= f.text_field :affiliation, :value =>  resource.affiliation %>
-				</div>
+        </div>
+        </div>
 
-				<%= f.label :password, :class => "control-label" %>
-				<div class="controls">
-				<%= f.password_field :password %>
-				</div>
-
-				<%= f.label :password_confirmation, :class => "control-label" %>
-				<div class="controls">
-				<%= f.password_field :password_confirmation %>
-				</div>
-
+        <div class="control-group">
 				<%= f.label :current_password, :class => "control-label" %>
 				<div class="controls">
 				<%= f.password_field :current_password %>
 				<p class="help-block">(we need your current password to confirm your changes)</p>
-				</div>
-	
-				<br />
+        </div>
+        </div>
 
-				<div class="control-group">
-			      <%= f.label "Groups", :class => 'control-label' %>
-					<div class="controls">
-		        		<%= f.text_field :rep_group_list, :class => 'text_field input-xlarge' %>
-					</div>
-				</div>
-
-				<div class="control-group">
-			      <%= f.label "Working Groups", :class => 'control-label' %>
-					<div class="controls">
-		        		<%= f.text_field :rep_subgroup_list, :class => 'text_field input-xlarge' %>
-					</div>
-				</div>
-
-			</div>
-	
 			<div class="form-actions">
 				<div><%= f.submit "Update", :class => "btn btn-primary" %></div>
 		  	</div>

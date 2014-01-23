@@ -1,0 +1,42 @@
+<style type="text/css" media="screen">
+.user-highlight {
+	font-style: italic;
+}
+
+.nav-tabs > li.active a, .nav-tabs > li.active a:hover {
+	background-color: rgb(238, 238, 238);
+}
+</style>
+<div class="row">
+	<div class="span12">
+		<h1>Groups</h1>
+	</div><!--/span12 -->
+</div><!--/row -->
+<div class="row">
+	<div class="span12">
+    <ul class="nav nav-tabs" id="group-tabs">
+      <li class="active"><a href="#groups" data-toggle="tab"><span class="badge"><%= current_user.rep_group_list.size %></span> Class Groups</a></li>
+      <li><a href="#subgroups" data-toggle="tab"><span class="badge"><%= current_user.rep_subgroup_list.size %></span> Working Groups</a></li>
+    </ul>
+    <div class="tab-content">
+      <div class="tab-pane active" id="groups">
+        <table class="table table-bordered">
+        <% current_user.rep_group_list.each do |group| %>
+            <tr>
+              <td><%= group %></td>
+            </tr>
+          <% end %>
+        </table>
+    </div>
+      <div class="tab-pane" id="subgroups">
+        <table class="table table-bordered">
+        <% current_user.rep_subgroup_list.each do |group| %>
+            <tr>
+              <td><%= group %></td>
+            </tr>
+          <% end %>
+        </table>
+      </div>
+    </div>
+	</div><!--/span12 -->
+</div><!--/row -->

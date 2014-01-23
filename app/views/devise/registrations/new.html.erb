@@ -71,10 +71,16 @@
 				</div>
 				<% end %>
 
+        <%= f.label :rep_group_list, "Class Group", :class => "control-label" %>
+        <div class="controls">
+        <%= f.text_field :rep_group_list %>
+        <span class="help-block">If your group leader has given you a the name of a class group to join, put that here. This will determine which documents are assigned to you.</span>
+        </div>
+
 				<%= f.label :rep_subgroup_list, "Working Group", :class => "control-label" %>
 				<div class="controls">
 				<%= f.text_field :rep_subgroup_list %>
-				<span class="help-block">Put a secret word here. Give it to anyone you want to share with. If they add it to their account, you'll be able to see one another's visible annotations</span>
+				<span class="help-block">If you enter the name of a working group here, you'll be able to share group-visible annotations with other users in that same working group.</span>
 				</div>
 
 				<br>

@@ -5,6 +5,9 @@ class Document < ActiveRecord::Base
   attr_accessible :title, :state, :chapters, :text, :user_id, 
     :rep_privacy_list, :rep_group_list, :new_group, :author, :edition, 
     :publisher, :publication_date, :source, :rights_status, :upload
+    
+  before_validation :add_title, on: :create, unless: :title?
+  before_create :add_processed_at, unless: :processed?
 
   extend FriendlyId
   friendly_id :title, use: [:slugged, :history]
@@ -39,6 +42,18 @@ class Document < ActiveRecord::Base
 
   def processed?
     processed_at.present?
+  end
+
+  def add_processed_at
+    self.processed_at = Time.now
+  end
+
+  def title?
+    title.present?
+  end
+
+  def add_title
+    self.title = "Untitled"
   end
 
 end

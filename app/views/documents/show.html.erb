@@ -67,12 +67,12 @@
 		</div>
 		<div class="form-actions">
 			<%= link_to 'Back', documents_path, :class => 'btn'  %>
-			<% if can? [:edit], @document %>
+			<% if can? :edit, @document %>
 			<%= link_to 'Edit', edit_document_path(@document.friendly_id), :class => 'btn' %>
-			<% end %>	
-			<% if can? [:delete], @document %>
+			<% end %>
+			<% if can? :delete, @document %>
 			<%= link_to 'Delete', document_path(@document.friendly_id), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-danger' %>
-			<% end %>	
+			<% end %>
 		</div>
 	</div><!--/span6 -->
   <% if @document.processed? %>

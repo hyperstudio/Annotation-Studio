@@ -10,7 +10,7 @@ jQuery(function ($) {
 	var token = '<%= @jwt %>';
 	// Backbone.history.start({pushState: true, root: window.location})
 
-	var loadOptions = {
+	var myLoadOptions = {
 		'limit': 5,
 		'groups': "<%= current_user.rep_group_list %>".split(/, /),
 		'subgroups': "<%= current_user.rep_subgroup_list %>".split(/, /),
@@ -19,9 +19,36 @@ jQuery(function ($) {
 		'mode': 'user',
 		'context': 'dashboard',
 	};
-	widget.listAnnotations(loadOptions, endpoint, token);
+  var classLoadOptions = {
+    'limit': 5,
+    'groups': "<%= current_user.rep_group_list %>".split(/, /),
+    'subgroups': "<%= current_user.rep_subgroup_list %>".split(/, /),
+    'host': location.host,
+    'user': "<%= current_user.email %>",
+    'mode': 'class',
+    'context': 'dashboard',
+  };
+  var groupLoadOptions = {
+    'limit': 5,
+    'groups': "<%= current_user.rep_group_list %>".split(/, /),
+    'subgroups': "<%= current_user.rep_subgroup_list %>".split(/, /),
+    'host': location.host,
+    'user': "<%= current_user.email %>",
+    'mode': 'group',
+    'context': 'dashboard',
+  };
+
+  widget.listAnnotations('my-annotation-list', myLoadOptions, endpoint, token);
+  widget.listAnnotations('class-annotation-list', classLoadOptions, endpoint, token);
+  widget.listAnnotations('group-annotation-list', groupLoadOptions, endpoint, token);
 });
 
+</script>
+<script type="text/template" id="user-comment-template">
+  <span class="user-comment"><a href="{{uri}}#hl{{uuid}}" target="_blank">{{{text}}}</a></span>
+</script>
+<script type="text/template" id="user-highlight-template">
+  <span class="user-highlight"><a href="{{uri}}#hl{{uuid}}" target="_blank">{{{quote}}}</a></span>
 </script>
 
 <div class="row">
@@ -41,9 +68,10 @@ jQuery(function ($) {
   <div class="tab-pane active" id="assigned">
 		<table class="table table-bordered">
 			<% unless Document.tagged_with(current_user.rep_group_list, :any => true).empty? || Document.tagged_with(current_user.rep_group_list).nil? %>
-				<% Document.tagged_with(current_user.rep_group_list, :any => true).sort {|a, b| a.title.downcase <=> b.title.downcase }.each do |document| %>
+				<% Document.tagged_with(current_user.rep_group_list, :any => true).sort {|a, b| b.created_at <=> a.created_at }.each do |document| %>
 					<tr>
-						<td><%= link_to document.title, document_path(document.friendly_id), target: 'blank' %></td>
+            <td><%= link_to document.title, document_path(document.friendly_id), target: 'blank' %></td>
+            <td><%= document.created_at.strftime("%m/%d/%Y") %></td>
 					</tr>
 				<% end %>
 			<% else %>
@@ -56,10 +84,11 @@ jQuery(function ($) {
   <div class="tab-pane" id="created">
 		<table class="table table-bordered">
 			<% unless current_user.documents.empty? || current_user.documents.nil? %>
-				<% current_user.documents.sort {|a, b| a.title.downcase <=> b.title.downcase }.each do |document| %>
+				<% current_user.documents.sort {|a, b| b.created_at <=> a.created_at }.each do |document| %>
 					<% if can? :read, document %>
 				      <tr>
 				        <td><%= link_to document.title, document_path(document.friendly_id), target: 'blank' %></td>
+                <td><%= document.created_at.strftime("%m/%d/%Y") %></td>
 				      </tr>
 			     	<% end %>
 		    	<% end %>
@@ -71,48 +100,34 @@ jQuery(function ($) {
 		</table>
   </div>
 </div>
-
+  <h5><%= link_to "View all documents", documents_path %></h5>
 	</div><!--/span4 -->
 	<div class="span4">
-		<h4>Annotations</h4>
+    <h4><%= link_to "Annotations", annotations_path %></h4>
 		<ul class="nav nav-tabs" id="document-tabs">
 		  <li class="active"><a href="#mine" data-toggle="tab"><span class="badge"></span> Mine</a></li>
-		  <li><a href="#group" data-toggle="tab"><span class="badge"></span> Groups</a></li>
-		  <li><a href="#class" data-toggle="tab"><span class="badge"></span> Classes</a></li>
+		  <li><a href="#class" data-toggle="tab"><span class="badge"></span> Class Groups</a></li>
+		  <li><a href="#group" data-toggle="tab"><span class="badge"></span> Working Groups</a></li>
 		</ul>
 
 		<div class="tab-content">
 			<div class="tab-pane active" id="mine">
-				<ul id="annotation-list" class="unstyled">
-					<script type="text/template" id="user-comment-template">
-						<span class="user-comment"><a href="{{uri}}#hl{{uuid}}" target="_blank">{{{text}}}</a></span>
-					</script>
-					<script type="text/template" id="user-highlight-template">
-						<span class="user-highlight"><a href="{{uri}}#hl{{uuid}}" target="_blank">{{{quote}}}</a></span>
-					</script>
-				</ul>
-			</div>
-			<div class="tab-pane" id="group">
-			<table class="table table-bordered">
-				<tr>
-				  <td>Coming soon...</td>
-				</tr>
-			</table>
+				<ul id="my-annotation-list" class="unstyled"></ul>
 			</div>
 			<div class="tab-pane" id="class">
-			<table class="table table-bordered">
-				<tr>
-				  <td>Coming soon...</td>
-				</tr>
-			</table>
+        <ul id="class-annotation-list" class="unstyled"></ul>
+			</div>
+			<div class="tab-pane" id="group">
+        <ul id="group-annotation-list" class="unstyled"></ul>
 			</div>
 		</div>
+    <h5><%= link_to "View all annotations", annotations_path %>  </h5>
 	</div><!--/span4 -->
 	<div class="span4">
-		<h4>Groups</h4>
+    <h4><%= link_to "Groups", groups_path %>  </h4>
 		<ul class="nav nav-tabs" id="group-tabs">
-		  <li class="active"><a href="#groups" data-toggle="tab"><span class="badge"><%= current_user.rep_group_list.size %></span> Class</a></li>
-		  <li><a href="#subgroups" data-toggle="tab"><span class="badge"><%= current_user.rep_subgroup_list.size %></span> Working</a></li>
+		  <li class="active"><a href="#groups" data-toggle="tab"><span class="badge"><%= current_user.rep_group_list.size %></span> Class Groups</a></li>
+		  <li><a href="#subgroups" data-toggle="tab"><span class="badge"><%= current_user.rep_subgroup_list.size %></span> Working Groups</a></li>
 		</ul>
 		<div class="tab-content">
 		  <div class="tab-pane active" id="groups">
@@ -134,5 +149,6 @@ jQuery(function ($) {
 				</table>
 		  </div>
 		</div>
+    <h5><%= link_to "View all groups", groups_path %>  </h5>
 	</div><!--/span4 -->
 </div><!--/row -->

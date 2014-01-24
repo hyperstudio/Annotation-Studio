@@ -60,7 +60,7 @@ Widget.AnnotationView = Backbone.View.extend({
 		$(this.el).find("highlight.comment img").addClass("thumbnail");
 		var txt = this.model.get("text");
 		var qt = this.model.get("quote");
-		
+
 		if (txt != "") { // This annotation contains a comment
 			this.mdConvert();
 			if (txt.length > 50) {
@@ -95,34 +95,46 @@ Widget.AnnotationView = Backbone.View.extend({
 
 // Annotation List View
 Widget.AnnotationListView = Backbone.View.extend({
-	el: $("ul#annotation-list"),
+  // el: $("ul#" + options.container),
 	initialize: function (options) {
-		this.template = $('#annotation-template').html();
+    this.el = $("ul#"+ options.container);
 	},
 	render: function () {
 		// Clear out existing annotations
-		$("ul#annotation-list").find(".annotation-item").remove();
-
-		// Walk throught the list, and render markdown in the user comment first.
+		// $(this.el).find(".annotation-item").remove();
+    this.$el.empty();
+		var self = this;
+    // Walk throught the list, and render markdown in the user comment first.
 		this.collection.each(function(ann) {
 			var annView = new Widget.AnnotationView({model: ann});
-			$("ul#annotation-list").append(annView.render().el);
+      console.log(annView.render().el);
+      console.log(self.el);
+      self.el.append(annView.render().el);
 		});
+
+    // this.collection.each(function(contact) { // iterate through the collection
+    //   var contactView = new ContactView({model: contact});
+    //   self.$el.append(contactView.el);
+    // });
+
+    return self;
+
 	}
 });
 
 // Application
 Widget.App = Backbone.Router.extend({
 	routes: {
-		'list':  'listAnnotations', 
+		'list':  'listAnnotations',
 	},
 	// takes an object literal of options for an XHR request.
-	listAnnotations: function (options, endpoint, token) {
-		Widget.annotations = new Widget.RemoteAnnotationList(options, endpoint, token);
-		var annotationsList = new Widget.AnnotationListView({
-			"container": $('#annotation-list'),
-			"collection": Widget.annotations
-		});
+  listAnnotations: function (listid, options, endpoint, token) {
+    Widget.annotations = new Widget.RemoteAnnotationList(options, endpoint, token);
+    var listOptions = {
+      "container": listid,
+      "collection": Widget.annotations
+    }
+    var annotationsList = new Widget.AnnotationListView(listOptions);
 		Widget.annotations.deferred.done(function () {
 			annotationsList.render();
 			// console.info("Remote: "+ Widget.annotations.toJSON());

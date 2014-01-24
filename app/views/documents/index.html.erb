@@ -15,6 +15,7 @@
 					<tr>
 						<th>Title</th>
 						<th>Author</th>
+            <th>Created</th>
 						<th>Groups</th>
 						<% if can? :manage, Document %>
 						<th>Actions</th>
@@ -25,15 +26,20 @@
 					<tr>
 						<td><%= link_to document.title, document_path(document.friendly_id), target: 'blank' %></td>
 						<td><%= document.author %></td>
+            <td><%= document.created_at.strftime("%m/%d/%Y") %></td>
 						<td><% document.rep_group_list.each do |group| %><span class="label"><%= group %></span> <% end %></td>
-						<td>
+            <% if can? :manage, Document %>
+            <td>
+            <% end %>
 							<% if can? :edit, document %>
 							<%= link_to 'Edit', edit_document_path(document.friendly_id), :class => 'btn btn-mini' %>
 							<% end %>
 							<% if can? :delete, document %>
 							<%= link_to 'Delete', document_path(document.friendly_id), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini btn-danger' %>
 							<% end %>
-						</td>
+            <% if can? :manage, Document %>
+            </td>
+            <% end %>
 					</tr>
 					<% end %>
 					<% else %>
@@ -48,26 +54,32 @@
 					<tr>
 						<th>Title</th>
 						<th>Author</th>
-						<th>Groups</th>
+            <th>Created</th>
+            <th>Groups</th>
 						<% if can? :manage, Document %>
 						<th>Actions</th>
 						<% end %>
 					</tr>
 					<% unless current_user.documents.empty? || current_user.documents.nil? %>
-					<% current_user.documents.sort {|a, b| a.title.downcase <=> b.title.downcase }.each do |document| %>
+					<% current_user.documents.sort {|a, b| b.created_at <=> a.created_at }.each do |document| %>
 					<% if can? :read, document %>
 					<tr>
 						<td><%= link_to document.title, document_path(document.friendly_id), target: 'blank' %></td>
 						<td><%= document.author %></td>
+            <td><%= document.created_at.strftime("%m/%d/%Y") %></td>
 						<td><% document.rep_group_list.each do |group| %><span class="label"><%= group %></span> <% end %></td>
-						<td>
-							<% if can? :edit, document %>
+            <% if can? :manage, Document %>
+            <td>
+            <% end %>
+              <% if can? :edit, document %>
 							<%= link_to 'Edit', edit_document_path(document.friendly_id), :class => 'btn btn-mini' %>
 							<% end %>
 							<% if can? :delete, document %>
 							<%= link_to 'Delete', document_path(document.friendly_id), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini btn-danger' %>
 							<% end %>
-						</td>
+            <% if can? :manage, Document %>
+            </td>
+            <% end %>
 					</tr>
 					<% end %>
 					<% end %>
@@ -84,25 +96,31 @@
 					<tr>
 						<th>Title</th>
 						<th>Author</th>
+            <th>Created</th>
 						<th>Groups</th>
 						<% if can? :manage, Document %>
 						<th>Actions</th>
 						<% end %>
 					</tr>
 					<% unless current_user.documents.empty? || current_user.documents.nil? %>
-					<% Document.all.sort {|a, b| a.title.downcase <=> b.title.downcase }.each do |document| %>
+					<% Document.all.sort {|a, b| b.created_at <=> a.created_at }.each do |document| %>
 					<tr>
 						<td><%= link_to document.title, document_path(document.friendly_id), target: 'blank' %></td>
 						<td><%= document.author %></td>
+            <td><%= document.created_at.strftime("%m/%d/%Y") %></td>
 						<td><% document.rep_group_list.each do |group| %><span class="label"><%= group %></span> <% end %></td>
-						<td>
+            <% if can? :manage, Document %>
+            <td>
+            <% end %>
 							<% if can? [:edit], document %>
 							<%= link_to 'Edit', edit_document_path(document.friendly_id), :class => 'btn btn-mini' %>
 							<% end %>
 							<% if can? [:delete], document %>
 							<%= link_to 'Delete', document_path(document.friendly_id), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini btn-danger' %>
 							<% end %>
-						</td>
+            <% if can? :manage, Document %>
+            </td>
+            <% end %>
 					</tr>
 					<% end %>
 					<% else %>

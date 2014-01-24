@@ -41,23 +41,50 @@
 <%= javascript_include_tag "widget" %>
 <script type="text/javascript" charset="utf-8">
 jQuery(function ($) {
-	var widget = new Widget.App();
-	var endpoint = '<%= ENV["API_URL"] %>';
-	var token = '<%= @jwt %>';
-	// Backbone.history.start({pushState: true, root: window.location})
+  var widget = new Widget.App();
+  var endpoint = '<%= ENV["API_URL"] %>';
+  var token = '<%= @jwt %>';
+  // Backbone.history.start({pushState: true, root: window.location})
 
-	var loadOptions = {
-		'limit': 50,
-		'groups': "<%= current_user.rep_group_list %>".split(/, /),
-		'subgroups': "<%= current_user.rep_subgroup_list %>".split(/, /),
-		'host': location.host,
-		'user': "<%= current_user.email %>",
-		'mode': 'user',
-		'context': 'search',
-	};
-	widget.listAnnotations(loadOptions, endpoint, token);
+  var myLoadOptions = {
+    'limit': 5,
+    'groups': "<%= current_user.rep_group_list %>".split(/, /),
+    'subgroups': "<%= current_user.rep_subgroup_list %>".split(/, /),
+    'host': location.host,
+    'user': "<%= current_user.email %>",
+    'mode': 'user',
+    'context': 'dashboard',
+  };
+  var classLoadOptions = {
+    'limit': 5,
+    'groups': "<%= current_user.rep_group_list %>".split(/, /),
+    'subgroups': "<%= current_user.rep_subgroup_list %>".split(/, /),
+    'host': location.host,
+    'user': "<%= current_user.email %>",
+    'mode': 'class',
+    'context': 'dashboard',
+  };
+  var groupLoadOptions = {
+    'limit': 5,
+    'groups': "<%= current_user.rep_group_list %>".split(/, /),
+    'subgroups': "<%= current_user.rep_subgroup_list %>".split(/, /),
+    'host': location.host,
+    'user': "<%= current_user.email %>",
+    'mode': 'group',
+    'context': 'dashboard',
+  };
+
+  widget.listAnnotations('my-annotation-list', myLoadOptions, endpoint, token);
+  widget.listAnnotations('class-annotation-list', classLoadOptions, endpoint, token);
+  widget.listAnnotations('group-annotation-list', groupLoadOptions, endpoint, token);
 });
 
+</script>
+<script type="text/template" id="user-comment-template">
+  <span class="user-comment"><a href="{{uri}}#hl{{uuid}}" target="_blank">{{{text}}}</a></span>
+</script>
+<script type="text/template" id="user-highlight-template">
+  <span class="user-highlight"><a href="{{uri}}#hl{{uuid}}" target="_blank">{{{quote}}}</a></span>
 </script>
 
 <div class="row">
@@ -67,15 +94,25 @@ jQuery(function ($) {
 </div><!--/row -->
 <div class="row">
 	<div class="span12">
-		<div class="tab-content">
-			<ul id="annotation-list" class="unstyled">
-				<script type="text/template" id="user-comment-template">
-					<span class="user-comment"><a href="{{uri}}#hl{{uuid}}" target="_blank">{{{text}}}</a></span>
-				</script>
-				<script type="text/template" id="user-highlight-template">
-					<span class="user-highlight"><a href="{{uri}}#hl{{uuid}}" target="_blank">{{{quote}}}</a></span>
-				</script>
-			</ul>
-		</div>
+
+    <ul class="nav nav-tabs" id="document-tabs">
+      <li class="active"><a href="#mine" data-toggle="tab"><span class="badge"></span> Mine</a></li>
+      <li><a href="#class" data-toggle="tab"><span class="badge"></span> Class Groups</a></li>
+      <li><a href="#group" data-toggle="tab"><span class="badge"></span> Working Groups</a></li>
+    </ul>
+
+    <div class="tab-content">
+      <div class="tab-pane active" id="mine">
+        <ul id="my-annotation-list" class="unstyled"></ul>
+      </div>
+      <div class="tab-pane" id="class">
+        <ul id="class-annotation-list" class="unstyled"></ul>
+      </div>
+      <div class="tab-pane" id="group">
+        <ul id="group-annotation-list" class="unstyled"></ul>
+      </div>
+    </div>
+
+
 	</div><!--/span12 -->
 </div><!--/row -->

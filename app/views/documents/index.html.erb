@@ -27,10 +27,10 @@
 						<td><%= document.author %></td>
 						<td><% document.rep_group_list.each do |group| %><span class="label"><%= group %></span> <% end %></td>
 						<td>
-							<% if can? [:edit], document %>
+							<% if can? :edit, document %>
 							<%= link_to 'Edit', edit_document_path(document.friendly_id), :class => 'btn btn-mini' %>
 							<% end %>
-							<% if can? [:delete], document %>
+							<% if can? :delete, document %>
 							<%= link_to 'Delete', document_path(document.friendly_id), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini btn-danger' %>
 							<% end %>
 						</td>
@@ -61,10 +61,10 @@
 						<td><%= document.author %></td>
 						<td><% document.rep_group_list.each do |group| %><span class="label"><%= group %></span> <% end %></td>
 						<td>
-							<% if can? [:edit], document %>
+							<% if can? :edit, document %>
 							<%= link_to 'Edit', edit_document_path(document.friendly_id), :class => 'btn btn-mini' %>
 							<% end %>
-							<% if can? [:delete], document %>
+							<% if can? :delete, document %>
 							<%= link_to 'Delete', document_path(document.friendly_id), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini btn-danger' %>
 							<% end %>
 						</td>

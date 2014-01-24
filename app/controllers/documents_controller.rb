@@ -35,6 +35,7 @@ class DocumentsController < ApplicationController
   # GET /documents/new.json
   def new
     @document = Document.new
+    @new_document = true
 
     respond_to do |format|
       format.html # new.html.erb
@@ -45,6 +46,7 @@ class DocumentsController < ApplicationController
   # GET /documents/1/edit
   def edit
     @document = Document.find(params[:id])
+    @new_document = false
   end
 
   # POST /documents
@@ -52,6 +54,7 @@ class DocumentsController < ApplicationController
   def create
     @document = Document.new(params[:document])
     @document.user = current_user
+    default_state = "draft"
     @document.state = "pending"
 
     respond_to do |format|
@@ -59,6 +62,8 @@ class DocumentsController < ApplicationController
         if params[:document][:upload].present?
           Delayed::Job.enqueue GoogleDocumentProcessor.new(@document.id)
         end
+        @document.state = params[:document][:state].present? ? params[:document][:state] : default_state
+        @document.save
         format.html { redirect_to documents_url, notice: 'Document was successfully created.' }
         format.json { render json: @document, status: :created, location: @document }
       else

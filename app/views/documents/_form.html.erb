@@ -8,6 +8,8 @@
 <fieldset>
 	<legend><%= controller.action_name.capitalize %> Document</legend>
 
+<% if @new_document %>
+
 	<h4>Content</h4>
 
 
@@ -71,6 +73,8 @@
   </div>
 </div>
 
+<% end %>
+
 	<h4>Metadata</h4>
 
 	<div class="row">
@@ -132,25 +136,21 @@
 
 			<div class="control-group">
 				<div class="controls">
-					<label class="radio inline"><i class="glyphicon icon-time"></i>
-						<%= f.radio_button :state, value: "pending", :checked => "checked" %>
-						Pending
-					</label>
-
 					<label class="radio inline"><i class="glyphicon icon-pencil"></i>
-						<%= f.radio_button :state, value: "draft" %>
+						<%= f.radio_button :state, "draft", checked: @new_document ? true : @document.draft? %>
 						Draft
 					</label>
-
 					<label class="radio inline"><i class="glyphicon icon-ok"></i>
-						<%= f.radio_button :state, value: "published" %>
+						<%= f.radio_button :state, "published", checked: @document.published? %>
 						Published
 					</label>
 
+					<% unless @new_document %>
 					<label class="radio inline"><i class="glyphicon icon-folder-close"></i>
-						<%= f.radio_button :state, value: "archived" %>
+						<%= f.radio_button :state, "archived", checked: @document.deleted? %>
 						Archived
 					</label>
+					<% end %>
 				</div>
 			</div>
 

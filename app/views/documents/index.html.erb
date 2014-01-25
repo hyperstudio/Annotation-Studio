@@ -15,7 +15,7 @@
 					<tr>
 						<th>Title</th>
 						<th>Author</th>
-            <th>Created</th>
+            			<th>Created</th>
 						<th>Groups</th>
 						<% if can? :manage, Document %>
 						<th>Actions</th>
@@ -30,14 +30,12 @@
 						<td><% document.rep_group_list.each do |group| %><span class="label"><%= group %></span> <% end %></td>
             <% if can? :manage, Document %>
             <td>
-            <% end %>
 							<% if can? :edit, document %>
 							<%= link_to 'Edit', edit_document_path(document.friendly_id), :class => 'btn btn-mini' %>
 							<% end %>
 							<% if can? :delete, document %>
 							<%= link_to 'Delete', document_path(document.friendly_id), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini btn-danger' %>
 							<% end %>
-            <% if can? :manage, Document %>
             </td>
             <% end %>
 					</tr>
@@ -66,18 +64,16 @@
 					<tr>
 						<td><%= link_to document.title, document_path(document.friendly_id), target: 'blank' %></td>
 						<td><%= document.author %></td>
-            <td><%= document.created_at.strftime("%m/%d/%Y") %></td>
+            			<td><%= document.created_at.strftime("%m/%d/%Y") %></td>
 						<td><% document.rep_group_list.each do |group| %><span class="label"><%= group %></span> <% end %></td>
             <% if can? :manage, Document %>
             <td>
-            <% end %>
-              <% if can? :edit, document %>
+              				<% if can? :edit, document %>
 							<%= link_to 'Edit', edit_document_path(document.friendly_id), :class => 'btn btn-mini' %>
 							<% end %>
 							<% if can? :delete, document %>
 							<%= link_to 'Delete', document_path(document.friendly_id), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini btn-danger' %>
 							<% end %>
-            <% if can? :manage, Document %>
             </td>
             <% end %>
 					</tr>
@@ -96,7 +92,7 @@
 					<tr>
 						<th>Title</th>
 						<th>Author</th>
-            <th>Created</th>
+            			<th>Created</th>
 						<th>Groups</th>
 						<% if can? :manage, Document %>
 						<th>Actions</th>
@@ -112,10 +108,10 @@
             <% if can? :manage, Document %>
             <td>
             <% end %>
-							<% if can? [:edit], document %>
+							<% if can? :edit, document %>
 							<%= link_to 'Edit', edit_document_path(document.friendly_id), :class => 'btn btn-mini' %>
 							<% end %>
-							<% if can? [:delete], document %>
+							<% if can? :delete, document %>
 							<%= link_to 'Delete', document_path(document.friendly_id), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini btn-danger' %>
 							<% end %>
             <% if can? :manage, Document %>

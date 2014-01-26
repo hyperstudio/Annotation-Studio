@@ -107,8 +107,8 @@ Widget.AnnotationListView = Backbone.View.extend({
     // Walk throught the list, and render markdown in the user comment first.
 		this.collection.each(function(ann) {
 			var annView = new Widget.AnnotationView({model: ann});
-      console.log(annView.render().el);
-      console.log(self.el);
+      // console.log(annView.render().el);
+      // console.log(self.el);
       self.el.append(annView.render().el);
 		});
 

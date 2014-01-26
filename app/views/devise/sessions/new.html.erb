@@ -13,9 +13,6 @@
 				<% end %>
 			</legend>
 		</p>
-		<%= render "techreqs" %>
-	</div>
-	<div class="span4" id="login">
 		<div class="alert">
 		<% if Rails.env.public? %>
 			This is the public demo of Annotation Studio. MIT affiliates should go <a href="http://annotationstudio.mit.edu/"><strong>here</strong></a>.
@@ -27,6 +24,9 @@
 			This is the internal MIT instance of Annotation Studio. Non-MIT affiliates should go <a href="http://app.annotationstudio.org/"><strong>here</strong></a> instead.
 		<% end %>
 		</div>
+		<%= render "techreqs" %>
+	</div>
+	<div class="span4" id="login">
 		<h4>Sign in</h4>
 		<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
 		<%= devise_error_messages! %>

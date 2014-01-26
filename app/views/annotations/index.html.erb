@@ -47,7 +47,7 @@ jQuery(function ($) {
   // Backbone.history.start({pushState: true, root: window.location})
 
   var myLoadOptions = {
-    'limit': 5,
+    'limit': 100,
     'groups': "<%= current_user.rep_group_list %>".split(/, /),
     'subgroups': "<%= current_user.rep_subgroup_list %>".split(/, /),
     'host': location.host,
@@ -56,7 +56,7 @@ jQuery(function ($) {
     'context': 'dashboard',
   };
   var classLoadOptions = {
-    'limit': 5,
+    'limit': 100,
     'groups': "<%= current_user.rep_group_list %>".split(/, /),
     'subgroups': "<%= current_user.rep_subgroup_list %>".split(/, /),
     'host': location.host,
@@ -65,7 +65,7 @@ jQuery(function ($) {
     'context': 'dashboard',
   };
   var groupLoadOptions = {
-    'limit': 5,
+    'limit': 100,
     'groups': "<%= current_user.rep_group_list %>".split(/, /),
     'subgroups': "<%= current_user.rep_subgroup_list %>".split(/, /),
     'host': location.host,
@@ -81,7 +81,7 @@ jQuery(function ($) {
 
 </script>
 <script type="text/template" id="user-comment-template">
-  <span class="user-comment"><a href="{{uri}}#hl{{uuid}}" target="_blank">{{{text}}}</a></span>
+  <span class="user-comment"><a href="{{uri}}#hl{{uuid}}" target="_blank">{{{text}}}</a>&raquo; {{quote}}</span>
 </script>
 <script type="text/template" id="user-highlight-template">
   <span class="user-highlight"><a href="{{uri}}#hl{{uuid}}" target="_blank">{{{quote}}}</a></span>

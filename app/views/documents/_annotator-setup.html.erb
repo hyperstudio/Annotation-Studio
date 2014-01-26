@@ -161,12 +161,11 @@ jQuery(function ($) {
   <% end %>
 
   function modeFilter(event) {
-    $('#spinnermodal').modal('show');
-    console.info(event.target);
+    // console.info(event.target);
     $('.viewchoice').removeClass("active");
-    var hilites = $('.annotator-hl');
-    hilites.contents().unwrap();
-    $(event.target).addClass("active");
+
+    $('#spinnermodal').modal('show');
+
     var loadOptions = {
       'limit': 1000,
       "groups": groups,
@@ -176,11 +175,44 @@ jQuery(function ($) {
       'context': 'document',
       'uri': [location.protocol, '//', location.host, location.pathname].join('')
     };
-    reloadAnnotations(loadOptions);
-  };
+ 
+    $.when(reloadAnnotations(loadOptions)).then(
+      function ( ) {
+        $.when(removeHilites()).then(refreshAnnotations());
+        stopSpinner();
+        $(event.target).addClass("active");
+        console.log("Reload complete.");
+      },
+      function ( ) {
+        console.log("Reload failed.");
+        // refreshAnnotations(), 
+      },
+      function ( ) {
+        $('#spinnermodal').modal('show');
+        console.log("Reload in progress.");
+      }
+    );
+  }
 
   function reloadAnnotations(loadOptions) {
-      $.when(subscriber.plugins.Store.loadAnnotationsFromSearch(loadOptions)).then(stopSpinner, subscriber.loadAnnotations(subscriber.plugins.Store.annotations));
+      var dfd = new jQuery.Deferred();
+      dfd.resolve(subscriber.plugins.Store.loadAnnotationsFromSearch(loadOptions));
+      return dfd.promise();
+  }
+
+  function refreshAnnotations() {
+    subscriber.loadAnnotations(subscriber.plugins.Store.annotations);
+  }
+
+
+  function removeHilites () {
+    var dfd = new jQuery.Deferred();
+    var hilites = $('.annotator-hl');
+
+    dfd.resolve(hilites.contents().unwrap());
+    console.log("Highlights removed.");
+
+    return dfd.promise();
   }
 
   var handleHash = function(annotation) {

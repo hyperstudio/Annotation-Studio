@@ -136,24 +136,18 @@
 
 			<div class="control-group">
 				<div class="controls">
-					<% if controller.action_name == "new" or @document.draft? %>
 					<label class="radio inline"><i class="glyphicon icon-pencil"></i>
-						<%= f.radio_button :state, "draft", checked: controller.action_name == "new" ? true : @document.draft? %>
+						<%= f.radio_button :state, "draft", checked: controller.action_name == "new" ? true : @document.draft?, disabled: !@document.draft? && controller.action_name == "edit" %>
 						Draft
 					</label>
-					<% end %>
-
 					<label class="radio inline"><i class="glyphicon icon-ok"></i>
 						<%= f.radio_button :state, "published", checked: @document.published? %>
 						Published
 					</label>
-
-					<% unless controller.action_name == "new" %>
 					<label class="radio inline"><i class="glyphicon icon-folder-close"></i>
-						<%= f.radio_button :state, "deleted", checked: @document.deleted? %>
+						<%= f.radio_button :state, "deleted", checked: @document.deleted?, disabled: controller.action_name == "new" %>
 						Archived
 					</label>
-					<% end %>
 				</div>
 			</div>
 

@@ -17,9 +17,7 @@
 						<th>Author</th>
             			<th>Created</th>
 						<th>Groups</th>
-						<% if can? :manage, Document %>
 						<th>Actions</th>
-						<% end %>
 					</tr>
 					<% if Document.tagged_with(current_user.rep_group_list, :any => true).any? %>
 					<% Document.order("created_at DESC").tagged_with(current_user.rep_group_list, :any => true).each do |document| %>
@@ -28,7 +26,6 @@
 						<td><%= document.author %></td>
             <td><%= document.created_at.strftime("%m/%d/%Y") %></td>
 						<td><% document.rep_group_list.each do |group| %><span class="label"><%= group %></span> <% end %></td>
-            <% if can? :manage, Document %>
             <td>
 							<% if can? :update, document %>
 							<%= link_to 'Edit', edit_document_path(document.friendly_id), :class => 'btn btn-mini' %>
@@ -37,7 +34,6 @@
 							<%= link_to 'Delete', document_path(document.friendly_id), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini btn-danger' %>
 							<% end %>
             </td>
-            <% end %>
 					</tr>
 					<% end %>
 					<% else %>
@@ -54,9 +50,7 @@
 						<th>Author</th>
             <th>Created</th>
             <th>Groups</th>
-						<% if can? :manage, Document %>
 						<th>Actions</th>
-						<% end %>
 					</tr>
 					<% if current_user.documents.any? %>
 					<% current_user.documents.order("created_at DESC").each do |document| %>
@@ -66,7 +60,6 @@
 						<td><%= document.author %></td>
             			<td><%= document.created_at.strftime("%m/%d/%Y") %></td>
 						<td><% document.rep_group_list.each do |group| %><span class="label"><%= group %></span> <% end %></td>
-            <% if can? :manage, Document %>
             <td>
               				<% if can? :update, document %>
 							<%= link_to 'Edit', edit_document_path(document.friendly_id), :class => 'btn btn-mini' %>
@@ -75,7 +68,6 @@
 							<%= link_to 'Delete', document_path(document.friendly_id), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini btn-danger' %>
 							<% end %>
             </td>
-            <% end %>
 					</tr>
 					<% end %>
 					<% end %>
@@ -94,9 +86,7 @@
 						<th>Author</th>
             			<th>Created</th>
 						<th>Groups</th>
-						<% if can? :manage, Document %>
 						<th>Actions</th>
-						<% end %>
 					</tr>
 					<% if Document.any? %>
 					<% Document.order("created_at DESC").each do |document| %>
@@ -105,18 +95,14 @@
 						<td><%= document.author %></td>
             <td><%= document.created_at.strftime("%m/%d/%Y") %></td>
 						<td><% document.rep_group_list.each do |group| %><span class="label"><%= group %></span> <% end %></td>
-            <% if can? :manage, Document %>
             <td>
-            <% end %>
 							<% if can? :update, document %>
 							<%= link_to 'Edit', edit_document_path(document.friendly_id), :class => 'btn btn-mini' %>
 							<% end %>
 							<% if can? :destroy, document %>
 							<%= link_to 'Delete', document_path(document.friendly_id), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini btn-danger' %>
 							<% end %>
-            <% if can? :manage, Document %>
             </td>
-            <% end %>
 					</tr>
 					<% end %>
 					<% else %>

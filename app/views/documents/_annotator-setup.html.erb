@@ -123,11 +123,11 @@ jQuery(function ($) {
       console.info("Err...");
     }
   }, this);
-  
+
   var stopSpinner = function(){
     $('#spinnermodal').modal('hide');
   };
-  
+
   var createAndAddUuid = function(annotation){
     createUuid(annotation);
     addUuid(annotation);
@@ -139,7 +139,7 @@ jQuery(function ($) {
         sidebar.listAnnotations(subscriber.dumpAnnotations());
     }, 100);
   };
-  
+
   // Remove all comment icons and load sidebar with local data
   var deleteFromSidebar = function(annotation) {
     $(".icon-comment").remove();
@@ -152,7 +152,7 @@ jQuery(function ($) {
     var newAnn = new Sidebar.Annotation(annotation);
     console.info(newAnn.get("uuid"));
   };
-  
+
   $('#userview').on('click', { mode: 'user', id: 'userview' }, modeFilter);
   $('#groupview').on('click', { mode: 'group', id: 'groupview' }, modeFilter);
   $('#classview').on('click', { mode: 'class', id: 'classview' }, modeFilter);
@@ -174,11 +174,11 @@ jQuery(function ($) {
       'context': 'document',
       'uri': [location.protocol, '//', location.host, location.pathname].join('')
     };
- 
+
     var reload_data = reloadAnnotations(loadOptions);
     var cleanup_document = cleanupDocument();
 
-    $.when(reload_data).then(cleanup_document).done(refreshAnnotations());
+    $.when(reload_data).then(cleanup_document).done(refreshAnnotations(), loadSidebar());
   }
 
   function reloadAnnotations(loadOptions) {

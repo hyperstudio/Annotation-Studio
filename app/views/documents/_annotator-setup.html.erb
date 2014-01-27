@@ -32,13 +32,13 @@ jQuery(function ($) {
 
   var groups = "<%= current_user.rep_group_list %>".split(/, /);
   var subgroups = "<%= current_user.rep_subgroup_list %>".split(/, /);
+  var annotatorOptions = {'readOnly': <%= @document.deleted? %>};
 
   // Bootstrap Backbone Sidebar //
   var sidebar = new Sidebar.App();
   Backbone.history.start({pushState: true, root: window.location});
-  var studio = $('#textcontent').annotator().annotator('setupPlugins', {}, {
-      <% if current_user.has_role?(:admin) && ENV["ANNOTATOR_FILTER"] == 'true' %>
-      <% else %>
+  var studio = $('#textcontent').annotator(annotatorOptions).annotator('setupPlugins', {}, {
+      <% unless current_user.has_role?(:admin) && ENV["ANNOTATOR_FILTER"] == 'true' %>
       Filter: false,
       <% end %>
       Auth: {

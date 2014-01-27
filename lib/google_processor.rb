@@ -2,8 +2,9 @@ require "google_drive"
 
 class GoogleProcessor
 
-	def initialize(document)
+	def initialize(document, document_state)
 		@document = document
+        @original_state = document_state
 	end
 
   def work
@@ -26,6 +27,7 @@ class GoogleProcessor
 	
 	@document.text = complete.css("body").inner_html
 	@document.processed_at = DateTime.now
+	@document.state = @original_state
 	@document.save
   end
 

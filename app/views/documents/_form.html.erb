@@ -7,8 +7,8 @@
 <%= form_for (@document), :html => { :class => 'form-horizontal' } do |f| %>
 <fieldset>
 	<legend><%= controller.action_name.capitalize %> Document</legend>
-
-<% if @new_document %>
+	
+<% if controller.action_name == "new" or @document.draft? %>
 
 	<h4>Content</h4>
 
@@ -136,18 +136,21 @@
 
 			<div class="control-group">
 				<div class="controls">
+					<% if controller.action_name == "new" or @document.draft? %>
 					<label class="radio inline"><i class="glyphicon icon-pencil"></i>
-						<%= f.radio_button :state, "draft", checked: @new_document ? true : @document.draft? %>
+						<%= f.radio_button :state, "draft", checked: controller.action_name == "new" ? true : @document.draft? %>
 						Draft
 					</label>
+					<% end %>
+
 					<label class="radio inline"><i class="glyphicon icon-ok"></i>
 						<%= f.radio_button :state, "published", checked: @document.published? %>
 						Published
 					</label>
 
-					<% unless @new_document %>
+					<% unless controller.action_name == "new" %>
 					<label class="radio inline"><i class="glyphicon icon-folder-close"></i>
-						<%= f.radio_button :state, "archived", checked: @document.deleted? %>
+						<%= f.radio_button :state, "deleted", checked: @document.deleted? %>
 						Archived
 					</label>
 					<% end %>

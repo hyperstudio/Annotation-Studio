@@ -28,7 +28,7 @@ class Document < ActiveRecord::Base
     :publisher, :publication_date, :source, :rights_status, :upload
     
   before_validation :add_title, on: :create, unless: :title?
-  before_create :add_processed_at, unless: :processed?
+  before_create :add_processed_at, unless: :uploaded?
 
   extend FriendlyId
   friendly_id :title, use: [:slugged, :history]
@@ -63,6 +63,10 @@ class Document < ActiveRecord::Base
 
   def processed?
     processed_at.present?
+  end
+
+  def uploaded?
+    upload_file_name.present?
   end
 
   def add_processed_at

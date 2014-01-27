@@ -21,8 +21,8 @@
 						<th>Actions</th>
 						<% end %>
 					</tr>
-					<% unless Document.tagged_with(current_user.rep_group_list, :any => true).empty? || Document.tagged_with(current_user.rep_group_list, :any => true).nil? %>
-					<% Document.tagged_with(current_user.rep_group_list, :any => true).sort {|a, b| a.title.downcase <=> b.title.downcase }.each do |document| %>
+					<% if Document.tagged_with(current_user.rep_group_list, :any => true).any? %>
+					<% Document.order("created_at DESC").tagged_with(current_user.rep_group_list, :any => true).each do |document| %>
 					<tr>
 						<td><%= link_to document.title, document_path(document.friendly_id), target: 'blank' %></td>
 						<td><%= document.author %></td>
@@ -58,8 +58,8 @@
 						<th>Actions</th>
 						<% end %>
 					</tr>
-					<% unless current_user.documents.empty? || current_user.documents.nil? %>
-					<% current_user.documents.sort {|a, b| b.created_at <=> a.created_at }.each do |document| %>
+					<% if current_user.documents.any? %>
+					<% current_user.documents.order("created_at DESC").each do |document| %>
 					<% if can? :read, document %>
 					<tr>
 						<td><%= link_to document.title, document_path(document.friendly_id), target: 'blank' %></td>
@@ -98,8 +98,8 @@
 						<th>Actions</th>
 						<% end %>
 					</tr>
-					<% unless current_user.documents.empty? || current_user.documents.nil? %>
-					<% Document.all.sort {|a, b| b.created_at <=> a.created_at }.each do |document| %>
+					<% if Document.any? %>
+					<% Document.order("created_at DESC").each do |document| %>
 					<tr>
 						<td><%= link_to document.title, document_path(document.friendly_id), target: 'blank' %></td>
 						<td><%= document.author %></td>

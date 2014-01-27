@@ -68,7 +68,7 @@ jQuery(function ($) {
   <div class="tab-pane active" id="assigned">
     <table class="table table-bordered">
       <% unless Document.tagged_with(current_user.rep_group_list, :any => true).empty? || Document.tagged_with(current_user.rep_group_list).nil? %>
-        <% Document.tagged_with(current_user.rep_group_list, :any => true).limit(10).sort {|a, b| b.created_at <=> a.created_at }.each do |document| %>
+        <% Document.order("created_at DESC").tagged_with(current_user.rep_group_list, :any => true).limit(10).each do |document| %>
           <tr>
             <td><%= link_to document.title, document_path(document.friendly_id), target: 'blank' %></td>
             <td><%= document.created_at.strftime("%m/%d/%Y") %></td>
@@ -84,7 +84,7 @@ jQuery(function ($) {
   <div class="tab-pane" id="created">
     <table class="table table-bordered">
       <% unless current_user.documents.empty? || current_user.documents.nil? %>
-        <% current_user.documents.limit(10).sort {|a, b| b.created_at <=> a.created_at }.each do |document| %>
+        <% current_user.documents.order("created_at DESC").limit(10).each do |document| %>
           <% if can? :read, document %>
               <tr>
                 <td><%= link_to document.title, document_path(document.friendly_id), target: 'blank' %></td>

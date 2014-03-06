@@ -1,4 +1,7 @@
 development:
+    ANNOTATOR_FILTER:                      false
+    ANNOTATOR_RICHTEXT:                    true
+    ANNOTATOR_RICHTEXT_CONFIG:             undo redo | styleselect | bold italic | link image media | code
     RUNTIMEERROR_EMAIL:                    example@example.com
     GOOGLE_VERIFICATION_CODE:
     DEFAULT_USER_GROUP: public
@@ -38,3 +41,6 @@ production:
     GMAIL_USER: # or an SMTP account if you prefer
     GMAIL_PASS: # or an SMTP account if you prefer
     RUNTIMEERROR_EMAIL:                    example@example.com
+    ANNOTATOR_FILTER:                      false
+    ANNOTATOR_RICHTEXT:                    true
+    ANNOTATOR_RICHTEXT_CONFIG:             undo redo | styleselect | bold italic | link image media | code

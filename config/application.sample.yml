@@ -1,18 +1,19 @@
 development:
-    GOOGLE_VERIFICATION_CODE: 
+    RUNTIMEERROR_EMAIL:                    example@example.com
+    GOOGLE_VERIFICATION_CODE:
     DEFAULT_USER_GROUP: public
-    GOOGLE_ANALYTICS_CODE: 
-    ENVIRONMENT_TAG: 
+    GOOGLE_ANALYTICS_CODE:
+    ENVIRONMENT_TAG:
     DEFAULT_USERS_CAN_CHOOSE_GROUPS: true
     DEFAULT_USERS_CAN_CONTROL_PERMISSIONS: true
     DEFAULT_USERS_CAN_CREATE_TEXTS: true
     DEFAULT_USERS_CAN_SEE_OTHERS_WORK: true
     GMAIL_USER: # to send user emails while in development
-    GMAIL_PASS: # to send user emails while in development 
+    GMAIL_PASS: # to send user emails while in development
     UNICORN_BACKLOG: 16
     # make the following the path to your local (or hosted) instance of the MIT-Annotation-Data-Store
     API_URL: http://localhost:5000/
-    API_SECRET: 
+    API_SECRET:
     API_CONSUMER: localhost
     CONFIRMATION_GRACE_PERIOD: 2
 
@@ -36,3 +37,4 @@ production:
     CONFIRMATION_GRACE_PERIOD: 2
     GMAIL_USER: # or an SMTP account if you prefer
     GMAIL_PASS: # or an SMTP account if you prefer
+    RUNTIMEERROR_EMAIL:                    example@example.com

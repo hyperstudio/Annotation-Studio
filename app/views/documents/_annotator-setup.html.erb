@@ -257,6 +257,7 @@ jQuery(function ($) {
   // When the local object is updated (contains previously created/stored UUID), load the sidebar from local data
   subscriber.subscribe('annotationUpdated', loadSidebar);
   subscriber.subscribe('annotationDeleted', deleteFromSidebar);
+  $(".annotator-checkbox label").text('Allow my groups to view this annotation')
 
 });
 </script>

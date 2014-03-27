@@ -25,7 +25,18 @@
 					<div class="container nav-collapse">
 						<h2 id="doctit" href="#" data-toggle="popover" data-content="" title=""><%= @document.title %></h2>
 						<script type="text/javascript" charset="utf-8">
+							if ("<%= @document.state %>" === "draft") {
+								statusMessage = '<i class="glyphicon icon-pencil"></i> Draft';
+							}
+							else if ("<%= @document.state %>" === "published") {
+								statusMessage = '<i class="glyphicon icon-ok"></i> Published';
+							}
+							else if ("<%= @document.state %>" === "deleted") {
+								statusMessage = '<i class="glyphicon icon-folder-close"></i> Archived';
+							};
+
 							var docMetaInfo = "";
+							docMetaInfo = docMetaInfo + "<li>Status: " + statusMessage;
 							if ("<%= @document.author %>" != "") {
 								docMetaInfo = docMetaInfo + "<li>Author: <%= @document.author %></li>";
 							}

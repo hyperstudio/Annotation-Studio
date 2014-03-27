@@ -46,7 +46,11 @@
         Paste or type directly into the form
       </a>
     </div>
-    <div id="collapseTwo" class="accordion-body collapse">
+    <% if controller.action_name == "new" %>
+    	<div id="collapseTwo" class="accordion-body collapse">
+    <% else %>
+    	<div id="collapseTwo" class="accordion-body collapse in">
+    <% end %>
       <div class="accordion-inner">
 
 		<div class="control-group" id="document-text">

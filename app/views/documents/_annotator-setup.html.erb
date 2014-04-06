@@ -98,6 +98,10 @@ jQuery(function ($) {
     $('.annotator-item').removeClass('hide');
   });
 
+  $('.annotator-adder').on('click', function(){
+    $('.annotator-item').removeClass('hide');
+  });
+
   // Create a UUID for a given annotation if needed.
   // Once created, this shouldn't be changed.
   var createUuid = function(annotation) {

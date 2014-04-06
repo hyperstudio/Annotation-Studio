@@ -30,3 +30,5 @@
 //= require underscore
 //= require backbone
 //= require mustache
+//= require annotator.touch.min
+//= require highlighter

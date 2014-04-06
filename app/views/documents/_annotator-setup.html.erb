@@ -89,7 +89,23 @@ jQuery(function ($) {
   };
 
   studio.annotator('addPlugin', 'RichText', optionsRichText);
+  studio.annotator("addPlugin", "Touch");
   var subscriber = $('#textcontent').annotator().data('annotator');
+  $('.annotator-item').addClass('hide');
+
+  // these three click and tap handlers manage the rich text editor show and hide on mobile and desktop
+  $('.annotator-button').on('tap', function(){
+    console.log('button tapped');
+    $('.annotator-item').removeClass('hide');
+  });
+
+  $('.annotator-adder').on('click', function(){
+    $('.annotator-item').removeClass('hide');
+  });
+
+  $('.annotator-edit').on('tap', function(){
+    $('.annotator-item').removeClass('hide');
+  });
 
   // Create a UUID for a given annotation if needed.
   // Once created, this shouldn't be changed.

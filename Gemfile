@@ -12,7 +12,7 @@ gem 'heroku-true-relic'
 gem 'devise'#, '>= 2.2.2'
 gem 'cancan'
 gem 'repertoire-groups', '0.0.1', :path => 'vendor/repertoire-groups-0.0.1' #, :require => 'repertoire-groups'
-gem 'acts-as-taggable-on'#, '~> 2.3.3'
+gem 'acts-as-taggable-on', '~> 3.0.2' # Note: 3.1.1 breaks the database TODO: Check later for updates.
 gem "friendly_id"#, ">= 4.0.9"
 gem "babosa"
 gem "aws-sdk"

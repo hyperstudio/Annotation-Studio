@@ -23,20 +23,36 @@ jQuery(function ($) {
 
   var groups = "<%= current_user.rep_group_list %>".split(/, /);
   var subgroups = "<%= current_user.rep_subgroup_list %>".split(/, /);
-  var annotatorOptions = {'readOnly': <%= @document.deleted? %>};
 
   // Bootstrap Backbone Sidebar //
   var sidebar = new Sidebar.App();
   window.sidebar = sidebar
   Backbone.history.start({pushState: true, root: window.location});
-  var studio = $('#textcontent').annotator(annotatorOptions).annotator('setupPlugins', {}, {
-      <% unless current_user.has_role?(:admin) && ENV["ANNOTATOR_FILTER"] == 'true' %>
-      Filter: false,
+
+  var options = {
+    optionsAnnotator: {
+      permissions: {
+        user: "<%= current_user.email %>",
+        permissions: {
+              'read': ['<%= current_user.email %>'], // default: review mode; this is what users will need to control
+              'update': ['<%= current_user.email %>'], // no one else can ever update
+              'delete': ['<%= current_user.email %>'], // no one else can ever delete
+              'admin': ['<%= current_user.email %>'] // no one else can ever admin
+        },
+        userString: function (user) {
+          return user.split("@")[0]
+        },
+        // Permissions settings per-annotation
+        showViewPermissionsCheckbox: true,
+        showEditPermissionsCheckbox: false
+      },
+      <% if current_user.has_role?(:admin) && ENV["ANNOTATOR_FILTER"] == 'true' %>
+      filter: {},
       <% end %>
       Auth: {
         token: '<%= session["jwt"] %>'
       },
-      Store: {
+      store: {
           prefix: '<%= ENV["API_URL"] %>',
           annotationData: {
               'uri': [location.protocol, '//', location.host, location.pathname].join(''),
@@ -54,55 +70,26 @@ jQuery(function ($) {
               'uri': [location.protocol, '//', location.host, location.pathname].join('')
           }
       },
-      Markdown: false, // use RichText instead
-      AnnotateItPermissions: false, // this is built into the kitchen sink, so cancel it
-      Permissions: {
-        user: "<%= current_user.email %>",
-        permissions: {
-              'read': ['<%= current_user.email %>'], // default: review mode; this is what users will need to control
-              'update': ['<%= current_user.email %>'], // no one else can ever update
-              'delete': ['<%= current_user.email %>'], // no one else can ever delete
-              'admin': ['<%= current_user.email %>'] // no one else can ever admin
-        },
-        userString: function (user) {
-          return user.split("@")[0]
-        },
-        // Permissions settings per-annotation
-        showViewPermissionsCheckbox: true,
-        showEditPermissionsCheckbox: false
-      }
-  });
+      richText: {
+        editor_enabled: <%= ENV["ANNOTATOR_RICHTEXT"] %>,
+        tinymce: {
+          toolbar: '<%= ENV["ANNOTATOR_RICHTEXT_CONFIG"] %>'
+        }
+      },
+      annotator: {
+        readOnly: <%= @document.deleted? %>
+      },
 
-  var optionsRichText = {
-    editor_enabled: '<%= ENV["ANNOTATOR_RICHTEXT"] %>',
-    tinymce: {
-      'toolbar': '<%= ENV["ANNOTATOR_RICHTEXT_CONFIG"] %>',
-      'image_dimensions': false
+    optionsVideoJS: {
+      techOrder: ["html5", "flash", "youtube"]
+    },
+    optionsRS: {},
+    optionsOVA: {
+      posBigNew: 'none'
     }
-  };
+  }
 
-  studio.annotator("addPlugin", "Touch");
-  var subscriber = $('#textcontent').annotator().data('annotator');
-  // $('.annotator-item').addClass('hide');
-
-  <% if !mobile_device? %>
-    studio.annotator('addPlugin', 'RichText', optionsRichText);
-  <% end %>
-
-
-  // these three click and tap handlers manage the rich text editor show and hide on mobile and desktop
-  $('.annotator-button').on('tap', function(){
-    console.log('button tapped');
-    $('.annotator-item').removeClass('hide');
-  });
-
-  $('.annotator-adder').on('click', function(){
-    $('.annotator-item').removeClass('hide');
-  });
-
-  $('.annotator-edit').on('tap', function(){
-    $('.annotator-item').removeClass('hide');
-  });
+  var studio = new OpenVideoAnnotation.Annotator($('#textcontent'), options);
 
   // Create a UUID for a given annotation if needed.
   // Once created, this shouldn't be changed.
@@ -149,7 +136,7 @@ jQuery(function ($) {
   // Update the sidebar with local annotation data
   var loadSidebar = function(annotation) {
     setTimeout(function() {
-        sidebar.listAnnotations(subscriber.dumpAnnotations());
+        sidebar.listAnnotations(studio.annotator.dumpAnnotations());
     }, 100);
   };
 
@@ -157,7 +144,7 @@ jQuery(function ($) {
   var deleteFromSidebar = function(annotation) {
     $(".glyphicon-comment").remove();
     setTimeout(function() {
-        sidebar.listAnnotations(subscriber.dumpAnnotations());
+        sidebar.listAnnotations(studio.annotator.dumpAnnotations());
     }, 100);
   };
 
@@ -196,8 +183,8 @@ jQuery(function ($) {
 
   function reloadAnnotations(loadOptions) {
     var dfd = new $.Deferred();
-    subscriber.plugins.Store.annotations = [];
-    if (subscriber.plugins.Store.loadAnnotationsFromSearch(loadOptions)) {
+    studio.annotator.plugins.Store.annotations = [];
+    if (studio.annotator.plugins.Store.loadAnnotationsFromSearch(loadOptions)) {
       setTimeout(function() {
         dfd.resolve("Reload complete.");
       }, 100);
@@ -234,7 +221,7 @@ jQuery(function ($) {
    }
 
   function refreshAnnotations() {
-    subscriber.loadAnnotations(subscriber.plugins.Store.annotations);
+    studio.annotator.loadAnnotations(studio.annotator.plugins.Store.annotations);
     $('#spinnermodal').modal('hide');
   }
 
@@ -263,26 +250,33 @@ jQuery(function ($) {
   };
 
   // When the annotator loads remote data, update sidebar
+<<<<<<< HEAD:app/views/documents/_annotation-sidebar.html.erb
   subscriber.subscribe('annotationsLoaded', loadSidebar);
   subscriber.subscribe('annotationsLoaded', stopSpinner);
   subscriber.subscribe('annotationsLoaded', handleHash);
   subscriber.subscribe('annotationEditorShown', parentIndex);
+=======
+  studio.annotator.subscribe('annotationsLoaded', loadSidebar);
+  studio.annotator.subscribe('annotationsLoaded', stopSpinner);
+  studio.annotator.subscribe('annotationsLoaded', handleHash);
+>>>>>>> 50a0efe... Set up OVA in the document view:app/views/documents/_annotator-setup.html.erb
 
   // Update all highlights with UUIDs
-  subscriber.subscribe('annotationsLoaded', __bind(function(annotations) {
+  studio.annotator.subscribe('annotationsLoaded', __bind(function(annotations) {
     annotations.map(addUuid); // copies the UUID value from the object field to the highlight spans attribute value.
   }, this));
 
   // Add the UUID to the local annotation object and to the highlight span before saving
-  subscriber.subscribe('beforeAnnotationCreated', createUuid); // creates, if need be, and adds, both to object, and to highlight.
-  subscriber.subscribe('beforeAnnotationCreated', addUserName); // creates, if need be, and adds, both to object, and to highlight.
+  studio.annotator.subscribe('beforeAnnotationCreated', createUuid); // creates, if need be, and adds, both to object, and to highlight.
+  studio.annotator.subscribe('beforeAnnotationCreated', addUserName); // creates, if need be, and adds, both to object, and to highlight.
 
 
   // Once the local object has been created, load the sidebar from local data (already contains UUID)
-  subscriber.subscribe('annotationCreated', loadSidebar);
-  subscriber.subscribe('annotationCreated', addUuid);
+  studio.annotator.subscribe('annotationCreated', loadSidebar);
+  studio.annotator.subscribe('annotationCreated', addUuid);
 
   // When the local object is updated (contains previously created/stored UUID), load the sidebar from local data
+<<<<<<< HEAD:app/views/documents/_annotation-sidebar.html.erb
   subscriber.subscribe('annotationUpdated', loadSidebar);
   subscriber.subscribe('annotationDeleted', deleteFromSidebar);
   $(".annotator-checkbox label").text('Allow my groups to view this annotation');
@@ -306,6 +300,11 @@ jQuery(function ($) {
     sidebar.filtered = false;
     sidebar.showAllAnnotations();
   });
+=======
+  studio.annotator.subscribe('annotationUpdated', loadSidebar);
+  studio.annotator.subscribe('annotationDeleted', deleteFromSidebar);
+  $(".annotator-checkbox label").text('Allow my groups to view this annotation')
+>>>>>>> 50a0efe... Set up OVA in the document view:app/views/documents/_annotator-setup.html.erb
 
 });
 </script>

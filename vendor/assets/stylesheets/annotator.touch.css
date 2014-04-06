@@ -249,7 +249,7 @@
 .annotator-touch-editor .annotator-touch-widget {
   pointer-events: all;
   position: relative;
-  width: 80%;
+  width: 60%;
   max-width: 680px;
 }
 

@@ -354,6 +354,7 @@ GEM
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
+    videojs_rails (4.6.1)
     warden (1.2.3)
       rack (>= 1.0)
     will_paginate (3.0.5)
@@ -417,4 +418,5 @@ DEPENDENCIES
   tinymce-rails
   uglifier
   unicorn
+  videojs_rails
   will_paginate (> 3.0)

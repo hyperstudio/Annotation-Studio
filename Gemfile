@@ -79,3 +79,4 @@ gem "figaro"
 gem 'will_paginate', '> 3.0'
 gem 'runtimeerror_notifier'
 gem 'intercom-rails'
+gem 'videojs_rails'

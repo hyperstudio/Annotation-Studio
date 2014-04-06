@@ -24,7 +24,10 @@
 //= require moment.min
 //= require tinymce
 //= require annotator-full.min
+//= require video
 //= require richText-annotator
+//= require rangeslider
+//= require ova
 //= require underscore
 //= require backbone
 //= require mustache

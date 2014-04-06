@@ -31,6 +31,4 @@
 //= require backbone
 //= require mustache
 //= require annotator.touch.min
-//= require handlebars
 //= require highlighter
-//= require detectmobilebrowser

@@ -8,7 +8,7 @@
 			</ul>
 			<script type="text/javascript" charset="utf-8">
 				$("#chapternav a").click(function(event){
-					event.preventDefault();				
+					event.preventDefault();
 					var idtarget = $(this).attr("href");
 					$('html,body').animate({scrollTop: $(idtarget).offset().top}, 500);
 					// $(idtarget).prepend('<i class="icon-comment"></i>');
@@ -56,7 +56,7 @@
 								docMetaInfo = "<ul>"+ docMetaInfo + "</ul>";
 							}
 							$('#doctit').popover({
-								'html': 'true', 
+								'html': 'true',
 								'placement': 'bottom',
 								'trigger': 'hover',
 								'title': "Additional information",
@@ -70,8 +70,13 @@
 		</div>
     <% if ! @document.processed? %>
       <%= render 'processed_message' %>
-    <% end %>				
-		<div id="textcontent"> 
+    <% end %>
+		<div id="textcontent">
+			<video id="vid1" class="video-js vjs-default-skin" controls preload="none" poster="http://video-js.zencoder.com/oceans-clip.png" data-setup=''>
+				<source src="http://video-js.zencoder.com/oceans-clip.mp4" type='video/mp4' />
+				<source src="http://video-js.zencoder.com/oceans-clip.webm" type='video/webm' />
+				<source src="http://video-js.zencoder.com/oceans-clip.ogv" type='video/ogg' />
+			</video>
 			<div><!-- Required for cases in which there's no HTML in the text -->
 				<%= @document.text.html_safe %>
 			</div>

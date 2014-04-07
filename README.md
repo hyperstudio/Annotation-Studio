@@ -49,14 +49,13 @@ Thanks to [OKFN](https://github.com/okfn/) and [Nick Stenning](https://github.co
 - http://hyperstudio.mit.edu/
 
 ### Developers
-- Jamie Folsom @jamiefolsom
-- Liam Andrew @mailbackwards
-- Andrew Magliozzi @andrewmagliozzi
-- Daniel Collis-Puro @djcp
-- Seth Woodworth @sethwoodworth
-- Ayse Gursoy @gursoy
-- Jacob Hilker @jhilker
-
+- Jamie Folsom [@jamiefolsom](http://github.com/jamiefolsom)
+- Liam Andrew [@mailbackwards](http://github.com/jamiefolsom)
+- Andrew Magliozzi [@andrewmagliozzi](http://github.com/andrewmagliozzi)
+- Daniel Collis-Puro [@djcp](http://github.com/djcp)
+- Seth Woodworth [@sethwoodworth](http://github.com/sethwoodworth)
+- Ayse Gursoy [@gursoy](http://github.com/gursoy)
+- Jacob Hilker [@jhilker](http://github.com/jhilker)
 
 ## License
 GPL2: http://www.gnu.org/licenses/gpl-2.0.html

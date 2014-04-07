@@ -19,6 +19,7 @@ development:
     API_SECRET:
     API_CONSUMER: localhost
     CONFIRMATION_GRACE_PERIOD: 2
+    DEVISE_SECRET_KEY:                     blah-blah # use: `rails g secret` to generate a value
 
 production:
     DEFAULT_NEW_USER_GROUP: public
@@ -44,3 +45,4 @@ production:
     ANNOTATOR_FILTER:                      false
     ANNOTATOR_RICHTEXT:                    true
     ANNOTATOR_RICHTEXT_CONFIG:             undo redo | styleselect | bold italic | link image media | code
+    DEVISE_SECRET_KEY:                     blah-blah # use: `rails g secret` to generate a value

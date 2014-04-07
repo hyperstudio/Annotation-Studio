@@ -41,7 +41,7 @@ If you would like to run the application on Heroku (recommended), do the followi
 http://support.annotationstudio.org
 
 ## Thanks
-Thanks to [OKFN](https://github.com/okfn/) and [Nick Stenning](https://github.com/nickstenning/) for creating The Annotator: https://github.com/okfn/annotator/ which is bundled here.
+Thanks to [OKFN](http://okfn.org/) and [Nick Stenning](https://github.com/nickstenning/) for creating The Annotator: https://github.com/openannotation/annotator/ which is bundled here.
 
 ## Contributors
 ### Lab

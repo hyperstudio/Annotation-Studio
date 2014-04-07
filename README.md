@@ -50,7 +50,7 @@ Thanks to [OKFN](https://github.com/okfn/) and [Nick Stenning](https://github.co
 
 ### Developers
 - Jamie Folsom [@jamiefolsom](http://github.com/jamiefolsom)
-- Liam Andrew [@mailbackwards](http://github.com/jamiefolsom)
+- Liam Andrew [@mailbackwards](http://github.com/mailbackwards)
 - Andrew Magliozzi [@andrewmagliozzi](http://github.com/andrewmagliozzi)
 - Daniel Collis-Puro [@djcp](http://github.com/djcp)
 - Seth Woodworth [@sethwoodworth](http://github.com/sethwoodworth)

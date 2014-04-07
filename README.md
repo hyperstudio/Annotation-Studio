@@ -41,7 +41,12 @@ If you would like to run the application on Heroku (recommended), do the followi
 http://support.annotationstudio.org
 
 ## Thanks
-Thanks to [OKFN](http://okfn.org/) and [Nick Stenning](https://github.com/nickstenning/) for creating The Annotator: https://github.com/openannotation/annotator/ which is bundled here.
+Thanks to:
+- [NEH Office of Digital Humanities](http://www.neh.gov/odh) who has funded this project
+- [OKFN](http://okfn.org/) for supporting [The Annotator](http://annotatorjs.org)
+- [Nick Stenning](https://github.com/nickstenning/) for being awesome and for leading the Annotator developer team
+- [Dan Whaley, Randall Leeds and hypothes.is](https://hypothes.is/)for being awesome and supporting the Annotator Community
+- [The Annotator community](https://github.com/openannotation/annotator/) for plugins and being awesome.
 
 ## Contributors
 ### Lab

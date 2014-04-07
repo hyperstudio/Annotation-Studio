@@ -29,7 +29,6 @@ end
 group :assets do
   gem "therubyracer"
   gem 'less-rails' #,   '~> 3.2.3'
-  gem 'sass-rails' #,   '~> 3.2.3'
   gem 'coffee-rails' #, '~> 3.2.1'
   gem 'uglifier' #, '>= 1.0.3'
 end
@@ -40,6 +39,10 @@ group :test, :development do
   gem 'pry-rails'
   gem 'capybara-webkit'
   gem 'simplecov'
+end
+
+group :production do
+  gem 'rails_12factor'
 end
 
 gem "twitter-bootstrap-rails" # https://github.com/seyhunak/twitter-bootstrap-rails/issues/401 ?

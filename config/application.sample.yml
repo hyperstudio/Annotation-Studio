@@ -1,8 +1,4 @@
 development:
-    ANNOTATOR_FILTER:                      false
-    ANNOTATOR_RICHTEXT:                    true
-    ANNOTATOR_RICHTEXT_CONFIG:             undo redo | styleselect | bold italic | link image media | code
-    RUNTIMEERROR_EMAIL:                    example@example.com
     GOOGLE_VERIFICATION_CODE:
     DEFAULT_USER_GROUP: public
     GOOGLE_ANALYTICS_CODE:
@@ -19,6 +15,15 @@ development:
     API_SECRET:
     API_CONSUMER: localhost
     CONFIRMATION_GRACE_PERIOD: 2
+    RUNTIMEERROR_EMAIL:                    example@example.com
+    ANNOTATOR_FILTER:                      false
+    ANNOTATOR_RICHTEXT:                    true
+    ANNOTATOR_RICHTEXT_CONFIG:             undo redo | styleselect | bold italic | link image media | code
+    AWS_ACCESS_KEY_ID:
+    AWS_SECRET_ACCESS_KEY:
+    AWS_BIN_NAME: # Bucket name
+    AWS_REGION:
+    DEVISE_SECRET_KEY:                    blah-blah # use: `rails g secret` to generate a value
 
 production:
     DEFAULT_NEW_USER_GROUP: public
@@ -44,3 +49,8 @@ production:
     ANNOTATOR_FILTER:                      false
     ANNOTATOR_RICHTEXT:                    true
     ANNOTATOR_RICHTEXT_CONFIG:             undo redo | styleselect | bold italic | link image media | code
+    AWS_ACCESS_KEY_ID:
+    AWS_SECRET_ACCESS_KEY:
+    AWS_BIN_NAME: # Bucket name
+    AWS_REGION:
+    DEVISE_SECRET_KEY:                     blah-blah # use: `rails g secret` to generate a value

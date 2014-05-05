@@ -26,7 +26,7 @@ class Document < ActiveRecord::Base
   attr_accessible :title, :state, :chapters, :text, :user_id,
     :rep_privacy_list, :rep_group_list, :new_group, :author, :edition,
     :publisher, :publication_date, :source, :rights_status, :upload
-    
+
   before_validation :add_title, on: :create, unless: :title?
   before_create :add_processed_at, unless: :uploaded?
 
@@ -36,6 +36,7 @@ class Document < ActiveRecord::Base
   acts_as_taggable_on :rep_privacy, :rep_group
 
   has_attached_file :upload
+  validates_attachment_content_type :upload, :content_type => ["application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "text/plain"]
 
   STATES = %w{ pending draft published deleted }
 

@@ -24,6 +24,7 @@ group :development do
   gem 'sextant'
   gem 'meta_request'#, '0.2.1'
   gem 'highline'
+  gem 'foreman'
 end
 
 group :assets do

@@ -74,6 +74,8 @@ test:
 EOF
 }
 
+bundle
+
 install_data_store
 
 bootstrap_main_application

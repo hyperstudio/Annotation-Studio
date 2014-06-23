@@ -56,7 +56,7 @@ class DocumentsController < ApplicationController
     respond_to do |format|
       if @document.save
         if params[:document][:upload].present?
-          Delayed::Job.enqueue GoogleDocumentProcessor.new(@document.id, @document.state)
+          Delayed::Job.enqueue DocumentProcessor.new(@document.id, @document.state)
           @document.pending!
         end
         format.html { redirect_to documents_url, notice: 'Document was successfully created.', anchor: 'created'}

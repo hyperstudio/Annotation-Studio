@@ -1,5 +1,5 @@
 require 'rake'
-require 'google_processor'
+require 'google_drive_processor'
 
 namespace :annotationstudio do
   desc 'test google drive API html conversion'
@@ -13,12 +13,9 @@ namespace :annotationstudio do
     )
 
 
-    processor = GoogleProcessor.new(document)
+    processor = GoogleDriveProcessor.new(document, 'published')
     processor.work
 
     document.reload
-
-    #binding.pry
-
   end
 end

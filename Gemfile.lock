@@ -6,6 +6,7 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
+    Ascii85 (1.0.2)
     actionmailer (3.2.18)
       actionpack (= 3.2.18)
       mail (~> 2.5.4)
@@ -217,6 +218,9 @@ GEM
       activesupport (>= 3.0.0)
       cocaine (~> 0.5.3)
       mime-types
+    pdf-reader (1.1.1)
+      Ascii85 (~> 1.0.0)
+      ruby-rc4
     pg (0.17.1)
     polyamorous (0.5.0)
       activerecord (~> 3.0)
@@ -282,6 +286,7 @@ GEM
       rspec-expectations (~> 2.14.0)
       rspec-mocks (~> 2.14.0)
     ruby-hmac (0.4.0)
+    ruby-rc4 (0.1.5)
     runtimeerror_notifier (0.0.19)
       actionmailer
       actionpack
@@ -375,6 +380,7 @@ DEPENDENCIES
   newrelic_rpm
   nokogiri
   paperclip
+  pdf-reader
   pg
   pry-rails
   rabl

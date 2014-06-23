@@ -10,5 +10,4 @@ class ProcessorFake
     @document.state = @original_state
     @document.save
   end
-
 end

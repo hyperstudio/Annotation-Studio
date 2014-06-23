@@ -46,4 +46,5 @@ RSpec.configure do |config|
   # config.extend ControllerMacros, :type => :controller
   config.include Warden::Test::Helpers
   config.include Paperclip::Shoulda::Matchers
+  config.include FileHelpers
 end

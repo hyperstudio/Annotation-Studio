@@ -19,6 +19,7 @@ gem "aws-sdk"
 gem "paperclip"
 gem "delayed_job_active_record"
 gem 'google_drive'
+gem 'pdf-reader'
 
 group :development do
   gem 'sextant'

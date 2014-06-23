@@ -1,6 +1,6 @@
 require "google_drive"
 
-class GoogleProcessor
+class GoogleDriveProcessor
 
   def initialize(document, document_state)
     @document = document

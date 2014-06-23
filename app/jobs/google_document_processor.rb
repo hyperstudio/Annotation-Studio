@@ -1,4 +1,4 @@
-class GoogleDocumentProcessor 
+class GoogleDocumentProcessor
   attr_reader :document_id
 
   def initialize(document_id, document_state)

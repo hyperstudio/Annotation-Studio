@@ -20,7 +20,7 @@ describe ProcessorFake do
     upload_file = File.open('spec/support/example_files/example.docx')
     document = create(:document, upload: upload_file, text: nil)
 
-    process = ProcessorFake.new(document)
+    process = ProcessorFake.new(document,'published')
     process.work
     document.reload
     document

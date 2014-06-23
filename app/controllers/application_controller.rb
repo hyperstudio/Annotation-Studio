@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   before_filter :authenticate_user!
 
   # add_breadcrumb :index, :root_path
-  
+
   def signed_in?
     @now = DateTime.current().to_time.iso8601
     @jwt = JWT.encode(

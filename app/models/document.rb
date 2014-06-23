@@ -29,6 +29,11 @@ class Document < ActiveRecord::Base
 
   before_validation :add_title, on: :create, unless: :title?
   before_create :add_processed_at, unless: :uploaded?
+  ALLOWED_CONTENT_TYPES = %w|application/msword
+application/vnd.openxmlformats-officedocument.wordprocessingml.document
+text/plain
+application/pdf
+  |
 
   extend FriendlyId
   friendly_id :title, use: [:slugged, :history]
@@ -36,7 +41,7 @@ class Document < ActiveRecord::Base
   acts_as_taggable_on :rep_privacy, :rep_group
 
   has_attached_file :upload
-  validates_attachment_content_type :upload, :content_type => ["application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "text/plain"]
+  validates_attachment_content_type :upload, content_type: ALLOWED_CONTENT_TYPES
 
   STATES = %w{ pending draft published deleted }
 

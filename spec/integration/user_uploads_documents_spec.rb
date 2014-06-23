@@ -7,10 +7,12 @@ feature 'A user uploads a document' do
   end
 
   context "with text only" do
-    scenario "they see a page including their text" do
+    scenario "they see a page including their content" do
       upload_a_document do
         fill_in 'Text', with: 'Call me Ishmael'
       end
+
+      click_on 'Moby-Dick'
 
       expect(page).to have_content 'Call me Ishmael'
     end
@@ -19,11 +21,12 @@ feature 'A user uploads a document' do
   context 'with an attached document' do
 
     scenario "they can't annotate a document and they know it before processing" do
-      pending "Adjust spec to accommodate jasny file field"
       with_jobs_delayed(true) do
         upload_a_document do
-          attach_file 'Pick a file from your computer', 'spec/support/example_files/example.docx'
+          attach_file 'document_upload', 'spec/support/example_files/example.docx'
         end
+
+        click_on 'Moby-Dick'
 
         expect(page).to have_content 'Please wait. The document is being converted'
         expect(page).not_to have_annotator
@@ -31,18 +34,17 @@ feature 'A user uploads a document' do
     end
 
     scenario "they can annotate the document after processing" do
-      pending "Adjust spec to accommodate jasny file field"
       with_jobs_delayed(false) do
         upload_a_document do
           attach_file 'Pick a file from your computer', 'spec/support/example_files/example.docx'
         end
 
         visit current_path
+        click_on 'Moby-Dick'
 
         expect(page).to have_annotator
       end
     end
-
   end
 
   def upload_a_document

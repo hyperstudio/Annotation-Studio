@@ -40,6 +40,8 @@ group :test, :development do
   gem 'pry-rails'
   gem 'capybara-webkit'
   gem 'simplecov'
+  gem 'launchy'
+  gem 'shoulda-matchers', require: false
 end
 
 group :production do

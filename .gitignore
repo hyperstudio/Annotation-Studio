@@ -11,11 +11,9 @@ _archive/*
 vendor/assets/javascripts/_archive/*
 config/application.yml
 db/backups/*
-config/database.yml
 
 # Ignore application & database configuration
 /config/application.yml
-/config/database.yml
 vendor/assets/javascripts/_attic
 vendor/assets/stylesheets/_attic
 Gemfile.lock.temp

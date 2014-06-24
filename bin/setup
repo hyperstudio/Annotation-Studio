@@ -80,4 +80,8 @@ install_data_store
 
 bootstrap_main_application
 
-bundle exec rake db:setup
+bundle exec rake db:reset
+# This must be run as a separate rake task because "db:reset" changes
+# the context of the database environment in a way that makes "db:test:prepare"
+# load the schema into the wrong database and/or schema.
+bundle exec rake db:test:prepare

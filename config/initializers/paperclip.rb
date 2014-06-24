@@ -1,3 +1,9 @@
+Paperclip.interpolates :tenant do |attachment, style|
+  Apartment::Database.current_tenant
+end
+
+Paperclip::Attachment.default_options[:path] = ':class/:attachment/:tenant/:id_partition/:style/:filename'
+
 if ['production', 'staging', 'public'].include?(Rails.env)
   Paperclip::Attachment.default_options[:storage] = :s3
   Paperclip::Attachment.default_options[:s3_credentials] = {

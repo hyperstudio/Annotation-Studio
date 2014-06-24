@@ -56,6 +56,20 @@ following
 communicate them to Heroku
   -  `rake figaro:heroku[$APPNAME]`
 
+### Multitenancy
+This app uses the [apartment gem](http://github.com/influitive/apartment) to allow multiple domains to be hosted in a single instance.  
+
+To create a new tenant:
+
+1. Log in via an AdminUser account to http://www.your-app-url.com/admin/
+1. Add a Tenant record, with the full hostname at which you want users to access the application, and the name of the database to be used to store the tenant's data
+1. Configure DNS for that domain (or subdomain), pointing it to the URL of the application
+1. Add the domain in question to the web server configuration for the application
+
+#### Caveats
+1. If a domain does not have a matching Tenant, the default "public" tenant will be used.
+2. Admin users are shared across all tenants, and therefore shouldn't be created and granted to single-tenant users
+
 ## User Support and Developer forum
 http://support.annotationstudio.org
 

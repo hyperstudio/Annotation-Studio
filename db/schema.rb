@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131030202337) do
+ActiveRecord::Schema.define(:version => 20140624195339) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -143,6 +143,16 @@ ActiveRecord::Schema.define(:version => 20131030202337) do
   create_table "tags", :force => true do |t|
     t.string "name"
   end
+
+  create_table "tenants", :force => true do |t|
+    t.string   "domain"
+    t.string   "database_name"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  add_index "tenants", ["database_name"], :name => "index_tenants_on_database_name"
+  add_index "tenants", ["domain"], :name => "index_tenants_on_domain"
 
   create_table "users", :force => true do |t|
     t.string   "firstname",              :default => "", :null => false

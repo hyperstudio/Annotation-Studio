@@ -20,6 +20,7 @@ gem "paperclip"
 gem "delayed_job_active_record"
 gem 'google_drive'
 gem 'pdf-reader'
+gem 'apartment'
 
 group :development do
   gem 'sextant'
@@ -43,6 +44,7 @@ group :test, :development do
   gem 'simplecov'
   gem 'launchy'
   gem 'shoulda-matchers', require: false
+  gem 'database_cleaner'
 end
 
 group :production do

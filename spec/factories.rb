@@ -9,4 +9,8 @@ FactoryGirl.define do
     text 'I am a body.'
   end
 
+  factory :tenant do
+    sequence (:domain) { |n|  "www#{n}.example.com" }
+    sequence (:database_name) { |n|  "www#{n}" }
+  end
 end

@@ -8,6 +8,10 @@ Devise.setup do |config|
 
   # Configure the class responsible to send e-mails.
   # config.mailer = "Devise::Mailer"
+  #
+  config.mailer.class_eval do
+    helper :devise_mailer_url
+  end
 
   # Automatically apply schema changes in tableless databases
   # config.apply_schema = false

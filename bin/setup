@@ -4,18 +4,35 @@
 
 trap '(( $? )) && { echo "setup failed"; exit 1; }' EXIT
 
+check() {
+  if ! command -v node >/dev/null; then
+    echo "Please ensure node is installed"
+    exit 1
+  fi
+
+  if ! command -v npm >/dev/null; then
+    echo "Please ensure npm is installed"
+    exit 1
+  fi
+
+  if ! pgrep mongo >/dev/null; then
+    echo "Please ensure mongodb is installed"
+    exit 1
+  fi
+}
+
 install_data_store() {
-if ! [ -e 'tmp/annotation-data-store' ]; then
-  echo 'copying annotation-data-store into tmp/'
-  cd tmp
-  git clone https://github.com/hyperstudio/MIT-Annotation-Data-Store.git annotation-data-store
-  cd annotation-data-store
-  echo 'installing node packages'
-  npm install
+  if ! [ -e 'tmp/annotation-data-store' ]; then
+    echo 'copying annotation-data-store into tmp/'
+    cd tmp
+    git clone https://github.com/hyperstudio/MIT-Annotation-Data-Store.git annotation-data-store
+    cd annotation-data-store
+    echo 'installing node packages'
+    npm install
 
-  echo 'creating annotation-data-store local .env'
+    echo 'creating annotation-data-store local .env'
 
-  cat > .env <<EOF
+    cat > .env <<EOF
 
 NODE_ENV=development
 PATH=bin:node_modules/.bin:/usr/local/bin:/usr/bin:/bin
@@ -27,17 +44,17 @@ DB=mongodb://localhost/annotationdb
 
 EOF
 
-cd ../..
+    cd ../..
 
-fi
+  fi
 }
 
 
 bootstrap_main_application() {
 
-echo 'creating local application.yml'
+  echo 'creating local application.yml'
 
-cat > config/application.yml <<EOF
+  cat > config/application.yml <<EOF
 
 development:
   RACK_ENV:                               development
@@ -74,12 +91,10 @@ test:
 EOF
 }
 
+check
 bundle
-
 install_data_store
-
 bootstrap_main_application
-
 bundle exec rake db:reset
 # This must be run as a separate rake task because "db:reset" changes
 # the context of the database environment in a way that makes "db:test:prepare"

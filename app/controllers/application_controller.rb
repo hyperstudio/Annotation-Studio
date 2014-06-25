@@ -13,15 +13,14 @@ class ApplicationController < ActionController::Base
             'userId' => current_user.email,
             'issuedAt' => @now,
             'ttl' => 86400
-        }, 
+        },
         ENV["API_SECRET"]
     )
     gon.current_user = current_user
   end
-  helper_method :signed_in?
 
   def authenticate
-    redirect_to root_path, notice: "You need to be signed in" unless signed_in?
+    redirect_to root_path, notice: "You need to be signed in" unless user_signed_in?
   end
 
   # Copied from Miximize!

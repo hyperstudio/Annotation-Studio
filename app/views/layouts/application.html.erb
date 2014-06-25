@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title><%= ENV["ENVIRONMENT_TAG"] %> :: Annotation Studio :: MIT Hyperstudio</title>
+	<title><%= yield(:page_title) %> :: Annotation Studio :: <%= ENV["ENVIRONMENT_TAG"] %></title>
 	<%# include_gon(:namespace => 'serverExports') %>
-	
+
 	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
 	<!--[if lt IE 9]>
 	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>

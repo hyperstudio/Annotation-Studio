@@ -19,6 +19,8 @@ AnnotationStudio::Application.routes.draw do
     end
   end
 
+  # root :to => "devise/sessions#new"
+
   ActiveAdmin.routes(self)
   devise_for :admin_users, ActiveAdmin::Devise.config
 end

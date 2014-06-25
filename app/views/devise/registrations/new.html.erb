@@ -68,6 +68,9 @@
         <span class="help-block">If you have a group or groups to join, put those here, and press enter after each. This will determine which documents are assigned to you.</span>
         </div>
 
+        <label class='checkbox agreement'> <%= f.check_box :agreement %> I have read and accept the <%= link_to 'terms of service', page_path('terms') %></label>
+
+
 				<br>
 				<div class="controls">
 				<%= f.submit "Register", :class => "btn btn-primary" %>

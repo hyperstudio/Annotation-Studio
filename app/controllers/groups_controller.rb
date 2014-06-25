@@ -1,5 +1,5 @@
 class GroupsController < ApplicationController
-  before_filter :authenticate
+  # before_action :authenticate_user!
 
   def index
   end

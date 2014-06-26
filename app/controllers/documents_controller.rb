@@ -1,6 +1,5 @@
 class DocumentsController < ApplicationController
-
-  # before_action :authenticate_user!
+  before_filter :authenticate_user!
 
   load_and_authorize_resource
 

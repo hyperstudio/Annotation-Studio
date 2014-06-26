@@ -1,5 +1,7 @@
 AnnotationStudio::Application.routes.draw do
   devise_for :users
+  devise_for :admin_users, ActiveAdmin::Devise.config
+  ActiveAdmin.routes(self)
 
   resources :documents
   resources :users, only: [:show, :edit]
@@ -20,7 +22,4 @@ AnnotationStudio::Application.routes.draw do
   end
 
   # root :to => "devise/sessions#new"
-
-  ActiveAdmin.routes(self)
-  devise_for :admin_users, ActiveAdmin::Devise.config
 end

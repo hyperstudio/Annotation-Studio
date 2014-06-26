@@ -15,7 +15,7 @@ gem 'repertoire-groups', '0.0.1', :path => 'vendor/repertoire-groups-0.0.1' #, :
 gem 'acts-as-taggable-on', '~> 3.0.2' # Note: 3.1.1 breaks the database TODO: Check later for updates.
 gem "friendly_id"#, ">= 4.0.9"
 gem "babosa"
-gem 'high_voltage', '~> 2.2.0'
+gem 'high_voltage', '~> 2.1.0'
 gem "aws-sdk"
 gem "paperclip"
 gem "delayed_job_active_record"

@@ -155,7 +155,7 @@ GEM
       actionpack (>= 3.2, < 5)
       activesupport (>= 3.2, < 5)
     heroku-true-relic (0.1.0)
-    high_voltage (2.2.0)
+    high_voltage (2.1.0)
     highline (1.6.21)
     hike (1.2.3)
     httparty (0.13.1)
@@ -390,7 +390,7 @@ DEPENDENCIES
   gon
   google_drive
   heroku-true-relic
-  high_voltage (~> 2.2.0)
+  high_voltage (~> 2.1.0)
   highline
   intercom-rails
   jbuilder

@@ -30,6 +30,10 @@ class ApplicationController < ActionController::Base
     redirect_to root_url, :alert => exception.message
   end
 
+  rescue_from ActiveRecord::RecordNotFound do |exception|
+    render action: 404, status: :not_found
+  end
+
   def current_tenant
     Apartment::Database.current_tenant
   end

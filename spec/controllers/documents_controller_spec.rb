@@ -1,6 +1,16 @@
 require 'spec_helper'
 
 describe DocumentsController do
+  context '#show' do
+    it 'redirects to root' do
+      sign_in_user
+
+      get :show, id: 100
+,
+      expect(response).to be_not_found
+    end
+  end
+
   context '#create' do
     it 'enqueues DocumentProcessor jobs correctly when documents are uploaded' do
       sign_in_user

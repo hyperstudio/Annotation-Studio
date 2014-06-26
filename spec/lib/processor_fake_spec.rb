@@ -17,7 +17,7 @@ describe ProcessorFake do
 
 
   def create_processed_document
-    upload_file = File.open('spec/support/example_files/example.docx')
+    upload_file = File.open('spec/support/example_files/example.pdf')
     document = create(:document, upload: upload_file, text: nil)
 
     process = ProcessorFake.new(document,'published')

@@ -1,12 +1,14 @@
 require 'spec_helper'
 
 describe DocumentsController do
+  include UserHelper
+
   context '#show' do
     it 'redirects to root' do
       sign_in_user
 
       get :show, id: 100
-,
+
       expect(response).to be_not_found
     end
   end
@@ -28,11 +30,11 @@ describe DocumentsController do
     end
   end
 
-  def sign_in_user
-    user = create(:user)
-    user.stub(:has_role?).and_return(true)
-    sign_in user
-  end
+  # def sign_in_user
+  #   user = create(:user)
+  #   user.stub(:has_role?).and_return(true)
+  #   sign_in user
+  # end
 
   def build_document
     document = build(:document, id: 1, state: 'published')

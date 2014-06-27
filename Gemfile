@@ -42,6 +42,7 @@ group :test, :development do
   gem 'pry-rails'
   gem 'capybara-webkit'
   gem 'simplecov'
+  gem 'rails_best_practices'
   gem 'launchy'
   gem 'shoulda-matchers', require: false
   gem 'database_cleaner'

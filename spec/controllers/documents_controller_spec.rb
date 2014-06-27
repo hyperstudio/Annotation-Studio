@@ -5,7 +5,7 @@ describe DocumentsController do
 
   context '#show' do
     it 'redirects to root' do
-      sign_in_user
+      sign_in_stubbed_user
 
       get :show, id: 100
 
@@ -15,7 +15,7 @@ describe DocumentsController do
 
   context '#create' do
     it 'enqueues DocumentProcessor jobs correctly when documents are uploaded' do
-      sign_in_user
+      sign_in_stubbed_user
       document = build_document
 
       document_processor_double = double(perform: -> {} )
@@ -30,11 +30,14 @@ describe DocumentsController do
     end
   end
 
-  # def sign_in_user
-  #   user = create(:user)
-  #   user.stub(:has_role?).and_return(true)
-  #   sign_in user
-  # end
+  def sign_in_stubbed_user
+    user = create(:user, agreement: true)
+    user.stub(:has_role?).and_return(true)
+
+    #This uses Devise::TestHelpers to sign in the user through a backdoor.
+    #The other "sign_in_user" helper in UserHelper is for integration specs.
+    sign_in user
+  end
 
   def build_document
     document = build(:document, id: 1, state: 'published')

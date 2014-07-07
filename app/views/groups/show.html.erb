@@ -29,7 +29,7 @@
 	border-collapse: separate;
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
-	border-radius: 4px;	
+	border-radius: 4px;
 }
 
 
@@ -43,7 +43,7 @@
 jQuery(function ($) {
 	var widget = new Widget.App();
 	var endpoint = '<%= ENV["API_URL"] %>';
-	var token = '<%= @jwt %>';
+	var token = '<%= session["jwt"] %>';
 	// Backbone.history.start({pushState: true, root: window.location})
 
 	var loadOptions = {

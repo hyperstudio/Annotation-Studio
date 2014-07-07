@@ -18,9 +18,9 @@ jQuery(function ($) {
 	   // studio.annotator('addPlugin', 'AnnotoriousImagePlugin');
 	studio.annotator('addPlugin', 'Unsupported');
 	studio.annotator('addPlugin', 'Auth', {
-		token: '<%= @jwt %>'
+		token: '<%= session["jwt"] %>'
 	});
-	
+
 	// how to interact with the backend store
 	studio.annotator('addPlugin', 'Store', {
 		// prefix: 'http://annotations.mit.edu/api',
@@ -36,29 +36,29 @@ jQuery(function ($) {
 		},
 		loadFromSearch: {
 			'limit': 1000,
-			
+
 			// Loads group annotations
 			'user[groups]': groups,
 
 			// Limits annotations to this document
 			'uri': [location.protocol, '//', location.host, location.pathname].join(''),
-			
+
 			// Limits annotations to this user unless user is an admin
 			<% unless current_user.has_role?(:admin) %>
 			'user[id]': "<%= current_user.id %>",
 			<% end %>
-			
+
 		}
 	});
 
 	var subscriber = $('#textcontent').annotator().data('annotator');
-	
+
 	var groups = "<%= current_user.rep_group_list %>".split(/, /);
 	var readPermitArray = ['<%= current_user.id %>'];
 	readPermitArray = readPermitArray.concat(groups);
 	console.info("readPermitArray: ");
 	console.info(readPermitArray);
-	
+
 	// settings to store with each annotation
 	studio.annotator('addPlugin', 'MITPermissions', {
 		user: {
@@ -81,7 +81,7 @@ jQuery(function ($) {
 		// Callback to return an id for the user
 		userId: function (user) {
 			console.info("userId called.");
-			if (user && user.id) { 
+			if (user && user.id) {
 				return user.id;
 			}
 			return user;
@@ -105,9 +105,9 @@ jQuery(function ($) {
 			// console.info(user);
 
 			// If no user is passed, it's because the annotator is asking whether the annotation
-			// allows any user to do that action. An annotation denotes world access by storing 
+			// allows any user to do that action. An annotation denotes world access by storing
 			// a zero-length array of tokens for that action's permission value
-			if (user === null) { 
+			if (user === null) {
 				// evaluates to true if the annotation stores no constraints.
 				if (annotation.permissions[action].length == 0) {
 					console.info("returning true: user === null; annotation.permissions[action].length === " + annotation.permissions[action].length);
@@ -119,7 +119,7 @@ jQuery(function ($) {
 				}
 			}
 
-			// Otherwise, the annotator is asking whether a specific user has a specific 
+			// Otherwise, the annotator is asking whether a specific user has a specific
 			// permission, so we return true only if the user stores a value for that action
 			// that matches what the annotation stores for that action
 			if (annotation.permissions[action].length > 0) { // the action is restricted to certain users
@@ -139,7 +139,7 @@ jQuery(function ($) {
 				return true;
 			}
 
-			// Failing all those tests, if the annotation.user.id is the current user.id, 
+			// Failing all those tests, if the annotation.user.id is the current user.id,
 			// we return true; the current user has all permissions on his/her own annotations.
 			if (user.id === annotation.user.id) {
 				console.info("returning true: return user.id === annotation.user.id");
@@ -186,7 +186,7 @@ jQuery(function ($) {
 			console.info("Err...");
 		}
 	}, this);
-	
+
 	var createAndAddUuid = function(annotation){
 		createUuid(annotation);
 		addUuid(annotation);
@@ -198,7 +198,7 @@ jQuery(function ($) {
 		    sidebar.listAnnotations(subscriber.dumpAnnotations());
 		}, 100);
 	};
-	
+
 	// Remove all comment icons and load sidebar with local data
 	var deleteFromSidebar =	function(annotation) {
 		$(".icon-comment").remove();
@@ -211,7 +211,7 @@ jQuery(function ($) {
 		var newAnn = new Sidebar.Annotation(annotation);
 		console.info(newAnn.get("uuid"));
 	};
-	
+
 	// When the annotator loads remote data, update sidebar
 	subscriber.subscribe('annotationsLoaded', loadSidebar);
 
@@ -232,6 +232,6 @@ jQuery(function ($) {
 	// When the local object is updated (contains previously created/stored UUID), load the sidebar from local data
 	subscriber.subscribe('annotationUpdated', loadSidebar);
 	subscriber.subscribe('annotationDeleted', deleteFromSidebar);
-	
+
 	mixpanel.track("Loaded Document");
 });

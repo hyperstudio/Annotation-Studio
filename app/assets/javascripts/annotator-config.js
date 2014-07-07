@@ -8,9 +8,9 @@
 	// // Bootstrap Backbone Sidebar //
 	// var sidebar = new Sidebar.App();
 	// Backbone.history.start({ pushState: true, root: window.location })
-	// 
+	//
 	// var studio = $('#textcontent').annotator();
-	// 
+	//
 	// studio.annotator('addPlugin', 'Markdown');
 	// <% if current_user.has_role?(:admin) %>
 	//  // studio.annotator('addPlugin', 'Filter');
@@ -19,9 +19,9 @@
 	//    // studio.annotator('addPlugin', 'AnnotoriousImagePlugin');
 	// studio.annotator('addPlugin', 'Unsupported');
 	// studio.annotator('addPlugin', 'Auth', {
-	// 	token: '<%= @jwt %>'
+	// 	token: '<%= session["jwt"] %>'
 	// });
-	// 
+	//
 	// // how to interact with the backend store
 	// studio.annotator('addPlugin', 'Store', {
 	// 	// prefix: 'http://annotations.mit.edu/api',
@@ -37,29 +37,29 @@
 	// 	},
 	// 	loadFromSearch: {
 	// 		'limit': 1000,
-	// 		
+	//
 	// 		// Loads group annotations
 	// 		'user[groups]': groups,
-	// 
+	//
 	// 		// Limits annotations to this document
 	// 		'uri': [location.protocol, '//', location.host, location.pathname].join(''),
-	// 		
+	//
 	// 		// Limits annotations to this user unless user is an admin
 	// 		<% unless current_user.has_role?(:admin) %>
 	// 		'user[id]': "<%= current_user.id %>",
 	// 		<% end %>
-	// 		
+	//
 	// 	}
 	// });
-	// 
+	//
 	// var subscriber = $('#textcontent').annotator().data('annotator');
-	// 
+	//
 	// var groups = "<%= current_user.rep_group_list %>".split(/, /);
 	// var readPermitArray = ['<%= current_user.id %>'];
 	// readPermitArray = readPermitArray.concat(groups);
 	// console.info("readPermitArray: ");
 	// console.info(readPermitArray);
-	// 
+	//
 	// // settings to store with each annotation
 	// studio.annotator('addPlugin', 'MITPermissions', {
 	// 	user: {
@@ -71,23 +71,23 @@
 	// 		'update': groups,
 	// 		'admin': groups,
 	// 	},
-	// 
+	//
 	// 	permissions: {
 	// 		'read': readPermitArray, // by default, the current user and all his/her groups can see annotations they create
 	// 		'update': ['<%= current_user.id %>'], // no one else can ever update
 	// 		'delete': ['<%= current_user.id %>'], // no one else can ever delete
 	// 		'admin': ['<%= current_user.id %>'] // no one else can ever admin
 	// 	},
-	// 
+	//
 	// 	// Callback to return an id for the user
 	// 	userId: function (user) {
 	// 		console.info("userId called.");
-	// 		if (user && user.id) { 
+	// 		if (user && user.id) {
 	// 			return user.id;
 	// 		}
 	// 		return user;
 	// 	},
-	// 
+	//
 	// 	// Callback to return a string for the user
 	// 	userString: function (user) {
 	// 		console.info("userString called.");
@@ -96,7 +96,7 @@
 	// 		}
 	// 		return user;
 	// 	},
-	// 
+	//
 	// 	userAuthorize: function (action, annotation, user) {
 	// 		console.info("action: "+ action);
 	// 		// console.info(action);
@@ -104,11 +104,11 @@
 	// 		// console.info(annotation);
 	// 		// console.info("user: ");
 	// 		// console.info(user);
-	// 
+	//
 	// 		// If no user is passed, it's because the annotator is asking whether the annotation
-	// 		// allows any user to do that action. An annotation denotes world access by storing 
+	// 		// allows any user to do that action. An annotation denotes world access by storing
 	// 		// a zero-length array of tokens for that action's permission value
-	// 		if (user === null) { 
+	// 		if (user === null) {
 	// 			// evaluates to true if the annotation stores no constraints.
 	// 			if (annotation.permissions[action].length == 0) {
 	// 				console.info("returning true: user === null; annotation.permissions[action].length === " + annotation.permissions[action].length);
@@ -120,8 +120,8 @@
 	// 				return false
 	// 			}
 	// 		}
-	// 
-	// 		// Otherwise, the annotator is asking whether a specific user has a specific 
+	//
+	// 		// Otherwise, the annotator is asking whether a specific user has a specific
 	// 		// permission, so we return true only if the user stores a value for that action
 	// 		// that matches what the annotation stores for that action
 	// 		if (annotation.permissions[action].length > 0) { // the action is restricted to certain users
@@ -140,20 +140,20 @@
 	// 			console.info("returning true: annotation.permissions[action].length is "+ annotation.permissions[action].length);
 	// 			return true;
 	// 		}
-	// 
-	// 		// Failing all those tests, if the annotation.user.id is the current user.id, 
+	//
+	// 		// Failing all those tests, if the annotation.user.id is the current user.id,
 	// 		// we return true; the current user has all permissions on his/her own annotations.
 	// 		if (user.id === annotation.user.id) {
 	// 			console.info("returning true: return user.id === annotation.user.id");
 	// 			return true;
 	// 		}
 	// 	},
-	// 
+	//
 	// 	// Permissions settings per-annotation
 	// 	showViewPermissionsCheckbox: false,
 	// 	showEditPermissionsCheckbox: true,
 	// });
-	// 
+	//
 	// // Create a UUID for a given annotation if needed.
 	// // Once created, this shouldn't be changed.
 	// var createUuid = function(annotation) {
@@ -165,7 +165,7 @@
 	// 		console.info("Existing uuid for annotation: '"+annotation.quote+"': "+ annotation.uuid);
 	// 	}
 	// };
-	// 
+	//
 	// // Create username for a given annotation if needed.
 	// var addUserName = function(annotation) {
 	// 	if (annotation.username == null) {
@@ -173,9 +173,9 @@
 	// 		console.info("New username for annotation: <%= current_user.first_name_last_initial %>");
 	// 	}
 	// };
-	// 
+	//
 	// // addLinkId(annotation);
-	// 
+	//
 	// // Add UUIDs to highlights so sidebar and highlights can link to one another.
 	// var addUuid;
 	// var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
@@ -188,19 +188,19 @@
 	// 		console.info("Err...");
 	// 	}
 	// }, this);
-	// 
+	//
 	// var createAndAddUuid = function(annotation){
 	// 	createUuid(annotation);
 	// 	addUuid(annotation);
 	// }
-	// 
+	//
 	// // Update the sidebar with local annotation data
 	// var loadSidebar = function(annotation) {
 	// 	setTimeout(function() {
 	// 	    sidebar.listAnnotations(subscriber.dumpAnnotations());
 	// 	}, 100);
 	// };
-	// 
+	//
 	// // Remove all comment icons and load sidebar with local data
 	// var deleteFromSidebar =	function(annotation) {
 	// 	$(".icon-comment").remove();
@@ -208,33 +208,33 @@
 	// 	    sidebar.listAnnotations(subscriber.dumpAnnotations());
 	// 	}, 100);
 	// };
-	// 
+	//
 	// var showAnnId =  function(annotation) {
 	// 	var newAnn = new Sidebar.Annotation(annotation);
 	// 	console.info(newAnn.get("uuid"));
 	// };
-	// 
+	//
 	// // When the annotator loads remote data, update sidebar
 	// subscriber.subscribe('annotationsLoaded', loadSidebar);
-	// 
+	//
 	// // Update all highlights with UUIDs
 	// subscriber.subscribe('annotationsLoaded', __bind(function(annotations) {
 	// 	annotations.map(addUuid); // copies the UUID value from the object field to the highlight spans attribute value.
 	// }, this));
-	// 
+	//
 	// // Add the UUID to the local annotation object and to the highlight span before saving
 	// subscriber.subscribe('beforeAnnotationCreated', createUuid); // creates, if need be, and adds, both to object, and to highlight.
 	// subscriber.subscribe('beforeAnnotationCreated', addUserName); // creates, if need be, and adds, both to object, and to highlight.
-	// 
-	// 
+	//
+	//
 	// // Once the local object has been created, load the sidebar from local data (already contains UUID)
 	// subscriber.subscribe('annotationCreated', loadSidebar);
 	// subscriber.subscribe('annotationCreated', addUuid);
-	// 
+	//
 	// // When the local object is updated (contains previously created/stored UUID), load the sidebar from local data
 	// subscriber.subscribe('annotationUpdated', loadSidebar);
 	// subscriber.subscribe('annotationDeleted', deleteFromSidebar);
-	// 
-	// 
+	//
+	//
 	// mixpanel.track("Loaded Document");
 });

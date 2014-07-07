@@ -214,7 +214,7 @@ Sidebar.App = Backbone.Router.extend({
       "collection": Sidebar.annotations
     });
     annotationsList.render();
-    this.showAndHideAnnotations();
+    // this.showAndHideAnnotations();
     // console.info("Local: "+ Sidebar.annotations.toJSON());
   },
   // takes an object literal of options for an XHR request.
@@ -226,7 +226,7 @@ Sidebar.App = Backbone.Router.extend({
     });
     Sidebar.annotations.deferred.done(function() {
       annotationsList.render();
-      this.showAndHideAnnotations();
+      // this.showAndHideAnnotations();
       // console.info("Remote: "+ Sidebar.annotations.toJSON());
     });
   },

@@ -285,22 +285,22 @@ jQuery(function ($) {
   $(".annotator-checkbox label").text('Allow my groups to view this annotation');
 
   // When the user scrolls, call showAndHideAnnotations
-  sidebar.filtered = true;
-  var lazyShowAndHideAnnotations = _.debounce(
-    function() { sidebar.showAndHideAnnotations() },
-    30
-  );
-  $(window).scroll(lazyShowAndHideAnnotations);
+  // sidebar.filtered = true;
+  // var lazyShowAndHideAnnotations = _.debounce(
+  //   function() { sidebar.showAndHideAnnotations() },
+  //   30
+  // );
+  // $(window).scroll(lazyShowAndHideAnnotations);
 
-  // Toggle filtered variable
-  $('#visibleannotiations').on('click', function(){
-    sidebar.filtered = true;
-    sidebar.showAndHideAnnotations();
-  });
-  $('#allannotations').on('click', function(){
-    sidebar.filtered = false;
-    sidebar.showAllAnnotations();
-  });
+  // // Toggle filtered variable
+  // $('#visibleannotiations').on('click', function(){
+  //   sidebar.filtered = true;
+  //   sidebar.showAndHideAnnotations();
+  // });
+  // $('#allannotations').on('click', function(){
+  //   sidebar.filtered = false;
+  //   sidebar.showAllAnnotations();
+  // });
 
 });
 </script>

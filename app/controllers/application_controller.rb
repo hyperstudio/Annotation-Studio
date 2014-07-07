@@ -1,20 +1,19 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
-  # add_breadcrumb :index, :root_path
-
-  def signed_in?
-    @now = DateTime.current().to_time.iso8601
-    @jwt = JWT.encode(
-        {
-            'consumerKey' => ENV["API_CONSUMER"],
-            'userId' => current_user.email,
-            'issuedAt' => @now,
-            'ttl' => 86400
-        },
-        ENV["API_SECRET"]
-    )
-    gon.current_user = current_user
+  def after_sign_in_path_for(user)
+      @now = DateTime.current().to_time.iso8601
+      session['jwt'] = JWT.encode(
+          {
+              'consumerKey' => ENV["API_CONSUMER"],
+              'userId' => current_user.email,
+              'issuedAt' => @now,
+              'ttl' => 86400
+          },
+          ENV["API_SECRET"]
+      )
+      user_url(current_user)
+      binding.pry
   end
 
   def authenticate

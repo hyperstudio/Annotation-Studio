@@ -49,7 +49,7 @@ jQuery(function ($) {
       Filter: false,
       <% end %>
       Auth: {
-        token: '<%= @jwt %>'
+        token: '<%= session["jwt"]t %>'
       },
       Store: {
           prefix: '<%= ENV["API_URL"] %>',

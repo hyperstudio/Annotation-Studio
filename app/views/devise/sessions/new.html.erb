@@ -1,8 +1,18 @@
+
+<div class="row">
+  <div class="span12" id="blurb">
+      <% if Rails.env.development? %>
+      <div class="alert alert-info">
+      This is the latest public beta version of Annotation Studio, v. 2.0.0. It offers PDF upload and conversion, for very basic text-based PDFs. It will strip out most if not all formatting. We will be adding more functionality to this feature over time.
+      </div>
+      <% end %>
+  </div>
+</div>
 <div class="row">
 	<div class="span8" id="blurb">
 		<p>
 			<legend>
-				<% if Rails.env.public? %>
+  				<% if Rails.env.public? %>
 					Annotation Studio is a web application that supports close reading and collaborative interpretation of online documents. It's designed primarily for use by students of the humanities. <a href="http://www.annotationstudio.org/">Learn more here</a>, or <a href="/users/sign_up">register</a> and <a href="/users/sign_in">sign in</a> to try it out.
 				<% elsif Rails.env.development? %>
 					Welcome to Annotation Studio, a tool to support close reading and collaborative interpretation of online documents. <a href="/users/sign_up">Register</a> and <a href="/users/sign_in">sign in</a> to use it, or <a href="http://www.annotationstudio.org/">click here</a> to learn more.
@@ -13,6 +23,7 @@
 				<% end %>
 			</legend>
 		</p>
+
 		<div class="alert">
 		<% if Rails.env.public? %>
 			This is the public demo of Annotation Studio. MIT affiliates should go <a href="http://annotationstudio.mit.edu/"><strong>here</strong></a>.

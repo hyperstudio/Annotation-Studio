@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
           ENV["API_SECRET"]
       )
       user_url(current_user)
-      binding.pry
+      # binding.pry
   end
 
   def authenticate

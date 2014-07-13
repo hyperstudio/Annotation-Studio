@@ -1,3 +1,4 @@
+<%= content_for :page_title, @document.title %>
 <%= stylesheet_link_tag "documents" %>
 <div class="row">
 	<div class="span3 hidden-phone hidden-tablet">
@@ -8,7 +9,7 @@
 			</ul>
 			<script type="text/javascript" charset="utf-8">
 				$("#chapternav a").click(function(event){
-					event.preventDefault();				
+					event.preventDefault();
 					var idtarget = $(this).attr("href");
 					$('html,body').animate({scrollTop: $(idtarget).offset().top}, 500);
 					// $(idtarget).prepend('<i class="icon-comment"></i>');
@@ -56,7 +57,7 @@
 								docMetaInfo = "<ul>"+ docMetaInfo + "</ul>";
 							}
 							$('#doctit').popover({
-								'html': 'true', 
+								'html': 'true',
 								'placement': 'bottom',
 								'trigger': 'hover',
 								'title': "Additional information",
@@ -70,8 +71,8 @@
 		</div>
     <% if ! @document.processed? %>
       <%= render 'processed_message' %>
-    <% end %>				
-		<div id="textcontent"> 
+    <% end %>
+		<div id="textcontent">
 			<div><!-- Required for cases in which there's no HTML in the text -->
 				<%= @document.text.html_safe %>
 			</div>

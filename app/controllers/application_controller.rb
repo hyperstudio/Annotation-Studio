@@ -6,14 +6,14 @@ class ApplicationController < ActionController::Base
       session['jwt'] = JWT.encode(
           {
               'consumerKey' => ENV["API_CONSUMER"],
-              'userId' => current_user.email,
+              'userId' => user.email,
               'issuedAt' => @now,
               'ttl' => 86400
           },
           ENV["API_SECRET"]
       )
-      user_url(current_user)
-      # binding.pry
+      user_url(user)
+      binding.pry
   end
 
   def authenticate

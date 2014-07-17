@@ -53,12 +53,12 @@ jQuery(function ($) {
 </script>
 
 <div class="row">
-  <div class="span12">
+  <div class="col-md-12">
     <h1>Dashboard for <%= @user.fullname %></h1>
-  </div><!--/span12 -->
+  </div><!--/col-md-12 -->
 </div><!--/row -->
 <div class="row">
-  <div class="span4">
+  <div class="col-md-4">
 <h4><%= link_to "Documents", documents_path %></h4>
 <ul class="nav nav-tabs" id="document-tabs">
   <li class="active"><a href="#assigned" data-toggle="tab"><span class="badge"><%= Document.tagged_with(current_user.rep_group_list, :any => true).size %></span> Assigned</a></li>
@@ -103,8 +103,8 @@ jQuery(function ($) {
 </div>
   <h5><%= link_to "View all documents", documents_path %></h5>
   <h5><%= link_to "New document", document_path('new') %></h5>
-  </div><!--/span4 -->
-  <div class="span4">
+  </div><!--/col-md-4 -->
+  <div class="col-md-4">
     <h4><%= link_to "Annotations", annotations_path %></h4>
     <ul class="nav nav-tabs" id="document-tabs">
       <li class="active"><a href="#mine" data-toggle="tab"><span class="badge"></span> Mine</a></li>
@@ -124,8 +124,8 @@ jQuery(function ($) {
       </div>
     </div>
     <h5><%= link_to "View all annotations", annotations_path %>  </h5>
-  </div><!--/span4 -->
-  <div class="span4">
+  </div><!--/col-md-4 -->
+  <div class="col-md-4">
     <h4><%= link_to "Groups", groups_path %>  </h4>
     <ul class="nav nav-tabs" id="group-tabs">
       <li class="active"><a href="#groups" data-toggle="tab"><span class="badge"><%= current_user.rep_group_list.size %></span> Class Groups</a></li>
@@ -152,5 +152,5 @@ jQuery(function ($) {
       </div>
     </div>
     <h5><%= link_to "View all groups", groups_path %>  </h5>
-  </div><!--/span4 -->
+  </div><!--/col-md-4 -->
 </div><!--/row -->

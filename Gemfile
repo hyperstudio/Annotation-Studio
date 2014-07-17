@@ -53,7 +53,9 @@ group :production do
   gem 'rails_12factor'
 end
 
-gem "twitter-bootstrap-rails" # https://github.com/seyhunak/twitter-bootstrap-rails/issues/401 ?
+# gem "twitter-bootstrap-rails" # https://github.com/seyhunak/twitter-bootstrap-rails/issues/401 ?
+gem 'twitter-bootstrap-rails', :git => 'git://github.com/seyhunak/twitter-bootstrap-rails.git', :branch => 'bootstrap3'
+
 
 gem 'jquery-rails', '~> 2.3.0'
 gem 'jquery-ui-rails'

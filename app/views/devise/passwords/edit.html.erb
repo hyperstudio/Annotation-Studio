@@ -1,33 +1,33 @@
 <%= content_for :page_title, "Password" %>
 <div class="row">
-	<div class="span12">
+    <div class="col-md-12">
 
-		<%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :put, :class => "form-horizontal" }) do |f| %>
-		<%= devise_error_messages! %>
-		<fieldset>
-		<legend>Forgot your password?</legend>
-			<div class="control-group">
-				<%= f.hidden_field :reset_password_token %>
-				<%= f.label :password, :class => "control-label" %>
-				<div class="controls">
-				<%= f.password_field :password %>
-				</div>
+        <%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :put, :class => "form-horizontal" }) do |f| %>
+        <%= devise_error_messages! %>
+        <fieldset>
+        <legend>Forgot your password?</legend>
+            <div class="form-group">
+                <%= f.hidden_field :reset_password_token %>
+                <%= f.label :password, :class => "control-label" %>
+                <div class="controls">
+                <%= f.password_field :password %>
+                </div>
 
-				<%= f.label :password_confirmation, :class => "control-label" %>
-				<div class="controls">
-				<%= f.password_field :password_confirmation %>
-				</div>
-				<br>
+                <%= f.label :password_confirmation, :class => "control-label" %>
+                <div class="controls">
+                <%= f.password_field :password_confirmation %>
+                </div>
+                <br>
 
-				<div class="controls">
-				<div><%= f.submit "Change my password", :class => "btn btn-primary" %></div>
-				</div>
-		  </div>
-		</fieldset>
-		<% end %>
-		<%= render "links" %>
+                <div class="controls">
+                <div><%= f.submit "Change my password", :class => "btn btn-default btn btn-default-primary" %></div>
+                </div>
+          </div>
+        </fieldset>
+        <% end %>
+        <%= render "links" %>
 
-	</div><!--/span12 -->
+    </div><!--/col-md-12 -->
 </div><!--/row -->
 
 

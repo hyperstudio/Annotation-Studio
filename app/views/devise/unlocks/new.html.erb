@@ -1,6 +1,6 @@
 <%= content_for :page_title, "Resend unlock instructions" %>
 <div class="row">
-	<div class="span12">
+	<div class="col-md-12">
 	<h2>Resend unlock instructions</h2>
 
 	<%= form_for(resource, :as => resource_name, :url => unlock_path(resource_name), :html => { :method => :post }) do |f| %>
@@ -13,5 +13,5 @@
 	<% end %>
 
 	<%= render "links" %>
-	</div><!--/span12 -->
+	</div><!--/col-md-12 -->
 </div><!--/row -->

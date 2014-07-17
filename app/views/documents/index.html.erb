@@ -1,154 +1,154 @@
 <%= content_for :page_title, 'Documents' %>
 <%= stylesheet_link_tag "documents" %>
 <div class="row">
-	<div class="span12">
-		<h1>Documents</h1>
-		<ul class="nav nav-tabs" id="document-tabs">
+    <div class="col-md-12">
+        <h1>Documents</h1>
+        <ul class="nav nav-tabs" id="document-tabs">
       <li class="active"><a id="assigned-tab" href="#assigned" data-toggle="tab"><span class="badge"><%= Document.tagged_with(current_user.rep_group_list, :any => true).size %></span> Assigned</a></li>
       <li><a id="created-tab" href="#created" data-toggle="tab"><span class="badge"><%= current_user.documents.size %></span> Created</a></li>
-			<% if can? :manage, Document %>
+            <% if can? :manage, Document %>
       <li><a id="all-tab" href="#all" data-toggle="tab"><span class="badge"><%= Document.all.length %></span> All</a></li>
-			<% end %>
-		</ul>
-		<div class="tab-content">
-			<div class="tab-pane active" id="assigned">
-				<table class="table table-striped table-bordered">
-					<tr>
-						<th>Title</th>
-						<th>Author</th>
-            			<th>Created</th>
-						<th>Groups</th>
-						<th>Status</th>
-						<th>Actions</th>
-					</tr>
-					<% if Document.tagged_with(current_user.rep_group_list, :any => true).any? %>
-					<% Document.order("created_at DESC").tagged_with(current_user.rep_group_list, :any => true).each do |document| %>
-					<tr>
-						<td><%= link_to document.title, document_path(document.friendly_id), target: 'blank' %></td>
-						<td><%= document.author %></td>
+            <% end %>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="assigned">
+                <table class="table table-striped table-bordered">
+                    <tr>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>Created</th>
+                        <th>Groups</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                    <% if Document.tagged_with(current_user.rep_group_list, :any => true).any? %>
+                    <% Document.order("created_at DESC").tagged_with(current_user.rep_group_list, :any => true).each do |document| %>
+                    <tr>
+                        <td><%= link_to document.title, document_path(document.friendly_id), target: 'blank' %></td>
+                        <td><%= document.author %></td>
             <td><%= document.created_at.strftime("%m/%d/%Y") %></td>
-						<td><% document.rep_group_list.each do |group| %><span class="label"><%= group %></span> <% end %></td>
-			<td>
-							<% if document.draft? %>
-							<i class="glyphicon icon-pencil"></i>
-							<% elsif document.published? %>
-							<i class="glyphicon icon-ok"></i>
-							<% elsif document.deleted? %>
-							<i class="glyphicon icon-folder-close"></i>
-							<% end %>
-			</td>
+                        <td><% document.rep_group_list.each do |group| %><span class="label label-default"><%= group %></span> <% end %></td>
             <td>
-							<% if can? :update, document %>
-							<%= link_to 'Edit', edit_document_path(document.friendly_id), :class => 'btn btn-mini' %>
-							<% end %>
-							<% if can? :destroy, document %>
-							<%= link_to 'Delete', document_path(document.friendly_id), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini btn-danger' %>
-							<% end %>
+                            <% if document.draft? %>
+                            <i class="glyphicon glyphicon-pencil"></i>
+                            <% elsif document.published? %>
+                            <i class="glyphicon glyphicon-ok"></i>
+                            <% elsif document.deleted? %>
+                            <i class="glyphicon glyphicon-folder-close"></i>
+                            <% end %>
             </td>
-					</tr>
-					<% end %>
-					<% else %>
-					<tr>
-						<td colspan="4">No documents to view.</td>
-					</tr>
-					<% end %>
-				</table>
-			</div>
-			<div class="tab-pane" id="created">
-				<table class="table table-striped table-bordered">
-					<tr>
-						<th>Title</th>
-						<th>Author</th>
+            <td>
+                            <% if can? :update, document %>
+                            <%= link_to 'Edit', edit_document_path(document.friendly_id), :class => 'btn btn-default btn btn-default-mini' %>
+                            <% end %>
+                            <% if can? :destroy, document %>
+                            <%= link_to 'Delete', document_path(document.friendly_id), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-default btn btn-default-mini btn btn-default-danger' %>
+                            <% end %>
+            </td>
+                    </tr>
+                    <% end %>
+                    <% else %>
+                    <tr>
+                        <td colspan="4">No documents to view.</td>
+                    </tr>
+                    <% end %>
+                </table>
+            </div>
+            <div class="tab-pane" id="created">
+                <table class="table table-striped table-bordered">
+                    <tr>
+                        <th>Title</th>
+                        <th>Author</th>
             <th>Created</th>
             <th>Groups</th>
-						<th>Status</th>
-						<th>Actions</th>
-					</tr>
-					<% if current_user.documents.any? %>
-					<% current_user.documents.order("created_at DESC").each do |document| %>
-					<% if can? :read, document %>
-					<tr>
-						<td><%= link_to document.title, document_path(document.friendly_id), target: 'blank' %></td>
-						<td><%= document.author %></td>
-            			<td><%= document.created_at.strftime("%m/%d/%Y") %></td>
-						<td><% document.rep_group_list.each do |group| %><span class="label"><%= group %></span> <% end %></td>
-			<td>
-							<% if document.draft? %>
-							<i class="glyphicon icon-pencil"></i>
-							<% elsif document.published? %>
-							<i class="glyphicon icon-ok"></i>
-							<% elsif document.deleted? %>
-							<i class="glyphicon icon-folder-close"></i>
-							<% end %>
-			</td>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                    <% if current_user.documents.any? %>
+                    <% current_user.documents.order("created_at DESC").each do |document| %>
+                    <% if can? :read, document %>
+                    <tr>
+                        <td><%= link_to document.title, document_path(document.friendly_id), target: 'blank' %></td>
+                        <td><%= document.author %></td>
+                        <td><%= document.created_at.strftime("%m/%d/%Y") %></td>
+                        <td><% document.rep_group_list.each do |group| %><span class="label label-default"><%= group %></span> <% end %></td>
             <td>
-              				<% if can? :update, document %>
-							<%= link_to 'Edit', edit_document_path(document.friendly_id), :class => 'btn btn-mini' %>
-							<% end %>
-							<% if can? :destroy, document %>
-							<%= link_to 'Delete', document_path(document.friendly_id), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini btn-danger' %>
-							<% end %>
+                            <% if document.draft? %>
+                            <i class="glyphicon glyphicon-pencil"></i>
+                            <% elsif document.published? %>
+                            <i class="glyphicon glyphicon-ok"></i>
+                            <% elsif document.deleted? %>
+                            <i class="glyphicon glyphicon-folder-close"></i>
+                            <% end %>
             </td>
-					</tr>
-					<% end %>
-					<% end %>
-					<% else %>
-					<tr>
-						<td colspan="4">No documents to view.</td>
-					</tr>
-					<% end %>
-				</table>
-			</div>
-			<% if can? :manage, Document %>
-			<div class="tab-pane" id="all">
-				<table class="table table-striped table-bordered">
-					<tr>
-						<th>Title</th>
-						<th>Author</th>
-            			<th>Created</th>
-						<th>Groups</th>
-						<th>Status</th>
-						<th>Actions</th>
-					</tr>
-					<% if Document.any? %>
-					<% Document.order("created_at DESC").each do |document| %>
-					<tr>
-						<td><%= link_to document.title, document_path(document.friendly_id), target: 'blank' %></td>
-						<td><%= document.author %></td>
+            <td>
+                            <% if can? :update, document %>
+                            <%= link_to 'Edit', edit_document_path(document.friendly_id), :class => 'btn btn-default btn btn-default-mini' %>
+                            <% end %>
+                            <% if can? :destroy, document %>
+                            <%= link_to 'Delete', document_path(document.friendly_id), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-default btn btn-default-mini btn btn-default-danger' %>
+                            <% end %>
+            </td>
+                    </tr>
+                    <% end %>
+                    <% end %>
+                    <% else %>
+                    <tr>
+                        <td colspan="4">No documents to view.</td>
+                    </tr>
+                    <% end %>
+                </table>
+            </div>
+            <% if can? :manage, Document %>
+            <div class="tab-pane" id="all">
+                <table class="table table-striped table-bordered">
+                    <tr>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>Created</th>
+                        <th>Groups</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                    <% if Document.any? %>
+                    <% Document.order("created_at DESC").each do |document| %>
+                    <tr>
+                        <td><%= link_to document.title, document_path(document.friendly_id), target: 'blank' %></td>
+                        <td><%= document.author %></td>
             <td><%= document.created_at.strftime("%m/%d/%Y") %></td>
-						<td><% document.rep_group_list.each do |group| %><span class="label"><%= group %></span> <% end %></td>
-			<td>
-							<% if document.draft? %>
-							<i class="glyphicon icon-pencil"></i>
-							<% elsif document.published? %>
-							<i class="glyphicon icon-ok"></i>
-							<% elsif document.deleted? %>
-							<i class="glyphicon icon-folder-close"></i>
-							<% end %>
-			</td>
+                        <td><% document.rep_group_list.each do |group| %><span class="label label-default"><%= group %></span> <% end %></td>
             <td>
-							<% if can? :update, document %>
-							<%= link_to 'Edit', edit_document_path(document.friendly_id), :class => 'btn btn-mini' %>
-							<% end %>
-							<% if can? :destroy, document %>
-							<%= link_to 'Delete', document_path(document.friendly_id), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini btn-danger' %>
-							<% end %>
+                            <% if document.draft? %>
+                            <i class="glyphicon glyphicon-pencil"></i>
+                            <% elsif document.published? %>
+                            <i class="glyphicon glyphicon-ok"></i>
+                            <% elsif document.deleted? %>
+                            <i class="glyphicon glyphicon-folder-close"></i>
+                            <% end %>
             </td>
-					</tr>
-					<% end %>
-					<% else %>
-					<tr>
-						<td colspan="4">No documents to view.</td>
-					</tr>
-					<% end %>
-				</table>
-			</div>
-			<% end %>
-		</div>
-		<% if can? :create, Document %>
-		<%= link_to 'New', new_document_path, :class => 'btn btn-primary' %>
-		<% end %>
-	</div><!--/span12 -->
+            <td>
+                            <% if can? :update, document %>
+                            <%= link_to 'Edit', edit_document_path(document.friendly_id), :class => 'btn btn-default btn btn-default-mini' %>
+                            <% end %>
+                            <% if can? :destroy, document %>
+                            <%= link_to 'Delete', document_path(document.friendly_id), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-default btn btn-default-mini btn btn-default-danger' %>
+                            <% end %>
+            </td>
+                    </tr>
+                    <% end %>
+                    <% else %>
+                    <tr>
+                        <td colspan="4">No documents to view.</td>
+                    </tr>
+                    <% end %>
+                </table>
+            </div>
+            <% end %>
+        </div>
+        <% if can? :create, Document %>
+        <%= link_to 'New', new_document_path, :class => 'btn btn-default btn btn-default-primary' %>
+        <% end %>
+    </div><!--/col-md-12 -->
 </div><!--/row -->
 <script type="text/javascript">
 $(document).ready(

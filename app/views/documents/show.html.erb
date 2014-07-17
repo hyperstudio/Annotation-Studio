@@ -1,98 +1,97 @@
 <%= content_for :page_title, @document.title %>
 <%= stylesheet_link_tag "documents" %>
 <div class="row">
-	<div class="span3 hidden-phone hidden-tablet">
-		<div class="affix-top" data-spy="affix" id="chapters">
-			<h4><%= ENV["DOCUMENT_SECTION_STRING"] %></h4>
-			<ul class="nav nav-list nav-collapse" id="chapternav">
-				<%= @document.chapters.try(:html_safe) %>
-			</ul>
-			<script type="text/javascript" charset="utf-8">
-				$("#chapternav a").click(function(event){
-					event.preventDefault();
-					var idtarget = $(this).attr("href");
-					$('html,body').animate({scrollTop: $(idtarget).offset().top}, 500);
-					// $(idtarget).prepend('<i class="icon-comment"></i>');
-					// event.stopPropagation();
-				});
+  <!-- <div class="col-md-1 hidden-xs hidden-xs">
+    <div class="affix-top" data-spy="affix" id="chapters">
+      <h4><%= ENV["DOCUMENT_SECTION_STRING"] %></h4>
+      <ul class="nav nav-list navbar-collapse" id="chapternav">
+        <%= @document.chapters.try(:html_safe) %>
+      </ul>
+      <script type="text/javascript" charset="utf-8">
+        $("#chapternav a").click(function(event){
+          event.preventDefault();
+          var idtarget = $(this).attr("href");
+          $('html,body').animate({scrollTop: $(idtarget).offset().top}, 500);
+          // $(idtarget).prepend('<i class="glyphicon-comment"></i>');
+          // event.stopPropagation();
+        });
+      </script>
+    </div>
+  </div><!--/col-md-1 --> -->
+  <div class="col-md-9">
+    <div class="navbar navbar-fixed-top hidden-xs hidden-xs" id="document-title">
+      <div class="navbar-inner">
+        <div class="container">
+          <div class="container navbar-collapse">
+            <h2 id="doc_title" href="#" data-toggle="popover" data-content="" title=""><%= @document.title %></h2>
+            <script type="text/javascript" charset="utf-8">
+              if ("<%= @document.state %>" === "draft") {
+                statusMessage = '<i class="glyphicon glyphicon-pencil"></i> Draft';
+              }
+              else if ("<%= @document.state %>" === "published") {
+                statusMessage = '<i class="glyphicon glyphicon-ok"></i> Published';
+              }
+              else if ("<%= @document.state %>" === "deleted") {
+                statusMessage = '<i class="glyphicon glyphicon-folder-close"></i> Archived';
+              };
 
-			</script>
-		</div>
-	</div><!--/span3 -->
-	<div class="span6">
-		<div class="navbar navbar-fixed-top hidden-phone hidden-tablet" id="document-title">
-			<div class="navbar-inner">
-				<div class="container">
-					<div class="container nav-collapse">
-						<h2 id="doctit" href="#" data-toggle="popover" data-content="" title=""><%= @document.title %></h2>
-						<script type="text/javascript" charset="utf-8">
-							if ("<%= @document.state %>" === "draft") {
-								statusMessage = '<i class="glyphicon icon-pencil"></i> Draft';
-							}
-							else if ("<%= @document.state %>" === "published") {
-								statusMessage = '<i class="glyphicon icon-ok"></i> Published';
-							}
-							else if ("<%= @document.state %>" === "deleted") {
-								statusMessage = '<i class="glyphicon icon-folder-close"></i> Archived';
-							};
-
-							var docMetaInfo = "";
-							docMetaInfo = docMetaInfo + "<li>Status: " + statusMessage;
-							if ("<%= @document.author %>" != "") {
-								docMetaInfo = docMetaInfo + "<li>Author: <%= @document.author %></li>";
-							}
-							if ("<%= @document.publisher %>" != "") {
-								docMetaInfo = docMetaInfo + "<li>Publisher: <%= @document.publisher %></li>";
-							}
-							if ("<%= @document.publication_date %>" != "") {
-								docMetaInfo = docMetaInfo + "<li>Publication date: <%= @document.publication_date %></li>";
-							}
-							if ("<%= @document.edition %>" != "") {
-								docMetaInfo = docMetaInfo + "<li>Edition: <%= @document.edition %></li>";
-							}
-							if ("<%= @document.source %>" != "") {
-								docMetaInfo = docMetaInfo + "<li>Source: <%= @document.source %></li>";
-							}
-							if (docMetaInfo != "") {
-								docMetaInfo = "<ul>"+ docMetaInfo + "</ul>";
-							}
-							$('#doctit').popover({
-								'html': 'true',
-								'placement': 'bottom',
-								'trigger': 'hover',
-								'title': "Additional information",
-								'content': docMetaInfo === "" ? "None at this time" : docMetaInfo,
-							});
-						</script>
-						<h4 class="pull-right">Annotations</h4>
-					</div><!--/.nav-collapse -->
-				</div><!--/.container -->
-			</div><!--/.navbar-inner -->
-		</div>
+              var docMetaInfo = "";
+              docMetaInfo = docMetaInfo + "<li>Status: " + statusMessage;
+              if ("<%= @document.author %>" != "") {
+                docMetaInfo = docMetaInfo + "<li>Author: <%= @document.author %></li>";
+              }
+              if ("<%= @document.publisher %>" != "") {
+                docMetaInfo = docMetaInfo + "<li>Publisher: <%= @document.publisher %></li>";
+              }
+              if ("<%= @document.publication_date %>" != "") {
+                docMetaInfo = docMetaInfo + "<li>Publication date: <%= @document.publication_date %></li>";
+              }
+              if ("<%= @document.edition %>" != "") {
+                docMetaInfo = docMetaInfo + "<li>Edition: <%= @document.edition %></li>";
+              }
+              if ("<%= @document.source %>" != "") {
+                docMetaInfo = docMetaInfo + "<li>Source: <%= @document.source %></li>";
+              }
+              if (docMetaInfo != "") {
+                docMetaInfo = "<ul>"+ docMetaInfo + "</ul>";
+              }
+              $('#doc_title').popover({
+                'html': 'true',
+                'placement': 'bottom',
+                'trigger': 'hover',
+                'title': "Additional information",
+                'content': docMetaInfo === "" ? "None at this time" : docMetaInfo,
+              });
+            </script>
+            <h4 class="pull-right">Annotations</h4>
+          </div><!--/.navbar-collapse -->
+        </div><!--/.container -->
+      </div><!--/.navbar-inner -->
+    </div>
     <% if ! @document.processed? %>
       <%= render 'processed_message' %>
     <% end %>
-		<div id="textcontent">
-			<div><!-- Required for cases in which there's no HTML in the text -->
-				<%= @document.text.html_safe %>
-			</div>
-		</div>
-		<div class="form-actions">
-			<%= link_to 'Back', documents_path, :class => 'btn'  %>
-			<% if can? :update, @document %>
-			<%= link_to 'Edit', edit_document_path(@document.friendly_id), :class => 'btn' %>
-			<% end %>
-			<% if can? :destroy, @document %>
-			<%= link_to 'Delete', document_path(@document.friendly_id), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-danger' %>
-			<% end %>
-		</div>
-	</div><!--/span6 -->
+    <div id="textcontent">
+      <div><!-- Required for cases in which there's no HTML in the text -->
+        <%= @document.text.html_safe %>
+      </div>
+    </div>
+    <div class="form-actions">
+      <%= link_to 'Back', documents_path, :class => 'btn btn-default'  %>
+      <% if can? :update, @document %>
+      <%= link_to 'Edit', edit_document_path(@document.friendly_id), :class => 'btn btn-default' %>
+      <% end %>
+      <% if can? :destroy, @document %>
+      <%= link_to 'Delete', document_path(@document.friendly_id), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-default btn btn-default-danger' %>
+      <% end %>
+    </div>
+  </div><!--/col-md-8 -->
   <% if @document.processed? and ! @document.draft? %>
     <%= render "documents/annotator-setup" %>
   <% end %>
-	<%# render "documents/annotator-sidebar" %>
-	<%= render "documents/help" %>
-	<div id="spinnermodal" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="spinnermodallabel" aria-hidden="true">
-	  <div class="modal-body" id="spinnerdiv"><em>Loading annotations...</em></div>
-	</div>
+  <%# render "documents/annotator-sidebar" %>
+  <%= render "documents/help" %>
+  <div id="spinnermodal" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="spinnermodallabel" aria-hidden="true">
+    <div class="modal-body" id="spinnerdiv"><em>Loading annotations...</em></div>
+  </div>
 </div><!--/row -->

@@ -1,17 +1,17 @@
-<div class="span3 hidden-phone hidden-tablet">
+<div class="col-md-3">
   <div id="annotation-well" class="affix">
-    <div class="btn-group" data-toggle="buttons-radio" id="view-chooser">
-      <button class="viewchoice btn btn-small active" id="userview">Mine</button>
-      <button class="viewchoice btn btn-small" id="groupview">Group</button>
-      <button class="viewchoice btn btn-small" id="classview">Class</button>
+    <div class="btn btn-default-group" data-toggle="buttons-radio" id="view-chooser">
+      <button class="viewchoice btn btn-default btn btn-default-small active" id="userview">Mine</button>
+      <button class="viewchoice btn btn-default btn btn-default-small" id="groupview">Group</button>
+      <button class="viewchoice btn btn-default btn btn-default-small" id="classview">Class</button>
       <% if current_user.has_role?(:admin) %>
-        <button class="viewchoice btn btn-small btn-inverse" id="adminview">All</button>
+        <button class="viewchoice btn btn-default btn btn-default-small btn btn-default-inverse" id="adminview">All</button>
       <% end %>
     </div>
     <!--
-    <div class="btn-group" data-toggle="buttons-radio" id="filter-chooser">
-      <button class="viewchoice btn btn-small active" id="visibleannotiations">Visible</button>
-      <button class="viewchoice btn btn-small" id="allannotations">All</button>
+    <div class="btn btn-default-group" data-toggle="buttons-radio" id="filter-chooser">
+      <button class="viewchoice btn btn-default btn btn-default-small active" id="visibleannotiations">Visible</button>
+      <button class="viewchoice btn btn-default btn btn-default-small" id="allannotations">All</button>
     </div>
      -->
     <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.3/underscore-min.js"></script>
@@ -23,15 +23,15 @@
       <span id="quote{{uuid}}" class="sbquote details">&quot;{{{quote}}}&quot;</span>
       <span id="text{{uuid}}" class="sbtext details">{{{text}}}</span>
       <span id="info{{uuid}}" class="sbinfo details">{{username}}</span>
-      <div id="tags{{uuid}}" class="sbtags details">{{#tags}}<span class="label">{{.}}</span> {{/tags}}</div>
+      <div id="tags{{uuid}}" class="sbtags details">{{#tags}}<span class="label label-default">{{.}}</span> {{/tags}}</div>
     </script>
     <script type="text/template" id="highlight-template">
       <span id="sb{{uuid}}" data-highlight="#hl{{uuid}}" rel="tooltip" title="{{username}}" class="highlightlink highlight sbquote">&quot;{{{quote}}}&quot;</span>
       <span id="quote{{uuid}}" class="sbquote details">&quot;{{{quote}}}&quot;</span>
-      <div id="tags{{uuid}}" class="sbtags details">{{#tags}}<span class="label">{{.}}</span> {{/tags}}</div>
+      <div id="tags{{uuid}}" class="sbtags details">{{#tags}}<span class="label label-default">{{.}}</span> {{/tags}}</div>
     </script>
   </div><!--/well -->
-</div><!--/span3 -->
+</div><!--/col-md-3 -->
 <%= javascript_include_tag "sidebar" %>
 <script type="text/javascript" charset="utf-8">
 jQuery(function ($) {
@@ -169,7 +169,7 @@ jQuery(function ($) {
 
   // Remove all comment icons and load sidebar with local data
   var deleteFromSidebar = function(annotation) {
-    $(".icon-comment").remove();
+    $(".glyphicon-comment").remove();
     setTimeout(function() {
         sidebar.listAnnotations(subscriber.dumpAnnotations());
     }, 100);
@@ -238,7 +238,7 @@ jQuery(function ($) {
   }
 
   function removeHilites() {
-    $(".icon-comment").remove();
+    $(".glyphicon-comment").remove();
     var hilites = $('.annotator-hl');
     if (hilites.length > 0) {
       hilites.children().unwrap();

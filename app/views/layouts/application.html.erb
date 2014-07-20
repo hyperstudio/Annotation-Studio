@@ -19,36 +19,38 @@
 
     <link href="/favicon.ico" rel="shortcut icon" />
     <%= javascript_include_tag "application" %>
-    <script type="text/javascript" src="//use.typekit.net/wod1jtz.js"></script>
-    <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 </head>
 <body data-spy="scroll" data-target="#chapters">
     <div class="container">
-        <div class="navbar navbar-fixed-top">
-            <div class="navbar-inner">
-                <div class="container">
-                    <a class="btn btn-default navbar-btn btn-default" data-target=".navbar-collapse" data-toggle="collapse">
-                        <span class="glyphicon-bar"></span>
-                        <span class="glyphicon-bar"></span>
-                        <span class="glyphicon-bar"></span>
-                    </a>
-                    <a class="navbar-brand" href="/">Annotation Studio</a>
-                    <div class="container navbar-collapse">
-                        <a class="hidden-xs logo" href="/"><img src="/assets/hs-logo-trans-horiz.png"></a>
-                        <ul class="nav" id="accountlinks">
+
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-target="#myNavmenu" data-canvas="body">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Annotation Studio</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <a class="hidden-xs logo" href="/"><img src="/assets/hs-logo-trans-horiz.png"></a>
+          <ul class="nav navbar-nav" id="accountlinks">
+
                             <%= render 'devise/menu/registration_items' %>
                             <%= render 'devise/menu/login_items' %>
-                        </ul>
-                        <ul class="nav">
-                            <% if params[:controller] == 'documents' && params[:action] == 'show' %>
-                            <li><a data-toggle="modal" href="#help">Help</a></li>
-                            <% end %>
-                        </ul>
-                    </div><!--/.navbar-collapse -->
-                </div><!--/.container -->
-            </div><!--/.navbar-inner -->
-        </div><!--/.navbar-fixed-top -->
-        <%= bootstrap_flash %>
+
+          </ul>
+          <ul class="nav navbar-nav">
+              <% if params[:controller] == 'documents' && params[:action] == 'show' %>
+              <li><a data-toggle="modal" href="#help">Help</a></li>
+              <% end %>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+
+        <%= render partial: "shared/flash_messages", flash: flash %>
         <noscript>
             <div class="alert alert-danger">For Annotation Studio to work, it is necessary to enable JavaScript. Here are <a href="http://www.enable-javascript.com/" target="_blank"> instructions how to enable JavaScript in your web browser</a>.</div>
         </noscript>

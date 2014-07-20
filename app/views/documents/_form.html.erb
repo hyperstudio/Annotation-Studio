@@ -1,179 +1,102 @@
-<style type="text/css" media="screen">
-	.redactor_box, .redactor_text_area, .redactor_editorm, .text_area {
-		width: 850px;
-	}
-</style>
+<%= form_for (@document), :html => { :role => 'form' } do |f| %>
+<legend><%= controller.action_name.capitalize %> Document</legend>
+  <% if controller.action_name == "new" or @document.draft? %>
+    <h4>Content</h4>
 
-<%= form_for (@document), :html => { :class => 'form-horizontal' } do |f| %>
-<fieldset>
-	<legend><%= controller.action_name.capitalize %> Document</legend>
+    <h5>Upload a file (word, PDF or plain text)</h5>
+    <%= f.label :upload, 'Pick a file from your computer'  %>
 
-<% if controller.action_name == "new" or @document.draft? %>
-
-	<h4>Content</h4>
-
-
-<div class="panel-group" id="accordion2">
-  <div class="panel-group-group">
-    <div class="panel-group-heading">
-      <a class="panel-group-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
-        Upload a file (word, PDF or plain text)
-      </a>
+    <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+      <div class="form-control" data-trigger="fileinput"><i class="fa fa-file fileinput-exists"></i> <span class="fileinput-filename"></span></div>
+      <span class="input-group-addon btn btn-default btn-file"><span class="fileinput-new">Select file</span><span class="fileinput-exists">Change</span><%= f.file_field :upload %></span>
+      <a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
     </div>
-    <div id="collapseOne" class="panel-group-body collapse">
-      <div class="panel-group-inner">
 
-	<div class="form-group" id="document-upload">
-		<%= f.label :upload, 'Pick a file from your computer', :class => 'control-label'  %>
-		<div class="controls">
-			<div class="fileinput fileinput-new" data-provides="fileinput">
-				<div class="input-group">
-					<div class="form-control uneditable-input col-md-6" data-trigger="fileinput"><i class="glyphicon glyphicon-file fileinput-exists"></i> <span class="fileinput-filename"></span></div>
-					<span class="input-group-addon btn btn-default btn btn-default-default btn btn-default-file"><span class="fileinput-new"><i class="glyphicon glyphicon-hdd"></i> Select file</span><span class="fileinput-exists"><i class="glyphicon glyphicon-hdd"></i> Different file</span><%= f.file_field :upload %></span>
-					<a href="#" class="input-group-addon btn btn-default btn btn-default-default fileinput-exists" data-dismiss="fileinput"><i class="glyphicon glyphicon-trash"></i> Clear file</a>
-				</div>
-			</div>
-      <p class="help-block">This feature converts your documents for use within Annotation Studio, and strips out all formatting.  Simple, single-column documents work best.</p>
-		</div>
-	</div>
+    <p class="help-block">This feature converts your documents for use within Annotation Studio, and strips out all formatting.  Simple, single-column documents work best.</p>
 
-
-      </div>
-    </div>
-  </div>
-  <div class="panel-group-group">
-    <div class="panel-group-heading">
-      <a class="panel-group-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
-        Paste or type directly into the form
-      </a>
-    </div>
+    <h5>Paste or type directly into the form</h5>
     <% if controller.action_name == "new" %>
-    	<div id="collapseTwo" class="panel-group-body collapse">
+    <!-- hide -->
     <% else %>
-    	<div id="collapseTwo" class="panel-group-body collapse in">
+    <!-- show -->
     <% end %>
-      <div class="panel-group-inner">
 
-		<div class="form-group" id="document-text">
-			<%= f.label :text, :class => 'control-label' %>
-			<div class="controls">
-				<%= f.text_area :text, :class => 'redactor text_area', :size => "18x6" %>
-				<p class="help-block">For chapters links to work, insert named anchors in the text above, in the form:"&lt;a name=&quot;2HCH0001&quot; id=&quot;2HCH0001&quot;&gt;&lt;/a&gt;"</p>
-			</div>
-		</div>
+      <%= f.label :text %>
+      <%= f.text_area :text, :class => 'form-control summernote', :size => "18x6" %>
+      <p class="help-block">For chapters links to work, insert named anchors in the text above, in the form:"&lt;a name=&quot;2HCH0001&quot; id=&quot;2HCH0001&quot;&gt;&lt;/a&gt;"</p>
 
-		<br />
-		<div class="form-group" id="document-chapters">
-			<%= f.label "Chapters", :class => 'control-label' %>
-			<div class="controls">
-				<%= f.text_area :chapters, :class => 'chapter-editor text_area', :size => "18x6" %>
-				<p class="help-block">Put chapters links in the field above, in the form:"&lt;li&gt;&lt;a href=&quot;#2HCH0001&quot;&gt;1. Loomings.&lt;/a&gt;&lt;/li&gt;"</p>
-			</div>
-		</div>
+      <%= f.label "Chapters" %>
+      <%= f.text_area :chapters, :class => 'form-control summernote', :size => "18x6" %>
+      <p class="help-block">Put chapters links in the field above, in the form:"&lt;li&gt;&lt;a href=&quot;#2HCH0001&quot;&gt;1. Loomings.&lt;/a&gt;&lt;/li&gt;"</p>
 
-
-
-      </div>
-    </div>
-  </div>
-</div>
-
-<% end %>
+  <% end %>
 
 	<h4>Metadata</h4>
 
 	<div class="row">
 		<div class="col-md-6">
 			<div class="form-group">
-				<%= f.label :title, :class => 'control-label' %>
-				<div class="controls">
-					<%= f.text_field :title, :class => 'text_field input-xlarge' %>
-				</div>
+				<%= f.label :title %>
+  			<%= f.text_field :title, :class => 'form-control' %>
 			</div>
 
 			<div class="form-group">
-				<%= f.label :author, :class => 'control-label' %>
-				<div class="controls">
-					<%= f.text_field :author, :class => 'text_field input-xlarge' %>
-				</div>
+				<%= f.label :author %>
+				<%= f.text_field :author, :class => 'form-control' %>
 			</div>
 
 			<div class="form-group">
-				<%= f.label :edition, :class => 'control-label' %>
-				<div class="controls">
-					<%= f.text_field :edition, :class => 'text_field input-xlarge' %>
-				</div>
+				<%= f.label :edition %>
+				<%= f.text_field :edition, :class => 'form-control' %>
 			</div>
 
 		</div><!-- end span 6 -->
 		<div class="col-md-6">
 			<div class="form-group">
-				<%= f.label :publisher, :class => 'control-label' %>
-				<div class="controls">
-					<%= f.text_field :publisher, :class => 'text_field input-xlarge' %>
-				</div>
+				<%= f.label :publisher %>
+				<%= f.text_field :publisher, :class => 'form-control' %>
 			</div>
 			<div class="form-group">
-				<%= f.label :publication_date, :class => 'control-label' %>
-				<div class="controls">
-					<%= f.text_field :publication_date, :class => 'text_field input-xlarge' %>
-				</div>
+				<%= f.label :publication_date %>
+				<%= f.text_field :publication_date, :class => 'form-control' %>
 			</div>
 			<div class="form-group">
-				<%= f.label :source, :class => 'control-label' %>
-				<div class="controls">
-					<%= f.text_field :source, :class => 'text_field input-xlarge' %>
-				</div>
+				<%= f.label :source %>
+				<%= f.text_field :source, :class => 'form-control' %>
 			</div>
 
 			<div class="form-group">
-				<%= f.label :rights_status, :class => 'control-label' %>
-				<div class="controls">
-					<%= f.text_field :rights_status, :class => 'text_field input-xlarge' %>
-				</div>
+				<%= f.label :rights_status %>
+				<%= f.text_field :rights_status, :class => 'form-control' %>
 			</div>
 		</div><!-- end span 6 -->
 	</div><!-- end row -->
 
 	<h4>Status</h4>
-			<p class="help-block">Only published documents may be annotated.
-			<br />Once published, documents may not be edited or deleted.</p>
-
-			<div class="form-group">
-				<div class="controls">
-					<label class="radio inline"><i class="glyphicon glyphicon-pencil"></i>
-						<%= f.radio_button :state, "draft", checked: controller.action_name == "new" ? true : @document.draft?, disabled: !@document.draft? && controller.action_name == "edit" %>
-						Draft
-					</label>
-					<label class="radio inline"><i class="glyphicon glyphicon-ok"></i>
-						<%= f.radio_button :state, "published", checked: @document.published? %>
-						Published
-					</label>
-					<label class="radio inline"><i class="glyphicon glyphicon-folder-close"></i>
-						<%= f.radio_button :state, "deleted", checked: @document.deleted?, disabled: controller.action_name == "new" %>
-						Archived
-					</label>
-				</div>
-			</div>
+	<div class="form-group">
+			<label class="radio-inline"><i class="fa fa-pencil"></i>
+				<%= f.radio_button :state, "draft", checked: controller.action_name == "new" ? true : @document.draft?, disabled: !@document.draft? && controller.action_name == "edit" %> Draft
+			</label>
+			<label class="radio-inline"><i class="fa fa-ok"></i>
+				<%= f.radio_button :state, "published", checked: @document.published? %> Published
+  		</label>
+			<label class="radio-inline"><i class="fa fa-folder-close"></i>
+				<%= f.radio_button :state, "deleted", checked: @document.deleted?, disabled: controller.action_name == "new" %> Archived
+			</label>
+      <p class="help-block">Only published documents may be annotated.</p>
+      <p class="help-block">Once published, documents may not be edited or deleted.</p>
+	</div>
 
 	<h4>Groups</h4>
-					<p class="help-block">Enter the groups to whom you wish to assign this document, and press enter after each.</p>
-
-			<div class="form-group">
-				<div class="controls">
-					<%= f.text_field :rep_group_list, :class => 'text_field input-xlarge', 'data-role' => "tagsinput", 'placeholder' => "Enter group name(s)" %>
-				</div>
-			</div>
-
-
-
-
-<div class="form-actions">
-	<%= f.submit nil, :class => 'btn btn-default btn btn-default-primary' %>
+	<p class="help-block">Enter the groups to whom you wish to assign this document, and press enter after each.</p>
+	<div class="form-group">
+	<%= f.text_field :rep_group_list, :class => 'form-control', 'data-role' => "tagsinput", 'placeholder' => "Enter group name(s)" %>
+	</div>
+  <%= f.submit nil, :class => 'btn btn-default btn btn-default-primary' %>
 	<%= link_to 'Cancel', documents_url, :class => 'btn btn-default' %>
-</div>
-
-
-
-</fieldset>
 <% end %>
+<script type="text/javascript">
+$(document).ready(function() {
+  $('.summernote').summernote();
+});
+</script>

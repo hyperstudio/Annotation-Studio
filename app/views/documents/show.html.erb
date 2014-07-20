@@ -1,7 +1,10 @@
 <%= content_for :page_title, @document.title %>
 <%= stylesheet_link_tag "documents" %>
 <div class="row">
-  <!-- <div class="col-md-1 hidden-xs hidden-xs">
+
+
+
+  <div class="col-md-1 offcanvas">
     <div class="affix-top" data-spy="affix" id="chapters">
       <h4><%= ENV["DOCUMENT_SECTION_STRING"] %></h4>
       <ul class="nav nav-list navbar-collapse" id="chapternav">
@@ -17,8 +20,10 @@
         });
       </script>
     </div>
-  </div><!--/col-md-1 --> -->
-  <div class="col-md-9">
+  </div><!--/col-md-1 -->
+
+
+  <div class="col-md-8">
     <div class="navbar navbar-fixed-top hidden-xs hidden-xs" id="document-title">
       <div class="navbar-inner">
         <div class="container">
@@ -26,13 +31,13 @@
             <h2 id="doc_title" href="#" data-toggle="popover" data-content="" title=""><%= @document.title %></h2>
             <script type="text/javascript" charset="utf-8">
               if ("<%= @document.state %>" === "draft") {
-                statusMessage = '<i class="glyphicon glyphicon-pencil"></i> Draft';
+                statusMessage = '<i class="fa fa-pencil"></i> Draft';
               }
               else if ("<%= @document.state %>" === "published") {
-                statusMessage = '<i class="glyphicon glyphicon-ok"></i> Published';
+                statusMessage = '<i class="fa fa-ok"></i> Published';
               }
               else if ("<%= @document.state %>" === "deleted") {
-                statusMessage = '<i class="glyphicon glyphicon-folder-close"></i> Archived';
+                statusMessage = '<i class="fa fa-folder-close"></i> Archived';
               };
 
               var docMetaInfo = "";
@@ -75,15 +80,6 @@
       <div><!-- Required for cases in which there's no HTML in the text -->
         <%= @document.text.html_safe %>
       </div>
-    </div>
-    <div class="form-actions">
-      <%= link_to 'Back', documents_path, :class => 'btn btn-default'  %>
-      <% if can? :update, @document %>
-      <%= link_to 'Edit', edit_document_path(@document.friendly_id), :class => 'btn btn-default' %>
-      <% end %>
-      <% if can? :destroy, @document %>
-      <%= link_to 'Delete', document_path(@document.friendly_id), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-default btn btn-default-danger' %>
-      <% end %>
     </div>
   </div><!--/col-md-8 -->
   <% if @document.processed? and ! @document.draft? %>

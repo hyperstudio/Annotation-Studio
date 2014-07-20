@@ -13,11 +13,10 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery.ui.all
-//= require twitter/bootstrap
+//= require bootstrap
 //= require bootstrap-tagsinput
-//= require jasny-fileinput
-//= require redactor-rails/redactor.min
-//= require redactor-config
+//= require jasny-bootstrap
+//= require summernote
 //= require showdown
 //= require gettext
 //= require xpath

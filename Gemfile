@@ -7,7 +7,6 @@ gem 'unicorn'
 
 gem 'pg'
 gem "newrelic_rpm"#, "~> 3.5.7.59"
-gem 'heroku-true-relic'
 
 gem 'devise'#, '>= 2.2.2'
 gem 'cancan'
@@ -53,10 +52,6 @@ group :production do
   gem 'rails_12factor'
 end
 
-# gem "twitter-bootstrap-rails" # https://github.com/seyhunak/twitter-bootstrap-rails/issues/401 ?
-gem 'twitter-bootstrap-rails', :git => 'git://github.com/seyhunak/twitter-bootstrap-rails.git', :branch => 'bootstrap3'
-
-
 gem 'jquery-rails', '~> 2.3.0'
 gem 'jquery-ui-rails'
 gem 'tinymce-rails'
@@ -68,7 +63,6 @@ gem "carrierwave"
 # gem "sidekiq"
 
 
-gem 'redactor-rails' # '0.3.2'
 gem 'jbuilder'
 gem "jwt" #, "~> 0.1.4"
 gem "rabl"
@@ -82,5 +76,5 @@ gem "meta_search"#,    '>= 1.1.0.pre'
 gem "figaro"
 
 gem 'will_paginate', '> 3.0'
-gem 'intercom-rails'
 gem 'runtimeerror_notifier'
+gem 'intercom-rails'

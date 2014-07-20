@@ -3,17 +3,11 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 #document-text, #document-chapters {
-	textarea, .redactor_box {
+	textarea {
 		height: 200px;
 		width: 800px;
 	}
 }
-
-.redactor_box, .redactor_text_area, .redactor_editor {
-	height: 200px;
-	width: 800px;
-}
-
 
 .help-block {
 	font-variant:italic;
@@ -23,4 +17,3 @@
 .nav-tabs > li.active a, .nav-tabs > li.active a:hover {
 	background-color: rgb(238, 238, 238);
 }
-

@@ -30,11 +30,11 @@
                         <td><% document.rep_group_list.each do |group| %><span class="label label-default"><%= group %></span> <% end %></td>
             <td>
                             <% if document.draft? %>
-                            <i class="glyphicon glyphicon-pencil"></i>
+                            <i class="fa fa-pencil"></i>
                             <% elsif document.published? %>
-                            <i class="glyphicon glyphicon-ok"></i>
+                            <i class="fa fa-ok"></i>
                             <% elsif document.deleted? %>
-                            <i class="glyphicon glyphicon-folder-close"></i>
+                            <i class="fa fa-folder-close"></i>
                             <% end %>
             </td>
             <td>
@@ -74,11 +74,11 @@
                         <td><% document.rep_group_list.each do |group| %><span class="label label-default"><%= group %></span> <% end %></td>
             <td>
                             <% if document.draft? %>
-                            <i class="glyphicon glyphicon-pencil"></i>
+                            <i class="fa fa-pencil"></i>
                             <% elsif document.published? %>
-                            <i class="glyphicon glyphicon-ok"></i>
+                            <i class="fa fa-ok"></i>
                             <% elsif document.deleted? %>
-                            <i class="glyphicon glyphicon-folder-close"></i>
+                            <i class="fa fa-folder-close"></i>
                             <% end %>
             </td>
             <td>
@@ -119,11 +119,11 @@
                         <td><% document.rep_group_list.each do |group| %><span class="label label-default"><%= group %></span> <% end %></td>
             <td>
                             <% if document.draft? %>
-                            <i class="glyphicon glyphicon-pencil"></i>
+                            <i class="fa fa-pencil"></i>
                             <% elsif document.published? %>
-                            <i class="glyphicon glyphicon-ok"></i>
+                            <i class="fa fa-ok"></i>
                             <% elsif document.deleted? %>
-                            <i class="glyphicon glyphicon-folder-close"></i>
+                            <i class="fa fa-folder-close"></i>
                             <% end %>
             </td>
             <td>
@@ -160,6 +160,7 @@ $(document).ready(
         $(hash + "-tab").tab('show');
       },10);
     }
+    $('.summernote').summernote();
   }
 );
 </script>

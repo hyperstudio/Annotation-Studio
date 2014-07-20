@@ -7,7 +7,7 @@
     <%= f.label :upload, 'Pick a file from your computer'  %>
 
     <div class="fileinput fileinput-new input-group" data-provides="fileinput">
-      <div class="form-control" data-trigger="fileinput"><i class="fa fa-file fileinput-exists"></i> <span class="fileinput-filename"></span></div>
+      <div class="form-control" data-trigger="fileinput"><i class="glyphicon glyphicon-file fileinput-exists"></i> <span class="fileinput-filename"></span></div>
       <span class="input-group-addon btn btn-default btn-file"><span class="fileinput-new">Select file</span><span class="fileinput-exists">Change</span><%= f.file_field :upload %></span>
       <a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
     </div>
@@ -74,15 +74,18 @@
 
 	<h4>Status</h4>
 	<div class="form-group">
-			<label class="radio-inline"><i class="fa fa-pencil"></i>
-				<%= f.radio_button :state, "draft", checked: controller.action_name == "new" ? true : @document.draft?, disabled: !@document.draft? && controller.action_name == "edit" %> Draft
-			</label>
-			<label class="radio-inline"><i class="fa fa-ok"></i>
-				<%= f.radio_button :state, "published", checked: @document.published? %> Published
-  		</label>
-			<label class="radio-inline"><i class="fa fa-folder-close"></i>
-				<%= f.radio_button :state, "deleted", checked: @document.deleted?, disabled: controller.action_name == "new" %> Archived
-			</label>
+			<label class="radio-inline">
+        <%= f.radio_button :state, "draft", checked: controller.action_name == "new" ? true : @document.draft?, disabled: !@document.draft? && controller.action_name == "edit" %>
+        <i class="glyphicon glyphicon-pencil"></i> Draft
+      </label>
+  		<label class="radio-inline">
+        <%= f.radio_button :state, "published", checked: @document.published? %>
+        <i class="glyphicon glyphicon-ok"></i> Published
+      </label>
+			<label class="radio-inline">
+        <%= f.radio_button :state, "deleted", checked: @document.deleted?, disabled: controller.action_name == "new" %>
+        <i class="glyphicon glyphicon-folder-close"></i> Archived
+      </label>
       <p class="help-block">Only published documents may be annotated.</p>
       <p class="help-block">Once published, documents may not be edited or deleted.</p>
 	</div>

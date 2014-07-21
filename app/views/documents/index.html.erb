@@ -27,7 +27,7 @@
                         <td><%= link_to document.title, document_path(document.friendly_id), target: 'blank' %></td>
                         <td><%= document.author %></td>
             <td><%= document.created_at.strftime("%m/%d/%Y") %></td>
-                        <td><% document.rep_group_list.each do |group| %><span class="label label-default"><%= group %></span> <% end %></td>
+                        <td><% document.rep_group_list.each do |group| %><span class="label label-info"><%= group %></span> <% end %></td>
             <td>
                             <% if document.draft? %>
                             <i class="glyphicon glyphicon-pencil"></i>
@@ -39,10 +39,10 @@
             </td>
             <td>
                             <% if can? :update, document %>
-                            <%= link_to 'Edit', edit_document_path(document.friendly_id), :class => 'btn btn-default btn btn-default-mini' %>
+                            <%= link_to 'Edit', edit_document_path(document.friendly_id), :class => 'btn btn-primary btn-sm' %>
                             <% end %>
                             <% if can? :destroy, document %>
-                            <%= link_to 'Delete', document_path(document.friendly_id), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-default btn btn-default-mini btn btn-default-danger' %>
+                            <%= link_to 'Delete', document_path(document.friendly_id), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-danger btn-sm' %>
                             <% end %>
             </td>
                     </tr>
@@ -71,7 +71,7 @@
                         <td><%= link_to document.title, document_path(document.friendly_id), target: 'blank' %></td>
                         <td><%= document.author %></td>
                         <td><%= document.created_at.strftime("%m/%d/%Y") %></td>
-                        <td><% document.rep_group_list.each do |group| %><span class="label label-default"><%= group %></span> <% end %></td>
+                        <td><% document.rep_group_list.each do |group| %><span class="label label-info"><%= group %></span> <% end %></td>
             <td>
                             <% if document.draft? %>
                             <i class="glyphicon glyphicon-pencil"></i>
@@ -83,10 +83,10 @@
             </td>
             <td>
                             <% if can? :update, document %>
-                            <%= link_to 'Edit', edit_document_path(document.friendly_id), :class => 'btn btn-default btn btn-default-mini' %>
+                            <%= link_to 'Edit', edit_document_path(document.friendly_id), :class => 'btn btn-primary btn-sm' %>
                             <% end %>
                             <% if can? :destroy, document %>
-                            <%= link_to 'Delete', document_path(document.friendly_id), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-default btn btn-default-mini btn btn-default-danger' %>
+                            <%= link_to 'Delete', document_path(document.friendly_id), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-danger btn-sm' %>
                             <% end %>
             </td>
                     </tr>
@@ -116,7 +116,7 @@
                         <td><%= link_to document.title, document_path(document.friendly_id), target: 'blank' %></td>
                         <td><%= document.author %></td>
             <td><%= document.created_at.strftime("%m/%d/%Y") %></td>
-                        <td><% document.rep_group_list.each do |group| %><span class="label label-default"><%= group %></span> <% end %></td>
+                        <td><% document.rep_group_list.each do |group| %><span class="label label-info"><%= group %></span> <% end %></td>
             <td>
                             <% if document.draft? %>
                             <i class="glyphicon glyphicon-pencil"></i>
@@ -128,10 +128,10 @@
             </td>
             <td>
                             <% if can? :update, document %>
-                            <%= link_to 'Edit', edit_document_path(document.friendly_id), :class => 'btn btn-default btn btn-default-mini' %>
+                            <%= link_to 'Edit', edit_document_path(document.friendly_id), :class => 'btn btn-primary btn-sm' %>
                             <% end %>
                             <% if can? :destroy, document %>
-                            <%= link_to 'Delete', document_path(document.friendly_id), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-default btn btn-default-mini btn btn-default-danger' %>
+                            <%= link_to 'Delete', document_path(document.friendly_id), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-danger btn-sm' %>
                             <% end %>
             </td>
                     </tr>
@@ -146,7 +146,7 @@
             <% end %>
         </div>
         <% if can? :create, Document %>
-        <%= link_to 'New', new_document_path, :class => 'btn btn-default btn btn-default-primary' %>
+        <%= link_to 'New', new_document_path, :class => 'btn btn-default' %>
         <% end %>
     </div><!--/col-md-12 -->
 </div><!--/row -->

@@ -1,20 +1,5 @@
 /* Add additional stylesheets below
 -------------------------------------------------- */
-/*
-  Bootstrap's documentation styles
-  Special styles for presenting Bootstrap's documentation and examples
-*/
-
-/*
-body{background-color:#4A525A;}
-#targettext h1 {	color:#DDD;}
-.annotator-hl {
-	background-color:rgba(34, 34, 34, 0.45);
-}
-@import url(http://fonts.googleapis.com/css?family=Esteban);
-@import url(http://fonts.googleapis.com/css?family=Balthazar);
-*/
-
 h1, h2, h3, h4, h5, h6, blockquote {
 	font-family: "source-sans-pro",sans-serif;
 	font-style: normal;
@@ -23,7 +8,6 @@ h1, h2, h3, h4, h5, h6, blockquote {
 
 body {
 	background-color: #eee;
-
 }
 
 pre {
@@ -34,9 +18,6 @@ pre {
 	padding: 12px;
 	background-color: #fff;
 	border: none;
-/*	word-break: normal;
-	word-wrap: normal;
-	white-space: normal; */
 	background-color: #fff;
 	border: 0px solid #ccc;
 	border: 0px solid rgba(0, 0, 0, 0.15);
@@ -44,8 +25,6 @@ pre {
 	-moz-border-radius: 0;
 	border-radius: 0;
 }
-
-
 
 div#textcontent {
 	margin-top:60px;
@@ -189,16 +168,6 @@ a.texttitle {
 	display:inline;
 }
 
-/* Sidebar, see: http://stackoverflow.com/questions/9350818/fixed-sidebar-navigation-in-fluid-twitter-bootstrap-2-0 */
-/*.sidebar-nav {
-    position:fixed;
-    top:100px;
-    width:21.97%;
-	height:80%;
-	overflow: auto;
-	background-color: #fefefe;
-}
-*/
 #annotation-well ul#annotation-list {
 	position: relative;
 	margin: 0;
@@ -208,12 +177,6 @@ a.texttitle {
 	left: 22.5%;
 	list-style: none;
 	margin-left: -22.5%;
-/*	border: 1px solid rgba(0, 0, 0, 0.2);
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	-o-box-sizing: border-box;
-	box-sizing: border-box;
-*/
 }
 
 #annotation-well ul#annotation-list li {
@@ -294,22 +257,6 @@ span.highlightborder {
 	margin-top:60px;
 	height:85%;
 	overflow:auto;
-/*  width: 100%;
-  height: 36px;
-  background-color: #eeeeee;
-  background-repeat: repeat-x;
-  background-image: -moz-linear-gradient(top, #f5f5f5 0%, #eeeeee 100%);
-  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f5f5f5), color-stop(100%,#eeeeee));
-  background-image: -webkit-linear-gradient(top, #f5f5f5 0%,#eeeeee 100%);
-  background-image: -ms-linear-gradient(top, #f5f5f5 0%,#eeeeee 100%);
-  background-image: -o-linear-gradient(top, #f5f5f5 0%,#eeeeee 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f5f5f5', endColorstr='#eeeeee',GradientType=0 );
-  background-image: linear-gradient(top, #f5f5f5 0%,#eeeeee 100%);
-  border: 1px solid #e5e5e5;
-  -webkit-border-radius: 4px;
-     -moz-border-radius: 4px;
-          border-radius: 4px;
-*/
 }
 
 #chapters a {
@@ -326,53 +273,6 @@ span.highlightborder {
 }
 
 #chapternav {}
-
-/*#chapters .nav {
-  margin-bottom: 0;
-}
-
-#chapters .nav > li > a {
-  margin: 0;
-  padding-top:    11px;
-  padding-bottom: 11px;
-  border-left: 1px solid #f5f5f5;
-  border-right: 1px solid #e5e5e5;
-  -webkit-border-radius: 0;
-     -moz-border-radius: 0;
-          border-radius: 0;
-}
-#chapters .nav > .active > a,
-#chapters .nav > .active > a:hover {
-  padding-left: 13px;
-  color: #777;
-  background-color: #e9e9e9;
-  border-right-color: #ddd;
-  border-left: 0;
-  -webkit-box-shadow: inset 0 3px 5px rgba(0,0,0,.05);
-     -moz-box-shadow: inset 0 3px 5px rgba(0,0,0,.05);
-          box-shadow: inset 0 3px 5px rgba(0,0,0,.05);
-}
-#chapters .nav > .active > a .caret,
-#chapters .nav > .active > a:hover .caret {
-  border-top-color: #777;
-}
-#chapters .nav > li:first-child > a,
-#chapters .nav > li:first-child > a:hover {
-  border-left: 0;
-  padding-left: 12px;
-  -webkit-border-radius: 4px 0 0 4px;
-     -moz-border-radius: 4px 0 0 4px;
-          border-radius: 4px 0 0 4px;
-}
-#chapters .nav > li:last-child > a {
-  border-right: 0;
-}
-#chapters .dropdown-menu {
-  -webkit-border-radius: 0 0 4px 4px;
-     -moz-border-radius: 0 0 4px 4px;
-          border-radius: 0 0 4px 4px;
-}
-*/
 
 /* Fixed subnav on scroll, but only for 980px and up (sorry IE!) */
 @media (min-width: 980px) {
@@ -406,8 +306,6 @@ span.highlightborder {
 }
 
 
-.nav-list >.active >a,.nav-list>.active>a:hover{color:#ffffff;text-shadow:0 -1px 0 rgba(0, 0, 0, 0.2);background-color: #7E7E7E;}
-
 .control-group .controls {
 	margin-top:5px;
 }
@@ -419,10 +317,6 @@ span.highlightborder {
 .popover.bottom .arrow:after {
   margin-left: -1px;
 }
-
-/*#user-account-name {
-	z-index:100000000;
-}*/
 
 footer {
 	padding-top:10px;

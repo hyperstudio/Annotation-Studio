@@ -1,3 +1,12 @@
 .user-highlight {
 	font-style: italic;
 }
+
+.nav-tabs {
+  border-bottom: 0;
+}
+
+.nav-tabs > li.active {
+  border-bottom: 1px solid #fff;
+  z-index: 100;
+}

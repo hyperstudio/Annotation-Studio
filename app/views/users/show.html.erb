@@ -55,9 +55,9 @@ jQuery(function ($) {
 <div class="row">
   <div class="col-md-12">
       <div class="page-header">
-        <h2>Dashboard for <%= @user.fullname %></h2>
+        <h1>Dashboard for <%= @user.fullname %></h1>
       </div>
-  </div><!--/col-md-12 -->
+  </div><!--/col-md-10 -->
 </div><!--/row -->
 <div class="row">
   <div class="col-md-4">
@@ -102,7 +102,7 @@ jQuery(function ($) {
     </div>
     <h5><%= link_to "View all documents", documents_path %></h5>
     <h5><%= link_to "New document", document_path('new') %></h5>
-  </div><!--/col-md-4 -->
+  </div><!--/col-md-3 -->
   <div class="col-md-4">
     <h4><%= link_to "Annotations", annotations_path %></h4>
     <ul class="nav nav-tabs" id="annotation-tabs" role="tablist">
@@ -123,7 +123,7 @@ jQuery(function ($) {
       </div>
     </div>
     <h5><%= link_to "View all annotations", annotations_path %>  </h5>
-  </div><!--/col-md-4 -->
+  </div><!--/col-md-3 -->
   <div class="col-md-4">
     <h4><%= link_to "Groups", groups_path %>  </h4>
     <ul class="nav nav-tabs" id="group-tabs" role="tablist">

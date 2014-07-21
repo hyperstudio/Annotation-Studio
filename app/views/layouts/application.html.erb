@@ -14,66 +14,70 @@
     <%= stylesheet_link_tag "application", :media => "all" %>
 
     <meta name="robots" content="noindex">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="google-site-verification" content="<%= ENV["GOOGLE_VERIFICATION_CODE"] %>" />
-
     <link href="/favicon.ico" rel="shortcut icon" />
     <%= javascript_include_tag "application" %>
 </head>
-<body data-spy="scroll" data-target="#chapters">
-    <div class="container">
-
-    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-target="#myNavmenu" data-canvas="body">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">Annotation Studio</a>
-        </div>
-        <div class="navbar-collapse collapse">
-          <a class="hidden-xs logo" href="/"><img src="/assets/hs-logo-trans-horiz.png"></a>
-          <ul class="nav navbar-nav" id="accountlinks">
-
-                            <%= render 'devise/menu/registration_items' %>
-                            <%= render 'devise/menu/login_items' %>
-
-          </ul>
-          <ul class="nav navbar-nav">
-              <% if params[:controller] == 'documents' && params[:action] == 'show' %>
-              <li><a data-toggle="modal" href="#help">Help</a></li>
-              <% end %>
-          </ul>
-        </div><!--/.nav-collapse -->
-      </div>
+<body>
+    <div class="navmenu navmenu-default navmenu-fixed-left" id="mainmenu">
+      <a class="navmenu-brand" href="#">Annotation Studio</a>
+      <ul class="nav navmenu-nav" id="globalnav">
+          <%= render 'devise/menu/registration_items' %>
+          <%= render 'devise/menu/login_items' %>
+      </ul>
+      <% if params[:controller] == 'documents' && params[:action] == 'show' %>
+      <%= render 'documents/leftnav' %>
+      <% end %>
     </div>
 
+    <div class="navmenu navmenu-default navmenu-fixed-right" id="annotationmenu">
+      <% if params[:controller] == 'documents' && params[:action] == 'show' %>
+      <%= render 'documents/rightnav' %>
+      <% end %>
+    </div>
+
+    <div class="canvas">
+      <div class="navbar navbar-default navbar-fixed-top" id="leftburger">
+        <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-recalc="false" data-target="#mainmenu" data-canvas=".canvas" id="leftburger-toggle">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+
+      <div class="navbar navbar-default navbar-fixed-top" id="rightburger">
+        <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-recalc="false" data-target="#annotationmenu" data-canvas=".canvas" id="rightburger-toggle">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+
+      <div class="container">
         <%= render partial: "shared/flash_messages", flash: flash %>
         <noscript>
             <div class="alert alert-danger">For Annotation Studio to work, it is necessary to enable JavaScript. Here are <a href="http://www.enable-javascript.com/" target="_blank"> instructions how to enable JavaScript in your web browser</a>.</div>
         </noscript>
-
         <%= yield %>
-
         <footer>
             <p>&copy; MIT <%= Time.now.year %></p>
+            <a class="logo" href="/"><img src="/assets/hs-logo-trans-horiz.png"></a>
         </footer>
-    </div><!-- /container -->
+      </div><!-- /.container -->
+    </div>
 
     <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', '<%= ENV["GOOGLE_ANALYTICS_CODE"] %>']);
+    _gaq.push(['_trackPageview']);
 
-        var _gaq = _gaq || [];
-        _gaq.push(['_setAccount', '<%= ENV["GOOGLE_ANALYTICS_CODE"] %>']);
-        _gaq.push(['_trackPageview']);
-
-        (function() {
-            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-        })();
-
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
     </script>
+
 </body>
 </html>

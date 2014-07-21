@@ -1,5 +1,7 @@
 <%= form_for (@document), :html => { :role => 'form' } do |f| %>
-<legend><%= controller.action_name.capitalize %> Document</legend>
+  <div class="page-header">
+    <h1><%= controller.action_name.capitalize %> Document</h1>
+  </div>
   <% if controller.action_name == "new" or @document.draft? %>
     <h4>Content</h4>
 

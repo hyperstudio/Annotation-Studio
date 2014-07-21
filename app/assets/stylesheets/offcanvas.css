@@ -1,0 +1,61 @@
+html, body {
+  height: 100%;
+}
+
+#leftburger-toggle {
+  float: left;
+  margin-left: 15px;
+}
+
+#rightburger-toggle {
+  float: right;
+  margin-right: 15px;
+}
+
+/*
+.navmenu {
+  z-index: 1;
+}
+*/
+
+#mainmenu, #annotationmenu{
+  z-index: 1;
+}
+
+.canvas {
+  position: relative;
+  left: 0;
+  z-index: 2;
+  min-height: 100%;
+  padding: 50px 0 0 0;
+  background: #fff;
+}
+
+@media (min-width: 0) {
+  .navbar-toggle {
+    display: block; /* force showing the toggle */
+  }
+}
+
+@media (min-width: 992px) {
+  body {
+    padding: 0;
+  }
+
+  #leftburger {
+    right: auto;
+    background: none;
+    border: none;
+  }
+
+  #rightburger {
+    left: auto;
+    background: none;
+    border: none;
+  }
+
+  .canvas {
+    padding: 0;
+  }
+
+}

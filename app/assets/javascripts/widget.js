@@ -49,7 +49,7 @@ Widget.RemoteAnnotationList = Backbone.Collection.extend({
 // Annotation View
 Widget.AnnotationView = Backbone.View.extend({
 	tagName: 'li',
-	className: 'annotation-item',
+	className: 'list-group-item',
 	initialize: function (annotation) {
 		this.commenttemplate = $('#user-comment-template').html();
 		this.highlighttemplate = $('#user-highlight-template').html();

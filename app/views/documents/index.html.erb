@@ -2,15 +2,17 @@
 <%= stylesheet_link_tag "documents" %>
 <div class="row">
     <div class="col-md-12">
-        <h1>Documents</h1>
-        <ul class="nav nav-tabs" id="document-tabs">
-      <li class="active"><a id="assigned-tab" href="#assigned" data-toggle="tab"><span class="badge"><%= Document.tagged_with(current_user.rep_group_list, :any => true).size %></span> Assigned</a></li>
-      <li><a id="created-tab" href="#created" data-toggle="tab"><span class="badge"><%= current_user.documents.size %></span> Created</a></li>
-            <% if can? :manage, Document %>
-      <li><a id="all-tab" href="#all" data-toggle="tab"><span class="badge"><%= Document.all.length %></span> All</a></li>
-            <% end %>
-        </ul>
-        <div class="tab-content">
+      <div class="page-header">
+        <h2>Documents</h2>
+      </div>
+      <ul class="nav nav-tabs" id="document-tabs">
+        <li class="active"><a id="assigned-tab" href="#assigned" data-toggle="tab"><span class="badge"><%= Document.tagged_with(current_user.rep_group_list, :any => true).size %></span> Assigned</a></li>
+        <li><a id="created-tab" href="#created" data-toggle="tab"><span class="badge"><%= current_user.documents.size %></span> Created</a></li>
+        <% if can? :manage, Document %>
+        <li><a id="all-tab" href="#all" data-toggle="tab"><span class="badge"><%= Document.all.length %></span> All</a></li>
+        <% end %>
+      </ul>
+      <div class="tab-content">
             <div class="tab-pane active" id="assigned">
                 <table class="table table-striped table-bordered">
                     <tr>
@@ -160,7 +162,6 @@ $(document).ready(
         $(hash + "-tab").tab('show');
       },10);
     }
-    $('.summernote').summernote();
   }
 );
 </script>

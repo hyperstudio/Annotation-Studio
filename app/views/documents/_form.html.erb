@@ -3,32 +3,53 @@
   <% if controller.action_name == "new" or @document.draft? %>
     <h4>Content</h4>
 
-    <h5>Upload a file (word, PDF or plain text)</h5>
-    <%= f.label :upload, 'Pick a file from your computer'  %>
+    <div class="panel-group" id="accordion">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a data-toggle="collapse" data-parent="#accordion" href="#uploader">
+              Either upload a file (word, PDF or plain text)...
+            </a>
+          </h4>
+        </div>
+        <div id="uploader" class="panel-collapse collapse">
+        <div class="panel-body">
+          <%= f.label :upload, 'Pick a file from your computer'  %>
+          <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+            <div class="form-control" data-trigger="fileinput"><i class="glyphicon glyphicon-file fileinput-exists"></i> <span class="fileinput-filename"></span></div>
+            <span class="input-group-addon btn btn-default btn-file"><span class="fileinput-new">Select file</span><span class="fileinput-exists">Change</span><%= f.file_field :upload %></span>
+            <a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
+          </div>
+          <p class="help-block">This feature converts your documents for use within Annotation Studio, and strips out all formatting.  Simple, single-column documents work best.</p>
+        </div>
+      </div>
+      </div>
 
-    <div class="fileinput fileinput-new input-group" data-provides="fileinput">
-      <div class="form-control" data-trigger="fileinput"><i class="glyphicon glyphicon-file fileinput-exists"></i> <span class="fileinput-filename"></span></div>
-      <span class="input-group-addon btn btn-default btn-file"><span class="fileinput-new">Select file</span><span class="fileinput-exists">Change</span><%= f.file_field :upload %></span>
-      <a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a data-toggle="collapse" data-parent="#accordion" href="#paster">
+              ...Or paste or type directly into the form
+            </a>
+          </h4>
+        </div>
+        <% if controller.action_name == "new" %>
+        <div id="paster" class="panel-collapse collapse">
+        <% else %>
+        <div id="paster" class="panel-collapse collapse in">
+        <% end %>
+        <div class="panel-body">
+          <%= f.label :text %>
+          <%= f.text_area :text, :class => 'form-control summernote', :size => "18x6" %>
+          <p class="help-block">For chapters links to work, insert named anchors in the text above, in the form:"&lt;a name=&quot;2HCH0001&quot; id=&quot;2HCH0001&quot;&gt;&lt;/a&gt;"</p>
+
+          <%= f.label "Chapters" %>
+          <%= f.text_area :chapters, :class => 'form-control summernote', :size => "18x6" %>
+          <p class="help-block">Put chapters links in the field above, in the form:"&lt;li&gt;&lt;a href=&quot;#2HCH0001&quot;&gt;1. Loomings.&lt;/a&gt;&lt;/li&gt;"</p>
+        </div>
+      </div>
+      </div>
     </div>
-
-    <p class="help-block">This feature converts your documents for use within Annotation Studio, and strips out all formatting.  Simple, single-column documents work best.</p>
-
-    <h5>Paste or type directly into the form</h5>
-    <% if controller.action_name == "new" %>
-    <!-- hide -->
-    <% else %>
-    <!-- show -->
-    <% end %>
-
-      <%= f.label :text %>
-      <%= f.text_area :text, :class => 'form-control summernote', :size => "18x6" %>
-      <p class="help-block">For chapters links to work, insert named anchors in the text above, in the form:"&lt;a name=&quot;2HCH0001&quot; id=&quot;2HCH0001&quot;&gt;&lt;/a&gt;"</p>
-
-      <%= f.label "Chapters" %>
-      <%= f.text_area :chapters, :class => 'form-control summernote', :size => "18x6" %>
-      <p class="help-block">Put chapters links in the field above, in the form:"&lt;li&gt;&lt;a href=&quot;#2HCH0001&quot;&gt;1. Loomings.&lt;/a&gt;&lt;/li&gt;"</p>
-
   <% end %>
 
 	<h4>Metadata</h4>

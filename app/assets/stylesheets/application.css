@@ -10,7 +10,6 @@
  *
  *= require_self
  *= require "bootstrap"
- *= require "bootstrap-theme"
  *= require "font-awesome"
  *= require "bootstrap-tagsinput"
  *= require "annotator.min"
@@ -19,7 +18,6 @@
  *= require "boot-docs"
  *= require "users"
  *= require "richText-annotator.css"
- *= require "jquery.ui.all"
  *= require "offcanvas"
  *= require "annotator.touch.css"
 */

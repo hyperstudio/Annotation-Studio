@@ -1,0 +1,14 @@
+    <div class="btn-group btn-group-sm" data-toggle="buttons-radio" id="view-chooser">
+      <button type="button" class="viewchoice btn btn-default btn-default-small active" id="userview">Mine</button>
+      <button type="button" class="viewchoice btn btn-default btn-default-small" id="groupview">Group</button>
+      <button type="button" class="viewchoice btn btn-default btn-default-small" id="classview">Class</button>
+      <% if current_user.has_role?(:admin) %>
+        <button class="viewchoice btn btn-default btn-default-small btn btn-default-inverse" id="adminview">All</button>
+      <% end %>
+    </div>
+    <!--
+    <div class="btn btn-default-group" data-toggle="buttons-radio" id="filter-chooser">
+      <button type="button" class="viewchoice btn btn-default btn-default-small active" id="visibleannotiations">Visible</button>
+      <button type="button" class="viewchoice btn btn-default btn-default-small" id="allannotations">All</button>
+    </div>
+     -->

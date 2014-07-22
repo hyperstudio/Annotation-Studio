@@ -1,5 +1,9 @@
 <% if user_signed_in? %>
 	<li class="<%= 'active' if current_page?(dashboard_path) || current_page?(root_path) %>"><%= link_to("Dashboard", "/dashboard", :id => "dashboard-link") %></li>
+  <li class="<%= 'active' if current_page?(documents_path) %>"><%= link_to("Documents", "/documents", :id => "documents-link") %></li>
+  <li class="<%= 'active' if current_page?(annotations_path) %>"><%= link_to("Annotations", "/annotations", :id => "annotations-link") %></li>
+  <li class="<%= 'active' if current_page?(groups_path) %>"><%= link_to("Groups", "/groups", :id => "groups-link") %></li>
+  <li><%= link_to("Help", "http://support.annotationstudio.org/", :id => "support-link", :target => '_blank') %></li>
 	<li class="<%= 'active' if current_page?(edit_user_registration_path) %>"><%= link_to("My Profile", edit_user_registration_path, :id => "user-account-edit") %></li>
 <% else %>
 	<li class="<%= 'active' if current_page?(new_user_registration_path) %>"><%= link_to('Register', new_user_registration_path)  %></li>

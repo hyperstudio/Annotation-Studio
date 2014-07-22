@@ -3,16 +3,12 @@
 <head>
     <meta charset="utf-8">
     <title><%= yield(:page_title) %> :: Annotation Studio :: <%= ENV["ENVIRONMENT_TAG"] %></title>
-    <%# include_gon(:namespace => 'serverExports') %>
-
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
     <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
     <![endif]-->
     <%= csrf_meta_tags %>
-
     <%= stylesheet_link_tag "application", :media => "all" %>
-
     <meta name="robots" content="noindex">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="google-site-verification" content="<%= ENV["GOOGLE_VERIFICATION_CODE"] %>" />
@@ -61,12 +57,10 @@
         </noscript>
         <%= yield %>
         <footer>
-            <p>&copy; MIT <%= Time.now.year %></p>
-            <a class="logo" href="/"><img src="/assets/hs-logo-trans-horiz.png"></a>
+            <p>&copy; MIT <%= Time.now.year %><a class="logo" href="/"><img src="/assets/hs-logo-trans-horiz.png"></a></p>
         </footer>
       </div><!-- /.container -->
     </div>
-
     <script type="text/javascript">
     var _gaq = _gaq || [];
     _gaq.push(['_setAccount', '<%= ENV["GOOGLE_ANALYTICS_CODE"] %>']);

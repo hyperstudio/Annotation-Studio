@@ -16,8 +16,7 @@
     <%= javascript_include_tag "application" %>
 </head>
 <body>
-    <div class="navmenu navmenu-default navmenu-fixed-left" id="mainmenu">
-      <a class="navmenu-brand" href="#">Annotation Studio</a>
+    <div class="navmenu navmenu-inverse navmenu-fixed-left offcanvas-lg" id="mainmenu">
       <ul class="nav navmenu-nav" id="globalnav">
           <%= render 'devise/menu/registration_items' %>
           <%= render 'devise/menu/login_items' %>
@@ -27,26 +26,19 @@
       <% end %>
     </div>
 
-    <div class="navmenu navmenu-default navmenu-fixed-right" id="annotationmenu">
+    <div class="navmenu navmenu-inverse navmenu-fixed-right offcanvas-lg" id="annotationmenu">
       <% if params[:controller] == 'documents' && params[:action] == 'show' %>
       <%= render 'documents/rightnav' %>
       <% end %>
     </div>
 
-    <div class="canvas">
-      <div class="navbar navbar-default navbar-fixed-top" id="leftburger">
-        <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-recalc="false" data-target="#mainmenu" data-canvas=".canvas" id="leftburger-toggle" title="Navigation">
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
+      <div class="navbar navbar-default navbar-fixed-top" id="navbar">
+        <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-recalc="false" data-target="#mainmenu" id="leftburger" title="Navigation">
+          <i class="fa fa-bars"></i>
         </button>
-      </div>
-
-      <div class="navbar navbar-default navbar-fixed-top" id="rightburger">
-        <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-recalc="false" data-target="#annotationmenu" data-canvas=".canvas" id="rightburger-toggle" title="Tools">
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
+        <a class="navbar-brand" href="#">Annotation Studio</a>
+        <button type="button" class="navbar-toggle pull-right" data-toggle="offcanvas" data-recalc="false" data-target="#annotationmenu" id="rightburger" title="Tools">
+          <i class="fa fa-gears"></i>
         </button>
       </div>
 

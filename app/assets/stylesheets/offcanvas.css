@@ -2,60 +2,55 @@ html, body {
   height: 100%;
 }
 
-#leftburger-toggle {
+body {
+  padding: 50px 0 0 0;
+}
+
+.navmenu {
+  padding-top: 70px;
+}
+
+.navmenu-inverse {
+  background-color: #333;
+}
+
+
+.navbar {
+  display: block;
+  text-align: center;
+}
+
+.navbar-brand {
+  display: inline-block;
+  float: center;
+}
+
+#leftburger {
   float: left;
   margin-left: 15px;
 }
 
-#rightburger-toggle {
+#rightburger {
   float: right;
   margin-right: 15px;
 }
 
-/*
-.navmenu {
-  z-index: 1;
-}
-*/
-
-#mainmenu, #annotationmenu{
-  z-index: 1;
+.container {
+  max-width: 100%;
 }
 
-.canvas {
-  position: relative;
-  left: 0;
-  z-index: 2;
-  min-height: 100%;
-  padding: 50px 0 0 0;
-  background: #eee;
-}
-
-@media (min-width: 0) {
+@media (min-width: 1px) {
   .navbar-toggle {
-    display: block; /* force showing the toggle */
+    display: block !important;
   }
 }
 
 @media (min-width: 992px) {
-  body {
-    padding: 0;
+  .navmenu {
+    padding-top: 70px;
   }
-
-  #leftburger {
-    right: auto;
-    background: none;
-    border: none;
+  .navbar-brand {
+    display: inline-block;
+    float: left;
   }
-
-  #rightburger {
-    left: auto;
-    background: none;
-    border: none;
-  }
-
-  .canvas {
-    padding: 0;
-  }
-
 }

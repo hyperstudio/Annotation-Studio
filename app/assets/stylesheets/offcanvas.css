@@ -1,19 +1,11 @@
-html, body {
-  height: 100%;
-}
-
-body {
-  padding: 50px 0 0 0;
-}
-
 .navmenu {
   padding-top: 70px;
+  /*margin-bottom: 60px;*/
 }
 
 .navmenu-inverse {
   background-color: #333;
 }
-
 
 .navbar {
   display: block;
@@ -25,6 +17,25 @@ body {
   float: left;
 }
 
+.nav-tabs.nav-tabs-xs {
+  margin-top: 5px;
+}
+
+.nav-tabs.nav-tabs-xs > li > a {
+  font-size: 12px;
+}
+
+.label {
+  padding-left: 3px;
+  padding-right: 3px;
+}
+
+/* Extra small */
+.nav-tabs.nav-tabs-xs > li > a {
+  padding: 4px 15px;
+}
+
+
 #leftburger {
   float: left;
   margin-left: 15px;
@@ -33,10 +44,6 @@ body {
 #rightburger {
   float: right;
   margin-right: 15px;
-}
-
-.container {
-  max-width: 100%;
 }
 
 @media (min-width: 1px) {
@@ -49,4 +56,23 @@ body {
   .navmenu {
     padding-top: 70px;
   }
+}
+
+#toolsmenu {
+  padding: 40px;
+  padding-top: 100px;
+}
+
+.navmenu h4, .navmenu p {
+  color: #999;
+
+}
+
+.navmenu strong {
+  color: #ccc;
+
+}
+
+#userfilter, #viewportfilter {
+  display: inline-block;
 }

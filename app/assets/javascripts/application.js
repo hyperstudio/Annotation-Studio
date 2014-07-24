@@ -22,7 +22,7 @@
 //= require Math.uuid
 //= require moment.min
 //= require tinymce
-//= require annotator.min
+//= require annotator-full.min
 //= require richText-annotator
 //= require underscore
 //= require backbone

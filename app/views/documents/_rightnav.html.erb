@@ -1,14 +1,15 @@
-    <div class="btn-group btn-group-sm" data-toggle="buttons-radio" id="view-chooser">
-      <button type="button" class="viewchoice btn btn-default btn-default-small active" id="userview">Mine</button>
-      <button type="button" class="viewchoice btn btn-default btn-default-small" id="groupview">Group</button>
-      <button type="button" class="viewchoice btn btn-default btn-default-small" id="classview">Class</button>
-      <% if current_user.has_role?(:admin) %>
-        <button class="viewchoice btn btn-default btn-default-small btn btn-default-inverse" id="adminview">All</button>
-      <% end %>
-    </div>
-    <!--
-    <div class="btn btn-default-group" data-toggle="buttons-radio" id="filter-chooser">
-      <button type="button" class="viewchoice btn btn-default btn-default-small active" id="visibleannotiations">Visible</button>
-      <button type="button" class="viewchoice btn btn-default btn-default-small" id="allannotations">All</button>
-    </div>
-     -->
+<h4>Filter annotations</h4>
+<p>By <strong>who</strong> made them:</p>
+<div class="btn-group-vertical btn-group-sm" data-toggle="buttons-radio" id="view-chooser">
+  <button type="button" class="viewchoice btn btn-default btn-default-small active" id="userview"><%= current_user.fullname %></button>
+  <button type="button" class="viewchoice btn btn-default btn-default-small" id="groupview">Teammates</button>
+  <button type="button" class="viewchoice btn btn-default btn-default-small" id="classview">Classmates</button>
+  <% if current_user.has_role?(:admin) %>
+    <button class="viewchoice btn btn-default btn-default-small btn btn-default-inverse" id="adminview">All users</button>
+  <% end %>
+</div>
+<p>By <strong>where</strong> they occur:</p>
+<div class="btn-group-vertical btn-group-sm" data-toggle="buttons-radio" id="filter-chooser">
+  <button type="button" class="viewchoice btn btn-default btn-default-small active" id="visibleannotiations">Visible annotations</button>
+  <button type="button" class="viewchoice btn btn-default btn-default-small" id="allannotations">All annotations</button>
+</div>

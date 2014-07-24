@@ -15,11 +15,15 @@
     <link href="/favicon.ico" rel="shortcut icon" />
     <%= javascript_include_tag "application" %>
 </head>
-<body>
+<body id="<%= yield(:body_id) %>">
     <div class="navmenu navmenu-inverse navmenu-fixed-left offcanvas-lg" id="mainmenu">
+      <ul class="nav navmenu-nav" id="globalnav">
       <%= render "shared/left_menu" %>
+      </ul>
       <% if params[:controller] == 'documents' && params[:action] == 'show' %>
+      <ul class="nav navmenu-nav" id="chapternav">
       <%= render 'documents/leftnav' %>
+      </ul>
       <% end %>
     </div>
 
@@ -29,24 +33,23 @@
       <% end %>
     </div>
 
-      <div class="navbar navbar-default navbar-fixed-top" id="navbar">
-        <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-recalc="false" data-target="#mainmenu" id="leftburger" title="Navigation">
-          <i class="fa fa-bars"></i>
-        </button>
-        <a class="navbar-brand" href="#">Annotation Studio</a>
-        <button type="button" class="navbar-toggle pull-right" data-toggle="offcanvas" data-recalc="false" data-target="#toolsmenu" id="rightburger" title="Tools">
-          <i class="fa fa-gears"></i>
-        </button>
-      </div>
+    <div class="navbar navbar-default navbar-fixed-top" id="navbar">
+      <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-recalc="false" data-target="#mainmenu" id="leftburger" title="Navigation">
+        <i class="fa fa-bars"></i>
+      </button>
+      <a class="navbar-brand" href="#">Annotation Studio</a> <%= render "shared/breadcrumbs" %>
+      <button type="button" class="navbar-toggle pull-right" data-toggle="offcanvas" data-recalc="false" data-target="#toolsmenu" id="rightburger" title="Tools">
+        <i class="fa fa-gears"></i>
+      </button>
+    </div>
 
-      <div class="container">
-        <%= render partial: "shared/flash_messages", flash: flash %>
-        <noscript>
-            <div class="alert alert-danger">For Annotation Studio to work, it is necessary to enable JavaScript. Here are <a href="http://www.enable-javascript.com/" target="_blank"> instructions how to enable JavaScript in your web browser</a>.</div>
-        </noscript>
-        <%= render "shared/breadcrumbs" %>
-        <%= yield %>
-      </div><!-- /.container -->
+    <div class="container">
+      <noscript>
+          <div class="alert alert-danger">For Annotation Studio to work, it is necessary to enable JavaScript. Here are <a href="http://www.enable-javascript.com/" target="_blank"> instructions how to enable JavaScript in your web browser</a>.</div>
+      </noscript>
+      <%= render partial: "shared/flash_messages", flash: flash %>
+      <%= yield %>
+    </div><!-- /.container -->
 
     <div class="footer">
       <div class="container">

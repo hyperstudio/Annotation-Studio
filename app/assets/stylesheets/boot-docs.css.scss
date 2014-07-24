@@ -204,6 +204,10 @@ div.okfnyellow {
 	margin: 0;
 }
 
+span.mycolor {
+  background-color: rgba(10, 255, 255, 0.3);
+}
+
 .highlightlink.highlight {
 	display: block;
 	width:100%;
@@ -271,8 +275,6 @@ span.highlightborder {
 #chapters li.active a {
 	color:#fff;
 }
-
-#chapternav {}
 
 /* Fixed subnav on scroll, but only for 980px and up (sorry IE!) */
 @media (min-width: 980px) {

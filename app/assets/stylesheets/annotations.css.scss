@@ -1,3 +1,35 @@
 // Place all the styles related to the annotations controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+.user-highlight {
+  font-style: italic;
+}
+
+.nav-tabs > li.active a, .nav-tabs > li.active a:hover {
+  background-color: rgb(238, 238, 238);
+}
+.tab-pane {
+/*  border-right: 1px solid #ddd;
+  border-left: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+*/}
+
+/*.nav-tabs {
+  border-bottom: 1px solid #eee;
+}
+.nav {
+  margin-bottom:0;
+}
+*/
+#annotation-list li {
+  margin:0 8px;
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+}
+#annotation-list {
+  border: 1px solid #dddddd;
+  border-collapse: separate;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+}

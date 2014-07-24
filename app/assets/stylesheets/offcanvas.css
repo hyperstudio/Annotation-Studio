@@ -22,7 +22,7 @@ body {
 
 .navbar-brand {
   display: inline-block;
-  float: center;
+  float: left;
 }
 
 #leftburger {
@@ -48,9 +48,5 @@ body {
 @media (min-width: 992px) {
   .navmenu {
     padding-top: 70px;
-  }
-  .navbar-brand {
-    display: inline-block;
-    float: left;
   }
 }

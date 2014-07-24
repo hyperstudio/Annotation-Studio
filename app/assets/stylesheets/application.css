@@ -22,6 +22,12 @@
  *= require "annotator.touch.css"
 */
 
+html, body {
+  height: 100%;
+  position: relative;
+  min-height: 100%;
+}
+
 footer {
   margin-top:20px;
 }
@@ -32,7 +38,23 @@ h1 {
 
 body {
   background-color:#eee;
-  padding-top: 60px;
+  padding: 60px 0 0 0;
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+
+.container {
+  max-width: 100%;
+  width: auto;
+  padding: 0 15px;
+}
+
+.container .text-muted {
+  margin: 20px 0;
+}
+
+.breadcrumb {
+  margin-top: 20px;
 }
 
 p.help-block {
@@ -56,4 +78,83 @@ div#login, div#blurb {
 .page-header h1 {
   font-size: 26px;
   margin-top: 30px;
+}
+
+/* OFFCANVAS */
+.navmenu {
+  padding-top: 70px;
+  margin-bottom: 60px;
+}
+
+.navmenu-inverse {
+  background-color: #333;
+}
+
+
+.navbar {
+  display: block;
+  text-align: center;
+}
+
+.navbar-brand {
+  display: inline-block;
+  float: left;
+}
+
+#leftburger {
+  float: left;
+  margin-left: 15px;
+}
+
+#rightburger {
+  float: right;
+  margin-right: 15px;
+}
+
+@media (min-width: 1px) {
+  .navbar-toggle {
+    display: block !important;
+  }
+}
+
+@media (min-width: 992px) {
+  .navmenu {
+    padding-top: 70px;
+  }
+}
+
+/* STICKY FOOTER */
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+  background-color: #f5f5f5;
+}
+
+
+.nav-tabs.nav-tabs-xs > li > a {
+  font-size: 12px;
+
+  .badge,
+  .label {
+    padding-left: 4px;
+    padding-right: 4px;
+    line-height: 13px;
+    font-size: 10px;
+    margin-left: 3px;
+    margin-right: -3px;
+    top: -1px;
+  }
+
+  .label {
+    padding-left: 3px;
+    padding-right: 3px;
+  }
+}
+
+/* Extra small */
+.nav-tabs.nav-tabs-xs > li > a {
+  padding: 4px 15px;
 }

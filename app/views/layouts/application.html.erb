@@ -17,16 +17,13 @@
 </head>
 <body>
     <div class="navmenu navmenu-inverse navmenu-fixed-left offcanvas-lg" id="mainmenu">
-      <ul class="nav navmenu-nav" id="globalnav">
-          <%= render 'devise/menu/registration_items' %>
-          <%= render 'devise/menu/login_items' %>
-      </ul>
+      <%= render "shared/left_menu" %>
       <% if params[:controller] == 'documents' && params[:action] == 'show' %>
       <%= render 'documents/leftnav' %>
       <% end %>
     </div>
 
-    <div class="navmenu navmenu-inverse navmenu-fixed-right offcanvas-lg" id="annotationmenu">
+    <div class="navmenu navmenu-inverse navmenu-fixed-right offcanvas-lg" id="toolsmenu">
       <% if params[:controller] == 'documents' && params[:action] == 'show' %>
       <%= render 'documents/rightnav' %>
       <% end %>
@@ -37,7 +34,7 @@
           <i class="fa fa-bars"></i>
         </button>
         <a class="navbar-brand" href="#">Annotation Studio</a>
-        <button type="button" class="navbar-toggle pull-right" data-toggle="offcanvas" data-recalc="false" data-target="#annotationmenu" id="rightburger" title="Tools">
+        <button type="button" class="navbar-toggle pull-right" data-toggle="offcanvas" data-recalc="false" data-target="#toolsmenu" id="rightburger" title="Tools">
           <i class="fa fa-gears"></i>
         </button>
       </div>
@@ -47,12 +44,16 @@
         <noscript>
             <div class="alert alert-danger">For Annotation Studio to work, it is necessary to enable JavaScript. Here are <a href="http://www.enable-javascript.com/" target="_blank"> instructions how to enable JavaScript in your web browser</a>.</div>
         </noscript>
+        <%= render "shared/breadcrumbs" %>
         <%= yield %>
-        <footer>
-            <p>&copy; MIT <%= Time.now.year %><a class="logo" href="/"><img src="/assets/hs-logo-trans-horiz.png"></a></p>
-        </footer>
       </div><!-- /.container -->
+
+    <div class="footer">
+      <div class="container">
+        <p class="text-muted">&copy; <%= Time.now.year %> <a class="logo" href="http://web.mit.edu/" target="_blank"><img src="/assets/logo_mit.png"></a> <a class="logo" href="http://hyperstudio.mit.edu/" target="_blank"><img src="/assets/hs-logo-trans-horiz.png"></a> <a class="logo" href="http://www.neh.gov/divisions/odh" target="_blank"><img src="/assets/neh_at_logo.png"></a></p>
+      </div>
     </div>
+
     <script type="text/javascript">
     var _gaq = _gaq || [];
     _gaq.push(['_setAccount', '<%= ENV["GOOGLE_ANALYTICS_CODE"] %>']);

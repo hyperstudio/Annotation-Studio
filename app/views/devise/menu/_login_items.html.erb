@@ -1,8 +1,0 @@
-<% if user_signed_in? %>
-  <li class="<%= 'active' if current_page?(destroy_user_session_path) %>"><%= link_to('Logout', destroy_user_session_path) %></li>
-  <% if can? :manage, UserSet %>
-  <li class="<%= 'active' if current_page?(admin_students_path) %>"><%= link_to('Manage Users', admin_students_path) %></li>
-  <% end %>
-<% else %>
-  <li class="<%= 'active' unless current_page?(new_user_registration_path) %>"><%= link_to('Login', new_user_session_path)  %></li>
-<% end %>

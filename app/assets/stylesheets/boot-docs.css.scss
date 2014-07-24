@@ -129,8 +129,9 @@ p.notice, p.alert {
 }
 
 a.logo {
-	float:right;
-	display: block;
+  float: right;
+	display: inline-block;
+  margin: -10px 10px 10px 20px;
 }
 
 a.logo img {

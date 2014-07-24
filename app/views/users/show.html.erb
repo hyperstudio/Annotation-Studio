@@ -51,124 +51,121 @@ jQuery(function ($) {
 <script type="text/template" id="user-highlight-template">
   <span class="user-highlight"><a href="{{uri}}#hl{{uuid}}" target="_blank">{{{quote}}}</a></span>
 </script>
+<div class="row">
+  <div class="col-md-6">
+    <div class="panel panel-default" id="dashboard-recent">
+          <div class="panel-heading">
+            <span class="panel-title"><%= link_to "Documents", documents_path %></span>
 
-<div class="row">
-  <div class="col-md-12">
-    <div class="page-header">
-      <h1>
-        Dashboard for
-        <%= @user.fullname %></h1>
-    </div>
-  </div>
-  <!--/col-md-10 -->
-</div>
-<!--/row -->
-<div class="row">
-  <div class="col-md-4">
-    <h4>
-      <%= link_to "Documents", documents_path %></h4>
-    <ul class="nav nav-tabs" id="document-tabs" role="tablist">
-      <li class="active">
-        <a href="#assigned" data-toggle="tab">
-          <span class="badge">
-            <%= Document.tagged_with(current_user.rep_group_list, :any =>true).size %></span>
-          Assigned
-        </a>
-      </li>
-      <li>
-        <a href="#created" data-toggle="tab">
-          <span class="badge">
-            <%= current_user.documents.size %></span>
-          Created
-        </a>
-      </li>
-    </ul>
+              <ul class="nav nav-tabs nav-tabs-xs pull-right" id="document-tabs" role="tablist">
+                <li class="active">
+                  <a href="#assigned" data-toggle="tab">
+                    <span class="badge">
+                      <%= Document.tagged_with(current_user.rep_group_list, :any =>true).size %></span>
+                    Assigned
+                  </a>
+                </li>
+                <li>
+                  <a href="#created" data-toggle="tab">
+                    <span class="badge">
+                      <%= current_user.documents.size %></span>
+                    Created
+                  </a>
+                </li>
+              </ul>
+
+          </div> <!-- / .panel-heading -->
+
+
     <div class="tab-content">
-      <div class="tab-pane active" id="assigned">
-        <ul class="list-group">
-          <% unless Document.tagged_with(current_user.rep_group_list, :any =>
-          true).empty? || Document.tagged_with(current_user.rep_group_list).nil? %>
-          <% Document.order("created_at DESC").tagged_with(current_user.rep_group_list, :any =>
-          true).limit(10).each do |document| %>
-          <li class="list-group-item">
-            <%= link_to document.title, document_path(document.friendly_id), target: 'blank' %>
-            <span class="pull-right">
-              <%= document.created_at.strftime("%m/%d/%Y") %></span>
-          </li>
-          <% end %>
-          <% else %>
-          <li class="list-group-item">
-            No documents to view. (Your account maybe be pending approval).
-          </li>
-          <% end %></ul>
+      <div class="panel-body tab-pane no-padding fade active in" id="assigned">
+          <table class="table">
+            <% unless Document.tagged_with(current_user.rep_group_list, :any => true).empty? || Document.tagged_with(current_user.rep_group_list).nil? %>
+              <% Document.order("created_at DESC").tagged_with(current_user.rep_group_list, :any => true).limit(10).each do |document| %>
+                <tr>
+                  <td><%= link_to document.title, document_path(document.friendly_id), target: 'blank' %></td>
+                  <td><%= document.created_at.strftime("%m/%d/%Y") %></td>
+                </tr>
+              <% end %>
+            <% else %>
+                <tr>
+                  <td>No documents to view. (Your account maybe be pending approval).</td>
+                </tr>
+            <% end %>
+          </table>
       </div>
-      <div class="tab-pane" id="created">
-        <ul class="list-group">
-          <% unless current_user.documents.empty? || current_user.documents.nil? %>
+      <div class="panel-body tab-pane no-padding fade in" id="created">
+        <table class="table">
+        <% unless current_user.documents.empty? || current_user.documents.nil? %>
           <% current_user.documents.order("created_at DESC").limit(10).each do |document| %>
-          <% if can? :read, document %>
-          <li class="list-group-item">
-            <%= link_to document.title, document_path(document.friendly_id), target: 'blank' %>
-            <span class="pull-right">
-              <%= document.created_at.strftime("%m/%d/%Y") %></span>
-          </li>
+            <% if can? :read, document %>
+            <tr>
+              <td><%= link_to document.title, document_path(document.friendly_id), target: 'blank' %></td>
+              <td><%= document.created_at.strftime("%m/%d/%Y") %></td>
+            </tr>
+            <% end %>
           <% end %>
-          <% end %>
-          <% else %>
-          <li class="list-group-item">
-            No documents to view. (Your account maybe be pending approval).
-          </li>
-          <% end %></ul>
+        <% else %>
+          <tr>
+            <td>No documents to view. (Your account maybe be pending approval).</td>
+          </tr>
+        <% end %>
+        </table>
       </div>
     </div>
-    <h5>
-      <%= link_to "View all documents", documents_path %></h5>
-    <h5>
-      <%= link_to "New document", document_path('new') %></h5>
-  </div>
-  <!--/col-md-3 -->
-  <div class="col-md-4">
-    <h4>
-      <%= link_to "Annotations", annotations_path %></h4>
-    <ul class="nav nav-tabs" id="annotation-tabs" role="tablist">
-      <li class="active">
-        <a href="#mine" data-toggle="tab">
-          <span class="badge"></span>
-          Mine
-        </a>
-      </li>
-      <li>
-        <a href="#class" data-toggle="tab">
-          <span class="badge"></span>
-          Class Groups
-        </a>
-      </li>
-      <li>
-        <a href="#group" data-toggle="tab">
-          <span class="badge"></span>
-          Working Groups
-        </a>
-      </li>
+    <ul class="nav nav-pills">
+      <li><%= link_to "View all documents", documents_path %></li>
+      <li><%= link_to "New document", document_path('new') %></li>
     </ul>
+    </div><!--/ panel -->
+  </div><!--/ col-md-6 -->
+  <div class="col-md-6">
+    <div class="panel panel-default" id="dashboard-recent">
+        <div class="panel-heading">
+          <span class="panel-title"><%= link_to "Annotations", annotations_path %></span>
+          <ul class="nav nav-tabs nav-tabs-xs pull-right" id="annotation-tabs" role="tablist">
+            <li class="active">
+              <a href="#mine" data-toggle="tab">
+                <span class="badge"></span>
+                Mine
+              </a>
+            </li>
+            <li>
+              <a href="#class" data-toggle="tab">
+                <span class="badge"></span>
+                Classes
+              </a>
+            </li>
+            <li>
+              <a href="#group" data-toggle="tab">
+                <span class="badge"></span>
+                Working Groups
+              </a>
+            </li>
+          </ul>
+        </div> <!-- / .panel-heading -->
+        <div class="tab-content">
+          <div class="tab-pane active" id="mine">
+            <ul id="my-annotation-list" class="list-group"></ul>
+          </div>
+          <div class="tab-pane" id="class">
+            <ul id="class-annotation-list" class="list-group"></ul>
+          </div>
+          <div class="tab-pane" id="group">
+            <ul id="group-annotation-list" class="list-group"></ul>
+          </div>
+        </div>
+        <ul class="nav nav-pills">
+          <li><%= link_to "View all annotations", annotations_path %></li>
+        </ul>
+    </div><!--/ panel -->
+  </div><!--/col-md-3 -->
+  </div><!--/row -->
 
-    <div class="tab-content">
-      <div class="tab-pane active" id="mine">
-        <ul id="my-annotation-list" class="list-group"></ul>
-      </div>
-      <div class="tab-pane" id="class">
-        <ul id="class-annotation-list" class="list-group"></ul>
-      </div>
-      <div class="tab-pane" id="group">
-        <ul id="group-annotation-list" class="list-group"></ul>
-      </div>
-    </div>
+  <div class="row">
+  <div class="col-md-6">
     <h5>
-      <%= link_to "View all annotations", annotations_path %></h5>
-  </div>
-  <!--/col-md-3 -->
-  <div class="col-md-4">
-    <h4>
-      <%= link_to "Groups", groups_path %></h4>
+      <%= link_to "Groups", groups_path %></h5>
     <ul class="nav nav-tabs" id="group-tabs" role="tablist">
       <li class="active">
         <a href="#groups" data-toggle="tab">

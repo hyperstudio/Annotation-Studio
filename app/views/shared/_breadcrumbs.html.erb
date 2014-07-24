@@ -1,0 +1,19 @@
+<ol class="breadcrumb">
+  <% if current_page?(dashboard_path) || current_page?(root_path) %>
+  <li class="active">Dashboard</li>
+  <% else %>
+  <li><%= link_to("Dashboard", "/dashboard", :id => "dashboard-link") %></li>
+  <% end %>
+
+  <% if current_page?(documents_path) %>
+  <li class="active">Documents</li>
+  <% end %>
+
+  <% if current_page?(annotations_path) %>
+  <li class="active">Annotations</li>
+  <% end %>
+
+  <% if current_page?(groups_path) %>
+  <li class="active">Groups</li>
+  <% end %>
+</ol>

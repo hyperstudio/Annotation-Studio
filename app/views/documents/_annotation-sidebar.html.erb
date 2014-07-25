@@ -253,14 +253,17 @@ jQuery(function ($) {
     console.info(selector);
     setTimeout(function(){
       $(selector).addClass('mycolor');
-    },1000);
+    },1);
   };
 
   // When the annotator loads remote data, update sidebar
   subscriber.subscribe('annotationsLoaded', loadSidebar);
   subscriber.subscribe('annotationsLoaded', stopSpinner);
   subscriber.subscribe('annotationsLoaded', handleHash);
+
   subscriber.subscribe('annotationsLoaded', colorMine);
+  subscriber.subscribe('annotationCreated', colorMine);
+  subscriber.subscribe('annotationUpdated', colorMine);
 
   // Update all highlights with UUIDs
   subscriber.subscribe('annotationsLoaded', __bind(function(annotations) {

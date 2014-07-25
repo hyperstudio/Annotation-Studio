@@ -7,11 +7,15 @@
 
   <% if current_page?(documents_path) %>
   <li class="active">Documents</li>
-  <% end %>
-
-  <% if params[:controller] == 'documents' && params[:action] == 'show' %>
-  <li><%= link_to("Documents", "/documents", :id => "documents-link") %></li>
-  <li class="active"><%= @document.title %></li>
+  <% elsif params[:controller] == 'documents' %>
+    <li><%= link_to("Documents", "/documents", :id => "documents-link") %></li>
+    <% if params[:action] == 'show' %>
+      <li class="active"><%= @document.title %></li>
+    <% elsif params[:action] == 'new' %>
+      <li class="active">New Document</li>
+    <% elsif params[:action] == 'edit' %>
+    <li class="active">Editing: <%= @document.title %></li>
+    <% end %>
   <% end %>
 
   <% if current_page?(annotations_path) %>

@@ -1,13 +1,17 @@
-<%= content_for :page_title, "Sign up" %>
+<%= content_for :page_title, "Editing: #{@user.fullname}" %>
+<%= content_for :body_id, 'groups' %>
+<%= content_for :body_class, 'index' %>
 <div class="row">
     <div class="col-md-12">
+      <div class="panel panel-default" id="user-form">
+        <div class="panel-heading">
+          <span class="panel-title">Edit Profile</span>
+        </div><!-- / .panel-heading -->
 
-		<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :role => "form"}) do |f| %>
-		<%= devise_error_messages! %>
+        <div class="panel-body">
 
-        <div class="page-header">
-          <h1>Edit Profile for <%= resource.firstname %>  <%= resource.lastname %></h1>
-        </div>
+    		<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :role => "form"}) do |f| %>
+    		<%= devise_error_messages! %>
 
         <div class="form-group">
 				<%= f.label :firstname, "First Name" %>
@@ -19,18 +23,16 @@
 				<%= f.text_field :lastname, :value =>  resource.lastname, :class => "form-control" %>
         </div>
 
-
-          <div class="form-group">
-          <%= f.label "Class Groups" %>
-              <%= f.text_field :rep_group_list, :class => "form-control", 'data-role' => "tagsinput", 'placeholder'=> "Enter Class Groups" %>
-              <p class="help-block">Enter the group names of any class groups you're in, and press enter after each.</p>
-          </div>
-          <div class="form-group">
-          <%= f.label "Working Groups" %>
-              <%= f.text_field :rep_subgroup_list, :class => "form-control", 'data-role' => "tagsinput", 'placeholder'=> "Enter Working Groups" %>
-              <p class="help-block">Enter the group names of any working groups you're in, and press enter after each</p>
-          </div>
-
+        <div class="form-group">
+        <%= f.label "Class Groups" %>
+            <%= f.text_field :rep_group_list, :class => "form-control", 'data-role' => "tagsinput", 'placeholder'=> "Enter Class Groups" %>
+            <p class="help-block">Enter the group names of any class groups you're in, and press enter after each.</p>
+        </div>
+        <div class="form-group">
+        <%= f.label "Working Groups" %>
+            <%= f.text_field :rep_subgroup_list, :class => "form-control", 'data-role' => "tagsinput", 'placeholder'=> "Enter Working Groups" %>
+            <p class="help-block">Enter the group names of any working groups you're in, and press enter after each</p>
+        </div>
 
         <div class="form-group">
 				<%= f.label :email %>
@@ -43,17 +45,15 @@
 				<%= f.text_field :affiliation, :value =>  resource.affiliation, :class => "form-control" %>
         </div>
 
-
         <div class="form-group">
         <%= f.label :current_password %>
         <%= f.password_field :current_password, :class => "form-control" %>
         <p class="help-block">(we need your current password to confirm your changes)</p>
         </div>
 
-
-				<div><%= f.submit "Update", :class => "btn btn-default btn btn-default-primary" %></div>
-    <fieldset>
-
-		<% end %>
+				<%= f.submit "Update", :class => "btn btn-default btn btn-default-primary" %>
+    		<% end %>
+      </div><!--/panel-body -->
+    </div><!--/panel -->
 	</div><!--/col-md-12 -->
 </div><!--/row -->

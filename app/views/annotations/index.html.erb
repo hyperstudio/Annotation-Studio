@@ -1,4 +1,6 @@
 <%= content_for :page_title, "Annotations" %>
+<%= content_for :body_id, 'annotations' %>
+<%= content_for :body_class, 'index' %>
 <%= stylesheet_link_tag "annotations" %>
 <%= render "shared/backbone_libraries" %>
 <%= javascript_include_tag "widget" %>
@@ -49,22 +51,27 @@
   <span class="user-highlight"><a href="{{uri}}#hl{{uuid}}" target="_blank">{{{quote}}}</a></span>
 </script>
 <div class="row">
-	<div class="col-md-12">
-    <ul class="nav nav-tabs" id="document-tabs">
-      <li class="active"><a href="#mine" data-toggle="tab"><span class="badge"></span> Mine</a></li>
-      <li><a href="#class" data-toggle="tab"><span class="badge"></span> Class Groups</a></li>
-      <li><a href="#group" data-toggle="tab"><span class="badge"></span> Working Groups</a></li>
-    </ul>
-    <div class="tab-content">
-      <div class="tab-pane active" id="mine">
-        <ul id="my-annotation-list" class="unstyled"></ul>
-      </div>
-      <div class="tab-pane" id="class">
-        <ul id="class-annotation-list" class="unstyled"></ul>
-      </div>
-      <div class="tab-pane" id="group">
-        <ul id="group-annotation-list" class="unstyled"></ul>
-      </div>
-    </div>
+  <div class="col-md-12">
+    <div class="panel panel-default" id="dashboard-documents">
+      <div class="panel-heading">
+        <span class="panel-title">Annotations</span>
+        <ul class="nav nav-tabs nav-tabs-xs pull-right" id="annotation-tabs" role="tablist">
+          <li class="active"><a href="#mine" data-toggle="tab"><span class="badge"></span> Mine</a></li>
+          <li><a href="#class" data-toggle="tab"><span class="badge"></span> Teammates</a></li>
+          <li><a href="#group" data-toggle="tab"><span class="badge"></span> Classmates</a></li>
+        </ul>
+      </div><!-- / .panel-heading -->
+        <div class="tab-content">
+          <div class="tab-pane no-padding fade active in" id="mine">
+            <ul id="my-annotation-list" class="list-group"></ul>
+          </div>
+          <div class="tab-pane no-padding fade in" id="class">
+            <ul id="class-annotation-list" class="list-group"></ul>
+          </div>
+          <div class="tab-pane no-padding fade in" id="group">
+            <ul id="group-annotation-list" class="list-group"></ul>
+          </div>
+        </div>
+     </div><!--/panel -->
 	</div><!--/col-md-12 -->
 </div><!--/row -->

@@ -15,7 +15,7 @@
     <link href="/favicon.ico" rel="shortcut icon" />
     <%= javascript_include_tag "application" %>
 </head>
-<body id="<%= yield(:body_id) %>">
+<body id="<%= yield(:body_id) %>" class="<%= yield(:body_class) %>">
     <div class="navmenu navmenu-inverse navmenu-fixed-left offcanvas-lg" id="mainmenu">
       <ul class="nav navmenu-nav" id="globalnav">
       <%= render "shared/left_menu" %>

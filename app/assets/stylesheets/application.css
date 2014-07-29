@@ -84,6 +84,18 @@ div#login, div#blurb {
   margin-top: 30px;
 }
 
-body#dashboard .panel {
+body#dashboard .panel, body#document-index .panel {
   background-color: transparent;
+}
+
+body#dashboard .panel-heading, body#document-index .panel-heading {
+  border-bottom: 0;
+}
+
+body#dashboard ul.nav-pills li a:hover, body#document-index ul.nav-pills li a:hover {
+  background-color: #fff;
+}
+
+.table-striped > tbody > tr:nth-child(odd) > td, .table-striped > tbody > tr:nth-child(odd) > th {
+  background-color: #fff;
 }

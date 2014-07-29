@@ -98,31 +98,29 @@ jQuery(function ($) {
         <div class="tab-pane no-padding fade in" id="created">
           <ul id="documents-created" class="list-group">
             <% unless current_user.documents.empty? || current_user.documents.nil? %>
-            <% current_user.documents.order("created_at DESC").limit(10).each do |document| %>
-            <% if can? :read, document %>
-            <li class="list-group-item">
-              <%= link_to document.title, document_path(document.friendly_id), target: 'blank' %>
-              <span class="pull-right">
-                <%= document.created_at.strftime("%m/%d/%Y") %></span>
-            </li>
-            <% end %>
-            <% end %>
+              <% current_user.documents.order("created_at DESC").limit(10).each do |document| %>
+                <% if can? :read, document %>
+                  <li class="list-group-item">
+                    <%= link_to document.title, document_path(document.friendly_id), target: 'blank' %>
+                    <span class="pull-right">
+                      <%= document.created_at.strftime("%m/%d/%Y") %></span>
+                  </li>
+                <% end %>
+              <% end %>
             <% else %>
             <li class="list-group-item">
               No documents to view. (Your account maybe be pending approval).
             </li>
-            <% end %></ul>
+            <% end %>
+          </ul>
         </div>
       </div>
       <ul class="nav nav-pills">
-        <li>
-          <%= link_to "View all documents", documents_path, :class =>"btn btn-default" %></li>
-        <li>
-          <%= link_to "New document", document_path('new'), :class =>"btn btn-default" %></li>
+        <li><%= link_to "View all documents", documents_path %></li>
+        <li><%= link_to "New document", document_path('new') %></li>
       </ul>
-    </div>
-    <!--/ panel --> </div>
-  <!--/ col-md-6 -->
+    </div><!--/ panel -->
+  </div><!--/ col-md-6 -->
   <div class="col-md-6">
     <div class="panel panel-default" id="dashboard-annotations">
       <div class="panel-heading">
@@ -173,43 +171,50 @@ jQuery(function ($) {
 
 <div class="row">
   <div class="col-md-6">
-    <h5>
-      <%= link_to "Groups", groups_path %></h5>
-    <ul class="nav nav-tabs" id="group-tabs" role="tablist">
-      <li class="active">
-        <a href="#groups" data-toggle="tab">
-          <span class="badge">
-            <%= current_user.rep_group_list.size %></span>
-          Classes
-        </a>
-      </li>
-      <li>
-        <a href="#subgroups" data-toggle="tab">
-          <span class="badge">
-            <%= current_user.rep_subgroup_list.size %></span>
-          Groups
-        </a>
-      </li>
-    </ul>
-    <div class="tab-content">
-      <div class="tab-pane active" id="groups">
-        <ul class="list-group">
-          <% current_user.rep_group_list.each do |group| %>
-          <li class="list-group-item">
-            <%= group %></li>
-          <% end %></ul>
+    <div class="panel panel-default" id="dashboard-groups">
+      <div class="panel-heading">
+        <span class="panel-title">
+          <%= link_to "Groups", groups_path %></span>
+        <ul class="nav nav-tabs nav-tabs-xs pull-right" id="group-tabs" role="tablist">
+          <li class="active">
+            <a href="#groups" data-toggle="tab">
+              <span class="badge">
+                <%= current_user.rep_group_list.size %></span>
+              Classes
+            </a>
+          </li>
+          <li>
+            <a href="#subgroups" data-toggle="tab">
+              <span class="badge">
+                <%= current_user.rep_subgroup_list.size %></span>
+              Groups
+            </a>
+          </li>
+        </ul>
       </div>
-      <div class="tab-pane" id="subgroups">
+      <!-- / .panel-heading -->
+
+    <div class="tab-content">
+      <div class="tab-pane no-padding fade active in" id="groups">
         <ul class="list-group">
-          <% current_user.rep_subgroup_list.each do |group| %>
-          <li class="list-group-item">
-            <%= group %></li>
-          <% end %></ul>
+        <% current_user.rep_group_list.each do |group| %>
+          <li class="list-group-item"><%= group %></li>
+        <% end %>
+        </ul>
+      </div>
+       <div class="tab-pane no-padding fade in" id="subgroups">
+        <ul class="list-group">
+        <% current_user.rep_subgroup_list.each do |group| %>
+          <li class="list-group-item"><%= group %></li>
+        <% end %>
+        </ul>
       </div>
     </div>
-    <h5>
-      <%= link_to "View all groups", groups_path %></h5>
-  </div>
-  <!--/col-md-4 -->
-</div>
-<!--/row -->
+    <ul class="nav nav-pills">
+      <li>
+        <%= link_to "View all groups", groups_path %>
+      </li>
+    </ul>
+    </div><!--/ panel -->
+  </div><!--/ col-md-6 -->
+</div><!--/row -->

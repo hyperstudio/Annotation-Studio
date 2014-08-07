@@ -247,32 +247,19 @@ jQuery(function ($) {
     }
   };
 
-  var colorMine = function() {
-    var user = "<%= current_user.email %>";
-    var selector = "span[title='" + user + "']";
-    console.info(selector);
-    setTimeout(function(){
-      $(selector).addClass('mycolor');
-    },1);
+  var domIndex = function(editor, annotation) {
+    var node = $(".annotator-hl-temporary");
+    var parent = node.parent()[0];
+    var domindex = $( "#textcontent" ).find( "*" ).index(parent)
+    // console.log(domindex);
+    annotation.domindex = domindex;
   };
-
-  var colorOne = function(annotation) {
-    var user = "<%= current_user.email %>";
-    var selector = "#hl" + annotation.uuid;
-    console.info(selector);
-    setTimeout(function(){
-      $(selector).addClass('mycolor');
-    },1);
-  }
 
   // When the annotator loads remote data, update sidebar
   subscriber.subscribe('annotationsLoaded', loadSidebar);
   subscriber.subscribe('annotationsLoaded', stopSpinner);
   subscriber.subscribe('annotationsLoaded', handleHash);
-
-  subscriber.subscribe('annotationsLoaded', colorMine);
-  subscriber.subscribe('annotationCreated', colorOne);
-  subscriber.subscribe('annotationUpdated', colorOne);
+  subscriber.subscribe('annotationEditorShown', domIndex);
 
   // Update all highlights with UUIDs
   subscriber.subscribe('annotationsLoaded', __bind(function(annotations) {
@@ -292,6 +279,8 @@ jQuery(function ($) {
   subscriber.subscribe('annotationUpdated', loadSidebar);
   subscriber.subscribe('annotationDeleted', deleteFromSidebar);
   $(".annotator-checkbox label").text('Allow my groups to view this annotation');
+
+
 
   // When the user scrolls, call showAndHideAnnotations
   // sidebar.filtered = true;

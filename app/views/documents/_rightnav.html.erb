@@ -1,15 +1,15 @@
-<h4>Filter annotations</h4>
-<p>By <strong>who</strong> made them:</p>
-<div class="btn-group-vertical btn-group-sm" data-toggle="buttons-radio" id="view-chooser">
-  <button type="button" class="viewchoice btn btn-default btn-default-small active" id="userview"><%= current_user.fullname %></button>
-  <button type="button" class="viewchoice btn btn-default btn-default-small" id="groupview">Teammates</button>
-  <button type="button" class="viewchoice btn btn-default btn-default-small" id="classview">Classmates</button>
+<h4>Filter annotations by:</h4>
+<p><strong>Who</strong> made them:</p>
+<div class="btn-group btn-group-sm" data-toggle="buttons-radio" id="view-chooser">
+  <button type="button" class="viewchoice btn btn-default btn-default-small active" id="userview">Me</button>
+  <button type="button" class="viewchoice btn btn-default btn-default-small" id="groupview">Teams</button>
+  <button type="button" class="viewchoice btn btn-default btn-default-small" id="classview">Groups</button>
   <% if current_user.has_role?(:admin) %>
     <button class="viewchoice btn btn-default btn-default-small btn btn-default-inverse" id="adminview">All users</button>
   <% end %>
 </div>
-<p>By <strong>where</strong> they occur:</p>
-<div class="btn-group-vertical btn-group-sm" data-toggle="buttons-radio" id="filter-chooser">
-  <button type="button" class="viewchoice btn btn-default btn-default-small active" id="visibleannotations">Visible annotations</button>
-  <button type="button" class="viewchoice btn btn-default btn-default-small" id="allannotations">All annotations</button>
+<p><strong>Where</strong> they occur:</p>
+<div class="btn-group btn-group-sm" data-toggle="buttons-radio" id="filter-chooser">
+  <button type="button" class="viewchoice btn btn-default btn-default-small active" id="visibleannotations">Visible portion</button>
+  <button type="button" class="viewchoice btn btn-default btn-default-small" id="allannotations">Whole document</button>
 </div>

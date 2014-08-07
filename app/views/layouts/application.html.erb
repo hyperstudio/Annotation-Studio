@@ -18,7 +18,7 @@
 <body id="<%= yield(:body_id) %>" class="<%= yield(:body_class) %>">
     <div class="navmenu navmenu-inverse navmenu-fixed-left offcanvas-lg" id="mainmenu">
       <ul class="nav navmenu-nav" id="globalnav">
-      <%= render "shared/left_menu" %>
+      <%# render "shared/left_menu" %>
       </ul>
       <% if params[:controller] == 'documents' && params[:action] == 'show' %>
       <ul class="nav navmenu-nav" id="chapternav">

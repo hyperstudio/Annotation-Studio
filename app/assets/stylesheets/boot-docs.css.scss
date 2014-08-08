@@ -27,7 +27,7 @@ pre {
 }
 
 div#textcontent {
-  margin-top: 20px;
+  margin-top: 30px;
 	font-family: "calluna";
 	padding: 60px;
 	background-color: #fff;
@@ -106,7 +106,7 @@ li.annotation-item.focuswhite {
 }
 
 #annotation-well {
-	width:240px;
+	width:360px;
 	height:85%;
 	padding:0 15px;
   	margin-top: 60px;
@@ -173,7 +173,7 @@ a.texttitle {
 	position: relative;
 	margin: 0;
 	padding: 0;
-	width: 100%;
+	width: 360px;
 	float: left;
 	left: 22.5%;
 	list-style: none;
@@ -183,6 +183,7 @@ a.texttitle {
 #annotation-well ul#annotation-list li {
 	font-size: 12px;
 	font-style: normal;
+  width: 340px;
 	font-weight: 400;
 	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.3);
 	padding: 2px 5px;

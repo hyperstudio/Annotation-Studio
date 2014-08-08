@@ -29,3 +29,4 @@
 //= require mustache
 //= require annotator.touch.min
 //= require highlighter
+//= require jquery.slimscroll.min

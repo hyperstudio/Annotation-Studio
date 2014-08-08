@@ -27,20 +27,16 @@
 
     <nav class="navbar navbar-default navbar-fixed-top" id="navbar">
       <div class="container">
-        <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-recalc="false" data-target="#mainmenu" id="leftburger" title="Navigation">
-          <i class="fa fa-bars"></i>
-        </button>
         <a class="navbar-brand" href="#">Annotation Studio</a>
-        <button type="button" class="navbar-toggle pull-right" data-toggle="offcanvas" data-recalc="false" data-target="#toolsmenu" id="rightburger" title="Tools">
-          <i class="fa fa-gears"></i>
-        </button>
         <%= render "shared/user_menu" %>
       </div>
     </nav>
 
     <nav class="navbar navbar-default navbar-fixed-top hidden-xs" id="lower-navbar">
       <div class="container">
+        <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-recalc="false" data-target="#mainmenu" id="leftburger" title="Navigation"><i class="fa fa-bars"></i></button>
         <%= render "shared/breadcrumbs" %>
+        <button type="button" class="navbar-toggle pull-right" data-toggle="offcanvas" data-recalc="false" data-target="#toolsmenu" id="rightburger" title="Tools"><i class="fa fa-gears"></i></button>
       </div>
     </nav>
 
@@ -50,7 +46,7 @@
       <%= yield %>
     </div><!-- /.container -->
 
-    <div class="footer">
+    <div class="footer navbar-fixed-bottom">
       <div class="container">
         <p class="text-muted">&copy; <%= Time.now.year %> <a class="logo" href="http://web.mit.edu/" target="_blank"><img src="/assets/logo_mit.png"></a> <a class="logo" href="http://hyperstudio.mit.edu/" target="_blank"><img src="/assets/hs-logo-trans-horiz.png"></a> <a class="logo" href="http://www.neh.gov/divisions/odh" target="_blank"><img src="/assets/neh_at_logo.png"></a></p>
       </div>
@@ -71,6 +67,14 @@
     $('#lower-navbar').affix({
       offset: {top: 50}
     });
+    $('#mainmenu').offcanvas({
+      disableScrolling: false,
+      autohide: false,
+    })
+    $('#toolsmenu').offcanvas({
+      disableScrolling: false,
+      autohide: false,
+    })
     </script>
 </body>
 </html>

@@ -1,7 +1,7 @@
 <%= content_for :page_title, @document.title %>
 <%= stylesheet_link_tag "documents" %>
 <div class="row">
-  <div class="col-md-9">
+  <div class="col-md-8">
     <% if ! @document.processed? %>
       <%= render 'processed_message' %>
     <% end %>
@@ -11,7 +11,7 @@
       </div>
     </div>
   </div><!--/col-md-8 -->
-  <div class="col-md-3">
+  <div class="col-md-4">
     <% if @document.processed? and ! @document.draft? %>
       <%= render "documents/annotation-sidebar" %>
     <% end %>
@@ -22,3 +22,24 @@
   <div class="modal-body" id="spinnerdiv"><em>Loading annotations...</em></div>
 </div>
 <%= render "documents/metadata" %>
+<script type="text/javascript">
+$('#annotation-list').slimScroll({
+  height: '99%',
+  width: '340px',
+  alwaysVisible: false,
+  allowPageScroll: true,
+  disableFadeOut: true
+});
+
+$('#chapternav').slimScroll({
+  height: '99%',
+  width: '300px',
+  size: '10px',
+  position: 'right',
+  color: '#ccc',
+  distance: '5px',
+  alwaysVisible: false,
+  allowPageScroll: true,
+  disableFadeOut: true
+});
+</script>

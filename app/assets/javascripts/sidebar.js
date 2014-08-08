@@ -230,11 +230,12 @@ Sidebar.App = Backbone.Router.extend({
       // console.info("Remote: "+ Sidebar.annotations.toJSON());
     });
   },
+
   showAndHideAnnotations: function() {
     if(this.filtered) {
       $('ul#annotation-list li').each(function(index, element){
         highlight_id = $(element).find('span:first-child').data('highlight');
-        if(isScrolledIntoView($(highlight_id))){
+        if(matchesFilters($(highlight_id))){
           $(element).show();
         }else{
           $(element).hide();
@@ -246,6 +247,10 @@ Sidebar.App = Backbone.Router.extend({
     $('ul#annotation-list li').show()
   },
 });
+
+function matchesFilters(elem) {
+  return (isScrolledIntoView(elem) && isTagged(elem));
+}
 
 function isScrolledIntoView(elem) {
   if (elem != undefined) {
@@ -260,3 +265,18 @@ function isScrolledIntoView(elem) {
     return false
   }
 }
+
+function isTagged(elem, tag) {
+  if (elem != undefined) {
+    var tags = $(window).scrollTop();
+    var docViewBottom = docViewTop + $(window).height();
+    var elemTop = $(elem).offset().top;
+    var elemBottom = elemTop + $(elem).height();
+
+    return ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
+  }
+  else {
+    return false
+  }
+}
+

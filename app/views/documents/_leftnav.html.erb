@@ -1,4 +1,8 @@
+<!-- documents/_leftnav.html.erb -->
+<% if params[:action] == 'show' %>
+<ul class="nav navmenu-nav" id="chapternav">
 <%= @document.chapters.try(:html_safe) %>
+</ul>
 <script type="text/javascript" charset="utf-8">
   $("#chapternav a").click(function(event){
     event.preventDefault();
@@ -6,3 +10,4 @@
     $('html,body').animate({scrollTop: $(idtarget).offset().top}, 500);
   });
 </script>
+<% end %>

@@ -17,6 +17,11 @@
   float: left;
 }
 
+#lower-navbar {
+  top: 50px;
+  border-width: 0 0 1px;
+}
+
 .nav-tabs.nav-tabs-xs {
   margin-top: 5px;
 }
@@ -55,6 +60,12 @@
 @media (min-width: 992px) {
   .navmenu {
     padding-top: 70px;
+  }
+}
+
+@media (max-width: 768px) {
+  body {
+    padding: 50px 0 0 0;
   }
 }
 

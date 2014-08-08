@@ -16,37 +16,36 @@
     <%= javascript_include_tag "application" %>
 </head>
 <body id="<%= yield(:body_id) %>" class="<%= yield(:body_class) %>">
+
     <div class="navmenu navmenu-inverse navmenu-fixed-left offcanvas-lg" id="mainmenu">
-      <ul class="nav navmenu-nav" id="globalnav">
-      <%# render "shared/left_menu" %>
-      </ul>
-      <% if params[:controller] == 'documents' && params[:action] == 'show' %>
-      <ul class="nav navmenu-nav" id="chapternav">
-      <%= render 'documents/leftnav' %>
-      </ul>
-      <% end %>
+      <%= render "#{params[:controller]}/leftnav" %>
     </div>
 
     <div class="navmenu navmenu-inverse navmenu-fixed-right offcanvas-lg" id="toolsmenu">
-      <% if params[:controller] == 'documents' && params[:action] == 'show' %>
-      <%= render 'documents/rightnav' %>
-      <% end %>
+      <%= render "#{params[:controller]}/rightnav" %>
     </div>
 
-    <div class="navbar navbar-default navbar-fixed-top" id="navbar">
-      <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-recalc="false" data-target="#mainmenu" id="leftburger" title="Navigation">
-        <i class="fa fa-bars"></i>
-      </button>
-      <a class="navbar-brand" href="#">Annotation Studio</a> <%= render "shared/breadcrumbs" %>
-      <button type="button" class="navbar-toggle pull-right" data-toggle="offcanvas" data-recalc="false" data-target="#toolsmenu" id="rightburger" title="Tools">
-        <i class="fa fa-gears"></i>
-      </button>
-    </div>
+    <nav class="navbar navbar-default navbar-fixed-top" id="navbar">
+      <div class="container">
+        <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-recalc="false" data-target="#mainmenu" id="leftburger" title="Navigation">
+          <i class="fa fa-bars"></i>
+        </button>
+        <a class="navbar-brand" href="#">Annotation Studio</a>
+        <button type="button" class="navbar-toggle pull-right" data-toggle="offcanvas" data-recalc="false" data-target="#toolsmenu" id="rightburger" title="Tools">
+          <i class="fa fa-gears"></i>
+        </button>
+        <%= render "shared/user_menu" %>
+      </div>
+    </nav>
+
+    <nav class="navbar navbar-default navbar-fixed-top hidden-xs" id="lower-navbar">
+      <div class="container">
+        <%= render "shared/breadcrumbs" %>
+      </div>
+    </nav>
 
     <div class="container">
-      <noscript>
-          <div class="alert alert-danger">For Annotation Studio to work, it is necessary to enable JavaScript. Here are <a href="http://www.enable-javascript.com/" target="_blank"> instructions how to enable JavaScript in your web browser</a>.</div>
-      </noscript>
+      <%= render partial: "shared/noscript" %>
       <%= render partial: "shared/flash_messages", flash: flash %>
       <%= yield %>
     </div><!-- /.container -->
@@ -67,6 +66,11 @@
         ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
+    </script>
+    <script type="text/javascript">
+    $('#lower-navbar').affix({
+      offset: {top: 50}
+    });
     </script>
 </body>
 </html>

@@ -18,11 +18,15 @@
 <body id="<%= yield(:body_id) %>" class="<%= yield(:body_class) %>">
 
     <div class="navmenu navmenu-inverse navmenu-fixed-left offcanvas-lg" id="mainmenu">
-      <%= render "#{params[:controller]}/leftnav" %>
+      <% unless params[:controller] == 'devise/sessions' %>
+        <%= render "#{params[:controller]}/leftnav" %>
+      <% end %>
     </div>
 
     <div class="navmenu navmenu-inverse navmenu-fixed-right offcanvas-lg" id="toolsmenu">
-      <%= render "#{params[:controller]}/rightnav" %>
+      <% unless params[:controller] == 'devise/sessions' %>
+        <%= render "#{params[:controller]}/rightnav" %>
+      <% end %>
     </div>
 
     <nav class="navbar navbar-default navbar-fixed-top" id="navbar">

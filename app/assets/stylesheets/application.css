@@ -99,3 +99,7 @@ body.index ul.nav-pills li a:hover {
 body.index .table-striped > tbody > tr:nth-child(odd) > td, .table-striped > tbody > tr:nth-child(odd) > th {
   background-color: #fff;
 }
+
+body#sessions.new {
+  padding-top: 50px;
+}

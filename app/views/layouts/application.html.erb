@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title><%= yield(:page_title) %> :: Annotation Studio :: <%= ENV["ENVIRONMENT_TAG"] %></title>
+    <title>Annotation Studio :: <%= yield(:page_title) %></title>
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
     <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
@@ -26,13 +26,13 @@
 
     <% if !current_user.nil?  %>
     <nav class="navmenu navmenu-inverse navmenu-fixed-left offcanvas" id="mainmenu" role="navigation">
-      <% unless params[:controller] == 'devise/sessions' %>
+      <% unless params[:controller].include?('devise') %>
         <%= render "#{params[:controller]}/leftnav" %>
       <% end %>
     </nav>
 
     <nav class="navmenu navmenu-inverse navmenu-fixed-right offcanvas" id="toolsmenu" role="navigation">
-      <% unless params[:controller] == 'devise/sessions' %>
+      <% unless params[:controller].include?('devise') %>
         <%= render "#{params[:controller]}/rightnav" %>
       <% end %>
     </nav>

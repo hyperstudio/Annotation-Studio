@@ -30,7 +30,7 @@ html {
 body {
   /*height: 100%;*/
   background-color:#eee;
-  padding: 100px 0 0 0;
+  padding: 100px 0 100px 0;
   margin-bottom: 60px;
 }
 
@@ -103,3 +103,8 @@ body.index .table-striped > tbody > tr:nth-child(odd) > td, .table-striped > tbo
 body#sessions.new {
   padding-top: 50px;
 }
+
+/*body#documents.show, body#registrations.edit {
+  padding-bottom: 100px;
+}
+*/

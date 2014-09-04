@@ -17,17 +17,6 @@
 		<%= render "techreqs" %>
 	</div>
 	<div class="span4" id="login">
-		<div class="alert">
-		<% if Rails.env.public? %>
-			This is the public demo of Annotation Studio. MIT affiliates should go <a href="http://annotationstudio.mit.edu/"><strong>here</strong></a>.
-		<% elsif Rails.env.development? %>
-			This is the development version of Annotation Studio.
-		<% elsif Rails.env.staging? %>
-			This is the staging site for Annotation Studio. MIT affiliates should go <a href="http://annotationstudio.mit.edu/"><strong>here</strong></a> instead. Affiliates of other institutions and the general public should go <a href="http://app.annotationstudio.org/"><strong>here</strong></a> instead.
-		<% elsif Rails.env.production? %>
-			This is the internal MIT instance of Annotation Studio. Non-MIT affiliates should go <a href="http://app.annotationstudio.org/"><strong>here</strong></a> instead.
-		<% end %>
-		</div>
 		<h4>Register</h4>
 		<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
 		<%= devise_error_messages! %>

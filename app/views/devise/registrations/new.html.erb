@@ -4,11 +4,11 @@
 		<p>
 			<legend>
 				<% if Rails.env.public? %>
-					Annotation Studio is a web application that supports close reading and collaborative interpretation of online documents. It's designed primarily for use by students of the humanities. <a href="http://www.annotationstudio.org/">Learn more here</a>, or <a href="/users/sign_up">register</a> and <a href="/users/sign_in">sign in</a> to try it out.
+					Annotation Studio is a web application that supports close reading and collaborative interpretation of online documents. It's designed primarily for use by students of the humanities. <a href="/users/sign_up">Register</a> and <a href="/users/sign_in">sign in</a> to try it out.
 				<% elsif Rails.env.development? %>
 					Welcome to Annotation Studio, a tool to support close reading and collaborative interpretation of online documents. <a href="/users/sign_up">Register</a> and <a href="/users/sign_in">sign in</a> to use it, or <a href="http://www.annotationstudio.org/">click here</a> to learn more.
 				<% elsif Rails.env.staging? %>
-					Annotation Studio is a web application that supports close reading and collaborative interpretation of online documents. It's designed primarily for use by students of the humanities. <a href="http://www.annotationstudio.org/">Learn more here</a>, or <a href="/users/sign_up">register</a> and <a href="/users/sign_in">sign in</a> to try it out.
+					Annotation Studio is a web application that supports close reading and collaborative interpretation of online documents. It's designed primarily for use by students of the humanities. <a href="/users/sign_up">Register</a> and <a href="/users/sign_in">sign in</a> to try it out.
 				<% elsif Rails.env.production? %>
 					Welcome to Annotation Studio, a tool to support close reading and collaborative interpretation of online documents. <a href="/users/sign_up">Register</a> and <a href="/users/sign_in">sign in</a> to use it, or <a href="http://www.annotationstudio.org/">click here</a> to learn more.
 				<% end %>

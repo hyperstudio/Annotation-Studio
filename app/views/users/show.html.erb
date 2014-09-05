@@ -137,13 +137,13 @@ jQuery(function ($) {
           <li>
             <a href="#group" data-toggle="tab">
               <span class="badge"></span>
-              Teams
+              Groups
             </a>
           </li>
           <li>
             <a href="#class" data-toggle="tab">
               <span class="badge"></span>
-              Groups
+              Classes
             </a>
           </li>
         </ul>
@@ -175,20 +175,20 @@ jQuery(function ($) {
     <div class="panel panel-default" id="dashboard-groups">
       <div class="panel-heading">
         <span class="panel-title">
-          <%= link_to "Groups", groups_path %></span>
+          <%= link_to "People", groups_path %></span>
         <ul class="nav nav-tabs nav-tabs-xs pull-right" id="group-tabs" role="tablist">
           <li class="active">
             <a href="#groups" data-toggle="tab">
               <span class="badge">
                 <%= current_user.rep_group_list.size %></span>
-              Classes
+              Groups
             </a>
           </li>
           <li>
             <a href="#subgroups" data-toggle="tab">
               <span class="badge">
                 <%= current_user.rep_subgroup_list.size %></span>
-              Groups
+              Classes
             </a>
           </li>
         </ul>

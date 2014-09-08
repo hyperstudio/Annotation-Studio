@@ -1,71 +1,64 @@
 <%= content_for :page_title, "Sign up" %>
 <div class="row">
 	<div class="col-md-8" id="blurb">
-    <% if Rails.env.public? %>
     <p>
       <legend>
         Annotation Studio is a web application that supports close reading and collaborative interpretation of online documents. <a href="/users/sign_up">Register</a> and <a href="/users/sign_in">sign in</a> to try it out.
       </legend>
     </p>
-    <% end %>
 		<%= render "techreqs" %>
 	</div>
 	<div class="col-md-4" id="login">
-		<h4>Register</h4>
-		<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
+		<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :role => "form"}) do |f| %>
 		<%= devise_error_messages! %>
-		<fieldset>
-			<div class="control-group well">
-				<%= f.label :firstname, "First Name", :class => "control-label" %>
-				<div class="controls">
-				<%= f.text_field :firstname %>
+			<div class="well">
+        <h4>Register</h4>
+        <div class="form-group">
+				<%= f.label :firstname, "First Name"%>
+				<%= f.text_field :firstname, :class => "form-control" %>
 				</div>
 
-				<%= f.label :lastname, "Last Name", :class => "control-label" %>
-				<div class="controls">
-				<%= f.text_field :lastname %>
+        <div class="form-group">
+				<%= f.label :lastname, "Last Name"%>
+				<%= f.text_field :lastname, :class => "form-control" %>
 				</div>
 
-				<%= f.label :email, :class => "control-label" %>
-				<div class="controls">
-				<%= f.email_field :email %>
+        <div class="form-group">
+				<%= f.label :email%>
+				<%= f.email_field :email, :class => "form-control" %>
 				</div>
 
-				<%= f.label :affiliation, :class => "control-label" %>
-				<div class="controls">
-				<%= f.text_field :affiliation %>
+        <div class="form-group">
+				<%= f.label :affiliation %>
+				<%= f.text_field :affiliation, :class => "form-control" %>
 				</div>
 
-				<%= f.label :password, :class => "control-label" %>
-				<div class="controls">
-				<%= f.password_field :password %>
+        <div class="form-group">
+				<%= f.label :password %>
+				<%= f.password_field :password, :class => "form-control" %>
 				</div>
 
-				<%= f.label :password_confirmation, :class => "control-label" %>
-				<div class="controls">
-				<%= f.password_field :password_confirmation %>
+        <div class="form-group">
+				<%= f.label :password_confirmation %>
+				<%= f.password_field :password_confirmation, :class => "form-control" %>
 				</div>
 
-        <%= f.label :rep_group_list, "Group", :class => "control-label" %>
-        <div class="controls">
-        <%= f.text_field :rep_group_list, :value => ENV["DEFAULT_USER_GROUP"], 'data-role' => "tagsinput", 'placeholder' => "Enter group name(s)" %>
+        <div class="form-group">
+        <%= f.label :rep_group_list, "Class" %><br />
+        <%= f.text_field :rep_group_list, 'data-role' => "tagsinput", 'placeholder' => "Enter class name(s)", :class => "form-control" %>
+
         <span class="help-block">If you have a group or groups to join, put those here, and press enter after each. This will determine which documents are assigned to you.</span>
+
         </div>
 
-        <label class='checkbox agreement'> <%= f.check_box :agreement %> I have read and accept the <%= link_to 'terms of service', page_path('terms') %></label>
+        <div class="checkbox">
+          <label class='checkbox agreement'> <%= f.check_box :agreement %> I have read and accept the <%= link_to 'terms of service', page_path('terms') %></label>
+        </div>
 
-
-				<br>
-				<div class="controls">
 				<%= f.submit "Register", :class => "btn btn-primary" %>
-				</div>
 
-				<br>
-				<div class="controls">
-				<%= render "links" %>
-				</div>
-			</div>
-		</fieldset>
+			</div><!--/well -->
 		<% end %>
-	</div>
+    <%= render "links" %>
+	</div><!--/col -->
 </div><!--/row -->

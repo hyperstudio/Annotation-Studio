@@ -4,57 +4,47 @@
 <div class="row">
   <div class="col-md-12" id="blurb">
       <% if ['development', 'public'].include?(Rails.env) %>
-      <div class="alert alert-info">
-      This is the latest public beta version of Annotation Studio, v. 2.0.0. It offers PDF upload and conversion, for very basic text-based PDFs. It will strip out most if not all formatting. We will be adding more functionality to this feature over time.
-      </div>
+        <div class="alert alert-info">
+          This is the latest public beta version of Annotation Studio, v. 2.0.0. It offers PDF upload and conversion, for very basic text-based PDFs. It will strip out most if not all formatting. We will be adding more functionality to this feature over time.
+        </div>
       <% end %>
   </div>
 </div>
 <div class="row">
   <div class="col-md-8" id="blurb">
-    <% if Rails.env.public? %>
     <p>
       <legend>
         Annotation Studio is a web application that supports close reading and collaborative interpretation of online documents. <a href="/users/sign_up">Register</a> and <a href="/users/sign_in">sign in</a> to try it out.
       </legend>
     </p>
-    <% end %>
     <%= render "techreqs" %>
   </div>
 	<div class="col-md-4" id="login">
-		<h4>Sign in</h4>
-		<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
-		<%= devise_error_messages! %>
-		<fieldset>
-			<div class="control-group well">
-				<%= f.label :email, :class => "control-label" %>
-				<div class="controls">
-				<%= f.email_field :email %>
+      <div class="well">
+  		<h4>Sign in</h4>
+    		<%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :role => "form"}) do |f| %>
+	     	<%= devise_error_messages! %>
+
+        <div class="form-group">
+				<%= f.label :email %>
+				<%= f.email_field :email, :class => "form-control" %>
 				</div>
 
-				<%= f.label :password, :class => "control-label" %>
-				<div class="controls">
-				<%= f.password_field :password %>
+        <div class="form-group">
+				<%= f.label :password %>
+				<%= f.password_field :password, :class => "form-control" %>
 				</div>
 
 				<% if devise_mapping.rememberable? -%>
-				 <div class="controls">
-				<%= label_tag :remember_me, :class => "checkbox" do %>
-				<%= f.check_box :remember_me %> Remember me
-				<% end %>
-				</div>
-				<% end -%>
+        <div class="checkbox">
+          <%= label_tag :remember_me do %><%= f.check_box :remember_me %> Remember me <% end %>
+        </div>
+        <% end %>
 
-				<div class="controls">
-				<div><%= f.submit "Sign in", :class => "btn btn-primary" %></div>
-				</div>
+				<div><%= f.submit "Sign in", :class => "btn btn-default btn-default-primary" %></div>
 
-				<div class="controls">
-				<%= render "links" %>
-				</div>
-			</div>
-		</fieldset>
-		<% end %>
-	</div>
+    		<% end %>
+      </div><!--/well -->
+      <%= render "links" %>
+	</div><!--/col -->
 </div><!--/row -->
-

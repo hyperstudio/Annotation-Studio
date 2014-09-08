@@ -20,6 +20,7 @@ gem "paperclip"
 gem "delayed_job_active_record"
 gem 'google_drive'
 gem 'pdf-reader'
+gem 'pdf-reader-html'
 gem 'apartment'
 
 group :development do

@@ -157,6 +157,7 @@ GEM
     high_voltage (2.1.0)
     highline (1.6.21)
     hike (1.2.3)
+    html_writer (0.2.0)
     httparty (0.13.1)
       json (~> 1.8)
       multi_xml (>= 0.5.2)
@@ -229,6 +230,9 @@ GEM
     pdf-reader (1.1.1)
       Ascii85 (~> 1.0.0)
       ruby-rc4
+    pdf-reader-html (0.1.0)
+      html_writer (~> 0.2.0)
+      pdf-reader (~> 1.1.0)
     pg (0.17.1)
     polyamorous (0.5.0)
       activerecord (~> 3.0)
@@ -395,6 +399,7 @@ DEPENDENCIES
   nokogiri
   paperclip
   pdf-reader
+  pdf-reader-html
   pg
   pry-rails
   rabl

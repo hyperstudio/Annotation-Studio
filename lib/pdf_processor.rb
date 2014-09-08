@@ -11,7 +11,8 @@ class PdfProcessor
     @document.upload.copy_to_local_file(:original, local_copy.path)
 
     parser = PdfParser.new(local_copy)
-    @document.text = parser.convert_to_html
+    # @document.text = parser.convert_to_html
+    @document.text = parser.to_html
 
     @document.processed_at = DateTime.now
     @document.state = @original_state
@@ -25,6 +26,14 @@ class PdfProcessor
 
     def initialize(file_path)
       @pdf = PDF::Reader.new(file_path)
+    end
+
+    def pages
+      @pdf.pages
+    end
+
+    def to_html
+      @pdf.to_html
     end
 
     def pages

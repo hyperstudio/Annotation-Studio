@@ -1,125 +1,141 @@
-<%= form_for (@document), :html => { :role => 'form' } do |f| %>
-  <% if controller.action_name == "new" or @document.draft? %>
-    <h4>Content</h4>
+          <%= form_for (@document), :html => { :role => 'form' } do |f| %>
+            <% if controller.action_name == "new" or @document.draft? %>
+              <h4>Content</h4>
 
-    <div class="panel-group" id="accordion">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h4 class="panel-title">
-            <a data-toggle="collapse" data-parent="#accordion" href="#uploader">
-              Either upload a file (word, PDF or plain text)...
-            </a>
-          </h4>
-        </div>
-        <div id="uploader" class="panel-collapse collapse">
-        <div class="panel-body">
-          <%= f.label :upload, 'Pick a file from your computer'  %>
-          <div class="fileinput fileinput-new input-group" data-provides="fileinput">
-            <div class="form-control" data-trigger="fileinput"><i class="glyphicon glyphicon-file fileinput-exists"></i> <span class="fileinput-filename"></span></div>
-            <span class="input-group-addon btn btn-default btn-file"><span class="fileinput-new">Select file</span><span class="fileinput-exists">Change</span><%= f.file_field :upload %></span>
-            <a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
-          </div>
-          <p class="help-block">This feature converts your documents for use within Annotation Studio, and strips out all formatting.  Simple, single-column documents work best.</p>
-        </div>
-      </div>
-      </div>
+              <div class="panel-group" id="accordion">
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <h4 class="panel-title">
+                      <a data-toggle="collapse" data-parent="#accordion" href="#uploader">
+                        Either upload a file (word, PDF or plain text)...
+                      </a>
+                    </h4>
+                  </div>
+                  <div id="uploader" class="panel-collapse collapse">
+                  <div class="panel-body">
+                    <%= f.label :upload, 'Pick a file from your computer'  %>
+                    <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                      <div class="form-control" data-trigger="fileinput"><i class="glyphicon glyphicon-file fileinput-exists"></i> <span class="fileinput-filename"></span></div>
+                      <span class="input-group-addon btn btn-default btn-file"><span class="fileinput-new">Select file</span><span class="fileinput-exists">Change</span><%= f.file_field :upload %></span>
+                      <a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
+                    </div>
+                    <p class="help-block">This feature converts your documents for use within Annotation Studio, and strips out all formatting.  Simple, single-column documents work best.</p>
+                  </div>
+                </div>
+                </div>
 
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h4 class="panel-title">
-            <a data-toggle="collapse" data-parent="#accordion" href="#paster">
-              ...Or paste or type directly into the form
-            </a>
-          </h4>
-        </div>
-        <% if controller.action_name == "new" %>
-        <div id="paster" class="panel-collapse collapse">
-        <% else %>
-        <div id="paster" class="panel-collapse collapse in">
-        <% end %>
-        <div class="panel-body">
-          <%= f.label :text %>
-          <%= f.text_area :text, :class => 'form-control summernote', :size => "18x6" %>
-          <p class="help-block">For chapters links to work, insert named anchors in the text above, in the form:"&lt;a name=&quot;2HCH0001&quot; id=&quot;2HCH0001&quot;&gt;&lt;/a&gt;"</p>
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <h4 class="panel-title">
+                      <a data-toggle="collapse" data-parent="#accordion" href="#paster">
+                        ...Or paste or type directly into the form
+                      </a>
+                    </h4>
+                  </div>
+                  <% if controller.action_name == "new" %>
+                  <div id="paster" class="panel-collapse collapse">
+                  <% else %>
+                  <div id="paster" class="panel-collapse collapse in">
+                  <% end %>
+                  <div class="panel-body">
+                    <%= f.label :text %>
+                    <%= f.text_area :text, :class => 'form-control text-area', :size => "18x18" %>
+                    <p class="help-block">For chapters links to work, insert named anchors in the text above, in the form:"&lt;a name=&quot;2HCH0001&quot; id=&quot;2HCH0001&quot;&gt;&lt;/a&gt;"</p>
 
-          <%= f.label "Chapters" %>
-          <%= f.text_area :chapters, :class => 'form-control summernote', :size => "18x6" %>
-          <p class="help-block">Put chapters links in the field above, in the form:"&lt;li&gt;&lt;a href=&quot;#2HCH0001&quot;&gt;1. Loomings.&lt;/a&gt;&lt;/li&gt;"</p>
-        </div>
-      </div>
-      </div>
-    </div>
-  <% end %>
+                    <label id="chapter-label" for="chapters">Click to add Chapters</label>
+                      <div id="chapter-editor">
+                      <p class="help-block">Put chapters links in the field below, in the form:"&lt;li&gt;&lt;a href=&quot;#2HCH0001&quot;&gt;1. Loomings.&lt;/a&gt;&lt;/li&gt;"</p>
+                      <%= f.text_area :chapters, :class => 'form-control chapter-area', :size => "18x6" %>
+                      </div>
+                  </div>
+                </div>
+                </div>
+              </div>
+            <% end %>
 
-	<h4>Metadata</h4>
+          	<h4>Metadata</h4>
 
-	<div class="row">
-		<div class="col-md-6">
-			<div class="form-group">
-				<%= f.label :title %>
-  			<%= f.text_field :title, :class => 'form-control' %>
-			</div>
+          	<div class="row">
+          		<div class="col-md-6">
+          			<div class="form-group">
+          				<%= f.label :title %>
+            			<%= f.text_field :title, :class => 'form-control' %>
+          			</div>
 
-			<div class="form-group">
-				<%= f.label :author %>
-				<%= f.text_field :author, :class => 'form-control' %>
-			</div>
+          			<div class="form-group">
+          				<%= f.label :author %>
+          				<%= f.text_field :author, :class => 'form-control' %>
+          			</div>
 
-			<div class="form-group">
-				<%= f.label :edition %>
-				<%= f.text_field :edition, :class => 'form-control' %>
-			</div>
+          			<div class="form-group">
+          				<%= f.label :edition %>
+          				<%= f.text_field :edition, :class => 'form-control' %>
+          			</div>
 
-		</div><!-- end span 6 -->
-		<div class="col-md-6">
-			<div class="form-group">
-				<%= f.label :publisher %>
-				<%= f.text_field :publisher, :class => 'form-control' %>
-			</div>
-			<div class="form-group">
-				<%= f.label :publication_date %>
-				<%= f.text_field :publication_date, :class => 'form-control' %>
-			</div>
-			<div class="form-group">
-				<%= f.label :source %>
-				<%= f.text_field :source, :class => 'form-control' %>
-			</div>
+          		</div><!-- end span 6 -->
+          		<div class="col-md-6">
+          			<div class="form-group">
+          				<%= f.label :publisher %>
+          				<%= f.text_field :publisher, :class => 'form-control' %>
+          			</div>
+          			<div class="form-group">
+          				<%= f.label :publication_date %>
+          				<%= f.text_field :publication_date, :class => 'form-control' %>
+          			</div>
+          			<div class="form-group">
+          				<%= f.label :source %>
+          				<%= f.text_field :source, :class => 'form-control' %>
+          			</div>
 
-			<div class="form-group">
-				<%= f.label :rights_status %>
-				<%= f.text_field :rights_status, :class => 'form-control' %>
-			</div>
-		</div><!-- end span 6 -->
-	</div><!-- end row -->
+          			<div class="form-group">
+          				<%= f.label :rights_status %>
+          				<%= f.text_field :rights_status, :class => 'form-control' %>
+          			</div>
+          		</div><!-- end span 6 -->
+          	</div><!-- end row -->
 
-	<h4>Status</h4>
-	<div class="form-group">
-			<label class="radio-inline">
-        <%= f.radio_button :state, "draft", checked: controller.action_name == "new" ? true : @document.draft?, disabled: !@document.draft? && controller.action_name == "edit" %>
-        <i class="glyphicon glyphicon-pencil"></i> Draft
-      </label>
-  		<label class="radio-inline">
-        <%= f.radio_button :state, "published", checked: @document.published? %>
-        <i class="glyphicon glyphicon-ok"></i> Published
-      </label>
-			<label class="radio-inline">
-        <%= f.radio_button :state, "deleted", checked: @document.deleted?, disabled: controller.action_name == "new" %>
-        <i class="glyphicon glyphicon-folder-close"></i> Archived
-      </label>
-      <p class="help-block">Only published documents may be annotated.</p>
-      <p class="help-block">Once published, documents may not be edited or deleted.</p>
-	</div>
+          	<h4>Status</h4>
+          	<div class="form-group">
+          			<label class="radio-inline">
+                  <%= f.radio_button :state, "draft", checked: controller.action_name == "new" ? true : @document.draft?, disabled: !@document.draft? && controller.action_name == "edit" %>
+                  <i class="glyphicon glyphicon-pencil"></i> Draft
+                </label>
+            		<label class="radio-inline">
+                  <%= f.radio_button :state, "published", checked: @document.published? %>
+                  <i class="glyphicon glyphicon-ok"></i> Published
+                </label>
+          			<label class="radio-inline">
+                  <%= f.radio_button :state, "deleted", checked: @document.deleted?, disabled: controller.action_name == "new" %>
+                  <i class="glyphicon glyphicon-folder-close"></i> Archived
+                </label>
+                <p class="help-block">Only published documents may be annotated.</p>
+                <p class="help-block">Once published, documents may not be edited or deleted.</p>
+          	</div>
 
-	<h4>Groups</h4>
-	<p class="help-block">Enter the groups to whom you wish to assign this document, and press enter after each.</p>
-	<div class="form-group">
-	<%= f.text_field :rep_group_list, :class => 'form-control', 'data-role' => "tagsinput", 'placeholder' => "Enter group name(s)" %>
-	</div>
-  <%= f.submit nil, :class => 'btn btn-default btn btn-default-primary' %>
-	<%= link_to 'Cancel', documents_url, :class => 'btn btn-default' %>
-<% end %>
-<script type="text/javascript">
-$(document).ready(function() {
-  $('.summernote').summernote();
-});
-</script>
+          	<h4>Classes</h4>
+          	<p class="help-block">Enter the classes to whom you wish to assign this document, <strong>and press enter after each.</strong></p>
+          	<div class="form-group">
+          	<%= f.text_field :rep_group_list, :class => 'form-control', 'data-role' => "tagsinput", 'placeholder' => "Enter class name(s)" %>
+          	</div>
+            <%= f.submit nil, :class => 'btn btn-default btn btn-default-primary' %>
+          	<%= link_to 'Cancel', documents_url, :class => 'btn btn-default' %>
+          <% end %>
+          <script type="text/javascript">
+          $(document).ready(function() {
+            $('.text-area').summernote({
+                height: 300,                 // set editor height
+                minHeight: null,             // set minimum height of editor
+                maxHeight: null,             // set maximum height of editor
+            });
+            $('.chapter-area').summernote({
+                height: 300,                 // set editor height
+                minHeight: null,             // set minimum height of editor
+                maxHeight: null,             // set maximum height of editor
+            });
+            $('#chapter-editor').hide();
+            $('#chapter-label').click(function(){
+              $("[data-event='codeview']").click()
+              $('#chapter-editor').toggle();
+            });
+          });
+          </script>

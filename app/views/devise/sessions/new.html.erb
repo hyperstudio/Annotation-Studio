@@ -2,7 +2,7 @@
 <%= content_for :body_class, 'new' %>
 <%= content_for :page_title, "Sign in" %>
 <div class="row">
-  <div class="span12" id="blurb">
+  <div class="col-md-12" id="blurb">
       <% if ['development', 'public'].include?(Rails.env) %>
       <div class="alert alert-info">
       This is the latest public beta version of Annotation Studio, v. 2.0.0. It offers PDF upload and conversion, for very basic text-based PDFs. It will strip out most if not all formatting. We will be adding more functionality to this feature over time.
@@ -11,7 +11,7 @@
   </div>
 </div>
 <div class="row">
-  <div class="span8" id="blurb">
+  <div class="col-md-8" id="blurb">
     <% if Rails.env.public? %>
     <p>
       <legend>
@@ -21,7 +21,7 @@
     <% end %>
     <%= render "techreqs" %>
   </div>
-	<div class="span4" id="login">
+	<div class="col-md-4" id="login">
 		<h4>Sign in</h4>
 		<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
 		<%= devise_error_messages! %>

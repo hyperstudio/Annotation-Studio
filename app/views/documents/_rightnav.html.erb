@@ -5,10 +5,10 @@
 <p><strong>Who</strong> made them:</p>
 <div class="btn-group btn-group-sm" data-toggle="buttons-radio" id="view-chooser">
   <button type="button" class="viewchoice btn btn-default btn-default-small active" id="userview">Me</button>
-  <button type="button" class="viewchoice btn btn-default btn-default-small" id="groupview">Teams</button>
-  <button type="button" class="viewchoice btn btn-default btn-default-small" id="classview">Groups</button>
+  <button type="button" class="viewchoice btn btn-default btn-default-small" id="groupview">Groups</button>
+  <button type="button" class="viewchoice btn btn-default btn-default-small" id="classview">Classes</button>
   <% if current_user.has_role?(:admin) %>
-    <button class="viewchoice btn btn-default btn-default-small btn btn-default-inverse" id="adminview">All users</button>
+    <button class="viewchoice btn btn-default btn-default-small btn btn-default-inverse" id="adminview">All</button>
   <% end %>
 </div>
 <p><strong>Where</strong> they occur:</p>

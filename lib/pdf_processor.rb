@@ -49,7 +49,8 @@ class PdfProcessor
 
     def convert_to_html
       temp = text_from_pdf.gsub(/&#9647;/, "&nbsp;")
-      simple_format(temp.gsub(/\n \n/, "\n\n")
+      simple_format(temp.gsub(/\n \n/, "\n\n"))
     end
+
   end
 end

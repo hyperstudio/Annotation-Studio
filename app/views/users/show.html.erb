@@ -8,8 +8,8 @@
       <div class="panel-heading">
         <span class="panel-title"><%= link_to "Documents", documents_path %></span>
         <ul class="nav nav-tabs nav-tabs-xs pull-right" id="document-tabs" role="tablist">
-          <li class="active"><a href="#assigned" data-toggle="tab"><span class="badge"><%= Document.tagged_with(current_user.rep_group_list, :any =>true).size %></span>Assigned</a></li>
-          <li><a href="#created" data-toggle="tab"><span class="badge"><%= current_user.documents.size %></span>Created</a></li>
+          <li class="active"><a href="#assigned" data-toggle="tab"><span class="badge"><%= Document.tagged_with(current_user.rep_group_list, :any =>true).size %></span> Assigned</a></li>
+          <li><a href="#created" data-toggle="tab"><span class="badge"><%= current_user.documents.size %></span> Created</a></li>
         </ul>
       </div><!-- / .panel-heading -->
       <div class="tab-content">

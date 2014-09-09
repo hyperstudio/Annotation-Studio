@@ -15,7 +15,10 @@ class PdfProcessor
     @document.text = parser.to_html
 
     @document.processed_at = DateTime.now
-    @document.state = @original_state
+
+    # @document.state = @original_state
+    @document.state = 'draft'
+
     @document.save
   end
 
@@ -33,7 +36,7 @@ class PdfProcessor
     end
 
     def to_html
-      @pdf.to_html
+      html = @pdf.to_html.gsub(/&#9647;/, "&nbsp;"))
     end
 
     def pages
@@ -45,7 +48,8 @@ class PdfProcessor
     end
 
     def convert_to_html
-      simple_format(text_from_pdf.gsub(/\n \n/, "\n\n"))
+      temp = text_from_pdf.gsub(/&#9647;/, "&nbsp;"))
+      simple_format(temp.gsub(/\n \n/, "\n\n"))
     end
   end
 end

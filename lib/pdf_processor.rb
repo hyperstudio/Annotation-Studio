@@ -36,7 +36,7 @@ class PdfProcessor
     end
 
     def to_html
-      html = @pdf.to_html.gsub(/&#9647;/, "&nbsp;"))
+      html = @pdf.to_html.gsub(/&#9647;/, "&nbsp;")
     end
 
     def pages
@@ -48,8 +48,8 @@ class PdfProcessor
     end
 
     def convert_to_html
-      temp = text_from_pdf.gsub(/&#9647;/, "&nbsp;"))
-      simple_format(temp.gsub(/\n \n/, "\n\n"))
+      temp = text_from_pdf.gsub(/&#9647;/, "&nbsp;")
+      simple_format(temp.gsub(/\n \n/, "\n\n")
     end
   end
 end

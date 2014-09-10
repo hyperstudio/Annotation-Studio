@@ -36,7 +36,7 @@ class PdfProcessor
     end
 
     def to_html
-      html = @pdf.to_html.tr('▯',"")
+      html = @pdf.to_html.tr('▯'," ")
     end
 
     def pages

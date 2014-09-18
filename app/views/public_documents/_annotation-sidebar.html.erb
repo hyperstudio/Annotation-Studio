@@ -76,8 +76,7 @@ jQuery(function ($) {
   var optionsRichText = {
     editor_enabled: '<%= ENV["ANNOTATOR_RICHTEXT"] %>',
     tinymce: {
-      'toolbar': '<%= ENV["ANNOTATOR_RICHTEXT_CONFIG"] %>',
-      'image_dimensions': false
+      'toolbar': '<%= ENV["ANNOTATOR_RICHTEXT_CONFIG"] %>'
     }
   };
 
@@ -133,7 +132,7 @@ jQuery(function ($) {
       a.highlights[0].title = a.user;
     }
     else {
-      console.info("Annotation: " + a.uuid + "has no highlights.");
+      console.info("Err...");
     }
   }, this);
 
@@ -248,25 +247,19 @@ jQuery(function ($) {
     }
   };
 
-  var parentIndex = function(editor, annotation) {
-    if (!annotation.parentIndex > 0) {
-      console.log("No current annotation.parentIndex: "+ annotation.parentIndex);
-      var node = $(".annotator-hl-temporary");
-      var parent = node.parent()[0];
-      var parentIndex = $( "#textcontent" ).find( "*" ).index(parent)
-      annotation.parentIndex = parentIndex;
-      console.log("Added annotation.parentIndex: "+ annotation.parentIndex);
-    }
-    else {
-      console.log("Existing parentIndex: " + annotation.parentIndex + "; not adding a new one.");
-    }
+  var domIndex = function(editor, annotation) {
+    var node = $(".annotator-hl-temporary");
+    var parent = node.parent()[0];
+    var domindex = $( "#textcontent" ).find( "*" ).index(parent)
+    // console.log(domindex);
+    annotation.domindex = domindex;
   };
 
   // When the annotator loads remote data, update sidebar
   subscriber.subscribe('annotationsLoaded', loadSidebar);
   subscriber.subscribe('annotationsLoaded', stopSpinner);
   subscriber.subscribe('annotationsLoaded', handleHash);
-  subscriber.subscribe('annotationEditorShown', parentIndex);
+  subscriber.subscribe('annotationEditorShown', domIndex);
 
   // Update all highlights with UUIDs
   subscriber.subscribe('annotationsLoaded', __bind(function(annotations) {
@@ -306,6 +299,6 @@ jQuery(function ($) {
     sidebar.filtered = false;
     sidebar.showAllAnnotations();
   });
-  $('#textcontent').minimap();
+
 });
 </script>

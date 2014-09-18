@@ -2,38 +2,20 @@
 <%= content_for :body_class, 'show' %>
 <%= content_for :page_title, @document.title %>
 <%= stylesheet_link_tag "documents" %>
-<style type="text/css">
-html {
-  height: 100%;
-  min-height: 100%;
-}
-body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-}
-</style>
 <div class="row">
   <div class="col-md-8">
-    <p><a href="javascript:$.minimap.toggle();">Toggle the minimap</a></p>
     <% if ! @document.processed? %>
       <%= render 'processed_message' %>
-    <% end %>
-    <% if @document.survey_link.present? %>
-      <%= render 'survey_button' %>
     <% end %>
     <div id="textcontent">
       <div><!-- Required for cases in which there's no HTML in the text -->
         <%= @document.text.html_safe %>
       </div>
     </div>
-    <% if @document.survey_link.present? %>
-      <%= render 'survey_button' %>
-    <% end %>
   </div><!--/col-md-8 -->
   <div class="col-md-4">
     <% if @document.processed? and ! @document.draft? %>
-      <%= render "documents/annotation-sidebar" %>
+      <%# render "public_documents/annotation-sidebar" %>
     <% end %>
   </div><!--/col-md-3 -->
 </div><!--/row -->
@@ -41,7 +23,7 @@ body {
 <div id="spinnermodal" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="spinnermodallabel" aria-hidden="true">
   <div class="modal-body" id="spinnerdiv"><em>Loading annotations...</em></div>
 </div>
-<%# render "documents/metadata" %>
+<%= render "documents/metadata" %>
 <script type="text/javascript">
 $('#annotation-list').slimScroll({
   height: '99%',

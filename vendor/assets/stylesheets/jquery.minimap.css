@@ -1,0 +1,26 @@
+.map_col {
+	display: none;
+}
+
+.mini-map-active .map_col {
+	width:       160px;
+	height:      100%;
+	min-height:  100%;
+	overflow:    hidden;
+	position:    relative;
+	float:       right;
+	cursor:      pointer;
+	display:     block;
+}
+
+@media only screen and (max-width: 800px) {
+	body.mini-map-active .map_col {
+		display: none !important;
+	}
+}
+
+.map-col-background {
+	background: rgba(0,0,0,.1);
+	padding: 0;
+	border-left: 1px solid rgba(0,0,0,.2);
+}

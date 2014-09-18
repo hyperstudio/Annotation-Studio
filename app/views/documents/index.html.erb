@@ -63,6 +63,7 @@
               <% end %></td>
             <td>
               <% if document.draft? %> <i class="glyphicon glyphicon-pencil"></i>
+              <% elsif document.public? %><i class="glyphicon glyphicon-share-alt"></i>
               <% elsif document.published? %> <i class="glyphicon glyphicon-ok"></i>
               <% elsif document.deleted? %>
               <i class="glyphicon glyphicon-folder-close"></i>
@@ -114,6 +115,8 @@
               <i class="glyphicon glyphicon-pencil"></i>
               <% elsif document.published? %>
               <i class="glyphicon glyphicon-ok"></i>
+              <% elsif document.public? %>
+              <i class="glyphicon glyphicon-share-alt"></i>
               <% elsif document.deleted? %>
               <i class="glyphicon glyphicon-folder-close"></i>
               <% end %></td>
@@ -163,6 +166,8 @@
             <td>
               <% if document.draft? %>
               <i class="glyphicon glyphicon-pencil"></i>
+              <% elsif document.public? %>
+              <i class="glyphicon glyphicon-share-alt"></i>
               <% elsif document.published? %>
               <i class="glyphicon glyphicon-ok"></i>
               <% elsif document.deleted? %>

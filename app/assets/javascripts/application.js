@@ -12,6 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery-ui.min
 //= require bootstrap
 //= require bootstrap-tagsinput
 //= require jasny-bootstrap
@@ -31,3 +32,4 @@
 //= require annotator.touch.min
 //= require highlighter
 //= require jquery.slimscroll.min
+//= require jquery.minimap

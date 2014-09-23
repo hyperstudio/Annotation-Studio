@@ -117,7 +117,7 @@
               <span class="badge"><%= current_user.rep_subgroup_list.size %></span> Groups
             </a>
           </li>
-          <li>
+          <li class="active">
             <a href="#groups" data-toggle="tab">
               <span class="badge"><%= current_user.rep_group_list.size %></span> Classes
             </a>
@@ -134,7 +134,7 @@
         <% end %>
         </ul>
       </div>
-       <div class="tab-pane no-padding fade in" id="groups">
+       <div class="tab-pane no-padding fade active in" id="groups">
         <ul class="list-group">
         <% current_user.rep_group_list.each do |group| %>
           <li class="list-group-item"><%= group %></li>

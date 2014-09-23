@@ -82,6 +82,8 @@ development:
   scope:                                  google_api_stuff
   issuer:                                 more_google_api_stuff
   DEVISE_SECRET_KEY:                      super_secret_key
+  GLOBAL_ALERT:                           "Global Alert Goes Here. Very important information!"
+  ALERT_LEVEL:                            "success"
 
 test:
   DEVISE_SECRET_KEY:                      blah blah

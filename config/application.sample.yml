@@ -20,6 +20,8 @@ development:
     API_CONSUMER: localhost
     CONFIRMATION_GRACE_PERIOD: 2
     DEVISE_SECRET_KEY:                     blah-blah # use: `rails g secret` to generate a value
+    GLOBAL_ALERT:                           "Global Alert Goes Here. Very important information!"
+    ALERT_LEVEL:                            "success"
 
 production:
     DEFAULT_NEW_USER_GROUP: public

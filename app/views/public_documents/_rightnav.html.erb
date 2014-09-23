@@ -1,0 +1,19 @@
+<!-- documents/_rightnav.html.erb -->
+<% if params[:action] == 'show' %>
+<!-- documents/_rightnav.html.erb -->
+<h4>Filter annotations by:</h4>
+<p><strong>Who</strong> made them:</p>
+<div class="btn-group btn-group-sm" data-toggle="buttons-radio" id="view-chooser">
+  <button type="button" class="viewchoice btn btn-default btn-default-small active" id="userview">Me</button>
+  <button type="button" class="viewchoice btn btn-default btn-default-small" id="groupview">Groups</button>
+  <button type="button" class="viewchoice btn btn-default btn-default-small" id="classview">Classes</button>
+  <% if current_user.has_role?(:admin) %>
+    <button class="viewchoice btn btn-default btn-default-small btn btn-default-inverse" id="adminview">All</button>
+  <% end %>
+</div>
+<p><strong>Where</strong> they occur:</p>
+<div class="btn-group btn-group-sm" data-toggle="buttons-radio" id="filter-chooser">
+  <button type="button" class="viewchoice btn btn-default btn-default-small active" id="visibleannotations">Visible portion</button>
+  <button type="button" class="viewchoice btn btn-default btn-default-small" id="allannotations">Whole document</button>
+</div>
+<% end %>

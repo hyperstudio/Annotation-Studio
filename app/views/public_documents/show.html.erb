@@ -4,9 +4,6 @@
 <%= stylesheet_link_tag "documents" %>
 <div class="row">
   <div class="col-md-8">
-    <% if ! @document.processed? %>
-      <%= render 'processed_message' %>
-    <% end %>
     <div id="textcontent">
       <div><!-- Required for cases in which there's no HTML in the text -->
         <%= @document.text.html_safe %>
@@ -15,22 +12,18 @@
   </div><!--/col-md-8 -->
   <div class="col-md-4">
     <% if @document.processed? and ! @document.draft? %>
-      <%# render "public_documents/annotation-sidebar" %>
+      <%= render "public_documents/annotation-sidebar" %>
     <% end %>
   </div><!--/col-md-3 -->
 </div><!--/row -->
-<%= render "documents/help" %>
-<div id="spinnermodal" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="spinnermodallabel" aria-hidden="true">
-  <div class="modal-body" id="spinnerdiv"><em>Loading annotations...</em></div>
-</div>
-<%= render "documents/metadata" %>
+<%= render "public_documents/metadata" %>
 <script type="text/javascript">
 $('#annotation-list').slimScroll({
-  height: '99%',
+  height: auto,
   width: '340px',
   alwaysVisible: false,
   allowPageScroll: true,
-  disableFadeOut: true
+  disableFadeOut: false
 });
 
 $('#chapternav').slimScroll({
@@ -42,6 +35,6 @@ $('#chapternav').slimScroll({
   distance: '5px',
   alwaysVisible: false,
   allowPageScroll: true,
-  disableFadeOut: true
+  disableFadeOut: false
 });
 </script>

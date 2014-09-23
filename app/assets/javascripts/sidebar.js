@@ -23,7 +23,7 @@ Sidebar.Annotation = Backbone.Model.extend({
 // Collection
 Sidebar.RemoteAnnotationList = Backbone.Collection.extend({
   model: Sidebar.Annotation,
-    url: 'http://annotations.mit.edu/api/search',
+    url: 'http://localhost:3000/api/search',
     // url: 'http://localhost:5000/api/search',
   // comparator: function(annotation) {
   //   try {

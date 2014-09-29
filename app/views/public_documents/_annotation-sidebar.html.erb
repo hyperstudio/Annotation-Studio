@@ -30,7 +30,7 @@ jQuery(function ($) {
   var studio = $('#textcontent').annotator(annotatorOptions).annotator('setupPlugins', {}, {
       Filter: false,
       Auth: {
-        token: '<%= session["jwt"] %>'
+        token: '<%= session["guest_jwt"] %>'
       },
       Store: {
           prefix: '<%= ENV["API_URL"] %>',
@@ -284,6 +284,5 @@ jQuery(function ($) {
     sidebar.filtered = false;
     sidebar.showAllAnnotations();
   });
-  $('.body_text').minimap();
 });
 </script>

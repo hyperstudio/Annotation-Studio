@@ -253,7 +253,7 @@ function matchesFilters(elem) {
 }
 
 function isScrolledIntoView(elem) {
-  if (! typeof elem === 'undefined' && ! typeof $(elem).offset() === 'undefined' ) {
+  if (! typeof elem === 'undefined') {
     // if (elem != undefined && $(elem).offset() != undefined) {
     var docViewTop = $(window).scrollTop();
     var docViewBottom = docViewTop + $(window).height();
@@ -268,7 +268,7 @@ function isScrolledIntoView(elem) {
 }
 
 function isTagged(elem, tag) {
-  if (! typeof elem === 'undefined' && ! typeof $(elem).offset() === 'undefined' ) {
+  if (! typeof elem === 'undefined') {
     // if (elem != undefined) {
     var docViewTop = $(window).scrollTop();
     var docViewBottom = docViewTop + $(window).height();

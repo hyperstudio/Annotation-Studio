@@ -3,6 +3,7 @@
               <h4>Content</h4>
 
               <div class="panel-group" id="accordion">
+
                 <div class="panel panel-default">
                   <div class="panel-heading">
                     <h4 class="panel-title">
@@ -22,6 +23,34 @@
                     <p class="help-block">This feature converts your documents for use within Annotation Studio, and strips out all formatting.  Simple, single-column documents work best.</p>
                   </div>
                 </div>
+                </div>
+
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <h4 class="panel-title">
+                      <a data-toggle="collapse" data-parent="#accordion" href="#selector">
+                        ...Or select text from the MEL catalog...
+                      </a>
+                    </h4>
+                  </div>
+                  <div id="selector" class="panel-collapse collapse">
+                    <div class="panel-body">
+                      <%= f.label :select, 'Select a text' %>
+                      <table class="table table-striped table-bordered table-hover">
+                        <thead>
+                           <tr><th>Author</th><th>Subject</th></tr>
+                        </thead>
+                        <tbody data-link="row" class="rowlink">
+                           <!--tr><td><a href="rowlink1" data-toggle="modal">Author 1</a></td><td>Title number 1.</td></tr>
+                           <tr><td><a href="rowlink2" data-toggle="modal">Author 2</a></td><td>Title number 2.</td></tr>
+                           <tr><td><a href="rowlink3" data-toggle="modal">Author 3</a></td><td>Title number 3.</td></tr>
+                           <tr><td><a href="rowlink4" data-toggle="modal">Author 4</a></td><td>Title number 4.</td></tr-->
+                        </tbody>
+                      </table>
+
+                      <p class="help-block">Select the text you would like to begin annotating.</p>
+                    </div>
+                  </div>
                 </div>
 
                 <div class="panel panel-default">

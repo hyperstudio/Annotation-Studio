@@ -254,7 +254,6 @@ function matchesFilters(elem) {
 
 function isScrolledIntoView(elem) {
   if (typeof elem !== 'undefined') {
-    // if (elem != undefined && $(elem).offset() != undefined) {
     var docViewTop = $(window).scrollTop();
     var docViewBottom = docViewTop + $(window).height();
     var elemTop = $(elem).offset().top;
@@ -268,8 +267,7 @@ function isScrolledIntoView(elem) {
 }
 
 function isTagged(elem, tag) {
-  if (! typeof elem === 'undefined') {
-    // if (elem != undefined) {
+  if (typeof elem !== 'undefined') {
     var docViewTop = $(window).scrollTop();
     var docViewBottom = docViewTop + $(window).height();
     var elemTop = $(elem).offset().top;

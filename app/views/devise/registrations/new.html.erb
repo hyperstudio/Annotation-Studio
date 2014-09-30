@@ -45,7 +45,11 @@
 
         <div class="form-group">
         <%= f.label :rep_group_list, "Class" %><br />
+        <% if Apartment::Database.current == 'demo' %>
+        <%= f.text_field :rep_group_list, 'data-role' => "tagsinput", 'placeholder' => "Enter class name(s)", :class => "form-control", :value => ENV["ALT_DEFAULT_USER_GROUP"] %>
+        <% else %>
         <%= f.text_field :rep_group_list, 'data-role' => "tagsinput", 'placeholder' => "Enter class name(s)", :class => "form-control", :value => ENV["DEFAULT_USER_GROUP"] %>
+        <% end %>
 
         <span class="help-block">If you have a group or groups to join, put those here, and press enter after each. This will determine which documents are assigned to you.</span>
 

@@ -20,6 +20,8 @@
   </div><!--/well -->
 
 <%= javascript_include_tag "sidebar" %>
+<%= javascript_include_tag "melcatalog-plugin" %>
+
 <script type="text/javascript" charset="utf-8">
 jQuery(function ($) {
 
@@ -100,8 +102,10 @@ jQuery(function ($) {
     studio.annotator('addPlugin', 'RichText', optionsRichText);
   <% end %>
 
+  // support for the MEL catalog plugin
+  studio.annotator('addPlugin', 'MelCatalogue' );
 
-  // these three click and tap handlers manage the rich text editor show and hide on mobile and desktop
+    // these three click and tap handlers manage the rich text editor show and hide on mobile and desktop
   $('.annotator-button').on('tap', function(){
     console.log('button tapped');
     $('.annotator-item').removeClass('hide');
@@ -360,8 +364,6 @@ jQuery(function ($) {
   subscriber.subscribe('annotationUpdated', loadSidebar);
   subscriber.subscribe('annotationDeleted', deleteFromSidebar);
   $(".annotator-checkbox label").text('Allow my groups to view this annotation');
-
-
 
   // When the user scrolls, call showAndHideAnnotations
   sidebar.filtered = true;

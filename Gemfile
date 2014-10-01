@@ -41,7 +41,7 @@ group :test, :development do
   gem 'factory_girl_rails'
   gem 'rspec-rails'
   gem 'pry-rails'
-  gem 'capybara-webkit'
+  #gem 'capybara-webkit'
   gem 'simplecov'
   gem 'rails_best_practices'
   gem 'launchy'
@@ -79,3 +79,5 @@ gem "figaro"
 gem 'will_paginate', '> 3.0'
 gem 'runtimeerror_notifier'
 gem 'intercom-rails'
+
+gem "melcatalog", :path => "vendor"

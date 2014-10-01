@@ -4,37 +4,38 @@ describe Melcatalog do
 
   before do
     Melcatalog.configure do |config|
-      config.service_endpoint = 'http://localhost:3000'
+      config.service_endpoint = 'http://localhost:4000/api'
     end
   end
 
   describe '#search' do
 
-     it 'finds by common term' do
-        term = "123"
+     it 'finds by wildcard' do
+        term = "%"
         results = Melcatalog.search( term, 1000, false )
         fail if results.empty?
+
      end
 
      it 'limit result count' do
-       max = 10
-       results = Melcatalog.search( '*', max, false )
+       max = 5
+       results = Melcatalog.search( '%', max, false )
        fail if results.empty?
        fail if results.size > max
      end
 
   end
 
-  describe '#explicit' do
-
-    it 'get by eid' do
-      eid = "123456"
-      results = Melcatalog.get( eid )
-      fail if results.empty?
-      fail if results.size != 1
-    end
-
-  end
+  #describe '#explicit' do
+  #
+  #  it 'get by eid' do
+  #    eid = "123456"
+  #    results = Melcatalog.get( eid )
+  #    fail if results.empty?
+  #    fail if results.size != 1
+  #  end
+  #
+  #end
 
   describe '#metadata' do
 
@@ -51,18 +52,17 @@ describe Melcatalog do
     it 'gets texts metadata' do
       metadata = Melcatalog.texts(  )
       fail if metadata.empty?
+      must_exist( metadata, :text )
 
-      metadata.each { | entity |
-        must_exist( entity, :type )
-        fail if entity[ :type ] != :text
+      metadata[:text].each { | entity |
 
         must_exist( entity, :title )
         must_exist( entity, :author )
-        must_exist( entity, :edition )
-        must_exist( entity, :publisher )
-        must_exist( entity, :pubdate )
-        must_exist( entity, :source )
-        must_exist( entity, :rights )
+      #  must_exist( entity, :edition )
+      #  must_exist( entity, :publisher )
+      #  must_exist( entity, :pubdate )
+      #  must_exist( entity, :source )
+      #  must_exist( entity, :rights )
         must_exist( entity, :text )
       }
     end
@@ -70,20 +70,21 @@ describe Melcatalog do
     it 'gets people metadata' do
       metadata = Melcatalog.people(  )
       fail if metadata.empty?
+      must_exist( metadata, :person )
 
-      metadata.each { | entity |
-        must_exist( entity, :type )
-        fail if entity[ :type ] != :person
+      metadata[:person].each { | entity |
+        must_exist( entity, :name )
       }
     end
 
     it 'gets artwork metadata' do
       metadata = Melcatalog.artwork(  )
       fail if metadata.empty?
+      must_exist( metadata, :artwork )
 
-      metadata.each { | entity |
-        must_exist( entity, :type )
-        fail if entity[ :type ] != :artwork
+      metadata[:artwork].each { | entity |
+        must_exist( entity, :artist )
+        must_exist( entity, :title )
       }
     end
 

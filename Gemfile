@@ -81,3 +81,4 @@ gem 'runtimeerror_notifier'
 gem 'intercom-rails'
 
 gem "melcatalog", :path => "vendor"
+gem "rest-client"

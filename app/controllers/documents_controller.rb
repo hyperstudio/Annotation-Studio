@@ -140,6 +140,7 @@ class DocumentsController < ApplicationController
     results = []
     if mel_catalogue?
        results = Melcatalog.texts
+       results = results[:text] unless results[:text].nil?
     end
     return results
   end

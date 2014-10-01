@@ -1,3 +1,6 @@
+# support for MEL catalog entries
+require 'melcatalog'
+
 class DocumentsController < ApplicationController
   before_filter :authenticate_user!
 
@@ -35,6 +38,7 @@ class DocumentsController < ApplicationController
   # GET /documents/new.json
   def new
     @document = Document.new
+    @catalog_texts = mel_catalog_texts
 
     respond_to do |format|
       format.html # new.html.erb
@@ -125,4 +129,19 @@ class DocumentsController < ApplicationController
     session[:mobile_param] = params[:mobile] if params[:mobile]
    # request.format = :mobile if mobile_device?
   end
+
+  # helper to determine if we should support content from the MEL catalog
+  def mel_catalogue?
+    true   # TODO: config...
+  end
+
+  def mel_catalog_texts
+
+    results = []
+    if mel_catalogue?
+       results = Melcatalog.texts
+    end
+    return results
+  end
+
 end

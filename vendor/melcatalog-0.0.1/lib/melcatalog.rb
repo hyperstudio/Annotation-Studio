@@ -1,7 +1,7 @@
 require "melcatalog/version"
 require "configuration"
-
-#require 'rest_client'
+require 'json'
+require 'rest_client'
 
 module Melcatalog
 
@@ -29,21 +29,27 @@ module Melcatalog
    def self.search( term, content = true, limit = Melcatalog.configuration.default_result_limit, entity_types = [], search_fields = [] )
 
       # handle defaults...
-      entity_types = Melcatalog.configuration.default_entity_types if entity_types.empty?
-      search_fields = Melcatalog.configuration.default_searchable_fields if search_fields.empty?
+      #entity_types = Melcatalog.configuration.default_entity_types if entity_types.empty?
+      #search_fields = Melcatalog.configuration.default_searchable_fields if search_fields.empty?
 
-      #response = RestClient.get Melcatalog.configuration.service_endpoint
-      response = []
-      response << fake_text( 1 ) unless entity_types.index( :text ).nil?
-      response << fake_text( 2 ) unless entity_types.index( :text ).nil?
+      results = []
+      term = "%" if term.empty?
 
-      response << fake_person( 1 ) unless entity_types.index( :person ).nil?
-      response << fake_person( 2 ) unless entity_types.index( :person ).nil?
+      entity_request = self.request_entity_types( entity_types )
+      entity_request = "&entry_types=#{entity_request}" unless entity_request.empty?
+      request = URI.escape "#{Melcatalog.configuration.service_endpoint}/entries?search_term=#{term}#{entity_request}"
 
-      response << fake_artwork( 1 ) unless entity_types.index( :artwork ).nil?
-      response << fake_artwork( 2 ) unless entity_types.index( :artwork ).nil?
+      begin
+         response = RestClient.get request
+         if response.code == 200
+           results = self.transform JSON.parse response
+         end
+      rescue => e
+        puts request
+        puts e
+      end
 
-      return response
+      return results
    end
 
    #
@@ -53,7 +59,18 @@ module Melcatalog
    # content   - return full content or just metadata
    #
    def self.get( eid, content = true )
-      return [ fake_text( 1 ) ]
+
+     request = URI.escape "#{Melcatalog.configuration.service_endpoint}/entries/#{eid}"
+     begin
+        response = RestClient.get request
+        if response.code == 200
+           puts response
+        end
+     rescue => e
+       puts request
+       puts e
+     end
+     return {}
    end
 
    #
@@ -70,11 +87,7 @@ module Melcatalog
    # helper to get all the metadata for text entities
    #
    def self.texts( )
-      #results = []self.search( "*", false, Melcatalog.configuration.default_result_limit, [ :text ] )
-      results = []
-      (1..5).each { |num|
-         results << self.fake_text( num )
-      }
+      results = self.search( "", false, Melcatalog.configuration.default_result_limit, [ :text ] )
       return results
    end
 
@@ -82,11 +95,7 @@ module Melcatalog
    # helper to get all the metadata for people entities
    #
    def self.people( )
-      #results = self.search( "*", false, Melcatalog.configuration.default_result_limit, [ :person ] )
-      results = []
-      (1..15).each { |num|
-         results << self.fake_person( num )
-      }
+      results = self.search( "", false, Melcatalog.configuration.default_result_limit, [ :person ] )
       return results
    end
 
@@ -94,15 +103,74 @@ module Melcatalog
    # helper to get all the metadata for artwork entities
    #
    def self.artwork( )
-      #results = self.search( "*", false, Melcatalog.configuration.default_result_limit, [ :artwork ] )
-      results = []
-      (1..10).each { |num|
-        results << self.fake_artwork( num )
-      }
+      results = self.search( "", false, Melcatalog.configuration.default_result_limit, [ :artwork ] )
       return results
    end
 
   private
+
+  def self.transform( response )
+    result = {}
+    result[:person] = self.transform_people( response['people'] ) unless response['people'].nil?
+    result[:artwork] = self.transform_artworks( response['artworks'] ) unless response['artworks'].nil?
+    result[:text] = self.transform_texts( response['texts'] ) unless response['texts'].nil?
+    return result
+  end
+
+  def self.transform_people( entries )
+     result = []
+     entries.each do | entry |
+       work = {}
+       work[:name] = entry['name'] unless entry['name'].nil?
+       result << work
+     end
+     return result
+  end
+
+  def self.transform_artworks( entries )
+    result = []
+    entries.each do | entry |
+      work = {}
+      work[:artist] = entry['artist'] unless entry['artist'].nil?
+      work[:title] = entry['title'] unless entry['title'].nil?
+
+      result << work
+    end
+    return result
+  end
+
+  def self.transform_texts( entries )
+    result = []
+    entries.each do | entry |
+       work = {}
+       work[:title] = entry['name'] unless entry['name'].nil?
+       work[:author] = entry['author'] unless entry['author'].nil?
+       work[:text] = entry['content'] unless entry['content'].nil?
+       result << work
+    end
+    return result
+  end
+
+  def self.request_entity_types( entity_types )
+     result = ""
+     entity_types.each do | entity |
+       case entity
+         when :text
+           result = "#{result}," unless result.empty?
+           result << "texts"
+         when :person
+           result = "#{result}," unless result.empty?
+           result << "people"
+         when :artwork
+           result = "#{result}," unless result.empty?
+           result << "artworks"
+         else
+           puts "Unknown entry type #{entity}"
+       end
+     end
+
+     return result
+  end
 
   def self.fake_text( number )
     entry = {}

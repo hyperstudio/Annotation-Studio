@@ -32,6 +32,6 @@ PLATFORMS
 DEPENDENCIES
   bundler (~> 1.6)
   melcatalog!
-  rake
-  rest-client
-  rspec
+  rake (~> 10.3)
+  rest-client (= 1.7.2)
+  rspec (~> 3.1)

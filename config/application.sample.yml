@@ -1,7 +1,7 @@
 development:
     ANNOTATOR_FILTER:                      false
     ANNOTATOR_RICHTEXT:                    true
-    ANNOTATOR_RICHTEXT_CONFIG:             undo redo | styleselect | bold italic | link image media | code
+    ANNOTATOR_RICHTEXT_CONFIG:             undo redo | styleselect | bold italic | link image media | code | mellink melimage
     RUNTIMEERROR_EMAIL:                    example@example.com
     GOOGLE_VERIFICATION_CODE:
     DEFAULT_USER_GROUP: public
@@ -46,5 +46,5 @@ production:
     RUNTIMEERROR_EMAIL:                    example@example.com
     ANNOTATOR_FILTER:                      false
     ANNOTATOR_RICHTEXT:                    true
-    ANNOTATOR_RICHTEXT_CONFIG:             undo redo | styleselect | bold italic | link image media | code
+    ANNOTATOR_RICHTEXT_CONFIG:             undo redo | styleselect | bold italic | link image media | code | mellink melimage
     DEVISE_SECRET_KEY:                     blah-blah # use: `rails g secret` to generate a value

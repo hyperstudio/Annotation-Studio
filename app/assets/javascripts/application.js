@@ -24,6 +24,7 @@
 //= require moment.min
 //= require tinymce
 //= require annotator-full.min
+//= require melcatalog-annotator-buttons
 //= require richText-annotator
 //= require underscore
 //= require backbone

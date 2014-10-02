@@ -121,6 +121,7 @@ module Melcatalog
      result = []
      entries.each do | entry |
        work = {}
+       work[:eid] = entry['id'].to_s unless entry['id'].nil?
        work[:name] = entry['name'] unless entry['name'].nil?
        result << work
      end
@@ -131,6 +132,7 @@ module Melcatalog
     result = []
     entries.each do | entry |
       work = {}
+      work[:eid] = entry['id'].to_s unless entry['id'].nil?
       work[:artist] = entry['artist'] unless entry['artist'].nil?
       work[:title] = entry['title'] unless entry['title'].nil?
 
@@ -143,6 +145,7 @@ module Melcatalog
     result = []
     entries.each do | entry |
        work = {}
+       work[:eid] = entry['id'].to_s unless entry['id'].nil?
        work[:title] = entry['name'] unless entry['name'].nil?
        work[:author] = entry['author'] unless entry['author'].nil?
        work[:text] = entry['content'] unless entry['content'].nil?

@@ -56,6 +56,7 @@ describe Melcatalog do
 
       metadata[:text].each { | entity |
 
+        must_exist( entity, :eid )
         must_exist( entity, :title )
         must_exist( entity, :author )
       #  must_exist( entity, :edition )
@@ -73,6 +74,7 @@ describe Melcatalog do
       must_exist( metadata, :person )
 
       metadata[:person].each { | entity |
+        must_exist( entity, :eid )
         must_exist( entity, :name )
       }
     end
@@ -83,6 +85,7 @@ describe Melcatalog do
       must_exist( metadata, :artwork )
 
       metadata[:artwork].each { | entity |
+        must_exist( entity, :eid )
         must_exist( entity, :artist )
         must_exist( entity, :title )
       }
@@ -94,7 +97,7 @@ describe Melcatalog do
 
   def process_peers( peers )
     peers.each { | entity |
-      fail if entity[ :text ].empty?
+      must_exist( entity, :text )
       process_peers( entity[ :nodes ] ) unless entity[ :nodes ].nil?
       fail if entity[ :eid ].nil? == false && entity[ :eid ].empty?
     }

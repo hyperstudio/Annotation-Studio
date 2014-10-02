@@ -38,7 +38,9 @@ class DocumentsController < ApplicationController
   # GET /documents/new.json
   def new
     @document = Document.new
-    @catalog_texts = mel_catalog_texts
+
+    # list any catalogue texts as appropriate
+    @catalog_texts = catalog_texts
 
     respond_to do |format|
       format.html # new.html.erb
@@ -56,6 +58,9 @@ class DocumentsController < ApplicationController
   def create
     @document = Document.new(params[:document])
     @document.user = current_user
+
+    # apply any catalogue content as appropriate
+    catalog_content( @document )
 
     respond_to do |format|
       if @document.save
@@ -130,19 +135,34 @@ class DocumentsController < ApplicationController
    # request.format = :mobile if mobile_device?
   end
 
-  # helper to determine if we should support content from the MEL catalog
-  def mel_catalogue?
-    true   # TODO: config...
+  private
+
+  def catalog_texts
+
+    if catalogue_enabled?
+       results = Melcatalog.texts
+       return results[:text] unless results[:text].nil?
+    end
+    return []
   end
 
-  def mel_catalog_texts
+  def catalog_content( doc )
 
-    results = []
-    if mel_catalogue?
-       results = Melcatalog.texts
-       results = results[:text] unless results[:text].nil?
+    if catalogue_enabled?
+      # we put placeholder content in earlier and replace with the real thing now
+      if doc.text.start_with?( "EID:" )
+         eid = doc.text.split( ":" )[ 1 ]
+         entry = Melcatalog.get( eid, true )
+         if entry && entry[:text] && entry[:text][ 0 ] && entry[:text][ 0 ][:text]
+           doc.text = entry[:text][ 0 ][:text]
+         end
+      end
     end
-    return results
+  end
+
+  # helper to determine if we should support content from the MEL catalog
+  def catalogue_enabled?
+    true   # TODO: config...
   end
 
 end

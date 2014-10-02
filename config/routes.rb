@@ -4,6 +4,7 @@ AnnotationStudio::Application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 
+  get 'documents/catalog', to: 'catalog#index'
   resources :documents
   resources :users, only: [:show, :edit]
 

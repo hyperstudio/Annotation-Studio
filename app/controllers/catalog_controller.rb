@@ -9,7 +9,7 @@ class CatalogController < ApplicationController
     # default search definitions
     @search_term = ""
     @search_types = []
-    @search_results = []
+    @search_results = {}
 
     # do we need to modify the defaults...
     @search_term = params[:term] unless params[:term].nil?
@@ -17,6 +17,7 @@ class CatalogController < ApplicationController
     types = params[:types].split( "," ) unless params[:types].nil?
     @search_types << :person if types.include? 'people'
     @search_types << :artwork if types.include? 'artwork'
+    @search_types = [:person, :artwork ] if @search_results.empty?
 
     # do the search, metadata only
     @search_results = Melcatalog.search( params[:term], false, Melcatalog.configuration.default_result_limit, @search_types ) unless @search_term.empty?

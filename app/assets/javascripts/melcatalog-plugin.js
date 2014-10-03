@@ -4,6 +4,11 @@
 
 jQuery(function ($) {
 
+    function storeAnnotationText( t ) {
+        var div = $( "div" )[ 0 ];
+        jQuery.data( div, "annotation", t );
+    }
+
     Annotator.Plugin.MelCatalogue = function (element) {
         return {
             pluginInit: function () {
@@ -16,7 +21,7 @@ jQuery(function ($) {
                 //    }
                 //});
 
-                //this.annotator
+                this.annotator
                     //.subscribe("beforeAnnotationCreated", function (annotation) {
                     //    console.info("beforeAnnotationCreated: %o", annotation)
                     //})
@@ -32,9 +37,10 @@ jQuery(function ($) {
                     //.subscribe("annotationDeleted", function (annotation) {
                     //    console.info("annotationDeleted: %o", annotation)
                     //})
-                    //.subscribe("annotationEditorShown", function (annotation) {
-                    //    console.info("annotationEditorShown: %o", annotation)
-                    //})
+                    .subscribe("annotationEditorShown", function (annotation) {
+                        //console.info("annotationEditorShown: %o", annotation)
+                        storeAnnotationText( annotation.annotation.quote );
+                    })
                     //.subscribe("annotationEditorHidden", function (annotation) {
                     //    console.info("annotationEditorHidden: %o", annotation)
                     //})

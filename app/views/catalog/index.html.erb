@@ -12,8 +12,9 @@
 
     <div>Search for:<input id="search-term" value="<%= @search_term %>"></input></div>
     <div><button id="search-button" type="button">Go</button></div>
-    <div><input type="checkbox" id="search-people" value="people">People</div>
-    <div><input type="checkbox" id="search-artwork" value="artwork">Artwork</div>
+    <div><input type="radio" name="searchtypes" id="search-both" value="people">Both</div>
+    <div><input type="radio" name="searchtypes" id="search-people" value="people">People</div>
+    <div><input type="radio" name="searchtypes" id="search-artwork" value="artwork">Artwork</div>
   </div>
 
   <div id="browse-panel" class="">
@@ -54,17 +55,18 @@
 
 <script type="text/javascript">
     $('document').ready(function( ) {
-        <% if @search_types.include? :person %>
+        <% if ( @search_types.include? :person ) && ( @search_types.include? :artwork ) %>
+           $('#search-both').prop('checked', true);
+        <% elsif @search_types.include? :person %>
            $('#search-people').prop('checked', true);
-        <% end %>
-        <% if @search_types.include? :artwork %>
+        <% elsif @search_types.include? :artwork %>
            $('#search-artwork').prop('checked', true);
         <% end %>
 
         $("#search-button").click(function() {
             var term = $('#search-term').val( );
-            var include_people = $('#search-people').prop('checked');
-            var include_artwork = $('#search-artwork').prop('checked');
+            var include_people = $('#search-people').prop('checked') || $('#search-both').prop('checked' );
+            var include_artwork = $('#search-artwork').prop('checked') || $('#search-both').prop('checked' );
             newSearch( term, include_people, include_artwork );
         });
 

@@ -1,1 +1,83 @@
-<h2>SEARCH... YAY!</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <%= javascript_include_tag "application" %>
+</head>
+<body>
+
+<div id="main-search-container">
+
+  <div id="new-search-panel" class="">
+
+    <div>Search for:<input id="search-term" value="<%= @search_term %>"></input></div>
+    <div><button id="search-button" type="button">Go</button></div>
+    <div><input type="checkbox" id="search-people" value="people">People</div>
+    <div><input type="checkbox" id="search-artwork" value="artwork">Artwork</div>
+  </div>
+
+  <div id="browse-panel" class="">
+  </div>
+
+  <div id="results-panel" class="">
+
+    <% unless @search_results[:person].nil? %>
+        <div class="results-type-header">People</div>
+        <table class="table table-striped table-bordered table-hover">
+          <thead>
+          <tr><th>Name</th><th>EID</th></tr>
+          </thead>
+          <tbody data-link="row" class="rowlink">
+             <% @search_results[:person].each do | entry | %>
+              <tr><td><a href="rowlink2" data-toggle="modal"><%= entry[:name] %></a></td><td><%= entry[:eid] %></td></tr>
+             <% end %>
+          </tbody>
+        </table>
+    <% end %>
+
+    <% unless @search_results[:artwork].nil? %>
+        <div class="results-type-header">Artworks</div>
+        <table class="table table-striped table-bordered table-hover">
+          <thead>
+             <tr><th>Artist</th><th>Title</th><th>EID</th></tr>
+          </thead>
+          <tbody data-link="row" class="rowlink">
+            <% @search_results[:artwork].each do | entry | %>
+               <tr><td><a href="rowlink2" data-toggle="modal"><%= entry[:artist] %></a></td><td><%= entry[:title] %></td><td><%= entry[:eid] %></td></tr>
+            <% end %>
+         </tbody>
+         </table>
+    <% end %>
+  </div>
+
+</div>
+
+<script type="text/javascript">
+    $('document').ready(function( ) {
+        <% if @search_types.include? :person %>
+           $('#search-people').prop('checked', true);
+        <% end %>
+        <% if @search_types.include? :artwork %>
+           $('#search-artwork').prop('checked', true);
+        <% end %>
+
+        $("#search-button").click(function() {
+            var term = $('#search-term').val( );
+            var include_people = $('#search-people').prop('checked');
+            var include_artwork = $('#search-artwork').prop('checked');
+            newSearch( term, include_people, include_artwork );
+        });
+
+        $('tbody.rowlink').rowlink();
+    });
+
+    function newSearch( term, include_people, include_artwork ) {
+        var include = "";
+        if( include_people ) { include = "people"; }
+        if( include_artwork ) { include = ( include ? include + "," : "" ) + "artwork"; }
+        var newURL = "/documents/catalog?term=" + term + ( include ? "&types=" + include : "" );
+        document.location.href = newURL;
+    }
+</script>
+
+</body>

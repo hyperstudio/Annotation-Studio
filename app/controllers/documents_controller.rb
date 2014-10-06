@@ -151,7 +151,7 @@ class DocumentsController < ApplicationController
     if catalogue_enabled?
       # we put placeholder content in earlier and replace with the real thing now
       if doc.text.start_with?( "EID:" )
-         eid = doc.text.split( ":" )[ 1 ]
+         eid = doc.text.split( ":",2 )[ 1 ]
          entry = Melcatalog.get( eid, true )
          if entry && entry[:text] && entry[:text][ 0 ] && entry[:text][ 0 ][:text]
            doc.text = entry[:text][ 0 ][:text]

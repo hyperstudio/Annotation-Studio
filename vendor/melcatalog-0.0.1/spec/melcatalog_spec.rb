@@ -26,16 +26,29 @@ describe Melcatalog do
 
   end
 
-  #describe '#explicit' do
-  #
-  #  it 'get by eid' do
-  #    eid = "123456"
-  #    results = Melcatalog.get( eid )
-  #    fail if results.empty?
-  #    fail if results.size != 1
-  #  end
-  #
-  #end
+  describe '#explicit' do
+
+    it 'get by eid' do
+      results = Melcatalog.search( '%', 1000, false )
+      fail if results.empty?
+
+      eid = ""
+      eid = results[:text][ 0 ][:eid] unless results[:text].nil?
+      eid = results[:person][ 0 ][:eid] unless results[:person].nil?
+      eid = results[:artwork][ 0 ][:eid] unless results[:artwork].nil?
+      fail if eid.empty?
+
+      results = Melcatalog.get( eid )
+      fail if results.empty?
+      fail if results.size != 1
+
+      check_texts( results[:text] ) unless results[:text].nil?
+      check_people( results[:person] ) unless results[:person].nil?
+      check_artworks( results[:artwork] ) unless results[:artwork].nil?
+
+    end
+
+  end
 
   describe '#metadata' do
 
@@ -53,47 +66,56 @@ describe Melcatalog do
       metadata = Melcatalog.texts(  )
       fail if metadata.empty?
       must_exist( metadata, :text )
-
-      metadata[:text].each { | entity |
-
-        must_exist( entity, :eid )
-        must_exist( entity, :title )
-        must_exist( entity, :author )
-      #  must_exist( entity, :edition )
-      #  must_exist( entity, :publisher )
-      #  must_exist( entity, :pubdate )
-      #  must_exist( entity, :source )
-      #  must_exist( entity, :rights )
-        must_exist( entity, :text )
-      }
+      check_texts( metadata[:text] )
     end
 
     it 'gets people metadata' do
       metadata = Melcatalog.people(  )
       fail if metadata.empty?
       must_exist( metadata, :person )
-
-      metadata[:person].each { | entity |
-        must_exist( entity, :eid )
-        must_exist( entity, :name )
-      }
+      check_people( metadata[:person] )
     end
 
     it 'gets artwork metadata' do
       metadata = Melcatalog.artwork(  )
       fail if metadata.empty?
       must_exist( metadata, :artwork )
-
-      metadata[:artwork].each { | entity |
-        must_exist( entity, :eid )
-        must_exist( entity, :artist )
-        must_exist( entity, :title )
-      }
+      check_artworks( metadata[:artwork] )
     end
 
   end
 
   private
+
+  def check_texts( entities )
+    entities.each { | entity |
+
+      must_exist( entity, :eid )
+      must_exist( entity, :title )
+      must_exist( entity, :author )
+      #  must_exist( entity, :edition )
+      #  must_exist( entity, :publisher )
+      #  must_exist( entity, :pubdate )
+      #  must_exist( entity, :source )
+      #  must_exist( entity, :rights )
+      must_exist( entity, :text )
+    }
+  end
+
+  def check_people( entities )
+    entities.each { | entity |
+      must_exist( entity, :eid )
+      must_exist( entity, :name )
+    }
+  end
+
+  def check_artworks( entities )
+    entities.each { | entity |
+      must_exist( entity, :eid )
+      must_exist( entity, :artist )
+      must_exist( entity, :title )
+    }
+  end
 
   def process_peers( peers )
     peers.each { | entity |

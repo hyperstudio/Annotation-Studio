@@ -32,7 +32,7 @@ module Melcatalog
       #entity_types = Melcatalog.configuration.default_entity_types if entity_types.empty?
       #search_fields = Melcatalog.configuration.default_searchable_fields if search_fields.empty?
 
-      results = []
+      results = {}
       term = "%" if term.empty?
 
       entity_request = self.request_entity_types( entity_types )
@@ -60,17 +60,18 @@ module Melcatalog
    #
    def self.get( eid, content = true )
 
+     results = {}
      request = URI.escape "#{Melcatalog.configuration.service_endpoint}/entries/#{eid}"
      begin
         response = RestClient.get request
         if response.code == 200
-           puts response
+           results = self.transform JSON.parse response
         end
      rescue => e
        puts request
        puts e
      end
-     return {}
+     return results
    end
 
    #
@@ -121,7 +122,7 @@ module Melcatalog
      result = []
      entries.each do | entry |
        work = {}
-       work[:eid] = entry['id'].to_s unless entry['id'].nil?
+       work[:eid] = entry['eid'].to_s unless entry['eid'].nil?
        work[:name] = entry['name'] unless entry['name'].nil?
        result << work
      end
@@ -132,7 +133,7 @@ module Melcatalog
     result = []
     entries.each do | entry |
       work = {}
-      work[:eid] = entry['id'].to_s unless entry['id'].nil?
+      work[:eid] = entry['eid'].to_s unless entry['eid'].nil?
       work[:artist] = entry['artist'] unless entry['artist'].nil?
       work[:title] = entry['title'] unless entry['title'].nil?
 
@@ -145,7 +146,7 @@ module Melcatalog
     result = []
     entries.each do | entry |
        work = {}
-       work[:eid] = entry['id'].to_s unless entry['id'].nil?
+       work[:eid] = entry['eid'].to_s unless entry['eid'].nil?
        work[:title] = entry['name'] unless entry['name'].nil?
        work[:author] = entry['author'] unless entry['author'].nil?
        work[:text] = entry['content'] unless entry['content'].nil?

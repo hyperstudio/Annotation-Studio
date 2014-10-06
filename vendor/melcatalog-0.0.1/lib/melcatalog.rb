@@ -112,46 +112,9 @@ module Melcatalog
 
   def self.transform( response )
     result = {}
-    result[:person] = self.transform_people( response['people'] ) unless response['people'].nil?
-    result[:artwork] = self.transform_artworks( response['artworks'] ) unless response['artworks'].nil?
-    result[:text] = self.transform_texts( response['texts'] ) unless response['texts'].nil?
-    return result
-  end
-
-  def self.transform_people( entries )
-     result = []
-     entries.each do | entry |
-       work = {}
-       work[:eid] = entry['eid'].to_s unless entry['eid'].nil?
-       work[:name] = entry['name'] unless entry['name'].nil?
-       result << work
-     end
-     return result
-  end
-
-  def self.transform_artworks( entries )
-    result = []
-    entries.each do | entry |
-      work = {}
-      work[:eid] = entry['eid'].to_s unless entry['eid'].nil?
-      work[:artist] = entry['artist'] unless entry['artist'].nil?
-      work[:title] = entry['title'] unless entry['title'].nil?
-
-      result << work
-    end
-    return result
-  end
-
-  def self.transform_texts( entries )
-    result = []
-    entries.each do | entry |
-       work = {}
-       work[:eid] = entry['eid'].to_s unless entry['eid'].nil?
-       work[:title] = entry['name'] unless entry['name'].nil?
-       work[:author] = entry['author'] unless entry['author'].nil?
-       work[:text] = entry['content'] unless entry['content'].nil?
-       result << work
-    end
+    result[:person] = response['people'] unless response['people'].nil?
+    result[:artwork] = response['artworks'] unless response['artworks'].nil?
+    result[:text] = response['texts'] unless response['texts'].nil?
     return result
   end
 
@@ -174,34 +137,6 @@ module Melcatalog
      end
 
      return result
-  end
-
-  def self.fake_text( number )
-    entry = {}
-    entry[:title] = "Title for text # #{number}"
-    entry[:author] = "Author for text # #{number}"
-    entry[:edition] = "Edition for text # #{number}"
-    entry[:publisher] = "Publisher for text # #{number}"
-    entry[:pubdate] = "Publication Date for text # #{number}"
-    entry[:source] = "Source for text # #{number}"
-    entry[:rights] = "Rights for text # #{number}"
-    entry[:text] = "All the text for text # #{number}"
-    entry[:type] = :text
-    return entry
-  end
-
-  def self.fake_person( number )
-    entry = {}
-    entry[:title] = "Title for person # #{number}"
-    entry[:type] = :person
-    return entry
-  end
-
-  def self.fake_artwork( number )
-    entry = {}
-    entry[:title] = "Title for artwork # #{number}"
-    entry[:type] = :artwork
-    return entry
   end
 
 end

@@ -33,9 +33,9 @@ describe Melcatalog do
       fail if results.empty?
 
       eid = ""
-      eid = results[:text][ 0 ][:eid] unless results[:text].nil?
-      eid = results[:person][ 0 ][:eid] unless results[:person].nil?
-      eid = results[:artwork][ 0 ][:eid] unless results[:artwork].nil?
+      eid = results[:text][ 0 ]['eid'] unless results[:text].nil?
+      eid = results[:person][ 0 ]['eid'] unless results[:person].nil?
+      eid = results[:artwork][ 0 ]['eid'] unless results[:artwork].nil?
       fail if eid.empty?
 
       results = Melcatalog.get( eid )
@@ -90,30 +90,42 @@ describe Melcatalog do
   def check_texts( entities )
     entities.each { | entity |
 
-      must_exist( entity, :eid )
-      must_exist( entity, :title )
-      must_exist( entity, :author )
-      #  must_exist( entity, :edition )
+      must_exist( entity, 'eid' )
+      must_exist( entity, 'name' )
+      must_exist( entity, 'author' )
+      must_exist( entity, 'witnesses' )
       #  must_exist( entity, :publisher )
       #  must_exist( entity, :pubdate )
       #  must_exist( entity, :source )
       #  must_exist( entity, :rights )
-      must_exist( entity, :text )
+      must_exist( entity, 'content' )
     }
   end
 
   def check_people( entities )
     entities.each { | entity |
-      must_exist( entity, :eid )
-      must_exist( entity, :name )
+      must_exist( entity, 'eid' )
+      must_exist( entity, 'name' )
+      must_exist( entity, 'role' )
+      must_exist( entity, 'birth' )
+      must_exist( entity, 'death' )
+      must_exist( entity, 'nationality' )
     }
   end
 
   def check_artworks( entities )
     entities.each { | entity |
-      must_exist( entity, :eid )
-      must_exist( entity, :artist )
-      must_exist( entity, :title )
+      must_exist( entity, 'eid' )
+      must_exist( entity, 'artist' )
+      must_exist( entity, 'title' )
+      must_exist( entity, 'artist_national_origin' )
+      must_exist( entity, 'engraver' )
+      must_exist( entity, 'engraver_national_origin' )
+      must_exist( entity, 'publication' )
+      must_exist( entity, 'medium' )
+      must_exist( entity, 'permissions' )
+      must_exist( entity, 'subject' )
+      must_exist( entity, 'genre' )
     }
   end
 
@@ -125,9 +137,9 @@ describe Melcatalog do
     }
   end
 
-  def must_exist( obj, sym )
-    fail if obj[ sym ].nil?
-    fail if obj[ sym ].empty?
+  def must_exist( obj, field )
+    fail if obj[ field ].nil?
+    fail if obj[ field ].empty?
   end
 
 end

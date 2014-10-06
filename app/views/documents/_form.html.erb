@@ -199,7 +199,7 @@
                  e[ 'pubdate' ] = '<%= entry[:pubdate].nil? ? '' : entry[:pubdate] %>';
                  e[ 'source' ] = '<%= entry[:source].nil? ? '' : entry[:source] %>';
                  e[ 'rights' ] = '<%= entry[:rights].nil? ? '' : entry[:rights] %>';
-                 text[ <%= entry[:eid] %> ] = e;
+                 text[ '<%= entry[:eid] %>' ] = e;
               <% end %>
             <% end %>
 

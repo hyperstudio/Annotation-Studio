@@ -153,8 +153,8 @@ class DocumentsController < ApplicationController
       if doc.text.start_with?( "EID:" )
          eid = doc.text.split( ":",2 )[ 1 ]
          entry = Melcatalog.get( eid, true )
-         if entry && entry[:text] && entry[:text][ 0 ] && entry[:text][ 0 ][:text]
-           doc.text = entry[:text][ 0 ][:text]
+         if entry && entry[:text] && entry[:text][ 0 ] && entry[:text][ 0 ]['content']
+           doc.text = entry[:text][ 0 ]['content']
          end
       end
     end

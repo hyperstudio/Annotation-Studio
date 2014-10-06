@@ -44,7 +44,7 @@
                         </thead>
                         <tbody data-link="row" class="rowlink">
                            <% @catalog_texts.each do | entry | %>
-                              <tr><td><a id="<%= entry[:eid] %>" class="clickable"><%= entry[:author] %></a></td><td><%= entry[:title] %></td></tr>
+                              <tr><td><a id="<%= entry['eid'] %>" class="clickable"><%= entry['author'] %></a></td><td><%= entry['name'] %></td></tr>
                            <% end %>
                         </tbody>
                       </table>
@@ -177,21 +177,26 @@
             <% unless @catalog_texts.nil? || @catalog_texts.empty? %>
               <% @catalog_texts.each do | entry | %>
                  var e = {};
-                 e[ 'title' ] = '<%= entry[:title].nil? ? '' : entry[:title] %>';
-                 e[ 'author' ] = '<%= entry[:author].nil? ? '' : entry[:author] %>';
-                 e[ 'edition' ] = '<%= entry[:edition].nil? ? '' : entry[:edition] %>';
-                 e[ 'publisher' ] = '<%= entry[:publisher].nil? ? '' : entry[:publisher] %>';
-                 e[ 'pubdate' ] = '<%= entry[:pubdate].nil? ? '' : entry[:pubdate] %>';
-                 e[ 'source' ] = '<%= entry[:source].nil? ? '' : entry[:source] %>';
-                 e[ 'rights' ] = '<%= entry[:rights].nil? ? '' : entry[:rights] %>';
-                 text[ '<%= entry[:eid] %>' ] = e;
+
+                 // fill in all the fields here...
+                 <% ['name', 'author'].each do | field | %>
+                    e[ '<%= field %>' ] = '<%= entry[field].nil? ? '' : entry[field] %>';
+                 <% end %>
+
+                 // temp...
+                 e[ 'edition' ] = '';
+                 e[ 'publisher' ] = '';
+                 e[ 'pubdate' ] = '';
+                 e[ 'source' ] = '';
+                 e[ 'rights' ] = '';
+                 text[ '<%= entry['eid'] %>' ] = e;
               <% end %>
             <% end %>
 
             $('.clickable').on('click', function (e) {
                 var id = $( this ).attr( "id" );
                 var entry = text[ id ];
-                $( "#document_title").val( entry['title'] );
+                $( "#document_title").val( entry['name'] );
                 $( "#document_author").val( entry[ 'author'] );
                 $( "#document_edition").val( entry[ 'edition'] );
                 $( "#document_publisher").val( entry[ 'publisher'] );

@@ -1,0 +1,7 @@
+public:
+  site_name: Public
+  welcome_message: "Welcome to Annotation Studio at <strong>Jamie's Computer</strong>"
+  site_color: '#A31F34'
+mit:
+  site_name: MIT
+  welcome_message: "Welcome to Annotation Studio at <strong>MIT</strong>"

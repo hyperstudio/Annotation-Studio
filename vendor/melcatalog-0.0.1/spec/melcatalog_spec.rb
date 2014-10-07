@@ -12,16 +12,19 @@ describe Melcatalog do
 
      it 'finds by wildcard' do
         term = "%"
-        results = Melcatalog.search( term, 1000, false )
+        results = Melcatalog.search( term, false, Melcatalog.configuration.default_result_limit )
         fail if results.empty?
 
      end
 
      it 'limit result count' do
-       max = 5
-       results = Melcatalog.search( '%', max, false )
+       max = 1
+       results = Melcatalog.search( '%', false, max )
        fail if results.empty?
-       fail if results.size > max
+
+       fail if results[:text].nil? == false && results[:text].size > max
+       fail if results[:person].nil? == false && results[:person].size > max
+       fail if results[:artwork].nil? == false && results[:artwork].size > max
      end
 
   end
@@ -29,7 +32,7 @@ describe Melcatalog do
   describe '#explicit' do
 
     it 'get by eid' do
-      results = Melcatalog.search( '%', 1000, false )
+      results = Melcatalog.search( '%', false, Melcatalog.configuration.default_result_limit )
       fail if results.empty?
 
       eid = ""

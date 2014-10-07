@@ -37,7 +37,7 @@ module Melcatalog
 
       entity_request = self.request_entity_types( entity_types )
       entity_request = "&entry_types=#{entity_request}" unless entity_request.empty?
-      request = URI.escape "#{Melcatalog.configuration.service_endpoint}/entries?search_term=#{term}#{entity_request}"
+      request = URI.escape "#{Melcatalog.configuration.service_endpoint}/entries?search_term=#{term}#{entity_request}&limit=#{limit}"
 
       begin
          response = RestClient.get request

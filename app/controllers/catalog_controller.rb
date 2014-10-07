@@ -20,7 +20,7 @@ class CatalogController < ApplicationController
     @search_types = [:person, :artwork ] if @search_types.empty?
 
     # do the search, metadata only
-    @search_results = Melcatalog.search( params[:term], false, Melcatalog.configuration.default_result_limit, @search_types ) unless @search_term.empty?
+    @search_results = Melcatalog.search( params[:term], Melcatalog.configuration.default_result_limit, @search_types ) unless @search_term.empty?
 
     render "catalog/index", :layout => false
   end

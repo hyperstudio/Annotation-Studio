@@ -26,7 +26,7 @@ module Melcatalog
    # entity_types  - include just these entity types. If empty then include all entity types.
    # search_fields - just search these fields for the specified term. If empty then all fields are searched.
    #
-   def self.search( term, content = true, limit = Melcatalog.configuration.default_result_limit, entity_types = [], search_fields = [] )
+   def self.search( term, limit = Melcatalog.configuration.default_result_limit, entity_types = [], search_fields = [] )
 
       # handle defaults...
       #entity_types = Melcatalog.configuration.default_entity_types if entity_types.empty?
@@ -88,7 +88,7 @@ module Melcatalog
    # helper to get all the metadata for text entities
    #
    def self.texts( )
-      results = self.search( "", false, Melcatalog.configuration.default_result_limit, [ :text ] )
+      results = self.search( "", Melcatalog.configuration.default_result_limit, [ :text ] )
       return results
    end
 
@@ -96,7 +96,7 @@ module Melcatalog
    # helper to get all the metadata for people entities
    #
    def self.people( )
-      results = self.search( "", false, Melcatalog.configuration.default_result_limit, [ :person ] )
+      results = self.search( "", Melcatalog.configuration.default_result_limit, [ :person ] )
       return results
    end
 
@@ -104,7 +104,7 @@ module Melcatalog
    # helper to get all the metadata for artwork entities
    #
    def self.artwork( )
-      results = self.search( "", false, Melcatalog.configuration.default_result_limit, [ :artwork ] )
+      results = self.search( "", Melcatalog.configuration.default_result_limit, [ :artwork ] )
       return results
    end
 

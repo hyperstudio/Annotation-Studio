@@ -26,23 +26,24 @@
     </div>
   </div>
 
-  <div id="results-panel" class="indent">
+  <div id="results-container" class="indent">
 
-      <div id="browse-panel" class="">
+      <div id="browse-panel" class="left">
+        <label>Browse</label>
         <div id="tag-tree"></div>
       </div>
 
-      <div id="results-panel" class="">
+      <div id="results-panel" class="right">
 
         <label class="results-type-header">People</label>
             <table class="table table-striped table-bordered table-hover">
               <thead>
-              <tr><th>Name</th><th>Birth</th><th>Death</th><th>EID</th></tr>
+              <tr><th></th><th>Name</th><th>Birth</th><th>Death</th></tr>
               </thead>
               <% unless @search_results[:person].nil? %>
               <tbody data-link="row" class="rowlink">
                  <% @search_results[:person].each do | entry | %>
-                  <tr><td><a id="<%= entry['eid'] %>" class="clickable"><%= entry['name'] %></a></td><td><%= entry['birth'] %></td><td><%= entry['death'] %></td><td><%= entry['eid'] %></td></tr>
+                  <tr><td><span class="glyphicon glyphicon-picture home-page-glyph"></span></td><td><a id="<%= entry['eid'] %>" class="clickable"><%= entry['name'] %></a></td><td><%= entry['birth'] %></td><td><%= entry['death'] %></td></tr>
                  <% end %>
               </tbody>
               <% end %>
@@ -51,12 +52,12 @@
         <label class="results-type-header">Artworks</label>
             <table class="table table-striped table-bordered table-hover">
               <thead>
-                 <tr><th>Artist</th><th>Title</th><th>EID</th></tr>
+                 <tr><th></th><th>Artist</th><th>Title</th></tr>
               </thead>
               <% unless @search_results[:artwork].nil? %>
               <tbody data-link="row" class="rowlink">
                 <% @search_results[:artwork].each do | entry | %>
-                   <tr><td><a id="<%= entry['eid'] %>" class="clickable"><%= entry['artist'] %></a></td><td><%= entry['title'] %></td><td><%= entry['eid'] %></td></tr>
+                   <tr><td><span class="glyphicon glyphicon-user home-page-glyph"></span></td><td><a id="<%= entry['eid'] %>" class="clickable"><%= entry['artist'] %></a></td><td><%= entry['title'] %></td></tr>
                 <% end %>
               </tbody>
               <% end %>
@@ -79,7 +80,7 @@
            $('#search-artwork').prop('checked', true);
         <% end %>
 
-        $('#tag-tree').treeview( { data: getTagRoot( ), levels: 0 } );
+        $('#tag-tree').treeview( { data: getTagRoot( ), levels: 0, highlightSelected: false } );
 
         // new search handler
         $("#search-button").click(function() {

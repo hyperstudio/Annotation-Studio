@@ -3,7 +3,7 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 #catalog-container {
-  width: 50%;
+  //width: 50%;
 
   #new-search-panel {
 
@@ -27,11 +27,14 @@
   }
 
   #browse-panel {
-    padding-top: 15px;
+    padding-top: 5px;
+    width: 30%;
   }
 
   #results-panel {
-    padding-top: 15px;
+    padding-top: 5px;
+    margin-left: 5px;
+    width: 65%;
   }
 
   // general helper classes

@@ -12,7 +12,7 @@ module Melcatalog
       @service_endpoint = 'UNKNOWN'
 
       # max number of results to return
-      @default_result_limit = 1000
+      @default_result_limit = 999
 
       # the default entity types
       @default_entity_types = [ :text, :person, :artwork ]

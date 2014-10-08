@@ -10,6 +10,7 @@ class CatalogController < ApplicationController
     @search_term = ""
     @search_types = []
     @search_results = {}
+    @onlyimages = false
 
     # do we need to modify the defaults...
     @search_term = params[:term] unless params[:term].nil?
@@ -18,6 +19,7 @@ class CatalogController < ApplicationController
     @search_types << :person if types.include? 'people'
     @search_types << :artwork if types.include? 'artwork'
     @search_types = [:person, :artwork ] if @search_types.empty?
+    @onlyimages = true if params[:onlyimages].nil? == false && params[:onlyimages] == 'true'
 
     # do the search, metadata only
     @search_results = Melcatalog.search( params[:term], Melcatalog.configuration.default_result_limit, @search_types ) unless @search_term.empty?

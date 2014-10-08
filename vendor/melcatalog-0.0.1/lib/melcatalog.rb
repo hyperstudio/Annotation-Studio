@@ -81,7 +81,7 @@ module Melcatalog
       return [ { :text => 'texts', :nodes => [ :text => 'sub classification', :nodes => [ { :text => 'an entity title', :eid => '123456' }] ] },
                { :text => 'people', :nodes => [ ] },
                { :text => 'artworks', :nodes => [ ] }
-             ]
+              ]
    end
 
    #

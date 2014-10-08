@@ -13,14 +13,6 @@ jQuery(function ($) {
         return {
             pluginInit: function () {
 
-                container = $(".mce-container-body");
-
-                //this.annotator.editor.addField({
-                //    load: function (field, annotation) {
-                //         field.innerHTML = 'bla bla bla';
-                //    }
-                //});
-
                 this.annotator
                     //.subscribe("beforeAnnotationCreated", function (annotation) {
                     //    console.info("beforeAnnotationCreated: %o", annotation)
@@ -56,7 +48,6 @@ jQuery(function ($) {
             }
         }
     };
-
 });
 
 //

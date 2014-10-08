@@ -161,12 +161,10 @@ describe Melcatalog do
   end
 
   def must_exist( obj, field )
-    fail if obj[ field ].nil? == true
-    fail if obj[ field ].empty? == true
+    fail if obj.has_key?( field ) == false
   end
 
   def must_not_exist( obj, field )
-    #fail if obj[ field ].nil? == false
-    #fail if obj[ field ].empty? == false
+    #fail if obj.has_key?( field ) == true
   end
 end

@@ -30,6 +30,11 @@
   #browse-panel {
     padding-top: 5px;
     width: 30%;
+
+    .list-group-item {
+      padding-top: 3px;
+      padding-bottom: 3px;
+    }
   }
 
   #results-panel {

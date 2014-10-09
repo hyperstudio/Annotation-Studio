@@ -69,8 +69,8 @@ describe Melcatalog do
 
   describe '#metadata' do
 
-    it 'gets AAT tag hiararchy' do
-       metadata = Melcatalog.aat_hirararchy(  )
+    it 'gets AAT tag hierarchy' do
+       metadata = Melcatalog.aat_hierarchy(  )
        fail if metadata.empty?
        process_tag_peers( metadata )
     end
@@ -154,9 +154,9 @@ describe Melcatalog do
 
   def process_tag_peers( peers )
     peers.each { | entity |
-      must_exist( entity, :text )
-      process_tag_peers( entity[ :nodes ] ) unless entity[ :nodes ].nil?
-      fail if entity[ :eid ].nil? == false && entity[ :eid ].empty?
+      must_exist( entity, 'text' )
+      process_tag_peers( entity[ 'nodes' ] ) unless entity[ 'nodes' ].nil?
+      fail if entity[ 'eid' ].nil? == false && entity[ 'eid' ].empty?
     }
   end
 

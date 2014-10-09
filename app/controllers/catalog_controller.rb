@@ -28,12 +28,31 @@ class CatalogController < ApplicationController
   end
 
   def image
-    @entry = Melcatalog.get( params[:eid] )
-    render "catalog/image", :layout => false
+
+    result = Melcatalog.get( params[:eid] )
+    if result && result[:person]
+      # setup the data as appropriate
+       render "catalog/image", :layout => false
+    elsif result && result[:artwork]
+      # setup the data as appropriate
+       render "catalog/image", :layout => false
+    else
+      render :file => 'public/404.html', :status => :not_found, :layout => false
+    end
   end
 
   def reference
-    @entry = Melcatalog.get( params[:eid] )
-    render "catalog/reference", :layout => false
+
+    result = Melcatalog.get( params[:eid] )
+    if result && result[:person]
+       @entry = result[:person][ 0 ]
+       render "catalog/person", :layout => false
+    elsif result && result[:artwork]
+       @entry = result[:artwork][ 0 ]
+       render "catalog/artwork", :layout => false
+    else
+       render :file => 'public/404.html', :status => :not_found, :layout => false
+    end
+
   end
 end

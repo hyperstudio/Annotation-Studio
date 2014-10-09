@@ -94,15 +94,8 @@
 
         // any of the results we found
         $(".clickable").click(function() {
-            var eid = $(this).attr( "id");
-            <% if @onlyimages == true %>
-               var reference = "image|" + eid;
-            <% else %>
-               var title = $(this).attr( "title");
-               var reference = "object|" + eid + "|" + title;
-            <% end %>
-
-            storeDetails( reference );
+            // the eid and the entry title separated with a pipe character
+            storeDetails( $(this).attr( "id") + "|" + $(this).attr( "title") );
 
             // the current window, hopefully we are in an iframe
             close( );

@@ -37,19 +37,9 @@ module Melcatalog
 
       entity_request = self.request_entity_types( entity_types )
       entity_request = "&entry_types=#{entity_request}" unless entity_request.empty?
-      request = URI.escape "#{Melcatalog.configuration.service_endpoint}/entries?search_term=#{term}#{entity_request}&limit=#{limit}"
 
-      begin
-         response = RestClient.get request
-         if response.code == 200
-           results = self.transform JSON.parse response
-         end
-      rescue => e
-        puts request
-        puts e
-      end
-
-      return results
+      request = "#{Melcatalog.configuration.service_endpoint}/entries?search_term=#{term}#{entity_request}&limit=#{limit}"
+      return self.transform self.rest_get request
    end
 
    #
@@ -59,29 +49,16 @@ module Melcatalog
    # content   - return full content or just metadata
    #
    def self.get( eid, content = true )
-
-     results = {}
-     request = URI.escape "#{Melcatalog.configuration.service_endpoint}/entries/#{eid}"
-     begin
-        response = RestClient.get request
-        if response.code == 200
-           results = self.transform JSON.parse response
-        end
-     rescue => e
-       puts request
-       puts e
-     end
-     return results
+     request = "#{Melcatalog.configuration.service_endpoint}/entries/#{eid}"
+     return self.transform self.rest_get request
    end
 
    #
-   # get a hash representing the AAT hiararchy of all our content
+   # get a hash representing the AAT hierarchy of all our content
    #
-   def self.aat_hirararchy( )
-      return [ { :text => 'texts', :nodes => [ :text => 'sub classification', :nodes => [ { :text => 'an entity title', :eid => '123456' }] ] },
-               { :text => 'people', :nodes => [ ] },
-               { :text => 'artworks', :nodes => [ ] }
-              ]
+   def self.aat_hierarchy( )
+     request = "#{Melcatalog.configuration.service_endpoint}/tags"
+     return self.rest_get request
    end
 
    #
@@ -109,6 +86,20 @@ module Melcatalog
    end
 
   private
+
+  def self.rest_get( request )
+    results = {}
+    begin
+      response = RestClient.get URI.escape request
+      if response.code == 200
+        results = JSON.parse response
+      end
+    rescue => e
+      puts request
+      puts e
+    end
+    return results
+  end
 
   def self.transform( response )
     result = {}

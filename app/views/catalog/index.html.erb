@@ -147,7 +147,7 @@
     //    ] }
     // ]
     function getTagTree( ) {
-        var json_str = "<%= JSON.generate Melcatalog.aat_hirararchy %>";
+        var json_str = "<%= JSON.generate Melcatalog.aat_hierarchy %>";
         json_str = json_str.replace(/&quot;/g, '"');
         return( jQuery.parseJSON( json_str ) );
     }

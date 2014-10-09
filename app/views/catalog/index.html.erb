@@ -70,7 +70,9 @@
 
     $('document').ready(function( ) {
 
+        //
         // setup correct search radio buttons
+        //
         <% if ( @search_types.include? :person ) && ( @search_types.include? :artwork ) %>
            $('#search-both').prop('checked', true);
         <% elsif @search_types.include? :person %>
@@ -79,9 +81,10 @@
            $('#search-artwork').prop('checked', true);
         <% end %>
 
-        $('#tag-tree').treeview( { data: getTagRoot( ), levels: 0, highlightSelected: false } );
+        // enable the tree view
+        $('#tag-tree').treeview( { data: getTagTree( ), levels: 0, highlightSelected: false } );
 
-        // new search handler
+        // search button handler
         $("#search-button").click(function() {
             var term = $('#search-term').val( );
             var include_people = $('#search-people').prop('checked') || $('#search-both').prop('checked' );
@@ -100,14 +103,18 @@
             <% end %>
 
             storeDetails( reference );
+
+            // the current window, hopefully we are in an iframe
             close( );
         });
 
+        // when we select a tag
         $('#tag-tree').on('nodeSelected', function(event, node) {
             //alert( "Clicked tag");
         });
     });
 
+    // doing a new search in the same frame
     function newSearch( term, include_people, include_artwork ) {
         var include = "";
         if( include_people ) { include = "people"; }
@@ -116,26 +123,33 @@
         document.location.href = newURL;
     }
 
+    // store the inserted item off so it is available to our parent (the opener)
     function storeDetails( reference ) {
        var div = window.opener.jQuery('div')[ 0 ];
-       window.opener.jQuery.data( div, "catalog", reference )
+       window.opener.jQuery.data( div, "catalog", reference );
     }
 
+    //
+    // the tree view needs an array of json objects. Something like:
+    //
+    // [ { text: "Parent 1", nodes:
+    //    [
+    //      { text: "Child 1.1" }
+    //    ] },
+    //    { text: "Parent 2", nodes:
+    //    [
+    //      { text: "Child 2.1" }
+    //    ] },
+    //    { text: "Parent 3", nodes:
+    //    [
+    //      { text: "Child 3.1" },
+    //      { text: "Child 3.2" }
+    //    ] }
+    // ]
     function getTagTree( ) {
-    }
-
-    function getTagRoot( ) {
-       return( [ { text: "Parent 1", nodes: [
-                     { text: "Child 1.1" }
-                 ] },
-                 { text: "Parent 2", nodes: [
-                     { text: "Child 2.1" }
-                 ] },
-                 { text: "Parent 3", nodes: [
-                     { text: "Child 3.1" },
-                     { text: "Child 3.2" }
-                 ] }
-               ] );
+        var json_str = "<%= JSON.generate Melcatalog.aat_hirararchy %>";
+        json_str = json_str.replace(/&quot;/g, '"');
+        return( jQuery.parseJSON( json_str ) );
     }
 </script>
 

@@ -179,16 +179,9 @@
                  var e = {};
 
                  // fill in all the fields here...
-                 <% ['name', 'author'].each do | field | %>
+                 <% ['name', 'author', 'edition', 'publisher', 'publication_date', 'source', 'copyright'].each do | field | %>
                     e[ '<%= field %>' ] = '<%= entry[field].nil? ? '' : entry[field] %>';
                  <% end %>
-
-                 // temp...
-                 e[ 'edition' ] = '';
-                 e[ 'publisher' ] = '';
-                 e[ 'pubdate' ] = '';
-                 e[ 'source' ] = '';
-                 e[ 'rights' ] = '';
                  text[ '<%= entry['eid'] %>' ] = e;
               <% end %>
             <% end %>
@@ -200,9 +193,9 @@
                 $( "#document_author").val( entry[ 'author'] );
                 $( "#document_edition").val( entry[ 'edition'] );
                 $( "#document_publisher").val( entry[ 'publisher'] );
-                $( "#document_publication_date").val( entry[ 'pubdate'] );
+                $( "#document_publication_date").val( entry[ 'publication_date'] );
                 $( "#document_source").val( entry[ 'source'] );
-                $( "#document_rights_status").val( entry[ 'rights'] );
+                $( "#document_rights_status").val( entry[ 'copyright'] );
                 $( ".note-editable").html( "EID:" + id );
             })
 

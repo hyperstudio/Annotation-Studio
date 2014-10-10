@@ -40,11 +40,11 @@
                       <%= f.label :select, 'Select a text' %>
                       <table class="table table-striped table-bordered table-hover">
                         <thead>
-                           <tr><th>Author</th><th>Subject</th></tr>
+                           <tr><th>Title</th><th>Author</th></tr>
                         </thead>
                         <tbody data-link="row" class="rowlink">
                            <% @catalog_texts.each do | entry | %>
-                              <tr><td><a id="<%= entry['eid'] %>" class="clickable"><%= entry['author'] %></a></td><td><%= entry['name'] %></td></tr>
+                              <tr><td><a id="<%= entry['eid'] %>" class="clickable"><%= entry['name'] %></a></td><td><%= entry['author'] %></td></tr>
                            <% end %>
                         </tbody>
                       </table>

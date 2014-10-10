@@ -31,10 +31,10 @@ class CatalogController < ApplicationController
 
     result = Melcatalog.get( params[:eid] )
     if result && result[:person]
-      # setup the data as appropriate
+       @entry = result[:person][ 0 ]
        render "catalog/image", :layout => false
     elsif result && result[:artwork]
-      # setup the data as appropriate
+       @entry = result[:artwork][ 0 ]
        render "catalog/image", :layout => false
     else
       render :file => 'public/404.html', :status => :not_found, :layout => false

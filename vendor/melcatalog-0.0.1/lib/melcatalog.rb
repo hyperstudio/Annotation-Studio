@@ -64,25 +64,28 @@ module Melcatalog
    #
    # helper to get all the metadata for text entities
    #
-   def self.texts( )
-      results = self.search( "", Melcatalog.configuration.default_result_limit, [ :text ] )
-      return results
+   def self.texts( limit = Melcatalog.configuration.default_result_limit )
+      request = "#{Melcatalog.configuration.service_endpoint}/texts?limit=#{limit}"
+      results = self.rest_get request
+      return { :text => results }
    end
 
    #
    # helper to get all the metadata for people entities
    #
-   def self.people( )
-      results = self.search( "", Melcatalog.configuration.default_result_limit, [ :person ] )
-      return results
+   def self.people( limit = Melcatalog.configuration.default_result_limit )
+     request = "#{Melcatalog.configuration.service_endpoint}/people?limit=#{limit}"
+     results = self.rest_get request
+     return { :person => results }
    end
 
    #
    # helper to get all the metadata for artwork entities
    #
-   def self.artwork( )
-      results = self.search( "", Melcatalog.configuration.default_result_limit, [ :artwork ] )
-      return results
+   def self.artwork( limit = Melcatalog.configuration.default_result_limit )
+     request = "#{Melcatalog.configuration.service_endpoint}/artworks?limit=#{limit}"
+     results = self.rest_get request
+     return { :artwork => results }
    end
 
   private

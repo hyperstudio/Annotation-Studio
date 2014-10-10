@@ -10,11 +10,43 @@ describe Melcatalog do
 
   describe '#search' do
 
-     it 'finds by wildcard' do
+     it 'search by wildcard' do
         term = "%"
         results = Melcatalog.search( term, Melcatalog.configuration.default_result_limit )
         fail if results.empty?
+     end
 
+     it 'search by type' do
+       term = "%"
+
+       results = Melcatalog.search( term, Melcatalog.configuration.default_result_limit, [:text] )
+       fail if results.empty?
+       fail if results[:text].nil?
+       fail if results[:person].nil? == false
+       fail if results[:artwork].nil? == false
+
+       results = Melcatalog.search( term, Melcatalog.configuration.default_result_limit, [:person] )
+       fail if results.empty?
+       fail if results[:text].nil? == false
+       fail if results[:person].nil?
+       fail if results[:artwork].nil? == false
+
+       results = Melcatalog.search( term, Melcatalog.configuration.default_result_limit, [:artwork] )
+       fail if results.empty?
+       fail if results[:text].nil? == false
+       fail if results[:person].nil? == false
+       fail if results[:artwork].nil?
+
+     end
+
+     it 'search by type list' do
+       term = "%"
+
+       results = Melcatalog.search( term, Melcatalog.configuration.default_result_limit, [:text, :person ] )
+       fail if results.empty?
+       fail if results[:text].nil?
+       fail if results[:person].nil?
+       fail if results[:artwork].nil? == false
      end
 
      it 'limit result count' do
@@ -25,6 +57,10 @@ describe Melcatalog do
        fail if results[:text].nil? == false && results[:text].size > max
        fail if results[:person].nil? == false && results[:person].size > max
        fail if results[:artwork].nil? == false && results[:artwork].size > max
+     end
+
+     it 'image only results' do
+        # TODO
      end
 
   end
@@ -111,10 +147,11 @@ describe Melcatalog do
       must_exist( entity, 'name' )
       must_exist( entity, 'author' )
       must_exist( entity, 'witnesses' )
-      #  must_exist( entity, 'publisher' )
-      #  must_exist( entity, 'pubdate' )
-      #  must_exist( entity, 'source' )
-      #  must_exist( entity, 'rights' )
+      must_exist( entity, 'edition' )
+      must_exist( entity, 'publisher' )
+      must_exist( entity, 'publication_date' )
+      must_exist( entity, 'source' )
+      must_exist( entity, 'copyright' )
 
       must_not_exist( entity, 'content' ) if contentOk == false
       must_exist( entity, 'content' ) if contentOk == true
@@ -125,12 +162,19 @@ describe Melcatalog do
     entities.each { | entity |
       must_exist( entity, 'eid' )
       must_exist( entity, 'name' )
+      must_exist( entity, 'surname' )
+      must_exist( entity, 'forename' )
       must_exist( entity, 'role' )
+      must_exist( entity, 'additional_name_info' )
       must_exist( entity, 'birth' )
       must_exist( entity, 'death' )
       must_exist( entity, 'nationality' )
+      must_exist( entity, 'education' )
 
-      # not sure what the content fields are
+      must_exist( entity, 'url' )
+      must_exist( entity, 'image_full' )
+      must_exist( entity, 'image_medium' )
+      must_exist( entity, 'image_thumb' )
     }
   end
 
@@ -138,17 +182,27 @@ describe Melcatalog do
     entities.each { | entity |
       must_exist( entity, 'eid' )
       must_exist( entity, 'artist' )
-      must_exist( entity, 'title' )
       must_exist( entity, 'artist_national_origin' )
       must_exist( entity, 'engraver' )
       must_exist( entity, 'engraver_national_origin' )
+      must_exist( entity, 'title' )
       must_exist( entity, 'publication' )
       must_exist( entity, 'medium' )
-      must_exist( entity, 'permissions' )
-      must_exist( entity, 'subject' )
+      must_exist( entity, 'medium_of_original' )
+      must_exist( entity, 'location_of_print' )
       must_exist( entity, 'genre' )
+      must_exist( entity, 'geography' )
+      must_exist( entity, 'subject' )
+      must_exist( entity, 'viewed' )
+      must_exist( entity, 'permissions' )
+      must_exist( entity, 'owned_acquired_borrowed' )
+      must_exist( entity, 'explicit_reference' )
+      must_exist( entity, 'associated_reference' )
 
-      # not sure what the content fields are
+      must_exist( entity, 'url' )
+      must_exist( entity, 'image_full' )
+      must_exist( entity, 'image_medium' )
+      must_exist( entity, 'image_thumb' )
     }
   end
 
@@ -161,10 +215,12 @@ describe Melcatalog do
   end
 
   def must_exist( obj, field )
+    puts "ERROR: missing required field: #{field}" if obj.has_key?( field ) == false
     fail if obj.has_key?( field ) == false
   end
 
   def must_not_exist( obj, field )
-    #fail if obj.has_key?( field ) == true
+    puts "ERROR: exists #{field}" if obj.has_key?( field ) == true
+    fail if obj.has_key?( field ) == true
   end
 end

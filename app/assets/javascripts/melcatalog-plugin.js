@@ -9,6 +9,15 @@ jQuery(function ($) {
         jQuery.data( div, "annotation", t );
     }
 
+    function catalogPopup( url ) {
+        jQuery.popupWindow( url, {
+            center: 'parent',
+            resizable: true,
+            createNew: true,
+            menubar: false
+        });
+    }
+
     Annotator.Plugin.MelCatalogue = function (element) {
         return {
             pluginInit: function () {
@@ -39,9 +48,10 @@ jQuery(function ($) {
                     //.subscribe("annotationEditorSubmit", function (annotation) {
                     //    console.info("annotationEditorSubmit: %o", annotation)
                     //})
-                    //.subscribe("annotationViewerShown", function (annotation) {
-                    //    console.info("annotationViewerShown: %o", annotation)
-                    //})
+                    .subscribe("annotationViewerShown", function (annotation) {
+                        //console.info("annotationViewerShown: %o", annotation)
+                        $( ".catalog-popup" ).on( 'click', function() { catalogPopup( $(this).attr( "href" ) ); return( false ); } );
+                    })
                     //.subscribe("annotationViewerTextField", function (annotation) {
                     //    console.info("annotationViewerTextField: %o", annotation)
                     //});

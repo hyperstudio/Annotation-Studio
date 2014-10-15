@@ -47,6 +47,7 @@
     margin-left: 5px;
     margin-right: 5px;
     width: 65%;
+    height: 380px !important;
   }
 
   // general helper classes
@@ -64,6 +65,10 @@
 
   .block {
     display: inline-block;
+  }
+
+  .scrollable {
+    overflow-y: scroll;
   }
 
   .bottom-border {

@@ -14,7 +14,9 @@ jQuery(function ($) {
             center: 'parent',
             resizable: true,
             createNew: true,
-            menubar: false
+            menubar: false,
+            width: 650,
+            height: 650
         });
     }
 

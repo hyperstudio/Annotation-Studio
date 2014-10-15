@@ -21,7 +21,6 @@
  *= require "users"
  *= require "richText-annotator.css"
  *= require "annotator.touch.css"
- *= require "catalog"
  */
 
 html {

@@ -2,9 +2,11 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+body {
+   padding: 0px;
+}
+
 #catalog-container, #catalog-image-container, #catalog-reference-container {
-  //width: 50%;
-  margin-top: -60px;
 
   #new-search-panel {
 
@@ -47,7 +49,7 @@
     margin-left: 5px;
     margin-right: 5px;
     width: 65%;
-    height: 380px !important;
+    height: 480px !important;
   }
 
   // general helper classes

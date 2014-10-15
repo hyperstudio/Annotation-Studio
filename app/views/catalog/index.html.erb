@@ -112,7 +112,7 @@
         var include = "";
         if( include_people ) { include = "people"; }
         if( include_artwork ) { include = ( include ? include + "," : "" ) + "artwork"; }
-        var newURL = "/documents/catalog?term=" + encodeURI( term ) + ( include ? "&types=" + include : "" );
+        var newURL = "/documents/catalog?term=" + encodeURI( term ) + "&onlyimages=<%= @onlyimages %>" + ( include ? "&types=" + include : "" );
         document.location.href = newURL;
     }
 

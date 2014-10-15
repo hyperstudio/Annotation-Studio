@@ -10,13 +10,28 @@
 
 <div id="catalog-reference-container">
   <h3 class="indent bottom-border">An Artwork From The Melville Electronic Library</h3>
+
+  <table class="table table-striped table-bordered">
+     <tbody>
+        <!-- do each field -->
+        <% ['artist', 'artist_national_origin', 'engraver', 'engraver_national_origin', 'title', 'publication', 'medium',
+           'medium_of_original', 'location_of_print', 'genre', 'geography', 'subject', 'viewed', 'permissions',
+           'owned_acquired_borrowed', 'explicit_reference', 'associated_reference'].each do |field| %>
+         <tr><td><%= field.humanize %></td><td><%= @entry[field] %></td></tr>
+        <% end %>
+
+        <!-- then the image -->
+        <tr><td>Image</td><td><%= image_display @entry['image_thumb'] %></td></tr>
+     </tbody>
+  </table>
+
 </div>
 
+<!--
 <script type="text/javascript">
-
     $('document').ready(function( ) {
     });
-
 </script>
+-->
 
 </body>

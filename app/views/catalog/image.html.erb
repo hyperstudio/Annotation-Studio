@@ -11,7 +11,9 @@
 <div id="catalog-image-container">
   <h3 class="indent bottom-border">An Image From Melville Electronic Library</h3>
 
-  <%= image_tag @entry['image_full'] %>
+  <div class="indent">
+     <%= image_display @entry['image_full'] %>
+  </div>
 </div>
 
 <script type="text/javascript">

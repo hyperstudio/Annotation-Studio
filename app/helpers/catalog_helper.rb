@@ -5,7 +5,7 @@ module CatalogHelper
       image_tag image
     else
       return text unless text.nil?
-      return "No image available" if text.nil?
+      return "No image available"
     end
   end
 

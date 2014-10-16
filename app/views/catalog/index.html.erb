@@ -43,7 +43,13 @@
               <% unless @search_results[:person].nil? %>
               <tbody data-link="row" class="rowlink">
                  <% @search_results[:person].each do | entry | %>
-                  <tr><td><%= image_or_text entry['image_thumb'], '' %></td><td><a id="<%= entry['eid'] %>" class="clickable" title="<%= entry['name'] %>" ref="<%= entry['image_thumb'] %>"><%= entry['name'] %></a></td><td><%= entry['birth'] %></td><td><%= entry['death'] %></td></tr>
+                  <tr><td>
+                    <% if has_image( entry['image_thumb'] ) %>
+                        <%= image_tag entry['image_thumb'] %>
+                    <% else %>
+                      <span class="glyphicon glyphicon-user"></span>
+                    <% end %>
+                  </td><td><a id="<%= entry['eid'] %>" class="clickable" title="<%= entry['name'] %>" ref="<%= entry['image_thumb'] %>"><%= entry['name'] %></a></td><td><%= entry['birth'] %></td><td><%= entry['death'] %></td></tr>
                  <% end %>
               </tbody>
               <% end %>
@@ -57,7 +63,13 @@
               <% unless @search_results[:artwork].nil? %>
               <tbody data-link="row" class="rowlink">
                 <% @search_results[:artwork].each do | entry | %>
-                   <tr><td><%= image_or_text entry['image_thumb'], '' %></td><td><a id="<%= entry['eid'] %>" class="clickable" title="<%= entry['title'] %>" ref="<%= entry['image_thumb'] %>"><%= entry['artist'] %></a></td><td><%= entry['title'] %></td></tr>
+                   <tr><td>
+                     <% if has_image( entry['image_thumb'] ) %>
+                         <%= image_tag entry['image_thumb'] %>
+                     <% else %>
+                         <span class="glyphicon glyphicon-picture"></span>
+                     <% end %>
+                   </td><td><a id="<%= entry['eid'] %>" class="clickable" title="<%= entry['title'] %>" ref="<%= entry['image_thumb'] %>"><%= entry['artist'] %></a></td><td><%= entry['title'] %></td></tr>
                 <% end %>
               </tbody>
               <% end %>

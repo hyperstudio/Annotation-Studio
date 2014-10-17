@@ -10,7 +10,8 @@
 <body>
 
 <div id="catalog-image-container">
-  <!--h3 class="indent bottom-border">An Image From Melville Electronic Library</h3-->
+  <h3 class="indent bottom-border"><%= @entry['artist'].nil? ? @entry['name'] : @entry['artist'] %></h3>
+
   <div class="indent">
      <%= image_or_text @entry['image_full'] %>
   </div>

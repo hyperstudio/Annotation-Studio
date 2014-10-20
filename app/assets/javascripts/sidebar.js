@@ -235,7 +235,7 @@ Sidebar.App = Backbone.Router.extend({
     if(this.filtered) {
       $('ul#annotation-list li').each(function(index, element){
         highlight_id = $(element).find('span:first-child').data('highlight');
-        if(matchesFilters($(highlight_id))){
+        if(isScrolledIntoView($(highlight_id))){
           $(element).show();
         }else{
           $(element).hide();
@@ -253,7 +253,7 @@ function matchesFilters(elem) {
 }
 
 function isScrolledIntoView(elem) {
-  if (elem != undefined) {
+  if (typeof elem !== 'undefined') {
     var docViewTop = $(window).scrollTop();
     var docViewBottom = docViewTop + $(window).height();
     var elemTop = $(elem).offset().top;
@@ -267,7 +267,7 @@ function isScrolledIntoView(elem) {
 }
 
 function isTagged(elem, tag) {
-  if (elem != undefined) {
+  if (typeof elem !== 'undefined') {
     var docViewTop = $(window).scrollTop();
     var docViewBottom = docViewTop + $(window).height();
     var elemTop = $(elem).offset().top;

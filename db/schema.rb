@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140625181144) do
+ActiveRecord::Schema.define(:version => 20141010190718) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -90,6 +90,7 @@ ActiveRecord::Schema.define(:version => 20140625181144) do
     t.integer  "upload_file_size"
     t.datetime "upload_updated_at"
     t.datetime "processed_at"
+    t.string   "survey_link"
   end
 
   add_index "documents", ["slug"], :name => "index_documents_on_slug", :unique => true

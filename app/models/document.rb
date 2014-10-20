@@ -25,7 +25,7 @@ class Document < ActiveRecord::Base
   belongs_to :user, :autosave => true
   attr_accessible :title, :state, :chapters, :text, :user_id,
     :rep_privacy_list, :rep_group_list, :new_group, :author, :edition,
-    :publisher, :publication_date, :source, :rights_status, :upload
+    :publisher, :publication_date, :source, :rights_status, :upload, :survey_link
 
   before_validation :add_title, on: :create, unless: :title?
   before_create :add_processed_at, unless: :uploaded?

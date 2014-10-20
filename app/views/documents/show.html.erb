@@ -7,11 +7,17 @@
     <% if ! @document.processed? %>
       <%= render 'processed_message' %>
     <% end %>
+    <% if @document.survey_link.present? %>
+      <%= render 'survey_button' %>
+    <% end %>
     <div id="textcontent">
       <div><!-- Required for cases in which there's no HTML in the text -->
         <%= @document.text.html_safe %>
       </div>
     </div>
+    <% if @document.survey_link.present? %>
+      <%= render 'survey_button' %>
+    <% end %>
   </div><!--/col-md-8 -->
   <div class="col-md-4">
     <% if @document.processed? and ! @document.draft? %>
@@ -23,7 +29,7 @@
 <div id="spinnermodal" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="spinnermodallabel" aria-hidden="true">
   <div class="modal-body" id="spinnerdiv"><em>Loading annotations...</em></div>
 </div>
-<%= render "documents/metadata" %>
+<%# render "documents/metadata" %>
 <script type="text/javascript">
 $('#annotation-list').slimScroll({
   height: '99%',

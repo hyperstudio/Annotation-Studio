@@ -35,12 +35,6 @@
 				<%= f.password_field :password, :class => "form-control" %>
 				</div>
 
-				<% if devise_mapping.rememberable? -%>
-        <div class="checkbox">
-          <%= label_tag :remember_me do %><%= f.check_box :remember_me %> Remember me <% end %>
-        </div>
-        <% end %>
-
 				<div><%= f.submit "Sign in", :class => "btn btn-default btn-default-primary" %></div>
 
     		<% end %>

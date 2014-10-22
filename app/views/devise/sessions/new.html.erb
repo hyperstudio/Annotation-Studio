@@ -5,7 +5,7 @@
   <div class="col-md-12" id="blurb">
       <% if ENV["GLOBAL_ALERT"] != "" %>
       <div class="alert alert-<%= ENV["ALERT_LEVEL"] %>">
-        <%= ENV["GLOBAL_ALERT"] %>
+        <%= ENV["GLOBAL_ALERT"].html_safe %>
       </div>
       <% end %>
   </div>

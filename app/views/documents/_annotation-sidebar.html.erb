@@ -76,7 +76,8 @@ jQuery(function ($) {
   var optionsRichText = {
     editor_enabled: '<%= ENV["ANNOTATOR_RICHTEXT"] %>',
     tinymce: {
-      'toolbar': '<%= ENV["ANNOTATOR_RICHTEXT_CONFIG"] %>'
+      'toolbar': '<%= ENV["ANNOTATOR_RICHTEXT_CONFIG"] %>',
+      'image_dimensions': false
     }
   };
 

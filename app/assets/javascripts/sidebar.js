@@ -193,7 +193,7 @@ Sidebar.AnnotationListView = Backbone.View.extend({
       // console.info("IdTarget offset top "+$(idtarget).offset().top);
       $('html,body').animate({scrollTop: $(idtarget).offset().top - 150}, 500);
       $(".icon-comment").remove();
-      $(idtarget).prepend('<i class="icon-comment"></i>');
+      $(idtarget).prepend('<i class="glyphicon glyphicon-comment"></i>');
       // event.stopPropagation();
     });
   }

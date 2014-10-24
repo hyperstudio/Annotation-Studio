@@ -1,8 +1,7 @@
 <% flash.each do |type, message| %>
-  <% if !flash[:timedout] %><%# per https://github.com/plataformatec/devise/issues/1777 %>
+  <%- next if type.to_s == 'timedout' %><%# per https://github.com/plataformatec/devise/issues/1777 %>
   <div class="alert <%= bootstrap_class_for(type) %> alert-dismissable fade in" id="mainalerts">
     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
     <%= message %>
   </div>
-  <% end %>
 <% end %>

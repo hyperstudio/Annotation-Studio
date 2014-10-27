@@ -248,19 +248,19 @@ jQuery(function ($) {
     }
   };
 
-  var domIndex = function(editor, annotation) {
+  var parentIndex = function(editor, annotation) {
     var node = $(".annotator-hl-temporary");
     var parent = node.parent()[0];
-    var domindex = $( "#textcontent" ).find( "*" ).index(parent)
-    // console.log(domindex);
-    annotation.domindex = domindex;
+    var parentIndex = $( "#textcontent" ).find( "*" ).index(parent)
+    console.log(parentIndex);
+    annotation.parentIndex = parentIndex;
   };
 
   // When the annotator loads remote data, update sidebar
   subscriber.subscribe('annotationsLoaded', loadSidebar);
   subscriber.subscribe('annotationsLoaded', stopSpinner);
   subscriber.subscribe('annotationsLoaded', handleHash);
-  subscriber.subscribe('annotationEditorShown', domIndex);
+  subscriber.subscribe('annotationEditorShown', parentIndex);
 
   // Update all highlights with UUIDs
   subscriber.subscribe('annotationsLoaded', __bind(function(annotations) {

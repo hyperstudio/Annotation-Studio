@@ -101,7 +101,7 @@ Sidebar.AnnotationView = Backbone.View.extend({
       var formattedComment = this.mdconverter.makeHtml(userComment);
       // Temporarily converting to text-only comment due to sidebar formatting issues
       var textComment = $(formattedComment).text()
-      this.model.set("text", textComment);
+      this.model.set("text", formattedComment);
     }
     return this;
   }

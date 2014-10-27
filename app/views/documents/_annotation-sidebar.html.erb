@@ -249,11 +249,17 @@ jQuery(function ($) {
   };
 
   var parentIndex = function(editor, annotation) {
-    var node = $(".annotator-hl-temporary");
-    var parent = node.parent()[0];
-    var parentIndex = $( "#textcontent" ).find( "*" ).index(parent)
-    console.log(parentIndex);
-    annotation.parentIndex = parentIndex;
+    if (!annotation.parentIndex > 0) {
+      console.log("No current annotation.parentIndex: "+ annotation.parentIndex);
+      var node = $(".annotator-hl-temporary");
+      var parent = node.parent()[0];
+      var parentIndex = $( "#textcontent" ).find( "*" ).index(parent)
+      annotation.parentIndex = parentIndex;
+      console.log("Added annotation.parentIndex: "+ annotation.parentIndex);
+    }
+    else {
+      console.log("Existing parentIndex: " + annotation.parentIndex + "; not adding a new one.");
+    }
   };
 
   // When the annotator loads remote data, update sidebar

@@ -74,6 +74,10 @@ jQuery(function ($) {
   studio.annotator("addPlugin", "Touch");
   var subscriber = $('#textcontent').annotator().data('annotator');
 
+  <% if !mobile_device? %>
+  studio.annotator('addPlugin', 'RichText', optionsRichText);
+  <% end %>
+
   // these three click and tap handlers manage the rich text editor show and hide on mobile and desktop
   $('.annotator-button').on('tap', function(){
     console.log('button tapped');

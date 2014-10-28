@@ -105,10 +105,12 @@
                   <%= f.radio_button :state, "published", checked: @document.published? %>
                   <i class="glyphicon glyphicon-ok"></i> Published
                 </label>
+                <% if current_user.has_role?(:admin) %>
                 <label class="radio-inline">
                   <%= f.radio_button :state, "public", checked: @document.public? %>
                   <i class="glyphicon glyphicon-share-alt"></i> Public
                 </label>
+                <% end %>
           			<label class="radio-inline">
                   <%= f.radio_button :state, "deleted", checked: @document.deleted?, disabled: controller.action_name == "new" %>
                   <i class="glyphicon glyphicon-folder-close"></i> Archived

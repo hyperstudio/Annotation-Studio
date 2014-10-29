@@ -36,8 +36,10 @@ class ApplicationController < ActionController::Base
 
   def set_domain_config
     $DOMAIN_CONFIG = DOMAIN_CONFIGS['public']
-    if request.subdomain.present?
+    if (request.subdomain.present? && DOMAIN_CONFIGS[request.subdomain].present?)
       $DOMAIN_CONFIG = DOMAIN_CONFIGS[request.subdomain]
+    else
+      $DOMAIN_CONFIG = DOMAIN_CONFIGS['default']
     end
   end
 end

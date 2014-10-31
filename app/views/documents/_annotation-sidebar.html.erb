@@ -185,7 +185,55 @@ jQuery(function ($) {
       'user': "<%= current_user.email %>",
       'mode': event.data.mode,
       'context': 'document',
-      'uri': [location.protocol, '//', location.host, location.pathname].join('')
+      'uri': [location.protocol, '//', location.host, location.pathname].join(''),
+      'tags': $('#tagsearchbox').val()
+    };
+
+    var reload_data = reloadAnnotations(loadOptions);
+    var cleanup_document = cleanupDocument();
+
+    $.when(reload_data).then(cleanup_document).done(refreshAnnotations(), loadSidebar());
+  }
+
+  function getAnnotationTags() {
+    var annotations = subscriber.dumpAnnotations();
+    var tags = [];
+    for (var i=0; i<annotations.length; i++) {
+      for (var j=0; j<annotations[i].tags.length; j++) {
+        tags.push(annotations[i].tags[j]);
+      }
+    }
+    return tags;
+  }
+  function activateAutocomplete() {
+    $('#tagsearchbox').autocomplete({
+      source: getAnnotationTags()
+    });
+  }
+
+  function getMode() {
+    var activeElems = $('.viewchoice.active')
+    for (var i=0; i<activeElems.length; i++) {
+      var elem = activeElems[i];
+      if (elem.id.substring(elem.id.length-4) === "view") {
+        return elem.id.substring(0,elem.id.length-4)
+      }
+    }
+  }
+
+  $('#tagsearch').on('click', { id: 'tagsearch' }, tagFilter);
+
+  function tagFilter(event) {
+    var tags = $('#tagsearchbox').val()
+    var loadOptions = {
+      'limit': 1000,
+      "groups": groups,
+      "subgroups": subgroups,
+      'user': "<%= current_user.email %>",
+      'mode': getMode(),
+      'context': 'document',
+      'uri': [location.protocol, '//', location.host, location.pathname].join(''),
+      'tags': tags
     };
 
     var reload_data = reloadAnnotations(loadOptions);
@@ -266,6 +314,7 @@ jQuery(function ($) {
   subscriber.subscribe('annotationsLoaded', loadSidebar);
   subscriber.subscribe('annotationsLoaded', stopSpinner);
   subscriber.subscribe('annotationsLoaded', handleHash);
+  subscriber.subscribe('annotationsLoaded', activateAutocomplete);
   subscriber.subscribe('annotationEditorShown', parentIndex);
 
   // Update all highlights with UUIDs

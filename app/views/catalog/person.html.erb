@@ -11,7 +11,7 @@
 
 <div class="container-fluid">
 
-  <div class="panel panel-info">
+  <div class="panel panel-info catalog-container">
     <div class="panel-heading"><h3 class="panel-title"><%= @entry['name'] %></h3></div>
 
     <div class="panel-body">
@@ -28,7 +28,7 @@
             <% end %>
 
             <div class="form-group">
-              <%= image_or_text @entry['image_thumb'] %>
+              <%= image_or_text @entry['image_medium'] %>
             </div>
 
           </form>

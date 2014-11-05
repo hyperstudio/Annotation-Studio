@@ -2,7 +2,12 @@ body {
    padding: 0px;
 }
 
-#catalog-container, #catalog-image-container, #catalog-reference-container {
+.catalog-container {
+
+  .form-horizontal .form-group {
+      margin-left: 0;
+      margin-right: 0;
+  }
 
   #new-search-panel {
     padding-top: 8px;

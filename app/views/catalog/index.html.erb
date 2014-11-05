@@ -6,12 +6,11 @@
   <%= stylesheet_link_tag "application", :media => "all" %>
   <%= stylesheet_link_tag "catalog", :media => "all" %>
   <%= javascript_include_tag "application" %>
+  <%= javascript_include_tag "tiny_mce_popup" %>
 </head>
 <body>
 
 <div id="catalog-container">
-
-  <h3 class="indent bottom-border">Search Melville Electronic Library</h3>
 
   <div id="new-search-panel" class="indent bottom-border">
 
@@ -110,8 +109,8 @@
             // the eid and the entry title separated with a pipe character
             storeDetails( $(this).attr( "id") + "|" + $(this).attr( "title") + "|" + $(this).attr( "ref") );
 
-            // the current window, hopefully we are in an iframe
-            close( );
+            // close the window...
+            tinyMCEPopup.close( );
         });
 
         // when we select a tag
@@ -131,8 +130,9 @@
 
     // store the inserted item off so it is available to our parent (the opener)
     function storeDetails( reference ) {
-       var div = window.opener.jQuery('div')[ 0 ];
-       window.opener.jQuery.data( div, "catalog", reference );
+       var parent = tinyMCEPopup.getWin( );
+       var div = parent.jQuery('div')[ 0 ];
+       parent.jQuery.data( div, "catalog", reference );
     }
 
     //

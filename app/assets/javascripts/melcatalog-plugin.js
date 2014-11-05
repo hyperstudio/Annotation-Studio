@@ -9,17 +9,6 @@ jQuery(function ($) {
         jQuery.data( div, "annotation", t );
     }
 
-    function catalogPopup( url ) {
-        jQuery.popupWindow( url, {
-            center: 'parent',
-            resizable: true,
-            createNew: true,
-            menubar: false,
-            width: 650,
-            height: 650
-        });
-    }
-
     Annotator.Plugin.MelCatalogue = function (element) {
         return {
             pluginInit: function () {
@@ -52,7 +41,10 @@ jQuery(function ($) {
                     //})
                     .subscribe("annotationViewerShown", function (annotation) {
                         //console.info("annotationViewerShown: %o", annotation)
-                        $( ".catalog-popup" ).on( 'click', function() { catalogPopup( $(this).attr( "href" ) ); return( false ); } );
+                        $( ".catalog-popup" ).on( 'click', function( e ) {
+                            e.preventDefault( );
+                            $( this ).ekkoLightbox( );
+                        } );
                     })
                     //.subscribe("annotationViewerTextField", function (annotation) {
                     //    console.info("annotationViewerTextField: %o", annotation)

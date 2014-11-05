@@ -33,4 +33,4 @@
 //= require annotator.touch.min
 //= require highlighter
 //= require jquery.slimscroll.min
-//= require jquery.popupwindow
+//= require ekko-lightbox.min

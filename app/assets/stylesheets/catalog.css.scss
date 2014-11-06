@@ -1,5 +1,5 @@
 body {
-   padding: 0px;
+   padding: 10px;
 }
 
 .catalog-container {
@@ -9,29 +9,7 @@ body {
       margin-right: 0;
   }
 
-  #new-search-panel {
-    padding-top: 8px;
-
-    #button-block {
-      padding-top: 5px;
-    }
-
-    #search-container {
-
-      #search-term {
-        margin-left: 10px;
-        width: 50%;
-        padding-right: 5px;
-      }
-
-      #search-button {
-        background-color: #006dcc;
-        color: #fff;
-      }
-    }
-  }
-
-  #browse-panel {
+  .browse-panel {
     padding-top: 5px;
     width: 30%;
 
@@ -46,7 +24,7 @@ body {
     }
   }
 
-  #results-panel {
+  .results-panel {
     padding-top: 5px;
     margin-left: 5px;
     margin-right: 5px;
@@ -55,16 +33,8 @@ body {
   }
 
   // general helper classes
-  .block {
-    display: inline-block;
-  }
-
   .scrollable {
     overflow-y: scroll;
   }
 
-  .bottom-border {
-    padding-bottom: 10px;
-    border-bottom: 1px solid #ccc;
-  }
 }

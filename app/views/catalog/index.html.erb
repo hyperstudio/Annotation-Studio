@@ -10,34 +10,53 @@
 </head>
 <body>
 
-<div class="catalog-container">
+<div class="container-fluid catalog-container">
 
-  <div id="new-search-panel" class="indent bottom-border">
+  <div id="new-search-panel" class="">
 
-    <div id="search-container">
-       <label>Search for:</label><input id="search-term" value="<%= @search_term %>"/>
-       <button id="search-button" type="button" class="btn-default btn btn-default-primary">Go</button>
-    </div>
-    <div id="button-block">
-       <label class="radio-inline"><input type="radio" name="searchtypes" id="search-both" value="people">Both</label>
-       <label class="radio-inline"><input type="radio" name="searchtypes" id="search-people" value="people">People</label>
-       <label class="radio-inline"><input type="radio" name="searchtypes" id="search-artwork" value="artwork">Artwork</label>
+    <div class="col-lg-8">
+      <form class="form-horizontal">
+
+        <div class="form-group">
+           <div class="input-group">
+             <input id="search-term" class="form-control" type="text" value="<%= @search_term %>"/>
+             <span class="input-group-btn">
+                <button id="search-button" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+             </span>
+           </div>
+        </div>
+
+        <div class="form-group">
+          <div class="btn-group" data-toggle="buttons">
+            <label id="search-both-label"class="btn btn-primary">
+              <input id="search-both" type="radio" name="options" autocomplete="off" checked>Both
+            </label>
+            <label id="search-people-label" class="btn btn-primary">
+              <input id="search-people" type="radio" name="options" autocomplete="off">People
+            </label>
+            <label id="search-artwork-label" class="btn btn-primary">
+              <input id="search-artwork" type="radio" name="options" autocomplete="off">Artwork
+            </label>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
 
-  <div id="results-container" class="indent">
+  <div id="results-container" class="col-lg-8">
 
-      <div id="browse-panel" class="left">
-        <label>Browse</label>
+    <div class="form-group">
+      <div id="browse-panel" class="pull-left">
+        <label for="tag-tree">Browse:</label>
         <div id="tag-tree"></div>
       </div>
+    </div>
 
-      <div id="results-panel" class="right scrollable">
+      <div id="results-panel" class="pull-right scrollable">
 
-        <label class="results-type-header">People</label>
-            <table class="table table-striped table-bordered table-hover">
+            <table id="people-results" class="table table-striped table-hover table-condensed">
               <thead>
-              <tr><th></th><th>Name</th><th>Birth</th><th>Death</th></tr>
+              <tr><th><span style="text-decoration: underline;">People:</span></th><th>Name</th><th>Birth</th><th>Death</th></tr>
               </thead>
               <% unless @search_results[:person].nil? %>
               <tbody data-link="row" class="rowlink">
@@ -54,10 +73,9 @@
               <% end %>
             </table>
 
-        <label class="results-type-header">Artworks</label>
-            <table class="table table-striped table-bordered table-hover">
+            <table class="table table-striped table-hover table-condensed">
               <thead>
-                 <tr><th></th><th>Artist</th><th>Title</th></tr>
+                 <tr><th><span style="text-decoration: underline;">Artworks:</span></th><th>Artist</th><th>Title</th></tr>
               </thead>
               <% unless @search_results[:artwork].nil? %>
               <tbody data-link="row" class="rowlink">
@@ -87,10 +105,13 @@
         //
         <% if ( @search_types.include? :person ) && ( @search_types.include? :artwork ) %>
            $('#search-both').prop('checked', true);
+           $('#search-both-label').addClass( "active")
         <% elsif @search_types.include? :person %>
            $('#search-people').prop('checked', true);
+           $('#search-people-label').addClass( "active")
         <% elsif @search_types.include? :artwork %>
            $('#search-artwork').prop('checked', true);
+           $('#search-artwork-label').addClass( "active")
         <% end %>
 
         // enable the tree view

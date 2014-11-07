@@ -10,28 +10,31 @@ describe Melcatalog do
 
   describe '#search' do
 
-     it 'search by wildcard' do
+     it 'search by term' do
         term = "%"
-        results = Melcatalog.search( term, Melcatalog.configuration.default_result_limit )
+        results = Melcatalog.search_by_term( term, Melcatalog.configuration.default_result_limit )
         fail if results.empty?
+     end
+
+     it 'search by tag' do
      end
 
      it 'search by type' do
        term = "%"
 
-       results = Melcatalog.search( term, Melcatalog.configuration.default_result_limit, [:text] )
+       results = Melcatalog.search_by_term( term, Melcatalog.configuration.default_result_limit, [:text] )
        fail if results.empty?
        fail if results[:text].nil?
        fail if results[:person].nil? == false
        fail if results[:artwork].nil? == false
 
-       results = Melcatalog.search( term, Melcatalog.configuration.default_result_limit, [:person] )
+       results = Melcatalog.search_by_term( term, Melcatalog.configuration.default_result_limit, [:person] )
        fail if results.empty?
        fail if results[:text].nil? == false
        fail if results[:person].nil?
        fail if results[:artwork].nil? == false
 
-       results = Melcatalog.search( term, Melcatalog.configuration.default_result_limit, [:artwork] )
+       results = Melcatalog.search_by_term( term, Melcatalog.configuration.default_result_limit, [:artwork] )
        fail if results.empty?
        fail if results[:text].nil? == false
        fail if results[:person].nil? == false
@@ -42,7 +45,7 @@ describe Melcatalog do
      it 'search by type list' do
        term = "%"
 
-       results = Melcatalog.search( term, Melcatalog.configuration.default_result_limit, [:text, :person ] )
+       results = Melcatalog.search_by_term( term, Melcatalog.configuration.default_result_limit, [:text, :person ] )
        fail if results.empty?
        fail if results[:text].nil?
        fail if results[:person].nil?
@@ -51,7 +54,7 @@ describe Melcatalog do
 
      it 'limit result count' do
        max = 1
-       results = Melcatalog.search( "", max )
+       results = Melcatalog.search_by_term( "", max )
        fail if results.empty?
 
        fail if results[:text].nil? == false && results[:text].size > max
@@ -105,8 +108,8 @@ describe Melcatalog do
 
   describe '#metadata' do
 
-    it 'gets AAT tag hierarchy' do
-       metadata = Melcatalog.aat_hierarchy(  )
+    it 'gets tag hierarchy' do
+       metadata = Melcatalog.tag_hierarchy(  )
        fail if metadata.empty?
        process_tag_peers( metadata )
     end

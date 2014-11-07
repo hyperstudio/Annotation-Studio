@@ -18,21 +18,15 @@ module Melcatalog
    end
 
    #
-   # search the MEL catalogue and return an array of results
+   # search the MEL catalogue by term and return an array of results
    #
    # term          - the term to search for.
-   # content       - return full content or just metadata.
    # limit         - the maximum number of results to return.
    # entity_types  - include just these entity types. If empty then include all entity types.
    # search_fields - just search these fields for the specified term. If empty then all fields are searched.
    #
-   def self.search( term, limit = Melcatalog.configuration.default_result_limit, entity_types = [], search_fields = [] )
+   def self.search_by_term( term, limit = Melcatalog.configuration.default_result_limit, entity_types = [], search_fields = [] )
 
-      # handle defaults...
-      #entity_types = Melcatalog.configuration.default_entity_types if entity_types.empty?
-      #search_fields = Melcatalog.configuration.default_searchable_fields if search_fields.empty?
-
-      results = {}
       term = "%" if term.empty?
 
       entity_request = self.request_entity_types( entity_types )
@@ -40,6 +34,17 @@ module Melcatalog
 
       request = "#{Melcatalog.configuration.service_endpoint}/entries?search_term=#{term}#{entity_request}&limit=#{limit}"
       return self.transform self.rest_get request
+   end
+
+   #
+   # search the MEL catalogue by tag and return an array of results
+   #
+   # tag           - the tag to search for.
+   # limit         - the maximum number of results to return.
+   # entity_types  - include just these entity types. If empty then include all entity types.
+   # search_fields - just search these fields for the specified term. If empty then all fields are searched.
+   #
+   def self.search_by_tag( tag, limit = Melcatalog.configuration.default_result_limit, entity_types = [], search_fields = [] )
    end
 
    #
@@ -54,9 +59,9 @@ module Melcatalog
    end
 
    #
-   # get a hash representing the AAT hierarchy of all our content
+   # get a hash representing the tag hierarchy of all our content
    #
-   def self.aat_hierarchy( )
+   def self.tag_hierarchy( )
      request = "#{Melcatalog.configuration.service_endpoint}/tags"
      return self.rest_get request
    end
@@ -65,27 +70,21 @@ module Melcatalog
    # helper to get all the metadata for text entities
    #
    def self.texts( limit = Melcatalog.configuration.default_result_limit )
-      request = "#{Melcatalog.configuration.service_endpoint}/texts?limit=#{limit}"
-      results = self.rest_get request
-      return { :text => results }
+      return self.search_by_term( "", limit, [:text] )
    end
 
    #
    # helper to get all the metadata for people entities
    #
    def self.people( limit = Melcatalog.configuration.default_result_limit )
-     request = "#{Melcatalog.configuration.service_endpoint}/people?limit=#{limit}"
-     results = self.rest_get request
-     return { :person => results }
+     return self.search_by_term( "", limit, [:person] )
    end
 
    #
    # helper to get all the metadata for artwork entities
    #
    def self.artwork( limit = Melcatalog.configuration.default_result_limit )
-     request = "#{Melcatalog.configuration.service_endpoint}/artworks?limit=#{limit}"
-     results = self.rest_get request
-     return { :artwork => results }
+     return self.search_by_term( "", limit, [:artwork] )
    end
 
   private

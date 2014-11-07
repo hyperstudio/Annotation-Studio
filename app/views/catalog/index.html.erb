@@ -127,7 +127,8 @@
         // any of the results we found
         $(".clickable").click(function() {
             // the eid and the entry title separated with a pipe character
-            storeDetails( $(this).attr( "id") + "|" + $(this).attr( "title") + "|" + $(this).attr( "ref") );
+            var title = $(this).attr( "title").length === 0 ? "no title" : $(this).attr( "title");
+            storeDetails( $(this).attr( "id") + "|" + title + "|" + $(this).attr( "ref") );
 
             // close the window...
             tinyMCEPopup.close( );

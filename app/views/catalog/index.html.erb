@@ -20,6 +20,9 @@
              <input id="search-term" class="form-control" type="text" value="<%= @search_term %>"/>
              <span class="input-group-btn">
                 <button id="search-button" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                <% if ( @search_term.nil? == false ) && ( @search_term.empty? == false ) %>
+                   <a href="/documents/catalog" class="btn btn-default" type="button">Clear</a>
+                <% end %>
              </span>
            </div>
         </div>
@@ -114,7 +117,7 @@
         <% end %>
 
         // enable the tree view
-        $('#tag-tree').treeview( { data: getTagTree( ), levels: 0, highlightSelected: false, nodeIcon: '', showTags: true } );
+        $('#tag-tree').treeview( { data: getTagTree( ), levels: 0, highlightSelected: false, nodeIcon: '', showTags: true, enableLinks: true } );
 
         // search button handler
         $("#search-button").click(function() {

@@ -12,7 +12,7 @@
 <div class="container-fluid">
 
   <div class="panel panel-info catalog-container">
-    <div class="panel-heading"><h3 class="panel-title"><%= @entry['name'] %></h3></div>
+    <div class="panel-heading"><h3 class="panel-title"><%= tagset_display( @entry['name'], true ) %></h3></div>
 
     <div class="panel-body">
 
@@ -23,7 +23,7 @@
             <% ['name', 'surname', 'forename', 'role', 'additional_name_info', 'birth', 'death', 'nationality', 'education'].each do |field| %>
                 <div class="form-group">
                   <label for="<%= field %>"><%= field.humanize %></label>
-                  <input class="form-control" id="<%= field %>" readonly="readonly" type="text" value="<%= @entry[field] %>">
+                  <input class="form-control" id="<%= field %>" readonly="readonly" type="text" value="<%= tagset_display @entry[field] %>">
                 </div>
             <% end %>
 

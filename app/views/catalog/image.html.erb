@@ -12,7 +12,7 @@
 <div class="container-fluid">
 
   <div class="panel panel-info catalog-container">
-    <div class="panel-heading"><h3 class="panel-title"><%= @entry['name'].nil? ? @entry['title'] : @entry['name'] %></h3></div>
+    <div class="panel-heading"><h3 class="panel-title"><%= @entry['name'].nil? ? tagset_display @entry['title'] : tagset_display @entry['name'] %></h3></div>
 
     <div class="panel-body">
 

@@ -68,7 +68,7 @@
                 <% else %>
                   <span class="glyphicon glyphicon-user"></span>
                 <% end %>
-              </td><td><a id="<%= entry['eid'] %>" class="clickable" title="<%= tagset_display entry['name'] %>" ref="<%= entry['image_thumb'] %>"><%= tagset_display entry['name'] %></a></td><td><%= entry['birth'] %></td><td><%= entry['death'] %></td></tr>
+              </td><td><a id="<%= entry['eid'] %>" class="clickable" title="<%= tagset_display( entry['name'], true ) %>" ref="<%= entry['image_thumb'] %>"><%= tagset_display( entry['name'], true ) %></a></td><td><%= entry['birth'] %></td><td><%= entry['death'] %></td></tr>
              <% end %>
           </tbody>
           <% end %>
@@ -87,7 +87,7 @@
                  <% else %>
                      <span class="glyphicon glyphicon-picture"></span>
                  <% end %>
-               </td><td><a id="<%= entry['eid'] %>" class="clickable" title="<%= tagset_display entry['title'] %>" ref="<%= entry['image_thumb'] %>"><%= tagset_display entry['artist'] %></a></td><td><%= entry['title'] %></td></tr>
+               </td><td><a id="<%= entry['eid'] %>" class="clickable" title="<%= tagset_display( entry['title'], true ) %>" ref="<%= entry['image_thumb'] %>"><%= tagset_display( entry['artist'], true ) %></a></td><td><%= entry['title'] %></td></tr>
             <% end %>
           </tbody>
           <% end %>

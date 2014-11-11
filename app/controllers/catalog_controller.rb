@@ -29,7 +29,7 @@ class CatalogController < ApplicationController
     @onlyimages = true if params[:onlyimages].nil? == false && params[:onlyimages] == 'true'
 
     # do the search, metadata only
-    @search_results = Melcatalog.search( @search_term, @search_tags, @search_fields, @search_types, Melcatalog.configuration.default_result_limit )
+    @search_results = Melcatalog.search( @search_term, @search_tags, @search_fields, @search_types, Melcatalog.configuration.default_result_limit ) unless ( @search_term.empty? && @search_tags.empty? )
 
     # I hate to do this... will pass image only constraint to catalog later...
     # TODO

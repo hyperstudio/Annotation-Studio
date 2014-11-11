@@ -11,12 +11,16 @@ class CatalogController < ApplicationController
 
     # default search definitions
     @search_term = ""
+    @search_tags = ""
+    @search_fields = []
     @search_types = []
     @search_results = {}
     @onlyimages = false
 
     # do we need to modify the defaults...
     @search_term = params[:term] unless params[:term].nil?
+    @search_tags = params[:search_tags] unless params[:search_tags].nil?
+
     types = []
     types = params[:types].split( "," ) unless params[:types].nil?
     @search_types << :person if types.include? 'people'
@@ -25,7 +29,7 @@ class CatalogController < ApplicationController
     @onlyimages = true if params[:onlyimages].nil? == false && params[:onlyimages] == 'true'
 
     # do the search, metadata only
-    @search_results = Melcatalog.search_by_term( params[:term], Melcatalog.configuration.default_result_limit, @search_types ) unless @search_term.empty?
+    @search_results = Melcatalog.search( @search_term, @search_tags, @search_fields, @search_types, Melcatalog.configuration.default_result_limit )
 
     # I hate to do this... will pass image only constraint to catalog later...
     # TODO

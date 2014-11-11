@@ -11,30 +11,36 @@ describe Melcatalog do
   describe '#search' do
 
      it 'search by term' do
-        term = "%"
-        results = Melcatalog.search_by_term( term, Melcatalog.configuration.default_result_limit )
+        any_terms = "%"
+        results = Melcatalog.search( any_terms )
         fail if results.empty?
      end
 
      it 'search by tag' do
+       no_terms = ""
+       tag = "Materials|bitstone"
+       results = Melcatalog.search( no_terms, tag )
+       fail if results.empty?
      end
 
      it 'search by type' do
-       term = "%"
+       any_terms = "%"
+       any_tags = ""
+       all_fields = []
 
-       results = Melcatalog.search_by_term( term, Melcatalog.configuration.default_result_limit, [:text] )
+       results = Melcatalog.search( any_terms, any_tags, all_fields, [:text] )
        fail if results.empty?
        fail if results[:text].nil?
        fail if results[:person].nil? == false
        fail if results[:artwork].nil? == false
 
-       results = Melcatalog.search_by_term( term, Melcatalog.configuration.default_result_limit, [:person] )
+       results = Melcatalog.search( any_terms, any_tags, all_fields, [:person] )
        fail if results.empty?
        fail if results[:text].nil? == false
        fail if results[:person].nil?
        fail if results[:artwork].nil? == false
 
-       results = Melcatalog.search_by_term( term, Melcatalog.configuration.default_result_limit, [:artwork] )
+       results = Melcatalog.search( any_terms, any_tags, all_fields, [:artwork] )
        fail if results.empty?
        fail if results[:text].nil? == false
        fail if results[:person].nil? == false
@@ -43,9 +49,11 @@ describe Melcatalog do
      end
 
      it 'search by type list' do
-       term = "%"
+       any_terms = "%"
+       any_tags = ""
+       all_fields = []
 
-       results = Melcatalog.search_by_term( term, Melcatalog.configuration.default_result_limit, [:text, :person ] )
+       results = Melcatalog.search( any_terms, any_tags, all_fields, [:text, :person ] )
        fail if results.empty?
        fail if results[:text].nil?
        fail if results[:person].nil?
@@ -53,8 +61,13 @@ describe Melcatalog do
      end
 
      it 'limit result count' do
+       any_terms = "%"
+       any_tags = ""
+       all_fields = []
+       all_types = []
+
        max = 1
-       results = Melcatalog.search_by_term( "", max )
+       results = Melcatalog.search( any_terms, any_tags, all_fields, all_types, max )
        fail if results.empty?
 
        fail if results[:text].nil? == false && results[:text].size > max
@@ -186,15 +199,12 @@ describe Melcatalog do
       must_exist( entity, 'eid' )
       must_exist( entity, 'artist' )
       must_exist( entity, 'artist_national_origin' )
-      must_exist( entity, 'engraver' )
-      must_exist( entity, 'engraver_national_origin' )
       must_exist( entity, 'title' )
       must_exist( entity, 'publication' )
-      must_exist( entity, 'medium' )
-      must_exist( entity, 'medium_of_original' )
+      must_exist( entity, 'technique' )
+      must_exist( entity, 'material' )
       must_exist( entity, 'location_of_print' )
       must_exist( entity, 'genre' )
-      must_exist( entity, 'geography' )
       must_exist( entity, 'subject' )
       must_exist( entity, 'viewed' )
       must_exist( entity, 'permissions' )

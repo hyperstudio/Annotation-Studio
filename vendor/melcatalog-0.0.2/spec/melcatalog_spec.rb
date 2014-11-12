@@ -121,31 +121,42 @@ describe Melcatalog do
 
   describe '#metadata' do
 
-    it 'gets tag hierarchy' do
-       metadata = Melcatalog.tag_hierarchy(  )
-       fail if metadata.empty?
-       process_tag_peers( metadata )
+    it 'get complete tag hierarchy' do
+       tagdata = Melcatalog.tag_hierarchy(  )
+       fail if tagdata.empty?
+       process_tag_peers( tagdata )
+    end
+
+    it 'get partial tag hierarchy' do
+      metadata = Melcatalog.artwork(  )
+      fail if metadata.empty?
+      must_exist( metadata, :artwork )
+      eid_list = metadata[ :artwork ].collect{ | a | a['eid']}
+
+      tagdata = Melcatalog.tag_hierarchy( eid_list )
+      fail if tagdata.empty?
+      process_tag_peers( tagdata )
     end
 
   end
 
   describe '#helpers' do
 
-    it 'gets texts metadata' do
+    it 'get texts metadata' do
       metadata = Melcatalog.texts(  )
       fail if metadata.empty?
       must_exist( metadata, :text )
       check_texts( metadata[:text], false )
     end
 
-    it 'gets people metadata' do
+    it 'get people metadata' do
       metadata = Melcatalog.people(  )
       fail if metadata.empty?
       must_exist( metadata, :person )
       check_people( metadata[:person], false )
     end
 
-    it 'gets artwork metadata' do
+    it 'get artwork metadata' do
       metadata = Melcatalog.artwork(  )
       fail if metadata.empty?
       must_exist( metadata, :artwork )
@@ -222,8 +233,9 @@ describe Melcatalog do
   def process_tag_peers( peers )
     peers.each { | entity |
       must_exist( entity, 'text' )
+      must_exist( entity, 'href' )
       process_tag_peers( entity[ 'nodes' ] ) unless entity[ 'nodes' ].nil?
-      fail if entity[ 'eid' ].nil? == false && entity[ 'eid' ].empty?
+      #fail if entity[ 'eid' ].nil? == false && entity[ 'eid' ].empty?
     }
   end
 

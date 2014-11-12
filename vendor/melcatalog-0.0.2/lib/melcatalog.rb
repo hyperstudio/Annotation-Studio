@@ -56,10 +56,16 @@ module Melcatalog
    end
 
    #
-   # get a hash representing the tag hierarchy of all our content
+   # get a hash representing the tag hierarchy of all content specified in the eid_list.
+   # if eid_list is empty or nil, all tags are returned
    #
-   def self.tag_hierarchy( )
-     request = "#{Melcatalog.configuration.service_endpoint}/tags"
+   # eid_list - an array of eid's
+   #
+   def self.tag_hierarchy( eid_list = nil )
+     eids = ""
+     eids = "?eids=#{eid_list.join( "," )}" unless( eid_list.nil? || eid_list.empty? )
+
+     request = "#{Melcatalog.configuration.service_endpoint}/tags#{eids}"
      return self.rest_get request
    end
 

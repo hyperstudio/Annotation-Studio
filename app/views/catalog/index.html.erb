@@ -17,7 +17,7 @@
 
         <div class="form-group">
            <div class="input-group">
-             <input id="search-term" class="form-control" type="text" value="<%= @search_term %>"/>
+             <input id="search-term" class="form-control" type="text" value="<%= @search_tags.empty? ? @search_term : "TAG:#{@search_tags.gsub( "|", " / " )}" %>"/>
              <span class="input-group-btn">
                 <button id="search-button" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
                 <% if ( @search_term.empty? == false ) || ( @search_tags.empty? == false ) %>

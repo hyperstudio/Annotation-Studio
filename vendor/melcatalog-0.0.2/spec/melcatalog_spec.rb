@@ -122,20 +122,45 @@ describe Melcatalog do
   describe '#metadata' do
 
     it 'get complete tag hierarchy' do
-       tagdata = Melcatalog.tag_hierarchy(  )
+
+       tagdata = Melcatalog.tags_by_entry_type(  )
        fail if tagdata.empty?
        process_tag_peers( tagdata )
+
+       tagdata = Melcatalog.tags_by_entry_id(  )
+       fail if tagdata.empty?
+       process_tag_peers( tagdata )
+
     end
 
-    it 'get partial tag hierarchy' do
+    it 'get tag hierarchy by entry type' do
+      tagdata = Melcatalog.tags_by_entry_type( [ 'artwork', 'person' ] )
+      fail if tagdata.empty?
+      process_tag_peers( tagdata )
+    end
+
+    it 'get tag hierarchy by entry id' do
+
       metadata = Melcatalog.artwork(  )
       fail if metadata.empty?
       must_exist( metadata, :artwork )
       eid_list = metadata[ :artwork ].collect{ | a | a['eid']}
 
-      tagdata = Melcatalog.tag_hierarchy( eid_list )
+      tagdata = Melcatalog.tags_by_entry_id( eid_list )
       fail if tagdata.empty?
       process_tag_peers( tagdata )
+    end
+
+    it 'get empty tag hierarchy' do
+
+      tagdata = Melcatalog.tags_by_entry_type( [ 'bad_type_1', 'bad_type_2' ] )
+      fail if tagdata.empty?
+      verify_empty_tags( tagdata )
+
+      tagdata = Melcatalog.tags_by_entry_id( [ 'bad_id_1', 'bad_id_2' ] )
+      fail if tagdata.empty?
+      verify_empty_tags( tagdata )
+
     end
 
   end
@@ -235,7 +260,15 @@ describe Melcatalog do
       must_exist( entity, 'text' )
       must_exist( entity, 'href' )
       process_tag_peers( entity[ 'nodes' ] ) unless entity[ 'nodes' ].nil?
-      #fail if entity[ 'eid' ].nil? == false && entity[ 'eid' ].empty?
+    }
+  end
+
+  def verify_empty_tags( tags )
+    tags.each { | entity |
+      must_exist( entity, 'text' )
+      must_exist( entity, 'href' )
+      must_exist( entity, 'nodes' )
+      fail if entity['nodes'] != nil
     }
   end
 

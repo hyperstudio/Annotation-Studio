@@ -178,6 +178,7 @@
     // ]
     function getTagTree( ) {
 
+        // build a list of entry ID's to constrain the tag search
         <% eid_list = [] %>
         <% [:artwork, :person].each do | t | %>
            <% if @search_results[t].nil? == false %>
@@ -187,7 +188,15 @@
            <% end %>
         <% end %>
 
-        var json_str = "<%= JSON.generate( Melcatalog.tag_hierarchy( eid_list ) ) %>";
+        // build a list of entry types to constrain the tag search
+        <% type_list = [:artwork.to_s, :person.to_s] %>
+
+        <% if eid_list.empty? %>
+           var json_str = "<%= JSON.generate( Melcatalog.tags_by_entry_type( type_list ) ) %>";
+        <% else %>
+           var json_str = "<%= JSON.generate( Melcatalog.tags_by_entry_id( eid_list ) ) %>";
+        <% end %>
+
         json_str = json_str.replace(/&quot;/g, '"');
         return( jQuery.parseJSON( json_str ) );
     }

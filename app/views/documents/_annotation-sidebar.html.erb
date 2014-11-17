@@ -250,16 +250,11 @@ jQuery(function ($) {
   };
 
   // When the annotator loads remote data, update sidebar
-<<<<<<< HEAD:app/views/documents/_annotation-sidebar.html.erb
+
   subscriber.subscribe('annotationsLoaded', loadSidebar);
   subscriber.subscribe('annotationsLoaded', stopSpinner);
   subscriber.subscribe('annotationsLoaded', handleHash);
   subscriber.subscribe('annotationEditorShown', parentIndex);
-=======
-  studio.annotator.subscribe('annotationsLoaded', loadSidebar);
-  studio.annotator.subscribe('annotationsLoaded', stopSpinner);
-  studio.annotator.subscribe('annotationsLoaded', handleHash);
->>>>>>> 50a0efe... Set up OVA in the document view:app/views/documents/_annotator-setup.html.erb
 
   // Update all highlights with UUIDs
   studio.annotator.subscribe('annotationsLoaded', __bind(function(annotations) {
@@ -276,12 +271,9 @@ jQuery(function ($) {
   studio.annotator.subscribe('annotationCreated', addUuid);
 
   // When the local object is updated (contains previously created/stored UUID), load the sidebar from local data
-<<<<<<< HEAD:app/views/documents/_annotation-sidebar.html.erb
   subscriber.subscribe('annotationUpdated', loadSidebar);
   subscriber.subscribe('annotationDeleted', deleteFromSidebar);
   $(".annotator-checkbox label").text('Allow my groups to view this annotation');
-
-
 
   // When the user scrolls, call showAndHideAnnotations
   sidebar.filtered = true;
@@ -300,11 +292,6 @@ jQuery(function ($) {
     sidebar.filtered = false;
     sidebar.showAllAnnotations();
   });
-=======
-  studio.annotator.subscribe('annotationUpdated', loadSidebar);
-  studio.annotator.subscribe('annotationDeleted', deleteFromSidebar);
-  $(".annotator-checkbox label").text('Allow my groups to view this annotation')
->>>>>>> 50a0efe... Set up OVA in the document view:app/views/documents/_annotator-setup.html.erb
 
 });
 </script>

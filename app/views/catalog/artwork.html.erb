@@ -5,34 +5,35 @@
   <%= csrf_meta_tags %>
   <%= stylesheet_link_tag "application", :media => "all" %>
   <%= stylesheet_link_tag "catalog", :media => "all" %>
-  <%#= javascript_include_tag "application" %>
 </head>
 <body>
 
 <div class="container-fluid">
 
   <div class="panel panel-info catalog-container">
-    <div class="panel-heading"><h3 class="panel-title"><%= tagset_display( @entry['title'], true ) %></h3></div>
+    <div class="panel-heading"><h3 class="panel-title">Artwork Information</h3></div>
 
     <div class="panel-body">
 
       <div class="row">
         <div class="col-lg-12">
-           <form class="form-horizontal">
+           <form class="form-horizontal" role="form">
 
-             <% ['artist', 'artist_national_origin', 'title', 'publication', 'technique',
+             <div class="form-group">
+               <%= image_or_nothing @entry['image_medium'] %>
+             </div>
+
+             <% ['artist', 'artist_national_origin', 'publication', 'technique',
                  'material', 'location_of_print', 'genre', 'subject', 'viewed', 'permissions',
                  'owned_acquired_borrowed', 'explicit_reference', 'associated_reference'].each do |field| %>
 
                  <div class="form-group">
-                   <label for="<%= field %>"><%= field.humanize %></label>
-                   <input class="form-control" id="<%= field %>" readonly="readonly" type="text" value="<%= tagset_display @entry[field] %>">
+                   <label class="col-sm-2 control-label"><%= field.humanize %></label>
+                   <div class="col-sm-10">
+                      <p class="form-control-static" id="<%= field %>"><%= tagset_display @entry[field] %></p>
+                   </div>
                  </div>
              <% end %>
-
-             <div class="form-group">
-               <%= image_or_text @entry['image_medium'] %>
-             </div>
 
            </form>
         </div>
@@ -41,12 +42,5 @@
   </div>
 
 </div>
-
-<!--
-<script type="text/javascript">
-    $('document').ready(function( ) {
-    });
-</script>
--->
 
 </body>

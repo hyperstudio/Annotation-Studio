@@ -25,6 +25,12 @@ module CatalogHelper
     end
   end
 
+  def image_or_nothing( image )
+    if has_image( image )
+      image_tag( image, :class => "img-responsive" )
+    end
+  end
+
   def has_image( image )
     return image.end_with?( 'missing.png' ) == false
   end

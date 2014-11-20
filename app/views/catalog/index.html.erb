@@ -87,7 +87,7 @@
                  <% else %>
                      <span class="glyphicon glyphicon-picture"></span>
                  <% end %>
-               </td><td><a id="<%= entry['eid'] %>" class="clickable" title="<%= tagset_display( entry['title'], true ) %>" ref="<%= entry['image_thumb'] %>"><%= tagset_display( entry['title'], true ) %></a></td><td><%= entry['artist'] %></td></tr>
+               </td><td><a id="<%= entry['eid'] %>" class="clickable" title="<%= tagset_display( entry['title'], true ) %>" ref="<%= entry['image_thumb'] %>"><%= entry['title'] %></a></td><td><%= tagset_display( entry['artist'], true ) %></td></tr>
             <% end %>
           </tbody>
           <% end %>
@@ -117,7 +117,15 @@
         <% end %>
 
         // enable the tree view
-        $('#tag-tree').treeview( { data: getTagTree( ), levels: 0, highlightSelected: false, nodeIcon: '', showTags: true, enableLinks: true } );
+        $('#tag-tree').treeview( { data: getTagTree( ), levels: 0, highlightSelected: true, nodeIcon: '', showTags: true, enableLinks: true } );
+
+        //var el = $('.click-expand').eq(1);
+        //el.trigger('click');
+
+        // select a tag if we did a search by tag
+        <%# if @search_tags.empty? == false %>
+           //selectTreeTag( )
+        <%# end %>
 
         // search button handler
         $("#search-button").click(function() {
@@ -136,11 +144,6 @@
             // close the window...
             tinyMCEPopup.close( );
         });
-
-        // when we select a tag
-        $('#tag-tree').on('nodeSelected', function(event, node) {
-            //alert( "Clicked tag");
-        });
     });
 
     // doing a new search in the same frame
@@ -157,6 +160,27 @@
        var parent = tinyMCEPopup.getWin( );
        var div = parent.jQuery('div')[ 0 ];
        parent.jQuery.data( div, "catalog", reference );
+    }
+
+    // select a particular item in the tree
+    function selectTreeTag( tag ) {
+
+        var tokens = tag.split( "|" )
+        if( tokens.length == 2 ) {
+            var toptags = $('.list-group-item > a');
+            for( var ix = 0; ix < toptags.length; ix++ ) {
+                if( toptags[ ix ].text == tokens[ 0 ] ) {
+                    var exp = $('.click-expand').eq( ix );
+                    exp.trigger('click');
+                    break;
+                //els[ ix ].css( "background-color", "red" );
+                //if( els[ ix ].text == tokens[ 0 ] ) {
+                //    els[ ix ].color = "#FF0000";
+                //    els[ ix ].trigger('click');
+                //    break;
+                }
+            }
+        }
     }
 
     //
@@ -188,12 +212,11 @@
            <% end %>
         <% end %>
 
-        // build a list of entry types to constrain the tag search
-        <% type_list = [:artwork.to_s, :person.to_s] %>
-
-        <% if eid_list.empty? %>
-           var json_str = "<%= JSON.generate( Melcatalog.tags_by_entry_type( type_list ) ) %>";
+        // if our entry ID list is empty and we have no current search term, get all the tags
+        <% if eid_list.empty? && @search_term.empty? %>
+           var json_str = "<%= JSON.generate( Melcatalog.tags_by_entry_type( [:artwork.to_s, :person.to_s] ) ) %>";
         <% else %>
+           <% eid_list.push( "none" ) if eid_list.empty? %>
            var json_str = "<%= JSON.generate( Melcatalog.tags_by_entry_id( eid_list ) ) %>";
         <% end %>
 

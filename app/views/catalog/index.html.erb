@@ -17,7 +17,7 @@
 
         <div class="form-group">
            <div class="input-group">
-             <input id="search-term" class="form-control" type="text" value="<%= @search_tags.empty? ? @search_term : "TAG:#{@search_tags.gsub( "|", " / " )}" %>"/>
+             <input id="search-term" class="form-control" type="text" value="<%= @search_term %>"/>
              <span class="input-group-btn">
                 <button id="search-button" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
                 <% if ( @search_term.empty? == false ) || ( @search_tags.empty? == false ) %>
@@ -117,15 +117,10 @@
         <% end %>
 
         // enable the tree view
-        $('#tag-tree').treeview( { data: getTagTree( ), levels: 0, highlightSelected: true, nodeIcon: '', showTags: true, enableLinks: true } );
-
-        //var el = $('.click-expand').eq(1);
-        //el.trigger('click');
+        $('#tag-tree').treeview( { data: getTagTree( ), levels: 0, highlightSelected: true, nodeIcon: '', showTags: true, enableLinks: false } );
 
         // select a tag if we did a search by tag
-        <%# if @search_tags.empty? == false %>
-           //selectTreeTag( )
-        <%# end %>
+        //selectTreeTag( '<%#= @search_tags %>' )
 
         // search button handler
         $("#search-button").click(function() {
@@ -144,6 +139,19 @@
             // close the window...
             tinyMCEPopup.close( );
         });
+
+        // when we select a tag
+        $('#tag-tree').on('nodeSelected', function(event, node) {
+            //event.preventDefault( );
+            if( node.href ) {
+                var newUrl = node.href;
+                <% if @search_term.empty? == false %>
+                   newUrl = newUrl + "&term=" + encodeURI( '<%= @search_term %>' );
+                <% end %>
+                document.location.href = newUrl;
+            }
+        });
+
     });
 
     // doing a new search in the same frame
@@ -151,8 +159,11 @@
         var include = "";
         if( include_people ) { include = "people"; }
         if( include_artwork ) { include = ( include ? include + "," : "" ) + "artwork"; }
-        var newURL = "/documents/catalog?term=" + encodeURI( term ) + "&onlyimages=<%= @onlyimages %>" + ( include ? "&types=" + include : "" );
-        document.location.href = newURL;
+        var newUrl = "/documents/catalog?term=" + encodeURI( term ) + "&onlyimages=<%= @onlyimages %>" + ( include ? "&types=" + include : "" );
+        <% if @search_tags.empty? == false %>
+           newUrl = newUrl + "&search_tags=" + encodeURI( '<%= @search_tags %>' );
+        <% end %>
+        document.location.href = newUrl;
     }
 
     // store the inserted item off so it is available to our parent (the opener)
@@ -165,19 +176,23 @@
     // select a particular item in the tree
     function selectTreeTag( tag ) {
 
-        var tokens = tag.split( "|" )
-        if( tokens.length == 2 ) {
-            var toptags = $('.list-group-item > a');
-            for( var ix = 0; ix < toptags.length; ix++ ) {
-                if( toptags[ ix ].text == tokens[ 0 ] ) {
-                    var exp = $('.click-expand').eq( ix );
-                    exp.trigger('click');
-                    break;
-                //els[ ix ].css( "background-color", "red" );
-                //if( els[ ix ].text == tokens[ 0 ] ) {
-                //    els[ ix ].color = "#FF0000";
-                //    els[ ix ].trigger('click');
-                //    break;
+        //var el = $('.click-expand').eq(1);
+        //el.trigger('click');
+
+        var tokens = tag.split("|")
+        if (tokens.length == 2) {
+            var titles = $('.list-group-item > a');
+            for (var ix = 0; ix < titles.length; ix++) {
+               if (titles[ix].text == tokens[0]) {
+                   //alert( "found " + tokens[0] + " at " + ix);
+                   $('.list-group-item > i').eq( ix * 2 ).trigger('click');
+                   //alert( i )
+                   break;
+                    //els[ ix ].css( "background-color", "red" );
+                    //if( els[ ix ].text == tokens[ 0 ] ) {
+                    //    els[ ix ].color = "#FF0000";
+                    //    els[ ix ].trigger('click');
+                    //    break;
                 }
             }
         }

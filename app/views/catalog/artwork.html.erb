@@ -20,7 +20,7 @@
            <form class="form-horizontal" role="form">
 
              <div class="form-group">
-               <%= image_or_nothing @entry['image_medium'] %>
+               <%= image_or_nothing( @entry['images'], 'image_medium' ) %>
              </div>
 
              <% ['artist', 'artist_national_origin', 'publication', 'technique',

@@ -34,8 +34,8 @@ class CatalogController < ApplicationController
     # I hate to do this... will pass image only constraint to catalog later...
     # TODO
     if @onlyimages == true
-      @search_results[:person].delete_if { |entry| has_image( entry[ 'image_full'] ) == false } if @search_results[:person].nil? == false
-      @search_results[:artwork].delete_if { |entry| has_image( entry[ 'image_full'] ) == false } if @search_results[:artwork].nil? == false
+      @search_results[:person].delete_if { |entry| has_images( entry[ 'images'] ) == false } if @search_results[:person].nil? == false
+      @search_results[:artwork].delete_if { |entry| has_images( entry[ 'images'] ) == false } if @search_results[:artwork].nil? == false
     end
 
     render "catalog/index", :layout => false

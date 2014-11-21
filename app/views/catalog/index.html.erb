@@ -63,8 +63,8 @@
           <tbody data-link="row" class="rowlink">
              <% @search_results[:person].each do | entry | %>
               <tr><td>
-                <% if has_image( entry['image_thumb'] ) %>
-                    <%= image_tag entry['image_thumb'] %>
+                <% if has_images( entry['images'] ) %>
+                    <%= thumbnail_or_nothing entry['images'] %>
                 <% else %>
                   <span class="glyphicon glyphicon-user"></span>
                 <% end %>
@@ -82,8 +82,8 @@
           <tbody data-link="row" class="rowlink">
             <% @search_results[:artwork].each do | entry | %>
                <tr><td>
-                 <% if has_image( entry['image_thumb'] ) %>
-                     <%= image_tag entry['image_thumb'] %>
+                 <% if has_images( entry['images'] ) %>
+                     <%= thumbnail_or_nothing entry['images'] %>
                  <% else %>
                      <span class="glyphicon glyphicon-picture"></span>
                  <% end %>

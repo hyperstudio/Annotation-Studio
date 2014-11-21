@@ -26,6 +26,14 @@ module CatalogHelper
     image_or_nothing( images, 'image_thumb' )
   end
 
+  def thumbnail_url( images )
+    if has_images( images )
+      return( images[ 0 ]['image_thumb'] )
+    else
+      return( '' )
+    end
+  end
+
   def has_images( images )
     return( ( images.nil? == false ) && ( images.empty? == false ) )
   end

@@ -16,22 +16,17 @@ module CatalogHelper
     return( tags.collect { |t| "'#{t}'" }.join( "," ) )
   end
 
-  def image_or_text( image, text = nil )
-    if has_image( image )
-      image_tag( image, :class => "img-responsive" )
-    else
-      return text unless text.nil?
-      return "No image available"
+  def image_or_nothing( images, type )
+    if has_images( images )
+      image_tag( images[ 0 ][type], :class => "img-responsive" )
     end
   end
 
-  def image_or_nothing( image )
-    if has_image( image )
-      image_tag( image, :class => "img-responsive" )
-    end
+  def thumbnail_or_nothing( images )
+    image_or_nothing( images, 'image_thumb' )
   end
 
-  def has_image( image )
-    return image.end_with?( 'missing.png' ) == false
+  def has_images( images )
+    return( ( images.nil? == false ) && ( images.empty? == false ) )
   end
 end

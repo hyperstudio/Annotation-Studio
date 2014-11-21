@@ -20,7 +20,7 @@
           <form class="form-horizontal" role="form">
 
             <div class="form-group">
-              <%= image_or_nothing @entry['image_medium'] %>
+              <%= image_or_nothing( @entry['images'], 'image_medium' ) %>
             </div>
 
             <% ['forename', 'surname', 'additional_name_info', 'birth', 'death', 'role', 'nationality', 'education'].each do |field| %>

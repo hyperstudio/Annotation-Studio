@@ -11,7 +11,7 @@
 <div class="container-fluid">
 
   <div class="panel panel-info catalog-container">
-    <div class="panel-heading"><h3 class="panel-title">Artwork Information</h3></div>
+    <div class="panel-heading"><h3 class="panel-title"><%= title %></h3></div>
 
     <div class="panel-body">
 
@@ -20,17 +20,15 @@
            <form class="form-horizontal" role="form">
 
              <div class="form-group">
-               <%= image_or_nothing( @entry['images'], 'image_medium' ) %>
+               <%= image_or_nothing( entry['images'], 'image_medium' ) %>
              </div>
 
-             <% ['artist', 'artist_national_origin', 'publication', 'technique',
-                 'material', 'location_of_print', 'genre', 'subject', 'viewed', 'permissions',
-                 'owned_acquired_borrowed', 'explicit_reference', 'associated_reference'].each do |field| %>
+             <% fieldlist.each do |field| %>
 
                  <div class="form-group">
                    <label class="col-sm-2 control-label"><%= field.humanize %></label>
                    <div class="col-sm-10">
-                      <p class="form-control-static" id="<%= field %>"><%= tagset_display @entry[field] %></p>
+                      <p class="form-control-static" id="<%= field %>"><%= tagset_display entry[field] %></p>
                    </div>
                  </div>
              <% end %>

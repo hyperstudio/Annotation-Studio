@@ -203,7 +203,7 @@ jQuery(function ($) {
         tags.push(annotations[i].tags[j]);
       }
     }
-    return tags;
+    return $.unique(tags);
   }
 
   var substringMatcher = function(strs) {
@@ -242,9 +242,17 @@ jQuery(function ($) {
     );
   }
 
-  $('#tagsearch').on('click', { id: 'tagsearch' }, tagFilter);
+  // $('#tagsearch').on('click', tagFilter);
+  $('#tagsearchbox').keypress(function(e){
+    var code = e.keyCode || e.which;
+    if(code == 13) { //Enter keycode
+      // console.log(e);
+      tagFilter();
+    }
+  });
 
   function tagFilter(event) {
+    console.log(event);
     var tags = $('#tagsearchbox').val()
     var loadOptions = {
       'limit': 1000,

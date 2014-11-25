@@ -29,14 +29,17 @@
 
         <div class="form-group">
           <div class="btn-group btn-group-xs" data-toggle="buttons">
-            <label id="search-both-label"class="btn btn-primary">
-              <input id="search-both" type="radio" name="options" autocomplete="off" checked>Both
+            <label id="search-all-label"class="btn btn-primary">
+              <input id="search-all" type="radio" name="options" autocomplete="off" checked>All
             </label>
             <label id="search-people-label" class="btn btn-primary">
               <input id="search-people" type="radio" name="options" autocomplete="off">People
             </label>
             <label id="search-artwork-label" class="btn btn-primary">
               <input id="search-artwork" type="radio" name="options" autocomplete="off">Artwork
+            </label>
+            <label id="search-text-label" class="btn btn-primary">
+              <input id="search-text" type="radio" name="options" autocomplete="off">Texts
             </label>
           </div>
         </div>
@@ -87,9 +90,28 @@
                  <% else %>
                      <span class="glyphicon glyphicon-picture"></span>
                  <% end %>
-               </td><td><a id="<%= entry['eid'] %>" class="clickable" title="<%= tagset_display( entry['title'], true ) %>" ref="<%= thumbnail_url entry['images'] %>"><%= entry['title'] %></a></td><td><%= tagset_display( entry['artist'], true ) %></td></tr>
+               </td><td><a id="<%= entry['eid'] %>" class="clickable" title="<%= entry['title'] %>" ref="<%= thumbnail_url entry['images'] %>"><%= entry['title'] %></a></td><td><%= tagset_display( entry['artist'], true ) %></td></tr>
             <% end %>
           </tbody>
+          <% end %>
+        </table>
+
+        <table class="table table-striped table-hover table-condensed">
+          <thead>
+          <tr><th><span style="text-decoration: underline;">Texts:</span></th><th>Title</th><th>Author</th></tr>
+          </thead>
+          <% unless @search_results[:text].nil? %>
+              <tbody data-link="row" class="rowlink">
+              <% @search_results[:text].each do | entry | %>
+                  <tr><td>
+                    <% if has_images( entry['images'] ) %>
+                        <%= thumbnail_or_nothing entry['images'] %>
+                    <% else %>
+                        <span class="glyphicon glyphicon-picture"></span>
+                    <% end %>
+                  </td><td><a id="<%= entry['eid'] %>" class="clickable" title="<%= entry['name'] %>" ref="<%= thumbnail_url entry['images'] %>"><%= entry['name'] %></a></td><td><%= tagset_display( entry['author'], true ) %></td></tr>
+              <% end %>
+              </tbody>
           <% end %>
         </table>
 
@@ -105,15 +127,18 @@
         //
         // setup correct search radio buttons
         //
-        <% if ( @search_types.include? :person ) && ( @search_types.include? :artwork ) %>
-           $('#search-both').prop('checked', true);
-           $('#search-both-label').addClass( "active")
+        <% if ( @search_types.empty? == true ) || ( ( @search_types.include? :person ) && ( @search_types.include? :artwork ) && ( @search_types.include? :text ) ) %>
+           $('#search-all').prop('checked', true);
+           $('#search-all-label').addClass( "active")
         <% elsif @search_types.include? :person %>
            $('#search-people').prop('checked', true);
            $('#search-people-label').addClass( "active")
         <% elsif @search_types.include? :artwork %>
            $('#search-artwork').prop('checked', true);
            $('#search-artwork-label').addClass( "active")
+        <% elsif @search_types.include? :text %>
+           $('#search-text').prop('checked', true);
+           $('#search-text-label').addClass( "active")
         <% end %>
 
         // enable the tree view
@@ -125,9 +150,10 @@
         // search button handler
         $("#search-button").click(function() {
             var term = $('#search-term').val( );
-            var include_people = $('#search-people').prop('checked') || $('#search-both').prop('checked' );
-            var include_artwork = $('#search-artwork').prop('checked') || $('#search-both').prop('checked' );
-            newSearch( term, include_people, include_artwork );
+            var include_people = $('#search-all').prop('checked') || $('#search-people').prop('checked' );
+            var include_artwork = $('#search-all').prop('checked') || $('#search-artwork').prop('checked' );
+            var include_text = $('#search-all').prop('checked') || $('#search-text').prop('checked' );
+            newSearch( term, include_people, include_artwork, include_text );
         });
 
         // any of the results we found
@@ -155,15 +181,27 @@
     });
 
     // doing a new search in the same frame
-    function newSearch( term, include_people, include_artwork ) {
-        var include = "";
-        if( include_people ) { include = "people"; }
-        if( include_artwork ) { include = ( include ? include + "," : "" ) + "artwork"; }
-        var newUrl = "/documents/catalog?term=" + encodeURI( term ) + "&onlyimages=<%= @onlyimages %>" + ( include ? "&types=" + include : "" );
+    function newSearch( term, include_people, include_artwork, include_text ) {
+        var types = makeTypeList( include_people, include_artwork, include_text );
+        var newUrl = "/documents/catalog?term=" + encodeURI( term ) + "&onlyimages=<%= @onlyimages %>" + ( types ? "&types=" + types : "" );
         <% if @search_tags.empty? == false %>
            newUrl = newUrl + "&search_tags=" + encodeURI( '<%= @search_tags %>' );
         <% end %>
         document.location.href = newUrl;
+    }
+
+    // make the list of types to ask for
+    function makeTypeList( include_people, include_artwork, include_text ) {
+        var types = "";
+        if( include_people ) { types = "people"; }
+        if( include_artwork ) { types = ( types ? types + "," : "" ) + "artwork"; }
+        if( include_text ) { types = ( types ? types + "," : "" ) + "texts"; }
+
+        // empty the typelist if we want all types and we will get all by default
+        if( include_people & include_artwork && include_text ) {
+            types = "";
+        }
+        return( types );
     }
 
     // store the inserted item off so it is available to our parent (the opener)

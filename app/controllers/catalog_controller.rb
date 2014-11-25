@@ -25,7 +25,7 @@ class CatalogController < ApplicationController
     types = params[:types].split( "," ) unless params[:types].nil?
     @search_types << :person if types.include? 'people'
     @search_types << :artwork if types.include? 'artwork'
-    @search_types = [:person, :artwork ] if @search_types.empty?
+    @search_types << :text if types.include? 'texts'
     @onlyimages = true if params[:onlyimages].nil? == false && params[:onlyimages] == 'true'
 
     # do the search, metadata only
@@ -36,6 +36,7 @@ class CatalogController < ApplicationController
     if @onlyimages == true
       @search_results[:person].delete_if { |entry| has_images( entry[ 'images'] ) == false } if @search_results[:person].nil? == false
       @search_results[:artwork].delete_if { |entry| has_images( entry[ 'images'] ) == false } if @search_results[:artwork].nil? == false
+      @search_results[:text].delete_if { |entry| has_images( entry[ 'images'] ) == false } if @search_results[:text].nil? == false
     end
 
     render "catalog/index", :layout => false
@@ -44,28 +45,49 @@ class CatalogController < ApplicationController
   def image
 
     result = Melcatalog.get( params[:eid] )
+
+    entry = nil
     if result && result[:person]
-       @entry = result[:person][ 0 ]
-       render "catalog/image", :layout => false
+       entry = result[:person][ 0 ]
     elsif result && result[:artwork]
-       @entry = result[:artwork][ 0 ]
-       render "catalog/image", :layout => false
-    else
-      render :file => 'public/404.html', :status => :not_found, :layout => false
+       entry = result[:artwork][ 0 ]
+    elsif result && result[:text]
+       entry = result[:text][ 0 ]
     end
+
+    if entry.nil?
+      render :file => 'public/404.html', :status => :not_found, :layout => false
+    else
+      render "catalog/image", :locals => { entry: entry }, :layout => false
+    end
+
   end
 
   def reference
 
     result = Melcatalog.get( params[:eid] )
+
+    entry = nil
     if result && result[:person]
-       @entry = result[:person][ 0 ]
-       render "catalog/person", :layout => false
+      entry = result[:person][ 0 ]
+      title = "Person Information"
+      fieldlist = ['forename', 'surname', 'additional_name_info', 'birth', 'death', 'role', 'nationality', 'education']
     elsif result && result[:artwork]
-       @entry = result[:artwork][ 0 ]
-       render "catalog/artwork", :layout => false
+       entry = result[:artwork][ 0 ]
+       title = "Artwork Information"
+       fieldlist = ['artist', 'artist_national_origin', 'publication', 'technique',
+                    'material', 'location_of_print', 'genre', 'subject', 'viewed', 'permissions',
+                    'owned_acquired_borrowed', 'explicit_reference', 'associated_reference']
+    elsif result && result[:text]
+      entry = result[:text][ 0 ]
+      title = "Text Information"
+      fieldlist = ['name', 'author', 'witnesses', 'content', 'edition', 'publisher', 'publication_date', 'source', 'copyright']
+    end
+
+    if entry.nil?
+      render :file => 'public/404.html', :status => :not_found, :layout => false
     else
-       render :file => 'public/404.html', :status => :not_found, :layout => false
+      render "catalog/reference", :locals => { entry: entry, title: title, fieldlist: fieldlist }, :layout => false
     end
 
   end

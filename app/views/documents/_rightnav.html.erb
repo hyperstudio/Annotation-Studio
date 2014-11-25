@@ -17,8 +17,10 @@
   <button type="button" class="viewchoice btn btn-default btn-default-small" id="allannotations">Whole document</button>
 </div>
 <p><strong>How</strong> they are tagged:</p>
-<div class="btn-group btn-group-sm" id="tag-chooser">
-  <input class="search-query input-medium" name="tag-query" id="tagsearchbox">
-  <button type="submit" class="btn btn-default btn-default-small" id="tagsearch">Search</button>
-</div>
+<div class="input-group" id="tag-chooser">
+  <input type="text" class="typeahead input-medium form-control" id="tagsearchbox" placeholder="Enter tag(s) to filter on">
+  <span class="input-group-btn">
+    <button class="btn btn-default" type="button" id="tagsearch">Filter</button>
+  </span>
+</div><!-- /input-group -->
 <% end %>

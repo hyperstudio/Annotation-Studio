@@ -205,20 +205,41 @@ jQuery(function ($) {
     }
     return tags;
   }
-  function activateAutocomplete() {
-    $('#tagsearchbox').autocomplete({
-      source: getAnnotationTags()
-    });
-  }
 
-  function getMode() {
-    var activeElems = $('.viewchoice.active')
-    for (var i=0; i<activeElems.length; i++) {
-      var elem = activeElems[i];
-      if (elem.id.substring(elem.id.length-4) === "view") {
-        return elem.id.substring(0,elem.id.length-4)
-      }
-    }
+  var substringMatcher = function(strs) {
+    return function findMatches(q, cb) {
+      var matches, substrRegex;
+
+      // an array that will be populated with substring matches
+      matches = [];
+
+      // regex used to determine if a string contains the substring `q`
+      substrRegex = new RegExp(q, 'i');
+
+      // iterate through the pool of strings and for any string that
+      // contains the substring `q`, add it to the `matches` array
+      $.each(strs, function(i, str) {
+        if (substrRegex.test(str)) {
+          // the typeahead jQuery plugin expects suggestions to a
+          // JavaScript object, refer to typeahead docs for more info
+          matches.push({ value: str });
+        }
+      });
+      cb(matches);
+    };
+  };
+
+  function activateAutocomplete() {
+    $('#tagsearchbox').typeahead(
+        {
+          minLength: 1,
+          highlight: true,
+        },
+        {
+          name: 'tags',
+          source: substringMatcher(getAnnotationTags()),
+        }
+    );
   }
 
   $('#tagsearch').on('click', { id: 'tagsearch' }, tagFilter);
@@ -240,6 +261,16 @@ jQuery(function ($) {
     var cleanup_document = cleanupDocument();
 
     $.when(reload_data).then(cleanup_document).done(refreshAnnotations(), loadSidebar());
+  }
+
+  function getMode() {
+    var activeElems = $('.viewchoice.active')
+    for (var i=0; i<activeElems.length; i++) {
+      var elem = activeElems[i];
+      if (elem.id.substring(elem.id.length-4) === "view") {
+        return elem.id.substring(0,elem.id.length-4)
+      }
+    }
   }
 
   function reloadAnnotations(loadOptions) {

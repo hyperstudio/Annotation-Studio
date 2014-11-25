@@ -12,7 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require jquery.ui.autocomplete
+//= require typeahead.jquery.js
 //= require bootstrap
 //= require bootstrap-tagsinput
 //= require jasny-bootstrap

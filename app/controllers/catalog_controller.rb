@@ -81,7 +81,7 @@ class CatalogController < ApplicationController
     elsif result && result[:text]
       entry = result[:text][ 0 ]
       title = "Text Information"
-      fieldlist = ['name', 'author', 'witnesses', 'content', 'edition', 'publisher', 'publication_date', 'source', 'copyright']
+      fieldlist = ['author', 'witnesses', 'content', 'edition', 'publisher', 'publication_date', 'source', 'copyright']
     end
 
     if entry.nil?

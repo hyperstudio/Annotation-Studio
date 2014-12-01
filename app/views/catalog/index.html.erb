@@ -273,9 +273,44 @@
            var json_str = "<%= JSON.generate( Melcatalog.tags_by_entry_id( eid_list ) ) %>";
         <% end %>
 
-        json_str = json_str.replace(/&quot;/g, '"');
-        return( jQuery.parseJSON( json_str ) );
+        json_str = json_str.replace( /&quot;/g, '"');
+        var json = jQuery.parseJSON( json_str );
+        function walk( arr ) {
+            if( arr == null ) { return; }
+
+            for (var ix = 0, len = arr.length; ix < len; ix++ ) {
+
+              var key = 'count';
+              if( arr[ ix ].hasOwnProperty( key ) ) {
+                 var count = arr[ ix ][ key ];
+                 delete arr[ ix ][ key ];
+                 if( count !== 0 ) {
+                     arr[ ix ][ 'tags' ] = [ count.toString( ) ];
+                 }
+              }
+              key = 'text';
+              if( arr[ ix ].hasOwnProperty( key ) ) {
+                  arr[ ix ][ key ] = truncate( arr[ ix ][ key ], 14 );
+              }
+
+              key = 'nodes';
+              if( arr[ ix ].hasOwnProperty( key ) ) {
+                 walk( arr[ ix ][ key ] );
+              }
+            }
+        }
+        walk( json );
+        return( json )
     }
+
+    function truncate( str, len ) {
+
+        if( str == null ) { return str; }
+        if( str.length <= len ) { return str; }
+        if( len == 3 ) { return( '...' ); }
+        return( str.substring( 0, len - 3 ) + '...' );
+    }
+
 </script>
 
 </body>

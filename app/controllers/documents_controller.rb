@@ -140,7 +140,7 @@ class DocumentsController < ApplicationController
   def catalog_texts
 
     if catalogue_enabled?
-       results = Melcatalog.texts
+       status, results = Melcatalog.texts
        return results[:text] unless results[:text].nil?
     end
     return []
@@ -152,7 +152,7 @@ class DocumentsController < ApplicationController
       # we put placeholder content in earlier and replace with the real thing now
       if doc.text.start_with?( "EID:" )
          eid = doc.text.split( ":",2 )[ 1 ]
-         entry = Melcatalog.get( eid, true )
+         status, entry = Melcatalog.get( eid )
          if entry && entry[:text] && entry[:text][ 0 ] && entry[:text][ 0 ]['content']
            doc.text = entry[:text][ 0 ]['content']
          end

@@ -52,7 +52,43 @@
     <div class="form-group">
       <div class="browse-panel pull-left">
         <label for="tag-tree"><span style="text-decoration: underline;">Browse:</span></label>
-        <div id="tag-tree"></div>
+        <!--div id="tag-tree"></div-->
+
+        <% eid_list = [] %>
+        <% [:artwork, :person].each do | t | %>
+            <% if @search_results[t].nil? == false %>
+                <% @search_results[t].each do | r | %>
+                    <% eid_list.push( r['eid'] ) %>
+                <% end %>
+            <% end %>
+        <% end %>
+
+        <% if eid_list.empty? && @search_term.empty? %>
+            <% status, tags = Melcatalog.tags_by_entry_type( ) %>
+        <% else %>
+            <% eid_list.push( "none" ) if eid_list.empty? %>
+            <% status, tags = Melcatalog.tags_by_entry_id( eid_list ) %>
+        <% end %>
+
+        <table class="tag-tree table table-bordered table-striped table-condensed">
+           <% ix = 1 %>
+           <% tags.each do |root| %>
+             <tr class="<%= "treegrid-#{ix}" %>">
+               <td><%= root['text'] %></td><td></td>
+             </tr>
+             <% ix += 1 %>
+             <% if root['nodes'].nil? == false %>
+                 <% parentix = ix - 1 %>
+                 <% root['nodes'].each do |child| %>
+                      <tr class="<%= "treegrid-#{ix} treegrid-parent-#{parentix}" %>">
+                        <td><a class="tree-click" href="<%= child['href'] %>"><%= truncate( child['text'], { :length => 16 } ) %></a></td><td><span class="badge"><%= child['count'] %></span></td>
+                      </tr>
+                      <% ix += 1 %>
+                 <% end %>
+             <% end %>
+           <% end %>
+        </table>
+
       </div>
     </div>
 
@@ -141,11 +177,12 @@
            $('#search-text-label').addClass( "active")
         <% end %>
 
-        // enable the tree view
-        $('#tag-tree').treeview( { data: getTagTree( ), levels: 0, highlightSelected: true, nodeIcon: '', showTags: true, enableLinks: false } );
-
-        // select a tag if we did a search by tag
-        //selectTreeTag( '<%#= @search_tags %>' )
+        // enable the tag tree view
+        $('.tag-tree').treegrid( {
+            initialState: 'collapsed',
+            expanderExpandedClass: 'glyphicon glyphicon-minus',
+            expanderCollapsedClass: 'glyphicon glyphicon-plus'
+        });
 
         // search button handler
         $("#search-button").click(function() {
@@ -171,10 +208,11 @@
         });
 
         // when we select a tag
-        $('#tag-tree').on('nodeSelected', function(event, node) {
-            //event.preventDefault( );
-            if( node.href ) {
-                var newUrl = node.href;
+        $('.tree-click').on('click', function( e ) {
+            e.preventDefault( );
+            var href = $(this).attr( 'href' );
+            if( href ) {
+                var newUrl = href;
                 <% if @search_term.empty? == false %>
                    newUrl = newUrl + "&term=" + encodeURI( '<%= @search_term %>' );
                 <% end %>
@@ -222,109 +260,6 @@
        var div = parent.jQuery('div')[ 0 ];
        parent.jQuery.data( div, "catalog", reference );
     }
-
-    // select a particular item in the tree
-    function selectTreeTag( tag ) {
-
-        //var el = $('.click-expand').eq(1);
-        //el.trigger('click');
-
-        var tokens = tag.split("|")
-        if (tokens.length == 2) {
-            var titles = $('.list-group-item > a');
-            for (var ix = 0; ix < titles.length; ix++) {
-               if (titles[ix].text == tokens[0]) {
-                   //alert( "found " + tokens[0] + " at " + ix);
-                   $('.list-group-item > i').eq( ix * 2 ).trigger('click');
-                   //alert( i )
-                   break;
-                    //els[ ix ].css( "background-color", "red" );
-                    //if( els[ ix ].text == tokens[ 0 ] ) {
-                    //    els[ ix ].color = "#FF0000";
-                    //    els[ ix ].trigger('click');
-                    //    break;
-                }
-            }
-        }
-    }
-
-    //
-    // the tree view needs an array of json objects. Something like:
-    //
-    // [ { text: "Parent 1", nodes:
-    //    [
-    //      { text: "Child 1.1" }
-    //    ] },
-    //    { text: "Parent 2", nodes:
-    //    [
-    //      { text: "Child 2.1" }
-    //    ] },
-    //    { text: "Parent 3", nodes:
-    //    [
-    //      { text: "Child 3.1" },
-    //      { text: "Child 3.2" }
-    //    ] }
-    // ]
-    function getTagTree( ) {
-
-        // build a list of entry ID's to constrain the tag search
-        <% eid_list = [] %>
-        <% [:artwork, :person].each do | t | %>
-           <% if @search_results[t].nil? == false %>
-              <% @search_results[t].each do | r | %>
-                 <% eid_list.push( r['eid'] ) %>
-              <% end %>
-           <% end %>
-        <% end %>
-
-        // if our entry ID list is empty and we have no current search term, get all the tags
-        <% if eid_list.empty? && @search_term.empty? %>
-           <% status, result = Melcatalog.tags_by_entry_type( ) %>
-           var json_str = "<%= JSON.generate( result ) %>";
-        <% else %>
-           <% eid_list.push( "none" ) if eid_list.empty? %>
-           <% status, result = Melcatalog.tags_by_entry_id( eid_list ) %>
-           var json_str = "<%= JSON.generate( result ) %>";
-        <% end %>
-
-        json_str = json_str.replace( /&quot;/g, '"');
-        var json = jQuery.parseJSON( json_str );
-        function walk( arr ) {
-            if( arr == null ) { return; }
-
-            for (var ix = 0, len = arr.length; ix < len; ix++ ) {
-
-              var key = 'count';
-              if( arr[ ix ].hasOwnProperty( key ) ) {
-                 var count = arr[ ix ][ key ];
-                 delete arr[ ix ][ key ];
-                 if( count !== 0 ) {
-                     arr[ ix ][ 'tags' ] = [ count.toString( ) ];
-                 }
-              }
-              key = 'text';
-              if( arr[ ix ].hasOwnProperty( key ) ) {
-                  arr[ ix ][ key ] = truncate( arr[ ix ][ key ], 14 );
-              }
-
-              key = 'nodes';
-              if( arr[ ix ].hasOwnProperty( key ) ) {
-                 walk( arr[ ix ][ key ] );
-              }
-            }
-        }
-        walk( json );
-        return( json )
-    }
-
-    function truncate( str, len ) {
-
-        if( str == null ) { return str; }
-        if( str.length <= len ) { return str; }
-        if( len == 3 ) { return( '...' ); }
-        return( str.substring( 0, len - 3 ) + '...' );
-    }
-
 </script>
 
 </body>

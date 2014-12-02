@@ -267,10 +267,12 @@
 
         // if our entry ID list is empty and we have no current search term, get all the tags
         <% if eid_list.empty? && @search_term.empty? %>
-           var json_str = "<%= JSON.generate( Melcatalog.tags_by_entry_type( ) ) %>";
+           <% status, result = Melcatalog.tags_by_entry_type( ) %>
+           var json_str = "<%= JSON.generate( result ) %>";
         <% else %>
            <% eid_list.push( "none" ) if eid_list.empty? %>
-           var json_str = "<%= JSON.generate( Melcatalog.tags_by_entry_id( eid_list ) ) %>";
+           <% status, result = Melcatalog.tags_by_entry_id( eid_list ) %>
+           var json_str = "<%= JSON.generate( result ) %>";
         <% end %>
 
         json_str = json_str.replace( /&quot;/g, '"');

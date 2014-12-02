@@ -41,6 +41,9 @@ jQuery(function ($) {
                     //})
                     .subscribe("annotationViewerShown", function (annotation) {
                         //console.info("annotationViewerShown: %o", annotation)
+
+                        // remove all handlers then add a click handler
+                        $( ".catalog-popup" ).off( );
                         $( ".catalog-popup" ).on( 'click', function( e ) {
                             e.preventDefault( );
                             $( this ).ekkoLightbox( );

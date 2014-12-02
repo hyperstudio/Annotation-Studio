@@ -101,7 +101,7 @@ Sidebar.AnnotationView = Backbone.View.extend({
       var formattedComment = this.mdconverter.makeHtml(userComment);
       // Temporarily converting to text-only comment due to sidebar formatting issues
       var textComment = $(formattedComment).text()
-      this.model.set("text", textComment);
+      this.model.set("text", formattedComment);
     }
     return this;
   }
@@ -192,8 +192,8 @@ Sidebar.AnnotationListView = Backbone.View.extend({
       // console.info("This offset top "+$(this).offset().top);
       // console.info("IdTarget offset top "+$(idtarget).offset().top);
       $('html,body').animate({scrollTop: $(idtarget).offset().top - 150}, 500);
-      $(".icon-comment").remove();
-      $(idtarget).prepend('<i class="icon-comment"></i>');
+      $(".glyphicon-comment").remove();
+      $(idtarget).prepend('<i class="glyphicon glyphicon-comment"></i>');
       // event.stopPropagation();
     });
   }

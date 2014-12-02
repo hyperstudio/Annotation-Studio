@@ -149,11 +149,15 @@
 
         // search button handler
         $("#search-button").click(function() {
-            var term = $('#search-term').val( );
-            var include_people = $('#search-all').prop('checked') || $('#search-people').prop('checked' );
-            var include_artwork = $('#search-all').prop('checked') || $('#search-artwork').prop('checked' );
-            var include_text = $('#search-all').prop('checked') || $('#search-text').prop('checked' );
-            newSearch( term, include_people, include_artwork, include_text );
+            doSearchHandler( );
+        });
+
+        // enter key handler
+        $('form input').keydown(function(event){
+            if(event.keyCode == 13) {
+                event.preventDefault();
+                doSearchHandler( );
+            }
         });
 
         // any of the results we found
@@ -179,6 +183,14 @@
         });
 
     });
+
+    function doSearchHandler( ) {
+        var term = $('#search-term').val( );
+        var include_people = $('#search-all').prop('checked') || $('#search-people').prop('checked' );
+        var include_artwork = $('#search-all').prop('checked') || $('#search-artwork').prop('checked' );
+        var include_text = $('#search-all').prop('checked') || $('#search-text').prop('checked' );
+        newSearch( term, include_people, include_artwork, include_text );
+    }
 
     // doing a new search in the same frame
     function newSearch( term, include_people, include_artwork, include_text ) {

@@ -1,7 +1,7 @@
 PATH
   remote: vendor
   specs:
-    melcatalog (0.0.2)
+    melcatalog (0.0.3)
 
 PATH
   remote: vendor/repertoire-groups-0.0.1

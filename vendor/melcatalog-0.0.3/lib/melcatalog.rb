@@ -41,18 +41,23 @@ module Melcatalog
       entity_request = "&entry_types=#{entity_request}" unless entity_request.empty?
 
       request = "#{Melcatalog.configuration.service_endpoint}/entries?limit=#{limit}#{term_request}#{field_request}#{tag_request}#{entity_request}"
-      return self.transform self.rest_get request
+
+      status, results = self.rest_get request
+      return status, ( self.transform results )
    end
 
    #
    # get the entity specified by the provided uid
    #
    # eid       - an opaque entity identifier. This is provided when browsing/searching and is assumed to be static/persistent
-   # content   - return full content or just metadata
+   # transform - the transform to be applied to content
    #
-   def self.get( eid, content = true )
-     request = "#{Melcatalog.configuration.service_endpoint}/entries/#{eid}"
-     return self.transform self.rest_get request
+   def self.get( eid, transform = nil )
+     transform = "?transform=#{transform}" unless( transform.nil? || transform.empty? )
+     request = "#{Melcatalog.configuration.service_endpoint}/entries/#{eid}#{transform}"
+
+     status, results = self.rest_get request
+     return status, ( self.transform results )
    end
 
    #
@@ -67,7 +72,9 @@ module Melcatalog
      entry_types = "?entry_types=#{entry_type_list.join( "," )}" unless( entry_type_list.nil? || entry_type_list.empty? )
 
      request = "#{Melcatalog.configuration.service_endpoint}/tags#{entry_types}"
-     return self.rest_get request
+
+     status, results = self.rest_get request
+     return status, results
    end
 
    #
@@ -82,7 +89,9 @@ module Melcatalog
      eids = "?eids=#{eid_list.join( "," )}" unless( eid_list.nil? || eid_list.empty? )
 
      request = "#{Melcatalog.configuration.service_endpoint}/tags#{eids}"
-     return self.rest_get request
+
+     status, results = self.rest_get request
+     return status, results
    end
 
    #
@@ -124,11 +133,12 @@ module Melcatalog
       if response.code == 200
         results = JSON.parse response
       end
+      return response.code, results
     rescue => e
       puts request
       puts e
+      return 500, results
     end
-    return results
   end
 
   def self.transform( response )

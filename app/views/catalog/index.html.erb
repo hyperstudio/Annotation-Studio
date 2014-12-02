@@ -70,7 +70,7 @@
             <% status, tags = Melcatalog.tags_by_entry_id( eid_list ) %>
         <% end %>
 
-        <table class="tag-tree table table-bordered table-striped table-condensed">
+        <table class="tag-tree table table-condensed table-hover table-striped">
            <% ix = 1 %>
            <% tags.each do |root| %>
              <tr class="<%= "treegrid-#{ix}" %>">

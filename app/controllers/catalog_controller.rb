@@ -44,7 +44,7 @@ class CatalogController < ApplicationController
 
   def image
 
-    status, result = Melcatalog.get( params[:eid] )
+    status, result = Melcatalog.get( params[:eid], 'stripxml' )
 
     entry = nil
     if result && result[:person]
@@ -65,7 +65,7 @@ class CatalogController < ApplicationController
 
   def reference
 
-    status, result = Melcatalog.get( params[:eid] )
+    status, result = Melcatalog.get( params[:eid], 'stripxml' )
 
     entry = nil
     if result && result[:person]

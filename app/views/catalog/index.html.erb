@@ -52,8 +52,8 @@
     <div class="form-group">
       <div class="browse-panel pull-left">
         <label for="tag-tree"><span style="text-decoration: underline;">Browse:</span></label>
-        <!--div id="tag-tree"></div-->
 
+        <!-- build the eid list if appropriate -->
         <% eid_list = [] %>
         <% [:artwork, :person].each do | t | %>
             <% if @search_results[t].nil? == false %>
@@ -63,6 +63,7 @@
             <% end %>
         <% end %>
 
+        <!-- get our list of tags -->
         <% if eid_list.empty? && @search_term.empty? %>
             <% status, tags = Melcatalog.tags_by_entry_type( ) %>
         <% else %>
@@ -70,17 +71,18 @@
             <% status, tags = Melcatalog.tags_by_entry_id( eid_list ) %>
         <% end %>
 
+        <!-- build the tag table as necessary -->
         <table class="tag-tree table table-condensed table-hover table-striped">
            <% ix = 1 %>
            <% tags.each do |root| %>
-             <tr class="<%= "treegrid-#{ix}" %>">
+             <tr class="<%= "tag_genre treegrid-#{ix}" %>">
                <td><%= root['text'] %></td><td></td>
              </tr>
              <% ix += 1 %>
              <% if root['nodes'].nil? == false %>
                  <% parentix = ix - 1 %>
                  <% root['nodes'].each do |child| %>
-                      <tr class="<%= "treegrid-#{ix} treegrid-parent-#{parentix}" %>">
+                      <tr class="<%= "tag_name treegrid-#{ix} treegrid-parent-#{parentix}" %>">
                         <td><a class="tree-click" href="<%= child['href'] %>"><%= truncate( child['text'], { :length => 16 } ) %></a></td><td><span class="badge"><%= child['count'] %></span></td>
                       </tr>
                       <% ix += 1 %>
@@ -184,6 +186,11 @@
             expanderCollapsedClass: 'glyphicon glyphicon-plus'
         });
 
+        // open the search tree if appropriate
+        <% if @search_tags.empty? == false %>
+           openTagTree( "<%= @search_tags %>" );
+        <% end %>
+
         // search button handler
         $("#search-button").click(function() {
             doSearchHandler( );
@@ -197,7 +204,7 @@
             }
         });
 
-        // any of the results we found
+        // handler for clicks on any of the results we found
         $(".clickable").click(function() {
             // the eid and the entry title separated with a pipe character
             var title = $(this).attr( "title" ).length === 0 ? "no title" : $(this).attr( "title");
@@ -207,7 +214,7 @@
             tinyMCEPopup.close( );
         });
 
-        // when we select a tag
+        // handler for when we select a tag
         $('.tree-click').on('click', function( e ) {
             e.preventDefault( );
             var href = $(this).attr( 'href' );
@@ -260,6 +267,21 @@
        var div = parent.jQuery('div')[ 0 ];
        parent.jQuery.data( div, "catalog", reference );
     }
+
+    // open the tag tree cos we are doing a tag search
+    function openTagTree( search_tag ) {
+       var domain = search_tag.split( "|" )[ 0 ];
+       var tag = search_tag.split( "|" )[ 1 ];
+
+       // open the tree
+       $( ".tag_genre" ).each( function( index, element ) {
+           var title = $( this ).text( ).replace(/\s/g, "");
+           if( title == domain ) {
+               $( this ).treegrid( 'expand' );
+           }
+       });
+    }
+
 </script>
 
 </body>

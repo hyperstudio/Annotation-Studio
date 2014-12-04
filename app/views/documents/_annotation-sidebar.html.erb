@@ -195,22 +195,12 @@ jQuery(function ($) {
     $.when(reload_data).then(cleanup_document).done(refreshAnnotations(), loadSidebar());
   }
 
- function getAnnotationTags() {
-    var annotations = subscriber.dumpAnnotations();
-    var tags = [];
-    for (var i=0; i<annotations.length; i++) {
-      for (var j=0; j<annotations[i].tags.length; j++) {
-        tags.push(annotations[i].tags[j]);
-      }
-    }
-    return $.unique(tags);
-  }
-
-  // $('#tagsearch').on('click', tagFilter);
+  // trigger reload of annotations based on tagfilter.
   $('#tagsearch').click(function(){
       tagFilter();
   });
 
+  // preform reload
   function tagFilter(event) {
     // console.log(event);
     var tags = $('#tagsearchbox').typeahead('val');
@@ -235,6 +225,18 @@ jQuery(function ($) {
 
   }
 
+  // set up a source for tags.
+  var getAnnotationTags = function () {
+    var annotations = subscriber.dumpAnnotations();
+    var tags = [];
+    for (var i=0; i<annotations.length; i++) {
+      for (var j=0; j<annotations[i].tags.length; j++) {
+        tags.push(annotations[i].tags[j]);
+      }
+    }
+    return $.unique(tags);
+  }
+
   var tagengine = new Bloodhound({
     name: 'tags',
     local: getAnnotationTags,
@@ -250,6 +252,7 @@ jQuery(function ($) {
   .done(function() { console.log('got tags!');  })
   .fail(function() { console.log('dint get tags!'); });
 
+  // setup typeaheaad
    $('#tag-chooser #tagsearchbox').typeahead(
     {
       minLength: 1,

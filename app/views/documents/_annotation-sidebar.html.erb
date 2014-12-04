@@ -186,7 +186,7 @@ jQuery(function ($) {
       'mode': event.data.mode,
       'context': 'document',
       'uri': [location.protocol, '//', location.host, location.pathname].join(''),
-      'tags': $('#tagsearchbox').val()
+      'tags': $('#tagsearchbox').typeahead('val')
     };
 
     var reload_data = reloadAnnotations(loadOptions);
@@ -195,7 +195,7 @@ jQuery(function ($) {
     $.when(reload_data).then(cleanup_document).done(refreshAnnotations(), loadSidebar());
   }
 
-  function getAnnotationTags() {
+ function getAnnotationTags() {
     var annotations = subscriber.dumpAnnotations();
     var tags = [];
     for (var i=0; i<annotations.length; i++) {
@@ -206,54 +206,17 @@ jQuery(function ($) {
     return $.unique(tags);
   }
 
-  var substringMatcher = function(strs) {
-    return function findMatches(q, cb) {
-      var matches, substrRegex;
-
-      // an array that will be populated with substring matches
-      matches = [];
-
-      // regex used to determine if a string contains the substring `q`
-      substrRegex = new RegExp(q, 'i');
-
-      // iterate through the pool of strings and for any string that
-      // contains the substring `q`, add it to the `matches` array
-      $.each(strs, function(i, str) {
-        if (substrRegex.test(str)) {
-          // the typeahead jQuery plugin expects suggestions to a
-          // JavaScript object, refer to typeahead docs for more info
-          matches.push({ value: str });
-        }
-      });
-      cb(matches);
-    };
-  };
-
-  function activateAutocomplete() {
-    $('#tagsearchbox').typeahead(
-        {
-          minLength: 1,
-          highlight: true,
-        },
-        {
-          name: 'tags',
-          source: substringMatcher(getAnnotationTags()),
-        }
-    );
-  }
-
   // $('#tagsearch').on('click', tagFilter);
-  $('#tagsearchbox').keypress(function(e){
-    var code = e.keyCode || e.which;
-    if(code == 13) { //Enter keycode
-      // console.log(e);
+  $('#tagsearch').click(function(){
       tagFilter();
-    }
   });
 
   function tagFilter(event) {
-    console.log(event);
-    var tags = $('#tagsearchbox').val()
+    // console.log(event);
+    var tags = $('#tagsearchbox').typeahead('val');
+    // $('#tagsearchbox').typeahead('val', tags);
+    console.log(tags);
+    // $('#tagsearchbox').typeahead('destroy');
     var loadOptions = {
       'limit': 1000,
       "groups": groups,
@@ -269,7 +232,40 @@ jQuery(function ($) {
     var cleanup_document = cleanupDocument();
 
     $.when(reload_data).then(cleanup_document).done(refreshAnnotations(), loadSidebar());
+
   }
+
+  var tagSuggest = function() {
+    $('#tag-chooser #tagsearchbox').typeahead('destroy');
+
+    var tagengine = new Bloodhound({
+      name: 'tags',
+      local: getAnnotationTags,
+      datumTokenizer: function(d) {
+        return Bloodhound.tokenizers.whitespace(d.val);
+      },
+      queryTokenizer: Bloodhound.tokenizers.whitespace
+    });
+
+    var tagpromise = tagengine.initialize();
+
+    tagpromise
+    .done(function() { console.log('got tags!');  })
+    .fail(function() { console.log('dint get tags!'); });
+
+     $('#tag-chooser #tagsearchbox').typeahead(
+      {
+        minLength: 1,
+        highlight: true,
+        hint: true,
+      },
+      {
+        name: 'tags',
+        displayKey: 'value',
+        source: tagengine.ttAdapter(),
+      }
+    );
+  };
 
   function getMode() {
     var activeElems = $('.viewchoice.active')
@@ -353,7 +349,7 @@ jQuery(function ($) {
   subscriber.subscribe('annotationsLoaded', loadSidebar);
   subscriber.subscribe('annotationsLoaded', stopSpinner);
   subscriber.subscribe('annotationsLoaded', handleHash);
-  subscriber.subscribe('annotationsLoaded', activateAutocomplete);
+  subscriber.subscribe('annotationsLoaded', tagSuggest);
   subscriber.subscribe('annotationEditorShown', parentIndex);
 
   // Update all highlights with UUIDs

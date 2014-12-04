@@ -123,3 +123,9 @@ img#neh-logo {
   z-index: 2000 !important;
   display: block !important;
 }
+
+#tag-chooser > span.input-group-btn {
+  top: -2px;
+}
+
+

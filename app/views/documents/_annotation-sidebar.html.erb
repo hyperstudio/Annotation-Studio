@@ -235,37 +235,33 @@ jQuery(function ($) {
 
   }
 
-  var tagSuggest = function() {
-    $('#tag-chooser #tagsearchbox').typeahead('destroy');
+  var tagengine = new Bloodhound({
+    name: 'tags',
+    local: getAnnotationTags,
+    datumTokenizer: function(d) {
+      return Bloodhound.tokenizers.whitespace(d.val);
+    },
+    queryTokenizer: Bloodhound.tokenizers.whitespace
+  });
 
-    var tagengine = new Bloodhound({
+  var tagpromise = tagengine.initialize();
+
+  tagpromise
+  .done(function() { console.log('got tags!');  })
+  .fail(function() { console.log('dint get tags!'); });
+
+   $('#tag-chooser #tagsearchbox').typeahead(
+    {
+      minLength: 1,
+      highlight: true,
+      hint: true,
+    },
+    {
       name: 'tags',
-      local: getAnnotationTags,
-      datumTokenizer: function(d) {
-        return Bloodhound.tokenizers.whitespace(d.val);
-      },
-      queryTokenizer: Bloodhound.tokenizers.whitespace
-    });
-
-    var tagpromise = tagengine.initialize();
-
-    tagpromise
-    .done(function() { console.log('got tags!');  })
-    .fail(function() { console.log('dint get tags!'); });
-
-     $('#tag-chooser #tagsearchbox').typeahead(
-      {
-        minLength: 1,
-        highlight: true,
-        hint: true,
-      },
-      {
-        name: 'tags',
-        displayKey: 'value',
-        source: tagengine.ttAdapter(),
-      }
-    );
-  };
+      displayKey: 'value',
+      source: tagengine.ttAdapter(),
+    }
+  );
 
   function getMode() {
     var activeElems = $('.viewchoice.active')
@@ -349,7 +345,7 @@ jQuery(function ($) {
   subscriber.subscribe('annotationsLoaded', loadSidebar);
   subscriber.subscribe('annotationsLoaded', stopSpinner);
   subscriber.subscribe('annotationsLoaded', handleHash);
-  subscriber.subscribe('annotationsLoaded', tagSuggest);
+  // subscriber.subscribe('annotationsLoaded', tagSuggest);
   subscriber.subscribe('annotationEditorShown', parentIndex);
 
   // Update all highlights with UUIDs

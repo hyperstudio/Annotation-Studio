@@ -1,0 +1,35 @@
+{
+  "name": "Annotation Studio",
+  "description": "",
+  "repository": "https://github.com/hyperstudio/Annotation-Studio",
+  "scripts": {
+    "postdeploy": "bundle exec rake db:migrate",
+  },
+  "env": {
+    "ALERT_LEVEL":                           "success",
+    "ALT_DEFAULT_USER_GROUP":                "French 101",
+    "ANNOTATOR_FILTER":                      "false",
+    "ANNOTATOR_RICHTEXT":                    "true",
+    "ANNOTATOR_RICHTEXT_CONFIG":             "undo redo | link image media | code",
+    "API_CONSUMER":                          "staging",
+    "API_URL":                               "http://staging-annotations.herokuapp.com/api",
+    "CONFIRMATION_GRACE_PERIOD":             "2",
+    "DEFAULT_NEW_USER_GROUP":                "public",
+    "DEFAULT_USERS_CAN_CHOOSE_GROUPS":       "false",
+    "DEFAULT_USERS_CAN_CONTROL_PERMISSIONS": "false",
+    "DEFAULT_USERS_CAN_CREATE_TEXTS":        "false",
+    "DEFAULT_USERS_CAN_SEE_OTHERS_WORK":     "false",
+    "DEFAULT_USER_GROUP":                    "public",
+    "EMAIL_DOMAIN":                          "staging-annotationstudio.herokuapp.com",
+    "ENVIRONMENT_TAG":                       "Welcome",
+    "GLOBAL_ALERT":                          "",
+    "LANG":                                  "en_US.UTF-8",
+    "S3_BUCKET_NAME":                        "annotationstudio-public",
+    "SENDGRID_USERNAME":                     "app30585070@heroku.com",
+    "UNICORN_BACKLOG":                       "16",
+  },
+  "addons": [
+    "heroku-postgresql:dev",
+    "sendgrid:starter",
+  ]
+}

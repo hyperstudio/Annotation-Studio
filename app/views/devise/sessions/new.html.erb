@@ -4,10 +4,15 @@
 <div class="row">
   <div class="col-md-12" id="blurb">
       <% if ENV["GLOBAL_ALERT"] != "" %>
-      <div class="alert alert-<%= ENV["ALERT_LEVEL"] %>">
+      <div class="alert alert-dismissible alert-<%= ENV["ALERT_LEVEL"] %>" role="alert">
         <%= ENV["GLOBAL_ALERT"].html_safe %>
+        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
       </div>
       <% end %>
+      <div class="alert alert-success alert-dismissible" role="alert">
+        <%= $DOMAIN_CONFIG['welcome_message'].html_safe %>
+        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      </div>
   </div>
 </div>
 <div class="row">

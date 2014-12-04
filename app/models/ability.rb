@@ -5,7 +5,7 @@ class Ability
   def initialize(user)
     user ||= User.new # guest user (not logged in)
 
-    # If CanCan doesn't find a match for the above, it falls through 
+    # If CanCan doesn't find a match for the above, it falls through
     # to the default abilities provided by Repertoire Groups:
     defaults_for user
 
@@ -35,11 +35,9 @@ class Ability
 
     else
       cannot :manage, :all
-      can :read, [Document] do |tors|
-        tors.rep_privacy_list.detect {|t| t == 'public'}
-      end
-
+      can :read, Document, { :public? => true }
     end
+
     can :index, Document
   end
 end

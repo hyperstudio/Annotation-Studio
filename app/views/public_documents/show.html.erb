@@ -1,0 +1,40 @@
+<%= content_for :body_id, 'documents' %>
+<%= content_for :body_class, 'show' %>
+<%= content_for :page_title, @document.title %>
+<%= stylesheet_link_tag "documents" %>
+<div class="row">
+  <div class="col-md-8">
+    <div id="textcontent">
+      <div><!-- Required for cases in which there's no HTML in the text -->
+        <%= @document.text.html_safe %>
+      </div>
+    </div>
+  </div><!--/col-md-8 -->
+  <div class="col-md-4">
+    <% if @document.processed? and ! @document.draft? %>
+      <%= render "public_documents/annotation-sidebar" %>
+    <% end %>
+  </div><!--/col-md-3 -->
+</div><!--/row -->
+<%= render "public_documents/metadata" %>
+<script type="text/javascript">
+$('#annotation-list').slimScroll({
+  height: '90%',
+  width: '340px',
+  alwaysVisible: false,
+  allowPageScroll: true,
+  disableFadeOut: false
+});
+
+$('#chapternav').slimScroll({
+  height: '90%',
+  width: '250px',
+  size: '10px',
+  position: 'right',
+  color: '#ccc',
+  distance: '5px',
+  alwaysVisible: false,
+  allowPageScroll: true,
+  disableFadeOut: false
+});
+</script>

@@ -13,8 +13,6 @@
     "ANNOTATOR_RICHTEXT_CONFIG":             "undo redo | link image media | code",
     "API_CONSUMER":                          "staging",
     "API_URL":                               "http://staging-annotations.herokuapp.com/api",
-    "AWS_ACCESS_KEY_ID":                     "AKIAJS7UWK4OQNMXGSUA",
-    "AWS_SECRET_ACCESS_KEY":                 "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",
     "CONFIRMATION_GRACE_PERIOD":             "2",
     "DEFAULT_NEW_USER_GROUP":                "public",
     "DEFAULT_USERS_CAN_CHOOSE_GROUPS":       "false",

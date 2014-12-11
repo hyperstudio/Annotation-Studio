@@ -14,3 +14,7 @@ staging-annotationstudio:
   site_name: MIT Staging
   welcome_message: "Welcome to Annotation Studio Staging at <strong>MIT</strong>"
   site_color: '#A31F34'
+wheatoncollege:
+  site_name: MIT Staging
+  welcome_message: "Welcome to Annotation Studio Staging at <strong>MIT</strong>"
+  site_color: '#A31F34'

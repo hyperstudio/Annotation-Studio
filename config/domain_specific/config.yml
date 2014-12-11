@@ -14,7 +14,43 @@ staging-annotationstudio:
   site_name: MIT Staging
   welcome_message: "Welcome to Annotation Studio Staging at <strong>MIT</strong>"
   site_color: '#A31F34'
-wheatoncollege:
-  site_name: MIT Staging
-  welcome_message: "Welcome to Annotation Studio Staging at <strong>MIT</strong>"
-  site_color: '#A31F34'
+barnard:
+  site_name: Barnard College
+  welcome_message: "Welcome to Annotation Studio Staging at <strong>Barnard College</strong>"
+  site_color: '#005596'
+bucknell:
+  site_name: Bucknell University
+  welcome_message: "Welcome to Annotation Studio Staging at <strong>Bucknell University</strong>"
+  site_color: '#00337F'
+university of new haven:
+  site_name: University of New Haven
+  welcome_message: "Welcome to Annotation Studio Staging at <strong>University of New Haven</strong>"
+  site_color: '#FFD700'
+stonybrook:
+  site_name: Stonybrook
+  welcome_message: "Welcome to Annotation Studio Staging at <strong>Stony Brook University</strong>"
+  site_color: '#990000'
+UM-Boston:
+  site_name: UM-Boston
+  welcome_message: "Welcome to Annotation Studio Staging at <strong>University of Massachusetts, Boston</strong>"
+  site_color: '#38197A'
+vassar:
+  site_name: vassar
+  welcome_message: "Welcome to Annotation Studio Staging at <strong>Vassar College</strong>"
+  site_color: '#800000'
+washjeff:
+  site_name: WashJeff
+  welcome_message: "Welcome to Annotation Studio Staging at <strong>Washington and Jefferson College</strong>"
+  site_color: '#FF0000'
+wheaton college:
+  site_name: Wheaton College
+  welcome_message: "Welcome to Annotation Studio Staging at <strong>Wheaton College</strong>"
+  site_color: '#FFA5000'
+WIT:
+  site_name: WIT
+  welcome_message: "Welcome to Annotation Studio Staging at <strong>Wentworth Institute of Technology</strong>"
+  site_color: '#FFD700'
+WLU:
+  site_name: WLU
+  welcome_message: "Welcome to Annotation Studio Staging at <strong>Washington and Lee University</strong>"
+  site_color: '#F169E1'

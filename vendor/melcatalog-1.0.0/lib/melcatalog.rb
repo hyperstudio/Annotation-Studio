@@ -18,7 +18,7 @@ module Melcatalog
    end
 
    #
-   # search the MEL catalogue and return an array of results
+   # search the catalogue and return an array of results
    #
    # search_term   - the term to search for.
    # search_tag    - the tag to search for (defaults to all tags).
@@ -89,6 +89,38 @@ module Melcatalog
      eids = "?eids=#{eid_list.join( "," )}" unless( eid_list.nil? || eid_list.empty? )
 
      request = "#{Melcatalog.configuration.service_endpoint}/tags#{eids}"
+
+     status, results = self.rest_get request
+     return status, results
+   end
+
+   #
+   # get a
+   #
+   def self.term_scopes
+
+     request = "#{Melcatalog.configuration.service_endpoint}/scopes"
+
+     status, results = self.rest_get request
+     return status, results
+   end
+
+   #
+   # get a list of terms (suitable tags) constrained by the specified parameters.
+   #
+   # scope        - the scope to search within.
+   # search_term  - the term to search for.
+   # limit        - the maximum number of results to return.
+   #
+   def self.terms( scope = "", search_term = "", limit = Melcatalog.configuration.default_result_limit )
+
+     scope_constraint = scope
+     scope_constraint = "&scope=#{scope_constraint}" unless scope_constraint.empty?
+
+     search_constraint = search_term
+     search_constraint = "&search_term=#{search_constraint}" unless search_constraint.empty?
+
+     request = "#{Melcatalog.configuration.service_endpoint}/terms?limit=#{limit}#{scope_constraint}#{search_constraint}"
 
      status, results = self.rest_get request
      return status, results

@@ -83,7 +83,7 @@ describe Melcatalog do
        fail "Unexpected artwork results" if results[:artwork].nil? == false
      end
 
-     it 'limit result count' do
+     it 'limit search result count' do
        all_terms = "%"
        any_tags = ""
        all_fields = []
@@ -154,12 +154,17 @@ describe Melcatalog do
       fail "Bad status" if status != 200
       fail "No text entries available" if metadata.empty?
       eid = ""
-      eid = metadata[:text][ 0 ]['eid'] unless metadata[:text].nil?
+      metadata[:text].each do |t|
+        if t['content_type'] != 'text/plain'
+          eid = t['eid']
+          break
+        end
+      end
       fail "No text entries available" if eid.empty?
-      #status, results = Melcatalog.get( eid, 'stripxml' )
-      #fail "Bad status" if status != 200
-      #fail "Incorrect result count" if results.size != 1
-      #check_texts( results[:text], true )
+      status, results = Melcatalog.get( eid, 'stripxml' )
+      fail "Bad status" if status != 200
+      fail "Incorrect result count" if results.size != 1
+      check_texts( results[:text], true )
     end
 
     it 'get by eid with bad transform' do
@@ -167,9 +172,14 @@ describe Melcatalog do
       # get the first text entry by EID
       status, metadata = Melcatalog.texts(  )
       fail "Bad status" if status != 200
-      fail "No text entries available" if metadata.empty?
+      fail "No text entries available" if( metadata.empty? || metadata[:text].nil? )
       eid = ""
-      eid = metadata[:text][ 0 ]['eid'] unless metadata[:text].nil?
+      metadata[:text].each do |t|
+        if t['content_type'] != 'text/plain'
+          eid = t['eid']
+          break
+        end
+      end
       fail "No text entries available" if eid.empty?
       status, results = Melcatalog.get( eid, 'badtransform' )
       fail "Bad status" if status != 500
@@ -194,6 +204,7 @@ describe Melcatalog do
     end
 
     it 'get tag hierarchy by entry type' do
+
       status, tagdata = Melcatalog.tags_by_entry_type( [ 'artwork', 'person' ] )
       fail "Bad status" if status != 200
       fail "No tag data available" if tagdata.empty?
@@ -226,6 +237,56 @@ describe Melcatalog do
       fail "No tag data available" if tagdata.empty?
       verify_empty_tags( tagdata )
 
+    end
+
+    it 'get term scope list' do
+
+      status, scopedata = Melcatalog.term_scopes(  )
+      fail "Bad status" if status != 200
+      fail "No scope data available" if scopedata.empty?
+      verify_scopes( scopedata )
+    end
+
+    it 'get term list within scope' do
+
+      scope = 'Genre'
+
+      status, termdata = Melcatalog.terms( scope, "" )
+      fail "Bad status" if status != 200
+      fail "No term data available" if termdata.empty?
+      verify_terms( termdata )
+    end
+
+    it 'search term list' do
+
+      search = 'art'
+
+      status, termdata = Melcatalog.terms( "", search )
+      fail "Bad status" if status != 200
+      fail "No term data available" if termdata.empty?
+      verify_terms( termdata )
+    end
+
+    it 'search term list within scope' do
+
+      scope = 'Genre'
+      search = 'art'
+
+      status, termdata = Melcatalog.terms( scope, search )
+      fail "Bad status" if status != 200
+      fail "No term data available" if termdata.empty?
+      verify_terms( termdata )
+    end
+
+    it 'limit term result count' do
+
+      max = 5
+
+      status, termdata = Melcatalog.terms( "", "", max )
+      fail "Bad status" if status != 200
+      fail "No term data available" if termdata.empty?
+      fail "Excessive result count" if termdata.size > max
+      verify_terms( termdata )
     end
 
   end
@@ -336,6 +397,20 @@ describe Melcatalog do
       must_exist( entity, 'href' )
       must_exist( entity, 'nodes' )
       fail "Node tag not empty" if entity['nodes'] != nil
+    }
+  end
+
+  def verify_scopes( scopes )
+    scopes.each { | scope |
+      must_exist( scope, 'scope' )
+      must_exist( scope, 'source' )
+      must_exist( scope, 'count' )
+    }
+  end
+
+  def verify_terms( terms )
+    terms.each { | term |
+      must_exist( term, 'term' )
     }
   end
 

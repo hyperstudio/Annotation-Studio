@@ -71,13 +71,13 @@ class CatalogController < ApplicationController
     if status == 200 && result && result[:person]
       entry = result[:person][ 0 ]
       title = "Person Information"
-      fieldlist = ['forename', 'surname', 'additional_name_info', 'birth', 'death', 'role', 'nationality', 'education']
+      fieldlist = ['forename', 'surname', 'additional_name_info', 'birth', 'death', 'role', 'nationality', 'education', 'see_also']
     elsif status == 200 && result && result[:artwork]
        entry = result[:artwork][ 0 ]
        title = "Artwork Information"
        fieldlist = ['artist', 'artist_national_origin', 'publication', 'technique',
                     'material', 'location_of_print', 'genre', 'subject', 'viewed', 'permissions',
-                    'owned_acquired_borrowed', 'explicit_reference', 'associated_reference']
+                    'owned_acquired_borrowed', 'explicit_reference', 'associated_reference', 'see_also']
     elsif status == 200 && result && result[:text]
       entry = result[:text][ 0 ]
       title = "Text Information"

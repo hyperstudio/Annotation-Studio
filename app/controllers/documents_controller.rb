@@ -153,8 +153,10 @@ class DocumentsController < ApplicationController
       if doc.text.start_with?( "EID:" )
          eid = doc.text.split( ":",2 )[ 1 ]
          status, entry = Melcatalog.get( eid, 'stripxml' )
-         if entry && entry[:text] && entry[:text][ 0 ] && entry[:text][ 0 ]['content']
+         if status == 200 && entry && entry[:text] && entry[:text][ 0 ] && entry[:text][ 0 ]['content']
            doc.text = entry[:text][ 0 ]['content']
+         else
+           doc.text = "Error getting document content from the catalog; status = #{status}, eid = #{eid}"
          end
       end
     end

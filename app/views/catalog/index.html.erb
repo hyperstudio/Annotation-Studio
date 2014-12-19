@@ -109,7 +109,7 @@
                 <% else %>
                   <span class="glyphicon glyphicon-user"></span>
                 <% end %>
-              </td><td><a id="<%= entry['eid'] %>" class="clickable" title="<%= tagset_display( entry['name'], true ) %>" ref="<%= thumbnail_url entry['images'] %>"><%= tagset_display( entry['name'], true ) %></a></td><td><%= entry['birth'] %></td><td><%= entry['death'] %></td></tr>
+              </td><td><a id="<%= entry['eid'] %>" class="clickable" title="<%= tagset_display( entry['authoritative_name'], true ) %>" ref="<%= thumbnail_url entry['images'] %>"><%= tagset_display( entry['authoritative_name'], true ) %></a></td><td><%= entry['birth'] %></td><td><%= entry['death'] %></td></tr>
              <% end %>
           </tbody>
           <% end %>

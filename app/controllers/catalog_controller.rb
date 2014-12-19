@@ -47,11 +47,11 @@ class CatalogController < ApplicationController
     status, result = Melcatalog.get( params[:eid], 'stripxml' )
 
     entry = nil
-    if result && result[:person]
+    if status == 200 && result && result[:person]
        entry = result[:person][ 0 ]
-    elsif result && result[:artwork]
+    elsif status == 200 && result && result[:artwork]
        entry = result[:artwork][ 0 ]
-    elsif result && result[:text]
+    elsif status == 200 && result && result[:text]
        entry = result[:text][ 0 ]
     end
 
@@ -68,20 +68,20 @@ class CatalogController < ApplicationController
     status, result = Melcatalog.get( params[:eid], 'stripxml' )
 
     entry = nil
-    if result && result[:person]
+    if status == 200 && result && result[:person]
       entry = result[:person][ 0 ]
       title = "Person Information"
       fieldlist = ['forename', 'surname', 'additional_name_info', 'birth', 'death', 'role', 'nationality', 'education']
-    elsif result && result[:artwork]
+    elsif status == 200 && result && result[:artwork]
        entry = result[:artwork][ 0 ]
        title = "Artwork Information"
        fieldlist = ['artist', 'artist_national_origin', 'publication', 'technique',
                     'material', 'location_of_print', 'genre', 'subject', 'viewed', 'permissions',
                     'owned_acquired_borrowed', 'explicit_reference', 'associated_reference']
-    elsif result && result[:text]
+    elsif status == 200 && result && result[:text]
       entry = result[:text][ 0 ]
       title = "Text Information"
-      fieldlist = ['author', 'witnesses', 'content', 'edition', 'publisher', 'publication_date', 'source', 'copyright']
+      fieldlist = ['author', 'version', 'manuscript', 'edition', 'publisher', 'place_of_publication', 'publication_date', 'permissions', 'copyright', 'credit_line', 'see_also', 'content_type', 'content']
     end
 
     if entry.nil?

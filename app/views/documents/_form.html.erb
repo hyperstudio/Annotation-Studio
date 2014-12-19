@@ -31,7 +31,7 @@
                   <div class="panel-heading">
                     <h4 class="panel-title">
                       <a data-toggle="collapse" data-parent="#accordion" href="#selector">
-                        ...Or select a text from the MEL Catalog...
+                        ...Or select a text from the Catalog...
                       </a>
                     </h4>
                   </div>
@@ -188,7 +188,7 @@
                  var e = {};
 
                  // fill in all the fields here...
-                 <% ['name', 'author', 'edition', 'publisher', 'publication_date', 'source', 'copyright'].each do | field | %>
+                 <% ['name', 'author', 'edition', 'publisher', 'publication_date', 'manuscript', 'permissions'].each do | field | %>
                     e[ '<%= field %>' ] = '<%= entry[field].nil? ? '' : entry[field] %>';
                  <% end %>
                  text[ '<%= entry['eid'] %>' ] = e;
@@ -203,8 +203,8 @@
                 $( "#document_edition").val( entry[ 'edition'] );
                 $( "#document_publisher").val( entry[ 'publisher'] );
                 $( "#document_publication_date").val( entry[ 'publication_date'] );
-                $( "#document_source").val( entry[ 'source'] );
-                $( "#document_rights_status").val( entry[ 'copyright'] );
+                $( "#document_source").val( entry[ 'manuscript'] );
+                $( "#document_rights_status").val( entry[ 'permissions'] );
                 $( ".note-editable").html( "EID:" + id );
             })
 

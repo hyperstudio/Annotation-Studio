@@ -11,19 +11,19 @@
       Archived <i class="glyphicon glyphicon-folder-close"></i>
     <% end %>
   </li>
-<% if @document.author != "" %>
+<% if ! @document.author.nil? %>
   <li>Author: <%= @document.author %></li>
 <% end %>
-<% if @document.publisher != "" %>
+<% if ! @document.publisher.nil? %>
   <li>Publisher: <%= @document.publisher %></li>
 <% end %>
-<% if @document.publication_date != "" %>
+<% if ! @document.publication_date.nil? %>
   <li>Publication date: <%= @document.publication_date %></li>
 <% end %>
-<% if @document.edition != "" %>
+<% if ! @document.edition.nil? %>
   <li>Edition: <%= @document.edition %></li>
 <% end %>
-<% if @document.source != "" %>
+<% if ! @document.source.nil? %>
   <li>Source: <%= @document.source %></li>
 <% end %>
 </ul>

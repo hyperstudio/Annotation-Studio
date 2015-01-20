@@ -12,9 +12,9 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require typeahead.bundle.js
 //= require bootstrap
 //= require bootstrap-tagsinput
+//= require bootstrap3-typeahead.min
 //= require jasny-bootstrap
 //= require summernote
 //= require showdown

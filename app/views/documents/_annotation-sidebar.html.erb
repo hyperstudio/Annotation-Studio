@@ -186,7 +186,7 @@ jQuery(function ($) {
       'mode': event.data.mode,
       'context': 'document',
       'uri': [location.protocol, '//', location.host, location.pathname].join(''),
-      'tags': $('#tagsearchbox').typeahead('val')
+      'tags': $('#tagsearchbox').val()
     };
 
     var reload_data = reloadAnnotations(loadOptions);
@@ -196,17 +196,14 @@ jQuery(function ($) {
   }
 
   // trigger reload of annotations based on tagfilter.
-  $('#tagsearch').click(function(){
-      tagFilter();
+  $('#tagsearch').click(function(event){
+      tagFilter(event);
   });
 
   // preform reload
   function tagFilter(event) {
-    // console.log(event);
-    var tags = $('#tagsearchbox').typeahead('val');
-    // $('#tagsearchbox').typeahead('val', tags);
-    console.log(tags);
-    // $('#tagsearchbox').typeahead('destroy');
+    var tags = $('#tagsearchbox').val();
+
     var loadOptions = {
       'limit': 1000,
       "groups": groups,
@@ -237,34 +234,48 @@ jQuery(function ($) {
     return $.unique(tags);
   }
 
-  var tagengine = new Bloodhound({
-    name: 'tags',
-    local: getAnnotationTags,
-    datumTokenizer: function(d) {
-      return Bloodhound.tokenizers.whitespace(d.val);
-    },
-    queryTokenizer: Bloodhound.tokenizers.whitespace
-  });
+  // var tagengine = new Bloodhound({
+  //   name: 'tags',
+  //   local: getAnnotationTags,
+  //   datumTokenizer: function(d) {
+  //     return Bloodhound.tokenizers.whitespace(d.val);
+  //   },
+  //   queryTokenizer: Bloodhound.tokenizers.whitespace
+  // });
 
-  var tagpromise = tagengine.initialize();
+  // tagengine.initialize();
 
-  tagpromise
-  .done(function() { console.log('got tags!');  })
-  .fail(function() { console.log('dint get tags!'); });
+  // tagpromise
+  // .done(function() { console.log('got tags!');  })
+  // .fail(function() { console.log('dint get tags!'); });
 
-  // setup typeaheaad
-   $('#tag-chooser #tagsearchbox').typeahead(
-    {
-      minLength: 1,
-      highlight: true,
-      hint: true,
-    },
-    {
-      name: 'tags',
-      displayKey: 'value',
-      source: tagengine.ttAdapter(),
+  $('#tagsearchbox').tagsinput({
+    typeahead: {
+      source: function(query) {
+        return getAnnotationTags();
+      }
     }
-  );
+  })
+  // $('#tagsearchbox').on('beforeItemAdd', function(event) {
+  //   console.log('hai');
+  //   console.log(event);
+  //   $('.bootstrap-tagsinput input').val('')
+  //   // event.item: contains the item
+
+  // });
+  // setup typeaheaad
+  //  $('#tag-chooser #tagsearchbox').typeahead(
+  //   {
+  //     minLength: 1,
+  //     highlight: true,
+  //     hint: true,
+  //   },
+  //   {
+  //     name: 'tags',
+  //     displayKey: 'value',
+  //     source: tagengine.ttAdapter(),
+  //   }
+  // );
 
   function getMode() {
     var activeElems = $('.viewchoice.active')

@@ -119,10 +119,10 @@ img#neh-logo {
   margin: 0;
 }
 
-#tag-chooser > span.twitter-typeahead .tt-dropdown-menu {
+/*#tag-chooser > span.twitter-typeahead .tt-dropdown-menu {
   z-index: 2000 !important;
   display: block !important;
-}
+}*/
 
 #tag-chooser > span.input-group-btn {
   top: -2px;

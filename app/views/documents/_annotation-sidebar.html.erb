@@ -195,15 +195,10 @@ jQuery(function ($) {
     $.when(reload_data).then(cleanup_document).done(refreshAnnotations(), loadSidebar());
   }
 
-  // trigger reload of annotations based on tagfilter.
-  $('#tagsearch').click(function(event){
-      tagFilter(event);
-  });
-
   // preform reload
   function tagFilter(event) {
+    console.log(event);
     var tags = $('#tagsearchbox').val();
-
     var loadOptions = {
       'limit': 1000,
       "groups": groups,
@@ -214,68 +209,16 @@ jQuery(function ($) {
       'uri': [location.protocol, '//', location.host, location.pathname].join(''),
       'tags': tags
     };
-
     var reload_data = reloadAnnotations(loadOptions);
     var cleanup_document = cleanupDocument();
-
     $.when(reload_data).then(cleanup_document).done(refreshAnnotations(), loadSidebar());
-
+    $('*[data-role="remove"]').hide();
   }
 
-  // set up a source for tags.
-  var getAnnotationTags = function () {
-    var annotations = subscriber.dumpAnnotations();
-    var tags = [];
-    for (var i=0; i<annotations.length; i++) {
-      for (var j=0; j<annotations[i].tags.length; j++) {
-        tags.push(annotations[i].tags[j]);
-      }
-    }
-    return $.unique(tags);
-  }
-
-  // var tagengine = new Bloodhound({
-  //   name: 'tags',
-  //   local: getAnnotationTags,
-  //   datumTokenizer: function(d) {
-  //     return Bloodhound.tokenizers.whitespace(d.val);
-  //   },
-  //   queryTokenizer: Bloodhound.tokenizers.whitespace
-  // });
-
-  // tagengine.initialize();
-
-  // tagpromise
-  // .done(function() { console.log('got tags!');  })
-  // .fail(function() { console.log('dint get tags!'); });
-
-  $('#tagsearchbox').tagsinput({
-    typeahead: {
-      source: function(query) {
-        return getAnnotationTags();
-      }
-    }
-  })
-  // $('#tagsearchbox').on('beforeItemAdd', function(event) {
-  //   console.log('hai');
-  //   console.log(event);
-  //   $('.bootstrap-tagsinput input').val('')
-  //   // event.item: contains the item
-
-  // });
-  // setup typeaheaad
-  //  $('#tag-chooser #tagsearchbox').typeahead(
-  //   {
-  //     minLength: 1,
-  //     highlight: true,
-  //     hint: true,
-  //   },
-  //   {
-  //     name: 'tags',
-  //     displayKey: 'value',
-  //     source: tagengine.ttAdapter(),
-  //   }
-  // );
+  $('#tagsearchbox').tagsinput()
+  $('#tagsearchbox').on('itemAdded', tagFilter);
+  $('#tagsearchbox').on('itemRemoved', tagFilter);
+  // $('*[data-role="remove"]').hide();
 
   function getMode() {
     var activeElems = $('.viewchoice.active')

@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
+  before_filter :set_domain_config
 
   def after_sign_in_path_for(user)
       @now = DateTime.current().to_time.iso8601
@@ -31,5 +32,14 @@ class ApplicationController < ActionController::Base
 
   def current_tenant
     Apartment::Database.current_tenant
+  end
+
+  def set_domain_config
+    $DOMAIN_CONFIG = DOMAIN_CONFIGS['public']
+    if (request.subdomain.present? && DOMAIN_CONFIGS[request.subdomain].present?)
+      $DOMAIN_CONFIG = DOMAIN_CONFIGS[request.subdomain]
+    else
+      $DOMAIN_CONFIG = DOMAIN_CONFIGS['default']
+    end
   end
 end

@@ -1,4 +1,7 @@
 AnnotationStudio::Application.routes.draw do
+
+  get 'public/:id' => 'public_documents#show'
+
   devise_for :users
 
   devise_for :admin_users, ActiveAdmin::Devise.config
@@ -11,6 +14,7 @@ AnnotationStudio::Application.routes.draw do
 
   resources :documents
   resources :users, only: [:show, :edit]
+
 
   authenticated :user do
     root :to => "users#show"

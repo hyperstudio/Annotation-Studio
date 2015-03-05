@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <%= csrf_meta_tags %>
+  <%= stylesheet_link_tag "application", :media => "all" %>
+  <%= stylesheet_link_tag "catalog", :media => "all" %>
+</head>
+<body>
+
+<div class="container-fluid">
+
+  <div class="panel panel-info catalog-container">
+    <div class="panel-heading"><h3 class="panel-title"><%= title %></h3></div>
+
+    <div class="panel-body">
+
+      <div class="row">
+        <div class="col-lg-12">
+           <form class="form-horizontal" role="form">
+
+             <div class="form-group">
+               <%= image_or_nothing( entry['images'], 'image_medium' ) %>
+             </div>
+
+             <% fieldlist.each do |field| %>
+
+                 <div class="form-group">
+                   <label class="col-sm-2 control-label"><%= field.humanize %></label>
+                   <div class="col-sm-10">
+                     <% str = "" %>
+                     <% case field %>
+                     <% when "affiliation" %>
+                         <% entry[field].each do |affiliation| %>
+                             <% str += "#{affiliation['affiliation']} : #{affiliation['type']} : #{affiliation['subtype']} : #{affiliation['role']} : #{affiliation['from']} : #{affiliation['to']} " %>
+                         <% end %>
+                         <p class="form-control-static" id="<%= field %>"><%= str %></p>
+                     <% when 'nationality' %>
+                         <% entry[field].each do |nationality| %>
+                             <% str += "#{nationality['nationality']} : #{nationality['from']} : #{nationality['to']} " %>
+                         <% end %>
+                         <p class="form-control-static" id="<%= field %>"><%= str %></p>
+                     <% when 'occupation' %>
+                         <% entry[field].each do |occupation| %>
+                             <% str += "#{occupation['occupation']} : #{occupation['from']} : #{occupation['to']} " %>
+                         <% end %>
+                         <p class="form-control-static" id="<%= field %>"><%= str %></p>
+                     <% when 'see_also' %>
+                         <% entry[field].each do |see_also| %>
+                           <% str += "#{see_also['description']} : #{see_also['url']} " %>
+                         <% end %>
+                         <p class="form-control-static" id="<%= field %>"><%= str %></p>
+                     <% else %>
+                         <p class="form-control-static" id="<%= field %>"><%= tagset_display entry[field] %></p>
+                     <% end %>
+                   </div>
+                 </div>
+             <% end %>
+
+           </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</body>

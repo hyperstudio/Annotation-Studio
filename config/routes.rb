@@ -7,6 +7,11 @@ AnnotationStudio::Application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 
+  # catalog routes
+  get 'documents/catalog', to: 'catalog#index'
+  get 'documents/catalog/image/:eid', to: 'catalog#image'
+  get 'documents/catalog/reference/:eid', to: 'catalog#reference'
+
   resources :documents
   resources :users, only: [:show, :edit]
 

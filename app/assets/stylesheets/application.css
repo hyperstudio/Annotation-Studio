@@ -12,6 +12,7 @@
  *= require "bootstrap"
  *= require "font-awesome"
  *= require "bootstrap-tagsinput"
+ *= require "jquery.treegrid"
  *= require "annotator.min"
  *= require "jasny-bootstrap"
  *= require "summernote"
@@ -20,7 +21,8 @@
  *= require "users"
  *= require "richText-annotator.css"
  *= require "annotator.touch.css"
-*/
+ *= require "ekko-lightbox.min"
+ */
 
 html {
   position: relative;

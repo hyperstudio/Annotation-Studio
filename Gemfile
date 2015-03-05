@@ -79,3 +79,6 @@ gem "figaro"
 gem 'will_paginate', '> 3.0'
 gem 'runtimeerror_notifier'
 gem 'intercom-rails'
+
+gem "melcatalog", :path => "vendor"
+gem "rest-client"

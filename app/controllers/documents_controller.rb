@@ -1,3 +1,6 @@
+# support for MEL catalog entries
+require 'melcatalog'
+
 class DocumentsController < ApplicationController
   before_filter :authenticate_user!
 
@@ -36,6 +39,9 @@ class DocumentsController < ApplicationController
   def new
     @document = Document.new
 
+    # list any catalogue texts as appropriate
+    @catalog_texts = catalog_texts
+
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @document }
@@ -52,6 +58,9 @@ class DocumentsController < ApplicationController
   def create
     @document = Document.new(params[:document])
     @document.user = current_user
+
+    # apply any catalogue content as appropriate
+    catalog_content( @document )
 
     respond_to do |format|
       if @document.save
@@ -125,4 +134,37 @@ class DocumentsController < ApplicationController
     session[:mobile_param] = params[:mobile] if params[:mobile]
    # request.format = :mobile if mobile_device?
   end
+
+  private
+
+  def catalog_texts
+
+    if catalogue_enabled?
+       status, results = Melcatalog.texts
+       return results[:text] unless results[:text].nil?
+    end
+    return []
+  end
+
+  def catalog_content( doc )
+
+    if catalogue_enabled?
+      # we put placeholder content in earlier and replace with the real thing now
+      if doc.text.start_with?( "EID:" )
+         eid = doc.text.split( ":",2 )[ 1 ]
+         status, entry = Melcatalog.get( eid, 'stripxml' )
+         if status == 200 && entry && entry[:text] && entry[:text][ 0 ] && entry[:text][ 0 ]['content']
+           doc.text = entry[:text][ 0 ]['content']
+         else
+           doc.text = "Error getting document content from the catalog; status = #{status}, eid = #{eid}"
+         end
+      end
+    end
+  end
+
+  # helper to determine if we should support content from the MEL catalog
+  def catalogue_enabled?
+    return( ENV["CATALOG_ENABLED"] == 'true' )
+  end
+
 end

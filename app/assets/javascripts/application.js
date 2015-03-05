@@ -14,6 +14,8 @@
 //= require jquery_ujs
 //= require bootstrap
 //= require bootstrap-tagsinput
+//= require jquery.treegrid
+//= require jquery.treegrid.bootstrap3
 //= require jasny-bootstrap
 //= require summernote
 //= require showdown
@@ -24,6 +26,7 @@
 //= require moment.min
 //= require tinymce
 //= require annotator-full.min
+//= require melcatalog-annotator-buttons
 //= require richText-annotator
 //= require underscore
 //= require backbone
@@ -31,3 +34,4 @@
 //= require annotator.touch.min
 //= require highlighter
 //= require jquery.slimscroll.min
+//= require ekko-lightbox.min

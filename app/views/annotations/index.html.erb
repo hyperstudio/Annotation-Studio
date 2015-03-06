@@ -11,34 +11,16 @@
     var token = '<%= session["jwt"] %>';
     // Backbone.history.start({pushState: true, root: window.location})
 
-    var myLoadOptions = {
-      'limit': 100,
-      'groups': "<%= current_user.rep_group_list %>".split(/, /),
-      'subgroups': "<%= current_user.rep_subgroup_list %>".split(/, /),
-      'host': location.host,
-      'user': "<%= current_user.email %>",
-      'mode': 'user',
-      'context': 'dashboard',
-    };
-    var classLoadOptions = {
-      'limit': 100,
-      'groups': "<%= current_user.rep_group_list %>".split(/, /),
-      'subgroups': "<%= current_user.rep_subgroup_list %>".split(/, /),
-      'host': location.host,
-      'user': "<%= current_user.email %>",
-      'mode': 'class',
-      'context': 'dashboard',
-    };
-    var groupLoadOptions = {
-      'limit': 100,
-      'groups': "<%= current_user.rep_group_list %>".split(/, /),
-      'subgroups': "<%= current_user.rep_subgroup_list %>".split(/, /),
-      'host': location.host,
-      'user': "<%= current_user.email %>",
-      'mode': 'group',
-      'context': 'dashboard',
-    };
+    var loadOptions = JSON.parse('<%== @loadOptions %>');
 
+    var myLoadOptions = {'mode': 'user'};
+        classLoadOptions = {'mode': 'class'};
+        groupLoadOptions = {'mode': 'group'};
+    for (var attrname in loadOptions) {
+        myLoadOptions[attrname] = loadOptions[attrname];
+        classLoadOptions[attrname] = loadOptions[attrname];
+        groupLoadOptions[attrname] = loadOptions[attrname];
+    };
     widget.listAnnotations('my-annotation-list', myLoadOptions, endpoint, token);
     widget.listAnnotations('class-annotation-list', classLoadOptions, endpoint, token);
     widget.listAnnotations('group-annotation-list', groupLoadOptions, endpoint, token);

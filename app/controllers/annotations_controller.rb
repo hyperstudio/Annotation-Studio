@@ -8,10 +8,9 @@ class AnnotationsController < ApplicationController
             :subgroups =>   current_user.rep_subgroup_list,
             :host =>        request.host_with_port,
             :user =>        current_user.email,
-            :context =>     'dashboard'
+            :context =>     'search'
         }
         if params[:document_id]
-            #loadOptions[:context] = 'document'
             loadOptions[:uri] = request.base_url + '/documents/' + params[:document_id]
         end
         @loadOptions = loadOptions.to_json

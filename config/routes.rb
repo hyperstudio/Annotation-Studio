@@ -18,7 +18,6 @@ AnnotationStudio::Application.routes.draw do
 
   resources :users, only: [:show, :edit]
 
-
   authenticated :user do
     root :to => "users#show"
     get 'dashboard', to: 'users#show', as: :dashboard

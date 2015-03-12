@@ -141,6 +141,8 @@ ActiveAdmin.setup do |config|
   # To load a javascript file:
   #   config.register_javascript 'my_javascript.js'
 
+  config.register_javascript 'jqColorPicker.min.js'
+  config.register_javascript 'admin-annotator-category.js'
 
   # == CSV options
   #

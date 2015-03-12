@@ -31,3 +31,5 @@
 //= require annotator.touch.min
 //= require highlighter
 //= require jquery.slimscroll.min
+//= require jquery.xcolor
+//= require annotator-category

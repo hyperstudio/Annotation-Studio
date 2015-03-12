@@ -27,6 +27,7 @@ jQuery(function ($) {
 
   // Bootstrap Backbone Sidebar //
   var sidebar = new Sidebar.App();
+  sidebar.token = '<%= session["jwt"] %>';
   window.sidebar = sidebar
   Backbone.history.start({pushState: true, root: window.location});
   var studio = $('#textcontent').annotator(annotatorOptions).annotator('setupPlugins', {}, {
@@ -70,7 +71,8 @@ jQuery(function ($) {
         // Permissions settings per-annotation
         showViewPermissionsCheckbox: true,
         showEditPermissionsCheckbox: false
-      }
+     },
+     Categories: <%= raw AnnotationCategory.to_plugin_init %>
   });
 
   var optionsRichText = {

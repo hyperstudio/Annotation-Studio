@@ -19,3 +19,21 @@
   -moz-border-radius: 4px;
   border-radius: 4px;
 }
+
+.viewer_indicator {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  margin: 0px 15px 0px 5px;
+}
+
+.annotator-item button.btn {
+  margin: 5px;
+  padding: 2px 5px;
+}
+/*
+.annotator-item button.btn-default:focus {
+  background-color: #FFF;
+}
+*/

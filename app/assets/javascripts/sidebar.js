@@ -112,25 +112,63 @@ Sidebar.AnnotationListView = Backbone.View.extend({
   el: $("div#annotation-well"),
   initialize: function(options) {
     this.template = $('#annotation-template').html();
+    var that = this;
+
+    if(sidebar.sort_editable) {
+      this.$el.find('#annotation-list').sortable({
+        handle: '.handle',
+	containment: 'parent',
+        update: function(event, ui) {
+          that.listUpdate();
+        }
+      });
+    }
+  },
+  listUpdate: function() {
+    // TODO: Is there a more elegant method to create this mapping? (uuid => sort position)
+    var manual_sort_positions = {};
+    var position = 0;
+    $.each($('li.annotation-item'), function(i, e) {
+      manual_sort_positions[$(e).find("span.highlightlink").attr("data-highlight").replace(/#hl/, '')] = position;
+      position += 1;
+    });
+
+    var that = this;
+    $.ajax({
+      url: 'http://localhost:5000/api/annotations/positions',
+      type: 'POST',
+      data: { sort_positions: manual_sort_positions },
+      // TODO: Is there a better way to send token here??
+      headers: { 'x-annotator-auth-token': sidebar.token }
+    }).done(function() {
+      // TODO: Is there a better way to set the annotation data here
+      $.each(sidebar.subscriber.plugins.Store.annotations, function(i, ann) {
+        ann.sort_position = manual_sort_positions[ann.uuid];
+      });
+    });
   },
   render: function() {
     var collection = this.collection
     // Clear out existing annotations
     $("ul#annotation-list").find(".annotation-item").remove();
 
-    // Sort the collection by where it appears in the document
-    sorted_ids = $('.annotator-hl').map(function(i,e){
-      return e.id.substring(2);
-    }).toArray();
+    if($('#textpositionsort').hasClass('active')) {
+      // Sort the collection by where it appears in the document
+      sorted_ids = $('.annotator-hl').map(function(i,e){
+        return e.id.substring(2);
+      }).toArray();
+      collection.each(function(ann) {
+        ann.set('order', sorted_ids.indexOf(ann.get('uuid')));
+      });
+      collection.comparator = function(model) {
+        return model.get('order');
+      };
+    } else {
+      collection.comparator = function(model) {
+        return model.get('sort_position');
+      };
+    }
 
-    collection.each(function(ann) {
-      position = sorted_ids.indexOf(ann.get('uuid'));
-      ann.set('order', position);
-    });
-
-    collection.comparator = function(model) {
-      return model.get('order');
-    };
 
     collection.sort();
 
@@ -196,6 +234,14 @@ Sidebar.AnnotationListView = Backbone.View.extend({
       $(idtarget).prepend('<i class="glyphicon glyphicon-comment"></i>');
       // event.stopPropagation();
     });
+
+    if(sidebar.sort_editable) {
+        if($('#customsort').hasClass('active')) {
+            $('ul#annotation-list').sortable('enable').addClass('sorting_on');
+        } else {
+            $('ul#annotation-list').sortable('disable').removeClass('sorting_on');
+        }
+    }
   }
 });
 
@@ -234,7 +280,7 @@ Sidebar.App = Backbone.Router.extend({
   showAndHideAnnotations: function() {
     if(this.filtered) {
       $('ul#annotation-list li').each(function(index, element){
-        highlight_id = $(element).find('span:first-child').data('highlight');
+        highlight_id = $(element).find('span.highlightlink').data('highlight');
         if(isScrolledIntoView($(highlight_id))){
           $(element).show();
         }else{

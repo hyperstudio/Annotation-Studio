@@ -4,6 +4,7 @@
   <div id="annotation-well" class="affix">
     <ul id="annotation-list"></ul>
     <script type="text/template" id="comment-template">
+      <span class="handle"><span class="glyphicon glyphicon-option-vertical"></span></span>
       <span id="sb{{uuid}}" href="#full{{uuid}}" data-highlight="#hl{{uuid}}" rel="tooltip" title="{{username}}" class="highlightlink comment">{{{text}}}</span>
       <span id="quote{{uuid}}" class="sbquote details">&quot;{{{quote}}}&quot;</span>
       <span id="text{{uuid}}" class="sbtext details">{{{text}}}</span>
@@ -11,6 +12,7 @@
       <div id="tags{{uuid}}" class="sbtags details">{{#tags}}<span class="label label-default">{{.}}</span> {{/tags}}</div>
     </script>
     <script type="text/template" id="highlight-template">
+      <span class="handle"><span class="glyphicon glyphicon-option-vertical"></span></span>
       <span id="sb{{uuid}}" data-highlight="#hl{{uuid}}" rel="tooltip" title="{{username}}" class="highlightlink highlight sbquote">&quot;{{{quote}}}&quot;</span>
       <span id="quote{{uuid}}" class="sbquote details">&quot;{{{quote}}}&quot;</span>
       <div id="tags{{uuid}}" class="sbtags details">{{#tags}}<span class="label label-default">{{.}}</span> {{/tags}}</div>

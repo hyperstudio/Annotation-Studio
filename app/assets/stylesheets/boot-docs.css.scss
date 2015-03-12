@@ -219,6 +219,10 @@ span.mycolor {
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
+.sorting_on .highlightlink.highlight {
+  display: inline-block;
+  width: 95%;
+}
 
 span.highlightborder {
 	border-left: 5px solid #F00;
@@ -236,6 +240,19 @@ span.highlightborder {
 #annotation-well ul#annotation-list li span {
 	text-decoration:none;
 	color: #111;
+}
+#annotation-well ul#annotation-list li span.handle {
+	display: none;
+	opacity: 0.1;
+}
+#annotation-well ul#annotation-list.sorting_on li span.handle {
+	display: block;
+	float: left;
+	margin-right: 4px;
+}
+#annotation-well ul#annotation-list li span.handle:hover {
+	cursor: pointer;
+	opacity: 1.0;
 }
 
 #annotation-well ul#annotation-list li.selected,

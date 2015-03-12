@@ -177,6 +177,15 @@ jQuery(function ($) {
     $('#adminview').on('click', { mode: 'admin', id: 'adminview' }, modeFilter);
   <% end %>
 
+  $.each($('#category-chooser button'), function(i, j) {
+    $(j).on('click', { mode: 'category' }, categoryFilter);
+  });
+
+  function categoryFilter(event) {
+    $(event.currentTarget).toggleClass('active');
+    modeFilter(event);
+  }
+
   $('#textpositionsort').on('click', {}, sortUpdate);
   $('#customsort').on('click', {}, sortUpdate);
 
@@ -193,6 +202,10 @@ jQuery(function ($) {
     $('.viewchoice').removeClass("active");
 
     $('#spinnermodal').modal('show');
+    var annotation_categories = [];
+    $.each($('#category-chooser button.active'), function(i, j) {
+      annotation_categories.push($(j).data('annotation_category_id'));
+    });
 
     var loadOptions = {
       'limit': 1000,
@@ -202,7 +215,8 @@ jQuery(function ($) {
       'mode': event.data.mode,
       'context': 'document',
       'uri': [location.protocol, '//', location.host, location.pathname].join(''),
-      'tags': $('#tagsearchbox').val()
+      'tags': $('#tagsearchbox').val(),
+      'annotation_categories': annotation_categories
     };
 
     var reload_data = reloadAnnotations(loadOptions);

@@ -1,3 +1,3 @@
 Melcatalog.configure do |config|
-  config.service_endpoint = 'http://localhost:4000/api'
+  config.service_endpoint = ENV["MEL_CATALOG_API"]
 end

@@ -27,6 +27,8 @@ development:
     DEVISE_SECRET_KEY:                     blah-blah # use: `rails g secret` to generate a value
     GLOBAL_ALERT:                           "Global Alert Goes Here. Very important information!"
     ALERT_LEVEL:                            "success"
+    # make the following the path to your local (or hosted) instance of the MEL-Catalog service
+    MEL_CATALOG_API:                        "http://localhost:4000/api"
 
 production:
     DEFAULT_NEW_USER_GROUP: public

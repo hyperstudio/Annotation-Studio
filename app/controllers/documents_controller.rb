@@ -164,7 +164,7 @@ class DocumentsController < ApplicationController
 
   # helper to determine if we should support content from the MEL catalog
   def catalogue_enabled?
-    true   # TODO: config...
+    return( ENV["CATALOG_ENABLED"] == true )
   end
 
 end

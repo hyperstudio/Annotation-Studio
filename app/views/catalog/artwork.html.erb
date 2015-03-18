@@ -4,14 +4,15 @@
   <meta charset="utf-8">
   <%= csrf_meta_tags %>
   <%= stylesheet_link_tag "application", :media => "all" %>
+  <%= stylesheet_link_tag "catalog", :media => "all" %>
   <%#= javascript_include_tag "application" %>
 </head>
 <body>
 
 <div id="catalog-reference-container">
-  <h3 class="indent bottom-border">An Artwork From The Melville Electronic Library</h3>
+  <h3 class="indent bottom-border"><%= @entry['artist'] %></h3>
 
-  <table class="table table-striped table-bordered">
+  <table class="indent table table-striped table-bordered">
      <tbody>
         <!-- do each field -->
         <% ['artist', 'artist_national_origin', 'engraver', 'engraver_national_origin', 'title', 'publication', 'medium',

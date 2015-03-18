@@ -35,5 +35,4 @@
 //= require highlighter
 //= require jquery.slimscroll.min
 //= require jquery.xcolor
-//= require annotator-category
-//= require jquery.popupwindow
+//= require ekko-lightbox.min

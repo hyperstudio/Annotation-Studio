@@ -10,6 +10,9 @@ AnnotationStudio::Application.routes.draw do
   resources :documents do
     resources :annotations
   end
+
+  get 'documents/catalog', to: 'catalog#index'
+
   resources :users, only: [:show, :edit]
 
 

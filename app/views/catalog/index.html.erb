@@ -90,14 +90,22 @@
             newSearch( term, include_people, include_artwork );
         });
 
+        // any of the results we found
         $(".clickable").click(function() {
-            //alert( "Clicked row");
+            var eid = $(this).attr( "id");
+            <% if @onlyimages == true %>
+            var reference = "image#" + eid;
+            <% else %>
+            var reference = "object#" + eid;
+            <% end %>
+
+            storeDetails( reference );
+            close( );
         });
 
         $('#tag-tree').on('nodeSelected', function(event, node) {
             //alert( "Clicked tag");
         });
-
     });
 
     function newSearch( term, include_people, include_artwork ) {
@@ -108,8 +116,12 @@
         document.location.href = newURL;
     }
 
-    function getTagTree( ) {
+    function storeDetails( eid ) {
+       var div = window.opener.jQuery('div')[ 0 ];
+        window.opener.jQuery.data( div, "catalog", eid )
+    }
 
+    function getTagTree( ) {
     }
 
     function getTagRoot( ) {

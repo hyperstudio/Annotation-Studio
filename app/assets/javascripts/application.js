@@ -15,6 +15,7 @@
 //= require jquery_ujs
 //= require bootstrap
 //= require bootstrap-tagsinput
+//= require bootstrap-treeview
 //= require jasny-bootstrap
 //= require summernote
 //= require showdown

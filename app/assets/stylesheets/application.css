@@ -12,6 +12,7 @@
  *= require "bootstrap"
  *= require "font-awesome"
  *= require "bootstrap-tagsinput"
+ *= require "bootstrap-treeview"
  *= require "annotator.min"
  *= require "jasny-bootstrap"
  *= require "summernote"
@@ -21,7 +22,8 @@
  *= require "richText-annotator.css"
  *= require "annotator.touch.css"
  *= require "annotations"
-*/
+ *= require "catalog"
+ */
 
 html {
   position: relative;

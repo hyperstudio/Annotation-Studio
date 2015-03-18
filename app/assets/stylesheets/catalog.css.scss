@@ -1,0 +1,58 @@
+// Place all the styles related to the documents controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+#catalog-container {
+  width: 50%;
+
+  #new-search-panel {
+
+    #button-block {
+      padding-top: 5px;
+    }
+
+    #search-container {
+
+      #search-term {
+        margin-left: 10px;
+        width: 50%;
+        padding-right: 5px;
+      }
+
+      #search-button {
+        background-color: #006dcc;
+        color: #fff;
+      }
+    }
+  }
+
+  #browse-panel {
+    padding-top: 15px;
+  }
+
+  #results-panel {
+    padding-top: 15px;
+  }
+
+  // general helper classes
+  .indent {
+    margin-left: 20px;
+  }
+
+  .left {
+    float: left;
+  }
+
+  .right {
+    float: right;
+  }
+
+  .block {
+    display: inline-block;
+  }
+
+  .bottom-border {
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ccc;
+  }
+}

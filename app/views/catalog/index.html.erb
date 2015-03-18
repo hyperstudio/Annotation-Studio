@@ -4,60 +4,73 @@
   <meta charset="utf-8">
   <meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
   <meta HTTP-EQUIV="Expires" CONTENT="-1">
+
+  <%= csrf_meta_tags %>
+  <%= stylesheet_link_tag "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
 </head>
 <body>
 
-<div id="main-search-container">
+<div id="catalog-container">
 
-  <div id="new-search-panel" class="">
+  <div id="new-search-panel" class="indent bottom-border">
 
-    <div>Search for:<input id="search-term" value="<%= @search_term %>"></input></div>
-    <div><button id="search-button" type="button">Go</button></div>
-    <div><input type="radio" name="searchtypes" id="search-both" value="people">Both</div>
-    <div><input type="radio" name="searchtypes" id="search-people" value="people">People</div>
-    <div><input type="radio" name="searchtypes" id="search-artwork" value="artwork">Artwork</div>
+    <div id="search-container">
+       <label>Search for:</label><input id="search-term" value="<%= @search_term %>"/>
+       <button id="search-button" type="button" class="btn-default btn btn-default-primary">Go</button>
+    </div>
+    <div id="button-block">
+       <label class="radio-inline"><input type="radio" name="searchtypes" id="search-both" value="people">Both</label>
+       <label class="radio-inline"><input type="radio" name="searchtypes" id="search-people" value="people">People</label>
+       <label class="radio-inline"><input type="radio" name="searchtypes" id="search-artwork" value="artwork">Artwork</label>
+    </div>
   </div>
 
-  <div id="browse-panel" class="">
+  <div id="results-panel" class="indent">
+
+      <div id="browse-panel" class="">
+        <div id="tag-tree"></div>
+      </div>
+
+      <div id="results-panel" class="">
+
+        <label class="results-type-header">People</label>
+            <table class="table table-striped table-bordered table-hover">
+              <thead>
+              <tr><th>Name</th><th>Birth</th><th>Death</th><th>EID</th></tr>
+              </thead>
+              <% unless @search_results[:person].nil? %>
+              <tbody data-link="row" class="rowlink">
+                 <% @search_results[:person].each do | entry | %>
+                  <tr><td><a id="<%= entry['eid'] %>" class="clickable"><%= entry['name'] %></a></td><td><%= entry['birth'] %></td><td><%= entry['death'] %></td><td><%= entry['eid'] %></td></tr>
+                 <% end %>
+              </tbody>
+              <% end %>
+            </table>
+
+        <label class="results-type-header">Artworks</label>
+            <table class="table table-striped table-bordered table-hover">
+              <thead>
+                 <tr><th>Artist</th><th>Title</th><th>EID</th></tr>
+              </thead>
+              <% unless @search_results[:artwork].nil? %>
+              <tbody data-link="row" class="rowlink">
+                <% @search_results[:artwork].each do | entry | %>
+                   <tr><td><a id="<%= entry['eid'] %>" class="clickable"><%= entry['artist'] %></a></td><td><%= entry['title'] %></td><td><%= entry['eid'] %></td></tr>
+                <% end %>
+              </tbody>
+              <% end %>
+            </table>
+      </div>
+
   </div>
-
-  <div id="results-panel" class="">
-
-    <div class="results-type-header">People</div>
-    <% unless @search_results[:person].nil? %>
-        <table class="table table-striped table-bordered table-hover">
-          <thead>
-          <tr><th>Name</th><th>EID</th></tr>
-          </thead>
-          <tbody data-link="row" class="rowlink">
-             <% @search_results[:person].each do | entry | %>
-              <tr><td><a href="rowlink2" data-toggle="modal"><%= entry[:name] %></a></td><td><%= entry[:eid] %></td></tr>
-             <% end %>
-          </tbody>
-        </table>
-    <% end %>
-
-    <div class="results-type-header">Artworks</div>
-    <% unless @search_results[:artwork].nil? %>
-        <table class="table table-striped table-bordered table-hover">
-          <thead>
-             <tr><th>Artist</th><th>Title</th><th>EID</th></tr>
-          </thead>
-          <tbody data-link="row" class="rowlink">
-            <% @search_results[:artwork].each do | entry | %>
-               <tr><td><a href="rowlink2" data-toggle="modal"><%= entry[:artist] %></a></td><td><%= entry[:title] %></td><td><%= entry[:eid] %></td></tr>
-            <% end %>
-         </tbody>
-         </table>
-    <% end %>
-  </div>
-
 </div>
 
 <script type="text/javascript">
 
     $('document').ready(function( ) {
+
+        // setup correct search radio buttons
         <% if ( @search_types.include? :person ) && ( @search_types.include? :artwork ) %>
            $('#search-both').prop('checked', true);
         <% elsif @search_types.include? :person %>
@@ -66,6 +79,9 @@
            $('#search-artwork').prop('checked', true);
         <% end %>
 
+        $('#tag-tree').treeview( { data: getTagRoot( ), levels: 0 } );
+
+        // new search handler
         $("#search-button").click(function() {
             var term = $('#search-term').val( );
             var include_people = $('#search-people').prop('checked') || $('#search-both').prop('checked' );
@@ -73,7 +89,14 @@
             newSearch( term, include_people, include_artwork );
         });
 
-        $('tbody.rowlink').rowlink();
+        $(".clickable").click(function() {
+            //alert( "Clicked row");
+        });
+
+        $('#tag-tree').on('nodeSelected', function(event, node) {
+            //alert( "Clicked tag");
+        });
+
     });
 
     function newSearch( term, include_people, include_artwork ) {
@@ -82,6 +105,24 @@
         if( include_artwork ) { include = ( include ? include + "," : "" ) + "artwork"; }
         var newURL = "/documents/catalog?term=" + term + ( include ? "&types=" + include : "" );
         document.location.href = newURL;
+    }
+
+    function getTagTree( ) {
+
+    }
+
+    function getTagRoot( ) {
+       return( [ { text: "Parent 1", nodes: [
+                     { text: "Child 1.1" }
+                 ] },
+                 { text: "Parent 2", nodes: [
+                     { text: "Child 2.1" }
+                 ] },
+                 { text: "Parent 3", nodes: [
+                     { text: "Child 3.1" },
+                     { text: "Child 3.2" }
+                 ] }
+               ] );
     }
 </script>
 

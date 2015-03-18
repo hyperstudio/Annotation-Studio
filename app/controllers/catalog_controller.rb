@@ -27,6 +27,13 @@ class CatalogController < ApplicationController
     render "catalog/index", :layout => false
   end
 
-  #def show
-  #end
+  def image
+    @entry = Melcatalog.get( params[:eid] )
+    render "catalog/image", :layout => false
+  end
+
+  def reference
+    @entry = Melcatalog.get( params[:eid] )
+    render "catalog/reference", :layout => false
+  end
 end

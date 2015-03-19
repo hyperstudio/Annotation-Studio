@@ -15,4 +15,12 @@ module ApplicationHelper
     end
   end
 
+  def mobile_device?
+    if session[:mobile_param]
+      session[:mobile_param] == "1"
+    else
+      request.env["HTTP_USER_AGENT"] =~ /Mobile|webOS/
+    end
+    false
+  end
 end

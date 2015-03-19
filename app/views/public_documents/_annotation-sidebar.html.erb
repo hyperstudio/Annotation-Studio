@@ -1,328 +1,58 @@
-  <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.3/underscore-min.js"></script>
-  <script src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/0.9.2/backbone-min.js"></script>
-  <script src="http://cdnjs.cloudflare.com/ajax/libs/mustache.js/0.4.2/mustache.min.js"></script>
-  <div id="annotation-well" class="affix">
-    <ul id="annotation-list"></ul>
-    <script type="text/template" id="comment-template">
-      <span id="sb{{uuid}}" href="#full{{uuid}}" data-highlight="#hl{{uuid}}" rel="tooltip" title="{{username}}" class="highlightlink comment">{{{text}}}</span>
-      <span id="quote{{uuid}}" class="sbquote details">&quot;{{{quote}}}&quot;</span>
-      <span id="text{{uuid}}" class="sbtext details">{{{text}}}</span>
-      <span id="info{{uuid}}" class="sbinfo details">{{username}}</span>
-      <div id="tags{{uuid}}" class="sbtags details">{{#tags}}<span class="label label-default">{{.}}</span> {{/tags}}</div>
-    </script>
-    <script type="text/template" id="highlight-template">
-      <span id="sb{{uuid}}" data-highlight="#hl{{uuid}}" rel="tooltip" title="{{username}}" class="highlightlink highlight sbquote">&quot;{{{quote}}}&quot;</span>
-      <span id="quote{{uuid}}" class="sbquote details">&quot;{{{quote}}}&quot;</span>
-      <div id="tags{{uuid}}" class="sbtags details">{{#tags}}<span class="label label-default">{{.}}</span> {{/tags}}</div>
-    </script>
-  </div><!--/well -->
+<%= render :partial => "shared/annotator_base" %>
 
-<%= javascript_include_tag "sidebar" %>
 <script type="text/javascript" charset="utf-8">
-jQuery(function ($) {
+var groups = [];
+var subgroups = [];
+var annotatorOptions = {'readOnly': 'true'};
+var modeFilter_user = "<%= @document.user.email %>";
+var token = '';
+var annotation_username = "<%= @document.user.first_name_last_initial %>";
+var sidebar_sort_editable = false;
+var mobile_device = <%= mobile_device? -%>;
 
-  var groups = [];
-  var subgroups = [];
-  var annotatorOptions = {'readOnly': 'true'};
-
-  // Bootstrap Backbone Sidebar //
-  var sidebar = new Sidebar.App();
-  window.sidebar = sidebar
-  Backbone.history.start({pushState: true, root: window.location});
-
-  var plugin_options = {
-    Filter: false,
-    Auth: {
-      token: '<%= session["guest_jwt"] %>'
-    },
-    Store: {
-        prefix: '<%= ENV["API_URL"] %>',
-        annotationData: {
-            'uri': [location.protocol, '//', location.host, location.pathname].join(''),
-        },
-        loadFromSearch: {
-            'limit': 100,
-            'user': "<%= @document.user.email %>",
-            'mode': 'user', // default mode -- user can switch via sidebar button.
-            'context': 'public',
-            'uri': [location.protocol, '//', location.host, location.pathname].join('')
-        }
-    },
-    Markdown: false, // use RichText instead
-    AnnotateItPermissions: false, // this is built into the kitchen sink, so cancel it
-    Permissions: {
-      user: "<%= @document.user.email %>",
-      permissions: {
-            'read': [], // default: review mode; this is what users will need to control
-            'update': ['<%= @document.user.email %>'], // no one else can ever update
-            'delete': ['<%= @document.user.email %>'], // no one else can ever delete
-            'admin': ['<%= @document.user.email %>'] // no one else can ever admin
-      },
-      userString: function (user) {
-        return user.split("@")[0]
-      },
-      // Permissions settings per-annotation
-      showViewPermissionsCheckbox: false,
-      showEditPermissionsCheckbox: false
-    }
-  };
-  <% if ENV["ANNOTATOR_CATEGORIES"] == 'true' -%>
-  plugin_options.Categories = <%= raw AnnotationCategory.to_plugin_init %>;
-  <% end -%>
-
-  var studio = $('#textcontent').annotator(annotatorOptions).annotator('setupPlugins', {}, plugin_options);
-
-  var optionsRichText = {
-    editor_enabled: '<%= ENV["ANNOTATOR_RICHTEXT"] %>',
-    tinymce: {
-      'toolbar': '<%= ENV["ANNOTATOR_RICHTEXT_CONFIG"] %>'
-    }
-  };
-
-  studio.annotator("addPlugin", "Touch");
-  var subscriber = $('#textcontent').annotator().data('annotator');
-
-  <% if !mobile_device? %>
-  studio.annotator('addPlugin', 'RichText', optionsRichText);
-  <% end %>
-
-  // these three click and tap handlers manage the rich text editor show and hide on mobile and desktop
-  $('.annotator-button').on('tap', function(){
-    console.log('button tapped');
-    $('.annotator-item').removeClass('hide');
-  });
-
-  $('.annotator-adder').on('click', function(){
-    $('.annotator-item').removeClass('hide');
-  });
-
-  $('.annotator-edit').on('tap', function(){
-    $('.annotator-item').removeClass('hide');
-  });
-
-  // Create a UUID for a given annotation if needed.
-  // Once created, this shouldn't be changed.
-  var createUuid = function(annotation) {
-    if (annotation.uuid == null) {
-      annotation.uuid = Math.uuid(8, 16);
-      console.info("New uuid for annotation: '"+annotation.quote+"': "+ annotation.uuid);
-    }
-    else {
-      console.info("Existing uuid for annotation: '"+annotation.quote+"': "+ annotation.uuid);
-    }
-  };
-
-  // Create username for a given annotation if needed.
-  var addUserName = function(annotation) {
-    if (annotation.username == null) {
-      annotation.username = "<%= @document.user.first_name_last_initial %>";
-      console.info("New username for annotation: <%= @document.user.first_name_last_initial %>");
-    }
-  };
-
-  // Add UUIDs to highlights so sidebar and highlights can link to one another.
-  var addUuid;
-  var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
-  addUuid = __bind(function(a) {
-    if (a.highlights[0] != null) {
-      a.highlights[0].id = "hl"+ a.uuid;
-      a.highlights[0].title = a.user;
-    }
-    else {
-      console.info("Err...");
-    }
-  }, this);
-
-  var stopSpinner = function(){
-    $('#spinnermodal').modal('hide');
-  };
-
-  var createAndAddUuid = function(annotation){
-    createUuid(annotation);
-    addUuid(annotation);
-  };
-
-  // Update the sidebar with local annotation data
-  var loadSidebar = function(annotation) {
-    setTimeout(function() {
-        sidebar.listAnnotations(subscriber.dumpAnnotations());
-    }, 100);
-  };
-
-  // Remove all comment icons and load sidebar with local data
-  var deleteFromSidebar = function(annotation) {
-    $(".glyphicon-comment").remove();
-    setTimeout(function() {
-        sidebar.listAnnotations(subscriber.dumpAnnotations());
-    }, 100);
-  };
-
-  var showAnnId =  function(annotation) {
-    var newAnn = new Sidebar.Annotation(annotation);
-    console.info(newAnn.get("uuid"));
-  };
-
-  $('#userview').on('click', { mode: 'user', id: 'userview' }, modeFilter);
-  $('#groupview').on('click', { mode: 'group', id: 'groupview' }, modeFilter);
-  $('#classview').on('click', { mode: 'class', id: 'classview' }, modeFilter);
-  <% if @document.user.has_role?(:admin) %>
-    $('#adminview').on('click', { mode: 'admin', id: 'adminview' }, modeFilter);
-  <% end %>
-
-  $.each($('#category-chooser button'), function(i, j) {
-    $(j).on('click', { mode: 'category' }, categoryFilter);
-  });
-
-  function categoryFilter(event) {
-    $(event.currentTarget).toggleClass('active');
-    modeFilter(event);
-  }
-
-  $('#textpositionsort').on('click', {}, sortUpdate);
-  $('#customsort').on('click', {}, sortUpdate);
-
-  function sortUpdate(event) {
-    // TODO: Shouldn't bootstrap handle this without code?
-    $('.sortchoice').removeClass("active");
-    $(this).addClass('active');
-
-    // TODO: Is there a better way to rerender annotations?
-    sidebar.listAnnotations(subscriber.dumpAnnotations());
-  };
-
-  function modeFilter(event) {
-    $('.viewchoice').removeClass("active");
-
-    $('#spinnermodal').modal('show');
-
-    var annotation_categories = [];
-    $.each($('#category-chooser button.active'), function(i, j) {
-      annotation_categories.push($(j).data('annotation_category_id'));
-    });
-
-    var loadOptions = {
-      'limit': 1000,
-      "groups": groups,
-      "subgroups": subgroups,
-      'user': "<%= @document.user.email %>",
-      'mode': event.data.mode,
-      'context': 'document',
+var plugin_options = {
+  Filter: false,
+  Auth: {
+    token: '<%= session["guest_jwt"] %>'
+  },
+  Store: {
+    prefix: '<%= ENV["API_URL"] %>',
+    annotationData: {
       'uri': [location.protocol, '//', location.host, location.pathname].join(''),
-      'annotation_categories': annotation_categories
-    };
-
-    var reload_data = reloadAnnotations(loadOptions);
-    var cleanup_document = cleanupDocument();
-
-    $.when(reload_data).then(cleanup_document).done(refreshAnnotations(), loadSidebar());
+    },
+    loadFromSearch: {
+      'limit': 100,
+      'user': "<%= @document.user.email %>",
+      'mode': 'user', // default mode -- user can switch via sidebar button.
+      'context': 'public',
+      'uri': [location.protocol, '//', location.host, location.pathname].join('')
+    }
+  },
+  Markdown: false, // use RichText instead
+  AnnotateItPermissions: false, // this is built into the kitchen sink, so cancel it
+  Permissions: {
+    user: "<%= @document.user.email %>",
+    permissions: {
+      'read': [], // default: review mode; this is what users will need to control
+      'update': ['<%= @document.user.email %>'], // no one else can ever update
+      'delete': ['<%= @document.user.email %>'], // no one else can ever delete
+      'admin': ['<%= @document.user.email %>'] // no one else can ever admin
+    },
+    userString: function (user) {
+      return user.split("@")[0]
+    },
+    // Permissions settings per-annotation
+    showViewPermissionsCheckbox: false,
+    showEditPermissionsCheckbox: false
   }
+};
+<% if ENV["ANNOTATOR_CATEGORIES"] == 'true' -%>
+plugin_options.Categories = <%= raw AnnotationCategory.to_plugin_init %>;
+<% end -%>
 
-  function reloadAnnotations(loadOptions) {
-    var dfd = new $.Deferred();
-    subscriber.plugins.Store.annotations = [];
-    if (subscriber.plugins.Store.loadAnnotationsFromSearch(loadOptions)) {
-      setTimeout(function() {
-        dfd.resolve("Reload complete.");
-      }, 100);
-      console.log("Reload complete.");
-    }
-    else {
-      console.log("Reload failed.");
-      dfd.reject("Reload failed.");
-    }
-    return dfd.promise();
-  }
-
-  function cleanupDocument () {
-    var dfd = new $.Deferred();
-    if (removeHilites()) {
-      console.log("Cleanup complete.");
-      dfd.resolve("Cleanup complete.");
-    }
-    else {
-      console.log("Cleanup failed.");
-      dfd.reject("Cleanup failed.");
-    }
-    return dfd.promise();
-  }
-
-  function removeHilites() {
-    $(".glyphicon-comment").remove();
-    var hilites = $('.annotator-hl');
-    if (hilites.length > 0) {
-      hilites.children().unwrap();
-      hilites.contents().unwrap();
-    }
-    return true;
-   }
-
-  function refreshAnnotations() {
-    subscriber.loadAnnotations(subscriber.plugins.Store.annotations);
-    $('#spinnermodal').modal('hide');
-  }
-
-  var handleHash = function(annotation) {
-    var hash = window.location.hash
-    if (hash.length > 0){
-      console.info(hash);
-      setTimeout(function(){
-        $('html,body').animate({scrollTop: $(hash).offset().top - 150}, 500);
-      },1000);
-    }
-  };
-
-  var domIndex = function(editor, annotation) {
-    var node = $(".annotator-hl-temporary");
-    var parent = node.parent()[0];
-    var domindex = $( "#textcontent" ).find( "*" ).index(parent)
-    // console.log(domindex);
-    annotation.domindex = domindex;
-  };
-
-  // When the annotator loads remote data, update sidebar
-  subscriber.subscribe('annotationsLoaded', loadSidebar);
-  subscriber.subscribe('annotationsLoaded', stopSpinner);
-  subscriber.subscribe('annotationsLoaded', handleHash);
-  subscriber.subscribe('annotationEditorShown', domIndex);
-
-  // Update all highlights with UUIDs
-  subscriber.subscribe('annotationsLoaded', __bind(function(annotations) {
-    annotations.map(addUuid); // copies the UUID value from the object field to the highlight spans attribute value.
-  }, this));
-
-  // Add the UUID to the local annotation object and to the highlight span before saving
-  subscriber.subscribe('beforeAnnotationCreated', createUuid); // creates, if need be, and adds, both to object, and to highlight.
-  subscriber.subscribe('beforeAnnotationCreated', addUserName); // creates, if need be, and adds, both to object, and to highlight.
-
-
-  // Once the local object has been created, load the sidebar from local data (already contains UUID)
-  subscriber.subscribe('annotationCreated', loadSidebar);
-  subscriber.subscribe('annotationCreated', addUuid);
-
-  // When the local object is updated (contains previously created/stored UUID), load the sidebar from local data
-  subscriber.subscribe('annotationUpdated', loadSidebar);
-  subscriber.subscribe('annotationDeleted', deleteFromSidebar);
-  $(".annotator-checkbox label").text('Allow my groups to view this annotation');
-
-
-
-  // When the user scrolls, call showAndHideAnnotations
-  sidebar.filtered = true;
-  sidebar.sort_editable = false;
-  var lazyShowAndHideAnnotations = _.debounce(
-    function() { sidebar.showAndHideAnnotations() },
-    30
-  );
-  $(window).scroll(lazyShowAndHideAnnotations);
-
-  // Toggle filtered variable
-  $('#visibleannotations').on('click', function(){
-    sidebar.filtered = true;
-    sidebar.showAndHideAnnotations();
-  });
-  $('#allannotations').on('click', function(){
-    sidebar.filtered = false;
-    sidebar.showAllAnnotations();
-  });
+jQuery(function ($) {
+  <% if @document.user.has_role?(:admin) %>
+    $('#adminview').on('click', { mode: 'admin', id: 'adminview', user: modeFilter_user }, modeFilter);
+  <% end %>
 });
 </script>

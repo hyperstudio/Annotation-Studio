@@ -59,9 +59,13 @@ Annotator.Plugin.Categories = (function(_super) {
       for (cat in _ref) {
         var category = _ref[cat];
         var button = $('<button>').attr('class', 'btn btn-default').attr('value', cat).text(category.name);
+        button.data('active-color', $.xcolor.opacity('#FFFFFF', category.hex, 0.4).getHex());
         button.click(function(e) {
-            e.preventDefault();
-            $(this).toggleClass('active');
+          e.preventDefault();
+          $(this).toggleClass('active').removeAttr('style');
+          if($(this).hasClass('active')) {
+            $(this).css('background-color', $(this).data('active-color'));
+          }
         });
         category_li.append(button);
       }
@@ -109,7 +113,8 @@ Annotator.Plugin.Categories = (function(_super) {
     $('#annotation-category-selection button').removeClass('active');
     if(annotation.annotation_categories !== undefined) {
       $.each(annotation.annotation_categories, function(i, category) {
-        $('#annotation-category-selection button[value="' + category + '"]').addClass('active');
+        var button = $('#annotation-category-selection button[value="' + category + '"]');
+        button.addClass('active').removeAttr('style').css('background-color', button.data('active-color'));
       });
     }
     return;
@@ -213,6 +218,11 @@ Annotator.Plugin.Categories = (function(_super) {
         updated[selector] = 1;
       }
     }
+    $.each(_ref, function(i, category) {
+      if(updated['annotation_category-' + i] === undefined) {
+        updated_rules += '.annotation_category-' + i + ' { background-color: ' + $.xcolor.opacity('#FFFFFF', category.hex, 0.4).getHex() + '; } ';
+      }
+    });
 
     $('style#annotator-category-styles').html(updated_rules);
 

@@ -52,7 +52,7 @@ plugin_options.Categories = <%= raw AnnotationCategory.to_plugin_init %>;
 
 jQuery(function ($) {
   <% if @document.user.has_role?(:admin) %>
-    $('#adminview').on('click', { mode: 'admin', id: 'adminview', user: modeFilter_user }, modeFilter);
+    $('#adminview').on('click', { mode: 'admin', id: 'adminview' }, modeFilter);
   <% end %>
 });
 </script>

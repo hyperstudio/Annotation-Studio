@@ -358,3 +358,8 @@ footer {
   margin-top:30px;
   margin-bottom:-20px;
 }
+
+#category-chooser button.btn-default:focus {
+  background-color: #FFF;
+  outline: none;
+}

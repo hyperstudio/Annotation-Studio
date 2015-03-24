@@ -88,7 +88,10 @@ var annotation_studio = {
     $('#spinnermodal').modal('hide');
   },
   categoryFilter: function(event) { 
-    $(event.currentTarget).toggleClass('active');
+    $(event.currentTarget).toggleClass('active').removeAttr('style');
+    if($(event.currentTarget).hasClass('active')) {
+      $(event.currentTarget).css('background-color', $(event.currentTarget).data('active-color'));
+    }
     annotation_studio.modeFilter(event);
   },
   sortUpdate: function(event) {
@@ -236,12 +239,13 @@ jQuery(function($) {
     $('.annotator-item').removeClass('hide');
   });
 
-  $('#userview').on('click', { mode: 'user', id: 'userview', user: modeFilter_user }, annotation_studio.modeFilter);
-  $('#groupview').on('click', { mode: 'group', id: 'groupview', user: modeFilter_user }, annotation_studio.modeFilter);
-  $('#classview').on('click', { mode: 'class', id: 'classview', user: modeFilter_user }, annotation_studio.modeFilter)
+  $('#userview').on('click', { mode: 'user', id: 'userview' }, annotation_studio.modeFilter);
+  $('#groupview').on('click', { mode: 'group', id: 'groupview' }, annotation_studio.modeFilter);
+  $('#classview').on('click', { mode: 'class', id: 'classview' }, annotation_studio.modeFilter)
 
   $.each($('#category-chooser button'), function(i, j) {
-    $(j).on('click', { mode: 'category', user: modeFilter_user }, annotation_studio.categoryFilter);
+    $(j).data('active-color', $.xcolor.opacity('#FFFFFF', $(j).data('hex'), 0.4).getHex());
+    $(j).on('click', { mode: 'category' }, annotation_studio.categoryFilter);
   });
   $('#textpositionsort').on('click', {}, annotation_studio.sortUpdate);
   $('#customsort').on('click', {}, annotation_studio.sortUpdate);

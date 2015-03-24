@@ -23,7 +23,7 @@
 <p><strong>How</strong> they are categorized:</p>
 <div class="btn-toolbar" id="category-chooser">
   <% AnnotationCategory.find_each do |annotation_category| -%>
-  <button type="button" class="btn btn-default btn-sm" data-annotation_category_id="<%= annotation_category.id %>"><%= annotation_category.name %></button> 
+  <button type="button" class="btn btn-default btn-sm" data-annotation_category_id="<%= annotation_category.id %>" data-hex="<%= annotation_category.hex %>"><%= annotation_category.name %></button>
   <% end -%>
 </div><!-- /input-group -->
 <% end -%>

@@ -12,8 +12,8 @@
 </div>
 <p><strong>Where</strong> they occur:</p>
 <div class="btn-group btn-group-sm" data-toggle="buttons-radio" id="filter-chooser">
-  <button type="button" class="viewchoice btn btn-default btn-default-small active" id="visibleannotations">Visible portion</button>
-  <button type="button" class="viewchoice btn btn-default btn-default-small" id="allannotations">Whole document</button>
+  <button type="button" class="btn btn-default btn-default-small active" id="visibleannotations">Visible portion</button>
+  <button type="button" class="btn btn-default btn-default-small" id="allannotations">Whole document</button>
 </div>
 <p><strong>How</strong> they are tagged:</p>
 <div class="input-group" id="tag-chooser">
@@ -23,7 +23,7 @@
 <p><strong>How</strong> they are categorized:</p>
 <div class="btn-toolbar" id="category-chooser">
   <% AnnotationCategory.find_each do |annotation_category| -%>
-  <button type="button" class="btn btn-default btn-sm" data-annotation_category_id="<%= annotation_category.id %>" data-hex="<%= annotation_category.hex %>"><%= annotation_category.name %></button>
+  <button id="annotation_category_<%= annotation_category.id %>" type="button" class="btn btn-default btn-sm" data-annotation_category_id="<%= annotation_category.id %>" data-hex="<%= annotation_category.hex %>"><%= annotation_category.name %></button>
   <% end -%>
 </div><!-- /input-group -->
 <% end -%>
@@ -36,3 +36,7 @@
 </div><!-- /input-group -->
 <% end %>
 <% end %>
+<% if current_user.has_document_permissions?(@document) %>
+<h4>Default State</h4>
+<a id="default_state" class="btn btn-default" href="#" role="button">Save Current Settings</a>
+<% end -%>

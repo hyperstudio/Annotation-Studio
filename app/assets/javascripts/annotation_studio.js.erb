@@ -6,9 +6,8 @@ var annotation_studio = {
     sidebar.token = token;
     window.sidebar = sidebar
     Backbone.history.start({pushState: true, root: window.location});
-  
-    var studio = $('#textcontent').annotator(annotatorOptions).annotator('setupPlugins', {}, plugin_options);
-  
+
+    var studio = $('#textcontent').annotator(annotatorOptions).annotator('setupPlugins', {}, plugin_options());
     var optionsRichText = {
       editor_enabled: '<%= ENV["ANNOTATOR_RICHTEXT"] %>',
       tinymce: {
@@ -31,7 +30,7 @@ var annotation_studio = {
     subscriber.subscribe('annotationsLoaded', annotation_studio.stopSpinner);
     subscriber.subscribe('annotationsLoaded', annotation_studio.handleHash);
     subscriber.subscribe('annotationEditorShown', annotation_studio.parentIndex);
-  
+
     // Update all highlights with UUIDs
     subscriber.subscribe('annotationsLoaded', __bind(function(annotations) {
       annotations.map(addUuid); // copies the UUID value from the object field to the highlight spans attribute value.
@@ -55,46 +54,57 @@ var annotation_studio = {
     sidebar.sort_editable = sidebar_sort_editable;
     sidebar.subscriber = subscriber;
   },
-  modeFilter: function(event) {
-    $('.viewchoice').removeClass("active");
-
-    $('#spinnermodal').modal('show');
-
+  loadOptions: function(overrides) {
     var annotation_categories = [];
     $.each($('#category-chooser button.active'), function(i, j) {
       annotation_categories.push($(j).data('annotation_category_id'));
     });
 
-    var loadOptions = {
+    var settings = {
       'limit': 1000,
       "groups": groups,
       "subgroups": subgroups,
-      'user': event.data.user,
-      'mode': event.data.mode,
-      'context': 'document',
+      'user': filter_user,
+      'mode': annotation_studio.getMode(), //default
+      'context': search_context,
       'uri': [location.protocol, '//', location.host, location.pathname].join(''),
       'annotation_categories': annotation_categories
     };
 
     if($('#tagsearchbox').length && $('#tagsearchbox').val() != '') {
-      loadOptions.tags = $('#tagsearchbox').val();
+      settings.tags = $('#tagsearchbox').val();
     }
- 
-    var reload_data = annotation_studio.reloadAnnotations(loadOptions);
-    var cleanup_document = annotation_studio.cleanupDocument();
- 
-    $.when(reload_data).then(cleanup_document).done(annotation_studio.refreshAnnotations(), annotation_studio.loadSidebar());
+
+    $.each(overrides, function(i, j) {
+      settings[i] = j;
+    });
+
+    return settings;
   },
   refreshAnnotations: function() {
     subscriber.loadAnnotations(subscriber.plugins.Store.annotations);
     $('#spinnermodal').modal('hide');
+  },
+  filterAnnotations: function(event) {
+    $('#spinnermodal').modal('show');
+    var reload_data = annotation_studio.reloadAnnotations(annotation_studio.loadOptions({ mode: event.data.mode }));
+    var cleanup_document = annotation_studio.cleanupDocument();
+    $.when(reload_data).then(cleanup_document).done(annotation_studio.refreshAnnotations(), annotation_studio.loadSidebar());
+  },
+  modeFilter: function(event) {
+    $('.viewchoice').removeClass("active");
+    annotation_studio.filterAnnotations(event);
+  },
+  tagFilter: function(event) {
+    $('*[data-role="remove"]').hide();
+    annotation_studio.filterAnnotations(event);
   },
   categoryFilter: function(event) { 
     $(event.currentTarget).toggleClass('active').removeAttr('style');
     if($(event.currentTarget).hasClass('active')) {
       $(event.currentTarget).css('background-color', $(event.currentTarget).data('active-color'));
     }
-    annotation_studio.modeFilter(event);
+    annotation_studio.filterAnnotations(event);
   },
   sortUpdate: function(event) {
     // TODO: Shouldn't bootstrap handle this without code?
@@ -176,24 +186,6 @@ var annotation_studio = {
     }
     return dfd.promise();
   },
-  tagFilter: function(event) {
-    console.log(event);
-    var tags = $('#tagsearchbox').val();
-    var loadOptions = {
-      'limit': 1000,
-      "groups": groups,
-      "subgroups": subgroups,
-      'user': modeFilter_user,
-      'mode': annotation_studio.getMode(),
-      'context': 'document',
-      'uri': [location.protocol, '//', location.host, location.pathname].join(''),
-      'tags': tags
-    };
-    var reload_data = annotation_studio.reloadAnnotations(loadOptions);
-    var cleanup_document = annotation_studio.cleanupDocument();
-    $.when(reload_data).then(cleanup_document).done(annotation_studio.refreshAnnotations(), annotation_studio.loadSidebar());
-    $('*[data-role="remove"]').hide();
-  },
   getMode: function() {
     var activeElems = $('.viewchoice.active')
     for (var i=0; i<activeElems.length; i++) {
@@ -221,10 +213,46 @@ var annotation_studio = {
     else {
       console.log("Existing parentIndex: " + annotation.parentIndex + "; not adding a new one.");
     }
+  },
+  set_document_state: function(state) {
+    $.each(state, function(i, button_id) {
+      var button = $('#' + button_id);
+      if(button.length > 0 && !button.hasClass('active')) {
+        if(button.parent().hasClass('btn-group')) {
+          button.siblings().removeClass('active');
+        }
+        button.addClass('active');
+        if(button.attr('id').match(/^annotation_category/)) {
+          button.css('background-color', $.xcolor.opacity('#FFFFFF', button.data('hex'), 0.4).getHex());
+        }
+      }
+    });
+  },
+  retrieve_document_state: function() {
+    var active_buttons = [];
+    $.each($('#toolsmenu button.active'), function(i, button) {
+      active_buttons.push($(button).attr('id'));
+    });
+    return active_buttons;
+  },
+  initialize_default_state_behavior: function() {
+    annotation_studio.set_document_state(default_state);
+
+    $('#default_state').on('click', function() {
+      var current_state = annotation_studio.retrieve_document_state();
+      $.ajax({
+        url: '/documents/' + document_id + '/set_default_state',
+        type: 'POST',
+        data: { default_state: JSON.stringify(current_state) }
+      }).done(function() {
+        $('#default_state').removeClass('active');
+      });
+    });
   }
 };
 
 jQuery(function($) {
+  annotation_studio.initialize_default_state_behavior();
   annotation_studio.initialize_annotator();
 
   // these three click and tap handlers manage the rich text editor show and hide on mobile and desktop
@@ -245,29 +273,37 @@ jQuery(function($) {
   $('#groupview').on('click', { mode: 'group', id: 'groupview' }, annotation_studio.modeFilter);
   $('#classview').on('click', { mode: 'class', id: 'classview' }, annotation_studio.modeFilter)
 
+  $('#tagsearchbox').tagsinput()
+  $('#tagsearchbox').on('itemAdded', annotation_studio.tagFilter);
+  $('#tagsearchbox').on('itemRemoved', annotation_studio.tagFilter);
+
+  $(window).scroll(lazyShowAndHideAnnotations);
+
+  // Toggle filtered variable
+  $('#visibleannotations').on('click', function(){
+    if($(this).hasClass('active')) {
+      return;
+    }
+    $('#allannotations').removeClass('active');
+    sidebar.filtered = true;
+    sidebar.showAndHideAnnotations();
+  });
+  $('#allannotations').on('click', function(){
+    if($(this).hasClass('active')) {
+      return;
+    }
+    $('#visibleannotations').removeClass('active');
+    sidebar.filtered = false;
+    sidebar.showAllAnnotations();
+  });
+
   $.each($('#category-chooser button'), function(i, j) {
     $(j).data('active-color', $.xcolor.opacity('#FFFFFF', $(j).data('hex'), 0.4).getHex());
     $(j).on('click', { mode: 'category' }, annotation_studio.categoryFilter);
   });
   $('#textpositionsort').on('click', {}, annotation_studio.sortUpdate);
   $('#customsort').on('click', {}, annotation_studio.sortUpdate);
-
-  $('#tagsearchbox').tagsinput()
-  $('#tagsearchbox').on('itemAdded', annotation_studio.tagFilter);
-  $('#tagsearchbox').on('itemRemoved', annotation_studio.tagFilter);
-
-  $(window).scroll(lazyShowAndHideAnnotations);
-  // Toggle filtered variable
-  $('#visibleannotations').on('click', function(){
-    sidebar.filtered = true;
-    sidebar.showAndHideAnnotations();
-  });
-  $('#allannotations').on('click', function(){
-    sidebar.filtered = false;
-    sidebar.showAllAnnotations();
-  });
 });
-
 
 var lazyShowAndHideAnnotations = _.debounce(
   function() { sidebar.showAndHideAnnotations() },

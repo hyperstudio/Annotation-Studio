@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150219165541) do
+ActiveRecord::Schema.define(:version => 20150324173818) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -99,6 +99,7 @@ ActiveRecord::Schema.define(:version => 20150219165541) do
     t.datetime "upload_updated_at"
     t.datetime "processed_at"
     t.string   "survey_link"
+    t.text     "default_state"
   end
 
   add_index "documents", ["slug"], :name => "index_documents_on_slug", :unique => true

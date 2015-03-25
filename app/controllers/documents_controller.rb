@@ -105,6 +105,16 @@ class DocumentsController < ApplicationController
     end
   end
 
+  #JSON for saving state
+  def set_default_state
+    @document = Document.find(params[:document_id])
+    @document.update_attribute(:default_state, params[:default_state])
+
+    render :json => {}
+  rescue Exception => e
+    render :json => {}
+  end
+
   # Helper which accepts an array of items and filters out those you are not allowed to read, according to CanCan abilities.
   # From Miximize.
   def filter_by_can_read(items)

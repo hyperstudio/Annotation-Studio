@@ -36,7 +36,7 @@ class User < ActiveRecord::Base
      "#{firstname.first}. #{lastname}"
   end
 
-  def has_document_permissions(document)
+  def has_document_permissions?(document)
     self.has_role?(:admin) || self == document.user
   end
 end

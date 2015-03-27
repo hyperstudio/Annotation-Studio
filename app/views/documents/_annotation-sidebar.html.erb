@@ -4,64 +4,57 @@
 
 
 <script type="text/javascript" charset="utf-8">
+var document_id = <%= @document.id %>;
+var default_state = <%= @document.default_state.present? ? (raw @document.default_state) : "''" %>;
 var groups = "<%= current_user.rep_group_list %>".split(/, /);
 var subgroups = "<%= current_user.rep_subgroup_list %>".split(/, /);
 var annotatorOptions = {'readOnly': <%= @document.deleted? %>};
-var modeFilter_user = "<%= current_user.email %>";
+var filter_user = "<%= current_user.email %>";
 var token = '<%= session["jwt"] %>';
 var annotation_username = "<%= current_user.first_name_last_initial %>";
-var sidebar_sort_editable = <%= current_user && current_user.has_document_permissions(@document) %>;
+var sidebar_sort_editable = <%= current_user && current_user.has_document_permissions?(@document) %>;
 var mobile_device = <%= mobile_device? -%>;
+var search_context = 'document';
 
-var plugin_options = {
-  <% unless current_user.has_role?(:admin) && ENV["ANNOTATOR_FILTER"] == 'true' %>
-  Filter: false,
-  <% end %>
-  Auth: {
-    token: '<%= session["jwt"] %>'
-  },
-  Store: {
-    prefix: '<%= ENV["API_URL"] %>',
-    annotationData: {
-      'uri': [location.protocol, '//', location.host, location.pathname].join(''),
-      "groups": groups,
-      "subgroups": subgroups
+var plugin_options = function() {
+  return {
+    <% unless current_user.has_role?(:admin) && ENV["ANNOTATOR_FILTER"] == 'true' %>
+    Filter: false,
+    <% end %>
+    Auth: {
+      token: '<%= session["jwt"] %>'
     },
-    loadFromSearch: {
-      'limit': 100,
-      "groups": groups,
-      "subgroups": subgroups,
-      'user': "<%= current_user.email %>",
-      'mode': 'user', // default mode -- user can switch via sidebar button.
-      'context': 'document',
-      'uri': [location.protocol, '//', location.host, location.pathname].join('')
+    Store: {
+      prefix: '<%= ENV["API_URL"] %>',
+      annotationData: {
+        'uri': [location.protocol, '//', location.host, location.pathname].join(''),
+        "groups": groups,
+        "subgroups": subgroups
+      },
+      loadFromSearch: annotation_studio.loadOptions({ mode: 'user', limit: 100 })
+    },
+    Markdown: false, // use RichText instead
+    AnnotateItPermissions: false, // this is built into the kitchen sink, so cancel it
+    Permissions: {
+      user: "<%= current_user.email %>",
+      permissions: {
+        'read': ['<%= current_user.email %>'], // default: review mode; this is what users will need to control
+        'update': ['<%= current_user.email %>'], // no one else can ever update
+        'delete': ['<%= current_user.email %>'], // no one else can ever delete
+        'admin': ['<%= current_user.email %>'] // no one else can ever admin
+      },
+      userString: function (user) {
+        return user.split("@")[0]
+      },
+      // Permissions settings per-annotation
+      showViewPermissionsCheckbox: true,
+      showEditPermissionsCheckbox: false
     }
-  },
-  Markdown: false, // use RichText instead
-  AnnotateItPermissions: false, // this is built into the kitchen sink, so cancel it
-  Permissions: {
-    user: "<%= current_user.email %>",
-    permissions: {
-      'read': ['<%= current_user.email %>'], // default: review mode; this is what users will need to control
-      'update': ['<%= current_user.email %>'], // no one else can ever update
-      'delete': ['<%= current_user.email %>'], // no one else can ever delete
-      'admin': ['<%= current_user.email %>'] // no one else can ever admin
-    },
-    userString: function (user) {
-      return user.split("@")[0]
-    },
-    // Permissions settings per-annotation
-    showViewPermissionsCheckbox: true,
-    showEditPermissionsCheckbox: false
+    <% if ENV["ANNOTATOR_CATEGORIES"] == 'true' -%>
+    , Categories: <%= raw AnnotationCategory.to_plugin_init %>
+    <% end -%>
   }
 };
-
-// Note this evals to a string, not boolean
-<% if ENV["ANNOTATOR_CATEGORIES"] == 'true' -%>
-plugin_options.Categories = <%= raw AnnotationCategory.to_plugin_init %>;
-<% end -%>
-
-
 
 jQuery(function ($) {
   // Create username for a given annotation if needed.

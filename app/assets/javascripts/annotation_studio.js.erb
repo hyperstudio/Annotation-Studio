@@ -63,6 +63,7 @@ var annotation_studio = {
       "groups": groups,
       "subgroups": subgroups,
       'user': filter_user,
+//can this always be getMode??
       'mode': annotation_studio.getMode(), //default
       'context': search_context,
       'uri': [location.protocol, '//', location.host, location.pathname].join(''),
@@ -95,6 +96,7 @@ var annotation_studio = {
   },
   tagFilter: function(event) {
     $('*[data-role="remove"]').hide();
+    event.data = { mode: annotation_studio.getMode() };
     annotation_studio.filterAnnotations(event);
   },
   categoryFilter: function(event) { 

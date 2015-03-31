@@ -2,7 +2,7 @@
 
 <script type="text/javascript" charset="utf-8">
 var document_id = <%= @document.id %>;
-var default_state = '<%= @document.default_state || '' %>';
+var default_state = <%= @document.default_state.present? ? (raw @document.default_state) : (raw "''") %>;
 var groups = [];
 var subgroups = [];
 var annotatorOptions = {'readOnly': 'true'};

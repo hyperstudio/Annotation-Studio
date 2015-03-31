@@ -56,7 +56,7 @@ var plugin_options = function() {
 jQuery(function ($) {
   // Create username for a given annotation if needed.
   <% if current_user.has_role?(:admin) %>
-    $('#adminview').on('click', { mode: 'admin', id: 'adminview' }, modeFilter);
+    $('#adminview').on('click', { mode: 'admin', id: 'adminview' }, annotation_studio.modeFilter);
   <% end %>
 });
 </script>

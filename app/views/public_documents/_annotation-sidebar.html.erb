@@ -51,7 +51,7 @@ var plugin_options = function() {
 
 jQuery(function ($) {
   <% if @document.user.has_role?(:admin) %>
-    $('#adminview').on('click', { mode: 'admin', id: 'adminview' }, modeFilter);
+    $('#adminview').on('click', { mode: 'admin', id: 'adminview' }, annotation_studio.modeFilter);
   <% end %>
 });
 </script>

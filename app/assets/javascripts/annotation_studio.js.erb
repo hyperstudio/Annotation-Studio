@@ -65,8 +65,7 @@ var annotation_studio = {
       "groups": groups,
       "subgroups": subgroups,
       'user': filter_user,
-//can this always be getMode??
-      'mode': annotation_studio.getMode(), //default
+      'mode': annotation_studio.getMode(),
       'context': search_context,
       'uri': [location.protocol, '//', location.host, location.pathname].join(''),
       'annotation_categories': annotation_categories
@@ -88,7 +87,7 @@ var annotation_studio = {
   },
   filterAnnotations: function(event) {
     $('#spinnermodal').modal('show');
-    var reload_data = annotation_studio.reloadAnnotations(annotation_studio.loadOptions({ mode: event.data.mode }));
+    var reload_data = annotation_studio.reloadAnnotations(annotation_studio.loadOptions({}));
     var cleanup_document = annotation_studio.cleanupDocument();
     $.when(reload_data).then(cleanup_document).done(annotation_studio.refreshAnnotations(), annotation_studio.loadSidebar());
   },
@@ -98,7 +97,6 @@ var annotation_studio = {
   },
   tagFilter: function(event) {
     $('*[data-role="remove"]').hide();
-    event.data = { mode: annotation_studio.getMode() };
     annotation_studio.filterAnnotations(event);
   },
   categoryFilter: function(event) { 
@@ -271,9 +269,9 @@ jQuery(function($) {
     $('.annotator-item').removeClass('hide');
   });
 
-  $('#userview').on('click', { mode: 'user', id: 'userview' }, annotation_studio.modeFilter);
-  $('#groupview').on('click', { mode: 'group', id: 'groupview' }, annotation_studio.modeFilter);
-  $('#classview').on('click', { mode: 'class', id: 'classview' }, annotation_studio.modeFilter)
+  $('#userview').on('click', { id: 'userview' }, annotation_studio.modeFilter);
+  $('#groupview').on('click', { id: 'groupview' }, annotation_studio.modeFilter);
+  $('#classview').on('click', { id: 'classview' }, annotation_studio.modeFilter)
 
   $('#tagsearchbox').tagsinput()
   $('#tagsearchbox').on('itemAdded', annotation_studio.tagFilter);
@@ -301,7 +299,7 @@ jQuery(function($) {
 
   $.each($('#category-chooser button'), function(i, j) {
     $(j).data('active-color', $.xcolor.opacity('#FFFFFF', $(j).data('hex'), 0.4).getHex());
-    $(j).on('click', { mode: 'category' }, annotation_studio.categoryFilter);
+    $(j).on('click', annotation_studio.categoryFilter);
   });
   $('#textpositionsort').on('click', {}, annotation_studio.sortUpdate);
   $('#customsort').on('click', {}, annotation_studio.sortUpdate);

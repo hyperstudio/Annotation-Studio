@@ -11,7 +11,7 @@ var annotation_studio = {
     var optionsRichText = {
       editor_enabled: '<%= ENV["ANNOTATOR_RICHTEXT"] %>',
       tinymce: {
-        'toolbar': '<%= if ENV["CATALOG_ENABLED"] === 'true' ? ENV["ANNOTATOR_RICHTEXT_WITH_CATALOG"] : ENV["ANNOTATOR_RICHTEXT_CONFIG"] %>',
+        'toolbar': '<%= ENV["CATALOG_ENABLED"] === "true" ? ENV["ANNOTATOR_RICHTEXT_WITH_CATALOG"] : ENV["ANNOTATOR_RICHTEXT_CONFIG"] %>',
         'image_dimensions': false
       }
     };

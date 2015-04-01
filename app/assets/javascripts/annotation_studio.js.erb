@@ -15,16 +15,18 @@ var annotation_studio = {
         'image_dimensions': false
       }
     };
-   
-    studio.annotator("addPlugin", "Touch");
+
     studio.annotator("addPlugin", "MelCatalogue");
 
     subscriber = $('#textcontent').annotator().data('annotator');
-   
+
     if(mobile_device) {
+      studio.annotator("addPlugin", "Touch");
+    }
+    else {
       studio.annotator('addPlugin', 'RichText', optionsRichText);
     }
-  
+
     // When the annotator loads remote data, update sidebar
     subscriber.subscribe('annotationsLoaded', annotation_studio.loadSidebar);
     subscriber.subscribe('annotationsLoaded', annotation_studio.stopSpinner);
@@ -35,20 +37,20 @@ var annotation_studio = {
     subscriber.subscribe('annotationsLoaded', __bind(function(annotations) {
       annotations.map(addUuid); // copies the UUID value from the object field to the highlight spans attribute value.
     }, this));
-  
+
     // Add the UUID to the local annotation object and to the highlight span before saving
     subscriber.subscribe('beforeAnnotationCreated', annotation_studio.createUuid); // creates, if need be, and adds, both to object, and to highlight.
     subscriber.subscribe('beforeAnnotationCreated', annotation_studio.addUserName); // creates, if need be, and adds, both to object, and to highlight.
-   
+
     // Once the local object has been created, load the sidebar from local data (already contains UUID)
     subscriber.subscribe('annotationCreated', annotation_studio.loadSidebar);
     subscriber.subscribe('annotationCreated', addUuid);
-  
+
     // When the local object is updated (contains previously created/stored UUID), load the sidebar from local data
     subscriber.subscribe('annotationUpdated', annotation_studio.loadSidebar);
     subscriber.subscribe('annotationDeleted', annotation_studio.deleteFromSidebar);
     $(".annotator-checkbox label").text('Allow my groups to view this annotation');
-  
+
     // When the user scrolls, call showAndHideAnnotations
     sidebar.filtered = true;
     sidebar.sort_editable = sidebar_sort_editable;
@@ -99,7 +101,7 @@ var annotation_studio = {
     $('*[data-role="remove"]').hide();
     annotation_studio.filterAnnotations(event);
   },
-  categoryFilter: function(event) { 
+  categoryFilter: function(event) {
     $(event.currentTarget).toggleClass('active').removeAttr('style');
     if($(event.currentTarget).hasClass('active')) {
       $(event.currentTarget).css('background-color', $(event.currentTarget).data('active-color'));
@@ -130,7 +132,7 @@ var annotation_studio = {
         sidebar.listAnnotations(subscriber.dumpAnnotations());
     }, 100);
   },
-  removeHilites: function() { 
+  removeHilites: function() {
     $(".glyphicon-comment").remove();
     var hilites = $('.annotator-hl');
     if (hilites.length > 0) {
@@ -171,7 +173,7 @@ var annotation_studio = {
     }
     return dfd.promise();
   },
-  reloadAnnotations: function(loadOptions) { 
+  reloadAnnotations: function(loadOptions) {
     var dfd = new $.Deferred();
     subscriber.plugins.Store.annotations = [];
     if (subscriber.plugins.Store.loadAnnotationsFromSearch(loadOptions)) {

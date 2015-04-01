@@ -242,6 +242,8 @@ Sidebar.AnnotationListView = Backbone.View.extend({
             $('ul#annotation-list').sortable('disable').removeClass('sorting_on');
         }
     }
+
+    sidebar.showAndHideAnnotations();
   }
 });
 
@@ -260,7 +262,6 @@ Sidebar.App = Backbone.Router.extend({
       "collection": Sidebar.annotations
     });
     annotationsList.render();
-    this.showAndHideAnnotations();
     // console.info("Local: "+ Sidebar.annotations.toJSON());
   },
   // takes an object literal of options for an XHR request.
@@ -272,7 +273,6 @@ Sidebar.App = Backbone.Router.extend({
     });
     Sidebar.annotations.deferred.done(function() {
       annotationsList.render();
-      this.showAndHideAnnotations();
       // console.info("Remote: "+ Sidebar.annotations.toJSON());
     });
   },
@@ -295,7 +295,7 @@ Sidebar.App = Backbone.Router.extend({
 });
 
 function matchesFilters(elem) {
-  return (isScrolledIntoView(elem) && isTagged(elem));
+  return isScrolledIntoView(elem);
 }
 
 function isScrolledIntoView(elem) {
@@ -311,18 +311,3 @@ function isScrolledIntoView(elem) {
     return false
   }
 }
-
-function isTagged(elem, tag) {
-  if (typeof elem !== 'undefined') {
-    var docViewTop = $(window).scrollTop();
-    var docViewBottom = docViewTop + $(window).height();
-    var elemTop = $(elem).offset().top;
-    var elemBottom = elemTop + $(elem).height();
-
-    return ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
-  }
-  else {
-    return false
-  }
-}
-

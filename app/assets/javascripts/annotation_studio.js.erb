@@ -51,8 +51,7 @@ var annotation_studio = {
     subscriber.subscribe('annotationDeleted', annotation_studio.deleteFromSidebar);
     $(".annotator-checkbox label").text('Allow my groups to view this annotation');
 
-    // When the user scrolls, call showAndHideAnnotations
-    sidebar.filtered = true;
+    sidebar.filtered = $('#visibleannotations').hasClass('active');
     sidebar.sort_editable = sidebar_sort_editable;
     sidebar.subscriber = subscriber;
   },

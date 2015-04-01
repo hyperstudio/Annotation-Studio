@@ -110,7 +110,7 @@ Annotator.Plugin.Categories = (function(_super) {
   };
 
   Categories.prototype.updateField = function(field, annotation) {
-    $('#annotation-category-selection button').removeClass('active');
+    $('#annotation-category-selection button').removeClass('active').removeAttr('style');
     if(annotation.annotation_categories !== undefined) {
       $.each(annotation.annotation_categories, function(i, category) {
         var button = $('#annotation-category-selection button[value="' + category + '"]');

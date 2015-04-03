@@ -239,7 +239,8 @@ var annotation_studio = {
   initialize_default_state_behavior: function() {
     annotation_studio.set_document_state(default_state);
 
-    $('#default_state').on('click', function() {
+    $('#default_state').on('click', function(e) {
+      e.preventDefault();
       var current_state = annotation_studio.retrieve_document_state();
       $.ajax({
         url: '/documents/' + document_id + '/set_default_state',

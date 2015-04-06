@@ -2,6 +2,10 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+body {
+  padding: 100px 0 100px 0;
+}
+
 #document-text, #document-chapters {
 	textarea {
 		height: 200px;

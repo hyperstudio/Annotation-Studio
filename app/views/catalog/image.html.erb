@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <%= csrf_meta_tags %>
+  <%= stylesheet_link_tag "application", :media => "all" %>
+  <%= stylesheet_link_tag "catalog", :media => "all" %>
+</head>
+<body id="catalog" class="image">
+
+<div class="container-fluid">
+
+  <div class="row">
+    <div class="col-lg-12">
+      <form class="form-horizontal">
+
+        <div class="form-group">
+          <%= image_or_nothing( entry['images'], 'image_full' ) %>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+</div>
+
+</body>

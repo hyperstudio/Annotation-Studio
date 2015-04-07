@@ -24,6 +24,9 @@ AnnotationStudio::Application.configure do
   # Log error messages when you accidentally call methods on nil
   config.whiny_nils = true
 
+  # touching this to deal with a sidebar with an incorrect API_URL compiled in.
+  config.assets.precompile += %w( sidebar.js )
+
   # Show full error reports and disable caching
   config.consider_all_requests_local       = true
   config.action_controller.perform_caching = false

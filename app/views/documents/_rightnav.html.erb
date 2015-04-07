@@ -35,6 +35,10 @@
   <button type="button" class="sortchoice btn btn-default btn-default-small" id="customsort">Custom</button>
 </div><!-- /input-group -->
 <% end %>
+<% if current_user.has_document_permissions?(@document) %>
+<h4>Default State</h4>
+<a id="default_state" class="btn btn-default" href="#" role="button">Save Current Settings</a>
+<% end -%>
 <% end %>
 <% if @document.present? && current_user.has_document_permissions?(@document) %>
 <h4>Default State</h4>

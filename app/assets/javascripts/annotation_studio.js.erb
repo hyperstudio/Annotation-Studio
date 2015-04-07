@@ -11,18 +11,22 @@ var annotation_studio = {
     var optionsRichText = {
       editor_enabled: '<%= ENV["ANNOTATOR_RICHTEXT"] %>',
       tinymce: {
-        'toolbar': '<%= ENV["ANNOTATOR_RICHTEXT_CONFIG"] %>',
+        'toolbar': '<%= ENV["CATALOG_ENABLED"] === "true" ? ENV["ANNOTATOR_RICHTEXT_WITH_CATALOG"] : ENV["ANNOTATOR_RICHTEXT_CONFIG"] %>',
         'image_dimensions': false
       }
     };
-   
-    studio.annotator("addPlugin", "Touch");
+
+    studio.annotator("addPlugin", "MelCatalogue");
+
     subscriber = $('#textcontent').annotator().data('annotator');
-   
+
     if(mobile_device) {
+      studio.annotator("addPlugin", "Touch");
+    }
+    else {
       studio.annotator('addPlugin', 'RichText', optionsRichText);
     }
-  
+
     // When the annotator loads remote data, update sidebar
     subscriber.subscribe('annotationsLoaded', annotation_studio.loadSidebar);
     subscriber.subscribe('annotationsLoaded', annotation_studio.stopSpinner);
@@ -33,22 +37,21 @@ var annotation_studio = {
     subscriber.subscribe('annotationsLoaded', __bind(function(annotations) {
       annotations.map(addUuid); // copies the UUID value from the object field to the highlight spans attribute value.
     }, this));
-  
+
     // Add the UUID to the local annotation object and to the highlight span before saving
     subscriber.subscribe('beforeAnnotationCreated', annotation_studio.createUuid); // creates, if need be, and adds, both to object, and to highlight.
     subscriber.subscribe('beforeAnnotationCreated', annotation_studio.addUserName); // creates, if need be, and adds, both to object, and to highlight.
-   
+
     // Once the local object has been created, load the sidebar from local data (already contains UUID)
     subscriber.subscribe('annotationCreated', annotation_studio.loadSidebar);
     subscriber.subscribe('annotationCreated', addUuid);
-  
+
     // When the local object is updated (contains previously created/stored UUID), load the sidebar from local data
     subscriber.subscribe('annotationUpdated', annotation_studio.loadSidebar);
     subscriber.subscribe('annotationDeleted', annotation_studio.deleteFromSidebar);
     $(".annotator-checkbox label").text('Allow my groups to view this annotation');
-  
-    // When the user scrolls, call showAndHideAnnotations
-    sidebar.filtered = true;
+
+    sidebar.filtered = $('#visibleannotations').hasClass('active');
     sidebar.sort_editable = sidebar_sort_editable;
     sidebar.subscriber = subscriber;
   },
@@ -63,8 +66,7 @@ var annotation_studio = {
       "groups": groups,
       "subgroups": subgroups,
       'user': filter_user,
-//can this always be getMode??
-      'mode': annotation_studio.getMode(), //default
+      'mode': annotation_studio.getMode(),
       'context': search_context,
       'uri': [location.protocol, '//', location.host, location.pathname].join(''),
       'annotation_categories': annotation_categories
@@ -86,7 +88,7 @@ var annotation_studio = {
   },
   filterAnnotations: function(event) {
     $('#spinnermodal').modal('show');
-    var reload_data = annotation_studio.reloadAnnotations(annotation_studio.loadOptions({ mode: event.data.mode }));
+    var reload_data = annotation_studio.reloadAnnotations(annotation_studio.loadOptions({}));
     var cleanup_document = annotation_studio.cleanupDocument();
     $.when(reload_data).then(cleanup_document).done(annotation_studio.refreshAnnotations(), annotation_studio.loadSidebar());
   },
@@ -96,10 +98,9 @@ var annotation_studio = {
   },
   tagFilter: function(event) {
     $('*[data-role="remove"]').hide();
-    event.data = { mode: annotation_studio.getMode() };
     annotation_studio.filterAnnotations(event);
   },
-  categoryFilter: function(event) { 
+  categoryFilter: function(event) {
     $(event.currentTarget).toggleClass('active').removeAttr('style');
     if($(event.currentTarget).hasClass('active')) {
       $(event.currentTarget).css('background-color', $(event.currentTarget).data('active-color'));
@@ -130,7 +131,7 @@ var annotation_studio = {
         sidebar.listAnnotations(subscriber.dumpAnnotations());
     }, 100);
   },
-  removeHilites: function() { 
+  removeHilites: function() {
     $(".glyphicon-comment").remove();
     var hilites = $('.annotator-hl');
     if (hilites.length > 0) {
@@ -171,7 +172,7 @@ var annotation_studio = {
     }
     return dfd.promise();
   },
-  reloadAnnotations: function(loadOptions) { 
+  reloadAnnotations: function(loadOptions) {
     var dfd = new $.Deferred();
     subscriber.plugins.Store.annotations = [];
     if (subscriber.plugins.Store.loadAnnotationsFromSearch(loadOptions)) {
@@ -238,7 +239,8 @@ var annotation_studio = {
   initialize_default_state_behavior: function() {
     annotation_studio.set_document_state(default_state);
 
-    $('#default_state').on('click', function() {
+    $('#default_state').on('click', function(e) {
+      e.preventDefault();
       var current_state = annotation_studio.retrieve_document_state();
       $.ajax({
         url: '/documents/' + document_id + '/set_default_state',
@@ -269,9 +271,9 @@ jQuery(function($) {
     $('.annotator-item').removeClass('hide');
   });
 
-  $('#userview').on('click', { mode: 'user', id: 'userview' }, annotation_studio.modeFilter);
-  $('#groupview').on('click', { mode: 'group', id: 'groupview' }, annotation_studio.modeFilter);
-  $('#classview').on('click', { mode: 'class', id: 'classview' }, annotation_studio.modeFilter)
+  $('#userview').on('click', { id: 'userview' }, annotation_studio.modeFilter);
+  $('#groupview').on('click', { id: 'groupview' }, annotation_studio.modeFilter);
+  $('#classview').on('click', { id: 'classview' }, annotation_studio.modeFilter)
 
   $('#tagsearchbox').tagsinput()
   $('#tagsearchbox').on('itemAdded', annotation_studio.tagFilter);
@@ -299,7 +301,7 @@ jQuery(function($) {
 
   $.each($('#category-chooser button'), function(i, j) {
     $(j).data('active-color', $.xcolor.opacity('#FFFFFF', $(j).data('hex'), 0.4).getHex());
-    $(j).on('click', { mode: 'category' }, annotation_studio.categoryFilter);
+    $(j).on('click', annotation_studio.categoryFilter);
   });
   $('#textpositionsort').on('click', {}, annotation_studio.sortUpdate);
   $('#customsort').on('click', {}, annotation_studio.sortUpdate);

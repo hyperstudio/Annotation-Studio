@@ -1,4 +1,9 @@
 PATH
+  remote: vendor
+  specs:
+    melcatalog (1.0.0)
+
+PATH
   remote: vendor/repertoire-groups-0.0.1
   specs:
     repertoire-groups (0.0.1)
@@ -212,6 +217,7 @@ GEM
     net-scp (1.0.4)
       net-ssh (>= 1.99.1)
     net-ssh (2.9.1)
+    netrc (0.7.7)
     newrelic_rpm (3.8.1.221)
     nokogiri (1.5.11)
     oauth (0.4.7)
@@ -292,6 +298,9 @@ GEM
     require_all (1.3.2)
     responders (1.0.0)
       railties (>= 3.2, < 5)
+    rest-client (1.7.2)
+      mime-types (>= 1.16, < 3.0)
+      netrc (~> 0.7)
     rspec-core (2.14.8)
     rspec-expectations (2.14.5)
       diff-lcs (>= 1.1.3, < 2.0)
@@ -392,6 +401,7 @@ DEPENDENCIES
   jwt
   launchy
   less-rails
+  melcatalog!
   meta_request
   meta_search
   mini_magick
@@ -407,6 +417,7 @@ DEPENDENCIES
   rails_12factor
   rails_best_practices
   repertoire-groups (= 0.0.1)!
+  rest-client
   rspec-rails
   runtimeerror_notifier
   sass-rails

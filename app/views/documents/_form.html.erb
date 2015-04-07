@@ -3,6 +3,7 @@
               <h4>Content</h4>
 
               <div class="panel-group" id="accordion">
+
                 <div class="panel panel-default">
                   <div class="panel-heading">
                     <h4 class="panel-title">
@@ -23,6 +24,36 @@
                   </div>
                 </div>
                 </div>
+
+                <% unless @catalog_texts.nil? || @catalog_texts.empty? %>
+
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <h4 class="panel-title">
+                      <a data-toggle="collapse" data-parent="#accordion" href="#selector">
+                        ...Or select a text from the Catalog...
+                      </a>
+                    </h4>
+                  </div>
+                  <div id="selector" class="panel-collapse collapse">
+                    <div class="panel-body">
+                      <%= f.label :select, 'Select a text' %>
+                      <table class="table table-striped table-bordered table-hover">
+                        <thead>
+                           <tr><th>Title</th><th>Author</th></tr>
+                        </thead>
+                        <tbody data-link="row" class="rowlink">
+                           <% @catalog_texts.each do | entry | %>
+                              <tr><td><a id="<%= entry['eid'] %>" class="clickable"><%= entry['name'] %></a></td><td><%= entry['author'] %></td></tr>
+                           <% end %>
+                        </tbody>
+                      </table>
+
+                      <p class="help-block">Select the text you would like to begin annotating.</p>
+                    </div>
+                  </div>
+                </div>
+                <% end %>
 
                 <div class="panel panel-default">
                   <div class="panel-heading">
@@ -137,6 +168,7 @@
           <% end %>
           <script type="text/javascript">
           $(document).ready(function() {
+
             $('.text-area').summernote({
                 height: 300,
                 minHeight: null,
@@ -152,5 +184,35 @@
               $("[data-event='codeview']").click()
               $('#chapter-editor').toggle();
             });
+
+            // handle catalog texts
+
+            var text = {};
+
+            <% unless @catalog_texts.nil? || @catalog_texts.empty? %>
+              <% @catalog_texts.each do | entry | %>
+                 var e = {};
+
+                 // fill in all the fields here...
+                 <% ['name', 'author', 'edition', 'publisher', 'publication_date', 'manuscript', 'permissions'].each do | field | %>
+                    e[ '<%= field %>' ] = '<%= entry[field].nil? ? '' : entry[field] %>';
+                 <% end %>
+                 text[ '<%= entry['eid'] %>' ] = e;
+              <% end %>
+            <% end %>
+
+            $('.clickable').on('click', function (e) {
+                var id = $( this ).attr( "id" );
+                var entry = text[ id ];
+                $( "#document_title").val( entry['name'] );
+                $( "#document_author").val( entry[ 'author'] );
+                $( "#document_edition").val( entry[ 'edition'] );
+                $( "#document_publisher").val( entry[ 'publisher'] );
+                $( "#document_publication_date").val( entry[ 'publication_date'] );
+                $( "#document_source").val( entry[ 'manuscript'] );
+                $( "#document_rights_status").val( entry[ 'permissions'] );
+                $( ".note-editable").html( "EID:" + id );
+            })
+
           });
           </script>

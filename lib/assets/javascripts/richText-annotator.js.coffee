@@ -9,7 +9,7 @@ class Annotator.Plugin.RichText extends Annotator.Plugin
     editor_enabled: true
     tinymce:
       selector: "li.annotator-item textarea",
-      plugins: "media image link code",
+      plugins: "media image link code melcatalog",
       link_list: false,
       target_list: false,
       rel_list: false,
@@ -17,7 +17,7 @@ class Annotator.Plugin.RichText extends Annotator.Plugin
       statusbar: false,
       toolbar_items_size: 'small',
       extended_valid_elements : "iframe[src|frameborder|style|scrolling|class|width|height|name|align|id]",
-      toolbar: "undo redo | styleselect | bold italic | link image media | code"
+      toolbar: "undo redo | styleselect | bold italic | link image media | code"  # this is overriden with a configuration value from the application.yml file
 
   mdconverter: if Showdown? then new Showdown.converter() else null
 

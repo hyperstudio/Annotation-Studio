@@ -10,6 +10,7 @@ vendor/assets/javascripts/annotator.js
 _archive/*
 vendor/assets/javascripts/_archive/*
 config/application.yml
+config/database.yml
 db/backups/*
 
 # Ignore application & database configuration
@@ -37,3 +38,4 @@ Gemfile.rej
 app/assets/javascripts/application.js.rej
 app/views/documents/index.html.erb.rej
 patch.diff
+.env

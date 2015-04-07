@@ -14,6 +14,9 @@ this.makeHtml=function(_5){
 _1=new Array();
 _2=new Array();
 _3=new Array();
+if(_5 === undefined) {
+_5 = '';
+}
 _5=_5.replace(/~/g,"~T");
 _5=_5.replace(/\$/g,"~D");
 _5=_5.replace(/\r\n/g,"\n");

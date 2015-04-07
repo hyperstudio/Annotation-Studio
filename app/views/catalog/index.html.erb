@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <%= csrf_meta_tags %>
+  <%= stylesheet_link_tag "application", :media => "all" %>
+  <%= stylesheet_link_tag "catalog", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= javascript_include_tag "tiny_mce_popup" %>
+</head>
+<body id="catalog" class="index">
+
+<div class="container-fluid catalog-container">
+
+  <div class="col-lg-8">
+    <form class="form-horizontal">
+
+        <div class="form-group">
+           <div class="input-group">
+             <input id="search-term" class="form-control" type="text" value="<%= @search_term %>"/>
+             <span class="input-group-btn">
+                <button id="search-button" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                <% if ( @search_term.empty? == false ) || ( @search_tags.empty? == false ) %>
+                   <a href="/documents/catalog" class="btn btn-default" type="button">Clear</a>
+                <% end %>
+             </span>
+           </div>
+        </div>
+
+        <div class="form-group">
+          <div class="btn-group btn-group-xs" data-toggle="buttons">
+            <label id="search-all-label"class="btn btn-primary">
+              <input id="search-all" type="radio" name="options" autocomplete="off" checked>All
+            </label>
+            <label id="search-people-label" class="btn btn-primary">
+              <input id="search-people" type="radio" name="options" autocomplete="off">People
+            </label>
+            <label id="search-artwork-label" class="btn btn-primary">
+              <input id="search-artwork" type="radio" name="options" autocomplete="off">Artwork
+            </label>
+            <label id="search-text-label" class="btn btn-primary">
+              <input id="search-text" type="radio" name="options" autocomplete="off">Texts
+            </label>
+          </div>
+        </div>
+
+    </form>
+  </div>
+
+  <div class="col-lg-8">
+
+    <div class="form-group">
+      <div class="browse-panel pull-left">
+        <label for="tag-tree"><span style="text-decoration: underline;">Browse:</span></label>
+
+        <!-- build the eid list if appropriate -->
+        <% eid_list = [] %>
+        <% [:artwork, :person].each do | t | %>
+            <% if @search_results[t].nil? == false %>
+                <% @search_results[t].each do | r | %>
+                    <% eid_list.push( r['eid'] ) %>
+                <% end %>
+            <% end %>
+        <% end %>
+
+        <!-- get our list of tags -->
+        <% if eid_list.empty? && @search_term.empty? %>
+            <% status, tags = Melcatalog.tags_by_entry_type( ) %>
+        <% else %>
+            <% eid_list.push( "none" ) if eid_list.empty? %>
+            <% status, tags = Melcatalog.tags_by_entry_id( eid_list ) %>
+        <% end %>
+
+        <!-- build the tag table as necessary -->
+        <table class="tag-tree table table-condensed table-hover table-striped">
+           <% ix = 1 %>
+           <% tags.each do |root| %>
+             <tr class="<%= "tag_genre treegrid-#{ix}" %>">
+               <td><%= root['text'] %></td><td></td>
+             </tr>
+             <% ix += 1 %>
+             <% if root['nodes'].nil? == false %>
+                 <% parentix = ix - 1 %>
+                 <% root['nodes'].each do |child| %>
+                      <tr class="<%= "tag_name treegrid-#{ix} treegrid-parent-#{parentix}" %>">
+                        <td><a class="tree-click" href="<%= child['href'] %>"><%= truncate( child['text'], { :length => 16 } ) %></a></td><td><span class="badge"><%= child['count'] %></span></td>
+                      </tr>
+                      <% ix += 1 %>
+                 <% end %>
+             <% end %>
+           <% end %>
+        </table>
+
+      </div>
+    </div>
+
+      <div class="results-panel pull-right scrollable">
+
+        <table id="people-results" class="table table-striped table-hover table-condensed">
+          <thead>
+            <tr><th><span style="text-decoration: underline;">People:</span></th><th>Name</th><th>Birth</th><th>Death</th></tr>
+          </thead>
+          <% unless @search_results[:person].nil? %>
+          <tbody data-link="row" class="rowlink">
+             <% @search_results[:person].each do | entry | %>
+              <tr><td>
+                <% if has_images( entry['images'] ) %>
+                    <%= thumbnail_or_nothing entry['images'] %>
+                <% else %>
+                  <span class="glyphicon glyphicon-user"></span>
+                <% end %>
+              </td><td><a id="<%= entry['eid'] %>" class="clickable" title="<%= tagset_display( entry['authoritative_name'], true ) %>" ref="<%= thumbnail_url entry['images'] %>"><%= tagset_display( entry['authoritative_name'], true ) %></a></td><td><%= entry['birth'] %></td><td><%= entry['death'] %></td></tr>
+             <% end %>
+          </tbody>
+          <% end %>
+        </table>
+
+        <table class="table table-striped table-hover table-condensed">
+          <thead>
+             <tr><th><span style="text-decoration: underline;">Artworks:</span></th><th>Title</th><th>Artist</th></tr>
+          </thead>
+          <% unless @search_results[:artwork].nil? %>
+          <tbody data-link="row" class="rowlink">
+            <% @search_results[:artwork].each do | entry | %>
+               <tr><td>
+                 <% if has_images( entry['images'] ) %>
+                     <%= thumbnail_or_nothing entry['images'] %>
+                 <% else %>
+                     <span class="glyphicon glyphicon-picture"></span>
+                 <% end %>
+               </td><td><a id="<%= entry['eid'] %>" class="clickable" title="<%= entry['title'] %>" ref="<%= thumbnail_url entry['images'] %>"><%= entry['title'] %></a></td><td><%= tagset_display( entry['artist'], true ) %></td></tr>
+            <% end %>
+          </tbody>
+          <% end %>
+        </table>
+
+        <table class="table table-striped table-hover table-condensed">
+          <thead>
+          <tr><th><span style="text-decoration: underline;">Texts:</span></th><th>Title</th><th>Author</th></tr>
+          </thead>
+          <% unless @search_results[:text].nil? %>
+              <tbody data-link="row" class="rowlink">
+              <% @search_results[:text].each do | entry | %>
+                  <tr><td>
+                    <% if has_images( entry['images'] ) %>
+                        <%= thumbnail_or_nothing entry['images'] %>
+                    <% else %>
+                        <span class="glyphicon glyphicon-picture"></span>
+                    <% end %>
+                  </td><td><a id="<%= entry['eid'] %>" class="clickable" title="<%= entry['name'] %>" ref="<%= thumbnail_url entry['images'] %>"><%= entry['name'] %></a></td><td><%= tagset_display( entry['author'], true ) %></td></tr>
+              <% end %>
+              </tbody>
+          <% end %>
+        </table>
+
+      </div>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+
+    $('document').ready(function( ) {
+
+        //
+        // setup correct search radio buttons
+        //
+        <% if ( @search_types.empty? == true ) || ( ( @search_types.include? :person ) && ( @search_types.include? :artwork ) && ( @search_types.include? :text ) ) %>
+           $('#search-all').prop('checked', true);
+           $('#search-all-label').addClass( "active")
+        <% elsif @search_types.include? :person %>
+           $('#search-people').prop('checked', true);
+           $('#search-people-label').addClass( "active")
+        <% elsif @search_types.include? :artwork %>
+           $('#search-artwork').prop('checked', true);
+           $('#search-artwork-label').addClass( "active")
+        <% elsif @search_types.include? :text %>
+           $('#search-text').prop('checked', true);
+           $('#search-text-label').addClass( "active")
+        <% end %>
+
+        // enable the tag tree view
+        $('.tag-tree').treegrid( {
+            initialState: 'collapsed',
+            expanderExpandedClass: 'glyphicon glyphicon-minus',
+            expanderCollapsedClass: 'glyphicon glyphicon-plus'
+        });
+
+        // open the search tree if appropriate
+        <% if @search_tags.empty? == false %>
+           openTagTree( "<%= @search_tags %>" );
+        <% end %>
+
+        // search button handler
+        $("#search-button").click(function() {
+            doSearchHandler( );
+        });
+
+        // enter key handler
+        $('form input').keydown(function(event){
+            if(event.keyCode == 13) {
+                event.preventDefault();
+                doSearchHandler( );
+            }
+        });
+
+        // handler for clicks on any of the results we found
+        $(".clickable").click(function() {
+            // the eid and the entry title separated with a pipe character
+            var title = $(this).attr( "title" ).length === 0 ? "no title" : $(this).attr( "title");
+            storeDetails( $(this).attr( "id") + "|" + title + "|" + $(this).attr( "ref") );
+
+            // close the window...
+            tinyMCEPopup.close( );
+        });
+
+        // handler for when we select a tag
+        $('.tree-click').on('click', function( e ) {
+            e.preventDefault( );
+            var href = $(this).attr( 'href' );
+            if( href ) {
+                var newUrl = href;
+                <% if @search_term.empty? == false %>
+                   newUrl = newUrl + "&term=" + encodeURI( '<%= @search_term %>' );
+                <% end %>
+                document.location.href = newUrl;
+            }
+        });
+
+    });
+
+    function doSearchHandler( ) {
+        var term = $('#search-term').val( );
+        var include_people = $('#search-all').prop('checked') || $('#search-people').prop('checked' );
+        var include_artwork = $('#search-all').prop('checked') || $('#search-artwork').prop('checked' );
+        var include_text = $('#search-all').prop('checked') || $('#search-text').prop('checked' );
+        newSearch( term, include_people, include_artwork, include_text );
+    }
+
+    // doing a new search in the same frame
+    function newSearch( term, include_people, include_artwork, include_text ) {
+        var types = makeTypeList( include_people, include_artwork, include_text );
+        var newUrl = "/documents/catalog?term=" + encodeURI( term ) + "&onlyimages=<%= @onlyimages %>" + ( types ? "&types=" + types : "" );
+        <% if @search_tags.empty? == false %>
+           newUrl = newUrl + "&search_tags=" + encodeURI( '<%= @search_tags %>' );
+        <% end %>
+        document.location.href = newUrl;
+    }
+
+    // make the list of types to ask for
+    function makeTypeList( include_people, include_artwork, include_text ) {
+        var types = "";
+        if( include_people ) { types = "people"; }
+        if( include_artwork ) { types = ( types ? types + "," : "" ) + "artwork"; }
+        if( include_text ) { types = ( types ? types + "," : "" ) + "texts"; }
+
+        // empty the typelist if we want all types and we will get all by default
+        if( include_people & include_artwork && include_text ) {
+            types = "";
+        }
+        return( types );
+    }
+
+    // store the inserted item off so it is available to our parent (the opener)
+    function storeDetails( reference ) {
+       var parent = tinyMCEPopup.getWin( );
+       var div = parent.jQuery('div')[ 0 ];
+       parent.jQuery.data( div, "catalog", reference );
+    }
+
+    // open the tag tree cos we are doing a tag search
+    function openTagTree( search_tag ) {
+       var domain = search_tag.split( "|" )[ 0 ];
+       var tag = search_tag.split( "|" )[ 1 ];
+
+       // open the tree
+       $( ".tag_genre" ).each( function( index, element ) {
+           var title = $( this ).text( ).replace(/\s/g, "");
+           if( title == domain ) {
+               $( this ).treegrid( 'expand' );
+           }
+       });
+    }
+
+</script>
+
+</body>

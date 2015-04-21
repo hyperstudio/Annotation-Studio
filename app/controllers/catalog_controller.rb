@@ -23,8 +23,9 @@ class CatalogController < ApplicationController
 
     types = []
     types = params[:types].split( "," ) unless params[:types].nil?
-    @search_types << :person if types.include? 'people'
     @search_types << :artwork if types.include? 'artwork'
+    @search_types << :person if types.include? 'people'
+    @search_types << :place if types.include? 'places'
     @search_types << :text if types.include? 'texts'
     @onlyimages = true if params[:onlyimages].nil? == false && params[:onlyimages] == 'true'
 
@@ -34,8 +35,9 @@ class CatalogController < ApplicationController
     # I hate to do this... will pass image only constraint to catalog later...
     # TODO
     if @onlyimages == true
-      @search_results[:person].delete_if { |entry| has_images( entry[ 'images'] ) == false } if @search_results[:person].nil? == false
       @search_results[:artwork].delete_if { |entry| has_images( entry[ 'images'] ) == false } if @search_results[:artwork].nil? == false
+      @search_results[:person].delete_if { |entry| has_images( entry[ 'images'] ) == false } if @search_results[:person].nil? == false
+      @search_results[:place].delete_if { |entry| has_images( entry[ 'images'] ) == false } if @search_results[:place].nil? == false
       @search_results[:text].delete_if { |entry| has_images( entry[ 'images'] ) == false } if @search_results[:text].nil? == false
     end
 
@@ -68,17 +70,22 @@ class CatalogController < ApplicationController
     status, result = Melcatalog.get( params[:eid], 'stripxml' )
 
     entry = nil
-    if status == 200 && result && result[:person]
+    if status == 200 && result && result[:artwork]
+    entry = result[:artwork][ 0 ]
+    title = "Artwork Information"
+    fieldlist = ['artist', 'artist_national_origin', 'publication', 'technique',
+                 'material', 'location_of_print', 'genre', 'subject', 'viewed', 'permissions',
+                 'owned_acquired_borrowed', 'explicit_reference', 'associated_reference', 'see_also']
+    elsif status == 200 && result && result[:person]
       entry = result[:person][ 0 ]
       title = "Person Information"
       fieldlist = ['authoritative_name', 'display_name', 'forename', 'surname', 'type', 'description', 'birth', 'death', 'occupation',
                    'affiliation', 'nationality', 'cultural_context', 'see_also']
-    elsif status == 200 && result && result[:artwork]
-       entry = result[:artwork][ 0 ]
-       title = "Artwork Information"
-       fieldlist = ['artist', 'artist_national_origin', 'publication', 'technique',
-                    'material', 'location_of_print', 'genre', 'subject', 'viewed', 'permissions',
-                    'owned_acquired_borrowed', 'explicit_reference', 'associated_reference', 'see_also']
+    elsif status == 200 && result && result[:place]
+      entry = result[:place][ 0 ]
+      title = "Place Information"
+      fieldlist = ['authoritative_name', 'alternate_name', 'coordinates', 'type', 'reference_title', 'reference_quote', 'reference_page', 'reference_line',
+                   'see_also']
     elsif status == 200 && result && result[:text]
       entry = result[:text][ 0 ]
       title = "Text Information"

@@ -95,7 +95,7 @@ module Melcatalog
    end
 
    #
-   # get a
+   # get a list of the vocabulary scopes
    #
    def self.term_scopes
 
@@ -127,13 +127,13 @@ module Melcatalog
    end
 
    #
-   # helper to get all the metadata for text entities
+   # helper to get all the metadata for artwork entities
    #
-   def self.texts( limit = Melcatalog.configuration.default_result_limit )
+   def self.artwork( limit = Melcatalog.configuration.default_result_limit )
      all_terms = ""
      all_tags = ""
      all_fields = []
-     return self.search( all_terms, all_tags, all_fields, [:text], limit )
+     return self.search( all_terms, all_tags, all_fields, [:artwork], limit )
    end
 
    #
@@ -147,13 +147,32 @@ module Melcatalog
    end
 
    #
-   # helper to get all the metadata for artwork entities
+   # helper to get all the metadata for places entities
    #
-   def self.artwork( limit = Melcatalog.configuration.default_result_limit )
+   def self.places( limit = Melcatalog.configuration.default_result_limit )
      all_terms = ""
      all_tags = ""
      all_fields = []
-     return self.search( all_terms, all_tags, all_fields, [:artwork], limit )
+     return self.search( all_terms, all_tags, all_fields, [:place], limit )
+   end
+
+   #
+   # helper to get all the metadata for text entities
+   #
+   def self.texts( limit = Melcatalog.configuration.default_result_limit )
+     all_terms = ""
+     all_tags = ""
+     all_fields = []
+     return self.search( all_terms, all_tags, all_fields, [:text], limit )
+   end
+
+   #
+   # ping the catalog to see if our credentials are good
+   #
+   def self.ping
+     request = "#{Melcatalog.configuration.service_endpoint}/ping"
+     status, results = self.rest_get request
+     return status == 200
    end
 
   private
@@ -162,10 +181,10 @@ module Melcatalog
     results = {}
     begin
       response = RestClient.get URI.escape request
-      if response.code == 200
-        results = JSON.parse response
+      if response.code == 200 && response.empty? == false && response != ' '
+        return response.code, JSON.parse( response )
       end
-      return response.code, results
+      return response.code, {}
     rescue => e
       puts request
       puts e
@@ -175,8 +194,9 @@ module Melcatalog
 
   def self.transform( response )
     result = {}
-    result[:person] = response['people'] unless response['people'].nil?
     result[:artwork] = response['artworks'] unless response['artworks'].nil?
+    result[:person] = response['people'] unless response['people'].nil?
+    result[:place] = response['places'] unless response['places'].nil?
     result[:text] = response['texts'] unless response['texts'].nil?
     return result
   end
@@ -191,15 +211,18 @@ module Melcatalog
      result = ""
      entity_types.each do | entity |
        case entity
-         when :text
-           result = "#{result}," unless result.empty?
-           result << "texts"
-         when :person
-           result = "#{result}," unless result.empty?
-           result << "people"
          when :artwork
            result = "#{result}," unless result.empty?
            result << "artworks"
+         when :person
+           result = "#{result}," unless result.empty?
+           result << "people"
+         when :place
+           result = "#{result}," unless result.empty?
+           result << "places"
+         when :text
+           result = "#{result}," unless result.empty?
+           result << "texts"
          else
            puts "Unknown entity type #{entity}"
        end

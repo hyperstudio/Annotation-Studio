@@ -41,7 +41,7 @@ group :test, :development do
   gem 'factory_girl_rails'
   gem 'rspec-rails'
   gem 'pry-rails'
-  gem 'capybara-webkit'
+#  gem 'capybara-webkit'
   gem 'simplecov'
   gem 'rails_best_practices'
   gem 'launchy'

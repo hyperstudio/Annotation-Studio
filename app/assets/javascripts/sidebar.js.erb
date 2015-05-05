@@ -200,6 +200,10 @@ Sidebar.AnnotationListView = Backbone.View.extend({
 
     // Bind some events to links
     $("li.annotation-item").click(function(event){
+      if($(this).hasClass('focuswhite')) {
+        return;
+      }
+
       var idtarget = $(this).find("span.highlightlink").attr("data-highlight");
 
       // Hide all details
@@ -234,6 +238,10 @@ Sidebar.AnnotationListView = Backbone.View.extend({
       $(idtarget).prepend('<i class="glyphicon glyphicon-comment"></i>');
       // event.stopPropagation();
     });
+
+    <% if ENV["CATALOG_ENABLED"] == "true" %>
+    $('li.annotation-item a.catalog-popup').unbind('click').attr('target', "_blank");
+    <% end %>
 
     if(sidebar.sort_editable) {
         if($('#customsort').hasClass('active')) {

@@ -111,6 +111,12 @@ li.annotation-item.focuswhite {
 	padding:0 15px;
   margin-top: 30px;
 	overflow:auto;
+  li.annotation-item {
+    a.catalog-popup {
+      display: inline-block;
+      outline: none;
+    }
+  }
 }
 
 #annotation-well ul#annotation-list li span.label, #annotation-well ul#annotation-list li span.badge {

@@ -79,12 +79,12 @@ class CatalogController < ApplicationController
     elsif status == 200 && result && result[:person]
       entry = result[:person][ 0 ]
       title = "Person Information"
-      fieldlist = ['authoritative_name', 'display_name', 'forename', 'surname', 'type', 'description', 'birth', 'death', 'occupation',
+      fieldlist = ['authoritative_name', 'display_name', 'forename', 'surname', 'person_type', 'description', 'birth', 'death', 'occupation',
                    'affiliation', 'nationality', 'cultural_context', 'see_also']
     elsif status == 200 && result && result[:place]
       entry = result[:place][ 0 ]
       title = "Place Information"
-      fieldlist = ['authoritative_name', 'alternate_name', 'type', 'geo_name', 'latitude', 'longitude',
+      fieldlist = ['authoritative_name', 'alternate_name', 'place_type', 'geo_name', 'latitude', 'longitude',
                    'note', 'see_also']
     elsif status == 200 && result && result[:text]
       entry = result[:text][ 0 ]

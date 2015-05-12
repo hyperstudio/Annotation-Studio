@@ -32,7 +32,7 @@
                      <% case field %>
                      <% when "affiliation" %>
                          <% entry[field].each do |affiliation| %>
-                             <% str += "#{affiliation['affiliation']} : #{affiliation['type']} : #{affiliation['subtype']} : #{affiliation['role']} : #{affiliation['from']} : #{affiliation['to']} " %>
+                             <% str += "#{affiliation['affiliation']} : #{affiliation['affiliation_type']} : #{affiliation['subtype']} : #{affiliation['role']} : #{affiliation['from']} : #{affiliation['to']} " %>
                          <% end %>
                          <p class="form-control-static" id="<%= field %>"><%= str %></p>
                      <% when 'nationality' %>

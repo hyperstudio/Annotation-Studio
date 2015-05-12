@@ -137,6 +137,16 @@ module Melcatalog
    end
 
    #
+   # helper to get all the metadata for event entities
+   #
+   def self.events( limit = Melcatalog.configuration.default_result_limit )
+     all_terms = ""
+     all_tags = ""
+     all_fields = []
+     return self.search( all_terms, all_tags, all_fields, [:event], limit )
+   end
+
+   #
    # helper to get all the metadata for people entities
    #
    def self.people( limit = Melcatalog.configuration.default_result_limit )
@@ -195,6 +205,7 @@ module Melcatalog
   def self.transform( response )
     result = {}
     result[:artwork] = response['artworks'] unless response['artworks'].nil?
+    result[:event] = response['events'] unless response['events'].nil?
     result[:person] = response['people'] unless response['people'].nil?
     result[:place] = response['places'] unless response['places'].nil?
     result[:text] = response['texts'] unless response['texts'].nil?
@@ -214,6 +225,9 @@ module Melcatalog
          when :artwork
            result = "#{result}," unless result.empty?
            result << "artworks"
+         when :event
+           result = "#{result}," unless result.empty?
+           result << "events"
          when :person
            result = "#{result}," unless result.empty?
            result << "people"

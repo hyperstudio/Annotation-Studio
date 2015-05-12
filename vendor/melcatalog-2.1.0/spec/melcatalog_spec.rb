@@ -52,6 +52,16 @@ describe Melcatalog do
        fail "Bad status" if status != 200
        fail "No search results" if results.empty?
        fail "No artwork results" if results[:artwork].nil?
+       fail "Unexpected events results" if results[:event].nil? == false
+       fail "Unexpected people results" if results[:person].nil? == false
+       fail "Unexpected places results" if results[:place].nil? == false
+       fail "Unexpected text results" if results[:text].nil? == false
+
+       status, results = Melcatalog.search( all_terms, any_tags, all_fields, [:event] )
+       fail "Bad status" if status != 200
+       fail "No search results" if results.empty?
+       fail "Unexpected artwork results" if results[:artwork].nil? == false
+       fail "No events results" if results[:event].nil?
        fail "Unexpected people results" if results[:person].nil? == false
        fail "Unexpected places results" if results[:place].nil? == false
        fail "Unexpected text results" if results[:text].nil? == false
@@ -60,6 +70,7 @@ describe Melcatalog do
        fail "Bad status" if status != 200
        fail "No search results" if results.empty?
        fail "Unexpected artwork results" if results[:artwork].nil? == false
+       fail "Unexpected events results" if results[:event].nil? == false
        fail "No people results" if results[:person].nil?
        fail "Unexpected places results" if results[:place].nil? == false
        fail "Unexpected text results" if results[:text].nil? == false
@@ -68,6 +79,7 @@ describe Melcatalog do
        fail "Bad status" if status != 200
        fail "No search results" if results.empty?
        fail "Unexpected artwork results" if results[:artwork].nil? == false
+       fail "Unexpected events results" if results[:event].nil? == false
        fail "Unexpected people results" if results[:person].nil? == false
        fail "No places results" if results[:place].nil?
        fail "Unexpected text results" if results[:text].nil? == false
@@ -76,6 +88,7 @@ describe Melcatalog do
        fail "Bad status" if status != 200
        fail "No search results" if results.empty?
        fail "Unexpected artwork results" if results[:artwork].nil? == false
+       fail "Unexpected events results" if results[:event].nil? == false
        fail "Unexpected people results" if results[:person].nil? == false
        fail "Unexpected places results" if results[:place].nil? == false
        fail "No text results" if results[:text].nil?
@@ -87,7 +100,7 @@ describe Melcatalog do
        any_tags = ""
        all_fields = []
 
-       status, results = Melcatalog.search( all_terms, any_tags, all_fields, [:text, :person ] )
+       status, results = Melcatalog.search( all_terms, any_tags, all_fields, [:text, :person] )
        fail "Bad status" if status != 200
        fail "No search results" if results.empty?
        fail "Unexpected artwork results" if results[:artwork].nil? == false
@@ -108,6 +121,7 @@ describe Melcatalog do
        fail "No search results" if results.empty?
 
        fail "Excessive artwork result count" if results[:artwork].nil? == false && results[:artwork].size > max
+       fail "Excessive events result count" if results[:event].nil? == false && results[:event].size > max
        fail "Excessive people result count" if results[:person].nil? == false && results[:person].size > max
        fail "Excessive places result count" if results[:place].nil? == false && results[:place].size > max
        fail "Excessive texts result count" if results[:text].nil? == false && results[:text].size > max
@@ -134,6 +148,18 @@ describe Melcatalog do
       fail "Bad status" if status != 200
       fail "Incorrect result count" if results.size != 1
       check_artworks( results[:artwork], true )
+
+      # get the first event entry by EID
+      status, metadata = Melcatalog.events( )
+      fail "Bad status" if status != 200
+      fail "No events entries available" if metadata.empty?
+      eid = ""
+      eid = metadata[:event][ 0 ]['eid'] unless metadata[:event].nil?
+      fail "No events entries available" if eid.empty?
+      status, results = Melcatalog.get( eid )
+      fail "Bad status" if status != 200
+      fail "Incorrect result count" if results.size != 1
+      check_events( results[:event], true )
 
       # get the first person entry by EID
       status, metadata = Melcatalog.people( )
@@ -327,6 +353,14 @@ describe Melcatalog do
       check_artworks( metadata[:artwork], false )
     end
 
+    it 'get events metadata' do
+      status, metadata = Melcatalog.events( )
+      fail "Bad status" if status != 200
+      fail "No events available" if metadata.empty?
+      must_exist( metadata, :event )
+      check_events( metadata[:event], false )
+    end
+
     it 'get people metadata' do
       status, metadata = Melcatalog.people( )
       fail "Bad status" if status != 200
@@ -384,6 +418,16 @@ describe Melcatalog do
     }
   end
 
+  def check_events( entities, contentOk )
+    entities.each { | entity |
+      must_exist( entity, 'eid' )
+      must_exist( entity, 'name' )
+      must_exist( entity, 'see_also' )
+
+      must_exist( entity, 'url' )
+      must_exist( entity, 'images' )
+    }
+  end
 
   def check_people( entities, contentOk )
     entities.each { | entity |
@@ -391,7 +435,7 @@ describe Melcatalog do
       must_exist( entity, 'authoritative_name' )
       must_exist( entity, 'surname' )
       must_exist( entity, 'forename' )
-      must_exist( entity, 'type' )
+      must_exist( entity, 'person_type' )
       must_exist( entity, 'occupation' )
       must_exist( entity, 'birth' )
       must_exist( entity, 'death' )
@@ -411,14 +455,13 @@ describe Melcatalog do
   def check_places( entities, contentOk )
     entities.each { | entity |
       must_exist( entity, 'eid' )
-      must_exist( entity, 'authoritative_name' )
+      must_exist( entity, 'name' )
+      must_exist( entity, 'name_type' )
       must_exist( entity, 'alternate_name' )
-      must_exist( entity, 'coordinates' )
-      must_exist( entity, 'reference_line' )
-      must_exist( entity, 'reference_page' )
-      must_exist( entity, 'reference_quote' )
-      must_exist( entity, 'reference_title' )
-      must_exist( entity, 'type' )
+      must_exist( entity, 'latitude' )
+      must_exist( entity, 'longitude' )
+      must_exist( entity, 'note' )
+      must_exist( entity, 'place_type' )
       must_exist( entity, 'see_also' )
 
       must_exist( entity, 'url' )

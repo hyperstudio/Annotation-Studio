@@ -50,6 +50,11 @@
                            <% str += "#{see_also['description']} : #{see_also['url']} " %>
                          <% end %>
                          <p class="form-control-static" id="<%= field %>"><%= str %></p>
+                     <% when 'references' %>
+                         <% entry[field].each do |reference| %>
+                             <% str += "#{reference['domain']} : #{reference['created_by']} : #{reference['cited_in']} " %>
+                         <% end %>
+                         <p class="form-control-static" id="<%= field %>"><%= str %></p>
                      <% else %>
                          <p class="form-control-static" id="<%= field %>"><%= tagset_display entry[field] %></p>
                      <% end %>

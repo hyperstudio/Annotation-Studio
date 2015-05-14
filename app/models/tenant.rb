@@ -1,5 +1,5 @@
 class Tenant < ActiveRecord::Base
-  attr_accessible :database_name, :domain
+  #attr_accessible :database_name, :domain
   after_create :initialize_apartment_schema
   after_destroy :drop_apartment_schema
 
@@ -8,7 +8,7 @@ class Tenant < ActiveRecord::Base
 
   def initialize_apartment_schema
     begin
-      Apartment::Database.create(database_name)
+      Apartment::Tenant.create(database_name)
     rescue Apartment::SchemaExists => e
       Rails.logger.warn "Schema already existed: #{e.inspect}"
     end
@@ -16,7 +16,7 @@ class Tenant < ActiveRecord::Base
 
   def drop_apartment_schema
     begin
-      Apartment::Database.drop(database_name)
+      Apartment::Tenant.drop(database_name)
     rescue Apartment::SchemaNotFound => e
       Rails.logger.warn "Schema can't be destroyed as it wasn't there: #{e.inspect}"
     end

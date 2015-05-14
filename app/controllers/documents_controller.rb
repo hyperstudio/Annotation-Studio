@@ -2,9 +2,10 @@
 require 'melcatalog'
 
 class DocumentsController < ApplicationController
+  before_filter :find_document, :only => [:show, :set_default_state, :destroy, :edit, :update]
   before_filter :authenticate_user!
 
-  load_and_authorize_resource
+  load_and_authorize_resource :except => :create
 
   # GET /documents
   # GET /documents.json
@@ -23,7 +24,6 @@ class DocumentsController < ApplicationController
   # GET /documents/1
   # GET /documents/1.json
   def show
-    @document = Document.find(params[:id])
     if request.path != document_path(@document)
       redirect_to @document, status: :moved_permanently
     end
@@ -50,17 +50,16 @@ class DocumentsController < ApplicationController
 
   # GET /documents/1/edit
   def edit
-    @document = Document.find(params[:id])
   end
 
   # POST /documents
   # POST /documents.json
   def create
-    @document = Document.new(params[:document])
+    @document = Document.new(documents_params)
     @document.user = current_user
 
     # apply any catalogue content as appropriate
-    catalog_content( @document )
+    catalog_content(@document)
 
     respond_to do |format|
       if @document.save
@@ -80,10 +79,10 @@ class DocumentsController < ApplicationController
   # PUT /documents/1
   # PUT /documents/1.json
   def update
-    @document = Document.find(params[:id])
+    @document = Document.friendly.find(params[:id])
 
     respond_to do |format|
-      if @document.update_attributes(params[:document])
+      if @document.update_attributes(documents_params)
         format.html { redirect_to documents_url, notice: 'Document was successfully updated.' }
         format.json { head :no_content }
       else
@@ -96,7 +95,6 @@ class DocumentsController < ApplicationController
   # DELETE /documents/1
   # DELETE /documents/1.json
   def destroy
-    @document = Document.find(params[:id])
     @document.destroy
 
     respond_to do |format|
@@ -107,7 +105,6 @@ class DocumentsController < ApplicationController
 
   #JSON for saving state
   def set_default_state
-    @document = Document.find(params[:document_id])
     @document.update_attribute(:default_state, params[:default_state])
 
     render :json => {}
@@ -167,4 +164,14 @@ class DocumentsController < ApplicationController
     return( ENV["CATALOG_ENABLED"] == 'true' )
   end
 
+private
+  def find_document
+    @document = Document.friendly.find(params.has_key?(:document_id) ? params[:document_id] : params[:id])
+  end
+
+  def documents_params
+    params.require(:document).permit(:title, :state, :chapters, :text, :user_id, :rep_privacy_list,
+                                     :rep_group_list, :new_group, :author, :edition, :publisher, 
+                                     :publication_date, :source, :rights_status, :upload, :survey_link)
+  end
 end

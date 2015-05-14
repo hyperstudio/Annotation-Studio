@@ -23,10 +23,6 @@ require "babosa" # allows cyrillic, other characters in titles (transliterates t
 
 class Document < ActiveRecord::Base
   belongs_to :user, :autosave => true
-  attr_accessible :title, :state, :chapters, :text, :user_id,
-    :rep_privacy_list, :rep_group_list, :new_group, :author, :edition,
-    :publisher, :publication_date, :source, :rights_status, :upload, :survey_link
-
   before_validation :add_title, on: :create, unless: :title?
   before_create :add_processed_at, unless: :uploaded?
   ALLOWED_CONTENT_TYPES = %w|application/msword
@@ -37,13 +33,14 @@ application/pdf
 
   extend FriendlyId
   friendly_id :title, use: [:slugged, :history]
+
   # acts_as_taggable_on :rep_group, :courses, :semesters, :genres, :categories
   acts_as_taggable_on :rep_privacy, :rep_group
 
   has_attached_file :upload
   validates_attachment_content_type :upload, content_type: ALLOWED_CONTENT_TYPES
 
-  scope :public, where(:state => 'public').order("id asc")
+  #scope :public, -> { where(:state => 'public').order("id asc") }
 
   STATES = %w{ pending draft published deleted public }
 

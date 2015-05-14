@@ -13,7 +13,7 @@ class PublicDocumentsController < ApplicationController
         ENV["API_SECRET"]
     )
 
-    @document = Document.public.find(params[:id])
+    @document = Document.public.where(:id => params[:id])
 
     respond_to do |format|
       format.html # show.html.erb

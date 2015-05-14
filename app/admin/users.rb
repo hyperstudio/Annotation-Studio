@@ -1,4 +1,5 @@
 ActiveAdmin.register User, :as => "Student" do
+  permit_params :firstname, :lastname, :affiliation, :email, :rep_group_list
 
   scope :all, :default => true
 
@@ -13,15 +14,15 @@ ActiveAdmin.register User, :as => "Student" do
   batch_action :approve do |selection|
     User.find(selection).each do |user|
       user.set_roles = ['student']
-      redirect_to collection_path, :notice => "Users approved!"
     end
+    redirect_to collection_path, :notice => "Users approved!"
   end
 
   batch_action :make_admin do |selection|
     User.find(selection).each do |user|
       user.set_roles = ['admin']
-      redirect_to collection_path, :notice => "Admins created!"
     end
+    redirect_to collection_path, :notice => "Admins created!"
   end
     
   index do |t|
@@ -32,7 +33,7 @@ ActiveAdmin.register User, :as => "Student" do
     column :affiliation
     column "Groups", :rep_group_list, :sortable => false
     column "Creation date", :created_at
-    default_actions
+    actions
   end
 
   show do |user|
@@ -61,6 +62,18 @@ ActiveAdmin.register User, :as => "Student" do
       #   :as => :string,
       #   :label => "Create (and add user to) a new group"
     end
-    f.buttons
+    f.actions do
+      f.action :submit
+      f.action :cancel, :wrapper_html => { :class => "cancel" }
+    end
+  end
+
+  controller do
+    def find_resource
+      User.friendly.find(params[:id])
+    end
+    def permitted_params
+      params.permit!
+    end
   end
 end

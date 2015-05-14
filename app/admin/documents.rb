@@ -1,15 +1,13 @@
 ActiveAdmin.register Document do
-
   scope :all, :default => true
 
   # scope :due_this_week do |documents|
   #   documents.where('due_date > ? and due_date < ?', Time.now, 1.week.from_now)
   # end
 
-  scope :mine do |documents|
-    documents.where(:user_id => current_user.id)
-  end
-  
+  # scope :mine do |documents|
+  #   documents.where(:user_id => current_user.id)
+  # end
       
   filter :title
   filter :publisher
@@ -39,7 +37,7 @@ ActiveAdmin.register Document do
     column "Source", :source  
     column "Groups", :rep_group_list, :sortable => false
     column "Creation date", :created_at
-    default_actions
+    actions
   end
 
   show do |document|
@@ -65,6 +63,18 @@ ActiveAdmin.register Document do
       #   :as => :string,
       #   :label => "Create (and add user to) a new group"
     end
-    f.buttons
+    f.actions do
+      f.action :submit
+      f.action :cancel, :wrapper_html => { :class => "cancel" }
+    end
+  end
+
+  controller do
+    def find_resource
+      Document.friendly.find(params[:id])
+    end
+    def permitted_params
+      params.permit!
+    end
   end
 end

@@ -1,7 +1,7 @@
 <%= render :partial => "shared/annotator_base" %>
 
 <script type="text/javascript" charset="utf-8">
-var document_id = <%= @document.id %>;
+var document_slug = "<%= @document.slug %>";
 var default_state = <%= @document.default_state.present? ? (raw @document.default_state) : (raw "''") %>;
 var groups = [];
 var subgroups = [];

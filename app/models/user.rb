@@ -4,9 +4,6 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :trackable, :validatable, :confirmable, :timeoutable
 
-  # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :agreement, :affiliation, :password_confirmation, :remember_me, :firstname, :lastname, :rep_privacy_list, :rep_group_list, :rep_subgroup_list, :first_name_last_initial, :username
-
   validates :agreement, presence: true
 
   extend FriendlyId

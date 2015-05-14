@@ -20,12 +20,12 @@
                     </div>
                     <div class="form-group">
                         <%= f.label "Classes" %>
-                        <%= f.text_field :rep_group_list, :class => "form-control", 'data-role' => "tagsinput", 'placeholder'=> "Enter Classes" %>
+                        <%= f.text_field :rep_group_list, :class => "form-control", 'data-role' => "tagsinput", 'placeholder'=> "Enter Classes", :value => resource.rep_group_list.join(',') %>
                         <p class="help-block">Enter the names of any classes you're in (or want to join), and <strong>press ENTER after each</strong>.</p>
                     </div>
                     <div class="form-group">
                         <%= f.label "Groups" %>
-                        <%= f.text_field :rep_subgroup_list, :class => "form-control", 'data-role' => "tagsinput", 'placeholder'=> "Enter Groups" %>
+                        <%= f.text_field :rep_subgroup_list, :class => "form-control", 'data-role' => "tagsinput", 'placeholder'=> "Enter Groups", :value => resource.rep_subgroup_list.join(',') %>
                         <p class="help-block">Enter the names of any groups you're in (or want to join), and <strong>press ENTER after each</strong></p>
                     </div>
                     <div class="form-group">

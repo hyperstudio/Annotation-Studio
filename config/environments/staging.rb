@@ -8,7 +8,7 @@ AnnotationStudio::Application.configure do
   config.cache_classes = true
 
   # Configure static asset server for tests with Cache-Control for performance
-  config.serve_static_assets = true
+  config.serve_static_files = false
 
   # Compress JavaScripts and CSS
   config.assets.compress = true

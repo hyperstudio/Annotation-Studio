@@ -35,6 +35,9 @@
             <label id="search-artwork-label" class="btn btn-primary">
               <input id="search-artwork" type="radio" name="options" autocomplete="off">Artwork
             </label>
+            <label id="search-events-label" class="btn btn-primary">
+              <input id="search-events" type="radio" name="options" autocomplete="off">Events
+            </label>
             <label id="search-people-label" class="btn btn-primary">
               <input id="search-people" type="radio" name="options" autocomplete="off">People
             </label>
@@ -58,7 +61,7 @@
 
         <!-- build the eid list if appropriate -->
         <% eid_list = [] %>
-        <% [:artwork, :person, :place, :text].each do | t | %>
+        <% [:artwork, :event, :person, :place, :text].each do | t | %>
             <% if @search_results[t].nil? == false %>
                 <% @search_results[t].each do | r | %>
                     <% eid_list.push( r['eid'] ) %>
@@ -118,22 +121,41 @@
           <% end %>
         </table>
 
-        <table id="people-results" class="table table-striped table-hover table-condensed">
+        <table id="events-results" class="table table-striped table-hover table-condensed">
           <thead>
-            <tr><th><span style="text-decoration: underline;">People:</span></th><th>Name</th><th>Birth</th><th>Death</th></tr>
+            <tr><th><span style="text-decoration: underline;">Events:</span></th><th>Name</th><th>Location</th><th>Date(s)</th></tr>
           </thead>
-          <% unless @search_results[:person].nil? %>
+          <% unless @search_results[:event].nil? %>
           <tbody data-link="row" class="rowlink">
-             <% @search_results[:person].each do | entry | %>
+             <% @search_results[:event].each do | entry | %>
               <tr><td>
                 <% if has_images( entry['images'] ) %>
                     <%= thumbnail_or_nothing entry['images'] %>
                 <% else %>
-                  <span class="glyphicon glyphicon-user"></span>
+                  <span class="glyphicon glyphicon-calendar"></span>
                 <% end %>
-              </td><td><a id="<%= entry['eid'] %>" class="clickable" title="<%= tagset_display( entry['authoritative_name'], true ) %>" ref="<%= thumbnail_url entry['images'] %>"><%= tagset_display( entry['authoritative_name'], true ) %></a></td><td><%= entry['birth'] %></td><td><%= entry['death'] %></td></tr>
+              </td><td><a id="<%= entry['eid'] %>" class="clickable" title="<%= tagset_display( entry['name'], true ) %>" ref="<%= thumbnail_url entry['images'] %>"><%= tagset_display( entry['name'], true ) %></a></td><td><%= entry['location'] %></td><td><%= ( entry['date_type'] == 'Actual' ) ? entry['event_date'] : "#{entry['from_date']}-#{entry['to_date']}" %></td></tr>
              <% end %>
           </tbody>
+          <% end %>
+        </table>
+
+        <table id="people-results" class="table table-striped table-hover table-condensed">
+          <thead>
+          <tr><th><span style="text-decoration: underline;">People:</span></th><th>Name</th><th>Birth</th><th>Death</th></tr>
+          </thead>
+          <% unless @search_results[:person].nil? %>
+              <tbody data-link="row" class="rowlink">
+              <% @search_results[:person].each do | entry | %>
+                  <tr><td>
+                    <% if has_images( entry['images'] ) %>
+                        <%= thumbnail_or_nothing entry['images'] %>
+                    <% else %>
+                        <span class="glyphicon glyphicon-user"></span>
+                    <% end %>
+                  </td><td><a id="<%= entry['eid'] %>" class="clickable" title="<%= tagset_display( entry['authoritative_name'], true ) %>" ref="<%= thumbnail_url entry['images'] %>"><%= tagset_display( entry['authoritative_name'], true ) %></a></td><td><%= entry['birth'] %></td><td><%= entry['death'] %></td></tr>
+              <% end %>
+              </tbody>
           <% end %>
         </table>
 
@@ -187,12 +209,20 @@
         //
         // setup correct search radio buttons
         //
-        <% if ( @search_types.empty? == true ) || ( ( @search_types.include? :artwork ) && ( @search_types.include? :person ) && ( @search_types.include? :place ) && ( @search_types.include? :text ) ) %>
+        <% if ( @search_types.empty? == true ) ||
+              ( ( @search_types.include? :artwork ) &&
+                ( @search_types.include? :event ) &&
+                ( @search_types.include? :person ) &&
+                ( @search_types.include? :place ) &&
+                ( @search_types.include? :text ) ) %>
            $('#search-all').prop('checked', true);
            $('#search-all-label').addClass( "active")
         <% elsif @search_types.include? :artwork %>
            $('#search-artwork').prop('checked', true);
            $('#search-artwork-label').addClass( "active")
+        <% elsif @search_types.include? :event %>
+           $('#search-events').prop('checked', true);
+           $('#search-events-label').addClass( "active")
         <% elsif @search_types.include? :person %>
            $('#search-people').prop('checked', true);
            $('#search-people-label').addClass( "active")
@@ -257,15 +287,16 @@
     function doSearchHandler( ) {
         var term = $('#search-term').val( );
         var include_artwork = $('#search-all').prop('checked') || $('#search-artwork').prop('checked' );
+        var include_events = $('#search-all').prop('checked') || $('#search-events').prop('checked' );
         var include_people = $('#search-all').prop('checked') || $('#search-people').prop('checked' );
         var include_places = $('#search-all').prop('checked') || $('#search-places').prop('checked' );
         var include_text = $('#search-all').prop('checked') || $('#search-text').prop('checked' );
-        newSearch( term, include_artwork, include_people, include_places, include_text );
+        newSearch( term, include_artwork, include_events, include_people, include_places, include_text );
     }
 
     // doing a new search in the same frame
-    function newSearch( term, include_artwork, include_people, include_places, include_text ) {
-        var types = makeTypeList( include_artwork, include_people, include_places, include_text );
+    function newSearch( term, include_artwork, include_events, include_people, include_places, include_text ) {
+        var types = makeTypeList( include_artwork, include_events, include_people, include_places, include_text );
         var newUrl = "/documents/catalog?term=" + encodeURI( term ) + "&onlyimages=<%= @onlyimages %>" + ( types ? "&types=" + types : "" );
         <% if @search_tags.empty? == false %>
            newUrl = newUrl + "&search_tags=" + encodeURI( '<%= @search_tags %>' );
@@ -274,15 +305,16 @@
     }
 
     // make the list of types to ask for
-    function makeTypeList( include_artwork, include_people, include_places, include_text ) {
+    function makeTypeList( include_artwork, include_events, include_people, include_places, include_text ) {
         var types = "";
         if( include_artwork ) { types = "artwork"; }
+        if( include_events ) { types = ( types ? types + "," : "" ) + "events"; }
         if( include_people ) { types = ( types ? types + "," : "" ) + "people"; }
         if( include_places ) { types = ( types ? types + "," : "" ) + "places"; }
         if( include_text ) { types = ( types ? types + "," : "" ) + "texts"; }
 
         // empty the typelist if we want all types and we will get all by default
-        if( include_artwork && include_people && include_places && include_text ) {
+        if( include_artwork && include_events && include_people && include_places && include_text ) {
             types = "";
         }
         return( types );

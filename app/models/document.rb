@@ -40,7 +40,7 @@ application/pdf
   has_attached_file :upload
   validates_attachment_content_type :upload, content_type: ALLOWED_CONTENT_TYPES
 
-  #scope :public, -> { where(:state => 'public').order("id asc") }
+  scope :publicly, -> { where(:state => 'public').order("id asc") }
 
   STATES = %w{ pending draft published deleted public }
 

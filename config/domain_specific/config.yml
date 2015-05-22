@@ -11,8 +11,8 @@ mit:
   welcome_message: "Welcome to Annotation Studio at <strong>MIT</strong>"
   site_color: '#A31F34'
 staging-annotationstudio:
-  site_name: MIT Staging
-  welcome_message: "Welcome to Annotation Studio Staging at <strong>MIT</strong>"
+  site_name: RSLT Staging
+  welcome_message: "Reasoning Structures in Legal Texts"
   site_color: '#A31F34'
 barnard:
   site_name: Barnard College

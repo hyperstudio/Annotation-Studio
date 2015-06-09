@@ -35,4 +35,8 @@ class User < ActiveRecord::Base
   def first_initial_last_name
      "#{firstname.first}. #{lastname}"
   end
+
+  def has_document_permissions?(document)
+    self.has_role?(:admin) || self == document.user
+  end
 end

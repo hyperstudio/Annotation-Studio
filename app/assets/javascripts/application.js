@@ -11,6 +11,7 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require jquery
+//= require jquery-ui
 //= require jquery_ujs
 //= require bootstrap
 //= require bootstrap-tagsinput
@@ -34,4 +35,6 @@
 //= require annotator.touch.min
 //= require highlighter
 //= require jquery.slimscroll.min
+//= require jquery.xcolor
 //= require ekko-lightbox.min
+//= require annotator-category

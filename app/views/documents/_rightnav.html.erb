@@ -1,6 +1,5 @@
-<!-- documents/_rightnav.html.erb -->
+<!-- documents/_rightnav.html.erb (also symlink for public_documents/_rightnav.html.erb) -->
 <% if params[:action] == 'show' %>
-<!-- documents/_rightnav.html.erb -->
 <h4>Filter annotations by:</h4>
 <p><strong>Who</strong> made them:</p>
 <div class="btn-group btn-group-sm" data-toggle="buttons-radio" id="view-chooser">
@@ -13,11 +12,31 @@
 </div>
 <p><strong>Where</strong> they occur:</p>
 <div class="btn-group btn-group-sm" data-toggle="buttons-radio" id="filter-chooser">
-  <button type="button" class="viewchoice btn btn-default btn-default-small active" id="visibleannotations">Visible portion</button>
-  <button type="button" class="viewchoice btn btn-default btn-default-small" id="allannotations">Whole document</button>
+  <button type="button" class="btn btn-default btn-default-small active" id="visibleannotations">Visible portion</button>
+  <button type="button" class="btn btn-default btn-default-small" id="allannotations">Whole document</button>
 </div>
 <p><strong>How</strong> they are tagged:</p>
 <div class="input-group" id="tag-chooser">
   <input type="text" id="tagsearchbox" placeholder="Enter tag(s) to filter on">
 </div><!-- /input-group -->
+<% if ENV["ANNOTATOR_CATEGORIES"] == 'true' -%>
+<p><strong>How</strong> they are categorized:</p>
+<div class="btn-toolbar" id="category-chooser">
+  <% AnnotationCategory.find_each do |annotation_category| -%>
+  <button id="annotation_category_<%= annotation_category.id %>" type="button" class="btn btn-default btn-sm" data-annotation_category_id="<%= annotation_category.id %>" data-hex="<%= annotation_category.hex %>"><%= annotation_category.name %></button>
+  <% end -%>
+</div><!-- /input-group -->
+<% end -%>
+<% if ENV["ANNOTATOR_CUSTOM_SORT"] == 'true' -%>
+<h4>Sort annotations by:</h4>
+<p><strong>How</strong> they are sorted:</p>
+<div class="btn-group btn-group-sm" id="sort-chooser">
+  <button type="button" class="sortchoice btn btn-default btn-default-small active" id="textpositionsort">Text Position</button>
+  <button type="button" class="sortchoice btn btn-default btn-default-small" id="customsort">Custom</button>
+</div><!-- /input-group -->
+<% end %>
+<% if @document.present? && current_user.has_document_permissions?(@document) %>
+  <h4>Default State</h4>
+  <a id="default_state" class="btn btn-default" href="#" role="button">Save Current Settings</a>
+<% end -%>
 <% end %>

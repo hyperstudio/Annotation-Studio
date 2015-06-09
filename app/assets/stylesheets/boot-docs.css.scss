@@ -73,7 +73,7 @@ div#textcontent {
 	font-style: normal;
 	font-weight: 400;
 	display: block;
-	width:100%;
+	width:95%;
 	height:1.6em;
 	white-space: nowrap;
 	overflow: hidden;
@@ -109,8 +109,14 @@ li.annotation-item.focuswhite {
 	width:360px;
 	height:85%;
 	padding:0 15px;
-  	margin-top: 60px;
+  margin-top: 30px;
 	overflow:auto;
+  li.annotation-item {
+    a.catalog-popup {
+      display: inline-block;
+      outline: none;
+    }
+  }
 }
 
 #annotation-well ul#annotation-list li span.label, #annotation-well ul#annotation-list li span.badge {
@@ -219,6 +225,10 @@ span.mycolor {
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
+.sorting_on .highlightlink.highlight {
+  display: inline-block;
+  width: 95%;
+}
 
 span.highlightborder {
 	border-left: 5px solid #F00;
@@ -236,6 +246,19 @@ span.highlightborder {
 #annotation-well ul#annotation-list li span {
 	text-decoration:none;
 	color: #111;
+}
+#annotation-well ul#annotation-list li span.handle {
+	display: none;
+	opacity: 0.1;
+}
+#annotation-well ul#annotation-list.sorting_on li span.handle {
+	display: block;
+	float: left;
+	margin-right: 4px;
+}
+#annotation-well ul#annotation-list li span.handle:hover {
+	cursor: pointer;
+	opacity: 1.0;
 }
 
 #annotation-well ul#annotation-list li.selected,
@@ -340,4 +363,9 @@ footer {
 #survey_button_container {
   margin-top:30px;
   margin-bottom:-20px;
+}
+
+#category-chooser button.btn-default:focus {
+  background-color: #FFF;
+  outline: none;
 }

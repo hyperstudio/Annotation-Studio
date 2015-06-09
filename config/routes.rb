@@ -12,9 +12,12 @@ AnnotationStudio::Application.routes.draw do
   get 'documents/catalog/image/:eid', to: 'catalog#image'
   get 'documents/catalog/reference/:eid', to: 'catalog#reference'
 
-  resources :documents
-  resources :users, only: [:show, :edit]
+  resources :documents do
+    resources :annotations
+    post 'set_default_state'
+  end
 
+  resources :users, only: [:show, :edit]
 
   authenticated :user do
     root :to => "users#show"

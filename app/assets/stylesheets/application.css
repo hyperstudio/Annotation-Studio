@@ -21,6 +21,8 @@
  *= require "users"
  *= require "richText-annotator.css"
  *= require "annotator.touch.css"
+ *= require "annotations"
+ *= require "catalog"
  *= require "ekko-lightbox.min"
  */
 

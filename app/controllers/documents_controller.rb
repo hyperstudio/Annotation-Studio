@@ -105,6 +105,16 @@ class DocumentsController < ApplicationController
     end
   end
 
+  #JSON for saving state
+  def set_default_state
+    @document = Document.find(params[:document_id])
+    @document.update_attribute(:default_state, params[:default_state])
+
+    render :json => {}
+  rescue Exception => e
+    render :json => {}
+  end
+
   # Helper which accepts an array of items and filters out those you are not allowed to read, according to CanCan abilities.
   # From Miximize.
   def filter_by_can_read(items)
@@ -121,18 +131,35 @@ class DocumentsController < ApplicationController
 
     before_filter :prepare_for_mobile
 
-  def mobile_device?
-    if session[:mobile_param]
-      session[:mobile_param] == "1"
-    else
-      request.env["HTTP_USER_AGENT"] =~ /Mobile|webOS/
-    end
-  end
-  helper_method :mobile_device?
-
   def prepare_for_mobile
     session[:mobile_param] = params[:mobile] if params[:mobile]
-   # request.format = :mobile if mobile_device?
+  end
+
+  private
+
+  def catalog_texts
+
+    if catalogue_enabled?
+       status, results = Melcatalog.texts
+       return results[:text] unless results[:text].nil?
+    end
+    return []
+  end
+
+  def catalog_content( doc )
+
+    if catalogue_enabled?
+      # we put placeholder content in earlier and replace with the real thing now
+      if doc.text.start_with?( "EID:" )
+         eid = doc.text.split( ":",2 )[ 1 ]
+         status, entry = Melcatalog.get( eid, 'stripxml' )
+         if status == 200 && entry && entry[:text] && entry[:text][ 0 ] && entry[:text][ 0 ]['content']
+           doc.text = entry[:text][ 0 ]['content']
+         else
+           doc.text = "Error getting document content from the catalog; status = #{status}, eid = #{eid}"
+         end
+      end
+    end
   end
 
   private

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141010190718) do
+ActiveRecord::Schema.define(:version => 20150324173818) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -45,6 +45,14 @@ ActiveRecord::Schema.define(:version => 20141010190718) do
 
   add_index "admin_users", ["email"], :name => "index_admin_users_on_email", :unique => true
   add_index "admin_users", ["reset_password_token"], :name => "index_admin_users_on_reset_password_token", :unique => true
+
+  create_table "annotation_categories", :force => true do |t|
+    t.string   "name",        :null => false
+    t.string   "hex"
+    t.string   "css_classes"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
 
   create_table "assignments", :force => true do |t|
     t.integer  "user_id"
@@ -91,6 +99,7 @@ ActiveRecord::Schema.define(:version => 20141010190718) do
     t.datetime "upload_updated_at"
     t.datetime "processed_at"
     t.string   "survey_link"
+    t.text     "default_state"
   end
 
   add_index "documents", ["slug"], :name => "index_documents_on_slug", :unique => true

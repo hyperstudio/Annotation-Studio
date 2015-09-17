@@ -18,9 +18,9 @@ gem 'high_voltage', '~> 2.1.0'
 gem "aws-sdk"
 gem "paperclip"
 gem "delayed_job_active_record"
-gem 'google_drive'
 gem 'pdf-reader'
 gem 'pdf-reader-html'
+gem 'yomu'
 gem 'apartment'
 
 group :development do

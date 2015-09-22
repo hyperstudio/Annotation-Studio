@@ -22,10 +22,10 @@ application/vnd.openxmlformats-officedocument.wordprocessingml.document
       end
     end
 
-    it 'returns PdfProcessor for pdf mime-types' do
+    it 'returns YomuProcessor for pdf mime-types' do
       with_real_document_processors do
         expect(described_class.processor_for('application/pdf')).to eq \
-          PdfProcessor
+          YomuProcessor
       end
     end
 

@@ -4,6 +4,7 @@ ans_dev
 /log/*.log
 /log/*
 tmp/
+documents/
 .DS_Store
 public/assets/application-*
 vendor/assets/javascripts/annotator.js

@@ -5,9 +5,9 @@ class DocumentProcessorDispatcher
     end
 
     if mime_type.in?('application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document')
-      GoogleDriveProcessor
+      YomuProcessor
     elsif mime_type == 'application/pdf'
-      PdfProcessor
+      YomuProcessor
     else
       NullProcessor
     end

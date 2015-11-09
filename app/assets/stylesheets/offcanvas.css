@@ -50,11 +50,13 @@
 #leftburger {
   float: left;
   margin-left: 0;
+  display: none !important; /* don't show this until it has some functionality */
 }
 
 #rightburger {
   float: right;
   margin-right: 0;
+  display: none !important; /* don't show this until it has some functionality */
 }
 
 @media (min-width: 1px) {

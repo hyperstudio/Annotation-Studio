@@ -43,7 +43,7 @@ production:
     DEFAULT_USERS_CAN_SEE_OTHERS_WORK: false
     UNICORN_BACKLOG: 16
     # Url to a running instance of MIT-Annotation-data-store
-    API_URL: http://path.to.your.api.com/
+    API_URL: http://path.to.your.api.com/api
     # Shared secret key between the Annotation Studio and Annotation Store
     # Make up a <32 character random string
     API_SECRET:

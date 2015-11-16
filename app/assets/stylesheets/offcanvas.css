@@ -57,11 +57,11 @@
   margin-right: 0;
 }
 
-body .navbar button#leftburger,body .navbar button#leftburger {
+body .navbar button#leftburger,body .navbar button#rightburger {
 	display: none !important; /* don't show this until it has some functionality */
 }
 
-body#documents.show .navbar button#leftburger,body#documents.show .navbar button#leftburger {
+body#documents.show .navbar button#leftburger,body#documents.show .navbar button#rightburger {
 	display: block !important; /* show the nav on the document edit page, only. */
 }
 

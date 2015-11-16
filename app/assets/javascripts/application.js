@@ -38,3 +38,4 @@
 //= require jquery.xcolor
 //= require ekko-lightbox.min
 //= require annotator-category
+//= require self_removing

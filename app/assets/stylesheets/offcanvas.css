@@ -50,13 +50,19 @@
 #leftburger {
   float: left;
   margin-left: 0;
-  display: none !important; /* don't show this until it has some functionality */
 }
 
 #rightburger {
   float: right;
   margin-right: 0;
-  display: none !important; /* don't show this until it has some functionality */
+}
+
+body .navbar button#leftburger,body .navbar button#leftburger {
+	display: none !important; /* don't show this until it has some functionality */
+}
+
+body#documents.show .navbar button#leftburger,body#documents.show .navbar button#leftburger {
+	display: block !important; /* show the nav on the document edit page, only. */
 }
 
 @media (min-width: 1px) {

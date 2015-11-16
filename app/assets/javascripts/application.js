@@ -39,3 +39,4 @@
 //= require ekko-lightbox.min
 //= require annotator-category
 //= require self_removing
+//= require remember_tabs

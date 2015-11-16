@@ -10,39 +10,37 @@
             <div class="panel-body">
                 <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :role => "form"}) do |f| %>
                     <%= devise_error_messages! %>
-                    <div class="form-group">
+					<h3>Personal Information</h3>
+                    <div class="form-group same-line">
                     	<%= f.label :firstname, "First Name" %>
                     	<%= f.text_field :firstname, :value =>  resource.firstname, :class => "form-control" %>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group same-line">
                     	<%= f.label :lastname, "Last Name" %>
                     	<%= f.text_field :lastname, :value =>  resource.lastname, :class => "form-control" %>
                     </div>
-                    <div class="form-group">
+					<div class="form-group next-line same-line">
+						<%= f.label :email %>
+						<%= f.email_field :email, :value =>  resource.email, :disabled => true, :class => "form-control" %>
+						<p class="help-block">Your email is your username, and cannot be changed.</p>
+					</div>
+					<div class="form-group same-line">
+						<%= f.label :affiliation %>
+						<%= f.text_field :affiliation, :value =>  resource.affiliation, :class => "form-control" %>
+					</div>
+					<h3 class="next-line">Classes</h3>
+					<div class="form-group">
                         <%= f.label "Classes" %>
                         <%= f.text_field :rep_group_list, :class => "form-control", 'data-role' => "tagsinput", 'placeholder'=> "Enter Classes" %>
                         <p class="help-block">Enter the names of any classes you're in (or want to join), and <strong>press ENTER after each</strong>.</p>
                     </div>
-                    <div class="form-group">
+					<h3>Groups</h3>
+					<div class="form-group">
                         <%= f.label "Groups" %>
                         <%= f.text_field :rep_subgroup_list, :class => "form-control", 'data-role' => "tagsinput", 'placeholder'=> "Enter Groups" %>
                         <p class="help-block">Enter the names of any groups you're in (or want to join), and <strong>press ENTER after each</strong></p>
                     </div>
-                    <div class="form-group">
-                    	<%= f.label :email %>
-                    	<%= f.email_field :email, :value =>  resource.email, :disabled => true, :class => "form-control" %>
-                        <p class="help-block">Your email is your username, and cannot be changed.</p>
-                    </div>
-                    <div class="form-group">
-                    	<%= f.label :affiliation %>
-                    	<%= f.text_field :affiliation, :value =>  resource.affiliation, :class => "form-control" %>
-                    </div>
-                    <div class="form-group">
-                        <%= f.label :current_password %>
-                        <%= f.password_field :current_password, :class => "form-control" %>
-                        <p class="help-block">(we need your current password to confirm your changes)</p>
-                    </div>
-                    <%= f.submit "Update", :class => "btn btn-default btn-default-primary" %>
+                     <%= f.submit "Update", :class => "btn btn-default btn-default-primary" %>
                 <% end %>
             </div><!--/panel-body -->
         </div><!--/panel -->

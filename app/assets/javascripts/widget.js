@@ -133,11 +133,19 @@ Widget.App = Backbone.Router.extend({
     var listOptions = {
       "container": listid,
       "collection": Widget.annotations
-    }
+    };
     var annotationsList = new Widget.AnnotationListView(listOptions);
 		Widget.annotations.deferred.done(function () {
 			annotationsList.render();
+			// Put the annotation count on the tab.
+			var id = annotationsList.el[0].id;
+			var el = $("#"+id);
+			var tabName = el.closest(".tab-pane").attr('id');
+			var parent = el.closest(".panel");
+			var tab = parent.find(".nav-tabs a[href='#" + tabName + "']");
+			var badge = tab.find(".badge");
+			badge.text(annotationsList.collection.length);
 			// console.info("Remote: "+ Widget.annotations.toJSON());
 		});
-	},
+	}
 });

@@ -28,6 +28,9 @@
 						<%= f.label :affiliation %>
 						<%= f.text_field :affiliation, :value =>  resource.affiliation, :class => "form-control" %>
 					</div>
+					<div class="form-group next-line same-line">
+						<button class="show-password-fields btn btn-default">Edit Password</button>
+					</div>
 					<h3 class="next-line">Classes</h3>
 					<div class="form-group">
                         <%= f.text_field :rep_group_list, :class => "form-control", 'data-role' => "tagsinput", 'placeholder'=> "Enter your class name (e.g., ENG-5)" %>
@@ -38,7 +41,7 @@
                         <%= f.text_field :rep_subgroup_list, :class => "form-control", 'data-role' => "tagsinput", 'placeholder'=> "Enter group names if any (e.g. mapping group)" %>
                         <p class="help-block">Press ENTER after each group name.</p>
                     </div>
-                     <%= f.submit "Update", :class => "btn btn-default btn-default-primary" %>
+                     <%= f.submit "Update", :class => "btn btn-default btn-default-primary btn-primary" %>
                 <% end %>
             </div><!--/panel-body -->
         </div><!--/panel -->

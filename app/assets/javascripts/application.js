@@ -40,3 +40,4 @@
 //= require annotator-category
 //= require self_removing
 //= require remember_tabs
+//= require show_password_fields

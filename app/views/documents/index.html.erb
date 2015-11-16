@@ -68,7 +68,7 @@
               <% elsif document.deleted? %>
               <i class="glyphicon glyphicon-folder-close"></i>
               <% end %></td>
-            <td>
+            <td class="button-column">
               <% if can? :update, document %>
               <%= link_to 'Edit', edit_document_path(document.friendly_id), :class =>
               'btn btn-primary btn-sm' %>
@@ -120,7 +120,7 @@
               <% elsif document.deleted? %>
               <i class="glyphicon glyphicon-folder-close"></i>
               <% end %></td>
-            <td>
+            <td class="button-column">
               <% if can? :update, document %>
               <%= link_to 'Edit', edit_document_path(document.friendly_id), :class =>
               'btn btn-primary btn-sm' %>
@@ -173,7 +173,7 @@
               <% elsif document.deleted? %>
               <i class="glyphicon glyphicon-folder-close"></i>
               <% end %></td>
-            <td>
+            <td class="button-column">
               <% if can? :update, document %>
               <%= link_to 'Edit', edit_document_path(document.friendly_id), :class =>
               'btn btn-primary btn-sm' %>

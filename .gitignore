@@ -14,7 +14,7 @@ config/database.yml
 db/backups/*
 
 # Ignore application & database configuration
-documents/
+/documents/
 vendor/assets/javascripts/_attic
 vendor/assets/stylesheets/_attic
 Gemfile.lock.temp

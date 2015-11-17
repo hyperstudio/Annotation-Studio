@@ -193,7 +193,7 @@
       <% end %></div>
     <% if can? :create, Document %>
     <ul class="nav nav-pills">
-      <li><%= link_to "New document", document_path('new') %></li>
+      <li><%= link_to raw("<span class=\"glyphicon glyphicon-plus\" aria-hidden=\"true\"></span> Create new document"), document_path('new') %></li>
     </ul>
     <% end %>
     </div><!--/panel -->

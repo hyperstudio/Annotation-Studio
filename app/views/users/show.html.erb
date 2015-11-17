@@ -53,7 +53,7 @@
       </div><!-- / .tab-pane -->
       <ul class="nav nav-pills">
         <!--<li><%#= link_to "Go to document list", documents_path %></li>-->
-        <li><%= link_to "+ Create new document", document_path('new') %></li>
+        <li><%= link_to raw("<span class=\"glyphicon glyphicon-plus\" aria-hidden=\"true\"></span> Create new document"), document_path('new') %></li>
       </ul>
     </div><!--/ panel -->
   </div><!--/ col-md-6 -->

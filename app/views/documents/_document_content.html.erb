@@ -1,0 +1,94 @@
+
+<% if controller.action_name == "new" or @document.draft? %>
+	<h4>Content</h4>
+
+	<div class="panel-group" id="accordion">
+
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h4 class="panel-title">
+					<a data-toggle="collapse" data-parent="#accordion" href="#uploader">
+						Upload a file (word, PDF or plain text)
+					</a>
+				</h4>
+			</div>
+			<div id="uploader" class="panel-collapse collapse">
+				<div class="panel-body">
+					<%= f.label :upload, 'Pick a file from your computer' %>
+					<div class="fileinput fileinput-new input-group" data-provides="fileinput">
+						<div class="form-control" data-trigger="fileinput">
+							<i class="glyphicon glyphicon-file fileinput-exists"></i>
+							<span class="fileinput-filename"></span></div>
+						<span class="input-group-addon btn btn-default btn-file"><span class="fileinput-new">Select file</span><span class="fileinput-exists">Change</span><%= f.file_field :upload %></span>
+						<a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
+					</div>
+					<p class="help-block">This feature converts your documents for use within Annotation Studio, and
+						strips out all formatting. Simple, single-column documents work best.</p>
+				</div>
+			</div>
+		</div>
+
+		<% unless @catalog_texts.nil? || @catalog_texts.empty? %>
+
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" data-parent="#accordion" href="#selector">
+							Select a text from the Catalog
+						</a>
+					</h4>
+				</div>
+				<div id="selector" class="panel-collapse collapse">
+					<div class="panel-body">
+						<%= f.label :select, 'Select a text' %>
+						<table class="table table-striped table-bordered table-hover">
+							<thead>
+							<tr>
+								<th>Title</th>
+								<th>Author</th>
+							</tr>
+							</thead>
+							<tbody data-link="row" class="rowlink">
+							<% @catalog_texts.each do |entry| %>
+								<tr>
+									<td><a id="<%= entry['eid'] %>" class="clickable"><%= entry['name'] %></a></td>
+									<td><%= entry['author'] %></td>
+								</tr>
+							<% end %>
+							</tbody>
+						</table>
+
+						<p class="help-block">Select the text you would like to begin annotating.</p>
+					</div>
+				</div>
+			</div>
+		<% end %>
+
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h4 class="panel-title">
+					<a data-toggle="collapse" data-parent="#accordion" href="#paster">
+						Paste or type directly into the form
+					</a>
+				</h4>
+			</div>
+			<% paster_class = controller.action_name == "new" ? 'panel-collapse collapse' : "panel-collapse collapse in" %>
+			<div id="paster" class="<%= paster_class %>">
+				<div class="panel-body">
+					<%= f.label :text %>
+					<%= f.text_area :text, :class => 'form-control text-area', :size => "18x18" %>
+					<br>
+					<label id="chapter-label" for="chapters" class="btn btn-default">Add Chapters</label>
+
+					<div id="chapter-editor">
+						<p class="help-block">For chapters links to work, insert named anchors in the text above, in the
+							form:"&lt;a name=&quot;2HCH0001&quot; id=&quot;2HCH0001&quot;&gt;&lt;/a&gt;"</p>
+						<p class="help-block">Put chapters links in the field below, in the form:"&lt;li&gt;&lt;a href=&quot;#2HCH0001&quot;&gt;1.
+							Loomings.&lt;/a&gt;&lt;/li&gt;"</p>
+						<%= f.text_area :chapters, :class => 'form-control chapter-area', :size => "18x6" %>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+<% end %>

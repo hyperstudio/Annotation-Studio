@@ -107,3 +107,8 @@ body#documents.show .navbar button#leftburger,body#documents.show .navbar button
 #userfilter, #viewportfilter {
   display: inline-block;
 }
+
+.secondary-text {
+	color: #888888;
+	font-size: 12px;
+}

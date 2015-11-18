@@ -2,6 +2,7 @@
 <%= content_for :body_class, 'index' %>
 <%= content_for :page_title, 'Dashboard' %>
 <%= stylesheet_link_tag "users" %>
+<%= render "/shared/document_titles" %>
 <div class="row">
   <div class="col-md-6">
     <div class="panel panel-default" id="dashboard-documents">
@@ -194,7 +195,7 @@ jQuery(function ($) {
 
 </script>
 <script type="text/template" id="user-comment-template">
-  <span class="user-comment"><a href="{{uri}}#hl{{uuid}}" target="_blank">{{{text}}}</a></span>
+  <span class="user-comment"><span class="pull-right">{{formattedDate}}</span><a href="{{uri}}#hl{{uuid}}" target="_blank">{{{text}}}</a><div class="secondary-text">{{title}} ({{username}})</div></span>
 </script>
 <script type="text/template" id="user-highlight-template">
   <span class="user-highlight"><a href="{{uri}}#hl{{uuid}}" target="_blank">{{{quote}}}</a></span>

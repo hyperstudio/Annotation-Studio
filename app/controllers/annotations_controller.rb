@@ -15,6 +15,7 @@ class AnnotationsController < ApplicationController
         end
         @token = session['jwt']
         @loadOptions = loadOptions.to_json
+        @document_list = Document.all # for getting document name in annotations table.
 
         respond_to do |format|
             format.html { render :index }

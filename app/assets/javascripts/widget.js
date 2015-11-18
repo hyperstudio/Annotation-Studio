@@ -1,3 +1,7 @@
+/*globals Mustache, Backbone */
+/*globals documentList */
+/*globals Widget:true */
+
 Widget = window.Widget || {};
 
 // Models
@@ -61,19 +65,29 @@ Widget.AnnotationView = Backbone.View.extend({
 		var txt = this.model.get("text");
 		var qt = this.model.get("quote");
 		var date = this.model.get("updated");
+		if (date)
+			this.model.set("formattedDate", window.formatDateTime(date));
+		var slug = this.model.get("uri");
+		if (slug) {
+			slug = slug.split("/");
+			slug = slug[slug.length - 1];
+			var title = documentList[slug];
+			title = title.replace(/&apos;/g, "'");
+			this.model.set('title', title);
+		}
 
-		if (txt != "") { // This annotation contains a comment
+		if (txt !== "") { // This annotation contains a comment
 			this.mdConvert();
 			if (txt.length > 50) {
 				this.model.set("text" , txt.substring(0,50) + "...");
 			}
 			else{
-				this.model.set("text" , "<span class=\"pull-right\">" + window.formatDateTime(date) + "</span>" + txt);
+				this.model.set("text" , txt);
 			}
 			$(this.el).html(Mustache.to_html(this.commenttemplate, this.model.toJSON()));
 		}
 		else { // This is just a highlight -- no contents
-			if (qt != "") { // This annotation contains a comment
+			if (qt !== "") { // This annotation contains a comment
 				if (qt.length > 50) {
 					this.model.set("quote" , qt.substring(0,50) + "...");
 				}

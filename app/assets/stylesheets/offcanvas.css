@@ -120,3 +120,12 @@ body#documents.show .navbar button#leftburger,body#documents.show .navbar button
 	padding-top: 15px;
 	padding-bottom: 15px;
 }
+
+.home-image {
+	z-index: -1;
+	overflow: hidden;
+}
+
+.home-image img {
+	width: 100%;
+}

@@ -54,6 +54,11 @@
     </nav>
     <% end %>
 
+	<% if params[:controller] == 'devise/sessions' %>
+	<div class="home-image">
+		<%= image_tag("home.png", { alt: 'Cover Photo' }) %>
+	</div>
+<% end %>
     <div class="container">
       <%= render partial: "shared/noscript" %>
       <%= render partial: "shared/flash_messages", flash: flash %>

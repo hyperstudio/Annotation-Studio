@@ -23,26 +23,4 @@
       </legend>
     </p>
   </div>
-	<div class="col-md-4" id="login">
-      <div class="well">
-  		<h4>Sign in</h4>
-    		<%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :role => "form"}) do |f| %>
-	     	<%= devise_error_messages! %>
-
-        <div class="form-group">
-				<%= f.label :email %>
-				<%= f.email_field :email, :class => "form-control" %>
-				</div>
-
-        <div class="form-group">
-				<%= f.label :password %>
-				<%= f.password_field :password, :class => "form-control" %>
-				</div>
-
-				<div><%= f.submit "Sign in", :class => "btn btn-default btn-default-primary" %></div>
-
-    		<% end %>
-      </div><!--/well -->
-      <%= render "links" %>
-	</div><!--/col -->
 </div><!--/row -->

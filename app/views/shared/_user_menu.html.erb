@@ -20,8 +20,26 @@
     <li class="<%= 'active' if current_page?(admin_students_path) %>"><%= link_to(raw('Manage Users <i class="fa fa-external-link-square"></i>'), admin_students_path, :target => '_blank') %></li>
     <% end %>
     <% else %>
-    <li class="<%= 'active' unless current_page?(new_user_registration_path) %>"><%= link_to('Login', new_user_session_path)  %></li>
-    <li class="<%= 'active' if current_page?(new_user_registration_path) %>"><%= link_to('Register', new_user_registration_path)  %></li>
+		  <li><div class="dropdown">
+			  <button class="dropdown-toggle menu-button" type="button" id="login-form" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+				  Login
+				  <span class="caret"></span>
+			  </button>
+			  <ul class="dropdown-menu" aria-labelledby="login-form">
+				  <li><%= render "/devise/sessions/sign_in" %></li>
+			  </ul>
+		  </div></li>
+
+		  <li><div class="dropdown">
+			  <button class="dropdown-toggle menu-button" type="button" id="login-form" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+				  Register
+				  <span class="caret"></span>
+			  </button>
+			  <ul class="dropdown-menu" aria-labelledby="login-form">
+				  <li><%= render "/devise/sessions/sign_up" %></li>
+			  </ul>
+		  </div></li>
+
     <li><a href="http://support.annotationstudio.org/" target="_blank">Help <i class="fa fa-external-link-square"></i></a></li>
     <% end %>
   </ul>

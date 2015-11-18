@@ -129,3 +129,7 @@ body#documents.show .navbar button#leftburger,body#documents.show .navbar button
 .home-image img {
 	width: 100%;
 }
+
+.well.devise {
+	width: 360px;
+}

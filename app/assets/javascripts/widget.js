@@ -57,9 +57,10 @@ Widget.AnnotationView = Backbone.View.extend({
 		this.href="#full"+this.model.get("uuid");
 	},
 	render: function () {
-		$(this.el).find("highlight.comment img").addClass("thumbnail");
+		$(this.el).find(".highlight.comment img").addClass("thumbnail");
 		var txt = this.model.get("text");
 		var qt = this.model.get("quote");
+		var date = this.model.get("updated");
 
 		if (txt != "") { // This annotation contains a comment
 			this.mdConvert();
@@ -67,7 +68,7 @@ Widget.AnnotationView = Backbone.View.extend({
 				this.model.set("text" , txt.substring(0,50) + "...");
 			}
 			else{
-				this.model.set("text" , txt);
+				this.model.set("text" , "<span class=\"pull-right\">" + window.formatDateTime(date) + "</span>" + txt);
 			}
 			$(this.el).html(Mustache.to_html(this.commenttemplate, this.model.toJSON()));
 		}

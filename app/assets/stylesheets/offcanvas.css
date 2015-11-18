@@ -112,3 +112,11 @@ body#documents.show .navbar button#leftburger,body#documents.show .navbar button
 	color: #888888;
 	font-size: 12px;
 }
+
+.menu-button {
+	border: none;
+	background: transparent;
+	color: #9d9d9d;
+	padding-top: 15px;
+	padding-bottom: 15px;
+}

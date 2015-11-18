@@ -1,4 +1,17 @@
   <ul class="nav navbar-nav pull-right hidden-xs" id="globalnav">
+	  <li><div class="dropdown">
+		  <button class="dropdown-toggle menu-button" type="button" id="about-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+			  About
+			  <span class="caret"></span>
+		  </button>
+		  <ul class="dropdown-menu" aria-labelledby="about-menu">
+			  <li><a href="http://www.annotationstudio.org/project/" target="_blank">Project <i class="fa fa-external-link-square"></i></a></li>
+			  <li><a href="http://www.annotationstudio.org/pedagogy/" target="_blank">Pedagogy <i class="fa fa-external-link-square"></i></a></li>
+			  <li><a href="http://www.annotationstudio.org/community/" target="_blank">Community <i class="fa fa-external-link-square"></i></a></li>
+			  <li><a href="http://www.annotationstudio.org/support/" target="_blank">Support <i class="fa fa-external-link-square"></i></a></li>
+			  <li><a href="http://www.annotationstudio.org/news/" target="_blank">News <i class="fa fa-external-link-square"></i></a></li>
+		  </ul>
+	  </div></li>
     <% if user_signed_in? %>
     <li class="<%= 'active' if current_page?(edit_user_registration_path) %>"><%= link_to("My Profile", edit_user_registration_path, :id => "user-account-edit") %></li>
     <li><a href="http://support.annotationstudio.org/" target="_blank">Help <i class="fa fa-external-link-square"></i></a></li>

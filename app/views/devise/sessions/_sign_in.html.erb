@@ -1,5 +1,5 @@
 <div class="well devise">
-	<h4>Sign in</h4>
+	<h4>Log in</h4>
 	<%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :role => "form"}) do |f| %>
 		<%= devise_error_messages! %>
 
@@ -13,7 +13,7 @@
 			<%= f.password_field :password, :class => "form-control" %>
 		</div>
 
-		<div><%= f.submit "Sign in", :class => "btn btn-default btn-default-primary" %></div>
+		<div><%= f.submit "Log in", :class => "btn btn-default btn-default-primary" %></div>
 
 	<% end %>
 </div><!--/well -->

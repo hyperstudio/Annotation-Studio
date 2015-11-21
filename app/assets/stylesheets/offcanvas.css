@@ -132,4 +132,18 @@ body#documents.show .navbar button#leftburger,body#documents.show .navbar button
 
 .well.devise {
 	width: 360px;
+	padding-top: 0;
+}
+
+.well.devise h4 {
+	border-bottom: 1px solid #ddd;
+	padding: 8px;
+	text-align: center;
+	font-weight: bold;
+	font-size: 24px;
+	margin-top: 0;
+}
+
+.dropdown-menu-right {
+	padding-top: 0;
 }

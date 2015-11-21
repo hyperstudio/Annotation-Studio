@@ -1,4 +1,4 @@
-          <%= form_for (@document), :html => { :role => 'form' } do |f| %>
+          <%= form_for (@document), :html => { :role => 'form', class: "confirm-changes" } do |f| %>
 <%= render 'document_content', f: f %>
 
           	<h4>Metadata</h4>

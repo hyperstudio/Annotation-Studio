@@ -147,3 +147,7 @@ body#documents.show .navbar button#leftburger,body#documents.show .navbar button
 .dropdown-menu-right {
 	padding-top: 0;
 }
+
+#navbar {
+	z-index: 2000;
+}

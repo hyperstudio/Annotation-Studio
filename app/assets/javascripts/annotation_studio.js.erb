@@ -49,7 +49,7 @@ var annotation_studio = {
     // When the local object is updated (contains previously created/stored UUID), load the sidebar from local data
     subscriber.subscribe('annotationUpdated', annotation_studio.loadSidebar);
     subscriber.subscribe('annotationDeleted', annotation_studio.deleteFromSidebar);
-    $(".annotator-checkbox label").text('Allow my groups to view this annotation');
+    $(".annotator-checkbox label").text('My groups can view this annotation');
 
     sidebar.filtered = $('#visibleannotations').hasClass('active');
     sidebar.sort_editable = sidebar_sort_editable;

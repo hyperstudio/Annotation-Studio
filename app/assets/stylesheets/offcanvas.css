@@ -168,3 +168,7 @@ ol.breadcrumb.second-line {
 .second-line li:last-child:before {
 	content: "";
 }
+
+.cancel-password-fields {
+	margin-top: 8px;
+}

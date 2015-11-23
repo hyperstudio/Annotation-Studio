@@ -77,7 +77,7 @@ gem "meta_search"#,    '>= 1.1.0.pre'
 gem "figaro"
 
 gem 'will_paginate', '> 3.0'
-gem 'runtimeerror_notifier'
+gem 'runtimeerror_notifier', '0.0.24' # NOTE-PER: This is the last version that works with Rails 3.2.x. After upgrading to Rails 4, you can remove the version.
 gem 'intercom-rails'
 
 gem "melcatalog", :path => "vendor"

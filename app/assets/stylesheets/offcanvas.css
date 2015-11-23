@@ -153,7 +153,7 @@ body#documents.show .navbar button#leftburger,body#documents.show .navbar button
 }
 
 ol.breadcrumb.second-line {
-	margin: 0;
+	margin: 4px 0 0 0;
 	position: relative;
 }
 
@@ -161,8 +161,8 @@ ol.breadcrumb.second-line {
 	position: absolute;
 	font-size: 14px;
 	text-align: left;
-	left: 8px;
-	bottom: -14px;
+	left: 6px;
+	white-space: nowrap;
 }
 
 .second-line li:last-child:before {

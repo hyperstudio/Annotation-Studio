@@ -7,7 +7,7 @@
   <div class="col-md-6">
     <div class="panel panel-default" id="dashboard-documents">
       <div class="panel-heading">
-        <span class="panel-title"><%= link_to "Documents", documents_path %></span>
+        <span class="panel-title"><%= link_to "Documents", documents_path %> <span class="badge"><%= @document_list.count %></span></span>
         <ul class="nav nav-tabs nav-tabs-xs pull-right" id="document-tabs" role="tablist">
           <li class="active"><a href="#assigned" data-toggle="tab"><span class="badge"><%= Document.tagged_with(current_user.rep_group_list, :any =>true).size %></span> Assigned</a></li>
           <li><a href="#created" data-toggle="tab"><span class="badge"><%= current_user.documents.size %></span> Created</a></li>
@@ -111,7 +111,7 @@
     <div class="panel panel-default" id="dashboard-groups">
       <div class="panel-heading">
         <span class="panel-title">
-          <%= link_to "Classes and Groups", groups_path %></span>
+          <%= link_to "Classes and Groups", groups_path %> <span class="badge"><%= current_user.rep_group_list.length %></span></span>
         <ul class="nav nav-tabs nav-tabs-xs pull-right" id="group-tabs" role="tablist">
           <li>
             <a href="#subgroups" data-toggle="tab">

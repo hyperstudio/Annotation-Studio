@@ -160,7 +160,8 @@ ol.breadcrumb.second-line {
 .second-line li:last-child {
 	position: absolute;
 	text-align: left;
-	left: 6px;
+	left: 5px;
+	top: 19px;
 	white-space: nowrap;
 }
 

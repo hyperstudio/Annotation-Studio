@@ -51,7 +51,7 @@
           true).each do |document| %>
           <tr>
             <td>
-              <%= link_to document.title, document_path(document.friendly_id), target: 'blank' %></td>
+              <%= link_to document.title, document_path(document.friendly_id) %></td>
             <td>
               <%= document.author %></td>
             <td>
@@ -100,7 +100,7 @@
           <% if can? :read, document %>
           <tr>
             <td>
-              <%= link_to document.title, document_path(document.friendly_id), target: 'blank' %></td>
+              <%= link_to document.title, document_path(document.friendly_id) %></td>
             <td>
               <%= document.author %></td>
             <td>
@@ -153,7 +153,7 @@
           <% Document.order("created_at DESC").each do |document| %>
           <tr>
             <td>
-              <%= link_to document.title, document_path(document.friendly_id), target: 'blank' %></td>
+              <%= link_to document.title, document_path(document.friendly_id) %></td>
             <td>
               <%= document.author %></td>
             <td>

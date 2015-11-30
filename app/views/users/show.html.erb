@@ -21,7 +21,7 @@
             <% Document.order("created_at DESC").tagged_with(current_user.rep_group_list, :any =>
             true).limit(10).each do |document| %>
             <li class="list-group-item">
-              <%= link_to document.title, document_path(document.friendly_id), target: 'blank' %>
+              <%= link_to document.title, document_path(document.friendly_id) %>
               <span class="pull-right">
                 <%= document.created_at.strftime("%m/%d/%Y") %></span>
             </li>
@@ -38,7 +38,7 @@
               <% current_user.documents.order("created_at DESC").limit(10).each do |document| %>
                 <% if can? :read, document %>
                   <li class="list-group-item">
-                    <%= link_to document.title, document_path(document.friendly_id), target: 'blank' %>
+                    <%= link_to document.title, document_path(document.friendly_id) %>
                     <span class="pull-right">
                       <%= document.created_at.strftime("%m/%d/%Y") %></span>
                   </li>
@@ -195,8 +195,8 @@ jQuery(function ($) {
 
 </script>
 <script type="text/template" id="user-comment-template">
-  <span class="user-comment"><span class="pull-right">{{formattedDate}}</span><a href="{{uri}}#hl{{uuid}}" target="_blank">{{{text}}}</a><div class="secondary-text">{{title}} ({{username}})</div></span>
+  <span class="user-comment"><span class="pull-right">{{formattedDate}}</span><a href="{{uri}}#hl{{uuid}}">{{{text}}}</a><div class="secondary-text">{{title}} ({{username}})</div></span>
 </script>
 <script type="text/template" id="user-highlight-template">
-  <span class="user-highlight"><a href="{{uri}}#hl{{uuid}}" target="_blank">{{{quote}}}</a></span>
+  <span class="user-highlight"><a href="{{uri}}#hl{{uuid}}">{{{quote}}}</a></span>
 </script>

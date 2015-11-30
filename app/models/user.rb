@@ -39,4 +39,9 @@ class User < ActiveRecord::Base
   def has_document_permissions?(document)
     self.has_role?(:admin) || self == document.user
   end
+
+  def self.all_tags()
+    tags = User.rep_group_counts.map{|t| t.name}
+    return tags.sort!
+  end
 end

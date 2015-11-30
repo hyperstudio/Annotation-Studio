@@ -23,7 +23,12 @@
             <li class="list-group-item">
               <%= link_to document.title, document_path(document.friendly_id) %>
               <span class="pull-right">
+				  <% if document.rep_group_list.length > 0 %>
+              <span class="label label-info">
+                <%= document.rep_group_list[0] %></span>
+              <% end %>
                 <%= document.created_at.strftime("%m/%d/%Y") %></span>
+				<div class="clearfix"></div>
             </li>
             <% end %>
             <% else %>

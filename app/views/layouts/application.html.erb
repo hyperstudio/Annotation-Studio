@@ -16,6 +16,12 @@
     <%= javascript_include_tag "application" %>
     <script type="text/javascript" src="//use.typekit.net/wod1jtz.js"></script>
     <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+	<script type="text/javascript">
+		var icons = {
+			external_link: '<%= asset_path('external-link.png') %>',
+			file_image: '<%= asset_path('file-image.png')%>'
+		}
+	</script>
 </head>
 <body id="<%= yield(:body_id) %>" class="<%= yield(:body_class) %>">
 

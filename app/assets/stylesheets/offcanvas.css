@@ -172,3 +172,14 @@ ol.breadcrumb.second-line {
 .cancel-password-fields {
 	margin-top: 8px;
 }
+
+.ellipsis {
+	text-overflow: ellipsis;
+	max-width: 380px;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+.ellipsis.long {
+	max-width: 900px;
+}

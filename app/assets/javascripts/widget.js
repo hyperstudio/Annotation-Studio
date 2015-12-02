@@ -76,24 +76,29 @@ Widget.AnnotationView = Backbone.View.extend({
 			this.model.set('title', title);
 		}
 
+		var groups = this.model.get("groups");
+		if (groups && groups.length > 0)
+			this.model.set("class", groups[0]);
 		if (txt !== "" && txt !== null) { // This annotation contains a comment
 			this.mdConvert();
-			if (txt.length > 50) {
-				this.model.set("text" , txt.substring(0,50) + "...");
-			}
-			else{
-				this.model.set("text" , txt);
-			}
+			//if (txt.length > 50) {
+			//	this.model.set("text" , txt.substring(0,50) + "...");
+			//}
+			//else{
+			if (txt.substring(0,3) === "<p>" && txt.slice(-4) === '</p>')
+				txt = txt.slice(3,-4);
+			this.model.set("text" , txt);
+			//}
 			$(this.el).html(Mustache.to_html(this.commenttemplate, this.model.toJSON()));
 		}
 		else { // This is just a highlight -- no contents
 			if (qt !== "" && qt !== null) { // This annotation contains a comment
-				if (qt.length > 50) {
-					this.model.set("quote" , qt.substring(0,50) + "...");
-				}
-				else {
+				//if (qt.length > 50) {
+				//	this.model.set("quote" , qt.substring(0,50) + "...");
+				//}
+				//else {
 					this.model.set("quote" , qt);
-				}
+				//}
 				$(this.el).html(Mustache.to_html(this.highlighttemplate, this.model.toJSON()));
 			}
 		}

@@ -28,10 +28,12 @@
   });
 </script>
 <script type="text/template" id="user-comment-template">
-  <span class="user-comment"><span class="pull-right">{{formattedDate}}</span><a href="{{uri}}#hl{{uuid}}">{{{text}}}</a><div class="secondary-text">{{title}} ({{username}})</div>&raquo; {{quote}}</span>
+	<span class="user-highlight"><span class="pull-right">{{formattedDate}}</span><div class="ellipsis">&raquo; <a href="{{uri}}#hl{{uuid}}">{{{quote}}}</a></div></span>
+  <span class="user-comment"><div class="ellipsis long">{{{text}}}</div><div class="secondary-text">{{title}} ({{username}}) <span class="label label-info">{{class}}</span></div></span>
 </script>
 <script type="text/template" id="user-highlight-template">
-  <span class="user-highlight"><a href="{{uri}}#hl{{uuid}}">{{{quote}}}</a></span>
+	<span class="user-highlight"><div class="ellipsis long">&raquo; <a href="{{uri}}#hl{{uuid}}">{{{quote}}}</a></div></span>
+	<span class="user-comment"><div class="secondary-text">{{title}} ({{username}}) <span class="label label-info">{{class}}</span></div></span>
 </script>
 <div class="row">
   <div class="col-md-12">

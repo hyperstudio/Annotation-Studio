@@ -28,7 +28,22 @@ Widget.Annotation = Backbone.Model.extend({
 Widget.RemoteAnnotationList = Backbone.Collection.extend({
 	model: Widget.Annotation,
 	comparator: function(annotation) {
-		return - moment(annotation.get("created"));
+		// sort first by document title, which we don't readily have in the object, so we add it if needed.
+		// then sort by time in reverse order. Since the sort rank is returned as a string, we can't just return a negative number,
+		// so we subtract the time from a really large number.
+		var created = 5000000000000 - moment(annotation.get("created"));
+		var title = annotation.get("title");
+		if (!title) {
+			var slug = annotation.get("uri");
+			if (slug) {
+				slug = slug.split("/");
+				slug = slug[slug.length - 1];
+				title = documentList[slug];
+				title = title.replace(/&apos;/g, "'");
+				annotation.set('title', title);
+			}
+		}
+		return annotation.get("title") + created;
 	},
 	initialize: function (options, endpoint, token) {
 		this.url = endpoint + "/search";

@@ -255,6 +255,18 @@ Sidebar.AnnotationListView = Backbone.View.extend({
   }
 });
 
+function updateTagSelector(tags) {
+	var items = "<li>Select tag(s) to filter on</li>";
+	var selected = annotation_studio.selectedTags;
+	for (var key in tags) {
+		if (tags.hasOwnProperty(key)) {
+			var checked =(selected.indexOf(key) >= 0) ? "checked" : "";
+			items += '<li><input type="checkbox" ' + checked + ' id="tag_check_' + key.replace(/\W/g, '') + '" value="' + key + '" /><label for="tag_check_' + key.replace(/\W/g, '') + '">' + key + "</label></li>";
+		}
+	}
+	$("#annotation-tag-list").html(items);
+}
+
 // Application
 Sidebar.App = Backbone.Router.extend({
   // Not currently being invoked.
@@ -265,6 +277,16 @@ Sidebar.App = Backbone.Router.extend({
   // takes an array of existing annotation object literals.
   listAnnotations: function(annotationArray) {
     Sidebar.annotations = new Sidebar.LocalAnnotationList(annotationArray);
+	  var tagList = {};
+	  for (var i = 0; i < annotationArray.length; i++) {
+		  var tags = annotationArray[i].tags;
+		  if (tags) {
+			  for (var j = 0; j < tags.length; j++) {
+				  tagList[tags[j]] = true;
+			  }
+		  }
+	  }
+	  updateTagSelector(tagList);
     var annotationsList = new Sidebar.AnnotationListView({
       "container": $('#annotation-well'),
       "collection": Sidebar.annotations

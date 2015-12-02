@@ -183,3 +183,18 @@ ol.breadcrumb.second-line {
 .ellipsis.long {
 	max-width: 900px;
 }
+
+ul.annotation-tags {
+	margin-top: 40px;
+	padding: 8px;
+	background: #ffffff;
+	border-radius: 4px;
+}
+
+.annotation-tags li {
+	list-style: none;
+}
+
+.annotation-tags input {
+	margin-right: 8px;
+}

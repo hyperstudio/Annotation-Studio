@@ -55,6 +55,7 @@ var annotation_studio = {
     sidebar.sort_editable = sidebar_sort_editable;
     sidebar.subscriber = subscriber;
   },
+	selectedTags: [],
   loadOptions: function(overrides) {
     var annotation_categories = [];
     $.each($('#category-chooser button.active'), function(i, j) {
@@ -75,6 +76,7 @@ var annotation_studio = {
     if($('#tagsearchbox').length && $('#tagsearchbox').val() != '') {
       settings.tags = $('#tagsearchbox').val();
     }
+	  settings.tags = annotation_studio.selectedTags.join(",");
 
     $.each(overrides, function(i, j) {
       settings[i] = j;
@@ -99,6 +101,16 @@ var annotation_studio = {
   tagFilter: function(event) {
     $('*[data-role="remove"]').hide();
     annotation_studio.filterAnnotations(event);
+  },
+  tagFilterCheck: function(event) {
+	  var parent = $("#annotation-tag-list");
+	  var checks = parent.find('input:checkbox:checked');
+	  var tags = [];
+	  for (var i = 0; i < checks.length; i++)
+		  tags.push(checks[i].value);
+	  annotation_studio.selectedTags = tags;
+
+	  annotation_studio.filterAnnotations(event);
   },
   categoryFilter: function(event) {
     $(event.currentTarget).toggleClass('active').removeAttr('style');
@@ -274,6 +286,9 @@ jQuery(function($) {
   $('#userview').on('click', { id: 'userview' }, annotation_studio.modeFilter);
   $('#groupview').on('click', { id: 'groupview' }, annotation_studio.modeFilter);
   $('#classview').on('click', { id: 'classview' }, annotation_studio.modeFilter)
+
+	var tagsElement = $("#annotation-tag-list");
+	$("body").on('click', '#annotation-tag-list input', annotation_studio.tagFilterCheck);
 
   $('#tagsearchbox').tagsinput()
   $('#tagsearchbox').on('itemAdded', annotation_studio.tagFilter);

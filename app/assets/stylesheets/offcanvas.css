@@ -185,9 +185,8 @@ ol.breadcrumb.second-line {
 }
 
 ul.annotation-tags {
-	margin-top: 40px;
 	padding: 8px;
-	background: #ffffff;
+	background-color: #e6e6e6;
 	border-radius: 4px;
 }
 
@@ -201,4 +200,10 @@ ul.annotation-tags {
 
 .panel-title > a {
 	color: #337ab7;
+}
+
+#default_state {
+	padding-top: 0;
+	padding-bottom: 0;
+	margin-top: 60px;
 }

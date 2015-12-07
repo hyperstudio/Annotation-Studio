@@ -233,9 +233,12 @@ Sidebar.AnnotationListView = Backbone.View.extend({
 
       // console.info("This offset top "+$(this).offset().top);
       // console.info("IdTarget offset top "+$(idtarget).offset().top);
-      $('html,body').animate({scrollTop: $(idtarget).offset().top - 150}, 500);
-      $(".glyphicon-comment").remove();
-      $(idtarget).prepend('<i class="glyphicon glyphicon-comment"></i>');
+		var el = $(idtarget);
+		if (el.length > 0) {
+			$('html,body').animate({scrollTop: $(idtarget).offset().top - 150}, 500);
+			$(".glyphicon-comment").remove();
+			$(idtarget).prepend('<i class="glyphicon glyphicon-comment"></i>');
+		}
       // event.stopPropagation();
     });
 
@@ -256,13 +259,24 @@ Sidebar.AnnotationListView = Backbone.View.extend({
 });
 
 function updateTagSelector(tags) {
-	var items = "<li>Select tag(s) to filter on</li>";
+	var items = "";
 	var selected = annotation_studio.selectedTags;
+	var tagArray = [];
 	for (var key in tags) {
 		if (tags.hasOwnProperty(key)) {
-			var checked =(selected.indexOf(key) >= 0) ? "checked" : "";
+			tagArray.push(key);
+		}
+	}
+	if (tagArray.length === 0)
+		items = "<li>There are no tags in this document to filter by.</li>";
+	else {
+		tagArray = tagArray.sort();
+		for (var i = 0; i < tagArray.length; i++) {
+			key = tagArray[i];
+			var checked = (selected.indexOf(key) >= 0) ? "checked" : "";
 			items += '<li><input type="checkbox" ' + checked + ' id="tag_check_' + key.replace(/\W/g, '') + '" value="' + key + '" /><label for="tag_check_' + key.replace(/\W/g, '') + '">' + key + "</label></li>";
 		}
+		items = "<li>Select tag(s) to filter on</li>" + items;
 	}
 	$("#annotation-tag-list").html(items);
 }
@@ -274,19 +288,19 @@ Sidebar.App = Backbone.Router.extend({
     'list':  'listAnnotations',
     'update':  'updateAnnotations'
   },
+	tagList: {},
   // takes an array of existing annotation object literals.
   listAnnotations: function(annotationArray) {
     Sidebar.annotations = new Sidebar.LocalAnnotationList(annotationArray);
-	  var tagList = {};
 	  for (var i = 0; i < annotationArray.length; i++) {
 		  var tags = annotationArray[i].tags;
 		  if (tags) {
 			  for (var j = 0; j < tags.length; j++) {
-				  tagList[tags[j]] = true;
+				  this.tagList[tags[j]] = true;
 			  }
 		  }
 	  }
-	  updateTagSelector(tagList);
+	  updateTagSelector(this.tagList);
     var annotationsList = new Sidebar.AnnotationListView({
       "container": $('#annotation-well'),
       "collection": Sidebar.annotations
@@ -329,7 +343,7 @@ function matchesFilters(elem) {
 }
 
 function isScrolledIntoView(elem) {
-  if (typeof elem !== 'undefined') {
+  if (typeof elem !== 'undefined' && $(elem).length > 0) {
     var docViewTop = $(window).scrollTop();
     var docViewBottom = docViewTop + $(window).height();
     var elemTop = $(elem).offset().top;

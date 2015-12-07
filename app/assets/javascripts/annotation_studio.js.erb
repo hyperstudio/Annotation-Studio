@@ -96,6 +96,8 @@ var annotation_studio = {
   },
   modeFilter: function(event) {
     $('.viewchoice').removeClass("active");
+	  $('.viewchoice').addClass("btn-primary");
+	  $(event.currentTarget).removeClass("btn-primary");
     annotation_studio.filterAnnotations(event);
   },
   tagFilter: function(event) {
@@ -123,6 +125,8 @@ var annotation_studio = {
     // TODO: Shouldn't bootstrap handle this without code?
     $('.sortchoice').removeClass("active");
     $(this).addClass('active');
+    $('.sortchoice').addClass("btn-primary");
+    $(this).removeClass('btn-primary');
 
     // TODO: Is there a better way to rerender annotations?
     sidebar.listAnnotations(subscriber.dumpAnnotations());
@@ -154,7 +158,7 @@ var annotation_studio = {
   },
   handleHash: function(annotation) {
     var hash = window.location.hash
-    if (hash.length > 0){
+    if (hash.length > 0 && $(hash).length > 0){
       console.info(hash);
       setTimeout(function(){
         $('html,body').animate({scrollTop: $(hash).offset().top - 150}, 500);
@@ -302,6 +306,8 @@ jQuery(function($) {
       return;
     }
     $('#allannotations').removeClass('active');
+    $('#allannotations').addClass('btn-primary');
+	  $('#visibleannotations').removeClass('btn-primary');
     sidebar.filtered = true;
     sidebar.showAndHideAnnotations();
   });
@@ -310,6 +316,8 @@ jQuery(function($) {
       return;
     }
     $('#visibleannotations').removeClass('active');
+	  $('#visibleannotations').addClass('btn-primary');
+	  $('#allannotations').removeClass('btn-primary');
     sidebar.filtered = false;
     sidebar.showAllAnnotations();
   });

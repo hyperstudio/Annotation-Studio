@@ -198,3 +198,7 @@ ul.annotation-tags {
 .annotation-tags input {
 	margin-right: 8px;
 }
+
+.panel-title > a {
+	color: #337ab7;
+}

@@ -31,6 +31,9 @@ development:
     # make the following the path to your local (or hosted) instance of the MEL-Catalog service
     CATALOG_ENABLED:                        true
     MEL_CATALOG_API:                        "http://localhost:4000/api"
+    EXCEPTION_PREFIX: "[STAGING: Annotation]"
+    EXCEPTION_SENDER: "example@example.com"
+    EXCEPTION_RECIPIENTS: "first@example.com second@example.com"
 
 production:
     DEFAULT_NEW_USER_GROUP: public
@@ -62,3 +65,6 @@ production:
     ANNOTATOR_RICHTEXT_WITH_CATALOG:      undo redo | styleselect | bold italic | link image media | code | mellink melimage
     CATALOG_ENABLED:                      true
     MEL_CATALOG_API:                      "http://mel-catalog.herokuapp.com/api"
+    EXCEPTION_PREFIX: "[PRODUCTION: Annotation]"
+    EXCEPTION_SENDER: "example@example.com"
+    EXCEPTION_RECIPIENTS: "first@example.com second@example.com"

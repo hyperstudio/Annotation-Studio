@@ -34,6 +34,15 @@ development:
     EXCEPTION_PREFIX: "[STAGING: Annotation]"
     EXCEPTION_SENDER: "example@example.com"
     EXCEPTION_RECIPIENTS: "first@example.com second@example.com"
+    ALT_DEFAULT_USER_GROUP:                "French 101"
+    ANNOTATOR_CATEGORIES:                  "true"
+    ANNOTATOR_CUSTOM_SORT:                 "true"
+    AWS_ACCESS_KEY_ID:                     "xxxxx"
+    AWS_SECRET_ACCESS_KEY:                 "xxxxxx"
+    EMAIL_DOMAIN:                          "staging-annotationstudio.herokuapp.com"
+    S3_BUCKET_NAME:                        "annotationstudio-public"
+    SENDGRID_PASSWORD:                     "xxxx"
+    SENDGRID_USERNAME:                     "xxxx"
 
 production:
     DEFAULT_NEW_USER_GROUP: public
@@ -68,3 +77,12 @@ production:
     EXCEPTION_PREFIX: "[PRODUCTION: Annotation]"
     EXCEPTION_SENDER: "example@example.com"
     EXCEPTION_RECIPIENTS: "first@example.com second@example.com"
+    ALT_DEFAULT_USER_GROUP:                "French 101"
+    ANNOTATOR_CATEGORIES:                  "true"
+    ANNOTATOR_CUSTOM_SORT:                 "true"
+    AWS_ACCESS_KEY_ID:                     "xxxxx"
+    AWS_SECRET_ACCESS_KEY:                 "xxxxxx"
+    EMAIL_DOMAIN:                          "staging-annotationstudio.herokuapp.com"
+    S3_BUCKET_NAME:                        "annotationstudio-public"
+    SENDGRID_PASSWORD:                     "xxxx"
+    SENDGRID_USERNAME:                     "xxxx"

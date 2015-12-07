@@ -57,10 +57,13 @@ Widget.RemoteAnnotationList = Backbone.Collection.extend({
 		this.sort();
 	},
     deferred: Function.constructor.prototype,
-    fetchSuccess: function (collection, response) {
+    fetchSuccess: function (collection, response, arg3) {
+		console.log("ANNOTATION API CALL:", arg3.data);
+		console.log("ANNOTATION RESPONSE:", collection.models);
         collection.deferred.resolve();
     },
     fetchError: function (collection, response) {
+		console.log("ANNOTATION API ERROR:", response);
         throw new Error("Fetch did not get annotations from the API" + response);
     }
 });

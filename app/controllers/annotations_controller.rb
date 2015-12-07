@@ -26,4 +26,8 @@ class AnnotationsController < ApplicationController
 
     def show
     end
+
+    def exception_test
+        raise "This is a test of the exception handler. If you received this email, it is working properly."
+    end
 end

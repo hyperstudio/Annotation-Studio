@@ -86,6 +86,7 @@ body#documents.show .navbar button#leftburger,body#documents.show .navbar button
 #toolsmenu {
   padding: 40px;
   padding-top: 60px;
+	padding-bottom: 20px;
 }
 
 #mainmenu {
@@ -188,6 +189,9 @@ ul.annotation-tags {
 	padding: 8px;
 	background-color: #e6e6e6;
 	border-radius: 4px;
+	max-height: 230px;
+	overflow: auto;
+	width: 200px;
 }
 
 .annotation-tags li {

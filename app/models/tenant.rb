@@ -1,5 +1,10 @@
 class Tenant < ActiveRecord::Base
   attr_accessible :database_name, :domain
+
+  attr_accessible :mel_catalog_enabled, :mel_catalog_enabled
+  attr_accessible :mel_catalog_url, :mel_catalog_url
+  attr_accessible :annotation_categories_enabled, :annotation_categories_enabled
+
   after_create :initialize_apartment_schema
   after_destroy :drop_apartment_schema
 

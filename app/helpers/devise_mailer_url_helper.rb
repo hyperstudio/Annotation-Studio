@@ -1,7 +1,8 @@
 module DeviseMailerUrlHelper
   def multitenant_domain
     protocol = Rails.application.config.default_email_link_protocol
-    if tenant = Tenant.where(database_name: Apartment::Database.current_tenant).first
+    tenant = Tenant.current_tenant
+    if tenant
       "#{protocol}://#{tenant.domain}"
     else
       "#{protocol}://#{ENV['EMAIL_DOMAIN']}"

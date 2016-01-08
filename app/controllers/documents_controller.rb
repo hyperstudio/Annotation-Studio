@@ -28,6 +28,12 @@ class DocumentsController < ApplicationController
       redirect_to @document, status: :moved_permanently
     end
 
+    # configuration for annotator
+    @mel_catalog_enabled = Tenant.current_tenant.mel_catalog_enabled
+    @enable_rich_text_editor = ENV["ANNOTATOR_RICHTEXT"]
+    @tiny_mce_toolbar = @mel_catalog_enabled ? ENV["ANNOTATOR_RICHTEXT_WITH_CATALOG"] : ENV["ANNOTATOR_RICHTEXT_CONFIG"]
+    @api_url = ENV["API_URL"]
+
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @document }
@@ -65,7 +71,7 @@ class DocumentsController < ApplicationController
     respond_to do |format|
       if @document.save
         if params[:document][:upload].present?
-          Delayed::Job.enqueue DocumentProcessor.new(@document.id, @document.state, current_tenant)
+          Delayed::Job.enqueue DocumentProcessor.new(@document.id, @document.state, Apartment::Database.current_tenant)
           @document.pending!
         end
         format.html { redirect_to documents_url, notice: 'Document was successfully created.', anchor: 'created'}
@@ -173,6 +179,11 @@ class DocumentsController < ApplicationController
     return []
   end
 
+  # helper to determine if we should support content from the MEL catalog
+  def catalogue_enabled?
+    Tenant.current_tenant.mel_catalog_enabled
+  end
+  
   def catalog_content( doc )
 
     if catalogue_enabled?
@@ -187,11 +198,6 @@ class DocumentsController < ApplicationController
          end
       end
     end
-  end
-
-  # helper to determine if we should support content from the MEL catalog
-  def catalogue_enabled?
-    return( ENV["CATALOG_ENABLED"] == 'true' )
   end
 
 end

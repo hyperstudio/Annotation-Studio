@@ -11,18 +11,26 @@ class Tenant < ActiveRecord::Base
   validates :domain, presence: true, uniqueness: true
   validates :database_name, presence: true, uniqueness: true
 
+  def self.current_tenant
+    Tenant.where({ database_name: Apartment::Database.current_tenant }).first
+  end
+
   def initialize_apartment_schema
+    return if database_name == 'public'
+    
     begin
       Apartment::Database.create(database_name)
-    rescue Apartment::SchemaExists => e
+    rescue Apartment::TenantExists => e
       Rails.logger.warn "Schema already existed: #{e.inspect}"
     end
   end
 
   def drop_apartment_schema
+    return if database_name == 'public'
+
     begin
       Apartment::Database.drop(database_name)
-    rescue Apartment::SchemaNotFound => e
+    rescue Apartment::TenantNotFound => e
       Rails.logger.warn "Schema can't be destroyed as it wasn't there: #{e.inspect}"
     end
   end

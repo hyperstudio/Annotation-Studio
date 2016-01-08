@@ -135,7 +135,7 @@ Sidebar.AnnotationListView = Backbone.View.extend({
 
     var that = this;
     $.ajax({
-      url: '<%= ENV["API_URL"] %>/annotations/positions',
+      url: annotationStudioConfig.apiURL + '/annotations/positions',
       type: 'POST',
       data: { sort_positions: manual_sort_positions },
       // TODO: Is there a better way to send token here??
@@ -242,10 +242,10 @@ Sidebar.AnnotationListView = Backbone.View.extend({
       // event.stopPropagation();
     });
 
-    <% if ENV["CATALOG_ENABLED"] == "true" %>
-    $('li.annotation-item a.catalog-popup').unbind('click').attr('target', "_blank");
-    <% end %>
-
+    if( annotationStudioConfig.melCatalogEnabled ) {
+      $('li.annotation-item a.catalog-popup').unbind('click').attr('target', "_blank");
+    }
+    
     if(sidebar.sort_editable) {
         if($('#customsort').hasClass('active')) {
             $('ul#annotation-list').sortable('enable').addClass('sorting_on');

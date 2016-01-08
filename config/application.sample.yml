@@ -20,17 +20,11 @@ development:
     API_SECRET:
     API_CONSUMER: localhost
     CONFIRMATION_GRACE_PERIOD: 2
-    ANNOTATOR_CATEGORIES:                   true
     ANNOTATOR_CUSTOM_SORT:                  true
     ANNOTATOR_RICHTEXT_WITH_CATALOG:        undo redo | styleselect | bold italic | link image media | code | mellink melimage
-    CATALOG_ENABLED:                        true
-    MEL_CATALOG_API:                        "http://mel-catalog.herokuapp.com/api"
     DEVISE_SECRET_KEY:                     blah-blah # use: `rails g secret` to generate a value
     GLOBAL_ALERT:                           "Global Alert Goes Here. Very important information!"
     ALERT_LEVEL:                            "success"
-    # make the following the path to your local (or hosted) instance of the MEL-Catalog service
-    CATALOG_ENABLED:                        true
-    MEL_CATALOG_API:                        "http://localhost:4000/api"
     EXCEPTION_PREFIX: "[STAGING: Annotation]"
     EXCEPTION_SENDER: "example@example.com"
     EXCEPTION_RECIPIENTS: "first@example.com second@example.com"
@@ -65,15 +59,12 @@ production:
     GMAIL_USER: # or an SMTP account if you prefer
     GMAIL_PASS: # or an SMTP account if you prefer
     RUNTIMEERROR_EMAIL:                    example@example.com
-    ANNOTATOR_CATEGORIES:                 false
     ANNOTATOR_CUSTOM_SORT:                false
     ANNOTATOR_FILTER:                     false
     ANNOTATOR_RICHTEXT:                   true
     ANNOTATOR_RICHTEXT_CONFIG:            undo redo | styleselect | bold italic | link image media | code
     DEVISE_SECRET_KEY:                    blah-blah # use: `rails g secret` to generate a value
     ANNOTATOR_RICHTEXT_WITH_CATALOG:      undo redo | styleselect | bold italic | link image media | code | mellink melimage
-    CATALOG_ENABLED:                      true
-    MEL_CATALOG_API:                      "http://mel-catalog.herokuapp.com/api"
     EXCEPTION_PREFIX: "[PRODUCTION: Annotation]"
     EXCEPTION_SENDER: "example@example.com"
     EXCEPTION_RECIPIENTS: "first@example.com second@example.com"

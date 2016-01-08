@@ -9,9 +9,9 @@ var annotation_studio = {
 
     var studio = $('#textcontent').annotator(annotatorOptions).annotator('setupPlugins', {}, plugin_options());
     var optionsRichText = {
-      editor_enabled: '<%= ENV["ANNOTATOR_RICHTEXT"] %>',
+      editor_enabled: annotationStudioConfig.enableRichTextEditor,
       tinymce: {
-        'toolbar': '<%= ENV["CATALOG_ENABLED"] == "true" ? ENV["ANNOTATOR_RICHTEXT_WITH_CATALOG"] : ENV["ANNOTATOR_RICHTEXT_CONFIG"] %>',
+        'toolbar': annotationStudioConfig.tinyMCEToolbar,
         'image_dimensions': false
       }
     };

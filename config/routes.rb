@@ -1,5 +1,9 @@
 AnnotationStudio::Application.routes.draw do
 
+  get "api/me"
+
+  use_doorkeeper
+
   get 'public/:id' => 'public_documents#show'
 
   devise_for :users

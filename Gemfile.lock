@@ -121,14 +121,8 @@ GEM
     factory_girl_rails (4.5.0)
       factory_girl (~> 4.5.0)
       railties (>= 3.0.0)
-<<<<<<< HEAD
     figaro (1.1.1)
       thor (~> 0.14)
-=======
-    figaro (0.7.0)
-      bundler (~> 1.0)
-      rails (>= 3, < 5)
->>>>>>> a3ced88d89856368b1a41860a8d4a6f0c4c16baa
     fog (1.3.1)
       builder
       excon (~> 0.13.0)
@@ -150,13 +144,9 @@ GEM
     gon (6.0.1)
       actionpack (>= 3.0)
       json
-<<<<<<< HEAD
       multi_json
       request_store (>= 1.0)
     has_scope (0.6.0)
-=======
-    has_scope (0.6.0.rc)
->>>>>>> a3ced88d89856368b1a41860a8d4a6f0c4c16baa
       actionpack (>= 3.2, < 5)
       activesupport (>= 3.2, < 5)
     high_voltage (2.1.0)
@@ -210,16 +200,9 @@ GEM
       polyamorous (~> 0.5.0)
     method_source (0.8.2)
     mime-types (1.25.1)
-<<<<<<< HEAD
     mimemagic (0.3.0)
     mini_magick (4.3.6)
     multi_json (1.11.2)
-=======
-    mini_magick (3.7.0)
-      subexec (~> 0.2.1)
-    multi_json (1.10.1)
-    multi_xml (0.5.5)
->>>>>>> a3ced88d89856368b1a41860a8d4a6f0c4c16baa
     net-scp (1.0.4)
       net-ssh (>= 1.99.1)
     net-ssh (3.0.1)
@@ -368,15 +351,8 @@ GEM
       raindrops (~> 0.7)
     warden (1.2.3)
       rack (>= 1.0)
-<<<<<<< HEAD
     will_paginate (3.0.7)
     yomu (0.2.3)
-=======
-    will_paginate (3.0.5)
-    xpath (2.0.0)
-      nokogiri (~> 1.3)
-    yomu (0.2.2)
->>>>>>> a3ced88d89856368b1a41860a8d4a6f0c4c16baa
       json (~> 1.8)
       mime-types (~> 1.23)
 

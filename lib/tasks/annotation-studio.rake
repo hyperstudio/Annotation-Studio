@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 namespace :annotationstudio do
 	desc "Set all the user passwords for development"
 	task :reset_passwords => :environment do
@@ -16,4 +17,10 @@ namespace :annotationstudio do
 			end
 		}
 	end
+=======
+require 'rake'
+
+namespace :annotationstudio do
+  
+>>>>>>> a3ced88d89856368b1a41860a8d4a6f0c4c16baa
 end

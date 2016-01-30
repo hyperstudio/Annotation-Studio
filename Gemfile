@@ -20,6 +20,7 @@ gem "paperclip"
 gem "delayed_job_active_record"
 gem 'pdf-reader'
 gem 'pdf-reader-html'
+gem 'yomu'
 gem 'apartment'
 gem 'yomu'
 

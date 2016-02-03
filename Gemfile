@@ -20,7 +20,6 @@ gem "paperclip"
 gem "delayed_job_active_record"
 gem 'pdf-reader'
 gem 'pdf-reader-html'
-gem 'yomu'
 gem 'apartment'
 gem 'yomu'
 
@@ -77,7 +76,9 @@ gem "meta_search"#,    '>= 1.1.0.pre'
 
 gem "figaro"
 
-gem 'will_paginate', '> 3.0'
+gem 'will_paginate', '~> 3.0.5'
+gem 'will_paginate-bootstrap'
+
 #gem 'runtimeerror_notifier', '0.0.24' # NOTE-PER: This is the last version that works with Rails 3.2.x. After upgrading to Rails 4, you can remove the version.
 gem 'exception_notification'
 gem 'intercom-rails'

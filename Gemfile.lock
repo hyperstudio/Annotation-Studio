@@ -352,6 +352,8 @@ GEM
     warden (1.2.3)
       rack (>= 1.0)
     will_paginate (3.0.7)
+    will_paginate-bootstrap (1.0.1)
+      will_paginate (>= 3.0.3)
     yomu (0.2.3)
       json (~> 1.8)
       mime-types (~> 1.23)
@@ -413,5 +415,6 @@ DEPENDENCIES
   tinymce-rails
   uglifier
   unicorn
-  will_paginate (> 3.0)
+  will_paginate (~> 3.0.5)
+  will_paginate-bootstrap
   yomu

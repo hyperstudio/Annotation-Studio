@@ -9,11 +9,27 @@ class DocumentsController < ApplicationController
   # GET /documents
   # GET /documents.json
   def index
-    # @documents = filter_by_can_read(Document.all)
 
-    # @documents = Document.all
-    @documents = Document.order("title")
-
+    if params[:docs] != 'assigned' && params[:docs] != 'created' && params[:docs] != 'all'
+      document_set = 'assigned'
+    else
+      document_set = params[:docs]
+    end    
+    
+    @tab_state = { document_set => 'active' }
+    @assigned_documents_count = Document.tagged_with(current_user.rep_group_list, :any =>true).count
+    @created_documents_count = current_user.documents.count
+    @all_documents_count = Document.all.count
+    per_page = 20
+    
+    if document_set == 'assigned'
+      @documents = Document.tagged_with(current_user.rep_group_list, :any =>true).paginate(:page => params[:page], :per_page => per_page)    
+    elsif document_set == 'created'
+      @documents = current_user.documents.paginate(:page => params[:page], :per_page => per_page)
+    elsif can? :manage, Document && document_set == 'all'
+      @documents = Document.paginate(:page => params[:page], :per_page => per_page ).order("created_at DESC")
+    end
+  
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @documents }

@@ -13,7 +13,6 @@ ans_dev
 !/log/.keep
 tmp/
 documents/
->>>>>>> a3ced88d89856368b1a41860a8d4a6f0c4c16baa
 .DS_Store
 public/assets/application-*
 vendor/assets/javascripts/annotator.js
@@ -24,7 +23,6 @@ config/database.yml
 db/backups/*
 
 # Ignore application & database configuration
-/documents/
 vendor/assets/javascripts/_attic
 vendor/assets/stylesheets/_attic
 Gemfile.lock.temp

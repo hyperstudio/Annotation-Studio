@@ -1,21 +1,19 @@
-require 'rake'
-require 'google_drive_processor'
-
 namespace :annotationstudio do
-  desc 'test google drive API html conversion'
-  task drive_conversion_test: :environment do
-
-    document = Document.create(
-      title: 'Today\'s Date: ' + Time.now.to_s, author: 'Test Author',
-      upload: File.open('spec/support/example_files/annotation-studio-white-paper.docx'),
-      user_id: 2,
-      rep_group_list: "public",
-    )
-
-
-    processor = GoogleDriveProcessor.new(document, 'published')
-    processor.work
-
-    document.reload
+	desc "Set all the user passwords for development"
+	task :reset_passwords => :environment do
+		users = User.all
+		puts "Resetting the passwords for #{users.count} users."
+		users.each_with_index { |user,x|
+			user.password = "super-secret"
+			user.save!
+			if x % 1000 == 0
+				puts ''
+				print "#{x}: "
+			elsif x % 100 == 0
+				print '+'
+			elsif x % 10 == 0
+				print '.'
+			end
+    }
   end
 end

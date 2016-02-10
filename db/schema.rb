@@ -11,10 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150506143609) do
+ActiveRecord::Schema.define(version: 20160107155128) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "pg_stat_statements"
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "resource_id",   limit: 255, null: false
@@ -50,11 +51,11 @@ ActiveRecord::Schema.define(version: 20150506143609) do
   add_index "admin_users", ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true, using: :btree
 
   create_table "annotation_categories", force: :cascade do |t|
-    t.string   "name",        limit: 255, null: false
-    t.string   "hex",         limit: 255
-    t.string   "css_classes", limit: 255
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.string   "name",        null: false
+    t.string   "hex"
+    t.string   "css_classes"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "assignments", force: :cascade do |t|
@@ -161,10 +162,13 @@ ActiveRecord::Schema.define(version: 20150506143609) do
   add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
 
   create_table "tenants", force: :cascade do |t|
-    t.string   "domain",        limit: 255
-    t.string   "database_name", limit: 255
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.string   "domain",                        limit: 255
+    t.string   "database_name",                 limit: 255
+    t.datetime "created_at",                                                null: false
+    t.datetime "updated_at",                                                null: false
+    t.boolean  "mel_catalog_enabled",                       default: false
+    t.boolean  "annotation_categories_enabled",             default: false
+    t.string   "mel_catalog_url"
   end
 
   add_index "tenants", ["database_name"], name: "index_tenants_on_database_name", using: :btree

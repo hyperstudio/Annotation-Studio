@@ -10,11 +10,11 @@ ActiveAdmin.register Document do
   # end
       
   filter :title
-  filter :publisher
+  filter :author
   filter :publication_date
   filter :created_at
   filter :updated_at
-  filter :taggings_tag_name, :as => :check_boxes, :collection => proc { Document.rep_group_counts.map{|t| t.name} }
+  filter :taggings_tag_name, label: 'Class and Group Names', :as => :check_boxes, :collection => proc { Document.rep_group_counts.map{|t| t.name}.sort! }
 
   # batch_action :approve do |selection|
   #   User.find(selection).each do |user|

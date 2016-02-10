@@ -47,7 +47,7 @@ var plugin_options = function() {
       showViewPermissionsCheckbox: true,
       showEditPermissionsCheckbox: false
     }
-    <% if ENV["ANNOTATOR_CATEGORIES"] == 'true' -%>
+    <% if Tenant.current_tenant.annotation_categories_enabled -%>
     , Categories: <%= raw AnnotationCategory.to_plugin_init %>
     <% end -%>
   }

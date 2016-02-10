@@ -16,6 +16,12 @@
     <%= javascript_include_tag "application" %>
     <script type="text/javascript" src="//use.typekit.net/wod1jtz.js"></script>
     <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+	<script type="text/javascript">
+		var icons = {
+			external_link: '<%= asset_path('external-link.png') %>',
+			file_image: '<%= asset_path('file-image.png')%>'
+		}
+	</script>
 </head>
 <body id="<%= yield(:body_id) %>" class="<%= yield(:body_class) %>">
 
@@ -28,13 +34,13 @@
 
     <% if !current_user.nil?  %>
     <nav class="navmenu navmenu-inverse navmenu-fixed-left offcanvas" id="mainmenu" role="navigation">
-      <% unless params[:controller].include?('devise') %>
+      <% unless params[:controller].include?('registrations') %>
         <%= render "#{params[:controller]}/leftnav" %>
       <% end %>
     </nav>
 
     <nav class="navmenu navmenu-inverse navmenu-fixed-right offcanvas" id="toolsmenu" role="navigation">
-      <% unless params[:controller].include?('devise') %>
+      <% unless params[:controller].include?('registrations') %>
         <%= render "#{params[:controller]}/rightnav" %>
       <% end %>
     </nav>
@@ -54,6 +60,11 @@
     </nav>
     <% end %>
 
+	<% if params[:controller] == 'devise/sessions' %>
+	<div class="home-image">
+		<%= image_tag("home.png", { alt: 'Cover Photo' }) %>
+	</div>
+<% end %>
     <div class="container">
       <%= render partial: "shared/noscript" %>
       <%= render partial: "shared/flash_messages", flash: flash %>

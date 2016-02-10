@@ -30,7 +30,16 @@
   <div class="modal-body" id="spinnerdiv"><em>Loading annotations...</em></div>
 </div>
 <%# render "documents/metadata" %>
+
 <script type="text/javascript">
+
+var annotationStudioConfig = {
+  enableRichTextEditor: '<%= @enable_rich_text_editor %>',
+  tinyMCEToolbar: '<%= @tiny_mce_toolbar %>',
+  apiURL: '<%= @api_url %>',
+  melCatalogEnabled: '<%= @mel_catalog_enabled %>'
+};
+
 $('#annotation-list').slimScroll({
   height: '99%',
   width: '340px',

@@ -40,9 +40,14 @@
 //= require melcatalog-plugin
 //= require sidebar
 //= require annotation_studio
-
 //= require backbone
 //= require_tree ./models
 //= require_tree ./collections
 //= require_tree ./views
 //= require_tree ./routers
+//= require self_removing
+//= require remember_tabs
+//= require show_password_fields
+//= require format_date
+//= require dont_overflow_dropdown
+//= require unload_confirmation

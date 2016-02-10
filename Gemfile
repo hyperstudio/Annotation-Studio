@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.1.4'
+ruby '2.2.4'
 
 gem 'rails', '4.2.1'
 gem 'unicorn'
@@ -15,13 +15,14 @@ gem 'acts-as-taggable-on'
 gem "friendly_id"
 gem "babosa"
 gem 'high_voltage', '~> 2.1.0'
-gem "aws-sdk"
+gem "aws-sdk", '< 2.0'
 gem "paperclip"
 gem "delayed_job_active_record"
-gem 'google_drive'
 gem 'pdf-reader'
 gem 'pdf-reader-html'
 gem 'apartment'
+gem 'yomu'
+gem 'net-ssh'
 
 group :development do
   gem 'sextant'
@@ -43,7 +44,7 @@ group :test, :development do
   gem 'factory_girl_rails'
   gem 'rspec-rails'
   gem 'pry-rails'
-  gem 'capybara-webkit'
+#  gem 'capybara-webkit'
   gem 'simplecov'
   gem 'rails_best_practices'
   gem 'launchy'
@@ -75,8 +76,11 @@ gem 'activeadmin', '1.0.0.pre1'
 
 gem "figaro"
 
-gem 'will_paginate', '> 3.0'
-gem 'runtimeerror_notifier'
+gem 'will_paginate', '~> 3.0.5'
+gem 'will_paginate-bootstrap'
+
+#gem 'runtimeerror_notifier', '0.0.24' # NOTE-PER: This is the last version that works with Rails 3.2.x. After upgrading to Rails 4, you can remove the version.
+gem 'exception_notification'
 gem 'intercom-rails'
 
 gem "melcatalog", :path => "vendor"

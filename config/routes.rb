@@ -2,7 +2,7 @@ AnnotationStudio::Application.routes.draw do
 
   get 'public/:id' => 'public_documents#show'
 
-  devise_for :users
+  devise_for :users, controllers: {registrations: 'registrations'}
 
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
@@ -34,5 +34,6 @@ AnnotationStudio::Application.routes.draw do
     end
   end
 
+	get 'exception_test' => "annotations#exception_test"
   # root :to => "devise/sessions#new"
 end

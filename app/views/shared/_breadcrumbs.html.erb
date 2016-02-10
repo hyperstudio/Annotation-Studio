@@ -1,4 +1,5 @@
-<ol class="breadcrumb breadcrumb-inverse hidden-xs">
+<% second_line = params[:controller] == 'documents' && (params[:action] == 'show' || params[:action] == 'edit') %>
+<ol class="breadcrumb breadcrumb-inverse hidden-xs<%= " second-line" if second_line %>">
   <% if current_page?(dashboard_path) || current_page?(root_path) %>
     <li class="active">Dashboard</li>
   <% else %>
@@ -23,10 +24,10 @@
   <% end %>
 
   <% if current_page?(groups_path) %>
-    <li class="active">Groups</li>
+    <li class="active">Classes and Groups</li>
   <% end %>
 
   <% if current_page?(edit_user_registration_path) %>
-    <li class="active">Editing: <%= @user.fullname %></li>
+    <li class="active">My Profile</li>
   <% end %>
 </ol>

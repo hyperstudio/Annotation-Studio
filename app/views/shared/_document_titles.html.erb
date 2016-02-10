@@ -1,0 +1,7 @@
+<script type="text/javascript">
+var documentList = {
+<% @document_list.each { |document| %>
+	'<%= document.slug %>': '<%= raw(document.title.gsub("'", "&apos;")) %>',
+<% } %>
+};
+</script>

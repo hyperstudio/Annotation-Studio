@@ -52,9 +52,11 @@ h1 {
   margin: 20px 0;
 }
 
-.breadcrumb {
-  margin: 8px 0 0 0 !important;
+ol.breadcrumb {
+  margin: 8px 0 0 0;
   float:left;
+  font-size: 14px;
+  padding: 0 15px;
 }
 
 .footer {

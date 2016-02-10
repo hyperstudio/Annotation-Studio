@@ -36,7 +36,7 @@ feature 'A user uploads a document' do
     scenario "they can annotate the document after processing" do
       with_jobs_delayed(false) do
         upload_a_document do
-          attach_file 'Pick a file from your computer', 'spec/support/example_files/example.docx'
+          attach_file 'Select a file from your computer', 'spec/support/example_files/example.docx'
         end
 
         visit current_path

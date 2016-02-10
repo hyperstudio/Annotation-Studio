@@ -25,3 +25,19 @@ body {
 .nav > li {
   color: whitesmoke;
 }
+
+.doc-set-footer {
+
+  height: 80px;
+
+  .create-new-button {  
+    margin-top: 10px;
+  }
+  
+  .pagination-controls {
+    float: right;
+    margin-right: 10px;
+    margin-top: -10px;
+  }  
+  
+}

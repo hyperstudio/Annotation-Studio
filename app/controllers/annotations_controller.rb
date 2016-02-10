@@ -15,6 +15,7 @@ class AnnotationsController < ApplicationController
         end
         @token = session['jwt']
         @loadOptions = loadOptions.to_json
+        @document_list = Document.all # for getting document name in annotations table.
 
         respond_to do |format|
             format.html { render :index }
@@ -24,5 +25,9 @@ class AnnotationsController < ApplicationController
     end
 
     def show
+    end
+
+    def exception_test
+        raise "This is a test of the exception handler. If you received this email, it is working properly."
     end
 end

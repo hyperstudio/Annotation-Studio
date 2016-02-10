@@ -50,4 +50,5 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.for(:account_update) << [:firstname, :lastname, :rep_group_list, :rep_subgroup_list, :affiliation]
     devise_parameter_sanitizer.for(:sign_up) << [:firstname, :lastname, :rep_group_list, :agreement, :affiliation]
   end
+
 end

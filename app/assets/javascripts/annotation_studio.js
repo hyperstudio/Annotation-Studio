@@ -9,9 +9,9 @@ var annotation_studio = {
 
     var studio = $('#textcontent').annotator(annotatorOptions).annotator('setupPlugins', {}, plugin_options());
     var optionsRichText = {
-      editor_enabled: '<%= ENV["ANNOTATOR_RICHTEXT"] %>',
+      editor_enabled: annotationStudioConfig.enableRichTextEditor,
       tinymce: {
-        'toolbar': '<%= ENV["CATALOG_ENABLED"] === "true" ? ENV["ANNOTATOR_RICHTEXT_WITH_CATALOG"] : ENV["ANNOTATOR_RICHTEXT_CONFIG"] %>',
+        'toolbar': annotationStudioConfig.tinyMCEToolbar,
         'image_dimensions': false
       }
     };
@@ -49,12 +49,13 @@ var annotation_studio = {
     // When the local object is updated (contains previously created/stored UUID), load the sidebar from local data
     subscriber.subscribe('annotationUpdated', annotation_studio.loadSidebar);
     subscriber.subscribe('annotationDeleted', annotation_studio.deleteFromSidebar);
-    $(".annotator-checkbox label").text('Allow my groups to view this annotation');
+    $(".annotator-checkbox label").text('My groups can view this annotation');
 
     sidebar.filtered = $('#visibleannotations').hasClass('active');
     sidebar.sort_editable = sidebar_sort_editable;
     sidebar.subscriber = subscriber;
   },
+	selectedTags: [],
   loadOptions: function(overrides) {
     var annotation_categories = [];
     $.each($('#category-chooser button.active'), function(i, j) {
@@ -75,6 +76,7 @@ var annotation_studio = {
     if($('#tagsearchbox').length && $('#tagsearchbox').val() != '') {
       settings.tags = $('#tagsearchbox').val();
     }
+	  settings.tags = annotation_studio.selectedTags.join(",");
 
     $.each(overrides, function(i, j) {
       settings[i] = j;
@@ -94,11 +96,23 @@ var annotation_studio = {
   },
   modeFilter: function(event) {
     $('.viewchoice').removeClass("active");
+	  $('.viewchoice').addClass("btn-primary");
+	  $(event.currentTarget).removeClass("btn-primary");
     annotation_studio.filterAnnotations(event);
   },
   tagFilter: function(event) {
     $('*[data-role="remove"]').hide();
     annotation_studio.filterAnnotations(event);
+  },
+  tagFilterCheck: function(event) {
+	  var parent = $("#annotation-tag-list");
+	  var checks = parent.find('input:checkbox:checked');
+	  var tags = [];
+	  for (var i = 0; i < checks.length; i++)
+		  tags.push(checks[i].value);
+	  annotation_studio.selectedTags = tags;
+
+	  annotation_studio.filterAnnotations(event);
   },
   categoryFilter: function(event) {
     $(event.currentTarget).toggleClass('active').removeAttr('style');
@@ -111,6 +125,8 @@ var annotation_studio = {
     // TODO: Shouldn't bootstrap handle this without code?
     $('.sortchoice').removeClass("active");
     $(this).addClass('active');
+    $('.sortchoice').addClass("btn-primary");
+    $(this).removeClass('btn-primary');
 
     // TODO: Is there a better way to rerender annotations?
     sidebar.listAnnotations(subscriber.dumpAnnotations());
@@ -142,7 +158,7 @@ var annotation_studio = {
   },
   handleHash: function(annotation) {
     var hash = window.location.hash
-    if (hash.length > 0){
+    if (hash.length > 0 && $(hash).length > 0){
       console.info(hash);
       setTimeout(function(){
         $('html,body').animate({scrollTop: $(hash).offset().top - 150}, 500);
@@ -279,6 +295,9 @@ jQuery(function($) {
   $('#groupview').on('click', { id: 'groupview' }, annotation_studio.modeFilter);
   $('#classview').on('click', { id: 'classview' }, annotation_studio.modeFilter)
 
+	var tagsElement = $("#annotation-tag-list");
+	$("body").on('click', '#annotation-tag-list input', annotation_studio.tagFilterCheck);
+
   $('#tagsearchbox').tagsinput()
   $('#tagsearchbox').on('itemAdded', annotation_studio.tagFilter);
   $('#tagsearchbox').on('itemRemoved', annotation_studio.tagFilter);
@@ -291,6 +310,8 @@ jQuery(function($) {
       return;
     }
     $('#allannotations').removeClass('active');
+    $('#allannotations').addClass('btn-primary');
+	  $('#visibleannotations').removeClass('btn-primary');
     sidebar.filtered = true;
     sidebar.showAndHideAnnotations();
   });
@@ -299,6 +320,8 @@ jQuery(function($) {
       return;
     }
     $('#visibleannotations').removeClass('active');
+	  $('#visibleannotations').addClass('btn-primary');
+	  $('#allannotations').removeClass('btn-primary');
     sidebar.filtered = false;
     sidebar.showAllAnnotations();
   });

@@ -10,11 +10,27 @@ class DocumentsController < ApplicationController
   # GET /documents
   # GET /documents.json
   def index
-    # @documents = filter_by_can_read(Document.all)
 
-    # @documents = Document.all
-    @documents = Document.order("title")
-
+    if params[:docs] != 'assigned' && params[:docs] != 'created' && params[:docs] != 'all'
+      document_set = 'assigned'
+    else
+      document_set = params[:docs]
+    end    
+    
+    @tab_state = { document_set => 'active' }
+    @assigned_documents_count = Document.tagged_with(current_user.rep_group_list, :any =>true).count
+    @created_documents_count = current_user.documents.count
+    @all_documents_count = Document.all.count
+    per_page = 20
+    
+    if document_set == 'assigned'
+      @documents = Document.tagged_with(current_user.rep_group_list, :any =>true).paginate(:page => params[:page], :per_page => per_page)    
+    elsif document_set == 'created'
+      @documents = current_user.documents.paginate(:page => params[:page], :per_page => per_page)
+    elsif can? :manage, Document && document_set == 'all'
+      @documents = Document.paginate(:page => params[:page], :per_page => per_page ).order("created_at DESC")
+    end
+  
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @documents }
@@ -27,6 +43,12 @@ class DocumentsController < ApplicationController
     if request.path != document_path(@document)
       redirect_to @document, status: :moved_permanently
     end
+
+    # configuration for annotator
+    @mel_catalog_enabled = Tenant.current_tenant.mel_catalog_enabled
+    @enable_rich_text_editor = ENV["ANNOTATOR_RICHTEXT"]
+    @tiny_mce_toolbar = @mel_catalog_enabled ? ENV["ANNOTATOR_RICHTEXT_WITH_CATALOG"] : ENV["ANNOTATOR_RICHTEXT_CONFIG"]
+    @api_url = ENV["API_URL"]
 
     respond_to do |format|
       format.html # show.html.erb
@@ -64,7 +86,7 @@ class DocumentsController < ApplicationController
     respond_to do |format|
       if @document.save
         if params[:document][:upload].present?
-          Delayed::Job.enqueue DocumentProcessor.new(@document.id, @document.state, current_tenant)
+          Delayed::Job.enqueue DocumentProcessor.new(@document.id, @document.state, Apartment::Database.current_tenant)
           @document.pending!
         end
         format.html { redirect_to documents_url, notice: 'Document was successfully created.', anchor: 'created'}
@@ -159,9 +181,36 @@ class DocumentsController < ApplicationController
     end
   end
 
+  private
+
+  def catalog_texts
+
+    if catalogue_enabled?
+       status, results = Melcatalog.texts
+       return results[:text] unless results[:text].nil?
+    end
+    return []
+  end
+
   # helper to determine if we should support content from the MEL catalog
   def catalogue_enabled?
-    return( ENV["CATALOG_ENABLED"] == 'true' )
+    Tenant.current_tenant.mel_catalog_enabled
+  end
+  
+  def catalog_content( doc )
+
+    if catalogue_enabled?
+      # we put placeholder content in earlier and replace with the real thing now
+      if doc.text.start_with?( "EID:" )
+         eid = doc.text.split( ":",2 )[ 1 ]
+         status, entry = Melcatalog.get( eid, 'stripxml' )
+         if status == 200 && entry && entry[:text] && entry[:text][ 0 ] && entry[:text][ 0 ]['content']
+           doc.text = entry[:text][ 0 ]['content']
+         else
+           doc.text = "Error getting document content from the catalog; status = #{status}, eid = #{eid}"
+         end
+      end
+    end
   end
 
 private

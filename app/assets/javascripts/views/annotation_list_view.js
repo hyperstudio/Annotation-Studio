@@ -27,7 +27,7 @@ Sidebar.AnnotationListView = Backbone.View.extend({
 
     var that = this;
     $.ajax({
-      url: '<%= ENV["API_URL"] %>/annotations/positions',
+      url: annotationStudioConfig.apiURL + '/annotations/positions',
       type: 'POST',
       data: { sort_positions: manual_sort_positions },
       // TODO: Is there a better way to send token here??
@@ -123,17 +123,20 @@ Sidebar.AnnotationListView = Backbone.View.extend({
 
       // console.info("This offset top "+$(this).offset().top);
       // console.info("IdTarget offset top "+$(idtarget).offset().top);
-      $('html,body').animate({scrollTop: $(idtarget).offset().top - 150}, 500);
-      $(".glyphicon-comment").remove();
-      $(idtarget).prepend('<i class="glyphicon glyphicon-comment"></i>');
+  		var el = $(idtarget);
+  		if (el.length > 0) {
+        $('html,body').animate({scrollTop: $(idtarget).offset().top - 150}, 500);
+        $(".glyphicon-comment").remove();
+        $(idtarget).prepend('<i class="glyphicon glyphicon-comment"></i>');
+      }
       // event.stopPropagation();
     });
 
-    <% if ENV["CATALOG_ENABLED"] == "true" %>
-    $('li.annotation-item a.catalog-popup').unbind('click').on('click', function(e) {
-      $('li.annotation-item a.catalog-popup').unbind('click').attr('target', "_blank");
-    });
-    <% end %>
+    if( annotationStudioConfig.melCatalogEnabled ) {
+      $('li.annotation-item a.catalog-popup').unbind('click').on('click', function(e) {
+        $('li.annotation-item a.catalog-popup').unbind('click').attr('target', "_blank");
+      });
+    }
 
     if(sidebar.sort_editable) {
         if($('#customsort').hasClass('active')) {

@@ -17,8 +17,7 @@
 </div>
 <p><strong>How</strong> they are tagged:</p>
 <div class="input-group" id="tag-chooser">
-  <!--<input type="text" id="tagsearchbox" placeholder="Enter tag(s) to filter on">-->
-	<ul id="annotation-tag-list" class="annotation-tags"></ul>
+  <input type="text" id="tagsearchbox" placeholder="Enter tag(s) to filter on">
 </div><!-- /input-group -->
 <% if Tenant.current_tenant.annotation_categories_enabled -%>
 <p><strong>How</strong> they are categorized:</p>
@@ -29,6 +28,7 @@
 </div><!-- /input-group -->
 <% end -%>
 <% if ENV["ANNOTATOR_CUSTOM_SORT"] == 'true' -%>
+<h4>Sort annotations by:</h4>
 <p><strong>How</strong> they are sorted:</p>
 <div class="btn-group btn-group-sm" id="sort-chooser">
   <button type="button" class="sortchoice btn btn-default btn-default-small active" id="textpositionsort">Text Position</button>

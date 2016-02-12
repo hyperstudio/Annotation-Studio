@@ -82,3 +82,5 @@ gem 'intercom-rails'
 
 gem "melcatalog", :path => "vendor"
 gem "rest-client"
+
+gem "doorkeeper"

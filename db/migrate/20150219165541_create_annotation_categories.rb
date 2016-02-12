@@ -5,7 +5,7 @@ class CreateAnnotationCategories < ActiveRecord::Migration
       t.string :name, :null => false
       t.string :hex
       t.string :css_classes
-      t.timestamps
+      t.timestamps null: true
     end
     rescue Exception => e
       # For some reason, the staging server is getting stuck on this migration, so just let it pass.

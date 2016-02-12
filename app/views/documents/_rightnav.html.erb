@@ -4,22 +4,22 @@
 <p><strong>Who</strong> made them:</p>
 <div class="btn-group btn-group-sm" data-toggle="buttons-radio" id="view-chooser">
   <button type="button" class="viewchoice btn btn-default btn-default-small active" id="userview">Me</button>
-  <button type="button" class="viewchoice btn btn-default btn-default-small" id="groupview">Groups</button>
-  <button type="button" class="viewchoice btn btn-default btn-default-small" id="classview">Classes</button>
+  <button type="button" class="viewchoice btn btn-default btn-default-small btn-primary" id="groupview">Groups</button>
+  <button type="button" class="viewchoice btn btn-default btn-default-small btn-primary" id="classview">Classes</button>
   <% if current_user.has_role?(:admin) %>
-    <button class="viewchoice btn btn-default btn-default-small btn btn-default-inverse" id="adminview">All</button>
+    <button class="viewchoice btn btn-default btn-default-small btn btn-default-inverse btn-primary" id="adminview">All</button>
   <% end %>
 </div>
 <p><strong>Where</strong> they occur:</p>
 <div class="btn-group btn-group-sm" data-toggle="buttons-radio" id="filter-chooser">
   <button type="button" class="btn btn-default btn-default-small active" id="visibleannotations">Visible portion</button>
-  <button type="button" class="btn btn-default btn-default-small" id="allannotations">Whole document</button>
+  <button type="button" class="btn btn-default btn-default-small btn-primary" id="allannotations">Whole document</button>
 </div>
 <p><strong>How</strong> they are tagged:</p>
 <div class="input-group" id="tag-chooser">
   <input type="text" id="tagsearchbox" placeholder="Enter tag(s) to filter on">
 </div><!-- /input-group -->
-<% if ENV["ANNOTATOR_CATEGORIES"] == 'true' -%>
+<% if Tenant.current_tenant.annotation_categories_enabled -%>
 <p><strong>How</strong> they are categorized:</p>
 <div class="btn-toolbar" id="category-chooser">
   <% AnnotationCategory.find_each do |annotation_category| -%>
@@ -32,11 +32,10 @@
 <p><strong>How</strong> they are sorted:</p>
 <div class="btn-group btn-group-sm" id="sort-chooser">
   <button type="button" class="sortchoice btn btn-default btn-default-small active" id="textpositionsort">Text Position</button>
-  <button type="button" class="sortchoice btn btn-default btn-default-small" id="customsort">Custom</button>
+  <button type="button" class="sortchoice btn btn-default btn-default-small btn-primary" id="customsort">Custom</button>
 </div><!-- /input-group -->
 <% end %>
 <% if @document.present? && current_user.has_document_permissions?(@document) %>
-  <h4>Default State</h4>
-  <a id="default_state" class="btn btn-default" href="#" role="button">Save Current Settings</a>
+  <a id="default_state" class="btn btn-default" href="#" role="button">Save This Filter</a>
 <% end -%>
 <% end %>

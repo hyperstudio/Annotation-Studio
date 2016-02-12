@@ -46,3 +46,16 @@ body#catalog {
   }
 
 }
+
+.button-column {
+	white-space: nowrap;
+}
+
+.same-line {
+	float: left;
+	margin-right: 10px;
+}
+
+.next-line {
+	clear: both;
+}

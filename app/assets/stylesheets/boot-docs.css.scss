@@ -117,13 +117,25 @@ li.annotation-item.focuswhite {
       outline: none;
     }
   }
+  img {
+    margin: 3px;
+    width: 300px;
+    max-height: 500px;
+  }
+  
+  iframe {
+    margin: 3px;
+    width: 300px;
+    height: 225px;
+  }
+  
 }
 
 #annotation-well ul#annotation-list li span.label, #annotation-well ul#annotation-list li span.badge {
 	color: #fff;
 	font-family: "source-sans-pro",sans-serif;
 	font-style: normal;
-	font-weight: 400;
+	font-weight: 400;  
 }
 
 .text_area {

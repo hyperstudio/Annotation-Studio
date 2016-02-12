@@ -1,0 +1,352 @@
+var sidebar, subscriber, studio;
+
+var annotation_studio = {
+  initialize_annotator: function() {
+    sidebar = new Sidebar.App();
+    sidebar.token = token;
+    //window.sidebar = sidebar;
+    //Backbone.history.start({pushState: true }); //, root: window.location});
+
+    var studio = $('#textcontent').annotator(annotatorOptions).annotator('setupPlugins', {}, plugin_options());
+    var optionsRichText = {
+      editor_enabled: annotationStudioConfig.enableRichTextEditor,
+      tinymce: {
+        'toolbar': annotationStudioConfig.tinyMCEToolbar,
+        'image_dimensions': false
+      }
+    };
+
+    studio.annotator("addPlugin", "MelCatalogue");
+
+    subscriber = $('#textcontent').annotator().data('annotator');
+
+    if(mobile_device) {
+      studio.annotator("addPlugin", "Touch");
+    }
+    else {
+      studio.annotator('addPlugin', 'RichText', optionsRichText);
+    }
+
+    // When the annotator loads remote data, update sidebar
+    subscriber.subscribe('annotationsLoaded', annotation_studio.loadSidebar);
+    subscriber.subscribe('annotationsLoaded', annotation_studio.stopSpinner);
+    subscriber.subscribe('annotationsLoaded', annotation_studio.handleHash);
+    subscriber.subscribe('annotationEditorShown', annotation_studio.parentIndex);
+
+    // Update all highlights with UUIDs
+    subscriber.subscribe('annotationsLoaded', __bind(function(annotations) {
+      annotations.map(addUuid); // copies the UUID value from the object field to the highlight spans attribute value.
+    }, this));
+
+    // Add the UUID to the local annotation object and to the highlight span before saving
+    subscriber.subscribe('beforeAnnotationCreated', annotation_studio.createUuid); // creates, if need be, and adds, both to object, and to highlight.
+    subscriber.subscribe('beforeAnnotationCreated', annotation_studio.addUserName); // creates, if need be, and adds, both to object, and to highlight.
+
+    // Once the local object has been created, load the sidebar from local data (already contains UUID)
+    subscriber.subscribe('annotationCreated', annotation_studio.loadSidebar);
+    subscriber.subscribe('annotationCreated', addUuid);
+
+    // When the local object is updated (contains previously created/stored UUID), load the sidebar from local data
+    subscriber.subscribe('annotationUpdated', annotation_studio.loadSidebar);
+    subscriber.subscribe('annotationDeleted', annotation_studio.deleteFromSidebar);
+    $(".annotator-checkbox label").text('My groups can view this annotation');
+
+    sidebar.filtered = $('#visibleannotations').hasClass('active');
+    sidebar.sort_editable = sidebar_sort_editable;
+    sidebar.subscriber = subscriber;
+  },
+	selectedTags: [],
+  loadOptions: function(overrides) {
+    var annotation_categories = [];
+    $.each($('#category-chooser button.active'), function(i, j) {
+      annotation_categories.push($(j).data('annotation_category_id'));
+    });
+
+    var settings = {
+      'limit': 1000,
+      "groups": groups,
+      "subgroups": subgroups,
+      'user': filter_user,
+      'mode': annotation_studio.getMode(),
+      'context': search_context,
+      'uri': [location.protocol, '//', location.host, location.pathname].join(''),
+      'annotation_categories': annotation_categories
+    };
+
+    if($('#tagsearchbox').length && $('#tagsearchbox').val() != '') {
+      settings.tags = $('#tagsearchbox').val();
+    }
+
+    $.each(overrides, function(i, j) {
+      settings[i] = j;
+    });
+
+    return settings;
+  },
+  refreshAnnotations: function() {
+    subscriber.loadAnnotations(subscriber.plugins.Store.annotations);
+    $('#spinnermodal').modal('hide');
+  },
+  filterAnnotations: function(event) {
+    $('#spinnermodal').modal('show');
+    var reload_data = annotation_studio.reloadAnnotations(annotation_studio.loadOptions({}));
+    var cleanup_document = annotation_studio.cleanupDocument();
+    $.when(reload_data).then(cleanup_document).done(annotation_studio.refreshAnnotations(), annotation_studio.loadSidebar());
+  },
+  modeFilter: function(event) {
+    $('.viewchoice').removeClass("active");
+	  $('.viewchoice').addClass("btn-primary");
+	  $(event.currentTarget).removeClass("btn-primary");
+    annotation_studio.filterAnnotations(event);
+  },
+  tagFilter: function(event) {
+    $('*[data-role="remove"]').hide();
+    annotation_studio.filterAnnotations(event);
+  },
+  tagFilterCheck: function(event) {
+	  var parent = $("#annotation-tag-list");
+	  var checks = parent.find('input:checkbox:checked');
+	  var tags = [];
+	  for (var i = 0; i < checks.length; i++)
+		  tags.push(checks[i].value);
+	  annotation_studio.selectedTags = tags;
+
+	  annotation_studio.filterAnnotations(event);
+  },
+  categoryFilter: function(event) {
+    $(event.currentTarget).toggleClass('active').removeAttr('style');
+    if($(event.currentTarget).hasClass('active')) {
+      $(event.currentTarget).css('background-color', $(event.currentTarget).data('active-color'));
+    }
+    annotation_studio.filterAnnotations(event);
+  },
+  sortUpdate: function(event) {
+    // TODO: Shouldn't bootstrap handle this without code?
+    $('.sortchoice').removeClass("active");
+    $(this).addClass('active');
+    $('.sortchoice').addClass("btn-primary");
+    $(this).removeClass('btn-primary');
+
+    // TODO: Is there a better way to rerender annotations?
+    sidebar.listAnnotations(subscriber.dumpAnnotations());
+  },
+  stopSpinner: function() {
+    $('#spinnermodal').modal('hide');
+  },
+  // Update the sidebar with local annotation data
+  loadSidebar: function(annotation) {
+    setTimeout(function() {
+        sidebar.listAnnotations(subscriber.dumpAnnotations());
+    }, 100);
+  },
+  // Remove all comment icons and load sidebar with local data
+  deleteFromSidebar: function(annotation) {
+    $(".glyphicon-comment").remove();
+    setTimeout(function() {
+        sidebar.listAnnotations(subscriber.dumpAnnotations());
+    }, 100);
+  },
+  removeHilites: function() {
+    $(".glyphicon-comment").remove();
+    var hilites = $('.annotator-hl');
+    if (hilites.length > 0) {
+      hilites.children().unwrap();
+      hilites.contents().unwrap();
+    }
+    return true;
+  },
+  handleHash: function(annotation) {
+    var hash = window.location.hash
+    if (hash.length > 0 && $(hash).length > 0){
+      console.info(hash);
+      setTimeout(function(){
+        $('html,body').animate({scrollTop: $(hash).offset().top - 150}, 500);
+      },1000);
+    }
+  },
+  // Create a UUID for a given annotation if needed.
+  // Once created, this shouldn\'t be changed.
+  createUuid: function(annotation) {
+    if (annotation.uuid == null) {
+      annotation.uuid = Math.uuid(8, 16);
+      console.info("New uuid for annotation: '"+annotation.quote+"': "+ annotation.uuid);
+    }
+    else {
+      console.info("Existing uuid for annotation: '"+annotation.quote+"': "+ annotation.uuid);
+    }
+  },
+  cleanupDocument: function() {
+    var dfd = new $.Deferred();
+    if (annotation_studio.removeHilites()) {
+      console.log("Cleanup complete.");
+      dfd.resolve("Cleanup complete.");
+    }
+    else {
+      console.log("Cleanup failed.");
+      dfd.reject("Cleanup failed.");
+    }
+    return dfd.promise();
+  },
+  reloadAnnotations: function(loadOptions) {
+    var dfd = new $.Deferred();
+    subscriber.plugins.Store.annotations = [];
+    if (subscriber.plugins.Store.loadAnnotationsFromSearch(loadOptions)) {
+      setTimeout(function() {
+        dfd.resolve("Reload complete.");
+      }, 100);
+      console.log("Reload complete.");
+    }
+    else {
+      console.log("Reload failed.");
+      dfd.reject("Reload failed.");
+    }
+    return dfd.promise();
+  },
+  getMode: function() {
+    var activeElems = $('.viewchoice.active')
+    for (var i=0; i<activeElems.length; i++) {
+      var elem = activeElems[i];
+      if (elem.id.substring(elem.id.length-4) === "view") {
+        return elem.id.substring(0,elem.id.length-4)
+      }
+    }
+  },
+  addUserName: function(annotation) {
+    if (annotation.username == null) {
+      annotation.username = annotation_username;
+      console.info("New username for annotation: " + annotation_username);
+    }
+  },
+  parentIndex: function(editor, annotation) {
+    if (!annotation.parentIndex > 0) {
+      console.log("No current annotation.parentIndex: "+ annotation.parentIndex);
+      var node = $(".annotator-hl-temporary");
+      var parent = node.parent()[0];
+      var parentIndex = $( "#textcontent" ).find( "*" ).index(parent)
+      annotation.parentIndex = parentIndex;
+      console.log("Added annotation.parentIndex: "+ annotation.parentIndex);
+    }
+    else {
+      console.log("Existing parentIndex: " + annotation.parentIndex + "; not adding a new one.");
+    }
+  },
+  set_document_state: function(state) {
+    $.each(state, function(i, button_id) {
+      var button = $('#' + button_id);
+      if(button.length > 0 && !button.hasClass('active')) {
+        if(button.parent().hasClass('btn-group')) {
+          button.siblings().removeClass('active');
+        }
+        button.addClass('active');
+        if(button.attr('id').match(/^annotation_category/)) {
+          button.css('background-color', $.xcolor.opacity('#FFFFFF', button.data('hex'), 0.4).getHex());
+        }
+      }
+    });
+  },
+  retrieve_document_state: function() {
+    var active_buttons = [];
+    $.each($('#toolsmenu button.active'), function(i, button) {
+      active_buttons.push($(button).attr('id'));
+    });
+    return active_buttons;
+  },
+  initialize_default_state_behavior: function() {
+    annotation_studio.set_document_state(default_state);
+
+    $('#default_state').on('click', function(e) {
+      e.preventDefault();
+      var current_state = annotation_studio.retrieve_document_state();
+      $.ajax({
+        url: '/documents/' + document_slug + '/set_default_state',
+        type: 'POST',
+        data: { default_state: JSON.stringify(current_state) }
+      }).done(function() {
+        $('#default_state').removeClass('active');
+      });
+    });
+  }
+};
+
+jQuery(function($) {
+  if(!($('body').attr('id') == 'documents' && $('body').attr('class') == 'show')) {
+    return;
+  }
+
+  annotation_studio.initialize_default_state_behavior();
+  annotation_studio.initialize_annotator();
+
+  // these three click and tap handlers manage the rich text editor show and hide on mobile and desktop
+  $('.annotator-button').on('tap', function(){
+    console.log('button tapped');
+    $('.annotator-item').removeClass('hide');
+  });
+
+  $('.annotator-adder').on('click', function(){
+    $('.annotator-item').removeClass('hide');
+  });
+
+  $('.annotator-edit').on('tap', function(){
+    $('.annotator-item').removeClass('hide');
+  });
+
+  $('#userview').on('click', { id: 'userview' }, annotation_studio.modeFilter);
+  $('#groupview').on('click', { id: 'groupview' }, annotation_studio.modeFilter);
+  $('#classview').on('click', { id: 'classview' }, annotation_studio.modeFilter)
+
+	var tagsElement = $("#annotation-tag-list");
+	$("body").on('click', '#annotation-tag-list input', annotation_studio.tagFilterCheck);
+
+  $('#tagsearchbox').tagsinput()
+  $('#tagsearchbox').on('itemAdded', annotation_studio.tagFilter);
+  $('#tagsearchbox').on('itemRemoved', annotation_studio.tagFilter);
+
+  $(window).scroll(lazyShowAndHideAnnotations);
+
+  // Toggle filtered variable
+  $('#visibleannotations').on('click', function(){
+    if($(this).hasClass('active')) {
+      return;
+    }
+    $('#allannotations').removeClass('active');
+    $('#allannotations').addClass('btn-primary');
+	  $('#visibleannotations').removeClass('btn-primary');
+    sidebar.filtered = true;
+    sidebar.showAndHideAnnotations();
+  });
+  $('#allannotations').on('click', function(){
+    if($(this).hasClass('active')) {
+      return;
+    }
+    $('#visibleannotations').removeClass('active');
+	  $('#visibleannotations').addClass('btn-primary');
+	  $('#allannotations').removeClass('btn-primary');
+    sidebar.filtered = false;
+    sidebar.showAllAnnotations();
+  });
+
+  $.each($('#category-chooser button'), function(i, j) {
+    $(j).data('active-color', $.xcolor.opacity('#FFFFFF', $(j).data('hex'), 0.4).getHex());
+    $(j).on('click', annotation_studio.categoryFilter);
+  });
+  $('#textpositionsort').on('click', {}, annotation_studio.sortUpdate);
+  $('#customsort').on('click', {}, annotation_studio.sortUpdate);
+
+});
+
+var lazyShowAndHideAnnotations = _.debounce(
+  function() { sidebar.showAndHideAnnotations() },
+  30
+);
+  // Add UUIDs to highlights so sidebar and highlights can link to one another.
+  var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+  var addUuid = __bind(function(a) {
+    if (a.highlights[0] != null) {
+      a.highlights[0].id = "hl"+ a.uuid;
+      a.highlights[0].title = a.user;
+    }
+    else {
+      console.info("Annotation: " + a.uuid + "has no highlights.");
+    }
+  }, this);
+

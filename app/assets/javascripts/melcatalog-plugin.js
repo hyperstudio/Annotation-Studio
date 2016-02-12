@@ -44,12 +44,12 @@ jQuery(function ($) {
 
                         // remove all handlers then add a click handler
                         $( ".catalog-popup" ).off( ).attr('target', '_blank');
-                        /* $( ".catalog-popup" ).on( 'click', function( e ) {
+                        $( ".catalog-popup" ).on( 'click', function( e ) {
                             e.preventDefault( );
                             $('.ekko-lightbox').remove();
                             $( this ).ekkoLightbox( );
                             $('.ekko-lightbox .modal-dialog').draggable().resizable();
-                        } ); */
+                        } );
                     })
                     //.subscribe("annotationViewerTextField", function (annotation) {
                     //    console.info("annotationViewerTextField: %o", annotation)

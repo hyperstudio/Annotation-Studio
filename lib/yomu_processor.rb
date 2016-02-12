@@ -1,4 +1,3 @@
-
 class YomuProcessor
   def initialize(document, document_state)
     @document = document

@@ -4,10 +4,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :trackable, :validatable, :confirmable, :timeoutable
 
-  # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :agreement, :affiliation, :password_confirmation, :remember_me, :firstname, :lastname, :rep_privacy_list, :rep_group_list, :rep_subgroup_list, :first_name_last_initial, :username
-
-  validates :agreement, presence: true
+  validates :agreement, presence: { message: "must be checked. Please check the box to confirm you have read and accepted the terms and conditions." }
 
   extend FriendlyId
   friendly_id :username, use: [:slugged, :history]
@@ -38,5 +35,10 @@ class User < ActiveRecord::Base
 
   def has_document_permissions?(document)
     self.has_role?(:admin) || self == document.user
+  end
+
+  def self.all_tags()
+    tags = User.rep_group_counts.map{|t| t.name}
+    return tags.sort!
   end
 end

@@ -18,32 +18,7 @@
 <div class="row">
   <div class="col-md-8" id="blurb">
     <p>
-      <legend>
-        Annotation Studio is a web application that supports close reading and collaborative interpretation of online documents. <a href="/users/sign_up">Register</a> and <a href="/users/sign_in">sign in</a> to try it out.
-      </legend>
+      <legend>Annotation Studio is a web application that supports close reading and collaborative interpretation of online documents. For more information on the project click the About link at the top. If you don’t have an account yet, click Register at the top of this page otherwise just log in.</legend>
     </p>
-    <%= render "techreqs" %>
   </div>
-	<div class="col-md-4" id="login">
-      <div class="well">
-  		<h4>Sign in</h4>
-    		<%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :role => "form"}) do |f| %>
-	     	<%= devise_error_messages! %>
-
-        <div class="form-group">
-				<%= f.label :email %>
-				<%= f.email_field :email, :class => "form-control" %>
-				</div>
-
-        <div class="form-group">
-				<%= f.label :password %>
-				<%= f.password_field :password, :class => "form-control" %>
-				</div>
-
-				<div><%= f.submit "Sign in", :class => "btn btn-default btn-default-primary" %></div>
-
-    		<% end %>
-      </div><!--/well -->
-      <%= render "links" %>
-	</div><!--/col -->
 </div><!--/row -->

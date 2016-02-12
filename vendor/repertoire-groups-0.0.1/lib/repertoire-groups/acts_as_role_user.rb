@@ -9,7 +9,6 @@ module Repertoire
             has_many :assignments
             has_many :roles, :through => :assignments
 
-            attr_accessible :roles
             after_initialize :set_default_roles
             before_save :remove_unapproved
             validate :must_have_at_least_one_role

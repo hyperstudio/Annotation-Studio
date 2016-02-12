@@ -15,6 +15,15 @@ module ApplicationHelper
     end
   end
 
+  def self_removing(notice)
+    # This is a hack to get the devise messages to disappear on their own after a little while. If it is a normal
+    # devise message, then we add a class.
+    if notice == t("devise.sessions.signed_in") || notice == t("devise.sessions.signed_out")
+      return "self_removing"
+    end
+      return ""
+  end
+
   def mobile_device?
     if session[:mobile_param]
       session[:mobile_param] == "1"

@@ -1,4 +1,6 @@
 ActiveAdmin.register AnnotationCategory do
+  permit_params :name, :hex, :css_classes
+
   scope :all, :default => true
 
   filter :name
@@ -11,7 +13,7 @@ ActiveAdmin.register AnnotationCategory do
     column "Name", :name
     column "Hex", :hex
     column "CSS Classes", :css_classes
-    default_actions
+    actions
   end
 
   show do |document|

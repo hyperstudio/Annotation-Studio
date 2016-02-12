@@ -15,51 +15,56 @@
 
     <div class="panel-body">
 
-      <div class="row">
-        <div class="col-lg-12">
-           <form class="form-horizontal" role="form">
-
-             <div class="form-group">
-               <%= image_or_nothing( entry['images'], 'image_medium' ) %>
-             </div>
+             <%= image_or_nothing( entry['images'], 'image_medium' ) %>
 
              <% fieldlist.each do |field| %>
 
-                 <div class="form-group">
-                   <label class="col-sm-2 control-label"><%= field.humanize %></label>
-                   <div class="col-sm-10">
-                     <% str = "" %>
-                     <% case field %>
-                     <% when "affiliation" %>
-                         <% entry[field].each do |affiliation| %>
-                             <% str += "#{affiliation['affiliation']} : #{affiliation['type']} : #{affiliation['subtype']} : #{affiliation['role']} : #{affiliation['from']} : #{affiliation['to']} " %>
-                         <% end %>
-                         <p class="form-control-static" id="<%= field %>"><%= str %></p>
-                     <% when 'nationality' %>
-                         <% entry[field].each do |nationality| %>
-                             <% str += "#{nationality['nationality']} : #{nationality['from']} : #{nationality['to']} " %>
-                         <% end %>
-                         <p class="form-control-static" id="<%= field %>"><%= str %></p>
-                     <% when 'occupation' %>
-                         <% entry[field].each do |occupation| %>
-                             <% str += "#{occupation['occupation']} : #{occupation['from']} : #{occupation['to']} " %>
-                         <% end %>
-                         <p class="form-control-static" id="<%= field %>"><%= str %></p>
-                     <% when 'see_also' %>
-                         <% entry[field].each do |see_also| %>
-                           <% str += "#{see_also['description']} : #{see_also['url']} " %>
-                         <% end %>
-                         <p class="form-control-static" id="<%= field %>"><%= str %></p>
-                     <% else %>
-                         <p class="form-control-static" id="<%= field %>"><%= tagset_display entry[field] %></p>
+                 <% str = "" %>
+                 <% lines = [] %>
+                 <% case field %>
+                 <% when "affiliation" %>
+                     <% entry[field].each_with_index do |affiliation, ix| %>
+                         <% lines[ix] = "#{affiliation['affiliation']} [#{affiliation['affiliation_type']}/#{affiliation['subtype']}] #{affiliation['role']} (#{affiliation['from']} to #{affiliation['to']})" %>
                      <% end %>
+                 <% when 'nationality' %>
+                     <% entry[field].each_with_index do |nationality, ix| %>
+                         <% lines[ix] = "#{nationality['nationality']} (#{nationality['from']} to #{nationality['to']})" %>
+                     <% end %>
+                 <% when 'occupation' %>
+                     <% entry[field].each_with_index do |occupation, ix| %>
+                         <% lines[ix] = "#{occupation['occupation']} (#{occupation['from']} to #{occupation['to']})" %>
+                     <% end %>
+                 <% when 'see_also' %>
+                     <% entry[field].each_with_index do |see_also, ix| %>
+                       <% lines[ix] = "<a href='#{see_also['url']}'>#{see_also['description']}</a>" %>
+                     <% end %>
+                 <% when 'references' %>
+                     <% entry[field].each_with_index do |reference, ix| %>
+                         <% lines[ix] = "<a href='#{reference['uri']}'>referenced by #{reference['created_by']} in #{reference['cited_in']} on #{reference['created_at']}</a>" %>
+                     <% end %>
+                 <% else %>
+                     <% str = tagset_display entry[field] %>
+                     <% if str.blank? == false %>
+                        <div class="form-group">
+                           <label for="<%= field.downcase %>"><%= field.humanize %></label>
+                           <input type="text" class="form-control" id="<%= field.downcase %>" value="<%= str %>" readonly="true">
+                        </div>
+                     <% end %>
+                 <% end %>
+
+                 <% if lines.empty? == false %>
+                   <div class="form-group">
+                     <label for="<%= field.downcase %>" class="control-label"><%= field.humanize %></label>
+                     <ul class="list-group">
+                       <% lines.each do |line| %>
+                           <li class="list-group-item"><%= raw( line ) %></li>
+                       <% end %>
+                     </ul>
                    </div>
-                 </div>
+                 <% end %>
+
              <% end %>
 
-           </form>
-        </div>
-      </div>
     </div>
   </div>
 

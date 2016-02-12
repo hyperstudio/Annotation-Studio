@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   before_filter :set_domain_config
+  before_action :configure_permitted_parameters, if: :devise_controller?
 
   def after_sign_in_path_for(user)
       @now = DateTime.current().to_time.iso8601
@@ -31,7 +32,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_tenant
-    Apartment::Database.current_tenant
+    Apartment::Tenant.current_tenant
   end
 
   def set_domain_config
@@ -42,4 +43,12 @@ class ApplicationController < ActionController::Base
       $DOMAIN_CONFIG = DOMAIN_CONFIGS['default']
     end
   end
+
+  protected
+
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.for(:account_update) << [:firstname, :lastname, :rep_group_list, :rep_subgroup_list, :affiliation]
+    devise_parameter_sanitizer.for(:sign_up) << [:firstname, :lastname, :rep_group_list, :agreement, :affiliation]
+  end
+
 end

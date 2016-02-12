@@ -1,5 +1,5 @@
 ActiveAdmin.register Tenant do
-  permit_params :domain, :database_name
+  permit_params :domain, :database_name, :mel_catalog_enabled, :mel_catalog_url, :annotation_categories_enabled
 
   form do |f|
     f.inputs "Tenant Details" do

@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :trackable, :validatable, :confirmable, :timeoutable
 
-  validates :agreement, presence: true
+  validates :agreement, presence: { message: "must be checked. Please check the box to confirm you have read and accepted the terms and conditions." }
 
   extend FriendlyId
   friendly_id :username, use: [:slugged, :history]

@@ -76,7 +76,6 @@ var annotation_studio = {
     if($('#tagsearchbox').length && $('#tagsearchbox').val() != '') {
       settings.tags = $('#tagsearchbox').val();
     }
-	  settings.tags = annotation_studio.selectedTags.join(",");
 
     $.each(overrides, function(i, j) {
       settings[i] = j;

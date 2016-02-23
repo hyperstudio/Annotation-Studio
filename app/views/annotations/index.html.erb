@@ -2,8 +2,8 @@
 <%= content_for :body_id, 'annotations' %>
 <%= content_for :body_class, 'index' %>
 <%= stylesheet_link_tag "annotations" %>
-<%= render "shared/backbone_libraries" %>
 <%= javascript_include_tag "widget" %>
+<%= render "/shared/document_titles" %>
 <script type="text/javascript">
   jQuery(function ($) {
     var widget = new Widget.App();
@@ -27,10 +27,12 @@
   });
 </script>
 <script type="text/template" id="user-comment-template">
-  <span class="user-comment"><a href="{{uri}}#hl{{uuid}}" target="_blank">{{{text}}}</a>&raquo; {{quote}}</span>
+	<span class="user-highlight"><span class="pull-right">{{formattedDate}}</span><div class="ellipsis">&raquo; <a href="{{uri}}#hl{{uuid}}">{{{quote}}}</a></div></span>
+  <span class="user-comment"><div class="ellipsis long">{{{text}}}</div><div class="secondary-text">{{title}} ({{username}}) <span class="label label-info">{{class}}</span></div></span>
 </script>
 <script type="text/template" id="user-highlight-template">
-  <span class="user-highlight"><a href="{{uri}}#hl{{uuid}}" target="_blank">{{{quote}}}</a></span>
+	<span class="user-highlight"><div class="ellipsis long">&raquo; <a href="{{uri}}#hl{{uuid}}">{{{quote}}}</a></div></span>
+	<span class="user-comment"><div class="secondary-text">{{title}} ({{username}}) <span class="label label-info">{{class}}</span></div></span>
 </script>
 <div class="row">
   <div class="col-md-12">

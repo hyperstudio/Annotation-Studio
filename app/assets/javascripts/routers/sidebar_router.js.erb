@@ -1,0 +1,47 @@
+var Sidebar = Sidebar || {};
+
+Sidebar.App = Backbone.Router.extend({
+  // Not currently being invoked.
+  routes: {
+    'list':  'listAnnotations',
+    'update':  'updateAnnotations'
+  },
+  // takes an array of existing annotation object literals.
+  listAnnotations: function(annotationArray) {
+    Sidebar.annotations = new Sidebar.LocalAnnotationList(annotationArray);
+    var annotationsList = new Sidebar.AnnotationListView({
+      "container": $('#annotation-well'),
+      "collection": Sidebar.annotations
+    });
+    annotationsList.render();
+    // console.info("Local: "+ Sidebar.annotations.toJSON());
+  },
+  // takes an object literal of options for an XHR request.
+  updateAnnotations: function(options) {
+    Sidebar.annotations = new Sidebar.RemoteAnnotationList(options);
+    var annotationsList = new Sidebar.AnnotationListView({
+      "container": $('#annotation-well'),
+      "collection": Sidebar.annotations
+    });
+    Sidebar.annotations.deferred.done(function() {
+      annotationsList.render();
+      // console.info("Remote: "+ Sidebar.annotations.toJSON());
+    });
+  },
+
+  showAndHideAnnotations: function() {
+    if(this.filtered) {
+      $('ul#annotation-list li').each(function(index, element){
+        highlight_id = $(element).find('span.highlightlink').data('highlight');
+        if(isScrolledIntoView($(highlight_id))){
+          $(element).show();
+        }else{
+          $(element).hide();
+        };
+      });
+    }
+  },
+  showAllAnnotations: function() {
+    $('ul#annotation-list li').show()
+  },
+});

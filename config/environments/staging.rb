@@ -8,24 +8,20 @@ AnnotationStudio::Application.configure do
   config.cache_classes = true
 
   # Configure static asset server for tests with Cache-Control for performance
-  config.serve_static_assets = true
+  config.serve_static_files = false
 
   # Compress JavaScripts and CSS
   config.assets.compress = true
 
+  config.eager_load = true
+
   # Don't fallback to assets pipeline if a precompiled asset is missed
   config.assets.compile = true
-
-  # Generate digests for assets URLs
-  config.assets.digest = true
 
   config.static_cache_control = "public, max-age=3600"
 
   # Log error messages when you accidentally call methods on nil
   config.whiny_nils = true
-
-  # touching this to deal with a sidebar with an incorrect API_URL compiled in.
-  config.assets.precompile += %w( sidebar.js )
 
   # Show full error reports and disable caching
   config.consider_all_requests_local       = true
@@ -43,7 +39,7 @@ AnnotationStudio::Application.configure do
   config.action_mailer.delivery_method = :test
 
   # Raise exception on mass assignment protection for Active Record models
-  config.active_record.mass_assignment_sanitizer = :strict
+  # config.active_record.mass_assignment_sanitizer = :strict
 
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr

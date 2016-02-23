@@ -1,0 +1,49 @@
+<table class="table table-striped table-bordered">
+  <tr>
+    <th>Title</th>
+    <th>Author</th>
+    <th>Created</th>
+    <th>Groups</th>
+    <th>Status</th>
+    <th>Actions</th>
+  </tr>
+  <% unless documents.nil? || documents.empty? %>
+    <% documents.each do |document| %>
+      <tr>
+        <td>
+          <%= link_to document.title, document_path(document.friendly_id) %></td>
+        <td>
+          <%= document.author %></td>
+        <td>
+          <%= document.created_at.strftime("%m/%d/%Y") %></td>
+        <td>
+          <% document.rep_group_list.each do |group| %>
+          <span class="label label-info">
+            <%= group %></span>
+          <% end %></td>
+        <td>
+          <% if document.draft? %>
+          <i class="glyphicon glyphicon-pencil"></i>
+          <% elsif document.public? %>
+          <i class="glyphicon glyphicon-share-alt"></i>
+          <% elsif document.published? %>
+          <i class="glyphicon glyphicon-ok"></i>
+          <% elsif document.deleted? %>
+          <i class="glyphicon glyphicon-folder-close"></i>
+          <% end %></td>
+        <td class="button-column">
+          <% if can? :update, document %>
+          <%= link_to 'Edit', edit_document_path(document.friendly_id), :class =>
+          'btn btn-default btn-sm' %>
+          <% end %>
+          <% if can? :destroy, document %>
+          <%= link_to 'Delete', document_path(document.friendly_id), :method =>
+          :delete, :confirm => 'Are you sure?', :class => 'btn btn-danger btn-sm' %>
+          <% end %></td>
+      </tr>
+    <% end %>
+  <% else %>
+  <tr>
+    <td colspan="4">No documents to view.</td>
+  </tr>
+  <% end %></table>

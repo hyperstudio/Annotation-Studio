@@ -49,3 +49,4 @@ patch.diff
 .env
 .idea
 /deploy.sh
+devnotes.md

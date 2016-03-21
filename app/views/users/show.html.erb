@@ -154,51 +154,7 @@
 </div>
 <!--/row -->
 
-<div class="row">
-  <div class="col-md-6">
-    <div class="panel panel-default" id="dashboard-groups">
-      <div class="panel-heading">
-        <span class="panel-title">
-          <%= link_to "People", groups_path %></span>
-        <ul class="nav nav-tabs nav-tabs-xs pull-right" id="group-tabs" role="tablist">
-          <li>
-            <a href="#subgroups" data-toggle="tab">
-              <span class="badge"><%= current_user.rep_subgroup_list.size %></span> Groups
-            </a>
-          </li>
-          <li class="active">
-            <a href="#groups" data-toggle="tab">
-              <span class="badge"><%= current_user.rep_group_list.size %></span> Classes
-            </a>
-          </li>
-        </ul>
-      </div>
-      <!-- / .panel-heading -->
 
-    <div class="tab-content">
-      <div class="tab-pane no-padding fade in" id="subgroups">
-        <ul class="list-group">
-        <% current_user.rep_subgroup_list.each do |group| %>
-          <li class="list-group-item"><%= group %></li>
-        <% end %>
-        </ul>
-      </div>
-       <div class="tab-pane no-padding fade active in" id="groups">
-        <ul class="list-group">
-        <% current_user.rep_group_list.each do |group| %>
-          <li class="list-group-item"><%= group %></li>
-        <% end %>
-        </ul>
-      </div>
-    </div>
-    <ul class="nav nav-pills">
-      <li>
-        <%= link_to "Go to class and group list", groups_path %>
-      </li>
-    </ul>
-    </div><!--/ panel -->
-  </div><!--/ col-md-6 -->
-</div><!--/row -->
 <%= javascript_include_tag "widget" %>
 <script type="text/javascript" charset="utf-8">
 jQuery(function ($) {

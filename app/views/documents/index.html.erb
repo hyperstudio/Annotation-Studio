@@ -12,12 +12,12 @@
         <ul class="nav nav-tabs nav-tabs-xs pull-right" id="document-tabs" role="tablist">
           <li class="<%= @tab_state['assigned'] %>">
             <%= link_to documents_path( docs: 'assigned' ) do %>
-              <span class='badge'><%= @assigned_documents_count %></span> Assigned
+              <span class='badge'><%= @assigned_documents_count %></span> Shared
             <% end %>
           </li>
           <li class="<%= @tab_state['created'] %>">
             <%= link_to documents_path( docs: 'created' ) do %>
-              <span class='badge'><%= @created_documents_count %></span> Created
+              <span class='badge'><%= @created_documents_count %></span> Mine
             <% end %>
           </li>
           <% if can? :manage, Document %>

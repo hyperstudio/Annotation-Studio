@@ -24,9 +24,9 @@ class DocumentsController < ApplicationController
     per_page = 20
     
     if document_set == 'assigned'
-      @documents = Document.tagged_with(current_user.rep_group_list, :any =>true).paginate(:page => params[:page], :per_page => per_page)    
+      @documents = Document.tagged_with(current_user.rep_group_list, :any =>true).paginate(:page => params[:page], :per_page => per_page).order('created_at DESC')
     elsif document_set == 'created'
-      @documents = current_user.documents.paginate(:page => params[:page], :per_page => per_page)
+      @documents = current_user.documents.paginate(:page => params[:page], :per_page => per_page).order('created_at DESC')
     elsif can? :manage, Document && document_set == 'all'
       @documents = Document.paginate(:page => params[:page], :per_page => per_page ).order("created_at DESC")
     end

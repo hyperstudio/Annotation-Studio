@@ -10,6 +10,25 @@ class Tenant < ActiveRecord::Base
     Tenant.where({ database_name: Apartment::Database.current_tenant }).first
   end
 
+  def self.mel_catalog_enabled
+    tenant = self.current_tenant    
+    if !tenant.present?
+      return false
+    else
+      return tenant.mel_catalog_enabled?
+    end
+  end
+
+  def self.annotation_categories_enabled
+    tenant = self.current_tenant    
+    if !tenant.present?
+      return false
+    else
+      return tenant.annotation_categories_enabled?
+    end
+  end
+
+
   def initialize_apartment_schema
     return if database_name == 'public'
     

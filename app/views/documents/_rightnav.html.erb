@@ -19,7 +19,7 @@
 <div class="input-group" id="tag-chooser">
   <input type="text" id="tagsearchbox" placeholder="Enter tag(s) to filter on">
 </div><!-- /input-group -->
-<% if Tenant.current_tenant.annotation_categories_enabled -%>
+<% if Tenant.annotation_categories_enabled -%>
 <p><strong>How</strong> they are categorized:</p>
 <div class="btn-toolbar" id="category-chooser">
   <% AnnotationCategory.find_each do |annotation_category| -%>

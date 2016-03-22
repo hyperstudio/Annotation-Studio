@@ -44,8 +44,9 @@ class DocumentsController < ApplicationController
       redirect_to @document, status: :moved_permanently
     end
 
-    # configuration for annotator
-    @mel_catalog_enabled = Tenant.current_tenant.mel_catalog_enabled
+    # configuration for annotator [note that public schema won't have mel_catalog enabled]
+    @mel_catalog_enabled =  Tenant.mel_catalog_enabled
+    @annotation_categories_enabled =  Tenant.annotation_categories_enabled
     @enable_rich_text_editor = ENV["ANNOTATOR_RICHTEXT"]
     @tiny_mce_toolbar = @mel_catalog_enabled ? ENV["ANNOTATOR_RICHTEXT_WITH_CATALOG"] : ENV["ANNOTATOR_RICHTEXT_CONFIG"]
     @api_url = ENV["API_URL"]

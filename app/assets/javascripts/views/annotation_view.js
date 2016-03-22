@@ -23,7 +23,9 @@ Sidebar.AnnotationView = Backbone.View.extend({
       $(this.el).html(Mustache.to_html(this.highlighttemplate, this.model.toJSON())); // instead of console.info:
     }
     $(this.el).find(".details").hide();
-     $(this.el).find("a").click(function(){
+    $(this.el).addClass(this.displayCategories());
+
+    $(this.el).find("a").click(function(){
       window.open(this.href, '_blank');
       return false;
     });
@@ -38,5 +40,13 @@ Sidebar.AnnotationView = Backbone.View.extend({
       this.model.set("text", formattedComment);
     }
     return this;
+  },
+
+  displayCategories: function() {
+    var categories = this.model.get("annotation_categories");
+    var catClasses = _.map(categories, function(cat_id){ 
+      return "annotation_category-" + cat_id;
+    });
+    return catClasses.join(" ");
   }
 });

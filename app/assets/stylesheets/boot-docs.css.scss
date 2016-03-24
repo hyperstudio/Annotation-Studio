@@ -352,10 +352,18 @@ span.highlightborder {
 
 #view-chooser {
 	margin-bottom:10px;
+	label.active {
+		background-color: #444;
+	    color: white;
+	}
 }
 
 #filter-chooser {
     margin-bottom:10px;
+    label.active {
+		background-color: #444;
+	    color: white;
+	}
 }
 
 .popover.bottom .arrow:after {

@@ -87,21 +87,22 @@ var annotation_studio = {
     subscriber.loadAnnotations(subscriber.plugins.Store.annotations);
     $('#spinnermodal').modal('hide');
   },
-  filterAnnotations: function(event) {
-    $('#spinnermodal').modal('show');
-    var reload_data = annotation_studio.reloadAnnotations(annotation_studio.loadOptions({}));
+  filterAnnotations: function(overrides) {
+    var options = annotation_studio.loadOptions(overrides);
+    var reload_data = annotation_studio.reloadAnnotations(options);
     var cleanup_document = annotation_studio.cleanupDocument();
     $.when(reload_data).then(cleanup_document).done(annotation_studio.refreshAnnotations(), annotation_studio.loadSidebar());
   },
   modeFilter: function(event) {
-    $('.viewchoice').removeClass("active");
-	  $('.viewchoice').addClass("btn-primary");
-	  $(event.currentTarget).removeClass("btn-primary");
-    annotation_studio.filterAnnotations(event);
+    var overrides = {
+      mode: event.target.id
+    };
+    annotation_studio.filterAnnotations(overrides);
   },
   tagFilter: function(event) {
     $('*[data-role="remove"]').hide();
-    annotation_studio.filterAnnotations(event);
+    var overrides = {};
+    annotation_studio.filterAnnotations(overrides);
   },
   tagFilterCheck: function(event) {
 	  var parent = $("#annotation-tag-list");
@@ -110,15 +111,16 @@ var annotation_studio = {
 	  for (var i = 0; i < checks.length; i++)
 		  tags.push(checks[i].value);
 	  annotation_studio.selectedTags = tags;
-
-	  annotation_studio.filterAnnotations(event);
+    var overrides = {};
+	  annotation_studio.filterAnnotations(overrides);
   },
   categoryFilter: function(event) {
     $(event.currentTarget).toggleClass('active').removeAttr('style');
     if($(event.currentTarget).hasClass('active')) {
       $(event.currentTarget).css('background-color', $(event.currentTarget).data('active-color'));
     }
-    annotation_studio.filterAnnotations(event);
+    var overrides = {};
+    annotation_studio.filterAnnotations(overrides);
   },
   sortUpdate: function(event) {
     // TODO: Shouldn't bootstrap handle this without code?
@@ -203,13 +205,7 @@ var annotation_studio = {
     return dfd.promise();
   },
   getMode: function() {
-    var activeElems = $('.viewchoice.active')
-    for (var i=0; i<activeElems.length; i++) {
-      var elem = activeElems[i];
-      if (elem.id.substring(elem.id.length-4) === "view") {
-        return elem.id.substring(0,elem.id.length-4)
-      }
-    }
+    return $('label.viewchoice.active').attr("id") || "user";
   },
   addUserName: function(annotation) {
     if (annotation.username == null) {
@@ -290,9 +286,7 @@ jQuery(function($) {
     $('.annotator-item').removeClass('hide');
   });
 
-  $('#userview').on('click', { id: 'userview' }, annotation_studio.modeFilter);
-  $('#groupview').on('click', { id: 'groupview' }, annotation_studio.modeFilter);
-  $('#classview').on('click', { id: 'classview' }, annotation_studio.modeFilter)
+  $('.viewchoice').on('click', annotation_studio.modeFilter);
 
 	var tagsElement = $("#annotation-tag-list");
 	$("body").on('click', '#annotation-tag-list input', annotation_studio.tagFilterCheck);
@@ -305,22 +299,10 @@ jQuery(function($) {
 
   // Toggle filtered variable
   $('#visibleannotations').on('click', function(){
-    if($(this).hasClass('active')) {
-      return;
-    }
-    $('#allannotations').removeClass('active');
-    $('#allannotations').addClass('btn-primary');
-	  $('#visibleannotations').removeClass('btn-primary');
     sidebar.filtered = true;
     sidebar.showAndHideAnnotations();
   });
   $('#allannotations').on('click', function(){
-    if($(this).hasClass('active')) {
-      return;
-    }
-    $('#visibleannotations').removeClass('active');
-	  $('#visibleannotations').addClass('btn-primary');
-	  $('#allannotations').removeClass('btn-primary');
     sidebar.filtered = false;
     sidebar.showAllAnnotations();
   });

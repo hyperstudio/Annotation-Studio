@@ -11,17 +11,6 @@ ActiveAdmin.register User, :as => "Student" do
   filter :last_sign_in_at
   filter :taggings_tag_name, label: 'Class and Group Names', :as => :check_boxes, :collection => proc { User.all_tags() }
 
-  controller do
-    def autocomplete_tags
-      @tags = ActsAsTaggableOn::Tag.
-        where("name LIKE ?", "#{params[:q]}%").
-        order(:name)
-      respond_to do |format|
-        format.json { render :json => @tags.collect{|t| {:id => t.id, :name => t.name }}}
-      end
-    end
-  end
-
   batch_action :approve do |selection|
     User.find(selection).each do |user|
       user.set_roles = ['student']
@@ -62,16 +51,16 @@ ActiveAdmin.register User, :as => "Student" do
       f.input :affiliation, :as => :string
       f.input :email, :as => :string
       f.input :rep_group_list, 
-        :label => "Put this student with a class",
-        input_html: {
-        data: {
-          placeholder: "Start typing to see existing classes or add new ones",
-          saved: f.object.rep_group.map{|t| {id: t.name, name: t.name}}.to_json,
-          url: autocomplete_tags_path 
-        },
-        class: 'tagselect'
-      }
-
+      :label => "Add/remove existing groups",
+        # :input_html => { :size => 50 },
+        :as => :check_boxes,
+        # :multiple => :true,
+        :collection => ActsAsTaggableOn::Tag.all.map(&:name)
+      # f.input :rep_group_list, 
+      #   :value => nil,
+      #   :placeholder_text => "Type new group here",
+      #   :as => :string,
+      #   :label => "Create (and add user to) a new group"
     end
     f.actions do
       f.action :submit

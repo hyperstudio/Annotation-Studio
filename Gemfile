@@ -23,7 +23,6 @@ gem 'pdf-reader-html'
 gem 'apartment'
 gem 'yomu'
 gem 'net-ssh'
-gem 'select2-rails', '< 4.0'
 
 group :development do
   gem 'sextant'

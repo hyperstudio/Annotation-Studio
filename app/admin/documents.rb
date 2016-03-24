@@ -52,16 +52,17 @@ ActiveAdmin.register Document do
     f.inputs "Details" do
       f.input :title, :as => :string
       f.input :rep_group_list, 
-      :label => "Add/remove existing groups",
-        # :input_html => { :size => 50 },
-        :as => :check_boxes,
-        # :multiple => :true,
-        :collection => ActsAsTaggableOn::Tag.all.map(&:name)
-      # f.input :rep_group_list, 
-      #   :value => nil,
-      #   :placeholder_text => "Type new group here",
-      #   :as => :string,
-      #   :label => "Create (and add user to) a new group"
+        :label => "Share this document with a class",
+        input_html: {
+        multiple: true,
+        data: {
+          placeholder: "Start typing to see existing classes or add new ones",
+          saved: f.object.rep_group.collect{|t| { :id => t.name, :name => t.name }}.to_json,
+          url: autocomplete_tags_path 
+        },
+        value: f.object.rep_group_list.join(', '),
+        class: 'tagselect'
+      }
     end
     f.actions do
       f.action :submit
@@ -75,6 +76,14 @@ ActiveAdmin.register Document do
     end
     def permitted_params
       params.permit!
+    end
+    def autocomplete_tags
+      @tags = ActsAsTaggableOn::Tag.
+        where("name LIKE ?", "#{params[:q]}%").
+        order(:name)
+      respond_to do |format|
+        format.json { render :json => @tags.collect{|t| {:id => t.name, :name => t.name }}}
+      end
     end
   end
 end

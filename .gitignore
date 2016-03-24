@@ -12,7 +12,7 @@ ans_dev
 /log/*
 !/log/.keep
 tmp/
-documents/
+./documents/
 .DS_Store
 public/assets/application-*
 vendor/assets/javascripts/annotator.js

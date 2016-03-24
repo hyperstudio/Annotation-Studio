@@ -83,7 +83,7 @@
           	<h4>Classes</h4>
           	<p class="help-block">Enter the classes to whom you wish to assign this document, <strong>and press enter after each.</strong></p>
           	<div class="form-group">
-          	<%= f.text_field :rep_group_list, :class => 'form-control', 'data-role' => "tagsinput", 'placeholder' => "Enter class name(s)" %>
+          	<%= f.text_field :rep_group_list, :value => @document.rep_group_list.join(', '), :class => 'form-control', 'data-role' => "tagsinput", 'placeholder' => "Enter class name(s)" %>
           	</div>
 			  </div><!-- end span 6 -->
 			  </div><!-- end row -->

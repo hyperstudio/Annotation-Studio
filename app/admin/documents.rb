@@ -52,16 +52,15 @@ ActiveAdmin.register Document do
     f.inputs "Details" do
       f.input :title, :as => :string
       f.input :rep_group_list, 
-      :label => "Add/remove existing groups",
-        # :input_html => { :size => 50 },
-        :as => :check_boxes,
-        # :multiple => :true,
-        :collection => ActsAsTaggableOn::Tag.all.map(&:name)
-      # f.input :rep_group_list, 
-      #   :value => nil,
-      #   :placeholder_text => "Type new group here",
-      #   :as => :string,
-      #   :label => "Create (and add user to) a new group"
+        :label => "Share this document with a class",
+        input_html: {
+        data: {
+          placeholder: "Start typing to see existing classes or add new ones",
+          saved: f.object.rep_group.map{|t| {id: t.name, name: t.name}}.to_json,
+          url: autocomplete_tags_path 
+        },
+        class: 'tagselect'
+      }
     end
     f.actions do
       f.action :submit

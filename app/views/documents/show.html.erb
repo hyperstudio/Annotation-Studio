@@ -4,6 +4,7 @@
 <%= stylesheet_link_tag "documents" %>
 <div class="row">
   <div class="col-md-8">
+  	<div id="visualizer"><div class="vis-blocker" id="blocker-top"></div><div class="vis-blocker" id="blocker-bottom"></div></div>
     <% if ! @document.processed? %>
       <%= render 'processed_message' %>
     <% end %>

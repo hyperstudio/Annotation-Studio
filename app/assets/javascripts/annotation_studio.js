@@ -29,6 +29,7 @@ var annotation_studio = {
 
     // When the annotator loads remote data, update sidebar
     subscriber.subscribe('annotationsLoaded', annotation_studio.loadSidebar);
+    subscriber.subscribe('annotationsLoaded', annotation_studio.loadVisualizer);
     subscriber.subscribe('annotationsLoaded', annotation_studio.stopSpinner);
     subscriber.subscribe('annotationsLoaded', annotation_studio.handleHash);
     subscriber.subscribe('annotationEditorShown', annotation_studio.parentIndex);
@@ -44,11 +45,14 @@ var annotation_studio = {
 
     // Once the local object has been created, load the sidebar from local data (already contains UUID)
     subscriber.subscribe('annotationCreated', annotation_studio.loadSidebar);
+    subscriber.subscribe('annotationCreated', annotation_studio.loadVisualizer);
     subscriber.subscribe('annotationCreated', addUuid);
 
     // When the local object is updated (contains previously created/stored UUID), load the sidebar from local data
     subscriber.subscribe('annotationUpdated', annotation_studio.loadSidebar);
+    subscriber.subscribe('annotationUpdated', annotation_studio.loadVisualizer);
     subscriber.subscribe('annotationDeleted', annotation_studio.deleteFromSidebar);
+    subscriber.subscribe('annotationDeleted', annotation_studio.deleteFromVisualizer);
     $(".annotator-checkbox label").text('My groups can view this annotation');
 
     sidebar.filtered = $('#visibleannotations').hasClass('active');
@@ -146,6 +150,43 @@ var annotation_studio = {
         sidebar.listAnnotations(subscriber.dumpAnnotations());
     }, 100);
   },
+  loadVisualizer: function(annotation) {
+		annotation_studio.updateVisualizerFocus();
+  	$(".vis-marker").remove(); // reset
+  	setTimeout(function() {
+			var vis = $("#visualizer");
+			var annotations = subscriber.dumpAnnotations();
+			annotations.forEach(function(annotation) {
+				vis.append("<div class='vis-marker' id='vis-" + annotation.uuid + "'></div>");
+				var highlightId = "#hl" + annotation.uuid;
+				var elemTop = $(highlightId).offset().top;
+				var docViewTop = $("#textcontent").offset().top + 60;
+				var docHeight = $("#textcontent").height();
+				var hlPos = (elemTop - docViewTop) / docHeight;
+				$("#vis-" + annotation.uuid).css("top", hlPos * vis.height() - 10);
+			});
+		});
+  },
+  deleteFromVisualizer: function(annotation) {
+  	if (annotation.uuid) $("#vis-" + annotation.uuid).remove();
+  },
+  updateVisualizerFocus: function() {
+  	var top = $(window).scrollTop() - 60; //$("#textcontent").offset().top;
+  	var bottom = top + $(window).height();
+  	var h = $(document.body).height();
+  	var visH = $("#visualizer").height();
+  	var tPos = (top / h) * visH;
+  	var bPos = (bottom / h) * visH;
+  	// artificially boost focus height so it doesn't vanish with large docs
+  	var minFocusH = 6;
+  	if (bPos - tPos < minFocusH) {
+  		var pad = (minFocusH - (bPos - tPos)) / 2;
+  		tPos -= pad;
+  		bPos += pad;
+  	}
+  	$("#blocker-top").css("top", "0").height(tPos);
+  	$("#blocker-bottom").css("top", bPos).height(visH - bPos);
+  },
   removeHilites: function() {
     $(".glyphicon-comment").remove();
     var hilites = $('.annotator-hl');
@@ -153,6 +194,7 @@ var annotation_studio = {
       hilites.children().unwrap();
       hilites.contents().unwrap();
     }
+    $('.vis-marker').remove();
     return true;
   },
   handleHash: function(annotation) {
@@ -302,6 +344,8 @@ jQuery(function($) {
   $('#tagsearchbox').on('itemRemoved', annotation_studio.tagFilter);
 
   $(window).scroll(lazyShowAndHideAnnotations);
+  $(window).scroll(annotation_studio.updateVisualizerFocus);
+  $(window).resize(annotation_studio.loadVisualizer);
 
   // Toggle filtered variable
   $('#visibleannotations').on('click', function(){

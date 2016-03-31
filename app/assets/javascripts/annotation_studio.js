@@ -186,6 +186,7 @@ var annotation_studio = {
   	}
   	$("#blocker-top").css("top", "0").height(tPos);
   	$("#blocker-bottom").css("top", bPos).height(visH - bPos);
+  	$(".vis-focus").css("top", tPos).height(bPos - tPos);
   },
   removeHilites: function() {
     $(".glyphicon-comment").remove();

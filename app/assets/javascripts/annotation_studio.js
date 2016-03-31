@@ -264,6 +264,23 @@ var annotation_studio = {
   }
 };
 
+var lazyShowAndHideAnnotations = _.debounce(
+  function() { sidebar.showAndHideAnnotations() },
+  30
+);
+
+// Add UUIDs to highlights so sidebar and highlights can link to one another.
+var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+var addUuid = __bind(function(a) {
+  if (a.highlights[0] != null) {
+    a.highlights[0].id = "hl"+ a.uuid;
+    a.highlights[0].title = a.user;
+  }
+  else {
+    console.info("Annotation: " + a.uuid + "has no highlights.");
+  }
+}, this);
+
 jQuery(function($) {
   if(!($('body').attr('id') == 'documents' && $('body').attr('class') == 'show')) {
     return;
@@ -288,8 +305,8 @@ jQuery(function($) {
 
   $('.viewchoice').on('click', annotation_studio.modeFilter);
 
-	var tagsElement = $("#annotation-tag-list");
-	$("body").on('click', '#annotation-tag-list input', annotation_studio.tagFilterCheck);
+  var tagsElement = $("#annotation-tag-list");
+  $("body").on('click', '#annotation-tag-list input', annotation_studio.tagFilterCheck);
 
   $('#tagsearchbox').tagsinput()
   $('#tagsearchbox').on('itemAdded', annotation_studio.tagFilter);
@@ -315,20 +332,3 @@ jQuery(function($) {
   $('#customsort').on('click', {}, annotation_studio.sortUpdate);
 
 });
-
-var lazyShowAndHideAnnotations = _.debounce(
-  function() { sidebar.showAndHideAnnotations() },
-  30
-);
-  // Add UUIDs to highlights so sidebar and highlights can link to one another.
-  var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
-  var addUuid = __bind(function(a) {
-    if (a.highlights[0] != null) {
-      a.highlights[0].id = "hl"+ a.uuid;
-      a.highlights[0].title = a.user;
-    }
-    else {
-      console.info("Annotation: " + a.uuid + "has no highlights.");
-    }
-  }, this);
-

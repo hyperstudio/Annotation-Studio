@@ -1,55 +1,76 @@
 <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :role => "form"}) do |f| %>
-	<%= devise_error_messages! %>
-	<div class="well devise">
-		<h4>Register</h4>
-		<div class="form-group">
-			<%= f.label :firstname, "First Name"%>
-			<%= f.text_field :firstname, :class => "form-control" %>
-		</div>
+<%= devise_error_messages! %>
+<div class="well devise">
+    <h4>Register with <span style="color:<%= $DOMAIN_CONFIG['site_color'] %>;"><%= $DOMAIN_CONFIG['site_name'] %></span></h4>
+    <div class="form-group">
+        <%= f.label :firstname, "First Name"%>
+        <%= f.text_field :firstname, :class => "form-control" %>
+    </div>
 
-		<div class="form-group">
-			<%= f.label :lastname, "Last Name"%>
-			<%= f.text_field :lastname, :class => "form-control" %>
-		</div>
+    <div class="form-group">
+        <%= f.label :lastname, "Last Name"%>
+        <%= f.text_field :lastname, :class => "form-control" %>
+    </div>
 
-		<div class="form-group">
-			<%= f.label :email%>
-			<%= f.email_field :email, :class => "form-control" %>
-		</div>
+    <div class="form-group">
+        <%= f.label :email%>
+        <%= f.email_field :email, :class => "form-control" %>
+    </div>
 
-		<div class="form-group">
-			<%= f.label :affiliation %>
-			<%= f.text_field :affiliation, :class => "form-control" %>
-		</div>
+    <div class="form-group">
+        <%= f.label :affiliation %>
+        <%= f.text_field :affiliation, :class => "form-control" %>
+    </div>
 
-		<div class="form-group">
-			<%= f.label :password %>
-			<%= f.password_field :password, :class => "form-control" %>
-		</div>
+    <div class="form-group">
+        <%= f.label :password %>
+        <%= f.password_field :password, :class => "form-control" %>
+    </div>
 
-		<div class="form-group">
-			<%= f.label :password_confirmation %>
-			<%= f.password_field :password_confirmation, :class => "form-control" %>
-		</div>
+    <div class="form-group">
+        <%= f.label :password_confirmation %>
+        <%= f.password_field :password_confirmation, :class => "form-control" %>
+    </div>
 
-		<div class="form-group">
-			<%= f.label :rep_group_list, "Class" %><br />
-			<% if Apartment::Database.current == 'demo' %>
-				<%= f.text_field :rep_group_list, 'data-role' => "tagsinput", 'placeholder' => "Enter class name(s)", :class => "form-control", :value => ENV["ALT_DEFAULT_USER_GROUP"] %>
-			<% else %>
-				<%= f.text_field :rep_group_list, 'data-role' => "tagsinput", 'placeholder' => "Enter class name(s)", :class => "form-control", :value => ENV["DEFAULT_USER_GROUP"] %>
-			<% end %>
+    <div class="form-group">
+        <%= f.label :rep_group_list, "Class" %><br />
+        <% if Apartment::Database.current == 'demo' %>
+            <%= f.text_field :rep_group_list, 'data-role' => "tagsinput", 'placeholder' => "Enter class name(s)", :class => "form-control", :value => ENV["ALT_DEFAULT_USER_GROUP"] %>
+        <% else %>
+            <%= f.text_field :rep_group_list, 'data-role' => "tagsinput", 'placeholder' => "Enter class name(s)", :class => "form-control", :value => ENV["DEFAULT_USER_GROUP"] %>
+        <% end %>
 
-			<span class="help-block">Please enter the class(es) you would like to join. Press ENTER after each class.</span>
+        <span class="help-block">Please enter the class(es) you would like to join. Press ENTER after each class.</span>
 
-		</div>
+    </div>
 
-		<div class="checkbox">
-			<label class='checkbox agreement'> <%= f.check_box :agreement %> I have read and accept the <%= link_to 'terms of service', page_path('terms') %></label>
-		</div>
+    <div class="checkbox">
+        <label class='checkbox agreement'> <%= f.check_box :agreement %> I have read and accept the <%= link_to 'terms of service', page_path('terms') %></label>
+    </div>
 
-		<%= f.submit "Register", :class => "btn btn-primary" %>
+    <%= f.submit "Register", :class => "btn btn-primary" %>
 
-	</div><!--/well -->
+</div><!--/well -->
 <% end %>
+<div class="well devise">
+    <h4>Or find your domain</h4>
+    <form>
+    <div class="form-group">
+        <select id="registration-chooser" class="form-control">
+        <% if !Apartment::database_names.blank? %>
+          <% for database in Apartment::database_names.map{|d| d.downcase}.sort! %>
+            <option value="http://<%= database %>.annotationstudio.org">http://<%= database %>.annotationstudio.org</option>        
+          <% end %>
+      <% end %>
+        </select>
+    </div>
+    </form>
+</div><!--/well -->
+<script type="text/javascript">
+$("document").ready(function(){
+    $("#registration-chooser").change(function(){
+        window.location = $(this).val();
+    });
+});
+</script>
 <%#= render "links" %>

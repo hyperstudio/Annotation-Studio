@@ -26,7 +26,7 @@
     "DEFAULT_USERS_CAN_CREATE_TEXTS":        "false",
     "DEFAULT_USERS_CAN_SEE_OTHERS_WORK":     "false",
     "DEFAULT_USER_GROUP":                    "public",
-    "EMAIL_DOMAIN":                          "cove-annotationstudio",
+    "EMAIL_DOMAIN":                          "cove-studio.herokuapp.com",
     "ENVIRONMENT_TAG":                       "Welcome",
     "GLOBAL_ALERT":                          "",
     "LANG":                                  "en_US.UTF-8",

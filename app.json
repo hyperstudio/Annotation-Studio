@@ -1,13 +1,19 @@
 {
   "name": "Annotation Studio",
   "description": "",
-  "repository": "https://github.com/hyperstudio/Annotation-Studio",
+  "repository": "https://github.com/performant-software/Annotation-Studio",
   "scripts": {
     "postdeploy": "bundle exec rake db:migrate",
   },
   "env": {
+    "HEROKU_APP_NAME": {
+        "required": true
+    },
+    "HEROKU_PARENT_APP_NAME": {
+        "required": true
+    },
     "ALERT_LEVEL":                           "success",
-    "ALT_DEFAULT_USER_GROUP":                "French 101",
+    "ALT_DEFAULT_USER_GROUP":                "COVE",
     "ANNOTATOR_FILTER":                      "false",
     "ANNOTATOR_RICHTEXT":                    "true",
     "ANNOTATOR_RICHTEXT_CONFIG":             "undo redo | link image media | code",
@@ -20,16 +26,28 @@
     "DEFAULT_USERS_CAN_CREATE_TEXTS":        "false",
     "DEFAULT_USERS_CAN_SEE_OTHERS_WORK":     "false",
     "DEFAULT_USER_GROUP":                    "public",
-    "EMAIL_DOMAIN":                          "staging-annotationstudio.herokuapp.com",
+    "EMAIL_DOMAIN":                          "cove-annotationstudio",
     "ENVIRONMENT_TAG":                       "Welcome",
     "GLOBAL_ALERT":                          "",
     "LANG":                                  "en_US.UTF-8",
-    "S3_BUCKET_NAME":                        "annotationstudio-public",
-    "SENDGRID_USERNAME":                     "app30585070@heroku.com",
+    "S3_BUCKET_NAME":                        "cove",
     "UNICORN_BACKLOG":                       "16",
   },
   "addons": [
     "heroku-postgresql:dev",
     "sendgrid:starter",
+  ]
+  "formation": {
+    "worker": {
+      "quantity": 1
+    },
+    "web": {
+      "quantity": 1
+    }
+  },
+  "buildpacks": [
+    {
+      "url": "heroku/ruby"
+    }
   ]
 }

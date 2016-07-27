@@ -3,45 +3,45 @@
   "description": "",
   "repository": "https://github.com/performant-software/Annotation-Studio",
   "scripts": {
-    "postdeploy": "bundle exec rake db:migrate",
+    "postdeploy": "bundle exec rake db:migrate"
   },
   "env": {
     "HEROKU_APP_NAME": {
-        "required": true
+      "required": true
     },
     "HEROKU_PARENT_APP_NAME": {
-        "required": true
+      "required": true
     },
-    "ALERT_LEVEL":                           "success",
-    "ALT_DEFAULT_USER_GROUP":                "COVE",
-    "ANNOTATOR_FILTER":                      "false",
-    "ANNOTATOR_RICHTEXT":                    "true",
-    "ANNOTATOR_RICHTEXT_CONFIG":             "undo redo | link image media | code",
-    "ANNOTATOR_RICHTEXT_WITH_CATALOG":       "false",
-    "ANNOTATOR_CUSTOM_SORT":                 "false"
-    "API_CONSUMER":                          "staging",
-    "API_URL":                               "http://staging-annotations.herokuapp.com/api",
-    "AWS_REGION":                            "",
-    "CONFIRMATION_GRACE_PERIOD":             "2",
-    "DEFAULT_NEW_USER_GROUP":                "public",
-    "DEFAULT_USERS_CAN_CHOOSE_GROUPS":       "false",
+    "ALERT_LEVEL": "success",
+    "ALT_DEFAULT_USER_GROUP": "COVE",
+    "ANNOTATOR_FILTER": "false",
+    "ANNOTATOR_RICHTEXT": "true",
+    "ANNOTATOR_RICHTEXT_CONFIG": "undo redo | link image media | code",
+    "ANNOTATOR_RICHTEXT_WITH_CATALOG": "false",
+    "ANNOTATOR_CUSTOM_SORT": "false",
+    "API_CONSUMER": "staging",
+    "API_URL": "http://staging-annotations.herokuapp.com/api",
+    "AWS_REGION": "",
+    "CONFIRMATION_GRACE_PERIOD": "2",
+    "DEFAULT_NEW_USER_GROUP": "public",
+    "DEFAULT_USERS_CAN_CHOOSE_GROUPS": "false",
     "DEFAULT_USERS_CAN_CONTROL_PERMISSIONS": "false",
-    "DEFAULT_USERS_CAN_CREATE_TEXTS":        "false",
-    "DEFAULT_USERS_CAN_SEE_OTHERS_WORK":     "false",
-    "DEFAULT_USER_GROUP":                    "public",
-    "EMAIL_DOMAIN":                          "cove-studio.herokuapp.com",
-    "ENVIRONMENT_TAG":                       "Welcome",
-    "GLOBAL_ALERT":                          "",
-    "GOOGLE_ANALYTICS_CODE":                 "",
-    "GOOGLE_VERIFICATION_CODE":              "",
-    "LANG":                                  "en_US.UTF-8",
-    "S3_BUCKET_NAME":                        "cove",
-    "UNICORN_BACKLOG":                       "16",
+    "DEFAULT_USERS_CAN_CREATE_TEXTS": "false",
+    "DEFAULT_USERS_CAN_SEE_OTHERS_WORK": "false",
+    "DEFAULT_USER_GROUP": "public",
+    "EMAIL_DOMAIN": "cove-studio.herokuapp.com",
+    "ENVIRONMENT_TAG": "Welcome",
+    "GLOBAL_ALERT": "",
+    "GOOGLE_ANALYTICS_CODE": "",
+    "GOOGLE_VERIFICATION_CODE": "",
+    "LANG": "en_US.UTF-8",
+    "S3_BUCKET_NAME": "cove",
+    "UNICORN_BACKLOG": "16"
   },
   "addons": [
     "heroku-postgresql:dev",
-    "sendgrid:starter",
-  ]
+    "sendgrid:starter"
+  ],
   "formation": {
     "worker": {
       "quantity": 1

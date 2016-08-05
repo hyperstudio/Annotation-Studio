@@ -242,7 +242,7 @@ var annotation_studio = {
   },
   retrieve_document_state: function() {
     var active_buttons = [];
-    $.each($('#toolsmenu button.active'), function(i, button) {
+    $.each($('#toolsmenu .btn.active'), function(i, button) {
       active_buttons.push($(button).attr('id'));
     });
     return active_buttons;

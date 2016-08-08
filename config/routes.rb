@@ -19,6 +19,8 @@ AnnotationStudio::Application.routes.draw do
   resources :documents do
     resources :annotations
     post :set_default_state
+    post :snapshot
+    get :snapshot, to: 'document#snapshot'
   end
 
   resources :users, only: [:show, :edit]

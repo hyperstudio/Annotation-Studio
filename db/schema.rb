@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160119182435) do
+ActiveRecord::Schema.define(version: 20160808210812) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -104,6 +104,7 @@ ActiveRecord::Schema.define(version: 20160119182435) do
     t.datetime "processed_at"
     t.string   "survey_link",         limit: 255
     t.text     "default_state"
+    t.text     "snapshot"
   end
 
   add_index "documents", ["slug"], name: "index_documents_on_slug", unique: true, using: :btree

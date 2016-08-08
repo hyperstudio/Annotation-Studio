@@ -2,7 +2,7 @@
 require 'melcatalog'
 
 class DocumentsController < ApplicationController
-  before_filter :find_document, :only => [:show, :set_default_state, :destroy, :edit, :update]
+  before_filter :find_document, :only => [:show, :set_default_state, :snapshot, :destroy, :edit, :update]
   before_filter :authenticate_user!
 
   load_and_authorize_resource :except => :create
@@ -135,6 +135,14 @@ class DocumentsController < ApplicationController
     render :json => {}
   end
 
+  #Snapshot of document for export
+  def snapshot
+    @document.update_attribute(:snapshot, params[:snapshot])
+    render :html => '<html>Success</html>'
+  rescue Exception => e
+    render :html => '<html>Error</html>'
+  end
+
   # Helper which accepts an array of items and filters out those you are not allowed to read, according to CanCan abilities.
   # From Miximize.
   def filter_by_can_read(items)
@@ -220,7 +228,7 @@ private
   end
 
   def documents_params
-    params.require(:document).permit(:title, :state, :chapters, :text, :user_id, :rep_privacy_list,
+    params.require(:document).permit(:title, :state, :chapters, :text, :snapshot, :user_id, :rep_privacy_list,
                                      :rep_group_list, :new_group, :author, :edition, :publisher, 
                                      :publication_date, :source, :rights_status, :upload, :survey_link)
   end

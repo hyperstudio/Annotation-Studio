@@ -33,9 +33,9 @@ var annotation_studio = {
     subscriber.subscribe('annotationsLoaded', annotation_studio.handleHash);
     subscriber.subscribe('annotationEditorShown', annotation_studio.parentIndex);
 
-    // Update all highlights with UUIDs
+    // Update all highlights with annotation object data
     subscriber.subscribe('annotationsLoaded', __bind(function(annotations) {
-      annotations.map(addUuid); // copies the UUID value from the object field to the highlight spans attribute value.
+      annotations.map(inlineData); // copies values from object fields to the highlight spans data attributes.
     }, this));
 
     // Add the UUID to the local annotation object and to the highlight span before saving
@@ -44,7 +44,7 @@ var annotation_studio = {
 
     // Once the local object has been created, load the sidebar from local data (already contains UUID)
     subscriber.subscribe('annotationCreated', annotation_studio.loadSidebar);
-    subscriber.subscribe('annotationCreated', addUuid);
+    subscriber.subscribe('annotationCreated', inlineData);
 
     // When the local object is updated (contains previously created/stored UUID), load the sidebar from local data
     subscriber.subscribe('annotationUpdated', annotation_studio.loadSidebar);
@@ -254,7 +254,26 @@ var annotation_studio = {
         $('#default_state').removeClass('active');
       });
     });
+  },
+
+  take_snapshot: function() {
+    return $("#snapshot").html();
+  },
+
+  initialize_document_snapshot: function() {
+    $('#snapshot_trigger').click(function(e) {
+      e.preventDefault();
+      var snapshot = annotation_studio.take_snapshot();
+      $.ajax({
+        url: '/documents/' + document_slug + '/snapshot',
+        type: 'POST',
+        data: { snapshot: snapshot }
+      }).done(function() {
+        $('#snapshot').removeClass('active');
+      });
+    });
   }
+
 };
 
 jQuery(function($) {
@@ -263,6 +282,7 @@ jQuery(function($) {
   }
 
   annotation_studio.initialize_default_state_behavior();
+  annotation_studio.initialize_document_snapshot();
   annotation_studio.initialize_annotator();
 
   // these three click and tap handlers manage the rich text editor show and hide on mobile and desktop
@@ -313,12 +333,16 @@ var lazyShowAndHideAnnotations = _.debounce(
   function() { sidebar.showAndHideAnnotations() },
   30
 );
-  // Add UUIDs to highlights so sidebar and highlights can link to one another.
+  // Add data attributes to highlights
   var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
-  var addUuid = __bind(function(a) {
+  var inlineData = __bind(function(a) {
     if (a.highlights[0] != null) {
       a.highlights[0].id = "hl"+ a.uuid;
       a.highlights[0].title = a.user;
+      a.highlights[0].dataset.tags = a.tags.join(",");
+      a.highlights[0].dataset.groups = a.groups.join(",");
+      a.highlights[0].dataset.subgroups = a.subgroups.join(",");
+      a.highlights[0].dataset.username = a.username;
     }
     else {
       console.info("Annotation: " + a.uuid + "has no highlights.");

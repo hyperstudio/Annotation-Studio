@@ -1,23 +1,25 @@
-# t.string   "title"
+# t.string   "title",               limit: 255
 # t.text     "text"
-# t.datetime "created_at",          :null => false
-# t.datetime "updated_at",          :null => false
-# t.string   "author"
+# t.datetime "created_at",                      null: false
+# t.datetime "updated_at",                      null: false
+# t.string   "author",              limit: 255
 # t.datetime "year_published"
-# t.string   "edition"
-# t.string   "publisher"
-# t.string   "source"
-# t.string   "rights_status"
-# t.string   "slug"
+# t.string   "edition",             limit: 255
+# t.string   "publisher",           limit: 255
+# t.string   "source",              limit: 255
+# t.string   "rights_status",       limit: 255
+# t.string   "slug",                limit: 255
 # t.integer  "user_id"
 # t.date     "publication_date"
 # t.text     "chapters"
-# t.string   "state"
-# t.string   "upload_file_name"
-# t.string   "upload_content_type"
+# t.string   "state",               limit: 255
+# t.string   "upload_file_name",    limit: 255
+# t.string   "upload_content_type", limit: 255
 # t.integer  "upload_file_size"
 # t.datetime "upload_updated_at"
 # t.datetime "processed_at"
+# t.string   "survey_link",         limit: 255
+# t.text     "default_state"
 
 require "babosa" # allows cyrillic, other characters in titles (transliterates titles for URL use)
 

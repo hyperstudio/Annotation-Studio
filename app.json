@@ -3,43 +3,130 @@
   "description": "",
   "repository": "https://github.com/performant-software/Annotation-Studio",
   "scripts": {
-    "postdeploy": "bundle exec rake db:migrate"
+    "postdeploy": "pg_dump $STAGING_DATABASE_URL | psql $DATABASE_URL && bundle exec rake db:migrate"
   },
   "env": {
+    "STAGING_DATABASE_URL": {
+      "required": true
+    },
     "HEROKU_APP_NAME": {
       "required": true
     },
     "HEROKU_PARENT_APP_NAME": {
       "required": true
     },
-    "ALERT_LEVEL": "success",
-    "ALT_DEFAULT_USER_GROUP": "COVE",
-    "ANNOTATOR_FILTER": "false",
-    "ANNOTATOR_RICHTEXT": "true",
-    "ANNOTATOR_RICHTEXT_CONFIG": "undo redo | link image media | code",
-    "ANNOTATOR_RICHTEXT_WITH_CATALOG": "false",
-    "ANNOTATOR_CUSTOM_SORT": "false",
-    "API_CONSUMER": "staging",
-    "API_URL": "http://staging-annotations.herokuapp.com/api",
-    "AWS_REGION": "",
-    "CONFIRMATION_GRACE_PERIOD": "2",
-    "DEFAULT_NEW_USER_GROUP": "public",
-    "DEFAULT_USERS_CAN_CHOOSE_GROUPS": "false",
-    "DEFAULT_USERS_CAN_CONTROL_PERMISSIONS": "false",
-    "DEFAULT_USERS_CAN_CREATE_TEXTS": "false",
-    "DEFAULT_USERS_CAN_SEE_OTHERS_WORK": "false",
-    "DEFAULT_USER_GROUP": "public",
-    "EMAIL_DOMAIN": "cove-studio.herokuapp.com",
-    "ENVIRONMENT_TAG": "Welcome",
-    "GLOBAL_ALERT": "",
-    "GOOGLE_ANALYTICS_CODE": "",
-    "GOOGLE_VERIFICATION_CODE": "",
+    "ALERT_LEVEL": {
+      "required": true
+    },
+    "ALT_DEFAULT_USER_GROUP": {
+      "required": true
+    },
+    "ANNOTATOR_FILTER": {
+      "required": true
+    },
+    "ANNOTATOR_RICHTEXT": {
+      "required": true
+    },
+    "ANNOTATOR_RICHTEXT_CONFIG": {
+      "required": true
+    },
+    "ANNOTATOR_CUSTOM_SORT": {
+      "required": true
+    },
+    "ANNOTATOR_CATEGORIES": {
+      "required": true
+    },
+    "ANNOTATOR_RICHTEXT_WITH_CATALOG": {
+      "required": true
+    },
+    "API_CONSUMER": {
+      "required": true
+    },
+    "API_URL": {
+      "required": true
+    },
+    "API_SECRET": {
+      "required": true
+    },
+    "AWS_ACCESS_KEY_ID": {
+      "required": true
+    },
+    "AWS_SECRET_ACCESS_KEY": {
+      "required": true
+    },
+    "AWS_REGION": {
+      "required": true
+    },
+    "CATALOG_ENABLED": {
+      "required": true
+    },
+    "CONFIRMATION_GRACE_PERIOD": {
+      "required": true
+    },
+    "DEFAULT_NEW_USER_GROUP": {
+      "required": true
+    },
+    "DEFAULT_USERS_CAN_CHOOSE_GROUPS": {
+      "required": true
+    },
+    "DEFAULT_USERS_CAN_CONTROL_PERMISSIONS": {
+      "required": true
+    },
+    "DEFAULT_USERS_CAN_CREATE_TEXTS": {
+      "required": true
+    },
+    "DEFAULT_USERS_CAN_SEE_OTHERS_WORK": {
+      "required": true
+    },
+    "DEFAULT_USER_GROUP": {
+      "required": true
+    },
+    "EMAIL_DOMAIN": {
+      "required": true
+    },
+    "ENVIRONMENT_TAG": {
+      "required": true
+    },
+    "EXCEPTION_PREFIX": {
+      "required": true
+    },
+    "EXCEPTION_RECIPIENTS": {
+      "required": true
+    },
+    "EXCEPTION_SENDER": {
+      "required": true
+    },
+    "GLOBAL_ALERT": {
+      "required": true
+    },
+    "GOOGLE_ANALYTICS_CODE": {
+      "required": false
+    },
+    "GOOGLE_VERIFICATION_CODE": {
+      "required": false
+    },
     "LANG": "en_US.UTF-8",
-    "S3_BUCKET_NAME": "cove",
+    "MEL_CATALOG_API": {
+      "required": true
+    },
+    "RACK_ENV": "production",
+    "RAILS_ENV": "production",
+    "S3_BUCKET_NAME": {
+      "required": true
+    },
+    "SECRET_KEY_BASE": {
+      "required": true
+    },
+    "SENDGRID_PASSWORD": {
+      "required": true
+    },
+    "SENDGRID_USERNAME": {
+      "required": true
+    },
     "UNICORN_BACKLOG": "16"
   },
   "addons": [
-    "heroku-postgresql:dev",
+    "heroku-postgresql:hobby-dev",
     "sendgrid:starter"
   ],
   "formation": {

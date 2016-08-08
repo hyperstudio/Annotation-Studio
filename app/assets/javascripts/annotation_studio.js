@@ -123,13 +123,6 @@ var annotation_studio = {
     annotation_studio.filterAnnotations(overrides);
   },
   sortUpdate: function(event) {
-    // TODO: Shouldn't bootstrap handle this without code?
-    $('.sortchoice').removeClass("active");
-    $(this).addClass('active');
-    $('.sortchoice').addClass("btn-primary");
-    $(this).removeClass('btn-primary');
-
-    // TODO: Is there a better way to rerender annotations?
     sidebar.listAnnotations(subscriber.dumpAnnotations());
   },
   stopSpinner: function() {

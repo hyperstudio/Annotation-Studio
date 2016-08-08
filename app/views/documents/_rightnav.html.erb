@@ -42,12 +42,18 @@
 <% if ENV["ANNOTATOR_CUSTOM_SORT"] == 'true' -%>
 <h4>Sort annotations by:</h4>
 <p><strong>How</strong> they are sorted:</p>
-<div class="btn-group btn-group-sm" id="sort-chooser">
-  <button type="button" class="sortchoice btn btn-default btn-sm active" id="textpositionsort">Text Position</button>
-  <button type="button" class="sortchoice btn btn-default btn-sm" id="customsort">Custom</button>
+<div class="btn-group btn-group-sm" data-toggle="buttons" id="sort-chooser">
+  <label class="btn btn-default btn-sm viewchoice active" id="textpositionsort">
+    <input type="radio" checked value="textpositionsort">Text Position</input>
+  </label>
+  <label class="btn btn-default btn-sm viewchoice" id="customsort">
+    <input type="radio" checked value="customsort">Custom</input>
+  </label>
 </div><!-- /input-group -->
 <% end %>
 <% if @document.present? && current_user.has_document_permissions?(@document) %>
-  <a id="default_state" class="btn btn-default" href="#" role="button">Save This Filter</a>
+<h4>Save Filters</h4>
+<p>As defaults for this document</p>
+  <a id="default_state" class="btn btn-default btn-sm" href="#" role="button">Save</a>
 <% end -%>
 <% end %>

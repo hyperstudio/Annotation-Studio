@@ -350,15 +350,7 @@ span.highlightborder {
 	margin-top:5px;
 }
 
-#view-chooser {
-	margin-bottom:10px;
-	label.active {
-		background-color: #444;
-	    color: white;
-	}
-}
-
-#filter-chooser {
+#view-chooser, #filter-chooser, #sort-chooser {
     margin-bottom:10px;
     label.active {
 		background-color: #444;

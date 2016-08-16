@@ -87,7 +87,7 @@ GEM
       thor
     builder (3.2.2)
     callsite (0.0.11)
-    cancan (1.6.10)
+    cancancan (1.15.0)
     carrierwave (0.10.0)
       activemodel (>= 3.2.0)
       activesupport (>= 3.2.0)
@@ -481,7 +481,7 @@ DEPENDENCIES
   aws-sdk (< 2.0)
   babosa
   backbone-on-rails
-  cancan
+  cancancan (~> 1.10)
   carrierwave
   coffee-rails
   database_cleaner

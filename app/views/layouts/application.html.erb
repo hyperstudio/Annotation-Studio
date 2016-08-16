@@ -14,7 +14,7 @@
     <meta name="google-site-verification" content="<%= ENV["GOOGLE_VERIFICATION_CODE"] %>" />
     <link href="/favicon.ico" rel="shortcut icon" />
     <%= javascript_include_tag "application" %>
-    <script type="text/javascript" src="//use.typekit.net/wod1jtz.js"></script>
+    <script type="text/javascript" src="//use.typekit.net/<%= ENV["TYPEKIT_CODE"] %>"></script>
     <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 	<script type="text/javascript">
 		var icons = {

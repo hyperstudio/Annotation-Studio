@@ -15,6 +15,9 @@
     "HEROKU_PARENT_APP_NAME": {
       "required": true
     },
+    "TYPEKIT_CODE": {
+      "required": true
+    },
     "ALERT_LEVEL": {
       "required": true
     },

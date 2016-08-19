@@ -257,7 +257,14 @@ var annotation_studio = {
   },
 
   take_snapshot: function() {
-    return $("#snapshot").html();
+    var html =  $("#snapshot").html();
+    var json = '<script type="text/javascript" id="json-archive">' + JSON.stringify(subscriber.dumpAnnotations()) + '</script>'
+    var catCss = $("#annotator-category-styles")[0].textContent;
+    var css = '<style type="text/css">';
+    css += '.annotator-hl { background: rgba(255, 255, 10, 0.3) } .annotator-hl-active { background: rgba(255, 255, 10, 0.8) }.annotator-hl-filtered { background-color: transparent }';
+    css += catCss;
+    css += '</style>';
+    return css + html + json;
   },
 
   initialize_document_snapshot: function() {
@@ -336,6 +343,7 @@ var lazyShowAndHideAnnotations = _.debounce(
   // Add data attributes to highlights
   var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
   var inlineData = __bind(function(a) {
+
     if (a.highlights[0] != null) {
       a.highlights[0].id = "hl"+ a.uuid;
       a.highlights[0].title = a.user;
@@ -343,6 +351,7 @@ var lazyShowAndHideAnnotations = _.debounce(
       a.highlights[0].dataset.groups = a.groups.join(",");
       a.highlights[0].dataset.subgroups = a.subgroups.join(",");
       a.highlights[0].dataset.username = a.username;
+      a.highlights[0].dataset.text = a.text;
     }
     else {
       console.info("Annotation: " + a.uuid + "has no highlights.");

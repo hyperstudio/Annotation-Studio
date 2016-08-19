@@ -138,9 +138,9 @@ class DocumentsController < ApplicationController
   #Snapshot of document for export
   def snapshot
     @document.update_attribute(:snapshot, params[:snapshot])
-    render :html => '<html>Success</html>'
+    render :json => {}
   rescue Exception => e
-    render :html => '<html>Error</html>'
+    render :json => {}
   end
 
   # Helper which accepts an array of items and filters out those you are not allowed to read, according to CanCan abilities.

@@ -89,3 +89,4 @@ gem "melcatalog", :path => "vendor"
 gem "rest-client"
 
 gem "doorkeeper"
+gem "octokit", "~> 4.0"

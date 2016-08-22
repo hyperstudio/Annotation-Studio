@@ -2,7 +2,7 @@
 require 'melcatalog'
 
 class DocumentsController < ApplicationController
-  before_filter :find_document, :only => [:show, :set_default_state, :snapshot, :destroy, :edit, :update]
+  before_filter :find_document, :only => [:show, :set_default_state, :preview, :publish, :archive, :snapshot, :destroy, :edit, :update]
   before_filter :authenticate_user!
 
   load_and_authorize_resource :except => :create
@@ -54,6 +54,13 @@ class DocumentsController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @document }
+    end
+  end
+
+  # GET /documents/1/preview
+  def preview 
+    respond_to do |format|
+      format.html # preview.html.erb
     end
   end
 
@@ -133,6 +140,33 @@ class DocumentsController < ApplicationController
     render :json => {}
   rescue Exception => e
     render :json => {}
+  end
+
+  def archive
+    respond_to do |format|
+      if @document.update_attribute(:state, 'archived')
+        format.html { redirect_to documents_url, notice: 'Document was successfully archived.', anchor: 'created'}
+      else
+        format.html { render action: "edit" }
+      end
+    end
+  end
+
+  #JSON for saving state
+  def publish
+    # TODO: POST to COVE
+    respond_to do |format|
+      if @document.update_attribute(:state, 'published')
+        format.html { redirect_to documents_url, notice: 'Document was successfully published.', anchor: 'created'}
+      else
+        format.html { render action: "edit" }
+      end
+    end
+  end
+
+  #Export HTML
+  def export
+    send_data(@document.snapshot, filename: "#{@document.title}.html")
   end
 
   #Snapshot of document for export

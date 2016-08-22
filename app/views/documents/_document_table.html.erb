@@ -3,7 +3,7 @@
     <th>Title</th>
     <th>Author</th>
     <th>Created</th>
-    <th>Groups</th>
+    <th><%= ENV["CLASS_TERM_PLURAL"] %></th>
     <th>Status</th>
     <th>Actions</th>
   </tr>
@@ -24,26 +24,30 @@
         <td>
           <% if document.draft? %>
           <i class="glyphicon glyphicon-pencil"></i>
-          <% elsif document.public? %>
-          <i class="glyphicon glyphicon-share-alt"></i>
           <% elsif document.published? %>
-          <i class="glyphicon glyphicon-ok"></i>
-          <% elsif document.deleted? %>
+          <i class="glyphicon glyphicon-book"></i>
+          <% elsif document.annotatable? %>
+          <i class="glyphicon glyphicon-comment"></i>
+          <% elsif document.archived? %>
           <i class="glyphicon glyphicon-folder-close"></i>
           <% end %></td>
         <td class="button-column">
           <% if can? :update, document %>
-          <%= link_to 'Edit', edit_document_path(document.friendly_id), :class =>
+          <%= link_to 'Edit', edit_document_path(document), :class =>
           'btn btn-default btn-sm' %>
           <% end %>
-          <% if can? :destroy, document %>
-          <%= link_to 'Delete', document_path(document.friendly_id), :method =>
-          :delete, :confirm => 'Are you sure?', :class => 'btn btn-danger btn-sm' %>
+          <% if can? :publish, document %>
+          <%= link_to 'Publish', document_publish_path(document), method: :post, :class =>
+          'btn btn-default btn-sm' %>
+          <% end %>
+          <% if can? :archive, document %>
+          <%= link_to 'Archive', document_archive_path(document), method: :post, :class => 
+          'btn btn-default btn-sm' %>
           <% end %></td>
       </tr>
     <% end %>
   <% else %>
   <tr>
-    <td colspan="4">No documents to view.</td>
+    <td colspan="6">No documents to view.</td>
   </tr>
   <% end %></table>

@@ -7,10 +7,10 @@
       <input type="radio" checked value="user">Me</input>
     </label>
     <label class="btn btn-default btn-sm viewchoice" id="group">
-      <input type="radio" value="group">Groups</input>
+      <input type="radio" value="group"><%= ENV["GROUP_TERM_PLURAL"] %></input>
     </label>
     <label class="btn btn-default btn-sm viewchoice" id="class">
-      <input type="radio" value="class">Classes</input>
+      <input type="radio" value="class"><%= ENV["CLASS_TERM_PLURAL"] %></input>
     </label>
     <% if current_user.has_role?(:admin) %>
     <label class="btn btn-default btn-sm viewchoice" id="admin">
@@ -58,5 +58,8 @@
     
     <p><strong>Snapshot</strong> of this document, for export</p>
     <a id="snapshot_trigger" class="btn btn-default btn-sm" href="#" role="button">Snapshot</a>
+
+    <p><strong>Preview</strong> of the document snapshot</p>
+    <%= link_to "Preview", document_preview_path(@document), class: "btn btn-default btn-sm", role: "button" %>
   <% end -%>
 <% end %>

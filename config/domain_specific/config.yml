@@ -2,14 +2,16 @@ default:
   site_name:
   welcome_message: "Welcome to Annotation Studio"
   site_color: '#CCC'
+  brand: 'shared/default_brand'
 public:
   site_name: Public
   welcome_message: "Welcome to Annotation Studio"
   site_color: '#CCC'
 cove-studio:
   site_name: COVE
-  welcome_message: "Welcome to Annotation Studio at the <strong>COVE</strong>"
+  welcome_message: "Welcome to Annotation Studio for the <strong>COVE</strong>"
   site_color: '#279eb2'
+  brand: 'shared/cove_brand'
 staging-annotationstudio:
   site_name: MIT Staging
   welcome_message: "Welcome to Annotation Studio Staging at <strong>MIT</strong>"

@@ -15,10 +15,28 @@
     "HEROKU_PARENT_APP_NAME": {
       "required": true
     },
+    "USE_TYPEKIT": {
+      "required": true
+    },
     "TYPEKIT_CODE": {
       "required": true
     },
+    "BRAND_RIBBON": {
+      "required": true
+    },
     "ALERT_LEVEL": {
+      "required": true
+    },
+    "CLASS_TERM": {
+      "required": true
+    },
+    "CLASS_TERM_PLURAL": {
+      "required": true
+    },
+    "GROUP_TERM": {
+      "required": true
+    },
+    "GROUP_TERM_PLURAL": {
       "required": true
     },
     "ALT_DEFAULT_USER_GROUP": {

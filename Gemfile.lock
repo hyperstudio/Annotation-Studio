@@ -146,8 +146,6 @@ GEM
       railties (>= 3.0.0)
     faraday (0.9.2)
       multipart-post (>= 1.2, < 3)
-    figaro (1.1.1)
-      thor (~> 0.14)
     fission (0.5.0)
       CFPropertyList (~> 2.2)
     fog (1.29.0)
@@ -236,8 +234,6 @@ GEM
     fog-xml (0.1.2)
       fog-core
       nokogiri (~> 1.5, >= 1.5.11)
-    foreman (0.78.0)
-      thor (~> 0.19.1)
     formatador (0.2.5)
     formtastic (3.1.3)
       actionpack (>= 3.2.13)
@@ -283,7 +279,6 @@ GEM
     kaminari (0.16.3)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
-    kgio (2.10.0)
     launchy (2.4.3)
       addressable (~> 2.3)
     libv8 (3.16.14.13)
@@ -335,6 +330,7 @@ GEM
       slop (~> 3.4)
     pry-rails (0.3.4)
       pry (>= 0.9.10)
+    puma (3.6.0)
     rabl (0.11.6)
       activesupport (>= 2.3.14)
     rack (1.6.0)
@@ -381,7 +377,6 @@ GEM
       activesupport (= 4.2.1)
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
-    raindrops (0.15.0)
     rake (10.5.0)
     ransack (1.6.6)
       actionpack (>= 3.0)
@@ -440,6 +435,7 @@ GEM
       simplecov-html (~> 0.10.0)
     simplecov-html (0.10.0)
     slop (3.6.0)
+    spring (1.7.2)
     sprockets (3.0.3)
       rack (~> 1.0)
     sprockets-rails (2.2.4)
@@ -466,10 +462,6 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.1)
-    unicorn (5.0.1)
-      kgio (~> 2.6)
-      rack
-      raindrops (~> 0.7)
     warden (1.2.3)
       rack (>= 1.0)
     will_paginate (3.0.7)
@@ -498,9 +490,7 @@ DEPENDENCIES
   doorkeeper
   exception_notification
   factory_girl_rails
-  figaro
   fog
-  foreman
   friendly_id
   gon
   high_voltage (~> 2.1.0)
@@ -524,6 +514,7 @@ DEPENDENCIES
   pdf-reader-html
   pg
   pry-rails
+  puma
   rabl
   rails (= 4.2.1)
   rails_12factor
@@ -536,12 +527,12 @@ DEPENDENCIES
   sextant
   shoulda-matchers
   simplecov
+  spring
   therubyracer
   tilt (= 1.1)
   tinymce-rails
   uglifier
   underscore-rails
-  unicorn
   will_paginate (~> 3.0.5)
   will_paginate-bootstrap
   yomu

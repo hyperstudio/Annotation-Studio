@@ -16,6 +16,9 @@
     </div>
   </div><!--/col-md-8 -->
   <div class="col-md-2" id="tool-sidebar">
+    <%= link_to("Download", document_export_path(@document), class: "btn btn-default btn-sm", role: "button") %>
+    <%= link_to("Post to COVE", "#", class: "btn btn-default btn-sm", disabled: "disabled", role: "button") %>
+    <%= link_to("Post to Github", "#", class: "btn btn-default btn-sm", disabled: "disabled", role: "button") %>
   </div><!--/col-md-2 -->
 </div><!--/row -->
 <%= render "documents/help" %>

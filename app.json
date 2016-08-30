@@ -117,9 +117,6 @@
     "EXCEPTION_SENDER": {
       "required": true
     },
-    "GLOBAL_ALERT": {
-      "required": true
-    },
     "GOOGLE_ANALYTICS_CODE": {
       "required": false
     },

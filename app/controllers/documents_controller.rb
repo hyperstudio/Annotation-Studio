@@ -2,7 +2,7 @@
 require 'melcatalog'
 
 class DocumentsController < ApplicationController
-  before_filter :find_document, :only => [:show, :set_default_state, :preview, :publish, :archive, :snapshot, :destroy, :edit, :update]
+  before_filter :find_document, :only => [:show, :set_default_state, :preview, :publish, :export, :archive, :snapshot, :destroy, :edit, :update]
   before_filter :authenticate_user!
 
   load_and_authorize_resource :except => :create

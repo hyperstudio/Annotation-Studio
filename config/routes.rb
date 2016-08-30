@@ -22,6 +22,7 @@ AnnotationStudio::Application.routes.draw do
     post :publish
     post :archive
     post :snapshot
+    get :export
     get :preview, to: 'documents#preview'
   end
 

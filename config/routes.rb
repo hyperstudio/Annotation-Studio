@@ -5,6 +5,7 @@ AnnotationStudio::Application.routes.draw do
   use_doorkeeper
 
   get 'public/:id' => 'public_documents#show'
+  get 'review/:id' => 'public_documents#show'
 
   devise_for :users, controllers: {registrations: 'registrations'}
 
@@ -20,6 +21,8 @@ AnnotationStudio::Application.routes.draw do
     resources :annotations
     post :set_default_state
     post :publish
+    post :annotatable
+    post :review
     post :archive
     post :snapshot
     get :export

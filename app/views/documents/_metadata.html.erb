@@ -1,15 +1,15 @@
 <script type="text/javascript" charset="utf-8">
   if ("<%= @document.state %>" === "draft") {
-    statusMessage = '<i class="fa fa-pencil"></i> Draft';
+    statusMessage = '<i class="fa fa-pencil"></i> Editable';
   }
   else if ("<%= @document.state %>" === "annotatable") {
     statusMessage = '<i class="fa fa-comment"></i> Annotatable';
   }
   else if ("<%= @document.state %>" === "published") {
-    statusMessage = '<i class="fa glyphicon-book"></i> Published';
+    statusMessage = '<i class="fa glyphicon-book"></i> Reviewable';
   }
   else if ("<%= @document.state %>" === "archived") {
-    statusMessage = '<i class="fa fa-folder-close"></i> Archived';
+    statusMessage = '<i class="fa fa-folder-close"></i> Publishable';
   };
 
   var docMetaInfo = "";

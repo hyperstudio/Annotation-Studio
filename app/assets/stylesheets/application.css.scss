@@ -24,6 +24,7 @@
  *= require "annotations"
  *= require "catalog"
  *= require "ekko-lightbox.min"
+ *= require "navbar-overrides.css"
  */
 
 html {
@@ -147,5 +148,3 @@ img#neh-logo {
     height: 225px;
   }
 }
-
-

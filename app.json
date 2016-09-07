@@ -24,6 +24,9 @@
     "BRAND_RIBBON": {
       "required": true
     },
+    "HOME_BANNER": {
+      "required": true
+    },
     "ALERT_LEVEL": {
       "required": true
     },

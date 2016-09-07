@@ -2,7 +2,7 @@
 require 'melcatalog'
 
 class DocumentsController < ApplicationController
-  before_filter :find_document, :only => [:show, :set_default_state, :preview, :publish, :export, :archive, :snapshot, :destroy, :edit, :update]
+  before_filter :find_document, :only => [:show, :set_default_state, :preview, :annotatable, :review, :publish, :export, :archive, :snapshot, :destroy, :edit, :update]
   before_filter :authenticate_user!
 
   load_and_authorize_resource :except => :create
@@ -152,12 +152,33 @@ class DocumentsController < ApplicationController
     end
   end
 
-  #JSON for saving state
+  def annotatable
+    # TODO: POST to COVE
+    respond_to do |format|
+      if @document.update_attribute(:state, 'annotatable')
+        format.html { redirect_to documents_url, notice: 'Document is now annotatable.', anchor: 'created'}
+      else
+        format.html { render action: "edit" }
+      end
+    end
+  end
+
+  def review
+    # TODO: POST to COVE
+    respond_to do |format|
+      if @document.update_attribute(:state, 'review')
+        format.html { redirect_to documents_url, notice: 'Document is now reviewable.', anchor: 'created'}
+      else
+        format.html { render action: "edit" }
+      end
+    end
+  end
+
   def publish
     # TODO: POST to COVE
     respond_to do |format|
       if @document.update_attribute(:state, 'published')
-        format.html { redirect_to documents_url, notice: 'Document was successfully published.', anchor: 'created'}
+        format.html { redirect_to documents_url, notice: 'Document is now publishable.', anchor: 'created'}
       else
         format.html { render action: "edit" }
       end

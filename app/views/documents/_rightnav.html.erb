@@ -1,5 +1,4 @@
-<!-- documents/_rightnav.html.erb (also symlink for public_documents/_rightnav.html.erb) -->
-<% if params[:action] == 'show' %>
+<% if params[:action] == 'show' && ! @document.draft? %>
   <h4>Filter annotations by:</h4>
   <p><strong>Who</strong> made them:</p>
   <div class="btn-group btn-group-sm" data-toggle="buttons" id="view-chooser">

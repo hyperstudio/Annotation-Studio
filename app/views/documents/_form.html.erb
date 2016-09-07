@@ -48,28 +48,38 @@
 				  <div class="col-md-6">
           	<h4>Status</h4>
           	<div class="form-group">
-          			<label class="radio-inline">
+                <div class="radio">
+                  <label>
                   <%= f.radio_button :state, "draft", checked: controller.action_name == "new" ? true : @document.draft?, disabled: !@document.draft? && controller.action_name == "edit" %>
-                  <i class="glyphicon glyphicon-pencil"></i> Draft
-                </label>
-                <label class="radio-inline">
+                  <i class="glyphicon glyphicon-pencil"></i> Editable
+                  <p class="help-block">privately visible, not annotatable</p>
+                  </label>
+                </div>  
+                <div class="radio">
+                  <label>
                   <%= f.radio_button :state, "annotatable", checked: @document.annotatable? %>
                   <i class="glyphicon glyphicon-comment"></i> Annotatable
-                </label>
-                <% if can? :publish, Document %>
-                <label class="radio-inline">
-                  <%= f.radio_button :state, "published", checked: @document.published? %>
-                  <i class="glyphicon glyphicon-book"></i> Published
-                </label>
+                  <p class="help-block">privately annotatable, privately visible, not editable</p>
+                  </label>
+                </div>  
+                <% if can? :review, Document %>
+                <div class="radio">
+                  <label>
+                  <%= f.radio_button :state, "review", checked: @document.review? %>
+                  <i class="glyphicon glyphicon-eye-open"></i> Reviewable
+                  <p class="help-block">privately annotatable, publicly visible, not editable</p>
+                  </label>
+                </div>  
                 <% end %>
-          			<label class="radio-inline">
-                  <%= f.radio_button :state, "archived", checked: @document.archived?, disabled: controller.action_name == "new" %>
-                  <i class="glyphicon glyphicon-folder-close"></i> Archived
-                </label>
-                <p class="help-block"><strong>Draft</strong> documents are editable but not annotatable.</p>
-                <p class="help-block"><strong>Annotatable</strong> documents may be annotated, but can no longer be edited or deleted.</p>
-                <p class="help-block"><strong>Published</strong> documents are privately annotatable and publicly visible.</p>
-                <p class="help-block"><strong>Archived</strong> documents are not annotatable, but are privately visible.</p>
+                <% if can? :publish, Document %>
+                <div class="radio">
+                  <label>
+                  <%= f.radio_button :state, "published", checked: @document.published? %>
+                  <i class="glyphicon glyphicon-book"></i> Publishable
+                  <p class="help-block">not annotatable, publicly visible, not editable</p>
+                  </label>
+                </div>  
+                <% end %>
           	</div>
 				  </div><!-- end span 6 -->
 

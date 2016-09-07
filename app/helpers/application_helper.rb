@@ -25,6 +25,14 @@ module ApplicationHelper
     end
   end
 
+  def home_banner
+    if ENV['HOME_BANNER'] != ""
+      return ENV['HOME_BANNER']
+    else
+      return "home.png"
+    end
+  end
+
   def self_removing(notice)
     # This is a hack to get the devise messages to disappear on their own after a little while. If it is a normal
     # devise message, then we add a class.

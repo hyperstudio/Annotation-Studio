@@ -12,7 +12,7 @@ public:
 cove-studio:
   site_name: COVE
   welcome_message: 'Sign in above, or via <a href="http://navsa.org">NAVSA</a>'
-  welcome_blurb: "COVE Studio is a web application that supports collaborative annotations of documents."
+  welcome_blurb: "COVE Studio is a web application that allows people to annotate documents collaboratively."
   site_color: '#279eb2'
   brand: 'shared/cove_brand'
 staging-annotationstudio:

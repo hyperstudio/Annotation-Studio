@@ -8,7 +8,7 @@ gem 'puma'
 gem 'pg'
 gem "newrelic_rpm"#, "~> 3.5.7.59"
 
-gem 'devise'#, '>= 2.2.2'
+gem 'devise', '~> 3.2'
 gem 'cancancan', '~> 1.10'
 gem 'repertoire-groups', '0.0.1', :path => 'vendor/repertoire-groups-0.0.1' #, :require => 'repertoire-groups'
 gem 'acts-as-taggable-on'
@@ -24,6 +24,8 @@ gem 'apartment'
 gem 'yomu'
 gem 'net-ssh'
 gem 'select2-rails', '< 4.0'
+gem 'omniauth-oauth2', '1.3.1'
+gem 'omniauth-wordpress_hosted', github: 'jwickard/omniauth-wordpress-oauth2-plugin'
 
 group :development do
   gem 'sextant'

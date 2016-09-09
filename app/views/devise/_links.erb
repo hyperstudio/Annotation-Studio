@@ -21,7 +21,7 @@
 
 <%- if devise_mapping.omniauthable? %>
   <%- resource_class.omniauth_providers.each do |provider| %>
-    <li class="list-group-item"><%= link_to "Sign in with #{provider.to_s.titleize}", omniauth_authorize_path(resource_name, provider), :class => "btn btn-default" %></li>
+    <li class="list-group-item"><%= link_to "Sign in with #{I18n.t provider.to_sym, scope: [:devise, :omniauth]}", omniauth_authorize_path(resource_name, provider), :class => "btn btn-default" %></li>
   <% end -%>
 <% end -%>
 </ul>

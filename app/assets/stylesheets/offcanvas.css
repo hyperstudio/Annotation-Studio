@@ -205,9 +205,3 @@ ul.annotation-tags {
 .panel-title > a {
 	color: #337ab7;
 }
-
-#default_state {
-	padding-top: 0;
-	padding-bottom: 0;
-	margin-top: 60px;
-}

@@ -3,13 +3,13 @@ source 'https://rubygems.org'
 ruby '2.2.4'
 
 gem 'rails', '4.2.1'
-gem 'unicorn'
+gem 'puma'
 
 gem 'pg'
 gem "newrelic_rpm"#, "~> 3.5.7.59"
 
-gem 'devise'#, '>= 2.2.2'
-gem 'cancan'
+gem 'devise', '~> 3.2'
+gem 'cancancan', '~> 1.10'
 gem 'repertoire-groups', '0.0.1', :path => 'vendor/repertoire-groups-0.0.1' #, :require => 'repertoire-groups'
 gem 'acts-as-taggable-on'
 gem "friendly_id"
@@ -24,12 +24,13 @@ gem 'apartment'
 gem 'yomu'
 gem 'net-ssh'
 gem 'select2-rails', '< 4.0'
+gem 'omniauth-oauth2', '1.3.1'
+gem 'omniauth-wordpress_hosted', github: 'jwickard/omniauth-wordpress-oauth2-plugin'
 
 group :development do
   gem 'sextant'
   gem 'meta_request'#, '0.2.1'
   gem 'highline'
-  gem 'foreman'
 end
 
 group :assets do
@@ -45,7 +46,7 @@ group :test, :development do
   gem 'factory_girl_rails'
   gem 'rspec-rails'
   gem 'pry-rails'
-#  gem 'capybara-webkit'
+  gem 'spring'
   gem 'simplecov'
   gem 'rails_best_practices'
   gem 'launchy'
@@ -75,12 +76,9 @@ gem 'tilt', '1.1'
 gem 'sass-rails', '5.0.3'
 gem 'activeadmin', '1.0.0.pre1'
 
-gem "figaro"
-
 gem 'will_paginate', '~> 3.0.5'
 gem 'will_paginate-bootstrap'
 
-#gem 'runtimeerror_notifier', '0.0.24' # NOTE-PER: This is the last version that works with Rails 3.2.x. After upgrading to Rails 4, you can remove the version.
 gem 'exception_notification'
 gem 'intercom-rails'
 
@@ -88,3 +86,4 @@ gem "melcatalog", :path => "vendor"
 gem "rest-client"
 
 gem "doorkeeper"
+gem "octokit", "~> 4.0"

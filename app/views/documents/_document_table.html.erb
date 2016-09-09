@@ -3,7 +3,7 @@
     <th>Title</th>
     <th>Author</th>
     <th>Created</th>
-    <th>Groups</th>
+    <th><%= ENV["CLASS_TERM_PLURAL"] %></th>
     <th>Status</th>
     <th>Actions</th>
   </tr>
@@ -22,28 +22,53 @@
             <%= group %></span>
           <% end %></td>
         <td>
-          <% if document.draft? %>
-          <i class="glyphicon glyphicon-pencil"></i>
-          <% elsif document.public? %>
-          <i class="glyphicon glyphicon-share-alt"></i>
-          <% elsif document.published? %>
-          <i class="glyphicon glyphicon-ok"></i>
-          <% elsif document.deleted? %>
-          <i class="glyphicon glyphicon-folder-close"></i>
-          <% end %></td>
+          <div class="btn-group" role="group" aria-label="document states">
+            <% if can? :update, document %>
+              <% if document.draft? %>
+                <%= link_to 'Editable', "#", :class => 'btn btn-default btn-sm active' %>
+              <% else %>
+                <%= link_to 'Editable', "#", :class => 'btn btn-default btn-sm disabled' %>
+              <% end %>
+            <% end %>
+            <% if can? :annotatable, document %>
+              <% if document.annotatable? %>
+                <%= link_to 'Annotatable', document_annotatable_path(document), method: :post, :class => 'btn btn-default btn-sm active' %>
+              <% else %>
+                <%= link_to 'Annotatable', document_annotatable_path(document), method: :post, :class => 'btn btn-default btn-sm' %>
+              <% end %>
+            <% end %>
+            <% if can? :review, document %>
+              <% if document.review? %>
+                <%= link_to 'Reviewable', document_review_path(document), method: :post, :class => 'btn btn-default btn-sm active' %>
+              <% else %>
+                <%= link_to 'Reviewable', document_review_path(document), method: :post, :class => 'btn btn-default btn-sm' %>
+              <% end %>
+            <% end %>
+            <% if can? :publish, document %>
+              <% if document.published? %>
+                <%= link_to 'Publishable', document_publish_path(document), method: :post, :class => 'btn btn-default btn-sm active' %>
+              <% else %>
+                <%= link_to 'Publishable', document_publish_path(document), method: :post, :class => 'btn btn-default btn-sm' %>
+              <% end %>
+            <% end %>
+            <% if can? :archive, document %>
+              <% if document.archived? %>
+                <%= link_to 'Archived', document_archive_path(document), method: :post, :class => 'btn btn-default btn-sm active' %>
+              <% else %>
+                <%= link_to 'Archived', document_archive_path(document), method: :post, :class => 'btn btn-default btn-sm' %>
+              <% end %>
+            <% end %>
+          </div>
+        </td>
         <td class="button-column">
           <% if can? :update, document %>
-          <%= link_to 'Edit', edit_document_path(document.friendly_id), :class =>
-          'btn btn-default btn-sm' %>
+            <%= link_to 'Edit', edit_document_path(document), :class => 'btn btn-default btn-sm' %>
           <% end %>
-          <% if can? :destroy, document %>
-          <%= link_to 'Delete', document_path(document.friendly_id), :method =>
-          :delete, :confirm => 'Are you sure?', :class => 'btn btn-danger btn-sm' %>
-          <% end %></td>
+        </td>
       </tr>
     <% end %>
   <% else %>
   <tr>
-    <td colspan="4">No documents to view.</td>
+    <td colspan="6">No documents to view.</td>
   </tr>
   <% end %></table>

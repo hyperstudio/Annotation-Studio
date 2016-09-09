@@ -5,9 +5,9 @@
   <li>Status:
     <% if @document.state == "draft" %>
       Draft <i class="glyphicon glyphicon-pencil"></i>
-    <% elsif @document.state == "published" %>
-      Published <i class="glyphicon glyphicon-ok"></i>
-    <% elsif @document.state == "deleted" %>
+    <% elsif @document.state == "annotatable" %>
+      Published <i class="glyphicon glyphicon-comment"></i>
+    <% elsif @document.state == "archived" %>
       Archived <i class="glyphicon glyphicon-folder-close"></i>
     <% end %>
   </li>

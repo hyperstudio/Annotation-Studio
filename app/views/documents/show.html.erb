@@ -11,16 +11,13 @@
       <%= render 'survey_button' %>
     <% end %>
     <div id="textcontent">
-      <div><!-- Required for cases in which there's no HTML in the text -->
+      <div id="snapshot">
         <%= @document.text.html_safe %>
       </div>
     </div>
-    <% if @document.survey_link.present? %>
-      <%= render 'survey_button' %>
-    <% end %>
   </div><!--/col-md-8 -->
   <div class="col-md-4">
-    <% if @document.processed? and ! @document.draft? %>
+    <% if @document.processed? and !@document.draft? %>
       <%= render "documents/annotation_sidebar" %>
     <% end %>
   </div><!--/col-md-3 -->

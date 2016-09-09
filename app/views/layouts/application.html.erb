@@ -14,8 +14,10 @@
     <meta name="google-site-verification" content="<%= ENV["GOOGLE_VERIFICATION_CODE"] %>" />
     <link href="/favicon.ico" rel="shortcut icon" />
     <%= javascript_include_tag "application" %>
-    <script type="text/javascript" src="//use.typekit.net/wod1jtz.js"></script>
-    <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+    <% if ENV["USE_TYPEKIT"] == true %>
+      <script type="text/javascript" src="//use.typekit.net/<%= ENV["TYPEKIT_CODE"] %>"></script>
+      <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+    <% end %>
 	<script type="text/javascript">
 		var icons = {
 			external_link: '<%= asset_path('external-link.png') %>',
@@ -27,7 +29,7 @@
 
     <nav class="navbar navbar-inverse navbar-fixed-top" id="navbar">
       <div class="container">
-      <a class="navbar-brand" href="/">Annotation Studio <span style="color:<%= $DOMAIN_CONFIG['site_color'] %>;"><%= $DOMAIN_CONFIG['site_name'] %></span></a>
+        <%= render_brand %>
         <%= render "shared/user_menu" %>
       </div>
     </nav>
@@ -44,6 +46,7 @@
         <%= render "#{params[:controller]}/rightnav" %>
       <% end %>
     </nav>
+
     <nav class="navbar navbar-default navbar-fixed-top hidden-xs" id="lower-navbar">
       <div class="container">
         <div class="row">
@@ -62,7 +65,7 @@
 
 	<% if params[:controller] == 'devise/sessions' %>
 	<div class="home-image">
-		<%= image_tag("home.png", { alt: 'Cover Photo' }) %>
+		<%= image_tag(home_banner, { alt: 'Cover Photo' }) %>
 	</div>
 <% end %>
     <div class="container">

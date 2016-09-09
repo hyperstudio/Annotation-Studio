@@ -24,6 +24,7 @@
  *= require "annotations"
  *= require "catalog"
  *= require "ekko-lightbox.min"
+ *= require "navbar-overrides.css"
  */
 
 html {
@@ -148,4 +149,8 @@ img#neh-logo {
   }
 }
 
-
+#globalnav {
+  img {
+    padding: 8px 0 0 8px;
+  }
+}

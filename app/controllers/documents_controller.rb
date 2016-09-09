@@ -2,7 +2,7 @@
 require 'melcatalog'
 
 class DocumentsController < ApplicationController
-  before_filter :find_document, :only => [:show, :set_default_state, :destroy, :edit, :update]
+  before_filter :find_document, :only => [:show, :set_default_state, :preview, :annotatable, :review, :publish, :export, :archive, :snapshot, :destroy, :edit, :update]
   before_filter :authenticate_user!
 
   load_and_authorize_resource :except => :create
@@ -54,6 +54,13 @@ class DocumentsController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @document }
+    end
+  end
+
+  # GET /documents/1/preview
+  def preview 
+    respond_to do |format|
+      format.html # preview.html.erb
     end
   end
 
@@ -130,6 +137,62 @@ class DocumentsController < ApplicationController
   def set_default_state
     @document.update_attribute(:default_state, params[:default_state])
 
+    render :json => {}
+  rescue Exception => e
+    render :json => {}
+  end
+
+  def archive
+    respond_to do |format|
+      if @document.update_attribute(:state, 'archived')
+        format.html { redirect_to documents_url, notice: 'Document was successfully archived.', anchor: 'created'}
+      else
+        format.html { render action: "edit" }
+      end
+    end
+  end
+
+  def annotatable
+    # TODO: POST to COVE
+    respond_to do |format|
+      if @document.update_attribute(:state, 'annotatable')
+        format.html { redirect_to documents_url, notice: 'Document is now annotatable.', anchor: 'created'}
+      else
+        format.html { render action: "edit" }
+      end
+    end
+  end
+
+  def review
+    # TODO: POST to COVE
+    respond_to do |format|
+      if @document.update_attribute(:state, 'review')
+        format.html { redirect_to documents_url, notice: 'Document is now reviewable.', anchor: 'created'}
+      else
+        format.html { render action: "edit" }
+      end
+    end
+  end
+
+  def publish
+    # TODO: POST to COVE
+    respond_to do |format|
+      if @document.update_attribute(:state, 'published')
+        format.html { redirect_to documents_url, notice: 'Document is now publishable.', anchor: 'created'}
+      else
+        format.html { render action: "edit" }
+      end
+    end
+  end
+
+  #Export HTML
+  def export
+    send_data(@document.snapshot, filename: "#{@document.title}.html")
+  end
+
+  #Snapshot of document for export
+  def snapshot
+    @document.update_attribute(:snapshot, params[:snapshot])
     render :json => {}
   rescue Exception => e
     render :json => {}
@@ -220,7 +283,7 @@ private
   end
 
   def documents_params
-    params.require(:document).permit(:title, :state, :chapters, :text, :user_id, :rep_privacy_list,
+    params.require(:document).permit(:title, :state, :chapters, :text, :snapshot, :user_id, :rep_privacy_list,
                                      :rep_group_list, :new_group, :author, :edition, :publisher, 
                                      :publication_date, :source, :rights_status, :upload, :survey_link)
   end

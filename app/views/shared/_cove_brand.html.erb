@@ -2,3 +2,35 @@
 	<li class="active"><a class="navbar-link" href="#">COVE Studio</a></li>
 	<li><a class="navbar-link" target="cove-editions" href="http://dev-rc-distro.pantheonsite.io/">COVE Editions <i class="fa fa-external-link-square"></i></a></li>
 </ul>
+<ul class="nav navbar-nav pull-right hidden-xs" id="globalnav">
+<% if user_signed_in? %>
+    <li class="<%= 'active' if current_page?(edit_user_registration_path) %>"><%= link_to("My Profile", edit_user_registration_path, :id => "user-account-edit") %></li>
+    <li class="<%= 'active' if current_page?(destroy_user_session_path) %>"><%= link_to('Logout', destroy_user_session_path) %></li>
+    <% if can? :manage, UserSet %>
+    <li class="<%= 'active' if current_page?(admin_students_path) %>"><%= link_to(raw('Manage Users <i class="fa fa-external-link-square"></i>'), admin_students_path, :target => '_blank') %></li>
+    <% end %>
+<% else %>
+  <% if defined?(resource) != nil %>
+  <li><div class="dropdown dont-overflow">
+      <button class="dropdown-toggle menu-button" type="button" id="login-form" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+          Log in
+          <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="login-form">
+          <li><%= render "/devise/sessions/sign_in" %></li>
+      </ul>
+  </div></li>
+  <li><div class="dropdown dont-overflow">
+      <button class="dropdown-toggle menu-button" type="button" id="login-form" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+          Register
+          <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="login-form">
+          <li><%= render "/devise/sessions/sign_up" %></li>
+      </ul>
+  </div></li>
+  <% end %>
+<% end %>
+<%= link_to(image_tag("NAVSAlogo.png"), "http://navsa.org") %>
+</ul>
+

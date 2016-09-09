@@ -43,6 +43,7 @@ application/pdf
   validates_attachment_content_type :upload, content_type: ALLOWED_CONTENT_TYPES
 
   scope :publicly, -> { where(:state => 'review').order("id asc") }
+  scope :active, -> { where("state != ?", 'archived').order("id asc") }
 
   STATES = %w{ pending draft annotatable review published archived }
 

@@ -22,47 +22,54 @@
             <%= group %></span>
           <% end %></td>
         <td>
+          <% if can? :update, document %>
           <div class="btn-group" role="group" aria-label="document states">
-            <% if can? :update, document %>
+
               <% if document.draft? %>
                 <%= link_to 'Editable', "#", :class => 'btn btn-default btn-sm active' %>
               <% else %>
                 <%= link_to 'Editable', "#", :class => 'btn btn-default btn-sm disabled' %>
               <% end %>
-            <% end %>
-            <% if can? :annotatable, document %>
+
+
               <% if document.annotatable? %>
                 <%= link_to 'Annotatable', document_annotatable_path(document), method: :post, :class => 'btn btn-default btn-sm active' %>
               <% else %>
                 <%= link_to 'Annotatable', document_annotatable_path(document), method: :post, :class => 'btn btn-default btn-sm' %>
               <% end %>
-            <% end %>
-            <% if can? :review, document %>
+
+
               <% if document.review? %>
                 <%= link_to 'Reviewable', document_review_path(document), method: :post, :class => 'btn btn-default btn-sm active' %>
               <% else %>
                 <%= link_to 'Reviewable', document_review_path(document), method: :post, :class => 'btn btn-default btn-sm' %>
               <% end %>
-            <% end %>
-            <% if can? :publish, document %>
+
+
               <% if document.published? %>
                 <%= link_to 'Publishable', document_publish_path(document), method: :post, :class => 'btn btn-default btn-sm active' %>
               <% else %>
                 <%= link_to 'Publishable', document_publish_path(document), method: :post, :class => 'btn btn-default btn-sm' %>
               <% end %>
-            <% end %>
-            <% if can? :archive, document %>
+
+
               <% if document.archived? %>
-                <%= link_to 'Archived', document_archive_path(document), method: :post, :class => 'btn btn-default btn-sm active' %>
+                <%= link_to 'Hidden', document_archive_path(document), method: :post, :class => 'btn btn-default btn-sm active' %>
               <% else %>
-                <%= link_to 'Archived', document_archive_path(document), method: :post, :class => 'btn btn-default btn-sm' %>
+                <%= link_to 'Hidden', document_archive_path(document), method: :post, :class => 'btn btn-default btn-sm' %>
               <% end %>
-            <% end %>
           </div>
+          <% else %>
+            <%= document.state %>
+          <% end %>
         </td>
         <td class="button-column">
           <% if can? :update, document %>
-            <%= link_to 'Edit', edit_document_path(document), :class => 'btn btn-default btn-sm' %>
+            <% if document.draft? %>
+              <%= link_to 'Edit', edit_document_path(document), :class => 'btn btn-default btn-sm', data: { toggle: 'tooltip', placement: 'top', original_title: 'Text and Metadata are editable' } %>
+            <% else %>
+              <%= link_to 'Edit', edit_document_path(document), :class => 'btn btn-default btn-sm', data: { toggle: 'tooltip', placement: 'top', original_title: 'Only metadata are editable' } %>
+            <% end %>
           <% end %>
         </td>
       </tr>
@@ -72,3 +79,8 @@
     <td colspan="6">No documents to view.</td>
   </tr>
   <% end %></table>
+<script type="text/javascript">
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip();
+});
+</script>

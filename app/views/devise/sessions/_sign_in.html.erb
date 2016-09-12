@@ -1,4 +1,16 @@
+<%- if devise_mapping.omniauthable? %>
+	<ul class="list-group" id="omniauth-links">
+	  <%- resource_class.omniauth_providers.each do |provider| %>
+	  <li class="list-group-item"><%= link_to "Log in through #{I18n.t provider.to_sym, scope: [:devise, :omniauth]}", omniauth_authorize_path(resource_name, provider), :class => "btn btn-default" %></li>
+	  <% end -%>
+
+	  <li class="list-group-item"><a id="manual-login-toggle" href="#manual-login">Not a NAVSA member?</a></li>
+	</ul>
+	<div id="manual-login">
+<% end -%>
+
 <div class="well devise">
+
 	<h4>Log in</h4>
 	<%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :role => "form"}) do |f| %>
 		<%= devise_error_messages! %>
@@ -18,3 +30,7 @@
 	<% end %>
 </div><!--/well -->
 <%= render "/devise/links" %>
+
+<%- if devise_mapping.omniauthable? %>
+	</div>
+<% end -%>

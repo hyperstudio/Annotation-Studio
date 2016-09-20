@@ -45,18 +45,19 @@ class User < ActiveRecord::Base
 
   def self.find_for_wordpress_oauth2(auth, current)
     authed_user = User.where(email: auth.info.email).first_or_initialize do |user|
-      user.provider = auth.provider
-      user.uid = auth.uid
-      user.password = Devise.friendly_token[0,20]
       user.firstname = auth.info.name.split(' ').first
       user.lastname = auth.info.name.split(' ').length > 1 ? auth.info.name.split(' ').last : " "
       user.agreement = true
+      user.password = Devise.friendly_token[0,20]
     end
+    authed_user.provider = auth.provider
+    authed_user.uid = auth.uid
     if authed_user.new_record?
       authed_user.skip_confirmation!
-      authed_user.save
     end
-    authed_user
+    if authed_user.save
+      authed_user
+    end
   end
 
 end

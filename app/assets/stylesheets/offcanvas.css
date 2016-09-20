@@ -131,7 +131,7 @@ body#documents.show .navbar button#leftburger,body#documents.show .navbar button
 	width: 100%;
 }
 
-.well.devise {
+.well.devise, #omniauth-links {
 	width: 360px;
 	padding-top: 0;
 }
@@ -143,6 +143,10 @@ body#documents.show .navbar button#leftburger,body#documents.show .navbar button
 	font-weight: bold;
 	font-size: 24px;
 	margin-top: 0;
+}
+
+#manual-login {
+  display: none;
 }
 
 .dropdown-menu-right {

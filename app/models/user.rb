@@ -2,7 +2,8 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable, :rememberable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :trackable, :validatable, :confirmable, :timeoutable
+         :recoverable, :trackable, :validatable, :confirmable,
+         :timeoutable, :omniauthable, :omniauth_providers => [:wordpress_hosted]
 
   validates :agreement, presence: { message: "must be checked. Please check the box to confirm you have read and accepted the terms and conditions." }
 
@@ -41,4 +42,21 @@ class User < ActiveRecord::Base
     tags = User.rep_group_counts.map{|t| t.name}
     return tags.sort!
   end
+
+  def self.find_for_wordpress_oauth2(auth, current)
+    authed_user = User.where(email: auth.info.email).first_or_initialize do |user|
+      user.provider = auth.provider
+      user.uid = auth.uid
+      user.password = Devise.friendly_token[0,20]
+      user.firstname = auth.info.name.split(' ').first
+      user.lastname = auth.info.name.split(' ').length > 1 ? auth.info.name.split(' ').last : " "
+      user.agreement = true
+    end
+    if authed_user.new_record?
+      authed_user.skip_confirmation!
+      authed_user.save
+    end
+    authed_user
+  end
+
 end

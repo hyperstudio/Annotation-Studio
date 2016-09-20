@@ -50,3 +50,6 @@ patch.diff
 .idea
 /deploy.sh
 devnotes.md
+
+# Ignore application configuration
+/config/application.yml

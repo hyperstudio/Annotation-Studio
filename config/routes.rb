@@ -36,6 +36,7 @@ AnnotationStudio::Application.routes.draw do
     get 'dashboard', to: 'users#show', as: :dashboard
     get 'annotations', to: 'annotations#index'
     get 'annotations/:id', to: 'annotations#show'
+    get 'documents/:document_id/annotations/field/:field', to: 'annotations#field'
     get 'groups', to: 'groups#index'
     get 'groups/:id', to: 'groups#show'
   end

@@ -18,6 +18,16 @@ class ApiRequester
 		to_csv == false ? data : CsvGenerator.to_csv(data)
 	end
 
+	def self.field(params, token, to_csv: false)
+		url = URI.parse(@@api_url + '/field')
+		url.query = URI.encode_www_form(params)
+		request = Net::HTTP::Get.new(url)
+		request['accept'] = 'application/json'
+		request['x-annotator-auth-token'] = token
+		response = Net::HTTP.start(url.host, url.port) {|http| http.request(request)}
+		data = MultiJson.load(response.body)
+	end
+
 end
 
 class CsvGenerator

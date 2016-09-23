@@ -12,19 +12,21 @@ var annotation_username = "<%= current_user.first_name_last_initial %>";
 var sidebar_sort_editable = <%= current_user && current_user.has_document_permissions?(@document) %>;
 var mobile_device = <%= mobile_device? -%>;
 var search_context = 'document';
-  
+var api_url = '<%= ENV["API_URL"] %>';
+var doc_uri = [location.protocol, '//', location.host, location.pathname].join('');
+
 var plugin_options = function() {
   return {
     <% unless current_user.has_role?(:admin) && ENV["ANNOTATOR_FILTER"] == 'true' %>
     Filter: false,
     <% end %>
     Auth: {
-      token: '<%= session["jwt"] %>'
+      token: token
     },
     Store: {
-      prefix: '<%= ENV["API_URL"] %>',
+      prefix: api_url,
       annotationData: {
-        'uri': [location.protocol, '//', location.host, location.pathname].join(''),
+        'uri': doc_uri,
         "groups": groups,
         "subgroups": subgroups
       },

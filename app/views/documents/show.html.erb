@@ -23,9 +23,12 @@
   </div><!--/col-md-3 -->
 </div><!--/row -->
 <%= render "documents/help" %>
-<div id="spinnermodal" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="spinnermodallabel" aria-hidden="true">
-  <div class="modal-body" id="spinnerdiv"><em>Loading annotations...</em></div>
+<%= render "documents/snapshot_progress" %>
+<%= render "documents/spinner_modal" %>
+<div id="snapshot-staging">
+  
 </div>
+
 <%# render "documents/metadata" %>
 
 <script type="text/javascript">

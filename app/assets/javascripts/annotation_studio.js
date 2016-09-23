@@ -173,11 +173,9 @@ var annotation_studio = {
   cleanupDocument: function() {
     var dfd = new $.Deferred();
     if (annotation_studio.removeHilites()) {
-      console.log("Cleanup complete.");
       dfd.resolve("Cleanup complete.");
     }
     else {
-      console.log("Cleanup failed.");
       dfd.reject("Cleanup failed.");
     }
     return dfd.promise();
@@ -189,10 +187,8 @@ var annotation_studio = {
       setTimeout(function() {
         dfd.resolve("Reload complete.");
       }, 100);
-      console.log("Reload complete.");
     }
     else {
-      console.log("Reload failed.");
       dfd.reject("Reload failed.");
     }
     return dfd.promise();
@@ -208,15 +204,12 @@ var annotation_studio = {
   },
   parentIndex: function(editor, annotation) {
     if (!annotation.parentIndex > 0) {
-      console.log("No current annotation.parentIndex: "+ annotation.parentIndex);
       var node = $(".annotator-hl-temporary");
       var parent = node.parent()[0];
       var parentIndex = $( "#textcontent" ).find( "*" ).index(parent)
       annotation.parentIndex = parentIndex;
-      console.log("Added annotation.parentIndex: "+ annotation.parentIndex);
     }
     else {
-      console.log("Existing parentIndex: " + annotation.parentIndex + "; not adding a new one.");
     }
   },
   set_document_state: function(state) {
@@ -240,6 +233,7 @@ var annotation_studio = {
     });
     return active_buttons;
   },
+
   initialize_default_state_behavior: function() {
     annotation_studio.set_document_state(default_state);
 
@@ -255,32 +249,6 @@ var annotation_studio = {
       });
     });
   },
-
-  take_snapshot: function() {
-    var html =  $("#snapshot").html();
-    var json = '<script type="text/javascript" id="json-archive">' + JSON.stringify(subscriber.dumpAnnotations()) + '</script>'
-    var catCss = $("#annotator-category-styles")[0].textContent;
-    var css = '<style type="text/css">';
-    css += '.annotator-hl { background: rgba(255, 255, 10, 0.3) } .annotator-hl-active { background: rgba(255, 255, 10, 0.8) }.annotator-hl-filtered { background-color: transparent }';
-    css += catCss;
-    css += '</style>';
-    return css + html + json;
-  },
-
-  initialize_document_snapshot: function() {
-    $('#snapshot_trigger').click(function(e) {
-      e.preventDefault();
-      var snapshot = annotation_studio.take_snapshot();
-      $.ajax({
-        url: '/documents/' + document_slug + '/snapshot',
-        type: 'POST',
-        data: { snapshot: snapshot }
-      }).done(function() {
-        $('#snapshot').removeClass('active');
-      });
-    });
-  }
-
 };
 
 jQuery(function($) {
@@ -289,8 +257,11 @@ jQuery(function($) {
   }
 
   annotation_studio.initialize_default_state_behavior();
-  annotation_studio.initialize_document_snapshot();
   annotation_studio.initialize_annotator();
+
+  // Sets up a click handler for the snapshot button, which
+  // creates a flattened snapshot of document, plus all metadata.
+  snapshot.initialize();
 
   // these three click and tap handlers manage the rich text editor show and hide on mobile and desktop
   $('.annotator-button').on('tap', function(){
@@ -333,28 +304,30 @@ jQuery(function($) {
   });
   $('#textpositionsort').on('click', {}, annotation_studio.sortUpdate);
   $('#customsort').on('click', {}, annotation_studio.sortUpdate);
-
 });
 
 var lazyShowAndHideAnnotations = _.debounce(
   function() { sidebar.showAndHideAnnotations() },
   30
 );
-  // Add data attributes to highlights
-  var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
-  var inlineData = __bind(function(a) {
 
-    if (a.highlights[0] != null) {
-      a.highlights[0].id = "hl"+ a.uuid;
-      a.highlights[0].title = a.user;
-      a.highlights[0].dataset.tags = a.tags.join(",");
-      a.highlights[0].dataset.groups = a.groups.join(",");
-      a.highlights[0].dataset.subgroups = a.subgroups.join(",");
-      a.highlights[0].dataset.username = a.username;
-      a.highlights[0].dataset.text = a.text;
-    }
-    else {
-      console.info("Annotation: " + a.uuid + "has no highlights.");
-    }
-  }, this);
+// Add data attributes to highlights
+var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+var inlineData = __bind(function(a) {
+
+  if (a.highlights[0] != null) {
+    a.highlights[0].id = "hl"+ a.uuid;
+    a.highlights[0].title = a.user;
+    a.highlights[0].dataset.tags = a.tags.join(",");
+    a.highlights[0].dataset.annotation_categories = a.annotation_categories.join(",");
+    a.highlights[0].dataset.groups = a.groups.join(",");
+    a.highlights[0].dataset.subgroups = a.subgroups.join(",");
+    a.highlights[0].dataset.username = a.username;
+    a.highlights[0].dataset.user = a.user;
+    a.highlights[0].dataset.text = a.text;
+  }
+  else {
+    console.info("Annotation: " + a.uuid + "has no highlights.");
+  }
+}, this);
 

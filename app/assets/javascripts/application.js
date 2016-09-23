@@ -41,6 +41,7 @@
 //= require melcatalog-plugin
 //= require sidebar
 //= require annotation_studio
+//= require snapshot
 //= require_tree ./models
 //= require_tree ./collections
 //= require_tree ./views

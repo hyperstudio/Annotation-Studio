@@ -1,3 +1,5 @@
+require 'json'
+
 class AnnotationsController < ApplicationController
     before_filter :authenticate_user!
 
@@ -24,7 +26,46 @@ class AnnotationsController < ApplicationController
         end
     end
 
+    def field
+        loadOptions = {
+            :context =>     'search'
+        }
+        if params[:field]
+            loadOptions[:field] = params[:field]
+        end
+        if params[:document_id]
+            loadOptions[:uri] = request.base_url + '/documents/' + params[:document_id]
+        end
+        @token = session['jwt']
+        @loadOptions = loadOptions.to_json
+
+        json = ApiRequester.field(loadOptions, @token)
+
+        if params[:field] == "tags"
+            json["tags"].each do |tag|
+                tag['text'] = tag['name']
+            end
+        end
+
+        if params[:field] == "annotation_categories"
+            json["annotation_categories"].each do |category|
+                category["text"] = AnnotationCategory.find(category['id']).name
+            end
+        end
+
+        if params[:field] == "user"
+            json["user"].each do |user|
+                user["text"] = "#{User.find_by_email(user['id']).firstname} #{User.find_by_email(user['id']).lastname[0]}."
+            end
+        end
+
+        respond_to do |format|
+            format.json { render json: json }
+        end
+    end
+
     def show
+
     end
 
     def exception_test

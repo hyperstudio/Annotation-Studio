@@ -195,7 +195,7 @@ class DocumentsController < ApplicationController
 
   # helper to determine if we should support content from the MEL catalog
   def catalogue_enabled?
-    Tenant.current_tenant.mel_catalog_enabled
+    Tenant.mel_catalog_enabled
   end
   
   def catalog_content( doc )

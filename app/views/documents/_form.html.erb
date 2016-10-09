@@ -93,8 +93,21 @@
           <% end %>
 
           <script type="text/javascript">
+						var changeMedia = function (media) {
+							if(media=='Text'){
+								$('#accordion').show();
+							}else if(media=='Video'){
+								$('#accordion').hide();
+							}
+						};
           $(document).ready(function() {
-
+						var $media = $('#document_media');
+						changeMedia($media.val());
+						$media.change(function(e) {
+							var $target = $(e.target);
+							var media = $target.val();
+							changeMedia(media);
+						});
             $('.text-area').summernote({
                 height: 300,
                 minHeight: null,

@@ -8,6 +8,7 @@
 # t.string   "publisher"
 # t.string   "source"
 # t.string   "rights_status"
+# t.string   "media"
 # t.string   "slug"
 # t.integer  "user_id"
 # t.date     "publication_date"

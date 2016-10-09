@@ -91,6 +91,7 @@ ActiveRecord::Schema.define(version: 20160119182435) do
     t.string   "edition",             limit: 255
     t.string   "publisher",           limit: 255
     t.string   "source",              limit: 255
+    t.string   "media",               limit: 255
     t.string   "rights_status",       limit: 255
     t.string   "slug",                limit: 255
     t.integer  "user_id"

@@ -6,6 +6,7 @@ var default_state = <%= @document.default_state.present? ? (raw @document.defaul
 var groups = "<%= current_user.rep_group_list %>".split(/, /);
 var subgroups = "<%= current_user.rep_subgroup_list %>".split(/, /);
 var annotatorOptions = {'readOnly': <%= @document.deleted? %>};
+var annotation_media = "<%= @document.media %>";
 var filter_user = "<%= current_user.email %>";
 var token = '<%= session["jwt"] %>';
 var annotation_username = "<%= current_user.first_name_last_initial %>";

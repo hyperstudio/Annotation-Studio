@@ -222,6 +222,6 @@ private
   def documents_params
     params.require(:document).permit(:title, :state, :chapters, :text, :user_id, :rep_privacy_list,
                                      :rep_group_list, :new_group, :author, :edition, :publisher, 
-                                     :publication_date, :source, :rights_status, :upload, :survey_link)
+                                     :publication_date, :source, :media, :rights_status, :upload, :survey_link)
   end
 end

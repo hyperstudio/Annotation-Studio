@@ -1,7 +1,10 @@
 
 <% if controller.action_name == "new" or @document.draft? %>
 	<h4>Content</h4>
-
+		<div class="form-group">
+			<%= f.label :media %>
+			<%= f.select :media, [ 'Text', 'Video'], {}, {:class => 'form-control'} %>
+		</div>
 	<div class="panel-group" id="accordion">
 
 		<div class="panel panel-default">

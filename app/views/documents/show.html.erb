@@ -2,61 +2,311 @@
 <%= content_for :body_class, 'show' %>
 <%= content_for :page_title, @document.title %>
 <%= stylesheet_link_tag "documents" %>
+<% if @document.media == 'Video' %>
+    <!-- Annotator -->
+    <!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>-->
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <!--<script src="//ovap-dev01.chs.harvard.edu/lib/annotator/annotator.min.js"></script>-->
+    <script src="https://gteavirtual.org/ova/js/annotator-full.js"></script>
+    <link rel="stylesheet" href="https://gteavirtual.org/ova/css/annotator.min.css">
+
+    <!--<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+    <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>-->
+
+    <!--video-js-->
+    <link href="//vjs.zencdn.net/4.11/video-js.css" rel="stylesheet">
+    <script src="https://gteavirtual.org/ova/js/video.dev.js"></script>
+
+    <!--Youtube Pluging-->
+    <script src="https://gteavirtual.org/ova/js/vjs.youtube.js"></script>
+
+    <!--RangeSlider Pluging-->
+    <script src="https://gteavirtual.org/ova/js/rangeslider.js"></script>
+    <link href="https://gteavirtual.org/ova/css/rangeslider.min.css" rel="stylesheet">
+
+    <!--Share Pluging-->
+    <script src="https://gteavirtual.org/ova/js/share-annotator.min.js"></script>
+    <link href="https://gteavirtual.org/ova/css/share-annotator.min.css" rel="stylesheet">
+
+    <!--Geolocation Pluging-->
+    <script src="https://gteavirtual.org/ova/js/geolocation-annotator.min.js"></script>
+    <link href="https://gteavirtual.org/ova/css/geolocation-annotator.min.css" rel="stylesheet">
+
+    <!--RichText Pluging-->
+    <script src="https://gteavirtual.org/ova/js/tinymce.min.js"></script>
+    <script src="https://gteavirtual.org/ova/js/richText-annotator.js"></script>
+    <link href="https://gteavirtual.org/ova/css/richText-annotator.min.css" rel="stylesheet">
+
+    <!--	 TimeTracking
+            <script src="https://gteavirtual.org/ova/js/InwicastTimeTracking.js"></script>
+            <link href="https://gteavirtual.org/ova/css/InwicastTimeTracking.css" rel="stylesheet">-->
+
+    <!-- Reply -->
+    <script src="https://gteavirtual.org/ova/js/reply-annotator.js"></script>
+    <link href="https://gteavirtual.org/ova/css/reply-annotator.min.css" rel="stylesheet">
+
+    <!-- Flags -->
+    <script src="https://gteavirtual.org/ova/js/flagging-annotator.js"></script>
+    <link href="https://gteavirtual.org/ova/js/flagging-annotator.css" rel="stylesheet">
+
+
+    <!--OpenVideoAnnotation Pluging-->
+    <script src="https://gteavirtual.org/ova/js/ova.js"></script>
+    <link href="https://gteavirtual.org/ova/css/ova.min.css" rel="stylesheet">
+
+    <link href="https://gteavirtual.org/ova/css/pagination.css" rel="stylesheet">
+<% end %>
+
 <div class="row">
   <div class="col-md-8">
-    <% if ! @document.processed? %>
-      <%= render 'processed_message' %>
+    <% if !@document.processed? %>
+        <%= render 'processed_message' %>
     <% end %>
     <% if @document.survey_link.present? %>
-      <%= render 'survey_button' %>
+        <%= render 'survey_button' %>
     <% end %>
-    <div id="textcontent">
-      <div><!-- Required for cases in which there's no HTML in the text -->
-        <%= @document.text.html_safe %>
-      </div>
-    </div>
+    <% if @document.media == 'Video' %>
+        <div id="videoHolder">
+          <video id="vid1" class="video-js vjs-default-skin" controls preload="none"
+                 poster="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcR9iQSibWrcwk5GYGtYymy4aGMYsKZCe5kHfOi0NHUVnCsvRU7piw">
+            <!--                data-setup='{techOrder: ["html5","flash","youtube"]}'>-->
+            <source src="<%= @document.source %>" type='video/youtube'/>
+          </video>
+        </div>
+        <!--Catch-->
+        <link rel="stylesheet" href="https://gteavirtual.org/ova/catch/css/main.css">
+
+        <header style="width:80%; margin-left:auto; margin-right: auto">
+        </header>
+        <br/>
+        <div id="catchDIV"></div>
+        <script src="https://gteavirtual.org/ova/catch/js/handlebars-1.1.2.js"></script>
+        <script src="https://gteavirtual.org/ova/catch/js/catch.js"></script>
+    <% else %>
+        <div id="textcontent">
+          <div><!-- Required for cases in which there's no HTML in the text -->
+            <%= @document.text.html_safe %>
+          </div>
+        </div>
+    <% end %>
+
     <% if @document.survey_link.present? %>
-      <%= render 'survey_button' %>
+        <%= render 'survey_button' %>
     <% end %>
   </div><!--/col-md-8 -->
   <div class="col-md-4">
-    <% if @document.processed? and ! @document.draft? %>
-      <%= render "documents/annotation_sidebar" %>
+    <% if @document.processed? and !@document.draft? %>
+        <%= render "documents/annotation_sidebar" %>
     <% end %>
   </div><!--/col-md-3 -->
 </div><!--/row -->
 <%= render "documents/help" %>
+
+<% if @document.media == 'Video' %>
+    <script type="text/javascript">
+      // Once the video is ready
+      videojs("vid1").ready(function () {
+        var myPlayer = this;    // Store the video object
+        var aspectRatio = 325 / 780; // Make up an aspect ratio
+
+        function resizeVideoJS() {
+          // Get the parent element's actual width
+          var width = document.getElementById(myPlayer.id_).parentElement.offsetWidth;
+          // Set width to fill parent element, Set height
+          myPlayer.width(width).height(width * aspectRatio);
+        }
+
+        resizeVideoJS(); // Initialize the function
+        window.onresize = resizeVideoJS; // Call the function on resize
+      });
+    </script>
+
+    <script>
+      //Options to load in Open Video Annotation, for all the plugins
+
+      var pagination = 0,
+          options = {
+            optionsAnnotator: {
+              permissions: {
+                user: {
+                  id: "<%= current_user.email %>",
+                  name: "<%= current_user.first_name_last_initial %>"
+                },
+                userString: function (user) {
+                  if (user && user.name)
+                    return user.name;
+                  return user;
+                },
+                userId: function (user) {
+                  if (user && user.id)
+                    return user.id;
+                  return user;
+                },
+                permissions: {
+                  'read': [],
+                  'update': ["<%= current_user.email %>"],
+                  'delete': ["<%= current_user.email %>"],
+                  'admin': ["<%= current_user.email %>"]
+                },
+                showViewPermissionsCheckbox: true,
+                showEditPermissionsCheckbox: false,
+                /*groups: {
+                 world: 'group:__world__',
+                 authenticated: 'group:__authenticated__',
+                 consumer: 'group:__consumer__'
+                 },*/
+                userAuthorize: function (action, annotation, user) {
+                  var token, tokens, _i, _len;
+                  if (annotation.permissions) {
+                    tokens = annotation.permissions[action] || [];
+                    if (tokens.length === 0) {
+                      return true;
+                    }
+                    for (_i = 0, _len = tokens.length; _i < _len; _i++) {
+                      token = tokens[_i];
+                      if (this.userId(user) === token) {
+                        return true;
+                      }
+                    }
+                    return false;
+                  } else if (annotation.user) {
+                    if (user) {
+                      return this.userId(user) === this.userId(annotation.user);
+                    } else {
+                      return false;
+                    }
+                  }
+                  return true;
+                }
+              },
+              auth: {
+                token: "eyJ0eXAiOiJKV1QiLAogICAgICAgICAgICAiYWxnIjoiSFMyNTYifQ.eyJjb25zdW1lcktleSI6ICJkblpPdG55VUY5RHNmWFRiQzAxZDczVFQzcklTdEoiLAogICAgICAgICAgICAidXNlcklkIjogImFub255bW91c0Bhbm9ueW1vdXMiLAogICAgICAgICAgICAiaXNzdWVkQXQiOiIyMDE2LTEwLTExVDExOjIxOjUxKzAyMDAiLAogICAgICAgICAgICAidHRsIjo4NjQwMH0.-_BjrGIfgaeJ2DofoMEH2f8fiiyJHLvKGx86G5ewUjA"
+              },
+              store: {
+                // The endpoint of the store on your server.
+                prefix: 'http://corubric.com/catch/api/api.php',
+                annotationData: {
+                  uri: [location.protocol, '//', location.host, location.pathname].join('')
+                },
+                urls: {
+                  // These are the default URLs.
+                  create: '/create',
+                  read: '/read/:id',
+                  update: '/update/:id',
+                  destroy: '/destroy/:id',
+                  info: '/info',
+                  search: '/search'
+                },
+                loadFromSearch: {
+                  limit: pagination,
+                  media: 'video',
+                  offset: 0,
+                  uri: [location.protocol, '//', location.host, location.pathname].join(''),
+                  group: '',
+                  userid: ''
+                  //media:'video',
+                  //                    uri:'http://herx-dev01.chs.harvard.edu/',
+                  // user:"2",
+                  //source:"https://www.youtube.com/watch?v=od1NTZQt1CY"
+                }
+              },
+              share: {
+                baseUrl: 'https://gteavirtual.org/ova/index.php?r=ova/index&id=1',
+              }
+            },
+            optionsVideoJS: {techOrder: ["html5", "flash", "youtube"]},
+            optionsRS: {},
+            optionsOVA: {posBigNew: 'none'},
+            optionsRichText: {
+              tinymce: {
+                selector: "li.annotator-item textarea",
+                plugins: "media image insertdatetime link code",
+                menubar: false,
+                toolbar_items_size: 'small',
+                extended_valid_elements: "iframe[src|frameborder|style|scrolling|class|width|height|name|align|id]",
+                toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media rubric | code ",
+              }
+            }
+          };
+      //Load the plugin Open Video Annotation
+      var ova = new OpenVideoAnnotation.Annotator($('#videoHolder'), options);
+
+      //    //Time tracker
+      //    var optionsTT ={
+      //        user:{//this is the current user
+      //            id: '2',//This is the id for the current user (-1 by default)
+      //            permission:true,//true or false. It is true if the user will be able to see the user statistics (false by default)
+      //            tracker:true,//true or false. If it is true, the current user will be tracked (true by default)
+      //        },
+      //        server:{
+      //            url:'/ova/index.php?r=JWT/op',//(obligatory)
+      //            token:'983432950949eb079f89ee83fd215174',//(obligatory)
+      //            refreshSeconds:10,//seconds to refresh the server (10 by default)
+      //        },
+      //        statistics:{//this is the user that we want to know the statistics
+      //            userId:'public',//This is the user ID to be displayed its statistics (public by default)
+      //            displayname:'public',//the name will appear in the panel with the statistics (public by default)
+      //        },
+      //        mediaId:'1',//this is the media Id to see the statistics and set the tracker
+      //        showTT:false,//this is to init with the statistics panel (false by default)
+      //    };
+      //    ova.mplayer['vid1'].timetracker(optionsTT);
+      var $catch = $('#catchDIV'),
+          catchOptions = {
+            media: 'video',
+            externalLink: false,
+            userId: '',
+            imageUrlRoot: 'http://localhost/ova/catch/img/',
+            showMediaSelector: false,
+            showPublicPrivate: true,
+            pagination: pagination, //Number of Annotations per load in the pagination,
+            flags: false,
+            group: '',
+            cansee: '1'
+          },
+          Catch = new CatchAnnotation($catch, catchOptions);
+      $("vid1").ready(function () {
+        var $selectors = $catch.find('.selectors');
+
+        $selectors.css('display', 'block');
+
+      })
+
+    </script>
+<% else %>
+
+    <script type="text/javascript">
+
+      var annotationStudioConfig = {
+        enableRichTextEditor: '<%= @enable_rich_text_editor %>',
+        tinyMCEToolbar: '<%= @tiny_mce_toolbar %>',
+        apiURL: '<%= @api_url %>',
+        melCatalogEnabled: '<%= @mel_catalog_enabled %>'
+      };
+
+      $('#annotation-list').slimScroll({
+        height: '99%',
+        width: '340px',
+        alwaysVisible: false,
+        allowPageScroll: true,
+        disableFadeOut: true
+      });
+
+      $('#chapternav').slimScroll({
+        height: '90%',
+        width: '250px',
+        size: '10px',
+        position: 'right',
+        color: '#ccc',
+        distance: '5px',
+        alwaysVisible: false,
+        allowPageScroll: true,
+        disableFadeOut: true
+      });
+    </script>
+<%# render "documents/metadata" %>
+<% end %>
+
 <div id="spinnermodal" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="spinnermodallabel" aria-hidden="true">
   <div class="modal-body" id="spinnerdiv"><em>Loading annotations...</em></div>
 </div>
-<%# render "documents/metadata" %>
-
-<script type="text/javascript">
-
-var annotationStudioConfig = {
-  enableRichTextEditor: '<%= @enable_rich_text_editor %>',
-  tinyMCEToolbar: '<%= @tiny_mce_toolbar %>',
-  apiURL: '<%= @api_url %>',
-  melCatalogEnabled: '<%= @mel_catalog_enabled %>'
-};
-
-$('#annotation-list').slimScroll({
-  height: '99%',
-  width: '340px',
-  alwaysVisible: false,
-  allowPageScroll: true,
-  disableFadeOut: true
-});
-
-$('#chapternav').slimScroll({
-  height: '90%',
-  width: '250px',
-  size: '10px',
-  position: 'right',
-  color: '#ccc',
-  distance: '5px',
-  alwaysVisible: false,
-  allowPageScroll: true,
-  disableFadeOut: true
-});
-</script>

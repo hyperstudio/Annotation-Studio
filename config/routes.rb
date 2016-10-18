@@ -27,6 +27,7 @@ AnnotationStudio::Application.routes.draw do
     post :snapshot
     get :export
     get :preview, to: 'documents#preview'
+    get :post_to_cove, to: 'documents#post_to_cove'
   end
 
   resources :users, only: [:show, :edit]

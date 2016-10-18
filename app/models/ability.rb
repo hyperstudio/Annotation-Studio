@@ -21,7 +21,7 @@ class Ability
         end
       end
       can :create, Document
-      can [:read, :update, :annotatable, :review, :publish, :archive, :preview, :export, :set_default_state, :snapshot], Document, { :user_id => user.id }
+      can [:read, :update, :annotatable, :review, :publish, :archive, :preview, :post_to_cove, :export, :set_default_state, :snapshot], Document, { :user_id => user.id }
       can :destroy, Document, { :user_id => user.id, :published? => false }
 
     elsif user.has_role? :student

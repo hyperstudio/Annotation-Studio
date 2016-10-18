@@ -1,8 +1,9 @@
 # support for MEL catalog entries
 require 'melcatalog'
+require 'json'
 
 class DocumentsController < ApplicationController
-  before_filter :find_document, :only => [:show, :set_default_state, :preview, :annotatable, :review, :publish, :export, :archive, :snapshot, :destroy, :edit, :update]
+  before_filter :find_document, :only => [:show, :set_default_state, :preview, :post_to_cove, :annotatable, :review, :publish, :export, :archive, :snapshot, :destroy, :edit, :update]
   before_filter :authenticate_user!
 
   load_and_authorize_resource :except => :create
@@ -153,7 +154,7 @@ class DocumentsController < ApplicationController
   end
 
   def annotatable
-    # TODO: POST to COVE
+
     respond_to do |format|
       if @document.update_attribute(:state, 'annotatable')
         format.html { redirect_to documents_url, notice: 'Document is now annotatable.', anchor: 'created'}
@@ -164,7 +165,7 @@ class DocumentsController < ApplicationController
   end
 
   def review
-    # TODO: POST to COVE
+
     respond_to do |format|
       if @document.update_attribute(:state, 'review')
         format.html { redirect_to documents_url, notice: 'Document is now reviewable.', anchor: 'created'}
@@ -196,6 +197,31 @@ class DocumentsController < ApplicationController
     render :json => {}
   rescue Exception => e
     render :json => {}
+  end
+
+  #POST document to COVE
+  def post_to_cove
+    document = {
+        title: @document.title,
+        body: { "und": [ { "value": @document.snapshot } ] },
+        "type":"editions_page",
+        format: "unfiltered_html",
+        "field_doc_owner":{"und":[@document.user.cove_id]}
+    }
+
+    unauth_token = ApiRequester::CoveClient.get_unauth_session
+    cookies = ApiRequester::CoveClient.get_cookie(unauth_token)
+    login_token = ApiRequester::CoveClient.get_login_session(cookies)
+    cove_object = ApiRequester::CoveClient.post(login_token, cookies, document)
+    cove_hash = JSON.parse(cove_object)
+
+    @document.cove_uri = cove_hash["uri"]
+    @document.save!
+
+    respond_to do |format|
+      link = %Q[<a href="#{@document.cove_uri}" target="cove-edition">View it now</a>]
+      format.html { redirect_to @document, notice: "Document was successfully posted to the COVE. #{link}".html_safe}
+    end
   end
 
   # Helper which accepts an array of items and filters out those you are not allowed to read, according to CanCan abilities.

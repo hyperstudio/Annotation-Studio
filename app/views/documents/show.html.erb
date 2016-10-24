@@ -180,7 +180,7 @@
                 }
               },
               auth: {
-                token: "eyJ0eXAiOiJKV1QiLAogICAgICAgICAgICAiYWxnIjoiSFMyNTYifQ.eyJjb25zdW1lcktleSI6ICJkblpPdG55VUY5RHNmWFRiQzAxZDczVFQzcklTdEoiLAogICAgICAgICAgICAidXNlcklkIjogImFub255bW91c0Bhbm9ueW1vdXMiLAogICAgICAgICAgICAiaXNzdWVkQXQiOiIyMDE2LTEwLTExVDExOjIxOjUxKzAyMDAiLAogICAgICAgICAgICAidHRsIjo4NjQwMH0.-_BjrGIfgaeJ2DofoMEH2f8fiiyJHLvKGx86G5ewUjA"
+                token: '<%= session["jwt"] %>'
               },
               store: {
                 // The endpoint of the store on your server.
@@ -256,7 +256,7 @@
             media: 'video',
             externalLink: false,
             userId: '',
-            imageUrlRoot: 'http://localhost/ova/catch/img/',
+            imageUrlRoot: 'https://gteavirtual.org/ova/catch/img/',
             showMediaSelector: false,
             showPublicPrivate: true,
             pagination: pagination, //Number of Annotations per load in the pagination,

@@ -73,6 +73,9 @@ var snapshot = {
       e.preventDefault();
 
       $("#snapshot-progress").modal("show");      
+
+      $(".glyphicon-comment").remove();
+
       console.log("Started spinner");
 
       // Get a reference to in-page storage node

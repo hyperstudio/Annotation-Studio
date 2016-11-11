@@ -81,7 +81,6 @@ gem 'will_paginate', '~> 3.0.5'
 gem 'will_paginate-bootstrap'
 
 gem 'exception_notification'
-gem 'intercom-rails'
 
 gem "melcatalog", :path => "vendor"
 gem "rest-client"

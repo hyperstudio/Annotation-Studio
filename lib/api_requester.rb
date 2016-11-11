@@ -30,6 +30,25 @@ class ApiRequester
         data = MultiJson.load(response.body)
     end
 
+    def self.create(annotation, token)
+        headers = {
+          'x-annotator-auth-token': token,
+          accept: :json,
+          content_type: 'application/json',
+        }
+
+        response = RestClient.post(@@api_url + '/annotations', annotation, headers)
+
+        case response.code
+        when 200
+            puts "Annotation POST Request successful"
+            return response
+        else
+            puts "Annotation POST request not successful"
+        end
+
+        response
+    end
 end
 
 class CoveClient
@@ -77,7 +96,6 @@ class CoveClient
         end
     end
 
-
     def self.get_login_session(cookie)
         headers = {
           cookies: cookie,
@@ -113,6 +131,62 @@ class CoveClient
         end
         return response.body
     end
+end
+
+
+class UserIngester
+  # Assumptions: 
+  # - users will use the same email address for all accounts
+  # - this will be run as a rake task, and should be repeatable with no risk
+  def self.get_users
+    @documents = Array.new
+
+    (0..4).to_a.each do |page|
+        headers = {
+          accept: :json,
+          content_type: 'application/json',
+        }
+        response = RestClient.get("http://dev-rc-distro.pantheonsite.io/editions/api/user.json?page=#{page}", headers)
+        @documents << JSON.parse(response)
+    end
+
+    return @documents.flatten!
+  end
+end
+
+class DocumentIngester
+  # Assumptions: 
+  # - users will use the same email address for all accounts
+  # - this will be run as a rake task, and should be repeatable with no risk
+  def self.get_documents
+    headers = {
+      accept: :json,
+      content_type: 'application/json',
+    }
+    response = RestClient.get("http://dev-rc-distro.pantheonsite.io/editions/api/documents.json", headers)
+    documents = JSON.parse(response)
+  end
+end
+
+class AnnotationIngester
+  # Assumptions: 
+  # - users will use the same email address for all accounts
+  # - this will be run as a rake task, and should be repeatable with no risk
+  def self.get_annotations
+
+    @annotations = Array.new
+
+    (1..12).to_a.each do |page|
+        headers = {
+          accept: :json,
+          content_type: 'application/json',
+        }
+        response = RestClient.get("http://dev-rc-distro.pantheonsite.io/annotation/api/annotation_documents.json?page=#{page}", headers)
+        @annotations << JSON.parse(response)
+    end
+
+    return @annotations.flatten!
+  end
 end
 
 class CsvGenerator

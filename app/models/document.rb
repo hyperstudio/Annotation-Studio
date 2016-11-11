@@ -36,7 +36,7 @@ application/pdf
   |
 
   extend FriendlyId
-  friendly_id :title, use: [:slugged, :history]
+  friendly_id :title, use: [:slugged, :history, :finders]
 
   # acts_as_taggable_on :rep_group, :courses, :semesters, :genres, :categories
   acts_as_taggable_on :rep_privacy, :rep_group
@@ -63,12 +63,12 @@ application/pdf
     rep_group_list << group_name unless group_name.nil? || group_name.empty?
   end
 
-  # def normalize_friendly_id(text)
-  #   text.to_slug.normalize! :transliterations => :russian
-  # end
-
   def normalize_friendly_id(input)
     input.to_s.to_slug.normalize(transliterations: :russian).to_s
+  end
+
+  def comes_from_cove?
+    origin == 'cove' ? true : false
   end
 
   def processed?
@@ -90,5 +90,4 @@ application/pdf
   def add_title
     self.title = "Untitled"
   end
-
 end

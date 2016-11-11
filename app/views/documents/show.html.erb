@@ -10,11 +10,16 @@
     <% if @document.survey_link.present? %>
       <%= render 'survey_button' %>
     <% end %>
+    <% if @document.comes_from_cove? %>
+        <%= @document.text.html_safe %>
+    <% else %>
     <div id="textcontent">
       <div id="snapshot">
         <%= @document.text.html_safe %>
       </div>
     </div>
+    <% end %>
+
   </div><!--/col-md-8 -->
   <div class="col-md-4">
     <% if @document.processed? and !@document.draft? %>

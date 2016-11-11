@@ -55,13 +55,23 @@ class AnnotationsController < ApplicationController
 
         if params[:field] == "user"
             json["user"].each do |user|
-                user["text"] = "#{User.find_by_email(user['id']).firstname} #{User.find_by_email(user['id']).lastname[0]}."
+                author = User.find_by_email(user['id'])
+                if author.present?
+                    user["text"] = "#{author.firstname} #{author.lastname[0]}."
+                else
+                    next
+                end                
             end
         end
 
         respond_to do |format|
             format.json { render json: json }
         end
+    end
+
+    def create(params)
+        @token = session['jwt']
+        ApiRequester.create(params, @token)
     end
 
     def show

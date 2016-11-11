@@ -273,8 +273,6 @@ GEM
       has_scope (~> 0.6.0.rc)
       railties (>= 3.2, < 5)
       responders
-    intercom-rails (0.2.29)
-      activesupport (> 3.0)
     ipaddress (0.8.0)
     jbuilder (2.2.13)
       activesupport (>= 3.0.0, < 5)
@@ -291,7 +289,7 @@ GEM
       activesupport (>= 3.0.0)
     launchy (2.4.3)
       addressable (~> 2.3)
-    libv8 (3.16.14.13)
+    libv8 (3.16.14.15)
     loofah (2.0.2)
       nokogiri (>= 1.5.9)
     mail (2.6.3)
@@ -519,7 +517,6 @@ DEPENDENCIES
   gon
   high_voltage (~> 2.1.0)
   highline
-  intercom-rails
   jbuilder
   jquery-rails (~> 2.3.0)
   jquery-ui-rails
@@ -563,5 +560,8 @@ DEPENDENCIES
   will_paginate-bootstrap
   yomu
 
+RUBY VERSION
+   ruby 2.2.4p230
+
 BUNDLED WITH
-   1.11.2
+   1.13.6

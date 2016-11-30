@@ -5,7 +5,7 @@ class AnnotationsController < ApplicationController
 
     def index
         loadOptions = {
-            :limit =>       100,
+            :limit =>       1000,
             :groups =>      current_user.rep_group_list,
             :subgroups =>   current_user.rep_subgroup_list,
             :host =>        request.host_with_port,

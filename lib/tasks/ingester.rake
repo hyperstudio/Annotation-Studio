@@ -220,6 +220,13 @@ namespace :ingest do
 
       as_annotation["groups"] = owner.rep_group_list
       as_annotation["uuid"] = cove_annotation['nid']
+      as_annotation["annotation_categories"] = []
+
+      cove_annotation["category"].each do |cove_cat|
+        new_cat = AnnotationCategory.find_or_initialize_by(name: cove_cat)
+        new_cat.save
+        as_annotation["annotation_categories"] << new_cat.id
+      end
 
       result = ApiRequester.create(as_annotation.to_json, @token)
 

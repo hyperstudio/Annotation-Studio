@@ -1,6 +1,6 @@
 development: &default
   adapter: postgresql
-  database: cove-dev
+  database: cove-studio
   encoding: utf8
   host: localhost
   pool: 5

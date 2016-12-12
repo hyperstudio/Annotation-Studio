@@ -8,7 +8,9 @@ namespace :ingest do
     
     # get all documents
     users = ApiRequester::UserIngester.get_users
-    
+
+    Apartment::Tenant.switch(ENV["TENANT"])
+
     # For each document
     users.each do |user|
 
@@ -45,6 +47,8 @@ namespace :ingest do
     # get all documents
     documents = ApiRequester::DocumentIngester.get_documents
     
+    Apartment::Tenant.switch(ENV["TENANT"])
+
     # For each document
     documents.each do |document|
       # - Look up or create the owner user, by email address
@@ -104,6 +108,8 @@ namespace :ingest do
     # - Receive an array of JSON objects, each one an annotation
     cove_annotations = ApiRequester::AnnotationIngester.get_annotations
     
+    Apartment::Tenant.switch(ENV["TENANT"])
+
     # For each annotation
 
     count = 0

@@ -53,24 +53,24 @@ namespace :ingest do
     documents.each do |document|
       # - Look up or create the owner user, by email address
       # - Include: email address, cove_id, full name
-      owner = User.find_or_initialize_by(cove_id: document["uid"])
+      owner = User.find_by(cove_id: document["uid"])
 
-      owner.skip_confirmation!
-      owner.skip_reconfirmation!
+      # owner.skip_confirmation!
+      # owner.skip_reconfirmation!
 
-      owner.full_name = document["user"]
-      owner.email = document["mail"]
-      owner.agreement = true
+      # owner.full_name = document["user"]
+      # owner.email = document["mail"]
+      # owner.agreement = true
 
-      if owner.full_name.split(" ")[1].present?
-        owner.firstname = owner.full_name.split(" ")[0]
-        owner.lastname = owner.full_name.split(" ")[1]
-      else
-        owner.firstname = owner.full_name
-        owner.lastname = owner.full_name
-      end
+      # if owner.full_name.split(" ")[1].present?
+      #   owner.firstname = owner.full_name.split(" ")[0]
+      #   owner.lastname = owner.full_name.split(" ")[1]
+      # else
+      #   owner.firstname = owner.full_name
+      #   owner.lastname = owner.full_name
+      # end
 
-      owner.save
+      # owner.save
       # puts owner.to_json
 
       # - Create the document
@@ -93,8 +93,8 @@ namespace :ingest do
       new_doc.state = "annotatable"
 
       # Update friendly id
-      new_doc.slug = nil
-
+      # new_doc.slug = nil
+      
       new_doc.save
       puts new_doc.to_json
       puts "=========="

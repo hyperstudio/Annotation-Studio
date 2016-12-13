@@ -163,8 +163,15 @@ class DocumentIngester
       accept: :json,
       content_type: 'application/json',
     }
-    response = RestClient.get("http://dev-rc-distro.pantheonsite.io/editions/api/documents.json", headers)
-    documents = JSON.parse(response)
+    @documents = Array.new
+
+    (0..1).to_a.each do |page|
+      response = RestClient.get("http://dev-rc-distro.pantheonsite.io/editions/api/documents.json?page=#{page}", headers)
+      @documents << JSON.parse(response)
+    end
+
+    return @documents.flatten!
+
   end
 end
 

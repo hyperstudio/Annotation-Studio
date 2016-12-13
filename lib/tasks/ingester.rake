@@ -53,6 +53,10 @@ namespace :ingest do
     documents.each do |document|
       # - Look up or create the owner user, by email address
       # - Include: email address, cove_id, full name
+      puts "=========="
+      puts "Incoming document:"
+      puts document
+
       owner = User.find_by(cove_id: document["uid"])
 
       # owner.skip_confirmation!
@@ -71,7 +75,7 @@ namespace :ingest do
       # end
 
       # owner.save
-      # puts owner.to_json
+      puts owner.to_json
 
       # - Create the document
       new_doc = Document.find_or_initialize_by(cove_uri: document["uri"])
@@ -94,7 +98,7 @@ namespace :ingest do
 
       # Update friendly id
       # new_doc.slug = nil
-      
+
       new_doc.save
       puts new_doc.to_json
       puts "=========="

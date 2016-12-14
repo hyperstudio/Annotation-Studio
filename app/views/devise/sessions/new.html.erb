@@ -9,12 +9,15 @@
         <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
       </div>
       <% end %>
+      <% if ENV["SHOW_WELCOME_MESSAGE"] == "true" %>
       <div class="alert alert-success alert-dismissible" role="alert">
         <%= $DOMAIN_CONFIG['welcome_message'].html_safe %>
         <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
       </div>
+      <% end %>
   </div>
 </div>
+<% if ENV["SHOW_DOMAIN_MESSAGE"] == "true" %>
 <div class="row">
   <div class="col-md-8" id="blurb">
     <p>
@@ -22,3 +25,4 @@
     </p>
   </div>
 </div><!--/row -->
+<% end %>

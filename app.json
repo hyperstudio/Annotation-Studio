@@ -48,6 +48,12 @@
     "CLASS_TERM_PLURAL": {
       "required": true
     },
+    "SHOW_WELCOME_MESSAGE": {
+      "required": true
+    },
+    "SHOW_DOMAIN_MESSAGE": {
+      "required": true
+    },
     "GROUP_TERM": {
       "required": true
     },

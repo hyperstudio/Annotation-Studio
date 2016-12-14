@@ -33,6 +33,14 @@ module ApplicationHelper
     end
   end
 
+  def render_footer
+    if ENV['FOOTER'] != ""
+      render partial: ENV['FOOTER']
+    else
+      render partial: "shared/default_footer"
+    end
+  end
+
   def self_removing(notice)
     # This is a hack to get the devise messages to disappear on their own after a little while. If it is a normal
     # devise message, then we add a class.

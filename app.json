@@ -33,6 +33,9 @@
     "BRAND_RIBBON": {
       "required": true
     },
+    "FOOTER": {
+      "required": true
+    },
     "HOME_BANNER": {
       "required": true
     },

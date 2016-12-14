@@ -5,6 +5,10 @@ div.poem {
     line-height: 0;
     counter-reset: line;
 
+    .castList {text-align:center;}
+    .stage {text-align:center; line-height:initial;}
+    .sp {text-align:center; line-height:initial;}
+
     .stanza {
         margin-top: 0.75em;
         margin-bottom: 0.75em;

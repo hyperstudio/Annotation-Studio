@@ -152,7 +152,7 @@ namespace :ingest do
 
       document = Document.where('cove_uri LIKE ?', "%/#{cove_id}").first
 
-      if document.present?
+      if document.present? && document.archived?
         as_annotation["uri"] = "#{@document_host}/documents/#{document.slug}"
       else 
         skipped = skipped + 1

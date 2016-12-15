@@ -49,6 +49,30 @@ class ApiRequester
 
         response
     end
+
+    def self.update(annotation, token)
+        headers = {
+          'x-annotator-auth-token': token,
+          accept: :json,
+          content_type: 'application/json',
+        }
+
+        # binding.pry
+
+        response = RestClient.put(@@api_url + '/annotations/' + annotation['id'], annotation.to_json, headers)
+
+        case response.code
+        when 200
+            puts "Annotation PUT Request successful"
+            return response
+        else
+            puts "Annotation PUT request not successful"
+        end
+
+        binding.pry
+        response
+
+    end
 end
 
 class CoveClient

@@ -250,3 +250,62 @@ namespace :ingest do
     puts "skipped: #{skipped}"
   end
 end
+namespace :groom do
+  desc "Groom annotations from COVE"
+  task :annotations => :environment do
+    
+    # Get all annotations from API
+    # - Receive an array of JSON objects, each one an annotation
+    Apartment::Tenant.switch(ENV["TENANT"])
+
+    @token = JWT.encode(
+      {
+        'consumerKey' => ENV["API_CONSUMER"],
+        'userId' => "jamie@performantsoftware.com",
+        'issuedAt' => @now,
+        'ttl' => 86400
+      },
+      ENV["API_SECRET"]
+    )
+
+    loadOptions = {
+        :host =>        ENV["DOCUMENT_HOST"],
+        :context =>     'search'
+    }
+
+    all_annotations = ApiRequester.search(loadOptions, @token)
+
+    # For each annotation
+    count = 0
+    skipped = 0
+
+    all_annotations.each do |annotation|
+
+      annotation['permissions']['read'] = []
+
+      if annotation["user"].present?
+        owner = User.find_or_initialize_by(email: annotation["user"])
+        annotation["username"] = "#{owner.firstname} #{owner.lastname}"
+      else
+        skipped = skipped + 1
+        next
+      end
+
+      # binding.pry
+
+      result = ApiRequester.update(annotation, @token)
+
+      # - Save the annotation
+      count = count + 1 
+      puts "=== Groomed ==="
+      puts annotation.to_json
+      puts "\n\n"
+    end
+
+    puts "=========="
+    puts "=========="
+    puts "count: #{count}"
+    puts "skipped: #{skipped}"
+  end
+
+end

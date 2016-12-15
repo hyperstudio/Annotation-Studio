@@ -207,14 +207,14 @@ class AnnotationIngester
 
     @annotations = Array.new
 
-    (1..12).to_a.each do |page|
+    # (0).to_a.each do |page|
         headers = {
           accept: :json,
           content_type: 'application/json',
         }
-        response = RestClient.get("http://dev-rc-distro.pantheonsite.io/annotation/api/annotation_documents.json?page=#{page}", headers)
+        response = RestClient.get("http://test-rc-distro.pantheonsite.io/annotation/api/annotation_documents.json", headers)
         @annotations << JSON.parse(response)
-    end
+    # end
 
     return @annotations.flatten!
   end

@@ -116,7 +116,8 @@ namespace :ingest do
 
     # For each annotation
 
-    count = 0
+    created = 0
+    updated = 0
     skipped = 0
 
     @token = JWT.encode(
@@ -129,11 +130,13 @@ namespace :ingest do
       ENV["API_SECRET"]
     )
 
+
     @document_host = ENV["DOCUMENT_HOST"]
 
     cove_annotations.each do |cove_annotation|
 
       as_annotation = {}
+
       #   - Look up user from AS by COVE ID
       #   - Insert user email from AS user object into annotation
       #   - Flatten user object to email
@@ -152,7 +155,7 @@ namespace :ingest do
 
       document = Document.where('cove_uri LIKE ?', "%/#{cove_id}").first
 
-      if document.present? && !document.archived?
+      if document.present?
         as_annotation["uri"] = "#{@document_host}/documents/#{document.slug}"
       else 
         skipped = skipped + 1
@@ -216,10 +219,10 @@ namespace :ingest do
       # - Permissions: don't exist; set defaults
       #   - Group-visible
       as_annotation["permissions"] = {
-        read: "",
-        update: owner.email,
-        delete: owner.email,
-        admin: owner.email,
+        'read': [ ],
+        'update': ["#{owner.email}"],
+        'delete': ["#{owner.email}"],
+        'admin': ["#{owner.email}"],
       }
 
       as_annotation["groups"] = owner.rep_group_list
@@ -232,21 +235,49 @@ namespace :ingest do
         as_annotation["annotation_categories"] << new_cat.id
       end
 
-      result = ApiRequester.create(as_annotation.to_json, @token)
+      get_params = {
+        'uuid': as_annotation['uuid'],
+        'context': 'uuid',
+        'mode': 'single',
+      }
 
-      # - Save the annotation
+      existing_annotation = ApiRequester.get_by_uuid(get_params, @token)
+
+      # binding.pry
       puts "== COVE =="
-      puts cove_annotation.to_json
+      puts cove_annotation['nid']
+      puts "== AS =="
+      puts as_annotation['uuid']
+
+      if (existing_annotation != 0 && existing_annotation != -1) # It's a COVE annotation
+        # binding.pry
+        as_annotation["id"] = existing_annotation[0]["id"]
+        as_annotation["_id"] = existing_annotation[0]["id"]
+        result = ApiRequester.update(as_annotation, @token)
+        puts "== Updated Annotation =="
+        puts result
+        updated = updated + 1
+      else
+        result = ApiRequester.create(as_annotation, @token)
+        puts "== New Annotation =="
+        puts result
+        created = created + 1 
+      end
       puts "\n\n"
-      count = count + 1 
-      puts "=== AS ==="
-      puts as_annotation.to_json
-      puts "\n\n"
+      puts "=== Next ===="
+      # - Save the annotation
+      # puts "== COVE =="
+      # puts cove_annotation.to_json
+      # puts "\n\n"
+      # puts "=== AS ==="
+      # puts as_annotation.to_json
+      # puts "\n\n"
     end
 
     puts "=========="
     puts "=========="
-    puts "count: #{count}"
+    puts "created: #{created}"
+    puts "updated: #{updated}"
     puts "skipped: #{skipped}"
   end
 end

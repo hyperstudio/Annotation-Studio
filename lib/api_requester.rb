@@ -26,7 +26,7 @@ class ApiRequester
             puts "No content"
             return 0
         else
-            puts "Annotation GET by UUID Request successful"
+            puts "GET by UUID Request NOT successful"
             return -1
         end
     end

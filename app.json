@@ -42,6 +42,9 @@
     "PAGE_TITLE": {
       "required": true
     },
+    "FAVICON": {
+      "required": true
+    },
     "ALERT_LEVEL": {
       "required": true
     },

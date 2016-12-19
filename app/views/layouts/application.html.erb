@@ -12,7 +12,7 @@
     <meta name="robots" content="noindex">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="google-site-verification" content="<%= ENV["GOOGLE_VERIFICATION_CODE"] %>" />
-    <link href="/favicon.ico" rel="shortcut icon" />
+    <link rel="shortcut icon" type="image/png" href="/<%= ENV["FAVICON"] %>" sizes="32x32" />
     <%= javascript_include_tag "application" %>
     <% if ENV["USE_TYPEKIT"] == true %>
       <script type="text/javascript" src="//use.typekit.net/<%= ENV["TYPEKIT_CODE"] %>"></script>

@@ -215,7 +215,10 @@ class DocumentsController < ApplicationController
     cove_object = ApiRequester::CoveClient.post(login_token, cookies, document)
     cove_hash = JSON.parse(cove_object)
 
-    @document.cove_uri = cove_hash["uri"]
+    short_cove_uri = /editions\/api\/(node\/\d+)/.match(cove_hash["uri"])[1]
+
+    @document.cove_uri = "#{ENV['COVE_URL']}/#{short_cove_uri}"
+
     @document.save!
 
     respond_to do |format|

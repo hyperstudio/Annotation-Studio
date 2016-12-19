@@ -39,6 +39,9 @@
     "HOME_BANNER": {
       "required": true
     },
+    "PAGE_TITLE": {
+      "required": true
+    },
     "ALERT_LEVEL": {
       "required": true
     },

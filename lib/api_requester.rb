@@ -236,7 +236,7 @@ class AnnotationIngester
           accept: :json,
           content_type: 'application/json',
         }
-        response = RestClient.get("http://test-rc-distro.pantheonsite.io/annotation/api/annotation_documents.json", headers)
+        response = RestClient.get("http://dev-rc-distro.pantheonsite.io/annotation/api/annotation_documents.json", headers)
         @annotations << JSON.parse(response)
     # end
 

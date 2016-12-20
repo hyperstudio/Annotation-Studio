@@ -50,6 +50,7 @@ patch.diff
 .idea
 /deploy.sh
 devnotes.md
+groom.txt
 
 # Ignore application configuration
 /config/application.yml

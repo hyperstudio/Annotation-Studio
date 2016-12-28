@@ -1,5 +1,5 @@
 /*Line numbers for everything marked div class="poem" and with div class="lineno"*/
-div.poem {
+#textcontent div.poem {
     margin: auto;
     padding: 0.5em;
     line-height: 0;
@@ -8,7 +8,15 @@ div.poem {
     .castList {text-align:center;}
     .stage {text-align:center; line-height:initial;}
     .sp {text-align:center; line-height:initial;}
-    a.note {text-align:center; line-height:initial;}
+    p { 
+        text-align:center; 
+        line-height:initial;
+        a[name].note {
+            top:10px;
+            margin: 10px 0;
+        }
+    }
+
 
     .stanza {
         margin-top: 0.75em;

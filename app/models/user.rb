@@ -44,7 +44,7 @@ class User < ActiveRecord::Base
   end
 
   def self.find_for_wordpress_oauth2(auth, current)
-    authed_user = User.where(email: auth.info.email).first_or_initialize do |user|
+    authed_user = User.where(email: auth.info.email.downcase).first_or_initialize do |user|
       user.firstname = auth.info.name.split(' ').first
       user.lastname = auth.info.name.split(' ').length > 1 ? auth.info.name.split(' ').last : " "
       user.agreement = true

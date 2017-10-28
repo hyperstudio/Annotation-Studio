@@ -1,12 +1,12 @@
 var snapshot = {
   save: function(storage){
-    var xhr = $.ajax({ 
+    var xhr = $.ajax({
       url: '/documents/' + document_slug + '/snapshot',
       type: 'POST',
       data: { snapshot: storage.html() }
     }).done(function(){
       console.log("Saved snapshot");
-      $("#snapshot-progress").modal("hide");      
+      $("#snapshot-progress").modal("hide");
       console.log("Removed spinner");
     }).fail(function(){
       console.log("Failed to save snapshot");
@@ -28,7 +28,7 @@ var snapshot = {
   },
 
   addJSON: function(){
-    var json = '<script type="text/javascript" id="json-archive">' + JSON.stringify(subscriber.dumpAnnotations()) + '</script>';    
+    var json = '<script type="text/javascript" id="json-archive">var annotations = //<![CDATA[[' + JSON.stringify(subscriber.dumpAnnotations()) + '//]]></script>';    
     return new Promise(function(resolve, reject){
       if (json.length) {
         resolve(json);
@@ -59,20 +59,20 @@ var snapshot = {
     var filterLists = {};
     var filterFields = ['tags', 'annotation_categories', 'user'];
     var filterblock = '';
-    
+
     var requests = _.map(filterFields, function(field){
       var fieldUrl = doc_uri + "/annotations/field/" + field + ".json";
       return Promise.resolve($.get(fieldUrl));
     });
 
-    return requests;    
+    return requests;
   },
 
   initialize: function () {
     $('#snapshot_trigger').click(function(e) {
       e.preventDefault();
 
-      $("#snapshot-progress").modal("show");      
+      $("#snapshot-progress").modal("show");
 
       $(".glyphicon-comment").remove();
 
@@ -92,11 +92,11 @@ var snapshot = {
       // each of which returns one key/value pair for a filterlist
       var filterPromises = snapshot.addFilters(storage);
 
-      // Set up an array of promises, 
+      // Set up an array of promises,
       // each of which grabs some content out of the page
       var sectionPromises = [css, html, json];
 
-      // Promise.all returns when all promises 
+      // Promise.all returns when all promises
       // in the array passed to it resolve
       // First, in-page content
       Promise.all(sectionPromises).then(function(sections){

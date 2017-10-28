@@ -324,10 +324,9 @@ var inlineData = __bind(function(a) {
     a.highlights[0].dataset.subgroups = a.subgroups.join(",");
     a.highlights[0].dataset.username = a.username;
     a.highlights[0].dataset.user = a.user;
-    a.highlights[0].dataset.text = a.text;
+    // a.highlights[0].dataset.text = a.text;
   }
   else {
     console.info("Annotation: " + a.uuid + "has no highlights.");
   }
 }, this);
-

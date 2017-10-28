@@ -28,7 +28,7 @@ var snapshot = {
   },
 
   addJSON: function(){
-    var json = '<script type="text/javascript" id="json-archive">var annotations = //<![CDATA[[' + JSON.stringify(subscriber.dumpAnnotations()) + '//]]></script>';    
+    var json = '<script type="text/javascript" id="json-archive">var annotations = ' + JSON.stringify(subscriber.dumpAnnotations()) + '</script>';    
     return new Promise(function(resolve, reject){
       if (json.length) {
         resolve(json);

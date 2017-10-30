@@ -316,6 +316,10 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
 var inlineData = __bind(function(a) {
 
   if (a.highlights[0] != null) {
+    highlightCount = a.highlights.length;
+    for (var i = 0; i < highlightCount; i++) {
+      a.highlights[i].dataset.uuid = a.uuid;
+    }
     a.highlights[0].id = "hl"+ a.uuid;
     a.highlights[0].title = a.user;
     a.highlights[0].dataset.tags = a.tags.join(",");

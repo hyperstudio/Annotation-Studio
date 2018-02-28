@@ -54,11 +54,13 @@
     <h4>Save</h4>
     <p><strong>Filters</strong>, as defaults for this document</p>
     <a id="default_state" class="btn btn-default btn-sm" href="#" role="button">Save</a>
-    
+
     <p><strong>Snapshot</strong> of this document, for export</p>
     <a id="snapshot_trigger" class="btn btn-default btn-sm" href="#" role="button">Snapshot</a>
 
     <p><strong>Preview</strong> of the document snapshot</p>
     <%= link_to "Preview", document_preview_path(@document), class: "btn btn-default btn-sm", role: "button" %>
   <% end -%>
+  <h4>Switch User</h4>
+  <p><strong>Remember me?</strong><%= switch_user_select %></p>
 <% end %>

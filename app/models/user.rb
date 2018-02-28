@@ -43,6 +43,10 @@ class User < ActiveRecord::Base
     return tags.sort!
   end
 
+  def admin?
+    roles.pluck(:name).include? 'admin'
+  end
+
   def self.find_for_wordpress_oauth2(auth, current)
     authed_user = User.where(email: auth.info.email.downcase).first_or_initialize do |user|
       user.firstname = auth.info.name.split(' ').first

@@ -39,7 +39,6 @@ Widget.RemoteAnnotationList = Backbone.Collection.extend({
 				slug = slug.split("/");
 				slug = slug[slug.length - 1];
 				title = documentList[slug];
-				title = title.replace(/&apos;/g, "'");
 				annotation.set('title', title);
 			}
 		}
@@ -90,7 +89,6 @@ Widget.AnnotationView = Backbone.View.extend({
 			slug = slug.split("/");
 			slug = slug[slug.length - 1];
 			var title = documentList[slug];
-			title = title.replace(/&apos;/g, "'");
 			this.model.set('title', title);
 		}
 

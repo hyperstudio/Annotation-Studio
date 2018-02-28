@@ -131,7 +131,7 @@ body#documents.show .navbar button#leftburger,body#documents.show .navbar button
 	width: 100%;
 }
 
-.well.devise {
+.well.devise, #omniauth-links {
 	width: 360px;
 	padding-top: 0;
 }
@@ -143,6 +143,10 @@ body#documents.show .navbar button#leftburger,body#documents.show .navbar button
 	font-weight: bold;
 	font-size: 24px;
 	margin-top: 0;
+}
+
+#manual-login {
+  display: none;
 }
 
 .dropdown-menu-right {
@@ -204,10 +208,4 @@ ul.annotation-tags {
 
 .panel-title > a {
 	color: #337ab7;
-}
-
-#default_state {
-	padding-top: 0;
-	padding-bottom: 0;
-	margin-top: 60px;
 }

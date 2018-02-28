@@ -46,7 +46,15 @@ Gemfile.rej
 app/assets/javascripts/application.js.rej
 app/views/documents/index.html.erb.rej
 patch.diff
-.env
+.env*
 .idea
 /deploy.sh
 devnotes.md
+groom.txt
+
+# Ignore application configuration
+/config/application.yml
+
+deploy-checklist.txt
+flags.txt
+rslt-db.txt

@@ -1,8 +1,9 @@
 # support for MEL catalog entries
 require 'melcatalog'
+require 'json'
 
 class DocumentsController < ApplicationController
-  before_filter :find_document, :only => [:show, :set_default_state, :destroy, :edit, :update]
+  before_filter :find_document, :only => [:show, :set_default_state, :preview, :post_to_cove, :annotatable, :review, :publish, :export, :archive, :snapshot, :destroy, :edit, :update]
   before_filter :authenticate_user!
 
   load_and_authorize_resource :except => :create
@@ -18,13 +19,13 @@ class DocumentsController < ApplicationController
     end    
     
     @tab_state = { document_set => 'active' }
-    @assigned_documents_count = Document.tagged_with(current_user.rep_group_list, :any =>true).count
+    @assigned_documents_count = Document.active.tagged_with(current_user.rep_group_list, :any =>true).count
     @created_documents_count = current_user.documents.count
     @all_documents_count = Document.all.count
     per_page = 20
     
     if document_set == 'assigned'
-      @documents = Document.tagged_with(current_user.rep_group_list, :any =>true).paginate(:page => params[:page], :per_page => per_page).order('created_at DESC')
+      @documents = Document.active.tagged_with(current_user.rep_group_list, :any =>true).paginate(:page => params[:page], :per_page => per_page).order('created_at DESC')
     elsif document_set == 'created'
       @documents = current_user.documents.paginate(:page => params[:page], :per_page => per_page).order('created_at DESC')
     elsif can? :manage, Document && document_set == 'all'
@@ -54,6 +55,13 @@ class DocumentsController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @document }
+    end
+  end
+
+  # GET /documents/1/preview
+  def preview 
+    respond_to do |format|
+      format.html # preview.html.erb
     end
   end
 
@@ -133,6 +141,90 @@ class DocumentsController < ApplicationController
     render :json => {}
   rescue Exception => e
     render :json => {}
+  end
+
+  def archive
+    respond_to do |format|
+      if @document.update_attribute(:state, 'archived')
+        format.html { redirect_to documents_url, notice: 'Document was successfully archived.', anchor: 'created'}
+      else
+        format.html { render action: "edit" }
+      end
+    end
+  end
+
+  def annotatable
+
+    respond_to do |format|
+      if @document.update_attribute(:state, 'annotatable')
+        format.html { redirect_to documents_url, notice: 'Document is now annotatable.', anchor: 'created'}
+      else
+        format.html { render action: "edit" }
+      end
+    end
+  end
+
+  def review
+
+    respond_to do |format|
+      if @document.update_attribute(:state, 'review')
+        format.html { redirect_to documents_url, notice: 'Document is now reviewable.', anchor: 'created'}
+      else
+        format.html { render action: "edit" }
+      end
+    end
+  end
+
+  def publish
+    # TODO: POST to COVE
+    respond_to do |format|
+      if @document.update_attribute(:state, 'published')
+        format.html { redirect_to documents_url, notice: 'Document is now publishable.', anchor: 'created'}
+      else
+        format.html { render action: "edit" }
+      end
+    end
+  end
+
+  #Export HTML
+  def export
+    send_data(@document.snapshot, filename: "#{@document.title}.html")
+  end
+
+  #Snapshot of document for export
+  def snapshot
+    @document.update_attribute(:snapshot, params[:snapshot])
+    render :json => {}
+  rescue Exception => e
+    render :json => {}
+  end
+
+  #POST document to COVE
+  def post_to_cove
+    document = {
+        title: @document.title,
+        body: { "und": [ { "value": @document.snapshot } ] },
+        "type":"editions_page",
+        format: "unfiltered_html",
+        "field_doc_owner":{"und":[@document.user.cove_id]}
+    }
+
+    unauth_token = ApiRequester::CoveClient.get_unauth_session
+    cookies = ApiRequester::CoveClient.get_cookie(unauth_token)
+    login_token = ApiRequester::CoveClient.get_login_session(cookies)
+    cove_object = ApiRequester::CoveClient.post(login_token, cookies, document)
+    cove_hash = JSON.parse(cove_object)
+
+    short_cove_uri = /editions\/api\/(node\/\d+)/.match(cove_hash["uri"])[1]
+
+    @document.cove_uri = "#{ENV['COVE_URL']}/#{short_cove_uri}"
+
+    @document.save!
+
+    respond_to do |format|
+      link = %Q[<a href="#{@document.cove_uri}" target="cove-edition">View it now</a>]
+      format.html { redirect_to @document, notice: "Document was successfully posted to the COVE. #{link}".html_safe}
+    end
   end
 
   # Helper which accepts an array of items and filters out those you are not allowed to read, according to CanCan abilities.
@@ -220,7 +312,7 @@ private
   end
 
   def documents_params
-    params.require(:document).permit(:title, :state, :chapters, :text, :user_id, :rep_privacy_list,
+    params.require(:document).permit(:title, :state, :chapters, :text, :snapshot, :user_id, :rep_privacy_list,
                                      :rep_group_list, :new_group, :author, :edition, :publisher, 
                                      :publication_date, :source, :rights_status, :upload, :survey_link)
   end

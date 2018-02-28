@@ -2,13 +2,13 @@
   if ("<%= @document.state %>" === "draft") {
     statusMessage = '<i class="fa fa-pencil"></i> Draft';
   }
+  else if ("<%= @document.state %>" === "annotatable") {
+    statusMessage = '<i class="fa fa-comment"></i> Annotatable';
+  }
   else if ("<%= @document.state %>" === "published") {
-    statusMessage = '<i class="fa fa-ok"></i> Published';
+    statusMessage = '<i class="fa glyphicon-book"></i> Published';
   }
-  else if ("<%= @document.state %>" === "public") {
-    statusMessage = '<i class="fa glyphicon-share-alt"></i> Public';
-  }
-  else if ("<%= @document.state %>" === "deleted") {
+  else if ("<%= @document.state %>" === "archived") {
     statusMessage = '<i class="fa fa-folder-close"></i> Archived';
   };
 

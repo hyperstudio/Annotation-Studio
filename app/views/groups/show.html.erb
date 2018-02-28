@@ -24,8 +24,8 @@ jQuery(function ($) {
     <div class="col-md-12">
         <ul class="nav nav-tabs" id="document-tabs">
           <li class="active"><a href="#mine" data-toggle="tab"><span class="badge"></span> Mine</a></li>
-          <li><a href="#group" data-toggle="tab"><span class="badge"></span> Groups</a></li>
-          <li><a href="#class" data-toggle="tab"><span class="badge"></span> Classes</a></li>
+          <li><a href="#group" data-toggle="tab"><span class="badge"></span> <%= ENV["GROUP_TERM_PLURAL"] %></a></li>
+          <li><a href="#class" data-toggle="tab"><span class="badge"></span> <%= ENV["CLASS_TERM_PLURAL"] %></a></li>
         </ul>
 
         <div class="tab-content">

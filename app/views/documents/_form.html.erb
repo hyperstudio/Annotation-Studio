@@ -100,14 +100,40 @@
           $(document).ready(function() {
 
             $('.text-area').summernote({
-                height: 300,
-                minHeight: null,
-                maxHeight: null,
+              height: 300,                 // set editor height
+              minHeight: null,             // set minimum height of editor
+              maxHeight: null,             // set maximum height of editor
+              cleaner:{
+                  action: 'paste', // both|button|paste 'button' only cleans via toolbar button, 'paste' only clean when pasting content, both does both options.
+                  newline: '<br>', // Summernote's default is to use '<p><br></p>'
+                  notStyle: 'position:absolute;top:0;left:0;right:0', // Position of Notification
+                  keepHtml: true, // Remove all Html formats
+                  keepOnlyTags: ['<p>', '<br>', '<ul>', '<li>', '<b>', '<strong>','<i>', '<a>'], // If keepHtml is true, remove all tags except these
+                  keepClasses: true, // Remove Classes
+                  badTags: ['style', 'script', 'applet', 'embed', 'noframes', 'noscript', 'html'], // Remove full tags with contents
+                  badAttributes: ['style', 'start'], // Remove attributes from remaining tags
+                  limitChars: false, // 0/false|# 0/false disables option
+                  limitDisplay: 'both', // text|html|both
+                  limitStop: false // true/false
+                }
             });
             $('.chapter-area').summernote({
                 height: 300,
                 minHeight: null,
                 maxHeight: null,
+                cleaner:{
+                    action: 'paste', // both|button|paste 'button' only cleans via toolbar button, 'paste' only clean when pasting content, both does both options.
+                    newline: '<br>', // Summernote's default is to use '<p><br></p>'
+                    notStyle: 'position:absolute;top:0;left:0;right:0', // Position of Notification
+                    keepHtml: true, // Remove all Html formats
+                    keepOnlyTags: ['<p>', '<br>', '<ul>', '<li>', '<b>', '<strong>','<i>', '<a>'], // If keepHtml is true, remove all tags except these
+                    keepClasses: true, // Remove Classes
+                    badTags: ['style', 'script', 'applet', 'embed', 'noframes', 'noscript', 'html'], // Remove full tags with contents
+                    badAttributes: ['style', 'start'], // Remove attributes from remaining tags
+                    limitChars: false, // 0/false|# 0/false disables option
+                    limitDisplay: 'both', // text|html|both
+                    limitStop: false // true/false
+                  }
             });
             $('#chapter-editor').hide();
             $('#chapter-label').click(function(){

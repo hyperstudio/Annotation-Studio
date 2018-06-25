@@ -23,6 +23,7 @@
 //= require underscore
 //= require backbone
 //= require summernote
+//= require summernote-cleaner
 //= require showdown
 //= require gettext
 //= require xpath

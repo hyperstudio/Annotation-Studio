@@ -16,7 +16,7 @@ module AnnotationStudio
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
     # config.middleware.use Rack::Deflator
-    
+
     config.autoload_paths += %W(#{config.root}/lib)
     config.encoding = "utf-8"
     config.filter_parameters += [:password]
@@ -35,6 +35,7 @@ module AnnotationStudio
     # in your app. As such, your models will need to explicitly whitelist or blacklist accessible
     # parameters by using an attr_accessible or attr_protected declaration.
     # config.active_record.whitelist_attributes = true
+    config.assets.compile = false
 
     config.assets.precompile += %w(active_admin.css active_admin.js)
 

@@ -12,7 +12,9 @@ var annotation_studio = {
       editor_enabled: annotationStudioConfig.enableRichTextEditor,
       tinymce: {
         'toolbar': annotationStudioConfig.tinyMCEToolbar,
-        'image_dimensions': false
+        'image_dimensions': false,
+        'plugins': "paste",
+        'paste_as_text': true
       }
     };
 

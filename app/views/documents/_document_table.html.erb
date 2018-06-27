@@ -70,7 +70,7 @@
             <% else %>
               <%= link_to 'Edit', edit_document_path(document), :class => 'btn btn-default btn-sm', data: { toggle: 'tooltip', placement: 'top', original_title: 'Only metadata are editable' } %>
             <% end %>
-            <%= link_to 'Delete', document_path(document), method: :delete, :class => 'btn btn-danger btn-sm' %>
+            <%= link_to 'Delete', document_path(document), method: :delete, data: {confirm: "Are you sure?"}, :class => 'btn btn-danger btn-sm' %>
           <% end %>
         </td>
       </tr>

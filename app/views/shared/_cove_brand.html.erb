@@ -9,6 +9,7 @@
     <% if can? :manage, UserSet %>
     	<li class="<%= 'active' if current_page?(admin_students_path) %>"><%= link_to(raw('Manage Users <i class="fa fa-external-link-square"></i>'), admin_students_path, :target => '_blank') %></li>
     <% end %>
+		<li><a href="http://support.performantsoftware.com/c/cove" target="_blank">Help <i class="fa fa-external-link-square"></i></a></li>
 		<% else %>
   <% if defined?(resource) != nil %>
   <li><div class="dropdown dont-overflow">

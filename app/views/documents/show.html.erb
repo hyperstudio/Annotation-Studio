@@ -31,7 +31,7 @@
 <%= render "documents/snapshot_progress" %>
 <%= render "documents/spinner_modal" %>
 <div id="snapshot-staging">
-  
+
 </div>
 
 <%# render "documents/metadata" %>
@@ -44,6 +44,8 @@ var annotationStudioConfig = {
   apiURL: '<%= @api_url %>',
   melCatalogEnabled: '<%= @mel_catalog_enabled %>'
 };
+
+$("#toolsmenu").offcanvas('show');
 
 $('#annotation-list').slimScroll({
   height: '99%',

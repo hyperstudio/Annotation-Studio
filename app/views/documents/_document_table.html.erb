@@ -20,7 +20,9 @@
           <% document.rep_group_list.each do |group| %>
           <span class="label label-info">
             <%= link_to group, params.merge(:group => group) %>
-          <% end %></td>
+          </span>
+          <% end %>
+        </td>
         <td>
           <% if can? :update, document %>
           <div class="btn-group" role="group" aria-label="document states">

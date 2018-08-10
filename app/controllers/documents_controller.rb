@@ -16,14 +16,15 @@ class DocumentsController < ApplicationController
       document_set = 'assigned'
     else
       document_set = params[:docs]
-    end    
-    
+    end
+
     @tab_state = { document_set => 'active' }
     @assigned_documents_count = Document.active.tagged_with(current_user.rep_group_list, :any =>true).count
     @created_documents_count = current_user.documents.count
     @all_documents_count = Document.all.count
+
     per_page = 20
-    
+
     if document_set == 'assigned'
       @documents = Document.active.tagged_with(current_user.rep_group_list, :any =>true).paginate(:page => params[:page], :per_page => per_page).order('created_at DESC')
     elsif document_set == 'created'
@@ -31,7 +32,11 @@ class DocumentsController < ApplicationController
     elsif can? :manage, Document && document_set == 'all'
       @documents = Document.paginate(:page => params[:page], :per_page => per_page ).order("created_at DESC")
     end
-  
+
+    if params[:group]
+      @documents = @documents.tagged_with(params[:group]).paginate(:page => params[:page], :per_page => per_page).order('created_at DESC')
+    end
+
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @documents }
@@ -59,7 +64,7 @@ class DocumentsController < ApplicationController
   end
 
   # GET /documents/1/preview
-  def preview 
+  def preview
     respond_to do |format|
       format.html # preview.html.erb
     end
@@ -289,7 +294,7 @@ class DocumentsController < ApplicationController
   def catalogue_enabled?
     Tenant.current_tenant.mel_catalog_enabled
   end
-  
+
   def catalog_content( doc )
 
     if catalogue_enabled?
@@ -313,7 +318,7 @@ private
 
   def documents_params
     params.require(:document).permit(:title, :state, :chapters, :text, :snapshot, :user_id, :rep_privacy_list,
-                                     :rep_group_list, :new_group, :author, :edition, :publisher, 
+                                     :rep_group_list, :new_group, :author, :edition, :publisher,
                                      :publication_date, :source, :rights_status, :upload, :survey_link)
   end
 end

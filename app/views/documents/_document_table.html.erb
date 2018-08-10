@@ -19,7 +19,7 @@
         <td>
           <% document.rep_group_list.each do |group| %>
           <span class="label label-info">
-            <a href="/documents?group=<%= group %>"><%= group %></a></span>
+            <a href="/documents?docs=created&group=<%= group %>"><%= group %></a></span>
           <% end %></td>
         <td>
           <% if can? :update, document %>

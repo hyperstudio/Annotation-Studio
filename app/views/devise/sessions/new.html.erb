@@ -26,3 +26,43 @@
   </div>
 </div><!--/row -->
 <% end %>
+
+
+<div class="modal fade" tabindex="-1" role="dialog" id="email-login" style="margin-top: 50px;">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Sign in with email</h4>
+      </div>
+      <div class="modal-body">
+
+        <h4>Log in</h4>
+        <%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :role => "form"}) do |f| %>
+          <%= devise_error_messages! %>
+          <div class="form-group">
+            <%= f.label :email %>
+            <%= f.email_field :email, :class => "form-control" %>
+          </div>
+          <div class="form-group">
+            <%= f.label :password %>
+            <%= f.password_field :password, :class => "form-control" %>
+          </div>
+          <%= f.submit "Log in", :class => "btn btn-default" %>
+          <% end %>
+
+      </div>
+      <div class="modal-footer">
+        <%= render "/devise/links" %>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<script type="text/javascript">
+$(document).ready(function() {
+  if(window.location.href.indexOf('#email-login') != -1) {
+    $('#email-login').modal('show');
+  }
+});
+</script>

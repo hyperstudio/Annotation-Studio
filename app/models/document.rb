@@ -75,6 +75,11 @@ application/pdf
     processed_at.present?
   end
 
+  def members
+    # binding.pry
+    User.tagged_with(this.tag_list)
+  end
+
   def uploaded?
     upload_file_name.present?
   end

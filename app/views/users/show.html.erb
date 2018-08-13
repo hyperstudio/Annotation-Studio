@@ -31,7 +31,7 @@
         <div class="clearfix"></div>
             </li>
             <% end %>
-            <li class="list-group-item"><em><a href="/documents?docs=assigned">See more shared documents&hellip;</a></em></li>
+            <li class="list-group-item"><strong><a href="/documents?docs=assigned">See more shared documents&hellip;</a></strong></li>
             <% else %>
             <li class="list-group-item">
               No documents to view. (Your account maybe be pending approval).
@@ -50,7 +50,7 @@
                   </li>
                 <% end %>
               <% end %>
-            <li class="list-group-item"><em><a href="/documents?docs=created">See more of my documents&hellip;</a></em></li>
+            <li class="list-group-item"><strong><a href="/documents?docs=created">See more of my documents&hellip;</a></strong></li>
             <% else %>
             <li class="list-group-item">
               No documents to view. (Your account maybe be pending approval).
@@ -87,15 +87,15 @@
       <div class="tab-content">
         <div class="tab-pane no-padding fade in" id="subgroups">
           <ul class="list-group">
-            <% current_user.rep_subgroup_list.each do |group| %>
-              <li class="list-group-item"><%= group %></li>
+            <% current_user.rep_subgroup_list.each do |subgroup| %>
+              <li class="list-group-item"><%= link_to subgroup, documents_path(docs: 'created', subgroup: subgroup) %></li>
             <% end %>
           </ul>
         </div>
         <div class="tab-pane no-padding fade active in" id="groups">
           <ul class="list-group">
             <% current_user.rep_group_list.each do |group| %>
-              <li class="list-group-item"><%= group %></li>
+              <li class="list-group-item"><%= link_to group, documents_path(docs: 'created', group: group) %></li>
             <% end %>
           </ul>
         </div>

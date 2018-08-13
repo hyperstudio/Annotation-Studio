@@ -88,14 +88,14 @@
         <div class="tab-pane no-padding fade in" id="subgroups">
           <ul class="list-group">
             <% current_user.rep_subgroup_list.each do |subgroup| %>
-              <li class="list-group-item"><%= link_to subgroup, documents_path(docs: 'created', subgroup: subgroup) %></li>
+              <li class="list-group-item"><%= link_to subgroup, documents_path(docs: 'assigned', subgroup: subgroup) %></li>
             <% end %>
           </ul>
         </div>
         <div class="tab-pane no-padding fade active in" id="groups">
           <ul class="list-group">
             <% current_user.rep_group_list.each do |group| %>
-              <li class="list-group-item"><%= link_to group, documents_path(docs: 'created', group: group) %></li>
+              <li class="list-group-item"><%= link_to group, documents_path(docs: 'assigned', group: group) %></li>
             <% end %>
           </ul>
         </div>

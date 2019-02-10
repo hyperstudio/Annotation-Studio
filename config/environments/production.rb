@@ -29,8 +29,8 @@ Rails.application.configure do
   # config.assets.css_compressor = :sass
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.
-  config.assets.compile = true
-
+  config.assets.compile = false # Disables security vulnerability
+  
   # `config.assets.precompile` and `config.assets.version` have moved to config/initializers/assets.rb
   # Defaults to nil and saved in location specified by config.assets.prefix
   # config.assets.manifest = YOUR_PATH

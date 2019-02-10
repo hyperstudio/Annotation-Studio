@@ -39,8 +39,8 @@ Rails.application.configure do
 
   # Do not compress assets
   config.assets.compress = false
-  
-  config.assets.compile = false # Disables security vulnerability
+
+  config.assets.compile = true
 
   # Debug mode disables concatenation and preprocessing of assets.
   # This option may cause significant delays in view rendering with a large
@@ -50,7 +50,7 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
   config.action_mailer.perform_deliveries = true
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.default :charset => "utf-8"  
+  config.action_mailer.default :charset => "utf-8"
   config.action_mailer.smtp_settings =  {
     :address  => "smtp.gmail.com",
     :domain  => "mit.edu",

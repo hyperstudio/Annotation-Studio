@@ -88,3 +88,5 @@ gem "melcatalog", :path => "vendor"
 gem "rest-client"
 
 gem "doorkeeper"
+
+gem 'sprockets', '~>3.7.2'

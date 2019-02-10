@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 ruby '2.2.4'
 
-gem 'rails', '4.2.1', :git => 'influitive/rails', :tag => 'v4.2.1.memfix'
+gem 'rails', '4.2.1', :git => 'https://github.com/influitive/rails.git', :tag => 'v4.2.1.memfix'
 gem 'unicorn'
 
 gem 'pg'

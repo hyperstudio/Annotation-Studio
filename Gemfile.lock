@@ -533,6 +533,7 @@ DEPENDENCIES
   sextant
   shoulda-matchers
   simplecov
+  sprockets (~> 3.7.2)
   therubyracer
   tilt (= 1.1)
   tinymce-rails

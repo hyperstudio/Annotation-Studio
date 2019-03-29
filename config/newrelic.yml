@@ -38,7 +38,7 @@ common: &default_settings
   # application and reports this data to the New Relic service at 
   # newrelic.com. This global switch is normally overridden for each 
   # environment below. (formerly called 'enabled')
-  monitor_mode: true
+  monitor_mode: false
 
   # Developer mode should be off in every environment but
   # development as it has very high overhead in memory.
@@ -98,7 +98,7 @@ common: &default_settings
   browser_monitoring:
       # By default the agent automatically injects the monitoring JavaScript 
       # into web pages. Set this attribute to false to turn off this behavior.
-      auto_instrument: true
+      auto_instrument: false
 
   # Proxy settings for connecting to the service.
   #
@@ -130,7 +130,7 @@ common: &default_settings
     # Transaction tracer is enabled by default. Set this to false to
     # turn it off. This feature is only available at the Professional
     # and above product levels.
-    enabled: true
+    enabled: false
     
     # Threshold in seconds for when to collect a transaction
     # trace. When the response time of a controller action exceeds
@@ -168,12 +168,12 @@ common: &default_settings
     # Error collector is enabled by default. Set this to false to turn
     # it off. This feature is only available at the Professional and above
     # product levels
-    enabled: true
+    enabled: false
     
     # Rails Only - tells error collector whether or not to capture a 
     # source snippet around the place of the error when errors are View 
     # related.
-    capture_source: true    
+    capture_source: false
     
     # To stop specific errors from reporting to New Relic, set this property
     # to comma separated values.  Default is to ignore routing errors
@@ -184,7 +184,7 @@ common: &default_settings
   # (Advanced) Uncomment this to ensure the cpu and memory samplers
   # won't run.  Useful when you are using the agent to monitor an
   # external resource
-  # disable_samplers: true
+  disable_samplers: true
   
   # If you aren't interested in visibility in these areas, you can
   # disable the instrumentation to reduce overhead.
@@ -227,7 +227,7 @@ development:
   # executed since starting the mongrel.
   # NOTE: There is substantial overhead when running in developer mode.
   # Do not use for production or load testing.  
-  developer_mode: true
+  developer_mode: false
   
   # Enable textmate links
   # textmate: true
@@ -244,12 +244,12 @@ test:
 # incurring any user-visible performance degradation.
 production:
   <<: *default_settings
-  monitor_mode: true
+  monitor_mode: false
 
 # Many applications have a staging environment which behaves
 # identically to production.  Support for that environment is provided
 # here.  By default, the staging environment has the agent turned on.
 staging:
   <<: *default_settings
-  monitor_mode: true
+  monitor_mode: false
   app_name: <%= ENV["NEW_RELIC_APP_NAME"] %> (Staging)

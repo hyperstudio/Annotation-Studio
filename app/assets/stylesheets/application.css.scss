@@ -18,12 +18,14 @@
  *= require "summernote"
  *= require "offcanvas"
  *= require "boot-docs"
+ *= require "doc-body"
  *= require "users"
  *= require "richText-annotator.css"
  *= require "annotator.touch.css"
  *= require "annotations"
  *= require "catalog"
  *= require "ekko-lightbox.min"
+ *= require "navbar-overrides.css"
  */
 
 html {
@@ -140,7 +142,7 @@ img#neh-logo {
     width: 300px;
     max-height: 500px;
   }
-  
+
   iframe {
     margin: 3px;
     width: 300px;
@@ -148,4 +150,24 @@ img#neh-logo {
   }
 }
 
-
+#globalnav {
+  img {
+    margin-top: -8px;
+    color: #ccc;
+  }
+  li.header-logo {
+    a {
+      color: #aaa;
+    }
+    display: inline-block;
+    max-height: 50px;
+    font-family: serif;
+    font-variant-caps: small-caps;
+    font-size: 1.4em;
+    font-weight: lighter;
+  }
+  li.divider {
+    margin-top: 12px;
+    color: #fff;
+  }
+}

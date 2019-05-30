@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Annotation Studio :: <%= yield(:page_title) %></title>
+    <title><%= ENV["PAGE_TITLE"] %> :: <%= yield(:page_title) %></title>
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
     <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
@@ -12,10 +12,12 @@
     <meta name="robots" content="noindex">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="google-site-verification" content="<%= ENV["GOOGLE_VERIFICATION_CODE"] %>" />
-    <link href="/favicon.ico" rel="shortcut icon" />
+    <link rel="shortcut icon" type="image/png" href="/<%= ENV["FAVICON"] %>" sizes="32x32" />
     <%= javascript_include_tag "application" %>
-    <script type="text/javascript" src="//use.typekit.net/wod1jtz.js"></script>
-    <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+    <% if ENV["USE_TYPEKIT"] == true %>
+      <script type="text/javascript" src="//use.typekit.net/<%= ENV["TYPEKIT_CODE"] %>"></script>
+      <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+    <% end %>
 	<script type="text/javascript">
 		var icons = {
 			external_link: '<%= asset_path('external-link.png') %>',
@@ -27,8 +29,7 @@
 
     <nav class="navbar navbar-inverse navbar-fixed-top" id="navbar">
       <div class="container">
-      <a class="navbar-brand" href="/">Annotation Studio <span style="color:<%= $DOMAIN_CONFIG['site_color'] %>;"><%= $DOMAIN_CONFIG['site_name'] %></span></a>
-        <%= render "shared/user_menu" %>
+        <%= render_brand %>
       </div>
     </nav>
 
@@ -44,6 +45,7 @@
         <%= render "#{params[:controller]}/rightnav" %>
       <% end %>
     </nav>
+
     <nav class="navbar navbar-default navbar-fixed-top hidden-xs" id="lower-navbar">
       <div class="container">
         <div class="row">
@@ -62,7 +64,7 @@
 
 	<% if params[:controller] == 'devise/sessions' %>
 	<div class="home-image">
-		<%= image_tag("home.png", { alt: 'Cover Photo' }) %>
+		<%= image_tag(home_banner, { alt: 'Cover Photo' }) %>
 	</div>
 <% end %>
     <div class="container">
@@ -71,16 +73,7 @@
       <%= yield %>
     </div><!-- /.container -->
 
-    <div class="footer">
-      <div class="container">
-        <p class="text-muted">
-          <a class="logo" href="http://web.mit.edu/" target="_blank"><img src="/assets/logo_mit.png"></a>
-          <a class="logo" href="http://hyperstudio.mit.edu/" target="_blank"><img src="/assets/hs-logo-trans-horiz.png"></a>
-          <a class="logo" href="http://www.neh.gov/divisions/odh" target="_blank"><img src="/assets/neh_at_logo.png" id="neh-logo"></a>
-          <span class="pull-right">&copy; <%= Time.now.year %></span>
-        </p>
-      </div>
-    </div>
+    <%= render_footer %>
 
     <script type="text/javascript">
     var _gaq = _gaq || [];

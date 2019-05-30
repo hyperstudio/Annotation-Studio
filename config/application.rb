@@ -16,7 +16,7 @@ module AnnotationStudio
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
     # config.middleware.use Rack::Deflator
-    
+
     config.autoload_paths += %W(#{config.root}/lib)
     config.encoding = "utf-8"
     config.filter_parameters += [:password]

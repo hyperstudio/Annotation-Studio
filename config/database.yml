@@ -1,6 +1,6 @@
 development: &default
   adapter: postgresql
-  database: annos
+  database: cove-studio-5-17-18
   encoding: utf8
   host: localhost
   pool: 5

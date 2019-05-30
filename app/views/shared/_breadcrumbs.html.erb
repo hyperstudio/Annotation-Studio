@@ -12,6 +12,8 @@
     <li><%= link_to("Documents", "/documents", :id => "documents-link") %></li>
     <% if params[:action] == 'show' %>
       <li class="active"><%= @document.title %></li>
+    <% elsif params[:action] == 'preview' %>
+      <li class="active">Snapshot Preview of <%= @document.title %></li>
     <% elsif params[:action] == 'new' %>
       <li class="active">New Document</li>
     <% elsif params[:action] == 'edit' %>
@@ -24,7 +26,7 @@
   <% end %>
 
   <% if current_page?(groups_path) %>
-    <li class="active">Classes and Groups</li>
+    <li class="active"><%= ENV["CLASS_TERM_PLURAL"] %> and <%= ENV["GROUP_TERM_PLURAL"] %></li>
   <% end %>
 
   <% if current_page?(edit_user_registration_path) %>

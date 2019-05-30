@@ -1,0 +1,26 @@
+<%= content_for :body_id, 'documents' %>
+<%= content_for :body_class, 'show' %>
+<%= content_for :page_title, @document.title %>
+<%= stylesheet_link_tag "documents" %>
+<div class="row">
+  <div class="col-md-2">
+  </div><!--/col-md-2 -->
+  <div class="col-md-8">
+    <% if ! @document.processed? %>
+      <%= render 'processed_message' %>
+    <% end %>
+    <div id="textcontent">
+      <div id="snapshot">
+        <%= @document.snapshot.html_safe %>
+      </div>
+    </div>
+  </div><!--/col-md-8 -->
+  <div class="col-md-2" id="tool-sidebar">
+    <%= link_to("Download", document_export_path(@document), class: "btn btn-default btn-sm", role: "button") %>
+    <%= link_to("Copy to COVE Editions", document_post_to_cove_path(@document), class: "btn btn-default btn-sm", role: "button") %>
+    <% if @document.cove_uri.present? %>
+      <%= link_to("View in COVE Editions", @document.cove_uri, target: "cove-edition", class: "btn btn-default btn-sm", role: "button") %>
+    <% end %>
+  </div><!--/col-md-2 -->
+</div><!--/row -->
+<%= render "documents/help" %>

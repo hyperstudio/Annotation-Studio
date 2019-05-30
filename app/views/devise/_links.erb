@@ -1,10 +1,11 @@
 <ul class="list-group" id="account-management-links">
+
 <%- if controller_name != 'sessions' %>
 <li class="list-group-item"><%= link_to "Sign in", new_session_path(resource_name), :class => "" %></li>
 <% end -%>
 
-<%- if false && devise_mapping.registerable? && controller_name != 'registrations' %>
-<li class="list-group-item"><%= link_to "Register", new_registration_path(resource_name), :class => "" %></li>
+<%- if devise_mapping.registerable? && controller_name != 'registrations' %>
+<li class="list-group-item"><%= link_to "Sign up", new_registration_path(resource_name), :class => "" %></li>
 <% end -%>
 
 <%- if devise_mapping.recoverable? && controller_name != 'passwords' %>
@@ -19,9 +20,4 @@
 <li class="list-group-item"><%= link_to "Resend unlock instructions?", new_unlock_path(resource_name), :class => "" %></li>
 <% end -%>
 
-<%- if devise_mapping.omniauthable? %>
-  <%- resource_class.omniauth_providers.each do |provider| %>
-    <li class="list-group-item"><%= link_to "Sign in with #{provider.to_s.titleize}", omniauth_authorize_path(resource_name, provider), :class => "btn btn-default" %></li>
-  <% end -%>
-<% end -%>
 </ul>

@@ -7,8 +7,8 @@ Rails.application.config.assets.version = '1.0'
 # Rails.application.config.assets.paths << Emoji.images_path
 
 Rails.application.config.assets.precompile += %w(active_admin.css active_admin.js users.css
-widget.js glyphicons-halflings-regular.eot glyphicons-halflings-regular.woff2
-glyphicons-halflings-regular.woff glyphicons-halflings-regular.ttf documents.css 
+widget.js summernote.eot summernote.ttf summernote.woff glyphicons-halflings-regular.eot glyphicons-halflings-regular.woff2
+glyphicons-halflings-regular.woff glyphicons-halflings-regular.ttf documents.css
 catalog.css tiny_mce_popup.js groups.css annotations.css)
 
 Rails.application.config.assets.enabled = true

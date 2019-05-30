@@ -10,25 +10,30 @@
     <% if @document.survey_link.present? %>
       <%= render 'survey_button' %>
     <% end %>
+    <% if @document.comes_from_cove? %>
+        <%= @document.text.html_safe %>
+    <% else %>
     <div id="textcontent">
-      <div><!-- Required for cases in which there's no HTML in the text -->
+      <div id="snapshot">
         <%= @document.text.html_safe %>
       </div>
     </div>
-    <% if @document.survey_link.present? %>
-      <%= render 'survey_button' %>
     <% end %>
+
   </div><!--/col-md-8 -->
   <div class="col-md-4">
-    <% if @document.processed? and ! @document.draft? %>
+    <% if @document.processed? and !@document.draft? %>
       <%= render "documents/annotation_sidebar" %>
     <% end %>
   </div><!--/col-md-3 -->
 </div><!--/row -->
 <%= render "documents/help" %>
-<div id="spinnermodal" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="spinnermodallabel" aria-hidden="true">
-  <div class="modal-body" id="spinnerdiv"><em>Loading annotations...</em></div>
+<%= render "documents/snapshot_progress" %>
+<%= render "documents/spinner_modal" %>
+<div id="snapshot-staging">
+
 </div>
+
 <%# render "documents/metadata" %>
 
 <script type="text/javascript">
@@ -39,6 +44,8 @@ var annotationStudioConfig = {
   apiURL: '<%= @api_url %>',
   melCatalogEnabled: '<%= @mel_catalog_enabled %>'
 };
+
+$("#toolsmenu").offcanvas('show');
 
 $('#annotation-list').slimScroll({
   height: '99%',

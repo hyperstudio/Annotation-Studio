@@ -18,7 +18,7 @@ module ApplicationHelper
   end
 
   def render_brand
-    if ENV['BRAND_RIBBON'] != ""
+    if ENV['BRAND_RIBBON'] && ENV['BRAND_RIBBON'] != ""
       render partial: ENV['BRAND_RIBBON']
     else
       render partial: "shared/default_brand"
@@ -26,7 +26,7 @@ module ApplicationHelper
   end
 
   def home_banner
-    if ENV['HOME_BANNER'] != ""
+    if ENV['HOME_BANNER'] && ENV['HOME_BANNER'] != ""
       return ENV['HOME_BANNER']
     else
       return "home.png"
@@ -34,7 +34,7 @@ module ApplicationHelper
   end
 
   def render_footer
-    if ENV['FOOTER'] != ""
+    if ENV['FOOTER'] && ENV['FOOTER'] != ""
       render partial: ENV['FOOTER']
     else
       render partial: "shared/default_footer"

@@ -28,7 +28,7 @@ var snapshot = {
   },
 
   addJSON: function(){
-    var json = '<script type="text/javascript" id="json-archive">var annotations = ' + JSON.stringify(subscriber.dumpAnnotations()) + '</script>';    
+    var json = '<script type="text/javascript" id="json-archive">var annotations = ' + JSON.stringify(subscriber.dumpAnnotations()) + '</script>';
     return new Promise(function(resolve, reject){
       if (json.length) {
         resolve(json);
@@ -40,13 +40,15 @@ var snapshot = {
   },
 
   addCSS: function(){
-    var catCss = $("#annotator-category-styles")[0].textContent;
-    var css = '<style type="text/css">';
-    css += '.annotator-hl { background: rgba(255, 255, 10, 0.3) } .annotator-hl-active { background: rgba(255, 255, 10, 0.8) }.annotator-hl-filtered { background-color: transparent }';
-    css += catCss;
-    css += '</style>';
     return new Promise(function(resolve, reject){
-      if (css.length) {
+      if ($("#annotator-category-styles")[0] && $("#annotator-category-styles")[0].textContent) {
+        var catCss = $("#annotator-category-styles")[0].textContent;
+        var css = '<style type="text/css">';
+        css += '.annotator-hl { background: rgba(255, 255, 10, 0.3) } .annotator-hl-active { background: rgba(255, 255, 10, 0.8) }.annotator-hl-filtered { background-color: transparent }';
+        css += catCss;
+        css += '</style>';
+      }
+      if (css && css.length) {
         resolve(css);
       }
       else {

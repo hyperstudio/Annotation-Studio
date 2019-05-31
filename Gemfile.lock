@@ -10,11 +10,6 @@ PATH
   specs:
     repertoire-groups (0.0.1)
 
-PATH
-  remote: vendor
-  specs:
-    melcatalog (2.1.0)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -525,7 +520,6 @@ DEPENDENCIES
   jquery-ui-rails
   jwt
   launchy
-  melcatalog!
   meta_request
   mini_magick
   mustache
@@ -568,4 +562,4 @@ RUBY VERSION
    ruby 2.2.4p230
 
 BUNDLED WITH
-   1.13.6
+   1.15.2

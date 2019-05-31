@@ -10,17 +10,8 @@ class Tenant < ActiveRecord::Base
     Tenant.where({ database_name: Apartment::Database.current_tenant }).first
   end
 
-  def self.mel_catalog_enabled
-    tenant = self.current_tenant    
-    if !tenant.present?
-      return false
-    else
-      return tenant.mel_catalog_enabled?
-    end
-  end
-
   def self.annotation_categories_enabled
-    tenant = self.current_tenant    
+    tenant = self.current_tenant
     if !tenant.present?
       return false
     else
@@ -31,7 +22,7 @@ class Tenant < ActiveRecord::Base
 
   def initialize_apartment_schema
     return if database_name == 'public'
-    
+
     begin
       Apartment::Database.create(database_name)
     rescue Apartment::TenantExists => e

@@ -12,10 +12,6 @@ AnnotationStudio::Application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 
-  # catalog routes
-  get 'documents/catalog', to: 'catalog#index'
-  get 'documents/catalog/image/:eid', to: 'catalog#image'
-  get 'documents/catalog/reference/:eid', to: 'catalog#reference'
 
   resources :documents do
     resources :annotations
@@ -26,8 +22,6 @@ AnnotationStudio::Application.routes.draw do
     post :archive
     post :snapshot
     get :export
-    get :preview, to: 'documents#preview'
-    get :post_to_cove, to: 'documents#post_to_cove'
   end
 
   resources :users, only: [:show, :edit]

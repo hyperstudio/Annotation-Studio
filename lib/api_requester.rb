@@ -99,91 +99,8 @@ class ApiRequester
     end
 end
 
-class CoveClient
-    @@api_url = ENV['COVE_URL']
-    @@password = ENV['COVE_PASSWORD']
-    @@username = ENV['COVE_USERNAME']
-    @@login_url = "#@@api_url/editions/api/user/login"
-    @@action_url = "#@@api_url/editions/api/node"
-    @@token_url = "#@@api_url/services/session/token"
-
-    def self.get_unauth_session
-        headers = {
-          accept: :json,
-          content_type: 'application/json',
-        }
-
-        response = RestClient.get(@@token_url, headers)
-        case response.code
-        when 200
-            puts "unAuth Request successful."
-        else
-            puts "unAuth Request unsuccessful."
-        end
-        return response.body    
-    end
-
-    def self.get_cookie(token)
-        params = {
-          'username': @@username,
-          'password': @@password
-        }
-        headers = {
-          'X-CSRF-Token': token,
-          accept: :json,
-          content_type: 'application/json',
-        }
-        response = RestClient.post(@@login_url, params, headers)
-        cookies = response.cookies
-        case response.code
-        when 200
-            puts "Cookie Request successful"
-            return cookies
-        else
-            puts "Cookie Request not successful"
-        end
-    end
-
-    def self.get_login_session(cookie)
-        headers = {
-          cookies: cookie,
-          accept: :json,
-          content_type: 'application/json',
-        }
-
-        response = RestClient.get(@@token_url, headers)
-
-        case response.code
-        when 200
-            puts "Login GET Request successful"
-        else
-            puts "Login GET Request not successful"
-        end
-        return response.body    
-    end
-
-
-    def self.post(token, cookies, document)
-        headers = {
-          accept: :json,
-          content_type: 'application/json',
-          'X-CSRF-Token': token,
-          'cookies': cookies
-        }
-        response = RestClient.post(@@action_url, document.to_json, headers)
-        case response.code
-        when 200
-            puts "POST Request successful"
-        else
-            puts "POST Request not successful"
-        end
-        return response.body
-    end
-end
-
-
 class UserIngester
-  # Assumptions: 
+  # Assumptions:
   # - users will use the same email address for all accounts
   # - this will be run as a rake task, and should be repeatable with no risk
   def self.get_users
@@ -203,7 +120,7 @@ class UserIngester
 end
 
 class DocumentIngester
-  # Assumptions: 
+  # Assumptions:
   # - users will use the same email address for all accounts
   # - this will be run as a rake task, and should be repeatable with no risk
   def self.get_documents
@@ -224,7 +141,7 @@ class DocumentIngester
 end
 
 class AnnotationIngester
-  # Assumptions: 
+  # Assumptions:
   # - users will use the same email address for all accounts
   # - this will be run as a rake task, and should be repeatable with no risk
   def self.get_annotations
@@ -245,7 +162,7 @@ class AnnotationIngester
 end
 
 class CsvGenerator
-    @@fields = ['id', 'user', 'username', 'text', 'uri', 'quote', 
+    @@fields = ['id', 'user', 'username', 'text', 'uri', 'quote',
                 'tags', 'ranges', 'subgroups', 'groups', 'updated', 'created']
 
     def self.to_csv(data)

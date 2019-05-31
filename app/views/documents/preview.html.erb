@@ -17,10 +17,6 @@
   </div><!--/col-md-8 -->
   <div class="col-md-2" id="tool-sidebar">
     <%= link_to("Download", document_export_path(@document), class: "btn btn-default btn-sm", role: "button") %>
-    <%= link_to("Copy to COVE Editions", document_post_to_cove_path(@document), class: "btn btn-default btn-sm", role: "button") %>
-    <% if @document.cove_uri.present? %>
-      <%= link_to("View in COVE Editions", @document.cove_uri, target: "cove-edition", class: "btn btn-default btn-sm", role: "button") %>
-    <% end %>
   </div><!--/col-md-2 -->
 </div><!--/row -->
 <%= render "documents/help" %>

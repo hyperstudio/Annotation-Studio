@@ -16,7 +16,7 @@ var annotation_studio = {
       }
     };
 
-    studio.annotator("addPlugin", "MelCatalogue");
+//    studio.annotator("addPlugin", "MelCatalogue");
 
     subscriber = $('#textcontent').annotator().data('annotator');
 
@@ -323,11 +323,14 @@ var inlineData = __bind(function(a) {
     a.highlights[0].id = "hl"+ a.uuid;
     a.highlights[0].title = a.user;
     a.highlights[0].dataset.tags = a.tags.join(",");
-    a.highlights[0].dataset.annotation_categories = a.annotation_categories.join(",");
     a.highlights[0].dataset.groups = a.groups.join(",");
     a.highlights[0].dataset.subgroups = a.subgroups.join(",");
     a.highlights[0].dataset.username = a.username;
     a.highlights[0].dataset.user = a.user;
+
+    if (a.annotation_categories) {
+      a.highlights[0].dataset.annotation_categories = a.annotation_categories.join(",");
+    }
     // a.highlights[0].dataset.text = a.text;
   }
   else {

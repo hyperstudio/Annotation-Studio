@@ -9,7 +9,7 @@ class Annotator.Plugin.RichText extends Annotator.Plugin
     editor_enabled: true
     tinymce:
       selector: "li.annotator-item textarea",
-      plugins: "media image link code melcatalog paste",
+      plugins: "media image link code paste",
       link_list: false,
       target_list: false,
       rel_list: false,

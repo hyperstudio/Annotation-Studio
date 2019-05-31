@@ -1,7 +1,41 @@
-	<ul class="list-group" id="omniauth-links">
-	  <%- resource_class.omniauth_providers.each do |provider| %>
-	  <li class="list-group-item"><%= link_to "Log in through #{I18n.t provider.to_sym, scope: [:devise, :omniauth]}", root_url(:protocol => "http").gsub(/\/$/, "") + omniauth_authorize_path(resource_name, provider), :class => "btn btn-default" %></li>
-	  <% end -%>
+<div class="well devise">
+    <h4>Log into <span style="color:<%= $DOMAIN_CONFIG['site_color'] %>;"><%= $DOMAIN_CONFIG['site_name'] %></span></h4>
+    <%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :role => "form"}) do |f| %>
+        <%= devise_error_messages! %>
 
-	  <li class="list-group-item"><a target="navsa" href="https://www.navsa.org/members/join-navsa/">Not a NAVSA member?</a></li>
-	</ul>
+        <div class="form-group">
+            <%= f.label :email %>
+            <%= f.email_field :email, :class => "form-control" %>
+        </div>
+
+        <div class="form-group">
+            <%= f.label :password %>
+            <%= f.password_field :password, :class => "form-control" %>
+        </div>
+
+        <div><%= f.submit "Log in", :class => "btn btn-default btn-default-primary" %></div>
+
+    <% end %>
+</div><!--/well -->
+<%= render "/devise/links" %>
+<div class="well devise">
+    <h4>Or find your domain</h4>
+    <form>
+    <div class="form-group">
+        <select id="login-chooser" class="form-control">
+        <% if !Apartment::database_names.blank? %>
+          <% for database in Apartment::database_names.map{|d| d.downcase}.sort! %>
+            <option value="http://<%= database %>.annotationstudio.org">http://<%= database %>.annotationstudio.org</option>
+          <% end %>
+      <% end %>
+        </select>
+    </div>
+    </form>
+</div><!--/well -->
+<script type="text/javascript">
+$("document").ready(function(){
+    $("#login-chooser").change(function(){
+        window.location = $(this).val();
+    });
+});
+</script>

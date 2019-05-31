@@ -36,10 +36,8 @@
 //= require annotator-full.min
 //= require annotator.touch.min
 //= require richText-annotator
-//= require melcatalog-annotator-buttons
 //= require annotator-category
 //= require ekko-lightbox.min
-//= require melcatalog-plugin
 //= require sidebar
 //= require annotation_studio
 //= require snapshot

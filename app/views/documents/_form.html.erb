@@ -145,18 +145,6 @@
 
             var text = {};
 
-            <% unless @catalog_texts.nil? || @catalog_texts.empty? %>
-              <% @catalog_texts.each do | entry | %>
-                 var e = {};
-
-                 // fill in all the fields here...
-                 <% ['name', 'author', 'edition', 'publisher', 'publication_date', 'manuscript', 'permissions'].each do | field | %>
-                    e[ '<%= field %>' ] = '<%= entry[field].nil? ? '' : entry[field] %>';
-                 <% end %>
-                 text[ '<%= entry['eid'] %>' ] = e;
-              <% end %>
-            <% end %>
-
             $('.clickable').on('click', function (e) {
                 var id = $( this ).attr( "id" );
                 var entry = text[ id ];

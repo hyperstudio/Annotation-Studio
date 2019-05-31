@@ -9,12 +9,6 @@ public:
   welcome_message: "Welcome to Annotation Studio"
   welcome_blurb: "Annotation Studio is a web application that supports close reading and collaborative interpretation of online documents. For more information on the project click the About link at the top. If you don’t have an account yet, click Register at the top of this page otherwise just log in."
   site_color: '#CCC'
-cove-studio:
-  site_name: COVE
-  welcome_message: 'Sign in above, or via <a href="http://navsa.org">NAVSA</a>'
-  welcome_blurb: 'COVE Studio is the annotation and peer review workbench for COVE edition documents, which you can view on the <a href="http://dev-rc-distro.pantheonsite.io">COVE editions</a> website.'
-  site_color: '#279eb2'
-  brand: 'shared/cove_brand'
 studio:
   site_name: Hofstra University
   welcome_message: "Welcome to Annotation Studio"

@@ -83,7 +83,6 @@ gem 'will_paginate-bootstrap'
 
 gem 'exception_notification'
 
-gem "melcatalog", :path => "vendor"
 gem "rest-client"
 
 gem "doorkeeper"

@@ -10,15 +10,11 @@
     <% if @document.survey_link.present? %>
       <%= render 'survey_button' %>
     <% end %>
-    <% if @document.comes_from_cove? %>
-        <%= @document.text.html_safe %>
-    <% else %>
     <div id="textcontent">
       <div id="snapshot">
         <%= @document.text.html_safe %>
       </div>
     </div>
-    <% end %>
 
   </div><!--/col-md-8 -->
   <div class="col-md-4">
@@ -41,8 +37,7 @@
 var annotationStudioConfig = {
   enableRichTextEditor: '<%= @enable_rich_text_editor %>',
   tinyMCEToolbar: '<%= @tiny_mce_toolbar %>',
-  apiURL: '<%= @api_url %>',
-  melCatalogEnabled: '<%= @mel_catalog_enabled %>'
+  apiURL: '<%= @api_url %>'
 };
 
 $("#toolsmenu").offcanvas('show');

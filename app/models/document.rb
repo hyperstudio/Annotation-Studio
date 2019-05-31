@@ -67,10 +67,6 @@ application/pdf
     input.to_s.to_slug.normalize(transliterations: :russian).to_s
   end
 
-  def comes_from_cove?
-    origin == 'cove' ? true : false
-  end
-
   def processed?
     processed_at.present?
   end

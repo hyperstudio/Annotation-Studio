@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161028195936) do
+ActiveRecord::Schema.define(version: 20190531192055) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -105,7 +105,6 @@ ActiveRecord::Schema.define(version: 20161028195936) do
     t.string   "survey_link",         limit: 255
     t.text     "default_state"
     t.text     "snapshot"
-    t.string   "cove_uri"
     t.string   "origin"
   end
 
@@ -209,9 +208,7 @@ ActiveRecord::Schema.define(version: 20161028195936) do
     t.string   "database_name",                 limit: 255
     t.datetime "created_at",                                                null: false
     t.datetime "updated_at",                                                null: false
-    t.boolean  "mel_catalog_enabled",                       default: false
     t.boolean  "annotation_categories_enabled",             default: false
-    t.string   "mel_catalog_url"
   end
 
   add_index "tenants", ["database_name"], name: "index_tenants_on_database_name", using: :btree
@@ -241,7 +238,6 @@ ActiveRecord::Schema.define(version: 20161028195936) do
     t.boolean  "agreement"
     t.string   "provider"
     t.string   "uid"
-    t.integer  "cove_id"
     t.string   "full_name"
   end
 

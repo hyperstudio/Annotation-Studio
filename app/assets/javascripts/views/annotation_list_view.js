@@ -132,12 +132,6 @@ Sidebar.AnnotationListView = Backbone.View.extend({
       // event.stopPropagation();
     });
 
-    if( annotationStudioConfig.melCatalogEnabled ) {
-      $('li.annotation-item a.catalog-popup').unbind('click').on('click', function(e) {
-        $('li.annotation-item a.catalog-popup').unbind('click').attr('target', "_blank");
-      });
-    }
-
     if(sidebar.sort_editable) {
         if($('#customsort').hasClass('active')) {
             $('ul#annotation-list').sortable('enable').addClass('sorting_on');

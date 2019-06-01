@@ -23,13 +23,13 @@ describe DocumentProcessor do
 
   context 'apartment multitenancy' do
     it 'switches tenants when running a job' do
-      Apartment::Database.switch('public')
-      current_tenant = Apartment::Database.current_tenant
+      Apartment::Tenant.switch('public')
+      current_tenant = Apartment::Tenant.current_tenant
       document = build(:document, id: 100)
       Document.should_receive(:find).with(document.id).and_return(document)
 
-      Apartment::Database.should_receive(:switch).with('www')
-      Apartment::Database.should_receive(:switch).with(current_tenant)
+      Apartment::Tenant.should_receive(:switch).with('www')
+      Apartment::Tenant.should_receive(:switch).with(current_tenant)
 
       job = described_class.new(document.id, 'a state', 'www')
       job.perform

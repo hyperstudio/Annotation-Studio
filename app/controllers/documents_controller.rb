@@ -90,7 +90,7 @@ class DocumentsController < ApplicationController
     respond_to do |format|
       if @document.save
         if params[:document][:upload].present?
-          Delayed::Job.enqueue DocumentProcessor.new(@document.id, @document.state, Apartment::Database.current_tenant)
+          Delayed::Job.enqueue DocumentProcessor.new(@document.id, @document.state, Apartment::Tenant.current_tenant)
           @document.pending!
         end
         format.html { redirect_to documents_url, notice: 'Document was successfully created.', anchor: 'created'}

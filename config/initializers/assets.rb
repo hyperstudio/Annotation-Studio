@@ -6,9 +6,8 @@ Rails.application.config.assets.version = '1.0'
 # Add additional assets to the asset load path
 # Rails.application.config.assets.paths << Emoji.images_path
 
-Rails.application.config.assets.precompile = ['*.scss']
 Rails.application.config.assets.precompile += %w(active_admin.css active_admin.js users.css annotation_studio.js
-  annotator-category.js application.js bootstrap-tagsinput.js jquery.treegrid.js snapshot.js
+annotator-category.js application.js bootstrap-tagsinput.js jquery.treegrid.js snapshot.js
 widget.js summernote.eot summernote.ttf summernote.woff glyphicons-halflings-regular.eot glyphicons-halflings-regular.woff2
 glyphicons-halflings-regular.woff glyphicons-halflings-regular.ttf documents.css
 catalog.css tiny_mce_popup.js groups.css annotations.css)

@@ -75,7 +75,7 @@ gem "gon"
 gem "nokogiri"
 
 gem 'tilt', '1.1'
-gem 'sass-rails', '5.0.3'
+gem 'sass-rails', '5.0.7'
 gem 'activeadmin', '1.0.0.pre1'
 
 gem 'will_paginate', '~> 3.0.5'

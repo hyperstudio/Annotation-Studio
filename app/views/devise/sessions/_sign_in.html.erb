@@ -23,8 +23,8 @@
     <form>
     <div class="form-group">
         <select id="login-chooser" class="form-control">
-        <% if !Apartment::tenant_names.blank? %>
-          <% for database in Apartment::tenant_names.map{|d| d.downcase}.sort! %>
+        <% if !Apartment::database_names.blank? %>
+          <% for database in Apartment::database_names.map{|d| d.downcase}.sort! %>
             <option value="http://<%= database %>.annotationstudio.org">http://<%= database %>.annotationstudio.org</option>
           <% end %>
       <% end %>

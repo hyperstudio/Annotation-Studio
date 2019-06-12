@@ -10,13 +10,13 @@ describe Document do
       )}
 
     it 'interpolates the tenant name into the path' do
-      Apartment::Tenant.switch('www')
+      Apartment::Database.switch('www')
       
       document = build(:document)
       document.upload = File.open(example_file('example.html'))
 
       expect(document.upload.path).to match '/www/'
-      Apartment::Tenant.switch('public')
+      Apartment::Database.switch('public')
     end
   end
 

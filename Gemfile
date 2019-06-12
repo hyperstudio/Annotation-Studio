@@ -7,6 +7,8 @@ gem 'puma'
 
 gem 'pg'
 gem "newrelic_rpm"#, "~> 3.5.7.59"
+gem 'allocation_tracer'
+gem 'derailed'
 
 gem 'devise', '~> 3.2'
 gem "switch_user"

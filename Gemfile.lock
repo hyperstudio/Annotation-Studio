@@ -5,6 +5,12 @@ GIT
     omniauth-wordpress_hosted (0.0.5)
       omniauth-oauth2
 
+GIT
+  remote: https://github.com/codahale/bcrypt-ruby.git
+  revision: 011b67ba550457dab5d6084128888f08476f278a
+  specs:
+    bcrypt (3.1.13)
+
 PATH
   remote: vendor/repertoire-groups-0.0.1
   specs:
@@ -83,7 +89,6 @@ GEM
       ejs
       jquery-rails
       railties
-    bcrypt (3.1.10)
     bourbon (4.2.2)
       sass (~> 3.4)
       thor
@@ -149,6 +154,7 @@ GEM
       railties (>= 3.0.0)
     faraday (0.9.2)
       multipart-post (>= 1.2, < 3)
+    ffi (1.11.1-x86-mingw32)
     figaro (1.1.1)
       thor (~> 0.14)
     fission (0.5.0)
@@ -285,7 +291,6 @@ GEM
       activesupport (>= 3.0.0)
     launchy (2.4.3)
       addressable (~> 2.3)
-    libv8 (3.16.14.15)
     loofah (2.0.2)
       nokogiri (>= 1.5.9)
     mail (2.6.3)
@@ -299,7 +304,7 @@ GEM
     mime-types (1.25.1)
     mimemagic (0.3.0)
     mini_magick (4.3.6)
-    mini_portile (0.6.2)
+    mini_portile2 (2.0.0)
     minitest (5.6.1)
     multi_json (1.11.2)
     multi_xml (0.5.5)
@@ -308,8 +313,10 @@ GEM
     net-ssh (3.0.2)
     netrc (0.11.0)
     newrelic_rpm (3.14.0.305)
-    nokogiri (1.6.6.2)
-      mini_portile (~> 0.6.0)
+    nokogiri (1.6.7)
+      mini_portile2 (~> 2.0.0.rc2)
+    nokogiri (1.6.7-x86-mingw32)
+      mini_portile2 (~> 2.0.0.rc2)
     oauth2 (1.2.0)
       faraday (>= 0.8, < 0.10)
       jwt (~> 1.0)
@@ -338,6 +345,7 @@ GEM
       html_writer (~> 0.2.0)
       pdf-reader (~> 1.1.0)
     pg (0.18.4)
+    pg (0.18.4-x86-mingw32)
     polyamorous (1.2.0)
       activerecord (>= 3.0)
     polyglot (0.3.5)
@@ -401,12 +409,16 @@ GEM
       activesupport (>= 3.0)
       i18n
       polyamorous (~> 1.2)
-    ref (2.0.0)
     request_store (1.2.1)
     require_all (1.3.3)
     responders (2.1.0)
       railties (>= 4.2.0, < 5)
     rest-client (1.8.0)
+      http-cookie (>= 1.0.2, < 2.0)
+      mime-types (>= 1.16, < 3.0)
+      netrc (~> 0.7)
+    rest-client (1.8.0-x86-mingw32)
+      ffi (~> 1.9)
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 3.0)
       netrc (~> 0.7)
@@ -461,9 +473,6 @@ GEM
       activesupport (>= 3.0)
       sprockets (>= 2.8, < 4.0)
     switch_user (1.5.0)
-    therubyracer (0.12.2)
-      libv8 (~> 3.16.14.0)
-      ref
     thor (0.19.1)
     thread_safe (0.3.5)
     tilt (1.1)
@@ -474,6 +483,8 @@ GEM
       polyglot (>= 0.3.1)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
+    tzinfo-data (1.2019.1)
+      tzinfo (>= 1.0.0)
     uglifier (2.7.2)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
@@ -481,6 +492,7 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.1)
+    unf_ext (0.0.7.1-x86-mingw32)
     warden (1.2.3)
       rack (>= 1.0)
     will_paginate (3.0.7)
@@ -492,6 +504,7 @@ GEM
 
 PLATFORMS
   ruby
+  x86-mingw32
 
 DEPENDENCIES
   activeadmin (= 1.0.0.pre1)
@@ -500,6 +513,7 @@ DEPENDENCIES
   aws-sdk (< 2.0)
   babosa
   backbone-on-rails
+  bcrypt!
   cancancan (~> 1.10)
   carrierwave
   coffee-rails
@@ -525,7 +539,7 @@ DEPENDENCIES
   mustache
   net-ssh
   newrelic_rpm
-  nokogiri
+  nokogiri (= 1.6.7)
   octokit (~> 4.0)
   omniauth-oauth2 (= 1.3.1)
   omniauth-wordpress_hosted!
@@ -549,9 +563,9 @@ DEPENDENCIES
   simplecov
   spring
   switch_user
-  therubyracer
   tilt (= 1.1)
   tinymce-rails
+  tzinfo-data
   uglifier
   underscore-rails
   will_paginate (~> 3.0.5)
@@ -562,4 +576,4 @@ RUBY VERSION
    ruby 2.2.4p230
 
 BUNDLED WITH
-   1.15.2
+   1.16.6

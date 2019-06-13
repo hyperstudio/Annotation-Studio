@@ -4,3 +4,26 @@ LOG:  autovacuum launcher started
 LOG:  database system was shut down at 2013-09-09 17:25:58 EDT
 LOG:  database system is ready to accept connections
 LOG:  autovacuum launcher started
+2019-06-13 15:04:51.214 EDT [8108] LOG:  listening on IPv6 address "::1", port 5432
+2019-06-13 15:04:51.214 EDT [8108] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2019-06-13 15:04:51.270 EDT [11396] LOG:  database system was shut down at 2019-06-13 15:04:39 EDT
+2019-06-13 15:04:51.314 EDT [8108] LOG:  database system is ready to accept connections
+2019-06-13 15:05:24.995 EDT [7408] FATAL:  database "annos_local" does not exist
+2019-06-13 15:06:38.865 EDT [11124] FATAL:  database "annos_local_fromh" does not exist
+2019-06-13 15:08:41.789 EDT [13420] FATAL:  database "annos_local_fromh" does not exist
+2019-06-13 15:10:21.662 EDT [3324] FATAL:  database "annos_local_fromh" does not exist
+2019-06-13 15:11:07.365 EDT [5448] ERROR:  new encoding (UTF8) is incompatible with the encoding of the template database (WIN1252)
+2019-06-13 15:11:07.365 EDT [5448] HINT:  Use the same encoding as in the template database, or use template0 as template.
+2019-06-13 15:11:07.365 EDT [5448] STATEMENT:  CREATE DATABASE "annos_local_fromh" ENCODING = 'utf8'
+2019-06-13 15:11:08.012 EDT [11476] FATAL:  database "annos_local_fromh" does not exist
+2019-06-13 15:11:48.294 EDT [4700] ERROR:  new encoding (UTF8) is incompatible with the encoding of the template database (WIN1252)
+2019-06-13 15:11:48.294 EDT [4700] HINT:  Use the same encoding as in the template database, or use template0 as template.
+2019-06-13 15:11:48.294 EDT [4700] STATEMENT:  CREATE DATABASE "annos_local_fromh" ENCODING = 'utf8'
+2019-06-13 15:11:48.930 EDT [10500] FATAL:  database "annos_local_fromh" does not exist
+2019-06-13 15:12:00.160 EDT [6344] FATAL:  database "Peggy Wang" does not exist
+2019-06-13 15:12:57.416 EDT [8108] LOG:  received fast shutdown request
+2019-06-13 15:12:57.424 EDT [3192] ERROR:  canceling statement due to user request
+2019-06-13 15:12:57.442 EDT [8108] LOG:  aborting any active transactions
+2019-06-13 15:12:57.447 EDT [8108] LOG:  worker process: logical replication launcher (PID 3192) exited with exit code 1
+2019-06-13 15:12:57.476 EDT [1948] LOG:  shutting down
+2019-06-13 15:12:57.524 EDT [8108] LOG:  database system is shut down

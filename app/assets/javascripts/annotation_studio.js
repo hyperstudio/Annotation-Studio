@@ -235,7 +235,12 @@ var annotation_studio = {
   },
 
   initialize_default_state_behavior: function() {
-    annotation_studio.set_document_state(default_state);
+    if(default_state){
+      annotation_studio.set_document_state(default_state);
+    }
+    else {
+      annotation_studio.set_document_state('');
+    }
 
     $('#default_state').on('click', function(e) {
       e.preventDefault();

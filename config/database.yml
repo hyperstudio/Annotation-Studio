@@ -9,11 +9,3 @@ development: &default
 test:
   <<: *default
   database: annos_test
-
-production: &default
-  adapter: postgresql
-  database: annos_local_fromh
-  encoding: utf8
-  host: localhost
-  pool: 5
-  timeout: 5000

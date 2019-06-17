@@ -32,7 +32,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_tenant
-    Apartment::Tenant.current_tenant
+    Apartment::Tenant.current
   end
 
   def set_domain_config

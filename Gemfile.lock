@@ -1,4 +1,15 @@
 GIT
+  remote: git://github.com/influitive/apartment.git
+  revision: 5585dac0665d44b29369bedd8f02cd61e64fdd46
+  branch: development
+  specs:
+    apartment (2.2.0)
+      activerecord (>= 3.1.2, < 6.0)
+      parallel (>= 0.7.1)
+      public_suffix (>= 2)
+      rack (>= 1.3.6)
+
+GIT
   remote: git://github.com/jwickard/omniauth-wordpress-oauth2-plugin.git
   revision: fa3915665106855738ac055b22be6b96ca37fb79
   specs:
@@ -66,9 +77,7 @@ GEM
     acts-as-taggable-on (3.5.0)
       activerecord (>= 3.2, < 5)
     addressable (2.3.8)
-    apartment (1.0.1)
-      activerecord (>= 3.1.2, < 5.0)
-      rack (>= 1.3.6)
+    allocation_tracer (0.6.3)
     arbre (1.0.3)
       activesupport (>= 3.0.0)
     arel (6.0.0)
@@ -84,6 +93,7 @@ GEM
       jquery-rails
       railties
     bcrypt (3.1.10)
+    benchmark-ips (2.7.2)
     bourbon (4.2.2)
       sass (~> 3.4)
       thor
@@ -117,6 +127,16 @@ GEM
     delayed_job_active_record (4.1.0)
       activerecord (>= 3.0, < 5)
       delayed_job (>= 3.0, < 5)
+    derailed (0.1.0)
+      derailed_benchmarks
+    derailed_benchmarks (1.3.5)
+      benchmark-ips (~> 2)
+      get_process_mem (~> 0)
+      heapy (~> 0)
+      memory_profiler (~> 0)
+      rack (>= 1)
+      rake (> 10, < 13)
+      thor (~> 0.19)
     devise (3.5.2)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -245,6 +265,7 @@ GEM
     formtastic_i18n (0.3.0)
     friendly_id (5.1.0)
       activerecord (>= 4.0.0)
+    get_process_mem (0.2.3)
     git-version-bump (0.15.1)
     globalid (0.3.5)
       activesupport (>= 4.1.0)
@@ -257,6 +278,7 @@ GEM
       actionpack (>= 3.2, < 5)
       activesupport (>= 3.2, < 5)
     hashie (3.4.4)
+    heapy (0.1.3)
     high_voltage (2.1.0)
     highline (1.7.2)
     html_writer (0.2.0)
@@ -291,6 +313,7 @@ GEM
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
       treetop (~> 1.4.8)
+    memory_profiler (0.9.4)
     meta_request (0.3.4)
       callsite (~> 0.0, >= 0.0.11)
       rack-contrib (~> 1.1)
@@ -331,6 +354,7 @@ GEM
       cocaine (~> 0.5.5)
       mime-types
       mimemagic (= 0.3.0)
+    parallel (1.17.0)
     pdf-reader (1.1.1)
       Ascii85 (~> 1.0.0)
       ruby-rc4
@@ -347,6 +371,7 @@ GEM
       slop (~> 3.4)
     pry-rails (0.3.4)
       pry (>= 0.9.10)
+    public_suffix (3.0.3)
     puma (3.6.0)
     rabl (0.11.6)
       activesupport (>= 2.3.14)
@@ -496,7 +521,8 @@ PLATFORMS
 DEPENDENCIES
   activeadmin (= 1.0.0.pre1)
   acts-as-taggable-on
-  apartment
+  allocation_tracer
+  apartment!
   aws-sdk (< 2.0)
   babosa
   backbone-on-rails
@@ -505,6 +531,7 @@ DEPENDENCIES
   coffee-rails
   database_cleaner
   delayed_job_active_record
+  derailed
   devise (~> 3.2)
   doorkeeper
   exception_notification
@@ -534,6 +561,7 @@ DEPENDENCIES
   pdf-reader-html
   pg
   pry-rails
+  public_suffix (= 3.0.3)
   puma
   rabl
   rails (= 4.2.1)

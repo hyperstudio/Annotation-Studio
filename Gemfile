@@ -7,6 +7,8 @@ gem 'puma'
 
 gem 'pg'
 gem "newrelic_rpm"#, "~> 3.5.7.59"
+gem 'allocation_tracer'
+gem 'derailed'
 
 gem 'devise', '~> 3.2'
 gem "switch_user"
@@ -21,7 +23,8 @@ gem "paperclip"
 gem "delayed_job_active_record"
 gem 'pdf-reader'
 gem 'pdf-reader-html'
-gem 'apartment'
+gem 'public_suffix', '3.0.3'
+gem 'apartment', :git => "git://github.com/influitive/apartment.git", :branch => "development"
 gem 'yomu'
 gem 'net-ssh'
 gem 'select2-rails', '< 4.0'

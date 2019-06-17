@@ -23,7 +23,7 @@ describe DocumentsController do
       DocumentProcessor.should_receive(:new).with(
         document.id,
         document.state,
-        Apartment::Tenant.current_tenant
+        Apartment::Tenant.current
       ).and_return(document_processor_double)
 
       post :create, { document: { upload: true }}

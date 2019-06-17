@@ -7,7 +7,7 @@ class Tenant < ActiveRecord::Base
   validates :database_name, presence: true, uniqueness: true
 
   def self.current_tenant
-    Tenant.where({ database_name: Apartment::Tenant.current_tenant }).first
+    Tenant.where({ database_name: Apartment::Tenant.current }).first
   end
 
   def self.annotation_categories_enabled

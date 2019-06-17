@@ -34,7 +34,7 @@
 
     <div class="form-group">
         <%= f.label :rep_group_list, "Class" %><br />
-        <% if Apartment::Database.current == 'demo' %>
+        <% if Apartment::Tenant.current == 'demo' %>
             <%= f.text_field :rep_group_list, 'data-role' => "tagsinput", 'placeholder' => "Enter class name(s)", :class => "form-control", :value => ENV["ALT_DEFAULT_USER_GROUP"] %>
         <% else %>
             <%= f.text_field :rep_group_list, 'data-role' => "tagsinput", 'placeholder' => "Enter class name(s)", :class => "form-control", :value => ENV["DEFAULT_USER_GROUP"] %>
@@ -57,8 +57,8 @@
     <form>
     <div class="form-group">
         <select id="registration-chooser" class="form-control">
-        <% if !Apartment::database_names.blank? %>
-          <% for database in Apartment::database_names.map{|d| d.downcase}.sort! %>
+        <% if !Apartment::tenant_names.blank? %>
+          <% for database in Apartment::tenant_names.map{|d| d.downcase}.sort! %>
             <option value="http://<%= database %>.annotationstudio.org">http://<%= database %>.annotationstudio.org</option>
           <% end %>
       <% end %>

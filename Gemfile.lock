@@ -1,4 +1,15 @@
 GIT
+  remote: git://github.com/influitive/apartment.git
+  revision: 5585dac0665d44b29369bedd8f02cd61e64fdd46
+  branch: development
+  specs:
+    apartment (2.2.0)
+      activerecord (>= 3.1.2, < 6.0)
+      parallel (>= 0.7.1)
+      public_suffix (>= 2)
+      rack (>= 1.3.6)
+
+GIT
   remote: git://github.com/jwickard/omniauth-wordpress-oauth2-plugin.git
   revision: fa3915665106855738ac055b22be6b96ca37fb79
   specs:
@@ -67,9 +78,6 @@ GEM
       activerecord (>= 3.2, < 5)
     addressable (2.3.8)
     allocation_tracer (0.6.3)
-    apartment (1.0.1)
-      activerecord (>= 3.1.2, < 5.0)
-      rack (>= 1.3.6)
     arbre (1.0.3)
       activesupport (>= 3.0.0)
     arel (6.0.0)
@@ -346,6 +354,7 @@ GEM
       cocaine (~> 0.5.5)
       mime-types
       mimemagic (= 0.3.0)
+    parallel (1.17.0)
     pdf-reader (1.1.1)
       Ascii85 (~> 1.0.0)
       ruby-rc4
@@ -362,6 +371,7 @@ GEM
       slop (~> 3.4)
     pry-rails (0.3.4)
       pry (>= 0.9.10)
+    public_suffix (3.0.3)
     puma (3.6.0)
     rabl (0.11.6)
       activesupport (>= 2.3.14)
@@ -512,7 +522,7 @@ DEPENDENCIES
   activeadmin (= 1.0.0.pre1)
   acts-as-taggable-on
   allocation_tracer
-  apartment
+  apartment!
   aws-sdk (< 2.0)
   babosa
   backbone-on-rails
@@ -551,6 +561,7 @@ DEPENDENCIES
   pdf-reader-html
   pg
   pry-rails
+  public_suffix (= 3.0.3)
   puma
   rabl
   rails (= 4.2.1)

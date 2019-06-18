@@ -1,0 +1,10 @@
+common: &defaults
+  name: "annotation-studio-2-0"
+  key: { :system, "SCOUT_KEY" }
+  monitor: { :system, "SCOUT_MONITOR" }
+
+test:
+  monitor: false
+
+production:
+  <<: *defaults

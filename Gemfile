@@ -1,4 +1,4 @@
-source 'https://rubygems.org'
+  source 'https://rubygems.org'
 
 ruby '2.2.4'
 
@@ -6,9 +6,12 @@ gem 'rails', '4.2.1'
 gem 'puma'
 
 gem 'pg'
+
+# memory profilers
 gem "newrelic_rpm"#, "~> 3.5.7.59"
 gem 'allocation_tracer'
 gem 'derailed'
+gem 'scout_apm'
 
 gem 'devise', '~> 3.2'
 gem "switch_user"

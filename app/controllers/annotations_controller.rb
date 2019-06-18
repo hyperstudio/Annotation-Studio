@@ -9,7 +9,7 @@ class AnnotationsController < ApplicationController
             :groups =>      current_user.rep_group_list,
             :subgroups =>   current_user.rep_subgroup_list,
             :host =>        request.host_with_port,
-            :user =>        current_user.email,
+            :user =>        current_user.email, 
             :context =>     'search'
         }
         if params[:document_id]

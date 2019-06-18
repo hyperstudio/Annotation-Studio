@@ -326,7 +326,7 @@ var inlineData = __bind(function(a) {
       a.highlights[i].dataset.uuid = a.uuid;
     }
     a.highlights[0].id = "hl"+ a.uuid;
-    a.highlights[0].title = a.user;
+    a.highlights[0].title = a.username;
     a.highlights[0].dataset.tags = a.tags.join(",");
     a.highlights[0].dataset.groups = a.groups.join(",");
     a.highlights[0].dataset.subgroups = a.subgroups.join(",");

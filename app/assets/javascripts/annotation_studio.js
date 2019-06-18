@@ -235,7 +235,7 @@ var annotation_studio = {
   },
 
   initialize_default_state_behavior: function() {
-    if(default_state){
+    if(typeof(default_state) !== "undefined"){
       annotation_studio.set_document_state(default_state);
     }
     else {

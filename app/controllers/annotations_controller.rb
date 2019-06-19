@@ -9,7 +9,7 @@ class AnnotationsController < ApplicationController
             :groups =>      current_user.rep_group_list,
             :subgroups =>   current_user.rep_subgroup_list,
             :host =>        request.host_with_port,
-            :user =>        current_user.email, 
+            :user =>        current_user.email,
             :context =>     'search'
         }
         if params[:document_id]
@@ -17,7 +17,7 @@ class AnnotationsController < ApplicationController
         end
         @token = session['jwt']
         @loadOptions = loadOptions.to_json
-        @document_list = Document.all # for getting document name in annotations table.
+        @document_list = Document.select(:slug, :title) # for getting document name in annotations table.
 
         respond_to do |format|
             format.html { render :index }
@@ -60,7 +60,7 @@ class AnnotationsController < ApplicationController
                     user["text"] = "#{author.firstname} #{author.lastname[0]}."
                 else
                     next
-                end                
+                end
             end
         end
 

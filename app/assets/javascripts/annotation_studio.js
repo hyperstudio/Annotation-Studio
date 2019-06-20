@@ -3,7 +3,7 @@ var sidebar, subscriber, studio;
 var annotation_studio = {
   initialize_annotator: function() {
     sidebar = new Sidebar.App();
-    sidebar.token = token;
+    //sidebar.token = token;
     //window.sidebar = sidebar;
     //Backbone.history.start({pushState: true }); //, root: window.location});
 

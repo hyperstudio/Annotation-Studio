@@ -8,7 +8,7 @@ gem 'puma'
 gem 'pg'
 
 # memory profilers
-gem "newrelic_rpm"#, "~> 3.5.7.59"
+#gem "newrelic_rpm" #, "~> 3.5.7.59"
 gem 'allocation_tracer'
 gem 'derailed'
 gem 'scout_apm'

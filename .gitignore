@@ -14,7 +14,7 @@ ans_dev
 tmp/
 ./documents/
 .DS_Store
-public/assets/application-*
+public/assets/
 vendor/assets/javascripts/annotator.js
 _archive/*
 vendor/assets/javascripts/_archive/*

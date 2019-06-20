@@ -1,10 +1,13 @@
 common: &defaults
   name: "annotation-studio-2-0"
-  key: { :system, "SCOUT_KEY" }
-  monitor: { :system, "SCOUT_MONITOR" }
+  key: <%= ENV['SCOUT_KEY'] %>
+  monitor: <%= ENV['SCOUT_MONITOR'] %>
 
 test:
   monitor: false
 
 production:
+  <<: *defaults
+
+development:
   <<: *defaults

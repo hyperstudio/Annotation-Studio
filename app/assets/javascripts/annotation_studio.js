@@ -3,7 +3,7 @@ var sidebar, subscriber, studio;
 var annotation_studio = {
   initialize_annotator: function() {
     sidebar = new Sidebar.App();
-    //sidebar.token = token;
+    sidebar.token = token;
     //window.sidebar = sidebar;
     //Backbone.history.start({pushState: true }); //, root: window.location});
 
@@ -262,7 +262,10 @@ jQuery(function($) {
   }
 
   annotation_studio.initialize_default_state_behavior();
-  annotation_studio.initialize_annotator();
+  if(annotation_studio.retrieve_document_state().length !== 0){
+    console.log(annotation_studio.retrieve_document_state());
+    annotation_studio.initialize_annotator();
+  }
 
   // Sets up a click handler for the snapshot button, which
   // creates a flattened snapshot of document, plus all metadata.

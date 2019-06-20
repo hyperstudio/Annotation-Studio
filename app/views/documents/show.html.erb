@@ -40,7 +40,11 @@ var annotationStudioConfig = {
   apiURL: '<%= @api_url %>'
 };
 
-$("#toolsmenu").offcanvas('show');
+<% if @document.processed? and !@document.draft? %>
+  $("#toolsmenu").offcanvas('show');
+<% else %>
+  $("#rightburger").attr("disabled", true);
+<% end %>
 
 $('#annotation-list').slimScroll({
   height: '99%',

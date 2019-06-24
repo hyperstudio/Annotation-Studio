@@ -43,8 +43,10 @@ var plugin_options = function() {
         'admin': ['<%= current_user.email %>'] // no one else can ever admin
       },
       userString: function (user) {
-        // return user.split("@")[0]
-        return annotation_username;
+        if(user && user.id){
+          return user.id;
+        }
+        return user;
       },
       // Permissions settings per-annotation
       showViewPermissionsCheckbox: true,

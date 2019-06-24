@@ -4,8 +4,6 @@ var annotation_studio = {
   initialize_annotator: function() {
     sidebar = new Sidebar.App();
     sidebar.token = token;
-    //window.sidebar = sidebar;
-    //Backbone.history.start({pushState: true }); //, root: window.location});
 
     var studio = $('#textcontent').annotator(annotatorOptions).annotator('setupPlugins', {}, plugin_options());
     var optionsRichText = {
@@ -15,8 +13,6 @@ var annotation_studio = {
         'image_dimensions': false
       }
     };
-
-//    studio.annotator("addPlugin", "MelCatalogue");
 
     subscriber = $('#textcontent').annotator().data('annotator');
 
@@ -339,7 +335,6 @@ var inlineData = __bind(function(a) {
     if (a.annotation_categories) {
       a.highlights[0].dataset.annotation_categories = a.annotation_categories.join(",");
     }
-    // a.highlights[0].dataset.text = a.text;
   }
   else {
     console.info("Annotation: " + a.uuid + "has no highlights.");

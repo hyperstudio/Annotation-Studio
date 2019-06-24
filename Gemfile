@@ -7,16 +7,12 @@ gem 'puma'
 
 gem 'pg'
 
-# memory profilers
-#gem "newrelic_rpm" #, "~> 3.5.7.59"
-gem 'allocation_tracer'
-gem 'derailed'
 gem 'scout_apm'
 
 gem 'devise', '~> 3.2'
 gem "switch_user"
 gem 'cancancan', '~> 1.10'
-gem 'repertoire-groups', '0.0.1', :path => 'vendor/repertoire-groups-0.0.1' #, :require => 'repertoire-groups'
+gem 'repertoire-groups', '0.0.1', :path => 'vendor/repertoire-groups-0.0.1'
 gem 'acts-as-taggable-on'
 gem "friendly_id"
 gem "babosa"
@@ -34,17 +30,21 @@ gem 'select2-rails', '< 4.0'
 gem 'omniauth-oauth2', '1.3.1'
 gem 'omniauth-wordpress_hosted', github: 'jwickard/omniauth-wordpress-oauth2-plugin'
 
+platforms :mingw, :mswin do
+  gem 'tzinfo-data'
+end
+
 group :development do
   gem 'sextant'
-  gem 'meta_request'#, '0.2.1'
+  gem 'meta_request'
   gem 'highline'
   gem 'figaro'
 end
 
 group :assets do
-  gem "therubyracer"
-  gem 'coffee-rails' #, '~> 3.2.1'
-  gem 'uglifier' #, '>= 1.0.3'
+  gem "therubyracer", :platforms => :ruby
+  gem 'coffee-rails'
+  gem 'uglifier'
   gem 'underscore-rails'
   gem 'backbone-on-rails'
   gem 'mustache'
@@ -78,7 +78,7 @@ gem 'jbuilder'
 gem "jwt"
 gem "rabl"
 gem "gon"
-gem "nokogiri"
+gem "nokogiri", '1.6.7'
 
 gem 'tilt', '1.1'
 gem 'sass-rails', '5.0.7'

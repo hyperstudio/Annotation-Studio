@@ -11,6 +11,7 @@ ans_dev
 
 /log/*
 !/log/.keep
+logger.txt
 tmp/
 ./documents/
 .DS_Store

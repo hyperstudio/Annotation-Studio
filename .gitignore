@@ -19,8 +19,6 @@ public/assets/
 vendor/assets/javascripts/annotator.js
 _archive/*
 vendor/assets/javascripts/_archive/*
-config/application.yml
-config/database.yml
 db/backups/*
 
 # Ignore application & database configuration
@@ -55,6 +53,7 @@ groom.txt
 
 # Ignore application configuration
 /config/application.yml
+/config/database.yml
 
 deploy-checklist.txt
 flags.txt

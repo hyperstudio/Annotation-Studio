@@ -11,10 +11,10 @@ default_tenants = ['public', 'www']
 default_tenants.each do |tenant|
   if tenant != 'public'
     Tenant.where(database_name: tenant, domain: "#{tenant}.localhost").first_or_create
-    Apartment::Database.switch(tenant)
+    Apartment::Tenant.switch(tenant)
   else
     # Use the default 'public' schema
-    Apartment::Database.reset
+    Apartment::Tenant.reset
   end
 
   # Create initial groups for the Annotation Studio application

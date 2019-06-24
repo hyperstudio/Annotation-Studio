@@ -16,7 +16,7 @@ module AnnotationStudio
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
     # config.middleware.use Rack::Deflator
-    
+
     config.autoload_paths += %W(#{config.root}/lib)
     config.encoding = "utf-8"
     config.filter_parameters += [:password]
@@ -42,7 +42,7 @@ module AnnotationStudio
     config.assets.enabled = true
 
     # Version of your assets, change this if you want to expire all your assets
-    config.assets.version = '1.0'
+    config.assets.version = '2.0'
 
     config.assets.initialize_on_precompile = false
   end

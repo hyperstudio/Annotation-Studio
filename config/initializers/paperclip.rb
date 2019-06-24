@@ -1,5 +1,5 @@
 Paperclip.interpolates :tenant do |attachment, style|
-  Apartment::Database.current_tenant
+  Apartment::Tenant.current
 end
 
 Paperclip::Attachment.default_options[:path] = ':class/:attachment/:tenant/:id_partition/:style/:filename'

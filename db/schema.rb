@@ -11,11 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160119182435) do
+ActiveRecord::Schema.define(version: 20190617185106) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-  enable_extension "pg_stat_statements"
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "resource_id",   limit: 255, null: false
@@ -104,6 +103,8 @@ ActiveRecord::Schema.define(version: 20160119182435) do
     t.datetime "processed_at"
     t.string   "survey_link",         limit: 255
     t.text     "default_state"
+    t.text     "snapshot"
+    t.string   "origin"
   end
 
   add_index "documents", ["slug"], name: "index_documents_on_slug", unique: true, using: :btree
@@ -206,9 +207,7 @@ ActiveRecord::Schema.define(version: 20160119182435) do
     t.string   "database_name",                 limit: 255
     t.datetime "created_at",                                                null: false
     t.datetime "updated_at",                                                null: false
-    t.boolean  "mel_catalog_enabled",                       default: false
     t.boolean  "annotation_categories_enabled",             default: false
-    t.string   "mel_catalog_url"
   end
 
   add_index "tenants", ["database_name"], name: "index_tenants_on_database_name", using: :btree
@@ -236,6 +235,9 @@ ActiveRecord::Schema.define(version: 20160119182435) do
     t.string   "affiliation",            limit: 255
     t.string   "slug",                   limit: 255
     t.boolean  "agreement"
+    t.string   "provider"
+    t.string   "uid"
+    t.string   "full_name"
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree

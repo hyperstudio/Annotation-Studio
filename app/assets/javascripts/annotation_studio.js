@@ -4,8 +4,6 @@ var annotation_studio = {
   initialize_annotator: function() {
     sidebar = new Sidebar.App();
     sidebar.token = token;
-    //window.sidebar = sidebar;
-    //Backbone.history.start({pushState: true }); //, root: window.location});
 
     var studio = $('#textcontent').annotator(annotatorOptions).annotator('setupPlugins', {}, plugin_options());
     var optionsRichText = {
@@ -15,8 +13,6 @@ var annotation_studio = {
         'image_dimensions': false
       }
     };
-
-    studio.annotator("addPlugin", "MelCatalogue");
 
     subscriber = $('#textcontent').annotator().data('annotator');
 
@@ -33,9 +29,9 @@ var annotation_studio = {
     subscriber.subscribe('annotationsLoaded', annotation_studio.handleHash);
     subscriber.subscribe('annotationEditorShown', annotation_studio.parentIndex);
 
-    // Update all highlights with UUIDs
+    // Update all highlights with annotation object data
     subscriber.subscribe('annotationsLoaded', __bind(function(annotations) {
-      annotations.map(addUuid); // copies the UUID value from the object field to the highlight spans attribute value.
+      annotations.map(inlineData); // copies values from object fields to the highlight spans data attributes.
     }, this));
 
     // Add the UUID to the local annotation object and to the highlight span before saving
@@ -44,7 +40,7 @@ var annotation_studio = {
 
     // Once the local object has been created, load the sidebar from local data (already contains UUID)
     subscriber.subscribe('annotationCreated', annotation_studio.loadSidebar);
-    subscriber.subscribe('annotationCreated', addUuid);
+    subscriber.subscribe('annotationCreated', inlineData);
 
     // When the local object is updated (contains previously created/stored UUID), load the sidebar from local data
     subscriber.subscribe('annotationUpdated', annotation_studio.loadSidebar);
@@ -123,13 +119,6 @@ var annotation_studio = {
     annotation_studio.filterAnnotations(overrides);
   },
   sortUpdate: function(event) {
-    // TODO: Shouldn't bootstrap handle this without code?
-    $('.sortchoice').removeClass("active");
-    $(this).addClass('active');
-    $('.sortchoice').addClass("btn-primary");
-    $(this).removeClass('btn-primary');
-
-    // TODO: Is there a better way to rerender annotations?
     sidebar.listAnnotations(subscriber.dumpAnnotations());
   },
   stopSpinner: function() {
@@ -180,11 +169,9 @@ var annotation_studio = {
   cleanupDocument: function() {
     var dfd = new $.Deferred();
     if (annotation_studio.removeHilites()) {
-      console.log("Cleanup complete.");
       dfd.resolve("Cleanup complete.");
     }
     else {
-      console.log("Cleanup failed.");
       dfd.reject("Cleanup failed.");
     }
     return dfd.promise();
@@ -196,10 +183,8 @@ var annotation_studio = {
       setTimeout(function() {
         dfd.resolve("Reload complete.");
       }, 100);
-      console.log("Reload complete.");
     }
     else {
-      console.log("Reload failed.");
       dfd.reject("Reload failed.");
     }
     return dfd.promise();
@@ -215,15 +200,12 @@ var annotation_studio = {
   },
   parentIndex: function(editor, annotation) {
     if (!annotation.parentIndex > 0) {
-      console.log("No current annotation.parentIndex: "+ annotation.parentIndex);
       var node = $(".annotator-hl-temporary");
       var parent = node.parent()[0];
       var parentIndex = $( "#textcontent" ).find( "*" ).index(parent)
       annotation.parentIndex = parentIndex;
-      console.log("Added annotation.parentIndex: "+ annotation.parentIndex);
     }
     else {
-      console.log("Existing parentIndex: " + annotation.parentIndex + "; not adding a new one.");
     }
   },
   set_document_state: function(state) {
@@ -242,13 +224,19 @@ var annotation_studio = {
   },
   retrieve_document_state: function() {
     var active_buttons = [];
-    $.each($('#toolsmenu button.active'), function(i, button) {
+    $.each($('#toolsmenu .btn.active'), function(i, button) {
       active_buttons.push($(button).attr('id'));
     });
     return active_buttons;
   },
+
   initialize_default_state_behavior: function() {
-    annotation_studio.set_document_state(default_state);
+    if(typeof(default_state) !== "undefined"){
+      annotation_studio.set_document_state(default_state);
+    }
+    else {
+      annotation_studio.set_document_state('');
+    }
 
     $('#default_state').on('click', function(e) {
       e.preventDefault();
@@ -261,7 +249,7 @@ var annotation_studio = {
         $('#default_state').removeClass('active');
       });
     });
-  }
+  },
 };
 
 jQuery(function($) {
@@ -270,7 +258,14 @@ jQuery(function($) {
   }
 
   annotation_studio.initialize_default_state_behavior();
-  annotation_studio.initialize_annotator();
+  if(annotation_studio.retrieve_document_state().length !== 0){
+    console.log(annotation_studio.retrieve_document_state());
+    annotation_studio.initialize_annotator();
+  }
+
+  // Sets up a click handler for the snapshot button, which
+  // creates a flattened snapshot of document, plus all metadata.
+  snapshot.initialize();
 
   // these three click and tap handlers manage the rich text editor show and hide on mobile and desktop
   $('.annotator-button').on('tap', function(){
@@ -313,22 +308,35 @@ jQuery(function($) {
   });
   $('#textpositionsort').on('click', {}, annotation_studio.sortUpdate);
   $('#customsort').on('click', {}, annotation_studio.sortUpdate);
-
 });
 
 var lazyShowAndHideAnnotations = _.debounce(
   function() { sidebar.showAndHideAnnotations() },
   30
 );
-  // Add UUIDs to highlights so sidebar and highlights can link to one another.
-  var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
-  var addUuid = __bind(function(a) {
-    if (a.highlights[0] != null) {
-      a.highlights[0].id = "hl"+ a.uuid;
-      a.highlights[0].title = a.user;
-    }
-    else {
-      console.info("Annotation: " + a.uuid + "has no highlights.");
-    }
-  }, this);
 
+// Add data attributes to highlights
+var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+var inlineData = __bind(function(a) {
+
+  if (a.highlights[0] != null) {
+    highlightCount = a.highlights.length;
+    for (var i = 0; i < highlightCount; i++) {
+      a.highlights[i].dataset.uuid = a.uuid;
+    }
+    a.highlights[0].id = "hl"+ a.uuid;
+    a.highlights[0].title = a.username;
+    a.highlights[0].dataset.tags = a.tags.join(",");
+    a.highlights[0].dataset.groups = a.groups.join(",");
+    a.highlights[0].dataset.subgroups = a.subgroups.join(",");
+    a.highlights[0].dataset.username = a.username;
+    a.highlights[0].dataset.user = a.user;
+
+    if (a.annotation_categories) {
+      a.highlights[0].dataset.annotation_categories = a.annotation_categories.join(",");
+    }
+  }
+  else {
+    console.info("Annotation: " + a.uuid + "has no highlights.");
+  }
+}, this);

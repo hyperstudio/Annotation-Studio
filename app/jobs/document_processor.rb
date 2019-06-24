@@ -8,7 +8,7 @@ class DocumentProcessor
   end
 
   def perform
-    original_tenant = Apartment::Tenant.current_tenant
+    original_tenant = Apartment::Tenant.current
     begin
       Apartment::Tenant.switch(@tenant)
       document = Document.find(@document_id)

@@ -48,42 +48,46 @@
 				  <div class="col-md-6">
           	<h4>Status</h4>
           	<div class="form-group">
-          			<label class="radio-inline">
+                <div class="radio">
+                  <label>
                   <%= f.radio_button :state, "draft", checked: controller.action_name == "new" ? true : @document.draft?, disabled: !@document.draft? && controller.action_name == "edit" %>
-                  <i class="glyphicon glyphicon-pencil"></i> Draft
-                </label>
-            		<label class="radio-inline">
-                  <%= f.radio_button :state, "published", checked: @document.published? %>
-                  <i class="glyphicon glyphicon-ok"></i> Published
-                </label>
-                <% if current_user.has_role?(:admin) %>
-                <label class="radio-inline">
-                  <%= f.radio_button :state, "public", checked: @document.public? %>
-                  <i class="glyphicon glyphicon-share-alt"></i> Public
-                </label>
+                  <i class="glyphicon glyphicon-pencil"></i> Editable
+                  <p class="help-block">privately visible, not annotatable</p>
+                  </label>
+                </div>
+                <div class="radio">
+                  <label>
+                  <%= f.radio_button :state, "annotatable", checked: @document.annotatable? %>
+                  <i class="glyphicon glyphicon-comment"></i> Annotatable
+                  <p class="help-block">privately annotatable, privately visible, not editable</p>
+                  </label>
+                </div>
+                <% if can? :review, Document %>
+                <div class="radio">
+                  <label>
+                  <%= f.radio_button :state, "review", checked: @document.review? %>
+                  <i class="glyphicon glyphicon-eye-open"></i> Reviewable
+                  <p class="help-block">privately annotatable, publicly visible, not editable</p>
+                  </label>
+                </div>
                 <% end %>
-          			<label class="radio-inline">
-                  <%= f.radio_button :state, "deleted", checked: @document.deleted?, disabled: controller.action_name == "new" %>
-                  <i class="glyphicon glyphicon-folder-close"></i> Archived
-                </label>
-                <p class="help-block">Only published documents may be annotated.</p>
-                <p class="help-block">Once published, documents may not be edited or deleted.</p>
+                <% if can? :publish, Document %>
+                <div class="radio">
+                  <label>
+                  <%= f.radio_button :state, "published", checked: @document.published? %>
+                  <i class="glyphicon glyphicon-book"></i> Publishable
+                  <p class="help-block">not annotatable, publicly visible, not editable</p>
+                  </label>
+                </div>
+                <% end %>
           	</div>
 				  </div><!-- end span 6 -->
 
-                <!--<%# if can? :manage, Document %>-->
-                <!--<h4>Survey Link</h4>-->
-                <!--<div class="form-group">-->
-                  <!--<p class="help-block">If you wish users to see a link to an offsite survey at top and bottom of the text, put that URL in this field.</p>-->
-                  <!--<%#= f.text_field :survey_link, :class => 'form-control' %>-->
-                <!--</div>-->
-                <!--<%# end %>-->
-
 			  <div class="col-md-6">
-          	<h4>Classes</h4>
-          	<p class="help-block">Enter the classes to whom you wish to assign this document, <strong>and press enter after each.</strong></p>
+          	<h4><%= ENV["CLASS_TERM_PLURAL"] %></h4>
+          	<p class="help-block">Enter the <%= ENV["CLASS_TERM_PLURAL"] %> to which you wish to assign this document, <strong>and press enter after each.</strong></p>
           	<div class="form-group">
-          	<%= f.text_field :rep_group_list, :value => @document.rep_group_list.join(', '), :class => 'form-control', 'data-role' => "tagsinput", 'placeholder' => "Enter class name(s)" %>
+          	<%= f.text_field :rep_group_list, :value => @document.rep_group_list.join(', '), :class => 'form-control', 'data-role' => "tagsinput", 'placeholder' => ENV["CLASS_TERM_PLURAL"] %>
           	</div>
 			  </div><!-- end span 6 -->
 			  </div><!-- end row -->
@@ -96,14 +100,40 @@
           $(document).ready(function() {
 
             $('.text-area').summernote({
-                height: 300,
-                minHeight: null,
-                maxHeight: null,
+              height: 300,                 // set editor height
+              minHeight: null,             // set minimum height of editor
+              maxHeight: null,             // set maximum height of editor
+              cleaner:{
+                  action: 'paste', // both|button|paste 'button' only cleans via toolbar button, 'paste' only clean when pasting content, both does both options.
+                  newline: '<br>', // Summernote's default is to use '<p><br></p>'
+                  notStyle: 'position:absolute;top:0;left:0;right:0', // Position of Notification
+                  keepHtml: true, // Remove all Html formats
+                  keepOnlyTags: ['<p>', '<br>', '<ul>', '<li>', '<b>', '<strong>','<i>', '<a>'], // If keepHtml is true, remove all tags except these
+                  keepClasses: true, // Remove Classes
+                  badTags: ['style', 'script', 'applet', 'embed', 'noframes', 'noscript', 'html'], // Remove full tags with contents
+                  badAttributes: ['style', 'start'], // Remove attributes from remaining tags
+                  limitChars: false, // 0/false|# 0/false disables option
+                  limitDisplay: 'both', // text|html|both
+                  limitStop: false // true/false
+                }
             });
             $('.chapter-area').summernote({
                 height: 300,
                 minHeight: null,
                 maxHeight: null,
+                cleaner:{
+                    action: 'paste', // both|button|paste 'button' only cleans via toolbar button, 'paste' only clean when pasting content, both does both options.
+                    newline: '<br>', // Summernote's default is to use '<p><br></p>'
+                    notStyle: 'position:absolute;top:0;left:0;right:0', // Position of Notification
+                    keepHtml: true, // Remove all Html formats
+                    keepOnlyTags: ['<p>', '<br>', '<ul>', '<li>', '<b>', '<strong>','<i>', '<a>'], // If keepHtml is true, remove all tags except these
+                    keepClasses: true, // Remove Classes
+                    badTags: ['style', 'script', 'applet', 'embed', 'noframes', 'noscript', 'html'], // Remove full tags with contents
+                    badAttributes: ['style', 'start'], // Remove attributes from remaining tags
+                    limitChars: false, // 0/false|# 0/false disables option
+                    limitDisplay: 'both', // text|html|both
+                    limitStop: false // true/false
+                  }
             });
             $('#chapter-editor').hide();
             $('#chapter-label').click(function(){
@@ -114,18 +144,6 @@
             // handle catalog texts
 
             var text = {};
-
-            <% unless @catalog_texts.nil? || @catalog_texts.empty? %>
-              <% @catalog_texts.each do | entry | %>
-                 var e = {};
-
-                 // fill in all the fields here...
-                 <% ['name', 'author', 'edition', 'publisher', 'publication_date', 'manuscript', 'permissions'].each do | field | %>
-                    e[ '<%= field %>' ] = '<%= entry[field].nil? ? '' : entry[field] %>';
-                 <% end %>
-                 text[ '<%= entry['eid'] %>' ] = e;
-              <% end %>
-            <% end %>
 
             $('.clickable').on('click', function (e) {
                 var id = $( this ).attr( "id" );

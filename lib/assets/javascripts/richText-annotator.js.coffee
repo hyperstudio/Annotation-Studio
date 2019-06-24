@@ -9,10 +9,11 @@ class Annotator.Plugin.RichText extends Annotator.Plugin
     editor_enabled: true
     tinymce:
       selector: "li.annotator-item textarea",
-      plugins: "media image link code melcatalog",
+      plugins: "media image link code paste",
       link_list: false,
       target_list: false,
       rel_list: false,
+      paste_as_text: true,
       menubar: false,
       statusbar: false,
       toolbar_items_size: 'small',
@@ -45,11 +46,11 @@ class Annotator.Plugin.RichText extends Annotator.Plugin
     annotator.subscribe "annotationEditorHidden", ->
       $(annotator.editor.element).find(".mce-tinymce")[0].style.display = "none"
 
-    
+
     #set listener for tinymce;
     @options.tinymce.setup = (ed) ->
       ed.on "change", (e) ->
-        
+
         #set the modification in the textarea of annotator
         $(editor.element).find("textarea")[0].value = tinymce.activeEditor.getContent()
 

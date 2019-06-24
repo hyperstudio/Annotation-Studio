@@ -5,30 +5,32 @@ var document_slug = "<%= @document.slug %>";
 var default_state = <%= @document.default_state.present? ? (raw @document.default_state) : (raw "''") %>;
 var groups = "<%= current_user.rep_group_list %>".split(/, /);
 var subgroups = "<%= current_user.rep_subgroup_list %>".split(/, /);
-var annotatorOptions = {'readOnly': <%= @document.deleted? %>};
+var annotatorOptions = {'readOnly': <%= @document.archived? %>};
 var filter_user = "<%= current_user.email %>";
 var token = '<%= session["jwt"] %>';
 var annotation_username = "<%= current_user.first_name_last_initial %>";
 var sidebar_sort_editable = <%= current_user && current_user.has_document_permissions?(@document) %>;
 var mobile_device = <%= mobile_device? -%>;
 var search_context = 'document';
-  
+var api_url = '<%= ENV["API_URL"] %>';
+var doc_uri = [location.protocol, '//', location.host, location.pathname].join('');
+
 var plugin_options = function() {
   return {
     <% unless current_user.has_role?(:admin) && ENV["ANNOTATOR_FILTER"] == 'true' %>
     Filter: false,
     <% end %>
     Auth: {
-      token: '<%= session["jwt"] %>'
+      token: token
     },
     Store: {
-      prefix: '<%= ENV["API_URL"] %>',
+      prefix: api_url,
       annotationData: {
-        'uri': [location.protocol, '//', location.host, location.pathname].join(''),
+        'uri': doc_uri,
         "groups": groups,
         "subgroups": subgroups
       },
-      loadFromSearch: annotation_studio.loadOptions({ mode: 'user', limit: 100 })
+      loadFromSearch: annotation_studio.loadOptions({ mode: default_state[0], limit: 100 })
     },
     Markdown: false, // use RichText instead
     AnnotateItPermissions: false, // this is built into the kitchen sink, so cancel it
@@ -41,7 +43,10 @@ var plugin_options = function() {
         'admin': ['<%= current_user.email %>'] // no one else can ever admin
       },
       userString: function (user) {
-        return user.split("@")[0]
+        if(user && user.id){
+          return user.id;
+        }
+        return user;
       },
       // Permissions settings per-annotation
       showViewPermissionsCheckbox: true,

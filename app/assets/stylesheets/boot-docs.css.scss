@@ -26,7 +26,7 @@ pre {
 	border-radius: 0;
 }
 
-div#textcontent {
+div#textcontent, section#textcontent {
   margin-top: 30px;
 	font-family: "calluna";
 	padding: 60px;
@@ -119,8 +119,8 @@ li.annotation-item.focuswhite {
   }
   img {
     margin: 3px;
-    width: 300px;
-    max-height: 500px;
+    max-width: 300px;
+    height: auto;
   }
   
   iframe {
@@ -184,6 +184,7 @@ a.texttitle {
 
 .annotator-widget img {
 	max-width:150px;
+	height: auto;
 	display:inline;
 }
 
@@ -350,15 +351,7 @@ span.highlightborder {
 	margin-top:5px;
 }
 
-#view-chooser {
-	margin-bottom:10px;
-	label.active {
-		background-color: #444;
-	    color: white;
-	}
-}
-
-#filter-chooser {
+#view-chooser, #filter-chooser, #sort-chooser {
     margin-bottom:10px;
     label.active {
 		background-color: #444;
@@ -388,4 +381,14 @@ footer {
 #category-chooser button.btn-default:focus {
   background-color: #FFF;
   outline: none;
+}
+
+#snapshot-staging {
+	display:none;
+}
+
+#snapshot-progress {
+	.modal-dialog {
+		margin-top:200px;
+	}
 }

@@ -1,12 +1,25 @@
+GIT
+  remote: git://github.com/influitive/apartment.git
+  revision: 5585dac0665d44b29369bedd8f02cd61e64fdd46
+  branch: development
+  specs:
+    apartment (2.2.0)
+      activerecord (>= 3.1.2, < 6.0)
+      parallel (>= 0.7.1)
+      public_suffix (>= 2)
+      rack (>= 1.3.6)
+
+GIT
+  remote: git://github.com/jwickard/omniauth-wordpress-oauth2-plugin.git
+  revision: fa3915665106855738ac055b22be6b96ca37fb79
+  specs:
+    omniauth-wordpress_hosted (0.0.5)
+      omniauth-oauth2
+
 PATH
   remote: vendor/repertoire-groups-0.0.1
   specs:
     repertoire-groups (0.0.1)
-
-PATH
-  remote: vendor
-  specs:
-    melcatalog (2.1.0)
 
 GEM
   remote: https://rubygems.org/
@@ -64,9 +77,7 @@ GEM
     acts-as-taggable-on (3.5.0)
       activerecord (>= 3.2, < 5)
     addressable (2.3.8)
-    apartment (1.0.1)
-      activerecord (>= 3.1.2, < 5.0)
-      rack (>= 1.3.6)
+    allocation_tracer (0.6.3)
     arbre (1.0.3)
       activesupport (>= 3.0.0)
     arel (6.0.0)
@@ -82,12 +93,13 @@ GEM
       jquery-rails
       railties
     bcrypt (3.1.10)
+    benchmark-ips (2.7.2)
     bourbon (4.2.2)
       sass (~> 3.4)
       thor
     builder (3.2.2)
     callsite (0.0.11)
-    cancan (1.6.10)
+    cancancan (1.15.0)
     carrierwave (0.10.0)
       activemodel (>= 3.2.0)
       activesupport (>= 3.2.0)
@@ -108,12 +120,23 @@ GEM
       execjs
     coffee-script-source (1.10.0)
     colored (1.2)
+    concurrent-ruby (1.0.5)
     database_cleaner (1.5.1)
     delayed_job (4.1.1)
       activesupport (>= 3.0, < 5.0)
     delayed_job_active_record (4.1.0)
       activerecord (>= 3.0, < 5)
       delayed_job (>= 3.0, < 5)
+    derailed (0.1.0)
+      derailed_benchmarks
+    derailed_benchmarks (1.3.5)
+      benchmark-ips (~> 2)
+      get_process_mem (~> 0)
+      heapy (~> 0)
+      memory_profiler (~> 0)
+      rack (>= 1)
+      rake (> 10, < 13)
+      thor (~> 0.19)
     devise (3.5.2)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -144,6 +167,8 @@ GEM
     factory_girl_rails (4.5.0)
       factory_girl (~> 4.5.0)
       railties (>= 3.0.0)
+    faraday (0.9.2)
+      multipart-post (>= 1.2, < 3)
     figaro (1.1.1)
       thor (~> 0.14)
     fission (0.5.0)
@@ -234,14 +259,13 @@ GEM
     fog-xml (0.1.2)
       fog-core
       nokogiri (~> 1.5, >= 1.5.11)
-    foreman (0.78.0)
-      thor (~> 0.19.1)
     formatador (0.2.5)
     formtastic (3.1.3)
       actionpack (>= 3.2.13)
     formtastic_i18n (0.3.0)
     friendly_id (5.1.0)
       activerecord (>= 4.0.0)
+    get_process_mem (0.2.3)
     git-version-bump (0.15.1)
     globalid (0.3.5)
       activesupport (>= 4.1.0)
@@ -253,6 +277,8 @@ GEM
     has_scope (0.6.0)
       actionpack (>= 3.2, < 5)
       activesupport (>= 3.2, < 5)
+    hashie (3.4.4)
+    heapy (0.1.3)
     high_voltage (2.1.0)
     highline (1.7.2)
     html_writer (0.2.0)
@@ -265,8 +291,6 @@ GEM
       has_scope (~> 0.6.0.rc)
       railties (>= 3.2, < 5)
       responders
-    intercom-rails (0.2.29)
-      activesupport (> 3.0)
     ipaddress (0.8.0)
     jbuilder (2.2.13)
       activesupport (>= 3.0.0, < 5)
@@ -281,15 +305,15 @@ GEM
     kaminari (0.16.3)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
-    kgio (2.10.0)
     launchy (2.4.3)
       addressable (~> 2.3)
-    libv8 (3.16.14.13)
+    libv8 (3.16.14.15)
     loofah (2.0.2)
       nokogiri (>= 1.5.9)
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
       treetop (~> 1.4.8)
+    memory_profiler (0.9.4)
     meta_request (0.3.4)
       callsite (~> 0.0, >= 0.0.11)
       rack-contrib (~> 1.1)
@@ -301,12 +325,27 @@ GEM
     mini_portile (0.6.2)
     minitest (5.6.1)
     multi_json (1.11.2)
+    multi_xml (0.5.5)
+    multipart-post (2.0.0)
     mustache (1.0.1)
     net-ssh (3.0.2)
     netrc (0.11.0)
-    newrelic_rpm (3.14.0.305)
     nokogiri (1.6.6.2)
       mini_portile (~> 0.6.0)
+    oauth2 (1.2.0)
+      faraday (>= 0.8, < 0.10)
+      jwt (~> 1.0)
+      multi_json (~> 1.3)
+      multi_xml (~> 0.5)
+      rack (>= 1.2, < 3)
+    octokit (4.3.0)
+      sawyer (~> 0.7.0, >= 0.5.3)
+    omniauth (1.3.1)
+      hashie (>= 1.2, < 4)
+      rack (>= 1.0, < 3)
+    omniauth-oauth2 (1.3.1)
+      oauth2 (~> 1.0)
+      omniauth (~> 1.2)
     orm_adapter (0.5.0)
     paperclip (4.3.2)
       activemodel (>= 3.2.0)
@@ -314,6 +353,7 @@ GEM
       cocaine (~> 0.5.5)
       mime-types
       mimemagic (= 0.3.0)
+    parallel (1.17.0)
     pdf-reader (1.1.1)
       Ascii85 (~> 1.0.0)
       ruby-rc4
@@ -330,9 +370,11 @@ GEM
       slop (~> 3.4)
     pry-rails (0.3.4)
       pry (>= 0.9.10)
+    public_suffix (3.0.3)
+    puma (3.6.0)
     rabl (0.11.6)
       activesupport (>= 2.3.14)
-    rack (1.6.0)
+    rack (1.6.10)
     rack-contrib (1.4.0)
       git-version-bump (~> 0.15)
       rack (~> 1.4)
@@ -376,7 +418,6 @@ GEM
       activesupport (= 4.2.1)
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
-    raindrops (0.15.0)
     rake (10.5.0)
     ransack (1.6.6)
       actionpack (>= 3.0)
@@ -413,12 +454,16 @@ GEM
     ruby-progressbar (1.7.5)
     ruby-rc4 (0.1.5)
     sass (3.4.19)
-    sass-rails (5.0.3)
-      railties (>= 4.0.0, < 5.0)
+    sass-rails (5.0.7)
+      railties (>= 4.0.0, < 6)
       sass (~> 3.1)
       sprockets (>= 2.8, < 4.0)
       sprockets-rails (>= 2.0, < 4.0)
-      tilt (~> 1.1)
+      tilt (>= 1.1, < 3)
+    sawyer (0.7.0)
+      addressable (>= 2.3.5, < 2.5)
+      faraday (~> 0.8, < 0.10)
+    scout_apm (2.4.24)
     select2-rails (3.5.10)
       thor (~> 0.14)
     sexp_processor (4.6.0)
@@ -432,12 +477,15 @@ GEM
       simplecov-html (~> 0.10.0)
     simplecov-html (0.10.0)
     slop (3.6.0)
-    sprockets (3.0.3)
-      rack (~> 1.0)
+    spring (1.7.2)
+    sprockets (3.7.2)
+      concurrent-ruby (~> 1.0)
+      rack (> 1, < 3)
     sprockets-rails (2.2.4)
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (>= 2.8, < 4.0)
+    switch_user (1.5.0)
     therubyracer (0.12.2)
       libv8 (~> 3.16.14.0)
       ref
@@ -458,10 +506,6 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.1)
-    unicorn (5.0.1)
-      kgio (~> 2.6)
-      rack
-      raindrops (~> 0.7)
     warden (1.2.3)
       rack (>= 1.0)
     will_paginate (3.0.7)
@@ -477,44 +521,47 @@ PLATFORMS
 DEPENDENCIES
   activeadmin (= 1.0.0.pre1)
   acts-as-taggable-on
-  apartment
+  allocation_tracer
+  apartment!
   aws-sdk (< 2.0)
   babosa
   backbone-on-rails
-  cancan
+  cancancan (~> 1.10)
   carrierwave
   coffee-rails
   database_cleaner
   delayed_job_active_record
-  devise
+  derailed
+  devise (~> 3.2)
   doorkeeper
   exception_notification
   factory_girl_rails
   figaro
   fog
-  foreman
   friendly_id
   gon
   high_voltage (~> 2.1.0)
   highline
-  intercom-rails
   jbuilder
   jquery-rails (~> 2.3.0)
   jquery-ui-rails
   jwt
   launchy
-  melcatalog!
   meta_request
   mini_magick
   mustache
   net-ssh
-  newrelic_rpm
   nokogiri
+  octokit (~> 4.0)
+  omniauth-oauth2 (= 1.3.1)
+  omniauth-wordpress_hosted!
   paperclip
   pdf-reader
   pdf-reader-html
   pg
   pry-rails
+  public_suffix (= 3.0.3)
+  puma
   rabl
   rails (= 4.2.1)
   rails_12factor
@@ -522,20 +569,25 @@ DEPENDENCIES
   repertoire-groups (= 0.0.1)!
   rest-client
   rspec-rails
-  sass-rails (= 5.0.3)
+  sass-rails (= 5.0.7)
+  scout_apm
   select2-rails (< 4.0)
   sextant
   shoulda-matchers
   simplecov
+  spring
+  switch_user
   therubyracer
   tilt (= 1.1)
   tinymce-rails
   uglifier
   underscore-rails
-  unicorn
   will_paginate (~> 3.0.5)
   will_paginate-bootstrap
   yomu
 
+RUBY VERSION
+   ruby 2.2.4p230
+
 BUNDLED WITH
-   1.11.2
+   1.15.2

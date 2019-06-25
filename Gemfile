@@ -85,7 +85,7 @@ gem 'tilt', '1.1'
 gem 'sass-rails', '5.0.7'
 gem 'activeadmin', '1.0.0.pre5'
 
-gem 'will_paginate', '~> 3.0.5'
+gem 'will_paginate', '3.1.7'
 gem 'will_paginate-bootstrap'
 
 gem 'exception_notification'

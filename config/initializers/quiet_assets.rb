@@ -1,3 +1,6 @@
+if !Rails.application.assets
+	Rails.application.assets = Sprockets::Environment.new
+end
 Rails.application.assets.logger = Logger.new(RUBY_PLATFORM != 'x86-mingw32' ? '/dev/null' : 'NUL')
 Rails::Rack::Logger.class_eval do
 	def call_with_quiet_assets(env)

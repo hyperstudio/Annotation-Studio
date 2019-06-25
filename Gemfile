@@ -44,7 +44,7 @@ end
 
 group :assets do
   gem "therubyracer", :platforms => :ruby
-  gem 'coffee-rails', '4.2.0'
+  gem 'coffee-rails', '4.2.2'
   gem 'uglifier'
   gem 'underscore-rails'
   gem 'backbone-on-rails'

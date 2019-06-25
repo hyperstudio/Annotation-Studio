@@ -25,7 +25,7 @@
 
 require "babosa" # allows cyrillic, other characters in titles (transliterates titles for URL use)
 
-class Document < ActiveRecord::Base
+class Document < ApplicationRecord
   belongs_to :user, :autosave => true
   before_validation :add_title, on: :create, unless: :title?
   before_create :add_processed_at, unless: :uploaded?

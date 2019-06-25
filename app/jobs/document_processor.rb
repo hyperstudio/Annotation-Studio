@@ -1,4 +1,4 @@
-class DocumentProcessor
+class DocumentProcessor < ApplicationJob
   attr_reader :document_id
 
   def initialize(document_id, document_state, tenant)

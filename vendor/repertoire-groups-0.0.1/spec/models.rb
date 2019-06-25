@@ -1,10 +1,10 @@
-class User < ActiveRecord::Base
+class User < ApplicationRecord
   attr_accessible :firstname, :lastname, :email, :password
   acts_as_role_user
   acts_as_taggable_on :rep_group
 end
 
-class TestModel < ActiveRecord::Base
+class TestModel < ApplicationRecord
   belongs_to :user
   attr_accessible :content, :user_id
   acts_as_taggable_on :rep_privacy, :rep_group

@@ -2,24 +2,25 @@
 
 ruby '2.2.4'
 
-gem 'rails', '4.2.1'
+gem 'rails', '5.0.0'
+gem 'rack', '2.0.7'
 gem 'puma'
 
 gem 'pg'
 
 gem 'scout_apm'
 
-gem 'devise', '~> 3.2'
+gem 'devise', '4.0.0'
 gem "switch_user"
 gem 'cancancan', '~> 1.10'
 gem 'repertoire-groups', '0.0.1', :path => 'vendor/repertoire-groups-0.0.1'
-gem 'acts-as-taggable-on'
+gem 'acts-as-taggable-on', '4.0.0'
 gem "friendly_id"
 gem "babosa"
 gem 'high_voltage', '~> 2.1.0'
 gem "aws-sdk", '< 2.0'
 gem "paperclip"
-gem "delayed_job_active_record"
+gem "delayed_job_active_record", '4.1.3'
 gem 'pdf-reader'
 gem 'pdf-reader-html'
 gem 'public_suffix', '3.0.3'
@@ -27,7 +28,7 @@ gem 'apartment', :git => "git://github.com/influitive/apartment.git", :branch =>
 gem 'yomu'
 gem 'net-ssh'
 gem 'select2-rails', '< 4.0'
-gem 'omniauth-oauth2', '1.3.1'
+gem 'omniauth-oauth2', '1.6.0'
 gem 'omniauth-wordpress_hosted', github: 'jwickard/omniauth-wordpress-oauth2-plugin'
 
 platforms :mingw, :mswin do
@@ -36,14 +37,14 @@ end
 
 group :development do
   gem 'sextant'
-  gem 'meta_request'
+  gem 'meta_request', '0.7.0'
   gem 'highline'
   gem 'figaro'
 end
 
 group :assets do
   gem "therubyracer", :platforms => :ruby
-  gem 'coffee-rails'
+  gem 'coffee-rails', '4.2.2'
   gem 'uglifier'
   gem 'underscore-rails'
   gem 'backbone-on-rails'
@@ -52,7 +53,7 @@ end
 
 group :test, :development do
   gem 'factory_girl_rails'
-  gem 'rspec-rails'
+  gem 'rspec-rails', '3.8.2'
   gem 'pry-rails'
   gem 'spring'
   gem 'simplecov'
@@ -66,7 +67,7 @@ group :production do
   gem 'rails_12factor'
 end
 
-gem 'jquery-rails', '~> 2.3.0'
+gem 'jquery-rails', '4.3.5'
 gem 'jquery-ui-rails'
 gem 'tinymce-rails'
 
@@ -74,17 +75,17 @@ gem "fog"
 gem "mini_magick"
 gem "carrierwave"
 
-gem 'jbuilder'
+gem 'jbuilder', '2.7.0'
 gem "jwt"
 gem "rabl"
 gem "gon"
-gem "nokogiri", '1.6.7'
+gem "nokogiri", '1.6.8'
 
 gem 'tilt', '1.1'
 gem 'sass-rails', '5.0.7'
-gem 'activeadmin', '1.0.0.pre1'
+gem 'activeadmin', '1.0.0.pre5'
 
-gem 'will_paginate', '~> 3.0.5'
+gem 'will_paginate', '3.1.7'
 gem 'will_paginate-bootstrap'
 
 gem 'exception_notification'

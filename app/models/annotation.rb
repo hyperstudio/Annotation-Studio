@@ -1,5 +1,5 @@
-class Annotation < ActiveRecord::Base
+class Annotation < ApplicationRecord
   def self.new
-    
+
   end
 end

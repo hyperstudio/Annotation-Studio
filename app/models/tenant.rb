@@ -1,4 +1,4 @@
-class Tenant < ActiveRecord::Base
+class Tenant < ApplicationRecord
 
   after_create :initialize_apartment_schema
   after_destroy :drop_apartment_schema

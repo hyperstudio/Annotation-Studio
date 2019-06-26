@@ -19,51 +19,12 @@
         <td>
           <% document.rep_group_list.each do |group| %>
           <span class="label label-info">
-            <%= link_to group, params.merge(:group => group) %>
+            <%= link_to group, params.permit(:group).merge(:group => group) %>
           </span>&nbsp;
           <% end %>
         </td>
         <td>
-          <% if can? :update, document %>
-          <div class="btn-group" role="group" aria-label="document states">
-
-              <% if document.draft? %>
-                <%= link_to 'Editable', "#", :class => 'btn btn-default btn-sm active' %>
-              <% else %>
-                <%= link_to 'Editable', "#", :class => 'btn btn-default btn-sm disabled' %>
-              <% end %>
-
-
-              <% if document.annotatable? %>
-                <%= link_to 'Annotatable', document_annotatable_path(document), method: :post, :class => 'btn btn-default btn-sm active' %>
-              <% else %>
-                <%= link_to 'Annotatable', document_annotatable_path(document), method: :post, :class => 'btn btn-default btn-sm' %>
-              <% end %>
-
-
-              <% if document.review? %>
-                <%= link_to 'Reviewable', document_review_path(document), method: :post, :class => 'btn btn-default btn-sm active' %>
-              <% else %>
-                <%= link_to 'Reviewable', document_review_path(document), method: :post, :class => 'btn btn-default btn-sm' %>
-              <% end %>
-
-
-              <% if document.published? %>
-                <%= link_to 'Publishable', document_publish_path(document), method: :post, :class => 'btn btn-default btn-sm active' %>
-              <% else %>
-                <%= link_to 'Publishable', document_publish_path(document), method: :post, :class => 'btn btn-default btn-sm' %>
-              <% end %>
-
-
-              <% if document.archived? %>
-                <%= link_to 'Hidden', document_archive_path(document), method: :post, :class => 'btn btn-default btn-sm active' %>
-              <% else %>
-                <%= link_to 'Hidden', document_archive_path(document), method: :post, :class => 'btn btn-default btn-sm' %>
-              <% end %>
-          </div>
-          <% else %>
-            <%= document.state %>
-          <% end %>
+          <%= document.state %>
         </td>
         <td class="button-column">
           <% if can? :update, document %>

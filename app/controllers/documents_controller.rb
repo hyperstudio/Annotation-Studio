@@ -1,19 +1,18 @@
 require 'json'
 
 class DocumentsController < ApplicationController
-  before_filter :find_document, :only => [:show, :set_default_state, :preview, :annotatable, :review, :publish, :export, :archive, :snapshot, :destroy, :edit, :update]
-  before_filter :authenticate_user!
+  before_action :find_document, :only => [:show, :set_default_state, :preview, :annotatable, :review, :publish, :export, :archive, :snapshot, :destroy, :edit, :update]
+  before_action :authenticate_user!
 
   load_and_authorize_resource :except => :create
 
   # GET /documents
   # GET /documents.json
   def index
-
-    if params[:docs] != 'assigned' && params[:docs] != 'created' && params[:docs] != 'all'
+    if params.permit(:docs)[:docs] != 'assigned' && params.permit(:docs)[:docs] != 'created' && params.permit(:docs)[:docs] != 'all'
       document_set = 'assigned'
     else
-      document_set = params[:docs]
+      document_set = params.permit(:docs)[:docs]
     end
 
     @tab_state = { document_set => 'active' }
@@ -208,7 +207,7 @@ class DocumentsController < ApplicationController
     end
   end
 
-    before_filter :prepare_for_mobile
+    before_action :prepare_for_mobile
 
   def prepare_for_mobile
     session[:mobile_param] = params[:mobile] if params[:mobile]

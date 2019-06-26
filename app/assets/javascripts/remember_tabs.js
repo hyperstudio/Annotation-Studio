@@ -12,7 +12,7 @@ $(function () {
 				var arr = key.split(":");
 				var tabRow = $('body#' + arr[0] + ' ' + '#' + arr[1]);
 				if (tabRow.length > 0) {
-					var tab = tabRow.find("a[href=" + tabPositions[key] + ']');
+					var tab = tabRow.find("a[href='" + tabPositions[key] + "']");
 					if (tab.length > 0)
 						tab.tab('show');
 				}

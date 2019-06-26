@@ -1,5 +1,5 @@
 class ApiController < ApplicationController	
-  before_filter :doorkeeper_authorize!
+  before_action :doorkeeper_authorize!
   respond_to    :json
 
   # GET /me.json

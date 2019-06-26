@@ -1,5 +1,5 @@
 class PublicDocumentsController < ApplicationController
-  skip_before_filter :authenticate_user!, :only => [:show, :index]
+  skip_before_action :authenticate_user!, :only => [:show, :index]
 
   def show
     @now = DateTime.current().to_time.iso8601
@@ -21,7 +21,7 @@ class PublicDocumentsController < ApplicationController
     end
   end
 
-  before_filter :prepare_for_mobile
+  before_action :prepare_for_mobile
 
   def prepare_for_mobile
     session[:mobile_param] = params[:mobile] if params[:mobile]

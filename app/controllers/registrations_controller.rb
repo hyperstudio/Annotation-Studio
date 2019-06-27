@@ -1,5 +1,6 @@
 class RegistrationsController < Devise::RegistrationsController
 
+	helper DeviseMailerUrlHelper
 	protected
 
 	def update_resource(resource, params)
@@ -10,4 +11,3 @@ class RegistrationsController < Devise::RegistrationsController
 		end
 	end
 end
-

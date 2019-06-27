@@ -1,5 +1,30 @@
-<!-- documents/_leftnav.html.erb -->
+<!-- public_documents/_leftnav.html.erb -->
 <% if params[:action] == 'show' %>
+<h4>Info</h4>
+<ul class="nav navmenu-nav">
+  <li>Status:
+    <% if @document.state == "draft" %>
+      Draft <i class="glyphicon glyphicon-pencil"></i>
+    <% elsif @document.state == "annotatable" %>
+      Published <i class="glyphicon glyphicon-comment"></i>
+    <% elsif @document.state == "archived" %>
+      Archived <i class="glyphicon glyphicon-folder-close"></i>
+    <% end %>
+  </li>
+<% if ! @document.author.nil? %>
+  <li>Author: <%= @document.author %></li>
+<% end %>
+<% if ! @document.publisher.nil? %>
+  <li>Publisher: <%= @document.publisher %></li>
+<% end %>
+<% if ! @document.publication_date.nil? %>
+  <li>Publication date: <%= @document.publication_date %></li>
+<% end %>
+<% if ! @document.edition.nil? %>
+  <li>Edition/Volume: <%= @document.edition %></li>
+<% end %>
+</ul>
+
 <h4>Chapters</h4>
 <ul class="nav navmenu-nav" id="chapternav">
 <%= @document.chapters.try(:html_safe) %>

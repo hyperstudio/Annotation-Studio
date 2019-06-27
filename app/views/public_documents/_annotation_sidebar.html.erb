@@ -7,24 +7,28 @@ var groups = [];
 var subgroups = [];
 var annotatorOptions = {'readOnly': 'true'};
 var filter_user = "<%= @document.user.email %>";
-var token = '';
+var token = '<%= session["jwt"] %>';
 var annotation_username = "<%= @document.user.first_name_last_initial %>";
 var sidebar_sort_editable = false;
 var mobile_device = <%= mobile_device? -%>;
 var search_context = 'public';
+var api_url = '<%= ENV["API_URL"] %>';
+var doc_uri = [location.protocol, '//', location.host, location.pathname].join('');
 
 var plugin_options = function() {
   return {
     Filter: false,
     Auth: {
-      token: '<%= session["guest_jwt"] %>'
+      token: token
     },
     Store: {
-      prefix: '<%= ENV["API_URL"] %>',
+      prefix: api_url,
       annotationData: {
-        'uri': [location.protocol, '//', location.host, location.pathname].join(''),
+        'uri': doc_uri,
+        "groups": groups,
+        "subgroups": subgroups
       },
-      loadFromSearch: annotation_studio.loadOptions({ mode: 'user' })
+      loadFromSearch: annotation_studio.loadOptions({ mode: default_state[0], limit: 100 })
     },
     Markdown: false, // use RichText instead
     AnnotateItPermissions: false, // this is built into the kitchen sink, so cancel it

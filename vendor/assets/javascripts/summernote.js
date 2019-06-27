@@ -3760,7 +3760,7 @@ var Editor = /** @class */ (function () {
             })(idx);
             this.context.memo('help.formatH' + idx, this.lang.help['formatH' + idx]);
         }
-        
+
         this.insertParagraph = this.wrapCommand(function () {
             _this.typing.insertParagraph(_this.editable);
         });
@@ -7312,4 +7312,3 @@ $$1.summernote = $$1.extend($$1.summernote, {
 });
 
 })));
-//# sourceMappingURL=summernote.js.map

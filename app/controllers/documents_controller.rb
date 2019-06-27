@@ -1,19 +1,19 @@
 require 'json'
 
 class DocumentsController < ApplicationController
-  before_filter :find_document, :only => [:show, :set_default_state, :preview, :annotatable, :review, :publish, :export, :archive, :snapshot, :destroy, :edit, :update]
-  before_filter :authenticate_user!
+  before_action :find_document, :only => [:show, :set_default_state, :preview, :annotatable, :review, :publish, :export, :archive, :snapshot, :destroy, :edit, :update]
+  before_action :authenticate_user!
 
   load_and_authorize_resource :except => :create
 
   # GET /documents
   # GET /documents.json
   def index
-
-    if params[:docs] != 'assigned' && params[:docs] != 'created' && params[:docs] != 'all'
+    whitelisted = params.permit(:docs, :page, :group)
+    if !%w[ assigned created all ].include?(whitelisted[:docs])
       document_set = 'assigned'
     else
-      document_set = params[:docs]
+      document_set = whitelisted[:docs]
     end
 
     @tab_state = { document_set => 'active' }
@@ -24,15 +24,15 @@ class DocumentsController < ApplicationController
     per_page = 20
 
     if document_set == 'assigned'
-      @documents = Document.active.tagged_with(current_user.rep_group_list, :any =>true).paginate(:page => params[:page], :per_page => per_page).order('created_at DESC')
+      @documents = Document.active.tagged_with(current_user.rep_group_list, :any =>true).paginate(:page => whitelisted[:page], :per_page => per_page).order('created_at DESC')
     elsif document_set == 'created'
-      @documents = current_user.documents.paginate(:page => params[:page], :per_page => per_page).order('created_at DESC')
+      @documents = current_user.documents.paginate(:page => whitelisted[:page], :per_page => per_page).order('created_at DESC')
     elsif can? :manage, Document && document_set == 'all'
-      @documents = Document.paginate(:page => params[:page], :per_page => per_page ).order("created_at DESC")
+      @documents = Document.paginate(:page => whitelisted[:page], :per_page => per_page ).order("created_at DESC")
     end
 
-    if params[:group]
-      @documents = @documents.tagged_with(params[:group]).paginate(:page => params[:page], :per_page => per_page).order('created_at DESC')
+    if whitelisted[:group]
+      @documents = @documents.tagged_with(whitelisted[:group]).paginate(:page => whitelisted[:page], :per_page => per_page).order('created_at DESC')
     end
 
     respond_to do |format|
@@ -208,7 +208,7 @@ class DocumentsController < ApplicationController
     end
   end
 
-    before_filter :prepare_for_mobile
+    before_action :prepare_for_mobile
 
   def prepare_for_mobile
     session[:mobile_param] = params[:mobile] if params[:mobile]

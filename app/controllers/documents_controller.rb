@@ -10,7 +10,11 @@ class DocumentsController < ApplicationController
   # GET /documents.json
   def index
     whitelisted = params.permit(:docs, :page, :group)
+<<<<<<< HEAD
     if !%w[ assigned created all ].include?(whitelisted[:docs])
+=======
+    if whitelisted[:docs] != 'assigned' && whitelisted[:docs] != 'created' && whitelisted[:docs] != 'all'
+>>>>>>> 61013d529c4e47c3fa849cbb885c0be71b79428f
       document_set = 'assigned'
     else
       document_set = whitelisted[:docs]

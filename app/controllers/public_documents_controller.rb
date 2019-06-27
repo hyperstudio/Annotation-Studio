@@ -1,5 +1,9 @@
 class PublicDocumentsController < ApplicationController
+<<<<<<< HEAD
   skip_before_action :authenticate_user!, :only => [:show, :index], :raise => false
+=======
+  skip_before_action :authenticate_user!, :only => [:show, :index]
+>>>>>>> 61013d529c4e47c3fa849cbb885c0be71b79428f
 
   def show
     @now = DateTime.current().to_time.iso8601

@@ -97,24 +97,14 @@ Widget.AnnotationView = Backbone.View.extend({
 			this.model.set("class", groups[0]);
 		if (txt !== "" && txt !== null) { // This annotation contains a comment
 			this.mdConvert();
-			//if (txt.length > 50) {
-			//	this.model.set("text" , txt.substring(0,50) + "...");
-			//}
-			//else{
 			if (txt.substring(0,3) === "<p>" && txt.slice(-4) === '</p>')
 				txt = txt.slice(3,-4);
 			this.model.set("text" , txt);
-			//}
 			$(this.el).html(Mustache.to_html(this.commenttemplate, this.model.toJSON()));
 		}
 		else { // This is just a highlight -- no contents
 			if (qt !== "" && qt !== null) { // This annotation contains a comment
-				//if (qt.length > 50) {
-				//	this.model.set("quote" , qt.substring(0,50) + "...");
-				//}
-				//else {
 					this.model.set("quote" , qt);
-				//}
 				$(this.el).html(Mustache.to_html(this.highlighttemplate, this.model.toJSON()));
 			}
 		}
@@ -131,27 +121,18 @@ Widget.AnnotationView = Backbone.View.extend({
 
 // Annotation List View
 Widget.AnnotationListView = Backbone.View.extend({
-  // el: $("ul#" + options.container),
 	initialize: function (options) {
     this.el = $("ul#"+ options.container);
 	},
 	render: function () {
 		// Clear out existing annotations
-		// $(this.el).find(".annotation-item").remove();
     this.$el.empty();
 		var self = this;
     // Walk throught the list, and render markdown in the user comment first.
 		this.collection.each(function(ann) {
 			var annView = new Widget.AnnotationView({model: ann});
-      // console.log(annView.render().el);
-      // console.log(self.el);
       self.el.append(annView.render().el);
 		});
-
-    // this.collection.each(function(contact) { // iterate through the collection
-    //   var contactView = new ContactView({model: contact});
-    //   self.$el.append(contactView.el);
-    // });
 
     return self;
 

@@ -161,8 +161,12 @@ Widget.App = Backbone.Router.extend({
 			var parent = el.closest(".panel");
 			var tab = parent.find(".nav-tabs a[href='#" + tabName + "']");
 			var badge = tab.find(".badge");
-			badge.text(annotationsList.collection.length);
-			// console.info("Remote: "+ Widget.annotations.toJSON());
+
+			// List the count on dashboard without re-querying API just to get count.
+			if(annotationsList.collection.length >= 10 && parent[0].id == "dashboard-annotations")
+				badge.text("10+");
+			else
+				badge.text(annotationsList.collection.length);
 		});
 	}
 });

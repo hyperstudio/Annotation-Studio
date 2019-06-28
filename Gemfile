@@ -92,5 +92,5 @@ gem 'exception_notification'
 
 gem "rest-client"
 
-gem "doorkeeper"
+gem "doorkeeper", "5.0.0"
 gem "octokit", "~> 4.0"

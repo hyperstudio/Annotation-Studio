@@ -266,7 +266,7 @@ GEM
       actionpack (>= 4.1)
       activesupport (>= 4.1)
     hashie (3.6.0)
-    high_voltage (2.1.0)
+    high_voltage (2.4.0)
     highline (1.7.2)
     html_writer (0.2.0)
     http-cookie (1.0.2)
@@ -535,7 +535,7 @@ DEPENDENCIES
   fog
   friendly_id
   gon (= 6.2.0)
-  high_voltage (~> 2.1.0)
+  high_voltage (= 2.4.0)
   highline
   jbuilder (= 2.7.0)
   jquery-rails (= 4.3.5)

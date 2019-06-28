@@ -26,7 +26,7 @@
   <% end %>
 
   <% if current_page?(groups_path) %>
-    <li class="active"><%= ENV["CLASS_TERM_PLURAL"] %> and <%= ENV["GROUP_TERM_PLURAL"] %></li>
+    <li class="active"><%= ENV["CLASS_TERM_PLURAL"] %>.capitalize and <%= ENV["GROUP_TERM_PLURAL"] %></li>
   <% end %>
 
   <% if current_page?(edit_user_registration_path) %>

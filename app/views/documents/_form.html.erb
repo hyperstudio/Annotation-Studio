@@ -84,7 +84,7 @@
 				  </div><!-- end span 6 -->
 
 			  <div class="col-md-6">
-          	<h4><%= ENV["CLASS_TERM_PLURAL"] %></h4>
+          	<h4><%= ENV["CLASS_TERM_PLURAL"].capitalize %></h4>
           	<p class="help-block">Enter the <%= ENV["CLASS_TERM_PLURAL"] %> to which you wish to assign this document, <strong>and press enter after each.</strong></p>
           	<div class="form-group">
           	<%= f.text_field :rep_group_list, :value => @document.rep_group_list.join(', '), :class => 'form-control', 'data-role' => "tagsinput", 'placeholder' => ENV["CLASS_TERM_PLURAL"] %>

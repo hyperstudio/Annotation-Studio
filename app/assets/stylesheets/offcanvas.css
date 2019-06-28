@@ -157,6 +157,11 @@ body#documents.show .navbar button#leftburger,body#documents.show .navbar button
 	z-index: 2000;
 }
 
+.navbar-fixed-top,
+.navbar-fixed-bottom {
+  z-index: 2000;
+}
+
 ol.breadcrumb.second-line {
 	margin: 4px 0 0 0;
 	position: relative;

@@ -17,7 +17,7 @@ gem 'repertoire-groups', '0.0.1', :path => 'vendor/repertoire-groups-0.0.1'
 gem 'acts-as-taggable-on', '4.0.0'
 gem "friendly_id"
 gem "babosa"
-gem 'high_voltage', '2.4.0'
+gem 'high_voltage', '3.1.0'
 gem "aws-sdk", '< 2.0'
 gem "paperclip"
 gem "delayed_job_active_record", '4.1.3'

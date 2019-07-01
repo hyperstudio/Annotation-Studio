@@ -72,6 +72,53 @@ p.help-block {
   margin-top:10px;
 }
 
+div.form-group {
+  margin-top: 20px;
+}
+
+table.help-block {
+  display: inline-table;
+  float: right;
+  margin: 0 0 0 auto;
+}
+
+table.help-block tr th {
+  font-style: italic;
+  font-weight: normal;
+  padding-bottom: 5px;
+}
+
+table.help-block .glyphicon.glyphicon-ok {
+  color: rgb(115, 170, 115);
+}
+
+table.help-block .glyphicon.glyphicon-remove {
+  color: rgb(170, 115, 115);
+}
+
+table.help-block tr th:first-child {
+  font-style:normal;
+}
+table.help-block tr:first-child th {
+  font-style:normal;
+}
+
+table.help-block tr th:nth-child(n+2) {
+  text-align:center;
+  padding-left:30px;
+}
+
+div.draftnote{
+  margin: 30px 0 10px 0;
+  clear:both;
+}
+label.draftnote{
+  text-align: justify;
+  font-weight: normal;
+  padding-left: 20px;
+}
+
+
 div#login, div#blurb {
   margin-top:20px;
 }

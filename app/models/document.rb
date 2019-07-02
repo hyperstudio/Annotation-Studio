@@ -44,10 +44,10 @@ application/pdf
   has_attached_file :upload
   validates_attachment_content_type :upload, content_type: ALLOWED_CONTENT_TYPES
 
-  scope :publicly, -> { where(:state => 'review').order("id desc") }
-  scope :active, -> { where("state != ?", 'archived').order("id desc") }
+  scope :publicly, -> { where(:state => 'public').order("id desc") }
+  scope :active, -> { where("state != ?", 'deleted').order("id desc") }
 
-  STATES = %w{ pending draft annotatable review published archived }
+  STATES = %w{ pending draft published archived public }
 
   STATES.each do |state|
     define_method("#{state}?") do

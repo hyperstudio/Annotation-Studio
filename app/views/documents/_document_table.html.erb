@@ -25,16 +25,14 @@
         </td>
         <td>
           <% case document.state %>
-          <% when 'review' %>
-            <i class="glyphicon glyphicon-eye-open" title="<%= document.state %>"></i>
           <% when 'draft' %>
             <i class="glyphicon glyphicon-pencil" title="<%= document.state %>"></i>
-          <% when 'annotatable' %>
-            <i class="glyphicon glyphicon-comment" title="<%= document.state %>"></i>
           <% when 'published' %>
-            <i class="glyphicon glyphicon-book" title="<%= document.state %>"></i>
+            <i class="glyphicon glyphicon-comment" title="<%= document.state %>"></i>
           <% when 'archived' %>
             <i class="glyphicon glyphicon-folder-close" title="<%= document.state %>"></i>
+          <% when 'public' %>
+            <i class="glyphicon glyphicon-globe" title="<%= document.state %>"></i>
           <% else %>
             <%= document.state %>
           <% end %>

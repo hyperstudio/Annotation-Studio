@@ -1,7 +1,7 @@
 require 'json'
 
 class DocumentsController < ApplicationController
-  before_action :find_document, :only => [:show, :set_default_state, :preview, :annotatable, :review, :publish, :export, :archive, :snapshot, :destroy, :edit, :update]
+  before_action :find_document, :only => [:show, :set_default_state, :preview, :archive, :publicize, :publish, :export, :snapshot, :destroy, :edit, :update]
   before_action :authenticate_user!
 
   load_and_authorize_resource :except => :create
@@ -148,38 +148,25 @@ class DocumentsController < ApplicationController
     end
   end
 
-  def annotatable
-
-    respond_to do |format|
-      if @document.update_attribute(:state, 'annotatable')
-        format.html { redirect_to documents_url, notice: 'Document is now annotatable.', anchor: 'created'}
-      else
-        format.html { render action: "edit" }
-      end
-    end
-  end
-
-  def review
-
-    respond_to do |format|
-      if @document.update_attribute(:state, 'review')
-        format.html { redirect_to documents_url, notice: 'Document is now reviewable.', anchor: 'created'}
-      else
-        format.html { render action: "edit" }
-      end
-    end
-  end
-
   def publish
     respond_to do |format|
       if @document.update_attribute(:state, 'published')
-        format.html { redirect_to documents_url, notice: 'Document is now publishable.', anchor: 'created'}
+        format.html { redirect_to documents_url, notice: 'Document is now published.', anchor: 'created'}
       else
         format.html { render action: "edit" }
       end
     end
   end
 
+  def publicize
+    respond_to do |format|
+      if @document.update_attribute(:state, 'public')
+        format.html { redirect_to documents_url, notice: 'Document is now public.', anchor: 'created'}
+      else
+        format.html { render action: "edit" }
+      end
+    end
+  end
   #Export HTML
   def export
     send_data(@document.snapshot, filename: "#{@document.title}.html")

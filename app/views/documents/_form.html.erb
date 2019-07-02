@@ -51,7 +51,7 @@
               <table class="help-block">
                 <tr><th></th><th><i class="glyphicon glyphicon-eye-open"></i> View</th><th><i class="glyphicon glyphicon-edit"></i> Edit</th><th><i class="glyphicon glyphicon-comment"></i> Annotate</th></tr>
                 <tr>
-                  <th><i class="glyphicon glyphicon-user"></i> You</th>
+                  <th><i class="glyphicon glyphicon-user"></i> Me</th>
                   <th><i class="glyphicon glyphicon-ok"></i></th>
                   <th><i class="glyphicon glyphicon-ok"></i></th>
                   <th><i class="glyphicon glyphicon-remove"></i></th>
@@ -62,12 +62,14 @@
                   <th><i class="glyphicon glyphicon-remove"></i></th>
                   <th><i class="glyphicon glyphicon-remove"></i></th>
                 </tr>
-                <tr>
-                  <th><i class="glyphicon glyphicon-globe"></i> Public</th>
-                  <th><i class="glyphicon glyphicon-remove"></i></th>
-                  <th><i class="glyphicon glyphicon-remove"></i></th>
-                  <th><i class="glyphicon glyphicon-remove"></i></th>
-                </tr>
+                <% if can? :publish, Document %>
+                  <tr>
+                    <th><i class="glyphicon glyphicon-globe"></i> Public</th>
+                    <th><i class="glyphicon glyphicon-remove"></i></th>
+                    <th><i class="glyphicon glyphicon-remove"></i></th>
+                    <th><i class="glyphicon glyphicon-remove"></i></th>
+                  </tr>
+                <% end %>
               </table>
                 <div class="radio">
                   <label>
@@ -77,30 +79,35 @@
                 </div>
                 <div class="radio">
                   <label>
-                    <%= f.radio_button :state, "annotatable", checked: @document.annotatable? %>
+                    <%= f.radio_button :state, "published", checked: @document.published? %>
                     <i class="glyphicon glyphicon-comment"></i> Published <b>*</b>
                   </label>
                 </div>
-                <% if can? :review, Document %>
+                <% if can? :archive, Document %>
                 <div class="radio">
                   <label>
-                    <%= f.radio_button :state, "review", checked: @document.review? %>
-                    <i class="glyphicon glyphicon-eye-open"></i> Public (Review) <b>*</b>
+                    <%= f.radio_button :state, "archived", checked: @document.archived? %>
+                    <i class="glyphicon glyphicon-folder-close"></i> Archived <b>*</b>
                   </label>
                 </div>
                 <% end %>
-                <% if can? :publish, Document %>
+                <% if current_user.has_role? :admin %>
                 <div class="radio">
                   <label>
-                    <%= f.radio_button :state, "published", checked: @document.published? %>
-                    <i class="glyphicon glyphicon-book"></i> Public (Archived) <b>*</b>
+                    <%= f.radio_button :state, "public", checked: @document.public? %>
+                    <i class="glyphicon glyphicon-globe"></i> Public <b>*</b>
                   </label>
                 </div>
                 <% end %>
           	</div>
             <div class="draftnote"><b>* Note:</b>
+              <% if current_user.has_role? :admin %>
+                <% @docStatusAdmin = "a status marked with an asterisk (*)" %>
+              <% else %>
+                <% @docStatusAdmin = "Published or Archived" %>
+              <% end %>
               <label class="draftnote">
-              If you set the document to a status marked with an asterisk (*), you will no longer be able to edit its content, and you cannot revert back to Draft. You will still be able to edit metadata and status. Make sure your document is finalized before choosing a status other than Draft.
+              If you set the document to <%= @docStatusAdmin %>, you will no longer be able to edit its content, and you cannot revert back to Draft. You will still be able to edit metadata and status. Make sure your document is finalized before choosing a status other than Draft.
               </label>
             </div>
 
@@ -188,6 +195,17 @@
               function(){
                 manageTable(permissionsTable);
               });
+
+            // Show or hide "Classes" permissions depending on if classes are assigned
+            showHideClasses(permissionsTable);
+            var tagFields = $('.bootstrap-tagsinput');
+            var tagLabels = $('.bootstrap-tagsinput span.tag.label.label-info');
+            tagFields.bind("keyup change click", function(){showHideClasses(permissionsTable);});
+            tagLabels.bind("keyup change click",function(){showHideClasses(permissionsTable);});
+
+            <% if !(current_user.has_role? :admin) %>
+              $(permissionsTable.rows[3]).children().attr('style','display:none');
+            <% end %>
           });
 
           function manageTable(table){
@@ -195,11 +213,11 @@
             var cell;
             if($('#document_state_draft').prop("checked") == true)
               tableState = '110100000'
-            else if($('#document_state_annotatable').prop("checked") == true)
-              tableState = '101101000';
-            else if($('#document_state_review').prop("checked") == true)
-              tableState = '101101100';
             else if($('#document_state_published').prop("checked") == true)
+              tableState = '101101000';
+            else if($('#document_state_archived').prop("checked") == true)
+              tableState = '100100000';
+            else if($('#document_state_public').prop("checked") == true)
               tableState = '100100100';
             for (var j = 0; j < 3; j++){
               for(var k = 0; k < 3; k++){
@@ -210,6 +228,13 @@
                   cell.attr('class','glyphicon glyphicon-remove');
               }
             }
+          }
+
+          function showHideClasses(table){
+            if ($('.bootstrap-tagsinput span.tag.label.label-info').length == 0)
+              $(table.rows[2]).children().attr('style','display:none');
+            else
+              $(table.rows[2]).children().attr('style','');
           }
 
           </script>

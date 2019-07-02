@@ -5,10 +5,12 @@
   <li>Status:
     <% if @document.state == "draft" %>
       Draft <i class="glyphicon glyphicon-pencil"></i>
-    <% elsif @document.state == "annotatable" %>
+    <% elsif @document.state == "published" %>
       Published <i class="glyphicon glyphicon-comment"></i>
     <% elsif @document.state == "archived" %>
       Archived <i class="glyphicon glyphicon-folder-close"></i>
+    <% elsif @document.state == "public" %>
+      Archived <i class="glyphicon glyphicon-globe"></i>
     <% end %>
   </li>
 <% if ! @document.author.nil? %>

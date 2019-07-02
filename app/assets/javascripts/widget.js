@@ -31,18 +31,7 @@ Widget.RemoteAnnotationList = Backbone.Collection.extend({
 		// sort first by document title, which we don't readily have in the object, so we add it if needed.
 		// then sort by time in reverse order. Since the sort rank is returned as a string, we can't just return a negative number,
 		// so we subtract the time from a really large number.
-		var created = 5000000000000 - moment(annotation.get("created"));
-		var title = annotation.get("title");
-		if (!title) {
-			var slug = annotation.get("uri");
-			if (slug) {
-				slug = slug.split("/");
-				slug = slug[slug.length - 1];
-				title = documentList[slug];
-				annotation.set('title', title);
-			}
-		}
-		return annotation.get("title") + created;
+		return 5000000000000 - moment(annotation.get("created"));
 	},
 	initialize: function (options, endpoint, token) {
 		this.url = endpoint + "/search";
@@ -97,24 +86,14 @@ Widget.AnnotationView = Backbone.View.extend({
 			this.model.set("class", groups[0]);
 		if (txt !== "" && txt !== null) { // This annotation contains a comment
 			this.mdConvert();
-			//if (txt.length > 50) {
-			//	this.model.set("text" , txt.substring(0,50) + "...");
-			//}
-			//else{
 			if (txt.substring(0,3) === "<p>" && txt.slice(-4) === '</p>')
 				txt = txt.slice(3,-4);
 			this.model.set("text" , txt);
-			//}
 			$(this.el).html(Mustache.to_html(this.commenttemplate, this.model.toJSON()));
 		}
 		else { // This is just a highlight -- no contents
 			if (qt !== "" && qt !== null) { // This annotation contains a comment
-				//if (qt.length > 50) {
-				//	this.model.set("quote" , qt.substring(0,50) + "...");
-				//}
-				//else {
 					this.model.set("quote" , qt);
-				//}
 				$(this.el).html(Mustache.to_html(this.highlighttemplate, this.model.toJSON()));
 			}
 		}
@@ -131,27 +110,18 @@ Widget.AnnotationView = Backbone.View.extend({
 
 // Annotation List View
 Widget.AnnotationListView = Backbone.View.extend({
-  // el: $("ul#" + options.container),
 	initialize: function (options) {
     this.el = $("ul#"+ options.container);
 	},
 	render: function () {
 		// Clear out existing annotations
-		// $(this.el).find(".annotation-item").remove();
     this.$el.empty();
 		var self = this;
     // Walk throught the list, and render markdown in the user comment first.
 		this.collection.each(function(ann) {
 			var annView = new Widget.AnnotationView({model: ann});
-      // console.log(annView.render().el);
-      // console.log(self.el);
       self.el.append(annView.render().el);
 		});
-
-    // this.collection.each(function(contact) { // iterate through the collection
-    //   var contactView = new ContactView({model: contact});
-    //   self.$el.append(contactView.el);
-    // });
 
     return self;
 
@@ -180,8 +150,12 @@ Widget.App = Backbone.Router.extend({
 			var parent = el.closest(".panel");
 			var tab = parent.find(".nav-tabs a[href='#" + tabName + "']");
 			var badge = tab.find(".badge");
-			badge.text(annotationsList.collection.length);
-			// console.info("Remote: "+ Widget.annotations.toJSON());
+
+			// List the count on dashboard without re-querying API just to get count.
+			if(annotationsList.collection.length >= 10 && parent[0].id == "dashboard-annotations")
+				badge.text("10+");
+			else
+				badge.text(annotationsList.collection.length);
 		});
 	}
 });

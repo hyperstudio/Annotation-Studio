@@ -40,9 +40,7 @@ var annotationStudioConfig = {
   apiURL: '<%= @api_url %>'
 };
 
-<% if @document.processed? and !@document.draft? %>
-  $("#toolsmenu").offcanvas('show');
-<% else %>
+<% if !@document.processed? or @document.draft? %>
   $("#rightburger").attr("disabled", true);
 <% end %>
 

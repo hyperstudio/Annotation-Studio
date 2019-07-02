@@ -17,8 +17,7 @@ AnnotationStudio::Application.routes.draw do
     resources :annotations
     post :set_default_state
     post :publish
-    post :annotatable
-    post :review
+    post :publicize
     post :archive
     post :snapshot
     get :export

@@ -4713,7 +4713,7 @@ var CodeView = /** @class */ (function () {
     return CodeView;
 }());
 
-var EDITABLE_PADDING = 24;
+var EDITABLE_PADDING = 57;
 var Statusbar = /** @class */ (function () {
     function Statusbar(context) {
         this.$document = $$1(document);

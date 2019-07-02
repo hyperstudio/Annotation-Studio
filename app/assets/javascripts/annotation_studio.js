@@ -290,7 +290,8 @@ jQuery(function($) {
   $('#tagsearchbox').on('itemAdded', annotation_studio.tagFilter);
   $('#tagsearchbox').on('itemRemoved', annotation_studio.tagFilter);
 
-  $(window).scroll(lazyShowAndHideAnnotations);
+  if(sidebar)
+    $(window).scroll(lazyShowAndHideAnnotations);
 
   // Toggle filtered variable
   $('#visibleannotations').on('click', function(){

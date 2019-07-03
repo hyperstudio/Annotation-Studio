@@ -203,8 +203,9 @@
             tagFields.bind("keyup change click", function(){showHideClasses(permissionsTable);});
             tagLabels.bind("keyup change click",function(){showHideClasses(permissionsTable);});
 
-            <% if !(current_user.has_role? :admin) %>
+            <% unless (current_user.has_role? :admin) %>
               $(permissionsTable.rows[3]).children().attr('style','display:none');
+              $(permissionsTable.rows[2]).children().attr('style','border-bottom:1px solid #BBB');
             <% end %>
           });
 
@@ -231,10 +232,14 @@
           }
 
           function showHideClasses(table){
-            if ($('.bootstrap-tagsinput span.tag.label.label-info').length == 0)
+            if ($('.bootstrap-tagsinput span.tag.label.label-info').length == 0){
               $(table.rows[2]).children().attr('style','display:none');
-            else
-              $(table.rows[2]).children().attr('style','');
+              $(table.rows[1]).children().attr('style','border-bottom:1px solid #BBB');
+            }
+            else{
+              $(table.rows[2]).children().attr('style','border-bottom:1px solid #BBB');
+              $(table.rows[1]).children().attr('style','');
+            }
           }
 
           </script>

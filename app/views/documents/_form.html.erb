@@ -233,12 +233,12 @@
 
           function showHideClasses(table){
             if ($('.bootstrap-tagsinput span.tag.label.label-info').length == 0){
-              $(table.rows[2]).children().attr('style','display:none');
-              $(table.rows[1]).children().attr('style','border-bottom:1px solid #BBB');
+              $(table.rows[2]).attr('style','display:none');
+              $(table.rows[1]).attr('style','border-bottom:1px solid #BBB');
             }
             else{
-              $(table.rows[2]).children().attr('style','border-bottom:1px solid #BBB');
-              $(table.rows[1]).children().attr('style','');
+              $(table.rows[2]).attr('style','border-bottom:1px solid #BBB');
+              $(table.rows[1]).attr('style','border-bottom: none');
             }
           }
 

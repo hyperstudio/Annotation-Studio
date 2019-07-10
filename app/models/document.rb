@@ -41,6 +41,9 @@ application/pdf
   # acts_as_taggable_on :rep_group, :courses, :semesters, :genres, :categories
   acts_as_taggable_on :rep_privacy, :rep_group
 
+  #new groups table structure:
+  has_and_belongs_to_many :groups
+
   has_attached_file :upload
   validates_attachment_content_type :upload, content_type: ALLOWED_CONTENT_TYPES
 

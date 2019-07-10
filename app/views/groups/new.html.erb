@@ -1,0 +1,22 @@
+<h1> Create New Group </h1>
+
+Enter new group info
+
+<%= form_for @group do |f| %>
+	<p> 
+		<%= f.label :group %>
+		<%= f.text_field :name %> <br />
+	</p>
+
+	<p>
+		<%= f.submit %>
+
+	</p>
+<% end %>
+
+
+
+
+
+
+

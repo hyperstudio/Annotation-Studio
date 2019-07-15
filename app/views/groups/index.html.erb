@@ -1,1 +1,75 @@
-<h1> New groups page </h1>
+<h1> Groups </h1>
+
+<div id= "join" >
+Join Group by entering name (case sensitive)
+    <%= form_tag({:controller=>'groups', :action => 'index'}, {:name => 'old-join-method'}) do %>
+      <% label_tag 'groupName' %>
+      <%= text_field_tag 'groupName'%>
+      <%= submit_tag 'Join'%>
+    <% end %>
+ </div>
+
+ <!-- Hidden form: Enter token to join group. PLEASE BE CAREFUL OF EXTRA SPACES -->
+		<%= form_tag({:controller=>'invites', :action => 'join_via_token'}, {:name => 'join-via-token', :style => 'display: none'}) do %>
+			<% if params[:invite_token] %>
+				<%= text_field_tag 'token', params[:invite_token] %>
+					<script>
+						window.onload = function(){
+							document.forms['join-via-token'].submit();
+						}
+					</script>
+			<% else %>
+		    <%= text_field_tag 'token' %>
+		    <% end %>
+		    <%= submit_tag 'Submit' %>
+		<% end %>
+
+ <div>
+<table class="group-table">
+	<tr class="group-table-row">
+		<th> Name </th>
+		<th> Role </th>
+		<th> Actions </th>
+	</tr>
+	<% if !current_user.groups.empty? %>
+		<% current_user.groups.each do |g| %>
+			<tr class="group-table-row"> 
+				<td> <%= link_to g.name, :controller => "groups", :action=> "show", :id => g.id %></td>
+				<td> <%= Membership.find_by(group_id: g.id, user_id: current_user.id).role %> </td> 
+				<td> 
+					<% unless is_owner(g.id) %>
+						<%= link_to "Leave", :controller=> "groups", :action =>"leave", :id => g.id %>
+					<% end %>
+
+					<% unless is_member(g.id) %>
+						<%= link_to "Edit", :controller=> "groups", :action => "edit", :id => g.id %>
+					<% end %>
+				</td>
+			</tr>
+		<% end %>
+	<% end %>
+</table>
+</div>
+
+
+	<style>
+	.group-table {
+	  border-collapse: collapse;
+	  width: 50%;
+	}
+
+	td, th {
+	  border: 2px solid #dddddd;
+	  text-align: left;
+	  padding: 5px;
+	}
+
+	.group-table-row:nth-child(even) {
+	  background-color: #ced4de;
+	}
+
+	#join{
+		margin-bottom:40px;
+	}
+	</style>
+

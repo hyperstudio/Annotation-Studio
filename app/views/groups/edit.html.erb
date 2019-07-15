@@ -1,0 +1,164 @@
+
+ADD PAGINATION!!!! 
+<% unless is_member(params[:id])%>
+<h1> Editing <%= @group.name %> </h1>
+
+
+<div id="wrapper">
+
+	<div id= "left"> 
+	<h2> Add new Member </h2>
+	<%= form_for @group do |f| %>
+		Email: <%= email_field_tag "email" %>
+	<%= f.submit "Add" %>
+	<% end %> <!-- form_for -->
+	</div> <!-- left -->
+
+
+	<div id="right">
+	<% @i = Invite.find_by(group_id: params[:id]) %>
+
+	<% if @i && (@i.expiration_date.nil? || @i.expiration_date > Time.now) %>
+		<%= label_tag 'Invite Link' %>
+		<%= text_field_tag "Invite Link:", "localhost:3000" + groups_path(:invite_token => @i.token).to_s, 
+		{:size =>40, :class => 'copy-link'} %>
+		<%= button_tag 'Copy', {:class =>'copy-button'}%>
+
+	<% elsif @i && @i.expiration_date <= Time.now %>
+
+		<% puts "token expired, deleted from DB" %>
+		<% @i.destroy %>
+
+		<%= form_for Invite.new , :url => invites_path do |f| %>
+		    <%= f.hidden_field :group_id, :value => params[:id] %>
+		<%= f.label 'Invite Link' %>    
+		<%= f.submit 'Generate'%>
+		<% end %>
+
+	<% else %>
+		
+		<%= form_for Invite.new , :url => invites_path do |f| %>
+		    <%= f.hidden_field :group_id, :value => params[:id] %>
+		<%= f.label 'Invite Link' %>    
+		<%= f.submit 'Generate'%>
+		<% end %>
+	<% end %>
+
+	</div> <!-- right -->
+
+</div> <!-- wrapper -->
+
+<h2> Members </h2>
+<table class="member-table">
+	<tr class="member-table-row">
+		<th> Name </th>
+		<th> Role </th>
+		<th> Actions </th>
+	</tr>
+<% if !@memberships.empty? %>
+	<% @memberships.each do |m| %>
+			<tr class="member-table-row"> 
+				<% @user = User.find(m.user_id) %>
+				<td> <!-- doesn't error check for missing last name -->
+					<%= @user.fullname %></td>
+				<td> <%= m.role %> </td> 
+				<td> 
+					<% unless m.role == "owner" %>
+						<span class= "action remove"> <%= link_to "Remove from Group", :controller => "groups", :action => "remove_member", 
+							:m_id => m.id, :username => @user.fullname %>  </span>
+					<% end %>
+
+					<% if m.role == "member" %>
+						<span class= "action promote"> 
+							<%= link_to "Make Manager", :controller => "groups", :action => "promote", 
+							:m_id => m.id %> 
+						</span>
+					<% end%>
+
+					<% if m.role == "manager" %>
+						<span class= "action demote"> <%= link_to "Demote to Member", :controller => "groups", 
+						:action => "demote", :m_id => m.id %>  </span>
+					<% end %>
+						
+				</td>
+			</tr>
+	<% end %> <!-- end loop -->
+<% end %> <!-- end if -->
+	
+
+</table>
+
+<script>
+	//for invite link copy to clipboard
+	//source: https://stackoverflow.com/questions/400212/how-do-i-copy-to-the-clipboard-in-javascript
+
+	var copyButton = document.querySelector('.copy-button');
+
+	copyButton.addEventListener('click', function(event){
+
+		var copyLink = document.querySelector('.copy-link');
+		copyLink.focus();
+		copyLink.select();
+
+		try{
+			var successful = document.execCommand('copy');
+			var msg = successful ? 'successful' : 'unsuccessful';
+			console.log(msg);
+		} catch (err){
+			console.log('unable to copy')
+		}
+
+	});
+
+</script>
+
+
+
+	<style>
+	.member-table {
+	  border-collapse: collapse;
+	  width: 50%;
+	}
+
+	td, th {
+	  border: 2px solid #dddddd;
+	  text-align: left;
+	  padding: 5px;
+	}
+
+	.member-table-row:nth-child(even) {
+	  background-color: #ced4de;
+	}
+
+	.action {
+		border: 1px solid gray;
+		padding: 3px;
+		margin-left: 3px;
+	}
+
+	.copy-button{
+	background-color:#ffed29;
+	}
+
+	#wrapper{
+		margin: 0 auto;
+		position: relative;
+	}
+
+
+	#right{
+		float:right;
+		padding-right: 30%;
+	}
+
+	#left{
+		width:50%;
+	}
+
+	</style>
+<% else %>
+
+You do not have permission to view this page
+
+<% end %>
+

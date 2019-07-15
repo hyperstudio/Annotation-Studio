@@ -1,4 +1,7 @@
-FactoryGirl.define do  factory :membership do
+FactoryGirl.define do  factory :invite do
+    
+  end
+  factory :membership do
     group_id 1
 user_id 1
 role "MyString"

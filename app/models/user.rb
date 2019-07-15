@@ -19,6 +19,7 @@ class User < ApplicationRecord
   has_many :groups, through: :memberships
   accepts_nested_attributes_for :memberships
 
+
   # Doesn't handle missing values.
   def fullname
     "#{firstname} #{lastname}"

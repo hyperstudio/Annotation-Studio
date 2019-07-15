@@ -23,8 +23,26 @@ class DocumentsController < ApplicationController
 
     per_page = 20
 
+
     if document_set == 'assigned'
-      @documents = Document.active.tagged_with(current_user.rep_group_list, :any =>true).where.not(state: 'draft').paginate(:page => whitelisted[:page], :per_page => per_page).order('created_at DESC')
+      #@documents = Document.active.tagged_with(current_user.rep_group_list, :any =>true).where.not(state: 'draft').paginate(:page => whitelisted[:page], :per_page => per_page).order('created_at DESC')
+
+      #use an array instead of activeRecordAssociation
+      #problem: can't sort documents by creation date
+      #also need to loop through each individual group's docs in order to return document objects
+
+      docList = []
+      current_user.groups.each do |g| 
+        g.documents.where.not(state: 'draft').each do |d|
+          docList << d
+        end
+      end
+      docList = docList.uniq #get rid of duplicates 
+
+      @documents = docList.paginate(:page => whitelisted[:page], :per_page => per_page)
+     
+      
+
     elsif document_set == 'created'
       @documents = current_user.documents.paginate(:page => whitelisted[:page], :per_page => per_page).order('created_at DESC')
     elsif can? :manage, Document && document_set == 'all'
@@ -87,6 +105,14 @@ class DocumentsController < ApplicationController
     @document = Document.new(documents_params)
     @document.user = current_user
 
+    @group = params["groups"] #can only choose one from dropdown rn
+    if @group
+      puts "group id: " + @group.to_s
+      @document.groups << Group.find(@group)
+    end
+
+#for multiple inputs, probably can't use bootstrap because it's doing something else. remember to permit parameter in controller. 
+
     respond_to do |format|
       if @document.save
         if params[:document][:upload].present?
@@ -106,6 +132,19 @@ class DocumentsController < ApplicationController
   # PUT /documents/1.json
   def update
     @document = Document.friendly.find(params[:id])
+    @group = params["groups"] #can only choose one from dropdown rn
+
+    if !@group.empty? 
+      puts "group id: " + @group.to_s
+      begin
+        @document.groups.find(@group) 
+      rescue ActiveRecord::RecordNotFound
+        @document.groups << Group.find(@group)
+        @document.update_attribute("updated_at", Time.now)
+        puts "doc groups updated" 
+      end
+
+    end
 
     respond_to do |format|
       if @document.update_attributes(documents_params)
@@ -209,6 +248,6 @@ private
   def documents_params
     params.require(:document).permit(:title, :state, :chapters, :text, :snapshot, :user_id, :rep_privacy_list,
                                      :rep_group_list, :new_group, :author, :edition, :publisher,
-                                     :publication_date, :source, :rights_status, :upload, :survey_link)
+                                     :publication_date, :source, :rights_status, :upload, :survey_link, groups: :group_id)
   end
 end

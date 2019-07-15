@@ -9,12 +9,33 @@
       <div class="panel-heading">
         <span class="panel-title"><%= link_to "Documents", documents_path %></span>
         <ul class="nav nav-tabs nav-tabs-xs pull-right" id="document-tabs" role="tablist">
-          <li class="active"><a href="#assigned" data-toggle="tab"><span class="badge"><%= Document.tagged_with(current_user.rep_group_list, :any =>true).where.not(state: 'draft').size %></span> Shared</a></li>
-          <li><a href="#created" data-toggle="tab"><span class="badge"><%= current_user.documents.size %></span> Mine</a></li>
+          <li style ="display:none"><a href="#assigned" data-toggle="tab"><span class="badge"><%= Document.tagged_with(current_user.rep_group_list, :any =>true).where.not(state: 'draft').size %></span> Shared</a></li>
+
+          <li class="active"><a href="#created" data-toggle="tab"><span class="badge"><%= current_user.documents.size %></span> Mine</a></li>
+
+
+          <!-- bad process documents method: find better solution (maybe cancan) -->
+          <% @docList = [] #ensure each document is only shown once. %>
+            <% unless current_user.groups.empty? || current_user.groups.nil? %>
+              <% current_user.groups.each do |group| %>
+              <% if group.documents %>
+                <% group.documents.each do |document| %>
+                  <% unless (@docList.include? document.id) ||  document.state == "draft" %>
+                      <% @docList << document.id %>
+                  <% end %> <!-- unless -->
+                <% end %> <!-- document loop -->
+              <% end %>
+              <% end %> <!-- group loop -->
+            <% end %> <!-- unless -->
+          <li>
+            <a href="#shared" data-toggle="tab"><span class="badge"><%= @docList.size %></span> New Group shared </a>
+          </li>
+
+
         </ul>
       </div><!-- / .panel-heading -->
       <div class="tab-content">
-        <div class="tab-pane no-padding fade active in" id="assigned">
+        <div class="tab-pane no-padding fade in" id="assigned" style= "display:none">
           <ul id="documents-assigned" class="list-group">
             <% unless Document.tagged_with(current_user.rep_group_list, :any =>
             true).empty? || Document.tagged_with(current_user.rep_group_list).nil? %>
@@ -57,12 +78,44 @@
             </li>
             <% end %>
           </ul>
-        </div>
-      </div><!-- / .tab-pane -->
-      <ul class="nav nav-pills">
+        </div><!-- / .tab-pane -->
+
+        <div class="tab-pane no-padding fade active in" id="shared">
+          <ul id="documents-shared" class="list-group">
+
+            <% @docList.each do |d| %>
+              <% document = Document.find(d) %>
+              <li class="list-group-item" id="<%= document.id %>"> 
+              <%= link_to document.title, document_path(document.friendly_id) %>
+              <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+            <% if document.updated_at > current_user.last_sign_in_at && 
+              document.updated_at < current_user.current_sign_in_at &&
+               document.user_id != current_user.id %>
+              <script> 
+                console.log("show notification");
+                $("#<%= document.id %>").append("<span class=\"glyphicon glyphicon-sunglasses\" aria-hidden=\"true\" style=\"color:#facf23\"></span>");
+             </script>
+
+            <% end %>
+            </li>
+            <% end %>
+        </ul>
+
+        </div><!-- / .tab-pane -->
+        <ul class="nav nav-pills">
         <!--<li><%#= link_to "Go to document list", documents_path %></li>-->
         <li><%= link_to raw("<span class=\"glyphicon glyphicon-plus\" aria-hidden=\"true\"></span> Create new document"), document_path('new') %></li>
       </ul>
+MAKE LOGIC CLEANER WITH CANCAN!
+
+
+      </div>
+      
+
+       
+
+
     </div><!--/ panel -->
 
     <div class="panel panel-default" id="dashboard-groups">
@@ -81,7 +134,7 @@
             </a>
           </li>
 
-          <li class="active">
+          <li class= "active">
             <a href="#groups" data-toggle="tab">
               <span class="badge"><%= current_user.rep_group_list.size %></span> <%= ENV["CLASS_TERM_PLURAL"].capitalize %>
             </a>
@@ -113,7 +166,7 @@
           </ul>
         </div>
 
-        <div class="tab-pane no-padding fade active in" id="new-groups">
+        <div class="tab-pane no-padding fade in" id="new-groups">
           <ul class="list-group">
             <% if !current_user.groups.empty? %>
             <% puts 'here' %>
@@ -125,9 +178,6 @@
         </div>
 
 
-
-
-
       </div>
       <!--<ul class="nav nav-pills">-->
       <!--<li>-->
@@ -137,6 +187,7 @@
       <ul class="nav nav-pills">
         <!--<li><%#= link_to "Go to document list", documents_path %></li>-->
         <li><%= link_to raw("<span class=\"glyphicon glyphicon-plus\" aria-hidden=\"true\"></span> Create new group"), group_path('new') %></li>
+        <li> <%= link_to raw("<span class=\"glyphicon glyphicon-user\" aria-hidden=\"true\"></span> Join a Group"), :controller => "groups", :action=> "index" %></li>
       </ul>
     </div><!--/ panel -->
 
@@ -233,10 +284,29 @@ jQuery(function ($) {
 
 </script>
 <script type="text/template" id="user-comment-template">
-  <span class="user-highlight"><span class="pull-right">{{formattedDate}}</span><div class="ellipsis"><a href="{{uri}}#hl{{uuid}}">{{{quote}}}</a></div></span>
-  <span class="user-comment"><div class="ellipsis">{{{text}}}</div><div class="secondary-text">{{title}} ({{username}})</div></span>
+  <span class="user-highlight" id="{{uuid}}"><span class="pull-right">{{formattedDate}}</span><div class="ellipsis"><a href="{{uri}}#hl{{uuid}}">{{{quote}}}</a></div>
+
+
+</span>
+  <span class="user-comment"><div class="ellipsis">{{{text}}}</div><div class="secondary-text">{{title}} ({{username}})</div>
+  </span>
 </script>
 <script type="text/template" id="user-highlight-template">
   <span class="user-highlight"><div class="ellipsis"><a href="{{uri}}#hl{{uuid}}">{{{quote}}}</a></div></span>
   <span class="user-comment"><div class="secondary-text">{{title}} ({{username}})</div></span>
 </script>
+
+ <script> 
+    var currentSignin = Date.parse("<%= current_user.current_sign_in_at %>");
+    var lastSignin = Date.parse("<%= current_user.last_sign_in_at %>");
+    var annoTime = Date.parse("{{{created}}}"); //not sure whether to use created or updated
+   
+   //or currentsignin and lastsignin are the same? 
+    if(annoTime < currentSignin && annoTime > lastSignin){
+      <% puts "new annotation" %>
+      // "<span class=\"glyphicon glyphicon-sunglasses\" aria-hidden=\"true\" style=\"color:#facf23\"></span>";
+
+    
+    };
+
+    </script>

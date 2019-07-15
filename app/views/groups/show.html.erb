@@ -1,5 +1,9 @@
 <h1> <%= @group.name %></h1>
 
+<% unless is_member(params[:id]) %>
+<%= link_to "Manage Group", :controller=> "groups", :action => "edit", :id => params[:id] %>
+<% end %>
+
 <h2> Members </h2>
 	<table class="member-table">
 		<tr class="member-table-row">
@@ -16,10 +20,8 @@
 			</tr>
 		<% end %>
 	<% end %>
-		
-
-
 	</table>
+
 
 
 	<style>

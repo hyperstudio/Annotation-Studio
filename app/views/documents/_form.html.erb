@@ -119,6 +119,20 @@
           	<div class="form-group">
           	<%= f.text_field :rep_group_list, :value => @document.rep_group_list.join(', '), :class => 'form-control', 'data-role' => "tagsinput", 'placeholder' => ENV["CLASS_TERM_PLURAL"] %>
           	</div>
+
+            <h4>New Groups (Testing) </h4>
+            <p class="help-block">Select the (new) group to which you wish to assign this document. </p>
+            <div class="form-group">
+                <!-- can only do one at a time. rn. more research on multiple inputs -->
+
+                <% @groups = current_user.groups %>
+            <%= select_tag "groups", options_from_collection_for_select(@groups, "id", "name"), include_blank: true %>
+            
+            </div>
+
+
+
+
 			  </div><!-- end span 6 -->
 			  </div><!-- end row -->
 

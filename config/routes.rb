@@ -25,6 +25,7 @@ AnnotationStudio::Application.routes.draw do
 
   resources :users, only: [:show, :edit]
 
+
   authenticated :user do
     root :to => "users#show"
     get 'dashboard', to: 'users#show', as: :dashboard
@@ -33,7 +34,20 @@ AnnotationStudio::Application.routes.draw do
     get 'documents/:document_id/annotations/field/:field', to: 'annotations#field'
     # get 'groups', to: 'groups#index'
     # get 'groups/:id', to: 'groups#show'
+    get 'leave' => 'groups#leave'
+    
+    post "/groups" => "groups#index" #for joining new groups via name entry
     resources :groups
+    get 'groups/:id/edit', to: 'groups#edit'
+
+    #should they be post instead? 
+    get 'promote', to: 'groups#promote'
+    get 'remove_member', to: 'groups#remove_member'
+    get 'demote', to: 'groups#demote'
+
+    resources :invites
+    post 'join_via_token' => 'invites#join_via_token'
+    
   end
 
   unauthenticated :user do

@@ -4,7 +4,7 @@ class InvitesController < ApplicationController
 
 		#for production, change expiration_date to something more reasonable, 
 		#like a month, or one semester. 
-		@invite.expiration_date = Time.now + 1.minute
+		@invite.expiration_date = Time.now + 5.minute
 
 		if @invite.save
 			redirect_to request.referrer
@@ -21,7 +21,7 @@ class InvitesController < ApplicationController
 			#check for expiration 
 			if invite.expiration_date && (invite.expiration_date < Time.now)
 				flash[:error] = 'token expired. please get new token'
-				redirect_to groups_path
+				redirect_to dashboard_path
 				return
 			end
 
@@ -36,7 +36,7 @@ class InvitesController < ApplicationController
 			flash[:error] = 'invalid token'
 			
 		end
-		redirect_to groups_path
+		redirect_to dashboard_path
 		
 	end
 

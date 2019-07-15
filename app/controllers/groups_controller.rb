@@ -4,26 +4,8 @@ class GroupsController < ApplicationController
 
 
   def index
-  	#add user to group if form is submitted. 
-     @groupName = params['groupName']
-     if @groupName
-      puts "Join"
-      begin
-          if Group.find_by(name: @groupName)
-            @group = Group.find_by(name: @groupName)
-            current_user.groups << @group
-
-            flash[:alert] = 'Successfully Joined Group!'
-
-          elsif Group.find_by(name: @groupName).nil?
-            flash[:alert] = 'Group not found!'
-          end
-      rescue ActiveRecord::RecordNotUnique
-          flash[:alert] = 'Already in Group!'
-      end
-    else 
-      puts "no join"
-    end
+  	
+     
   end
 
   def show
@@ -82,6 +64,30 @@ class GroupsController < ApplicationController
 
 		redirect_to request.referrer
 
+	end
+
+	def join_via_name
+	#add user to group if form is submitted. 
+		@groupName = params['groupName']
+	     if @groupName
+	      puts "Join"
+	      begin
+	          if Group.find_by(name: @groupName)
+	            @group = Group.find_by(name: @groupName)
+	            current_user.groups << @group
+
+	            flash[:alert] = 'Successfully Joined Group!'
+
+	          elsif Group.find_by(name: @groupName).nil?
+	            flash[:alert] = 'Group not found!'
+	          end
+	      rescue ActiveRecord::RecordNotUnique
+	          flash[:alert] = 'Already in Group!'
+	      end
+	    else 
+	      puts "no join"
+	    end
+	    redirect_to request.referrer
 	end
 
 

@@ -20,7 +20,7 @@ ADD PAGINATION!!!!
 
 	<% if @i && (@i.expiration_date.nil? || @i.expiration_date > Time.now) %>
 		<%= label_tag 'Invite Link' %>
-		<%= text_field_tag "Invite Link:", "localhost:3000" + groups_path(:invite_token => @i.token).to_s, 
+		<%= text_field_tag "Invite Link:", "localhost:3000" + dashboard_path(:invite_token => @i.token).to_s, 
 		{:size =>40, :class => 'copy-link'} %>
 		<%= button_tag 'Copy', {:class =>'copy-button'}%>
 

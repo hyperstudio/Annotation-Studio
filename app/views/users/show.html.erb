@@ -59,7 +59,7 @@
             </li>
             <% end %></ul>
         </div><!-- / .tab-pane -->
-        <div class="tab-pane no-padding fade in" id="created">
+        <div class="tab-pane no-padding fade active in" id="created">
           <ul id="documents-created" class="list-group">
             <% unless current_user.documents.empty? || current_user.documents.nil? %>
               <% current_user.documents.order("created_at DESC").limit(10).each do |document| %>
@@ -80,7 +80,7 @@
           </ul>
         </div><!-- / .tab-pane -->
 
-        <div class="tab-pane no-padding fade active in" id="shared">
+        <div class="tab-pane no-padding fade in" id="shared">
           <ul id="documents-shared" class="list-group">
 
             <% @docList.each do |d| %>
@@ -169,9 +169,8 @@ MAKE LOGIC CLEANER WITH CANCAN!
         <div class="tab-pane no-padding fade in" id="new-groups">
           <ul class="list-group">
             <% if !current_user.groups.empty? %>
-            <% puts 'here' %>
-            <% current_user.groups.each do |group| %>
-                <li class="list-group-item"><%= link_to group.name, :controller => "groups", :action => "show", :id => group.id  %></li>
+              <% current_user.groups.order('created_at DESC').each do |group| %>
+                  <li class="list-group-item"><%= link_to group.name, :controller => "groups", :action => "show", :id => group.id  %></li>
               <% end %>
             <% end %>
           </ul>
@@ -189,9 +188,26 @@ MAKE LOGIC CLEANER WITH CANCAN!
         <li><%= link_to raw("<span class=\"glyphicon glyphicon-plus\" aria-hidden=\"true\"></span> Create new group"), group_path('new') %></li>
         <li> <%= link_to raw("<span class=\"glyphicon glyphicon-user\" aria-hidden=\"true\"></span> Join a Group"), :controller => "groups", :action=> "index" %></li>
       </ul>
+
+      Hidden form: Enter token to join group. PLEASE BE CAREFUL OF EXTRA SPACES
+    <%= form_tag({:controller=>'invites', :action => 'join_via_token'}, {:name => 'join-via-token', :style => 'display: none'}) do %>
+      <% if params[:invite_token] %>
+        <%= text_field_tag 'token', params[:invite_token] %>
+          <script>
+            window.onload = function(){
+              document.forms['join-via-token'].submit();
+            }
+          </script>
+      <% else %>
+        <%= text_field_tag 'token' %>
+        <% end %>
+        <%= submit_tag 'Submit' %>
+    <% end %>
+
     </div><!--/ panel -->
 
   </div><!--/ col-md-6 -->
+  
   <div class="col-md-6">
     <div class="panel panel-default" id="dashboard-annotations">
       <div class="panel-heading">
@@ -296,7 +312,7 @@ jQuery(function ($) {
   <span class="user-comment"><div class="secondary-text">{{title}} ({{username}})</div></span>
 </script>
 
- <script> 
+ <!-- <script> 
     var currentSignin = Date.parse("<%= current_user.current_sign_in_at %>");
     var lastSignin = Date.parse("<%= current_user.last_sign_in_at %>");
     var annoTime = Date.parse("{{{created}}}"); //not sure whether to use created or updated
@@ -309,4 +325,4 @@ jQuery(function ($) {
     
     };
 
-    </script>
+    </script> -->

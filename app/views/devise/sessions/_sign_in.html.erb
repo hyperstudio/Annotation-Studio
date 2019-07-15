@@ -13,6 +13,12 @@
             <%= f.password_field :password, :class => "form-control" %>
         </div>
 
+        <!-- Registering with a group invitation attached -->
+        <% if params[:invite_token] %>
+            <%= hidden_field_tag :invite_token, params[:invite_token] %>
+        <% end %>
+
+
         <div><%= f.submit "Log in", :class => "btn btn-default btn-default-primary" %></div>
 
     <% end %>

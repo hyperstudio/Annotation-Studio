@@ -58,6 +58,11 @@
           <label class='checkbox agreement'> <%= f.check_box :agreement %> I have read and accept the <%= link_to 'terms of service', page_path('terms') %></label>
         </div>
 
+        <!-- Registering with a group invitation attached -->
+        <% if params[:invite_token] %>
+    		<%= hidden_field_tag :invite_token, params[:invite_token] %>
+  		<% end %>
+
 				<%= f.submit "Register", :class => "btn btn-primary" %>
 
 			</div><!--/well -->

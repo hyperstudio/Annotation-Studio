@@ -7,7 +7,8 @@ AnnotationStudio::Application.routes.draw do
   get 'public/:id' => 'public_documents#show'
   get 'review/:id' => 'public_documents#show'
 
-  devise_for :users, controllers: {registrations: 'registrations', omniauth_callbacks: 'omniauth_callbacks'}
+  devise_for :users, controllers: {registrations: 'registrations', omniauth_callbacks: 'omniauth_callbacks', 
+    sessions: 'sessions'}
 
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
@@ -36,7 +37,8 @@ AnnotationStudio::Application.routes.draw do
     # get 'groups/:id', to: 'groups#show'
     get 'leave' => 'groups#leave'
     
-    post "/groups" => "groups#index" #for joining new groups via name entry
+    post 'join_via_name' => "groups#join_via_name" #for joining new groups via name entry
+
     resources :groups
     get 'groups/:id/edit', to: 'groups#edit'
 
@@ -53,7 +55,11 @@ AnnotationStudio::Application.routes.draw do
   unauthenticated :user do
     devise_scope :user do
       get "/" => "devise/sessions#new"
+
+      #invite link for unauthenticated user
+      get "/dashboard" => "devise/sessions#new"
     end
+
   end
 
 	get 'exception_test' => "annotations#exception_test"

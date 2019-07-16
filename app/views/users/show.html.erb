@@ -265,8 +265,14 @@ jQuery(function ($) {
   var token = '<%= session["jwt"] %>';
   // Backbone.history.start({pushState: true, root: window.location})
 
+var groups=[];
+
+<% current_user.groups.each do |g| %>
+  groups.push("<%=g.name %>");
+<% end %>
+
   var myLoadOptions = {
-    'limit': 100,
+    'limit': 20,
     'groups': "<%= current_user.rep_group_list %>".split(/, /),
     'subgroups': "<%= current_user.rep_subgroup_list %>".split(/, /),
     'host': location.host,
@@ -275,8 +281,8 @@ jQuery(function ($) {
     'context': 'dashboard',
   };
   var classLoadOptions = {
-    'limit': 100,
-    'groups': "<%= current_user.rep_group_list %>".split(/, /),
+    'limit': 20,
+    'groups': groups, //"<%= current_user.rep_group_list %>".split(/, /),
     'subgroups': "<%= current_user.rep_subgroup_list %>".split(/, /),
     'host': location.host,
     'user': "<%= current_user.email %>",
@@ -284,7 +290,7 @@ jQuery(function ($) {
     'context': 'dashboard',
   };
   var groupLoadOptions = {
-    'limit': 100,
+    'limit': 20,
     'groups': "<%= current_user.rep_group_list %>".split(/, /),
     'subgroups': "<%= current_user.rep_subgroup_list %>".split(/, /),
     'host': location.host,

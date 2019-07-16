@@ -3,7 +3,23 @@
 <script type="text/javascript" charset="utf-8">
 var document_slug = "<%= @document.slug %>";
 var default_state = <%= @document.default_state.present? ? (raw @document.default_state) : (raw "''") %>;
-var groups = "<%= current_user.rep_group_list %>".split(/, /);
+// var groups = "<%= current_user.rep_group_list %>".split(/, /);
+
+//testingp per-group annotations
+var userGroups = [];
+var docGroups = [];
+
+<% current_user.groups.each do |g| %>
+  userGroups.push("<%=g.name %>");
+<% end %>
+
+<% @document.groups.each do |g| %>
+  docGroups.push("<%=g.name %>");
+<% end %>
+
+// get intersection of document's groups and user's groups
+var groups = userGroups.filter(value => docGroups.includes(value));
+
 var subgroups = "<%= current_user.rep_subgroup_list %>".split(/, /);
 var annotatorOptions = {'readOnly': <%= @document.archived? %>};
 var filter_user = "<%= current_user.email %>";

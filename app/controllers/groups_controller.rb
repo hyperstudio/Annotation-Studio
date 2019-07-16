@@ -46,7 +46,14 @@ class GroupsController < ApplicationController
 
 	def edit
 		@group = Group.find(params[:id])
-		@memberships = @group.memberships
+		if params['search']
+			queryStr = "%" + params['search'].downcase + "%"
+			matches = User.where(["lower(users.firstname) LIKE ?", queryStr]).pluck(:id)
+			@memberships = Membership.where(group_id: params[:id], user_id: matches)
+			
+		else
+			@memberships = @group.memberships
+		end
 	end
 
 	def update
@@ -66,6 +73,7 @@ class GroupsController < ApplicationController
 
 	end
 
+	#post
 	def join_via_name
 	#add user to group if form is submitted. 
 		@groupName = params['groupName']

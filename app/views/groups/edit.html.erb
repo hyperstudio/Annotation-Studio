@@ -48,6 +48,13 @@ ADD PAGINATION!!!!
 
 </div> <!-- wrapper -->
 
+<h3> Search for Member by FIRST name </h3>
+<%= form_tag({:controller=>'groups', :action => 'edit'}, {:method => 'get'}) do %>
+	<%= text_field_tag :search, params['search'] %>
+	<%= submit_tag "Search" %>
+<% end %>
+<%= link_to "All Members", :controller => 'groups', :action => 'edit'%>
+
 <h2> Members </h2>
 <table class="member-table">
 	<tr class="member-table-row">

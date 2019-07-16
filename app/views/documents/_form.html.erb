@@ -1,7 +1,16 @@
           <%= form_for (@document), :html => { :role => 'form', class: "confirm-changes" } do |f| %>
 <%= render 'document_content', f: f %>
 
-          	<h4>Metadata</h4>
+          	<h4>Metadata</h4>  
+
+            <div class="form-group">
+              <%= label_tag "Type of Resource" %>
+              <p class="help-block"> eg. Book, Journal, Article, etc...</p>
+
+              <%= select_tag "type", options_for_select([ "Book", "Website", "Journal", "Other" ]),  
+              {:class => 'form-control', :prompt => "Choose one...", :id => 'type', 
+                :onchange => "change(this.id)", :style=> "width:300px"} %>
+            </div>
 
           	<div class="row">
           		<div class="col-md-6">
@@ -15,32 +24,44 @@
           				<%= f.text_field :author, :class => 'form-control' %>
           			</div>
 
-					<div class="form-group">
-						<%= f.label :publication_date %>
-						<%= f.text_field :publication_date, :class => 'form-control' %>
-					</div>
+                <div class="form-group">
+                  <%= f.label :source %>
+                  <%= f.text_field :source, :class => 'form-control' %>
+                </div>
 
-					<div class="form-group">
-						<%= f.label :publisher %>
-						<%= f.text_field :publisher, :class => 'form-control' %>
-					</div>
+                <div class="form-group" id="edition">
+                  <%= f.label :edition, "Edition/Volume" %>
+                  <%= f.text_field :edition, :class => 'form-control' %>
+                </div>
+
+					
 				</div><!-- end span 6 -->
 
-          		<div class="col-md-6">
-					<div class="form-group">
-						<%= f.label :edition, "Edition/Volume" %>
-						<%= f.text_field :edition, :class => 'form-control' %>
-					</div>
+          <div class="col-md-6">
+            <div class="form-group">
+                <%= f.label :publication_date %>
+                <%= f.text_field :publication_date, :class => 'form-control' %>
+            </div>
 
-          			<div class="form-group">
-          				<%= f.label :source %>
-          				<%= f.text_field :source, :class => 'form-control' %>
-          			</div>
+            <div class="form-group">
+                <%= f.label :publisher %>
+                <%= f.text_field :publisher, :class => 'form-control' %>
+            </div>
 
-          			<div class="form-group">
-          				<%= f.label :rights_status %>
-          				<%= f.select :rights_status, [ 'Copyrighted', 'Public Domain', 'Creative Commons'], {}, {:class => 'form-control'} %>
-          			</div>
+          			
+      			<div class="form-group">
+      				<%= f.label :rights_status %>
+      				<%= f.select :rights_status, [ 'Copyrighted', 'Public Domain', 'Creative Commons'], {}, {:class => 'form-control'} %>
+      			</div>
+
+                <!-- <div class="form-group ajax"> <!-- testing ajax -->
+                  <!-- <button id="type-button"> Type </button> -->
+                <!-- </div>  -->
+
+               
+               
+
+
           		</div><!-- end span 6 -->
           	</div><!-- end row -->
 
@@ -257,3 +278,20 @@
           }
 
           </script>
+
+         <script>
+            
+          function change(selected){
+              var type = document.getElementById(selected);
+              var edition = document.getElementById("edition");
+              console.log(edition);
+              if(type.value == "Website"){
+                console.log("website!");
+                edition.style.display = "none";
+          } else {
+            edition.style.display = "block";
+          }
+        }
+
+        </script>
+

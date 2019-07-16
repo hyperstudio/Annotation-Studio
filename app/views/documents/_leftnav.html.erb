@@ -22,7 +22,7 @@
 <% if ! @document.publication_date.nil? %>
   <li>Publication date: <%= @document.publication_date %></li>
 <% end %>
-<% if ! @document.edition.nil? %>
+<% if ! @document.edition.blank? %>
   <li>Edition/Volume: <%= @document.edition %></li>
 <% end %>
 </ul>

@@ -34,10 +34,11 @@ class DocumentsController < ApplicationController
       docList = []
       current_user.groups.each do |g| 
         g.documents.where.not(state: 'draft').each do |d|
-          docList << d
+          unless docList.include? d 
+            docList << d
+          end
         end
       end
-      docList = docList.uniq #get rid of duplicates 
 
       @documents = docList.paginate(:page => whitelisted[:page], :per_page => per_page)
      
@@ -111,7 +112,8 @@ class DocumentsController < ApplicationController
       @document.groups << Group.find(@group)
     end
 
-#for multiple inputs, probably can't use bootstrap because it's doing something else. remember to permit parameter in controller. 
+#for multiple inputs, probably can't use bootstrap because it's doing something else. 
+#remember to permit parameter in controller. 
 
     respond_to do |format|
       if @document.save

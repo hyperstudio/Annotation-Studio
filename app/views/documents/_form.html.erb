@@ -55,17 +55,9 @@
       				<%= f.label :rights_status %>
       				<%= f.select :rights_status, [ 'Copyrighted', 'Public Domain', 'Creative Commons'], {}, {:class => 'form-control'} %>
       			</div>
-
-                <!-- <div class="form-group ajax"> <!-- testing ajax -->
-                  <!-- <button id="type-button"> Type </button> -->
-                <!-- </div>  -->
-
-               
-               
-
-
-          		</div><!-- end span 6 -->
-          	</div><!-- end row -->
+          
+          </div><!-- end span 6 -->
+        </div><!-- end row -->
 
 			  <div class="row">
 				  <div class="col-md-6">
@@ -144,6 +136,14 @@
           	</div>
 
             <h4>New Groups (Testing) </h4>
+
+            <% unless create %>
+            <!-- only show in edit document -->
+              <p> Current Groups: 
+                <%= @document.groups.pluck(:name)%>
+              </p>
+
+            <% end %>
             <p class="help-block">Select the (new) group to which you wish to assign this document. </p>
             <div class="form-group">
                 <!-- can only do one at a time. rn. more research on multiple inputs -->

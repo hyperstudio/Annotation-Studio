@@ -25,6 +25,9 @@
 <% if ! @document.edition.blank? %>
   <li>Edition/Volume: <%= @document.edition %></li>
 <% end %>
+<% if ! @document.source.blank? %>
+  <li>Source: <a href="<%= @document.source %>"> <%= @document.source %> </a></li>
+<% end %>
 </ul>
 
 <h4>Chapters</h4>

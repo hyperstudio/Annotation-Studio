@@ -2,15 +2,17 @@
 <%= render 'document_content', f: f %>
 
           	<h4>Metadata</h4>  
+            <% if create %>
+              <div class="form-group">
+                <%= label_tag "Type of Resource" %>
+                <p class="help-block"> eg. Book, Journal, Article, etc...</p>
 
-            <div class="form-group">
-              <%= label_tag "Type of Resource" %>
-              <p class="help-block"> eg. Book, Journal, Article, etc...</p>
+                <%= select_tag "type", options_for_select([ "Book", "Website", "Journal", "Other" ]),  
+                {:class => 'form-control', :prompt => "Choose one...", :id => 'type', 
+                  :onchange => "change(this.id)", :style=> "width:300px"} %>
+              </div>
 
-              <%= select_tag "type", options_for_select([ "Book", "Website", "Journal", "Other" ]),  
-              {:class => 'form-control', :prompt => "Choose one...", :id => 'type', 
-                :onchange => "change(this.id)", :style=> "width:300px"} %>
-            </div>
+            <% end %>
 
           	<div class="row">
           		<div class="col-md-6">

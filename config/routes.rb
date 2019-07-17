@@ -26,7 +26,6 @@ AnnotationStudio::Application.routes.draw do
 
   resources :users, only: [:show, :edit]
 
-
   authenticated :user do
     root :to => "users#show"
     get 'dashboard', to: 'users#show', as: :dashboard
@@ -49,6 +48,7 @@ AnnotationStudio::Application.routes.draw do
 
     resources :invites
     post 'join_via_token' => 'invites#join_via_token'
+
     
   end
 

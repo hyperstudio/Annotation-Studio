@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190712193820) do
+ActiveRecord::Schema.define(version: 20190717172928) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -107,6 +107,7 @@ ActiveRecord::Schema.define(version: 20190712193820) do
   create_table "documents_groups", id: false, force: :cascade do |t|
     t.integer "document_id", null: false
     t.integer "group_id",    null: false
+    t.index ["document_id", "group_id"], name: "index_documents_groups_on_document_id_and_group_id", unique: true, using: :btree
   end
 
   create_table "friendly_id_slugs", force: :cascade do |t|

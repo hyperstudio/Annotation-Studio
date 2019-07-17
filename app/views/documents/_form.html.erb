@@ -136,6 +136,7 @@
     	</div>
 
       <h4>New Groups (Testing) </h4>
+      <p> Note: UI working but Ajax (form submission) is not :( </p>
 
       <% unless create %>
       <!-- only show in edit document -->
@@ -144,18 +145,15 @@
         </p>
       <% end %>
 
-      <p class="help-block">Select the (new) group to which you wish to assign this document. </p>
+      <p class="help-block">Select the groups to which you wish to assign this document. For selecting multiple options, <strong> Hold Ctrl and then click. </strong></p>
       <div class="form-group">
-          <!-- can only do one at a time. rn. more research on multiple inputs -->
-        Selected Groups: 
-          <ul id="selected-groups">
-          </ul>
+          <!-- multiple input done through select tag, put ajax on hold for now -->
+        <!-- Selected Groups:  -->
+          <!-- <ul id="selected-groups">
+          </ul> -->
 
-
-
-          <% @groups = current_user.groups %>
-          <%= select_tag "groups", options_from_collection_for_select(@groups, "id", "name"), {:class => 'form-control', :prompt => "Choose one...", :id => 'my-groups', 
-            :onchange => "add_group(this.id)",:style=> "width:300px"} %>
+      <% @groups = current_user.groups %>
+      <%= select_tag "groups", options_from_collection_for_select(@groups, "id", "name"), {:class => 'form-control', :id => 'my-groups', :multiple => true,:style=> "height:250px"} %>
       
 
       </div>
@@ -286,44 +284,11 @@
       }
     }
 
+
+//     $('#my-groups option').mousedown(function(e) {
+//     e.preventDefault();
+//     $(this).prop('selected', !$(this).prop('selected'));
+//     return false;
+// });
     </script>
-
-   <script type="text/javascript">
-    //on change ajax stuff
-      
-    function change(selected){
-        var type = document.getElementById(selected);
-        var edition = document.getElementById("edition");
-        console.log(edition);
-        if(type.value == "Website"){
-          console.log("website!");
-          edition.style.display = "none";
-    } else {
-      edition.style.display = "block";
-    }
-  }
-
-
-  function add_group(selected){
-      var choice = document.getElementById(selected);
-      var gName = $(choice).find("option:selected").text();
-
-      //problem: will append same group name twice if selected twice. fix in controller. 
-      //either to ajax submit form and attach group (not sure if possible)
-      // or submit all list values and attach document to each of the groups
-
-      if(gName != "Choose one..."){
-        var content = "<li>" + gName + "    <span class='glyphicon glyphicon-remove-circle' id='" + gName + "'></span> </li> ";
-        $(choice).siblings("#selected-groups").append(content);
-
-        //event handler for delete:
-        document.getElementById(gName).onclick = function(){
-          console.log("remove");
-          $(this).parent().remove();
-         }; //end function
-
-        }; // end if
-      } //end add_group function
-
-  </script>
 

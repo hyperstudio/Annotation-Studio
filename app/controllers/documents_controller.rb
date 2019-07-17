@@ -106,14 +106,11 @@ class DocumentsController < ApplicationController
     @document = Document.new(documents_params)
     @document.user = current_user
 
-    @group = params["groups"] #can only choose one from dropdown rn
+    #@group is an array of group_ids, from multiple_select
+    @group = params["groups"]
     if @group
-      puts "group id: " + @group.to_s
       @document.groups << Group.find(@group)
     end
-
-#for multiple inputs, probably can't use bootstrap because it's doing something else. 
-#remember to permit parameter in controller. 
 
     respond_to do |format|
       if @document.save
@@ -134,19 +131,23 @@ class DocumentsController < ApplicationController
   # PUT /documents/1.json
   def update
     @document = Document.friendly.find(params[:id])
-    @group = params["groups"] #can only choose one from dropdown rn
+    @groups = params["groups"] #each element is a group id
+    updated = false
 
-    if !@group.empty? 
-      puts "group id: " + @group.to_s
-      begin
-        @document.groups.find(@group) 
-      rescue ActiveRecord::RecordNotFound
-        @document.groups << Group.find(@group)
-        @document.update_attribute("updated_at", Time.now)
-        puts "doc groups updated" 
-      end
+    if !@groups.empty? 
+      @groups.each do |g| 
+        begin
+          @document.groups.find(g) 
+        rescue ActiveRecord::RecordNotFound
+          @document.groups << Group.find(g)
+          updated = true
+          
+        end #end begin-rescue
+      end #end loop
+      
+      @document.update_attribute("updated_at", Time.now) if updated
 
-    end
+    end #end if
 
     respond_to do |format|
       if @document.update_attributes(documents_params)

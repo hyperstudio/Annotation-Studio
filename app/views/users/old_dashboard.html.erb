@@ -1,0 +1,334 @@
+<%= content_for :body_id, 'dashboard' %>
+<%= content_for :body_class, 'index' %>
+<%= content_for :page_title, 'Dashboard' %>
+<%= stylesheet_link_tag "users" %>
+<%= render "/shared/document_titles" %>
+<div id="users" class="row">
+  <div class="col-md-6">
+    <div class="panel panel-default" id="dashboard-documents">
+      <div class="panel-heading">
+        <span class="panel-title"><%= link_to "Documents", documents_path %></span>
+        <ul class="nav nav-tabs nav-tabs-xs pull-right" id="document-tabs" role="tablist">
+          <li style ="display:none"><a href="#assigned" data-toggle="tab"><span class="badge"><%= Document.tagged_with(current_user.rep_group_list, :any =>true).where.not(state: 'draft').size %></span> Shared</a></li>
+
+          <li class="active"><a href="#created" data-toggle="tab"><span class="badge"><%= current_user.documents.size %></span> Mine</a></li>
+
+
+          <!-- bad process documents method: find better solution (maybe cancan) -->
+          <% @docList = [] #ensure each document is only shown once. %>
+            <% unless current_user.groups.empty? || current_user.groups.nil? %>
+              <% current_user.groups.each do |group| %>
+              <% if group.documents %>
+                <% group.documents.each do |document| %>
+                  <% unless (@docList.include? document.id) ||  document.state == "draft" %>
+                      <% @docList << document.id %>
+                  <% end %> <!-- unless -->
+                <% end %> <!-- document loop -->
+              <% end %>
+              <% end %> <!-- group loop -->
+            <% end %> <!-- unless -->
+          <li>
+            <a href="#shared" data-toggle="tab"><span class="badge"><%= @docList.size %></span> New Group shared </a>
+          </li>
+
+
+        </ul>
+      </div><!-- / .panel-heading -->
+      <div class="tab-content">
+        <div class="tab-pane no-padding fade in" id="assigned" style= "display:none">
+          <ul id="documents-assigned" class="list-group">
+            <% unless Document.tagged_with(current_user.rep_group_list, :any =>
+            true).empty? || Document.tagged_with(current_user.rep_group_list).nil? %>
+            <% Document.order("created_at DESC").tagged_with(current_user.rep_group_list, :any =>
+            true).where.not(state: 'draft').limit(10).each do |document| %>
+            <li class="list-group-item">
+              <%= link_to document.title, document_path(document.friendly_id) %>
+              <span class="pull-right">
+          <% if document.rep_group_list.length > 0 %>
+              <span class="label label-info">
+                <%= document.rep_group_list[0] %></span>
+              <% end %>
+                <%= document.created_at.strftime("%m/%d/%Y") %></span>
+        <div class="clearfix"></div>
+            </li>
+            <% end %>
+            <li class="list-group-item"><strong><a href="/documents?docs=assigned">See more shared documents&hellip;</a></strong></li>
+            <% else %>
+            <li class="list-group-item">
+              No documents to view. (Your account maybe be pending approval).
+            </li>
+            <% end %></ul>
+        </div><!-- / .tab-pane -->
+        <div class="tab-pane no-padding fade active in" id="created">
+          <ul id="documents-created" class="list-group">
+            <% unless current_user.documents.empty? || current_user.documents.nil? %>
+              <% current_user.documents.order("created_at DESC").limit(10).each do |document| %>
+                <% if can? :read, document %>
+                  <li class="list-group-item">
+                    <%= link_to document.title, document_path(document.friendly_id) %>
+                    <span class="pull-right">
+                      <%= document.created_at.strftime("%m/%d/%Y") %></span>
+                  </li>
+                <% end %>
+              <% end %>
+            <li class="list-group-item"><strong><a href="/documents?docs=created">See more of my documents&hellip;</a></strong></li>
+            <% else %>
+            <li class="list-group-item">
+              No documents to view. (Your account maybe be pending approval).
+            </li>
+            <% end %>
+          </ul>
+        </div><!-- / .tab-pane -->
+
+        <div class="tab-pane no-padding fade in" id="shared">
+          <ul id="documents-shared" class="list-group">
+
+            <% @docList.each do |d| %>
+              <% document = Document.find(d) %>
+              <li class="list-group-item" id="<%= document.id %>"> 
+              <%= link_to document.title, document_path(document.friendly_id) %>
+              <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+            <% if document.updated_at > current_user.last_sign_in_at && 
+              document.updated_at < current_user.current_sign_in_at &&
+               document.user_id != current_user.id %>
+              <script> 
+                console.log("show notification");
+                $("#<%= document.id %>").append("<span class=\"glyphicon glyphicon-sunglasses\" aria-hidden=\"true\" style=\"color:#facf23\"></span>");
+             </script>
+
+            <% end %>
+            </li>
+            <% end %>
+        </ul>
+
+        </div><!-- / .tab-pane -->
+        <ul class="nav nav-pills">
+        <!--<li><%#= link_to "Go to document list", documents_path %></li>-->
+        <li><%= link_to raw("<span class=\"glyphicon glyphicon-plus\" aria-hidden=\"true\"></span> Create new document"), document_path('new') %></li>
+      </ul>
+MAKE LOGIC CLEANER WITH CANCAN!
+
+
+      </div>
+      
+
+       
+
+
+    </div><!--/ panel -->
+
+    <div class="panel panel-default" id="dashboard-groups">
+      <div class="panel-heading">
+       <!--  <span class="panel-title">
+          <%= link_to ENV["CLASS_TERM_PLURAL"], groups_path %></span> -->
+
+          <span class="panel-title">
+          <%= link_to ENV["GROUP_TERM_PLURAL"].capitalize, groups_path %></span>
+
+        <ul class="nav nav-tabs nav-tabs-xs pull-right" id="group-tabs" role="tablist">
+
+          <li>
+            <a href="#subgroups" data-toggle="tab">
+              <span class="badge"><%= current_user.rep_subgroup_list.size %></span> <%= ENV["GROUP_TERM_PLURAL"].capitalize %>
+            </a>
+          </li>
+
+          <li class= "active">
+            <a href="#groups" data-toggle="tab">
+              <span class="badge"><%= current_user.rep_group_list.size %></span> <%= ENV["CLASS_TERM_PLURAL"].capitalize %>
+            </a>
+          </li>
+
+          <li>
+            <a href="#new-groups" data-toggle="tab">
+              <span class="badge"><%= current_user.groups.size %></span> Actual Groups
+            </a>
+          </li>
+
+        </ul>
+      </div>
+      <!-- / .panel-heading -->
+
+      <div class="tab-content">
+        <div class="tab-pane no-padding fade in" id="subgroups">
+          <ul class="list-group">
+            <% current_user.rep_subgroup_list.each do |subgroup| %>
+              <li class="list-group-item"><%= link_to subgroup, documents_path(docs: 'assigned', subgroup: subgroup) %></li>
+            <% end %>
+          </ul>
+        </div>
+        <div class="tab-pane no-padding fade active in" id="groups">
+          <ul class="list-group">
+            <% current_user.rep_group_list.each do |group| %>
+              <li class="list-group-item"><%= link_to group, documents_path(docs: 'assigned', group: group) %></li>
+            <% end %>
+          </ul>
+        </div>
+
+        <div class="tab-pane no-padding fade in" id="new-groups">
+          <ul class="list-group">
+            <% if !current_user.groups.empty? %>
+              <% current_user.groups.order('created_at DESC').each do |group| %>
+                  <li class="list-group-item"><%= link_to group.name, :controller => "groups", :action => "show", :id => group.id  %></li>
+              <% end %>
+            <% end %>
+          </ul>
+        </div>
+
+
+      </div>
+      <!--<ul class="nav nav-pills">-->
+      <!--<li>-->
+      <!--<%#= link_to "Go to class and group list", groups_path %>-->
+      <!--</li>-->
+      <!--</ul>-->
+      <ul class="nav nav-pills">
+        <!--<li><%#= link_to "Go to document list", documents_path %></li>-->
+        <li><%= link_to raw("<span class=\"glyphicon glyphicon-plus\" aria-hidden=\"true\"></span> Create new group"), group_path('new') %></li>
+        <li> <%= link_to raw("<span class=\"glyphicon glyphicon-user\" aria-hidden=\"true\"></span> Join a Group"), :controller => "groups", :action=> "index" %></li>
+      </ul>
+
+      Hidden form: Enter token to join group. PLEASE BE CAREFUL OF EXTRA SPACES
+    <%= form_tag({:controller=>'invites', :action => 'join_via_token'}, {:name => 'join-via-token', :style => 'display: none'}) do %>
+      <% if params[:invite_token] %>
+        <%= text_field_tag 'token', params[:invite_token] %>
+          <script>
+            window.onload = function(){
+              document.forms['join-via-token'].submit();
+            }
+          </script>
+      <% else %>
+        <%= text_field_tag 'token' %>
+        <% end %>
+        <%= submit_tag 'Submit' %>
+    <% end %>
+
+    </div><!--/ panel -->
+
+  </div><!--/ col-md-6 -->
+  
+  <div class="col-md-6">
+    <div class="panel panel-default" id="dashboard-annotations">
+      <div class="panel-heading">
+        <span class="panel-title">
+          <%= link_to "Annotations", annotations_path %></span>
+        <ul class="nav nav-tabs nav-tabs-xs pull-right" id="annotation-tabs" role="tablist">
+          <li class="active">
+            <a href="#mine" data-toggle="tab">
+              <span class="badge"></span>
+              Mine
+            </a>
+          </li>
+          <li>
+            <a href="#group" data-toggle="tab">
+              <span class="badge"></span>
+              <%= ENV["GROUP_TERM_PLURAL"].capitalize %>
+            </a>
+          </li>
+          <li>
+            <a href="#class" data-toggle="tab">
+              <span class="badge"></span>
+              <%= ENV["CLASS_TERM_PLURAL"].capitalize %>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <!-- / .panel-heading -->
+      <div class="tab-content">
+        <div class="tab-pane no-padding fade active in" id="mine">
+          <ul id="my-annotation-list" class="list-group"></ul>
+        </div>
+        <div class="tab-pane no-padding fade in" id="class">
+          <ul id="class-annotation-list" class="list-group"></ul>
+        </div>
+        <div class="tab-pane no-padding fade in" id="group">
+          <ul id="group-annotation-list" class="list-group"></ul>
+        </div>
+      </div>
+      <!--<ul class="nav nav-pills">-->
+        <!--<li>-->
+    <!--  <%#= link_to "Go to annotation list", annotations_path %></li>-->
+      <!--</ul>-->
+    </div>
+    <!--/ panel --> </div>
+  <!--/col-md-3 -->
+</div>
+<!--/row -->
+
+
+<%= javascript_include_tag "widget" %>
+<script type="text/javascript" charset="utf-8">
+jQuery(function ($) {
+  var widget = new Widget.App();
+  var endpoint = '<%= ENV["API_URL"] %>';
+  var token = '<%= session["jwt"] %>';
+  // Backbone.history.start({pushState: true, root: window.location})
+
+var groups=[];
+
+<% current_user.groups.each do |g| %>
+  groups.push("<%=g.name %>");
+<% end %>
+
+  var myLoadOptions = {
+    'limit': 20,
+    'groups': "<%= current_user.rep_group_list %>".split(/, /),
+    'subgroups': "<%= current_user.rep_subgroup_list %>".split(/, /),
+    'host': location.host,
+    'user': "<%= current_user.email %>",
+    'mode': 'user',
+    'context': 'dashboard',
+  };
+  var classLoadOptions = {
+    'limit': 20,
+    'groups': groups, //"<%= current_user.rep_group_list %>".split(/, /),
+    'subgroups': "<%= current_user.rep_subgroup_list %>".split(/, /),
+    'host': location.host,
+    'user': "<%= current_user.email %>",
+    'mode': 'class',
+    'context': 'dashboard',
+  };
+  var groupLoadOptions = {
+    'limit': 20,
+    'groups': "<%= current_user.rep_group_list %>".split(/, /),
+    'subgroups': "<%= current_user.rep_subgroup_list %>".split(/, /),
+    'host': location.host,
+    'user': "<%= current_user.email %>",
+    'mode': 'group',
+    'context': 'dashboard',
+  };
+
+  widget.listAnnotations('my-annotation-list', myLoadOptions, endpoint, token);
+  widget.listAnnotations('class-annotation-list', classLoadOptions, endpoint, token);
+  widget.listAnnotations('group-annotation-list', groupLoadOptions, endpoint, token);
+});
+
+</script>
+<script type="text/template" id="user-comment-template">
+  <span class="user-highlight" id="{{uuid}}"><span class="pull-right">{{formattedDate}}</span><div class="ellipsis"><a href="{{uri}}#hl{{uuid}}">{{{quote}}}</a></div>
+
+
+</span>
+  <span class="user-comment"><div class="ellipsis">{{{text}}}</div><div class="secondary-text">{{title}} ({{username}})</div>
+  </span>
+</script>
+<script type="text/template" id="user-highlight-template">
+  <span class="user-highlight"><div class="ellipsis"><a href="{{uri}}#hl{{uuid}}">{{{quote}}}</a></div></span>
+  <span class="user-comment"><div class="secondary-text">{{title}} ({{username}})</div></span>
+</script>
+
+ <!-- <script> 
+    var currentSignin = Date.parse("<%= current_user.current_sign_in_at %>");
+    var lastSignin = Date.parse("<%= current_user.last_sign_in_at %>");
+    var annoTime = Date.parse("{{{created}}}"); //not sure whether to use created or updated
+   
+   //or currentsignin and lastsignin are the same? 
+    if(annoTime < currentSignin && annoTime > lastSignin){
+      <% puts "new annotation" %>
+      // "<span class=\"glyphicon glyphicon-sunglasses\" aria-hidden=\"true\" style=\"color:#facf23\"></span>";
+
+    
+    };
+
+    </script> -->

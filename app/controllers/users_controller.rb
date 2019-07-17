@@ -9,6 +9,7 @@ class UsersController < ApplicationController
     end
     @document_list = Document.select(:slug, :title) # for getting document name in annotations table.
 
+    @mygroups = Membership.where(user_id: current_user.id, role: "owner")
     
     respond_to do |format|
       format.html # show.html.erb

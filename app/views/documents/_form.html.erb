@@ -290,5 +290,19 @@
 //     $(this).prop('selected', !$(this).prop('selected'));
 //     return false;
 // });
+
+  function change(selected){
+                var type = document.getElementById(selected);
+                var edition = document.getElementById("edition");
+                console.log(edition);
+                if(type.value == "Website"){
+                  console.log("website!");
+                  edition.style.display = "none";
+            } else {
+              edition.style.display = "block";
+            }
+          }
+
+
     </script>
 

@@ -47,7 +47,7 @@ AnnotationStudio::Application.routes.draw do
     get 'demote', to: 'groups#demote'
 
     resources :invites
-    post 'join_via_token' => 'invites#join_via_token'
+
 
     
   end

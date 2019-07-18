@@ -118,7 +118,7 @@ class DocumentsController < ApplicationController
           Delayed::Job.enqueue DocumentProcessor.new(@document.id, @document.state, Apartment::Tenant.current)
           @document.pending!
         end
-        format.html { redirect_to documents_url, notice: 'Document was successfully created.', anchor: 'created'}
+        format.html { redirect_to dashboard_path, notice: 'Document was successfully created.', anchor: 'created'}
         format.json { render json: @document, status: :created, location: @document }
       else
         format.html { render action: "new" }

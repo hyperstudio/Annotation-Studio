@@ -4,30 +4,13 @@
 <%= stylesheet_link_tag "users" %>
 <%= render "/shared/document_titles" %>
 
-<!-- process all shared documents, ensure unique.  -->
-<!-- do here because need size.  -->
-<% @docList = [] #ensure each document is only shown once. %>
-            <% unless current_user.groups.empty? || current_user.groups.nil? %>
-              <% current_user.groups.each do |group| %>
-              <% if group.documents %>
-                <% group.documents.each do |document| %>
-                  <% unless (@docList.include? document) ||  document.state == "draft" %>
-                      <% @docList << document %>
-                  <% end %> <!-- unless -->
-                <% end %> <!-- document loop -->
-              <% end %>
-              <% end %> <!-- group loop -->
-            <% end %> <!-- unless -->
-
-<!-- change badge color if new doc since last login.  -->
-
 
 <center>
 <div class="dropdown">
   <button class="dropbtn">Documents</button>
   <div class="dropdown-content">
     <a id="documents-mine">Mine <span class="badge"> <%= current_user.documents.size %></span></a>
-    <a id="documents-shared">Shared <span class="badge"> <%= @docList.size %></span></a>
+    <a id="documents-shared">Shared <span class="badge"> <%= @sharedDocsCount %></span></a>
     <a href="<%= new_document_path %>">New</a>
   </div>
 </div>
@@ -45,39 +28,51 @@
 <div class="dropdown">
   <button class="dropbtn">Groups</button>
   <div class="dropdown-content">
-    <a id="groups-mine">Mine</a>
-    <a id="groups-joined">Joined</a>
+    <a id="groups-mine">Mine <span class="badge"> <%= @mygroups.size %></span> </a>
+    <a id="groups-joined">Joined <span class="badge"> <%= current_user.groups.size %></span></a>
     <a href="<%= new_group_path %>">New</a>
   </div>
 </div>
 </center>
+<center>
+  <h4 id= "current-page"> Shared Documents </h4>
+</center>
 
 <div class= "content" id="my-docs" style="display:none">
+    
   <div class="row">
-  <% current_user.documents.order("created_at DESC").each do |doc| %>
+  <% @myDocs.each do |doc| %>
 
     <div class= "column"> 
-       Title: <%= doc.title %> <br>
+       Title: <span><%= link_to doc.title, document_path(id: doc.id) %> <br>
        <% if doc.author != "" %>
           Author: <%= doc.author %> <br>
       <% end %>
        Created: <%= doc.created_at.strftime("%m/%d/%Y") %> 
-       <span style="font-size: 12px">Groups: <%= doc.groups.pluck(:name) %> </span>
+       <span class="title"> Groups: <%= doc.groups.pluck(:name) %> </span>
        <br>
 
        <%= link_to "Edit", controller: "documents", action: "edit", id: doc.id %>
     </div> <!-- end column -->
+
+    <!-- change badge color if new doc since last login.  -->
   <% end %> <!-- end doc loop -->
   </div>  <!-- end row -->
+
+  <div class='pagination-controls flex-wrap'>
+      <%= will_paginate @sharedDocs, renderer: BootstrapPagination::Rails %>
+    </div>
+
 </div><!--  end my-docs -->
 
-<div class= "content" id="shared-docs" style="display:none">
+<div class= "content" id="shared-docs" style="display:block">
+  
   <div class="row">
 
-  <% @docList.each do |doc| %>
+  <% @sharedDocs.each do |doc| %>
 
     <div class= "column"> 
-       Title: <%= doc.title %> <br>
+       Title: <span class="title"><%= link_to doc.title, document_path(id: doc.id) %> </span><br>
        <% if doc.author != "" %>
           Author: <%= doc.author %> <br>
       <% end %>
@@ -87,8 +82,27 @@
 
        <%= link_to "Edit", controller: "documents", action: "edit", id: doc.id if doc.user == current_user %>
     </div> <!-- end column -->
+
+    <% if doc.updated_at > current_user.last_sign_in_at && 
+    doc.updated_at < current_user.current_sign_in_at &&
+    doc.user_id != current_user.id %>
+  <script> 
+    console.log("new doc");
+    $("#documents-shared").find(".badge").css("background-color", "#6caef5");
+ </script>
+
+    <% end %> <!-- end if -->
   <% end %> <!-- end doc loop -->
+
   </div>  <!-- end row -->
+ 
+
+  <p>
+    <div class='pagination-controls'>
+      <%= will_paginate @sharedDocs, renderer: BootstrapPagination::Rails %>
+    </div>
+  </p>
+
 </div><!--  end shared-docs -->
 
 <div class = "content" id="my-annotations" style="display:none">
@@ -120,7 +134,10 @@
   <% current_user.groups.order("name ASC").each do |g| %>
     <div class= "column"> 
        <strong>Name:</strong> <%= g.name %> <br>
-       <strong>Role:</strong> <%= Membership.find_by(group_id: g.id, user_id: current_user.id).role %>
+       <strong>Role:</strong> <%= Membership.find_by(group_id: g.id, user_id: current_user.id).role %> <br>
+       <strong>Owner:</strong> 
+       <%= Membership.find_by(group_id: g.id, user_id: current_user.id).role == "owner" ? "Me" : User.find(Membership.find_by(group_id: g.id, role:"owner").user_id).firstname %> <br>
+       <strong>Members: </strong> <%= Membership.where(group_id: g.id).size %>
     </div>
   <% end %>
   </div>
@@ -135,24 +152,28 @@
     var myDocuments = document.getElementById("my-docs");
     $(".content").hide();
     myDocuments.style.display = "block";
+    $("#current-page").text("My Documents");
   }); 
 
   $("#documents-shared").click(function(){
     var sharedDocuments = document.getElementById("shared-docs");
     $(".content").hide();
     sharedDocuments.style.display = "block";
+    $("#current-page").text("Shared Documents");
   }); 
 
   $("#annotations-mine").click(function(){
     var myAnnotations = document.getElementById("my-annotations");
     $(".content").hide();
     myAnnotations.style.display = "block";
+    $("#current-page").text("My Annotations");
   });
 
   $("#annotations-shared").click(function(){
     var sharedAnnotations = document.getElementById("shared-annotations");
     $(".content").hide();
     sharedAnnotations.style.display = "block";
+    $("#current-page").text("Shared Annotations");
   });
 
   
@@ -161,17 +182,23 @@
     var joinedGroups = document.getElementById("joined-groups");
     $(".content").hide();
     joinedGroups.style.display = "block";
+    $("#current-page").text("Joined Groups");
   });
 
   $("#groups-mine").click(function(){
     var mygroups = document.getElementById("my-groups");
     $(".content").hide();
     mygroups.style.display = "block";
+    $("#current-page").text("My Groups");
   });
 
 $("button").click(function(){
     $(".content").hide();
   });
+
+$("#documents-shared").click(function(){
+    $(".badge").css("background-color", "#777");
+})
 
 </script>
 
@@ -228,6 +255,17 @@ $("button").click(function(){
   padding:5px;
   margin:20px 2% 0;
 }
+
+.title{
+  text-overflow: ellipsis;
+  max-width: 10px;
+  overflow: hidden;
+}
+
+.current-page{
+  margin-top: 5px;
+}
+
 </style>
 
 
@@ -281,8 +319,6 @@ var groups=[];
 </script>
 <script type="text/template" id="user-comment-template">
   <span class="user-highlight" id="{{uuid}}"><span class="pull-right">{{formattedDate}}</span><div class="ellipsis"><a href="{{uri}}#hl{{uuid}}">{{{quote}}}</a></div>
-
-
 </span>
   <span class="user-comment"><div class="ellipsis">{{{text}}}</div><div class="secondary-text">{{title}} ({{username}})</div>
   </span>

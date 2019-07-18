@@ -4,12 +4,30 @@
 <%= stylesheet_link_tag "users" %>
 <%= render "/shared/document_titles" %>
 
+<!-- process all shared documents, ensure unique.  -->
+<!-- do here because need size.  -->
+<% @docList = [] #ensure each document is only shown once. %>
+            <% unless current_user.groups.empty? || current_user.groups.nil? %>
+              <% current_user.groups.each do |group| %>
+              <% if group.documents %>
+                <% group.documents.each do |document| %>
+                  <% unless (@docList.include? document) ||  document.state == "draft" %>
+                      <% @docList << document %>
+                  <% end %> <!-- unless -->
+                <% end %> <!-- document loop -->
+              <% end %>
+              <% end %> <!-- group loop -->
+            <% end %> <!-- unless -->
+
+<!-- change badge color if new doc since last login.  -->
+
+
 <center>
 <div class="dropdown">
   <button class="dropbtn">Documents</button>
   <div class="dropdown-content">
-    <a id="documents-mine">Mine</a>
-    <a href="<%= documents_path %>">Shared</a>
+    <a id="documents-mine">Mine <span class="badge"> <%= current_user.documents.size %></span></a>
+    <a id="documents-shared">Shared <span class="badge"> <%= @docList.size %></span></a>
     <a href="<%= new_document_path %>">New</a>
   </div>
 </div>
@@ -18,7 +36,7 @@
   <button class="dropbtn">Annotations</button>
   <div class="dropdown-content">
     <a id= "annotations-mine"> Mine</a>
-    <a href="#shared">Shared</a>
+    <a id="annotations-shared">Shared</a>
     <a href="#">Bookmarked</a>
   </div>
 </div>
@@ -40,21 +58,48 @@
 
     <div class= "column"> 
        Title: <%= doc.title %> <br>
-       Author: <%= doc.author %> <br>
+       <% if doc.author != "" %>
+          Author: <%= doc.author %> <br>
+      <% end %>
        Created: <%= doc.created_at.strftime("%m/%d/%Y") %> 
        <span style="font-size: 12px">Groups: <%= doc.groups.pluck(:name) %> </span>
        <br>
-       <br>
+
        <%= link_to "Edit", controller: "documents", action: "edit", id: doc.id %>
-    </div>
-  <% end %>
-  </div>  
-</div>
+    </div> <!-- end column -->
+  <% end %> <!-- end doc loop -->
+  </div>  <!-- end row -->
+</div><!--  end my-docs -->
+
+<div class= "content" id="shared-docs" style="display:none">
+  <div class="row">
+
+  <% @docList.each do |doc| %>
+
+    <div class= "column"> 
+       Title: <%= doc.title %> <br>
+       <% if doc.author != "" %>
+          Author: <%= doc.author %> <br>
+      <% end %>
+       Created: <%= doc.created_at.strftime("%m/%d/%Y") %> 
+       <span style="font-size: 12px">Groups: <%= doc.groups.pluck(:name) %> </span>
+       <br>
+
+       <%= link_to "Edit", controller: "documents", action: "edit", id: doc.id if doc.user == current_user %>
+    </div> <!-- end column -->
+  <% end %> <!-- end doc loop -->
+  </div>  <!-- end row -->
+</div><!--  end shared-docs -->
 
 <div class = "content" id="my-annotations" style="display:none">
   <ul id="my-annotation-list" class="list-group"></ul>
-
 </div>
+
+
+<div class = "content" id="shared-annotations" style="display:none">
+  <ul id="class-annotation-list" class="list-group"></ul>
+</div>
+
 
 <div class = "content" id="my-groups" style="display:none">
   <div class="row">
@@ -86,16 +131,28 @@
 
 <script type="text/javascript">
 
-  var myDocuments = document.getElementById("my-docs");
   $("#documents-mine").click(function(){
+    var myDocuments = document.getElementById("my-docs");
     $(".content").hide();
     myDocuments.style.display = "block";
+  }); 
+
+  $("#documents-shared").click(function(){
+    var sharedDocuments = document.getElementById("shared-docs");
+    $(".content").hide();
+    sharedDocuments.style.display = "block";
   }); 
 
   $("#annotations-mine").click(function(){
     var myAnnotations = document.getElementById("my-annotations");
     $(".content").hide();
     myAnnotations.style.display = "block";
+  });
+
+  $("#annotations-shared").click(function(){
+    var sharedAnnotations = document.getElementById("shared-annotations");
+    $(".content").hide();
+    sharedAnnotations.style.display = "block";
   });
 
   

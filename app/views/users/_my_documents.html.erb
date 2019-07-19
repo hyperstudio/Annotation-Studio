@@ -1,0 +1,22 @@
+<div class="row">
+  <% @myDocs.each do |doc| %>
+
+    <div class= "column"> 
+       Title: <span><%= link_to doc.title, document_path(id: doc.id) %> <br>
+       <% if doc.author != "" %>
+          Author: <%= doc.author %> <br>
+      <% end %>
+       Created: <%= doc.created_at.strftime("%m/%d/%Y") %> 
+       <span class="title"> Groups: <%= doc.groups.pluck(:name) %> </span>
+       <br>
+
+       <%= link_to "Edit", controller: "documents", action: "edit", id: doc.id %>
+    </div> <!-- end column -->
+
+    <!-- change badge color if new doc since last login.  -->
+  <% end %> <!-- end doc loop -->
+  </div>  <!-- end row -->
+
+  <div class='pagination-controls flex-wrap'>
+      <%= will_paginate @myDocs, renderer: BootstrapPagination::Rails %>
+  </div>

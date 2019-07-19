@@ -8,8 +8,8 @@
 <div class="dropdown">
   <button class="dropbtn">Documents</button>
   <div class="dropdown-content">
-    <a id="documents-mine">Mine <span class="badge"> <%= current_user.documents.size %></span></a>
-    <a id="documents-shared">Shared <span class="badge"> <%= @sharedDocsCount %></span></a>
+    <a href = "<%= dashboard_path(nav: 'mydocuments') %>" id="documents-mine">Mine <span class="badge"> <%= current_user.documents.size %></span></a>
+    <a href= "<%= dashboard_path(nav: 'shareddocuments') %>" id="documents-shared">Shared <span class="badge"> <%= @sharedDocsCount %></span></a>
     <a href="<%= new_document_path %>">New</a>
   </div>
 </div>
@@ -29,6 +29,7 @@
     <a id="groups-mine">Mine <span class="badge"> <%= @mygroups.size %></span> </a>
     <a id="groups-joined">Joined <span class="badge"> <%= current_user.groups.size %></span></a>
     <a href="<%= new_group_path %>">New</a>
+    <a href="<%= groups_path %>"> Join New Group</a>
   </div>
 </div>
 </center>
@@ -37,34 +38,11 @@
   <h4 id= "current-page"> Shared Documents </h4>
 </center>
 
-<div class= "content" id="my-docs" style="display:none">
-    
-  <div class="row">
-  <% @myDocs.each do |doc| %>
-
-    <div class= "column"> 
-       Title: <span><%= link_to doc.title, document_path(id: doc.id) %> <br>
-       <% if doc.author != "" %>
-          Author: <%= doc.author %> <br>
-      <% end %>
-       Created: <%= doc.created_at.strftime("%m/%d/%Y") %> 
-       <span class="title"> Groups: <%= doc.groups.pluck(:name) %> </span>
-       <br>
-
-       <%= link_to "Edit", controller: "documents", action: "edit", id: doc.id %>
-    </div> <!-- end column -->
-
-    <!-- change badge color if new doc since last login.  -->
-  <% end %> <!-- end doc loop -->
-  </div>  <!-- end row -->
-
-  <div class='pagination-controls flex-wrap'>
-      <%= will_paginate @sharedDocs, renderer: BootstrapPagination::Rails %>
-    </div>
-
+<div class= "content" id="my-docs">
+  
 </div><!--  end my-docs -->
 
-<div class= "content" id="shared-docs" style="display:block">
+<div class= "content" id="shared-docs">
   
   <div class="row">
 
@@ -115,53 +93,62 @@
 
 
 <div class = "content" id="my-groups" style="display:none">
-  <div class="row">
-
-  <% @mygroups.each do |g| %>
-    <div class= "column"> 
-       <strong>Name:</strong> <%= Group.find(g.group_id).name %> <br>
-       <br>
-       <br>
-       <%= link_to "Edit", edit_group_path(id: g.group_id) %>
-    </div>
-  <% end %>
-  </div>
 </div>
 
 <div class = "content" id="joined-groups" style="display:none">
-  <div class="row">
-  <% current_user.groups.order("name ASC").each do |g| %>
-    <div class= "column"> 
-       <strong>Name:</strong> <%= g.name %> <br>
-       <strong>Role:</strong> <%= Membership.find_by(group_id: g.id, user_id: current_user.id).role %> <br>
-       <strong>Owner:</strong> 
-       <%= Membership.find_by(group_id: g.id, user_id: current_user.id).role == "owner" ? "Me" : User.find(Membership.find_by(group_id: g.id, role:"owner").user_id).firstname %> <br>
-       <strong>Members: </strong> <%= Membership.where(group_id: g.id).size %>
-    </div>
-  <% end %>
-  </div>
 </div>
-
-
 
 
 <script type="text/javascript">
 
-  $("#documents-mine").click(function(){
-    var myDocuments = document.getElementById("my-docs");
-    $(".content").hide();
-    myDocuments.style.display = "block";
-    $("#current-page").text("My Documents");
-  }); 
+  //a lot of repetition rn...clean up, or change page reload
+  <% if params[:nav] && params[:nav] == 'mydocuments' %>
 
-  $("#documents-shared").click(function(){
+    var myDocuments = document.getElementById("my-docs");
+    $(".content").hide(); //hide everything else 
+    
+    myDocuments.style.display = "block";
+    $(myDocuments).html("<%= j render 'my_documents' %>");
+    
+    $("#current-page").text("My Documents");
+
+
+  <% end %>
+
+
+//use href instead with a url param instead. downside: reloads the page. 
+  // $("#documents-mine").click(function(){
+  //   var myDocuments = document.getElementById("my-docs");
+  //   $(".content").hide(); //hide everything else 
+    
+  //   myDocuments.style.display = "block";
+  //   $(myDocuments).html("<%= j render 'my_documents' %>");
+    
+  //   $("#current-page").text("My Documents");
+  // }); 
+
+
+<% if params[:nav] && params[:nav] == 'shareddocuments' %>
+
     var sharedDocuments = document.getElementById("shared-docs");
     $(".content").hide();
     sharedDocuments.style.display = "block";
     $("#current-page").text("Shared Documents");
-  }); 
+
+
+  <% end %>
+
+
+  //use href instead with a url param. downside: reloads the page. 
+  // $("#documents-shared").click(function(){
+  //   var sharedDocuments = document.getElementById("shared-docs");
+  //   $(".content").hide();
+  //   sharedDocuments.style.display = "block";
+  //   $("#current-page").text("Shared Documents");
+  // }); 
 
   $("#annotations-mine").click(function(){
+
     var myAnnotations = document.getElementById("my-annotations");
     $(".content").hide();
     myAnnotations.style.display = "block";
@@ -169,18 +156,20 @@
   });
 
   $("#annotations-shared").click(function(){
+
     var sharedAnnotations = document.getElementById("shared-annotations");
     $(".content").hide();
     sharedAnnotations.style.display = "block";
     $("#current-page").text("Shared Annotations");
   });
-
   
 
   $("#groups-joined").click(function(){
+
     var joinedGroups = document.getElementById("joined-groups");
     $(".content").hide();
     joinedGroups.style.display = "block";
+    $(joinedGroups).html("<%= j render 'joined_groups' %>");
     $("#current-page").text("Joined Groups");
   });
 
@@ -188,6 +177,7 @@
     var mygroups = document.getElementById("my-groups");
     $(".content").hide();
     mygroups.style.display = "block";
+    $(mygroups).html("<%= j render 'my_groups' %>");
     $("#current-page").text("My Groups");
   });
 

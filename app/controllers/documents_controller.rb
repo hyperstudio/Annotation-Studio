@@ -134,7 +134,7 @@ class DocumentsController < ApplicationController
     @groups = params["groups"] #each element is a group id
     updated = false
 
-    if !@groups.empty? 
+    if @groups 
       @groups.each do |g| 
         begin
           @document.groups.find(g) 

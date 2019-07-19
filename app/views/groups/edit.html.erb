@@ -60,7 +60,9 @@ ADD PAGINATION!!!!
 	<tr class="member-table-row">
 		<th> Name </th>
 		<th> Role </th>
-		<th> Actions </th>
+		<% if is_owner(params[:id]) %>
+			<th> Actions </th>
+		<% end %>
 	</tr>
 <% if !@memberships.empty? %>
 	<% @memberships.each do |m| %>
@@ -69,25 +71,27 @@ ADD PAGINATION!!!!
 				<td> <!-- doesn't error check for missing last name -->
 					<%= @user.fullname %></td>
 				<td> <%= m.role %> </td> 
-				<td> 
-					<% unless m.role == "owner" %>
-						<span class= "action remove"> <%= link_to "Remove from Group", :controller => "groups", :action => "remove_member", 
-							:m_id => m.id, :username => @user.fullname %>  </span>
-					<% end %>
+				<% if is_owner(params[:id]) %>
+					<td> 
+						<% unless m.role == "owner" %>
+							<span class= "action remove"> <%= link_to "Remove from Group", :controller => "groups", :action => "remove_member", 
+								:m_id => m.id, :username => @user.fullname %>  </span>
+						<% end %>
 
-					<% if m.role == "member" %>
-						<span class= "action promote"> 
-							<%= link_to "Make Manager", :controller => "groups", :action => "promote", 
-							:m_id => m.id %> 
-						</span>
-					<% end%>
+						<% if m.role == "member" %>
+							<span class= "action promote"> 
+								<%= link_to "Make Manager", :controller => "groups", :action => "promote", 
+								:m_id => m.id %> 
+							</span>
+						<% end%>
 
-					<% if m.role == "manager" %>
-						<span class= "action demote"> <%= link_to "Demote to Member", :controller => "groups", 
-						:action => "demote", :m_id => m.id %>  </span>
-					<% end %>
-						
-				</td>
+						<% if m.role == "manager" %>
+							<span class= "action demote"> <%= link_to "Demote to Member", :controller => "groups", 
+							:action => "demote", :m_id => m.id %>  </span>
+						<% end %>
+							
+					</td>
+				<% end %> <!-- end if -->
 			</tr>
 	<% end %> <!-- end loop -->
 <% end %> <!-- end if -->

@@ -4,6 +4,25 @@
 <%= link_to "Manage Group", :controller=> "groups", :action => "edit", :id => params[:id] %>
 <% end %>
 
+
+
+<h2> Documents </h2> 
+	<table class="member-table">
+		<tr class="member-table-row">
+			<th> Title </th>
+			<th> Author </th>
+		</tr>
+	<% if !@documents.empty? %>
+	<% @documents.each do |d| %>
+			<tr class="member-table-row"> 
+				<td> <%= link_to d.title, document_path(id: d.id) %></td>
+
+				<td> <%= d.author %> </td> 
+			</tr>
+		<% end %>
+	<% end %>
+	</table>
+
 <h2> Members </h2> 
 	<table class="member-table">
 		<tr class="member-table-row">

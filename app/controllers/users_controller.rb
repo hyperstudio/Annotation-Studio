@@ -18,7 +18,7 @@ class UsersController < ApplicationController
     #   document_set = whitelisted[:docs]
     # end
 
-    per_page = 7 #breaks at 8
+    per_page = 10 #breaks at 8
 
     docList = []
       current_user.groups.each do |g| 

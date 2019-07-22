@@ -1,16 +1,16 @@
+
 <a class="navbar-brand" href="/">Annotation Studio <span style="color:<%= $DOMAIN_CONFIG['site_color'] %>;"><%= $DOMAIN_CONFIG['site_name'] %></span></a>
-<ul class="nav navbar-nav pull-right hidden-xs" id="globalnav">
+<ul class="nav navbar-nav pull-right hidden-xs" id="globalnav" >
   <li><div class="dropdown">
-	  <button class="dropdown-toggle menu-button" type="button" id="about-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+	  <button class="dropdown-toggle menu-button" type="button" id="about-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:black; ">
 		  About
-		  <span class="caret"></span>
 	  </button>
 	  <ul class="dropdown-menu" aria-labelledby="about-menu">
-		  <li><a href="http://www.annotationstudio.org/project/" target="_blank">Project <i class="fa fa-external-link-square"></i></a></li>
-		  <li><a href="http://www.annotationstudio.org/pedagogy/" target="_blank">Pedagogy <i class="fa fa-external-link-square"></i></a></li>
-		  <li><a href="http://www.annotationstudio.org/community/" target="_blank">Community <i class="fa fa-external-link-square"></i></a></li>
-		  <li><a href="http://www.annotationstudio.org/support/" target="_blank">Support <i class="fa fa-external-link-square"></i></a></li>
-		  <li><a href="http://www.annotationstudio.org/news/" target="_blank">News <i class="fa fa-external-link-square"></i></a></li>
+		  <li><a href="http://www.annotationstudio.org/project/" target="_blank">Project </a></li>
+		  <li><a href="http://www.annotationstudio.org/pedagogy/" target="_blank">Pedagogy </a></li>
+		  <li><a href="http://www.annotationstudio.org/community/" target="_blank">Community </a></li>
+		  <li><a href="http://www.annotationstudio.org/support/" target="_blank">Support </a></li>
+		  <li><a href="http://www.annotationstudio.org/news/" target="_blank">News </a></li>
 	  </ul>
   </div></li>
 <% if user_signed_in? %>
@@ -43,6 +43,7 @@
 	  </div></li>
 	  <% end %>
 
-<li><a href="http://support.annotationstudio.org/" target="_blank">Help <i class="fa fa-external-link-square"></i></a></li>
+<li><a href="http://support.annotationstudio.org/" target="_blank">Help </a></li>
 <% end %>
 </ul>
+

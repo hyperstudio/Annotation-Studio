@@ -1,0 +1,23 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
+en:
+    unauthorized:
+        manage:
+            all: "You don't have permission to %{action} %{subject}."
+            user: "You don't have permission to manage other user accounts."
+            document: "You don't have permission to manage this document."
+        read:
+            user: "You don't have permission to view other user accounts."
+            document: "You don't have permission to view this document."
+        update:
+            user: "You don't have permission to modify other user accounts."
+            document: "You don't have permission to modify this document."
+        destroy:
+            user: "You don't have permission to delete other user accounts."
+            document: "You don't have permission to delete this document."
+en:
+    active_admin:
+      batch_actions:
+        labels:
+          make_admin: "Create admins w/"

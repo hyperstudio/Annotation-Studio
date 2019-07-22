@@ -1,0 +1,61 @@
+<%= content_for :page_title, "Annotations" %>
+<%= content_for :body_id, 'annotations' %>
+<%= content_for :body_class, 'index' %>
+<%= stylesheet_link_tag "annotations" %>
+<%= javascript_include_tag "widget" %>
+<%= render "/shared/document_titles" %>
+<script type="text/javascript">
+  jQuery(function ($) {
+    var widget = new Widget.App();
+    var endpoint = '<%= ENV["API_URL"] %>';
+    var token = '<%= @token %>';
+    // Backbone.history.start({pushState: true, root: window.location})
+
+    var loadOptions = JSON.parse('<%== @loadOptions %>');
+
+    var myLoadOptions = {'mode': 'user'};
+        classLoadOptions = {'mode': 'class'};
+        groupLoadOptions = {'mode': 'group'};
+    for (var attrname in loadOptions) {
+        myLoadOptions[attrname] = loadOptions[attrname];
+        classLoadOptions[attrname] = loadOptions[attrname];
+        groupLoadOptions[attrname] = loadOptions[attrname];
+    };
+    widget.listAnnotations('my-annotation-list', myLoadOptions, endpoint, token);
+    widget.listAnnotations('class-annotation-list', classLoadOptions, endpoint, token);
+    widget.listAnnotations('group-annotation-list', groupLoadOptions, endpoint, token);
+  });
+</script>
+<script type="text/template" id="user-comment-template">
+	<span class="user-highlight"><span class="pull-right">{{formattedDate}}</span><div class="ellipsis">&raquo; <a href="{{uri}}#hl{{uuid}}">{{{quote}}}</a></div></span>
+  <span class="user-comment"><div class="ellipsis long">{{{text}}}</div><div class="secondary-text">{{title}} ({{username}}) <span class="label label-info">{{class}}</span></div></span>
+</script>
+<script type="text/template" id="user-highlight-template">
+	<span class="user-highlight"><div class="ellipsis long">&raquo; <a href="{{uri}}#hl{{uuid}}">{{{quote}}}</a></div></span>
+	<span class="user-comment"><div class="secondary-text">{{title}} ({{username}}) <span class="label label-info">{{class}}</span></div></span>
+</script>
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-default" id="dashboard-documents">
+      <div class="panel-heading">
+        <span class="panel-title">Annotations</span>
+        <ul class="nav nav-tabs nav-tabs-xs pull-right" id="annotation-tabs" role="tablist">
+          <li class="active"><a href="#mine" data-toggle="tab"><span class="badge"></span> Mine</a></li>
+          <li><a href="#groups" data-toggle="tab"><span class="badge"></span> <%= ENV["GROUP_TERM_PLURAL"] %></a></li>
+          <li><a href="#classes" data-toggle="tab"><span class="badge"></span> <%= ENV["CLASS_TERM_PLURAL"] %></a></li>
+        </ul>
+      </div><!-- / .panel-heading -->
+        <div class="tab-content">
+          <div class="tab-pane no-padding fade active in" id="mine">
+            <ul id="my-annotation-list" class="list-group"></ul>
+          </div>
+          <div class="tab-pane no-padding fade in" id="groups">
+            <ul id="group-annotation-list" class="list-group"></ul>
+          </div>
+          <div class="tab-pane no-padding fade in" id="classes">
+            <ul id="class-annotation-list" class="list-group"></ul>
+          </div>
+        </div>
+     </div><!--/panel -->
+	</div><!--/col-md-12 -->
+</div><!--/row -->

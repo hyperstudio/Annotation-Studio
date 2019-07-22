@@ -1,0 +1,17 @@
+<%= content_for :page_title, "Resend unlock instructions" %>
+<div class="row">
+	<div class="col-md-12">
+	<h2>Resend unlock instructions</h2>
+
+	<%= form_for(resource, :as => resource_name, :url => unlock_path(resource_name), :html => { :method => :post }) do |f| %>
+	  <%= devise_error_messages! %>
+
+	  <div><%= f.label :email %><br />
+	  <%= f.email_field :email %></div>
+
+	  <div><%= f.submit "Resend unlock instructions" %></div>
+	<% end %>
+
+	<%= render "links" %>
+	</div><!--/col-md-12 -->
+</div><!--/row -->

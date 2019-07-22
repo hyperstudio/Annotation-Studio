@@ -1,0 +1,13 @@
+common: &defaults
+  name: "annotation-studio-2-0"
+  key: <%= ENV['SCOUT_KEY'] %>
+  monitor: <%= ENV['SCOUT_MONITOR'] %>
+
+test:
+  monitor: false
+
+production:
+  <<: *defaults
+
+development:
+  <<: *defaults

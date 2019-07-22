@@ -1,0 +1,61 @@
+body#catalog {
+  padding: 10px;
+}
+
+.catalog-container {
+
+  padding-left: 0;
+  padding-right: 0;
+
+  .col-lg-8 {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .form-horizontal .form-group {
+      margin-left: 0;
+      margin-right: 0;
+  }
+
+  .browse-panel {
+    padding-top: 5px;
+    width: 30%;
+
+    .list-group-item {
+      padding-top: 3px;
+      padding-bottom: 3px;
+      font-size: 12px;
+    }
+
+    .icon {
+      font-size: 10px;
+    }
+  }
+
+  .results-panel {
+    padding-top: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+    width: 65%;
+    height: 490px !important;
+  }
+
+  // general helper classes
+  .scrollable {
+    overflow-y: scroll;
+  }
+
+}
+
+.button-column {
+	white-space: nowrap;
+}
+
+.same-line {
+	float: left;
+	margin-right: 10px;
+}
+
+.next-line {
+	clear: both;
+}

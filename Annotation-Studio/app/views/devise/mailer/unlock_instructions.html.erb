@@ -1,0 +1,7 @@
+<p>Hello <%= @resource.email %>!</p>
+
+<p>Your account in Annotation Studio has been locked due to an excessive amount of unsuccessful sign in attempts.</p>
+
+<p>Click the link below to unlock your account:</p>
+
+<p><%= link_to 'Unlock my account', multitenant_domain + unlock_path(@resource, :unlock_token => @resource.unlock_token) %></p>

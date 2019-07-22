@@ -1,0 +1,155 @@
+/*Line numbers for everything marked div class="poem" and with div class="lineno"*/
+#textcontent div.poem {
+    margin: auto;
+    padding: 0.5em;
+    line-height: 0;
+    counter-reset: line;
+
+    .castList {text-align:center;}
+    .stage {text-align:center; line-height:initial;}
+    .sp {text-align:center; line-height:initial;}
+    p { 
+        text-align:center; 
+        line-height:initial;
+    }
+    a[name].note {
+        top:0;
+        margin: 10px 0;
+    }
+
+
+    .stanza {
+        margin-top: 0.75em;
+        margin-bottom: 0.75em;
+
+        div[class^="lineno"] {
+            line-height: 1.5rem;
+            position: relative;
+            left: 20px;
+            padding-left: 3em;
+
+            /*  
+              Handling for prose and paragraph indentation. 
+              If class "indentps" is present all paragraphs (except first) will be indented. 
+              If not present, larger vertical margins will offset paragraphs
+            */
+            
+            .indentps p:first-child {
+                text-indent: 0;
+                margin: 0.25em 0;
+            }
+
+            .indentps p {
+                text-indent: 2em;
+                margin: 0.25em 0;
+            }
+
+            .indent1 {
+                display: inline-block;
+                text-indent: 0.5em;
+            }
+
+            .indent2 {
+                display: inline-block;
+                text-indent: 1em;
+            }
+
+            .indent3 {
+                display: inline-block;
+                text-indent: 1.5em;
+            }
+
+            .indent4 {
+                display: inline-block;
+                text-indent: 2em;
+            }
+
+            .indent5 {
+                display: inline-block;
+                text-indent: 2.5em;
+            }
+
+            .indent6 {
+                display: inline-block;
+                text-indent: 3em;
+            }
+
+            .indent7 {
+                display: inline-block;
+                text-indent: 3.5em;
+            }
+
+            .indent8 {
+                display: inline-block;
+                text-indent: 4em;
+            }
+
+            .indent9 {
+                display: inline-block;
+                text-indent: 4.5em;
+            }
+
+            .indent10 {
+                display: inline-block;
+                text-indent: 5em;
+            }
+
+            .indent11 {
+                display: inline-block;
+                text-indent: 5.5em;
+            }
+
+            .indent12 {
+                display: inline-block;
+                text-indent: 6em;
+            }
+
+            .indent13 {
+                display: inline-block;
+                text-indent: 6.5em;
+            }
+
+            .indent14 {
+                display: inline-block;
+                text-indent: 7em;
+            }
+
+            .indent15 {
+                display: inline-block;
+                text-indent: 7.5em;
+            }
+
+            .indent16 {
+                display: inline-block;
+                text-indent: 8em;
+            }
+        }
+
+        .lineSeg1 {
+            line-height: 1.5rem;
+            position: relative;
+            left: 20px;
+            padding-left: 3em;
+        }
+
+        .lineSeg2 {
+            line-height: 1.5rem;
+            position: relative;
+            left: 20px;
+            padding-left: 3em;
+        }
+
+        div[class^="lineno"]:before {
+            counter-increment: line;
+            content: counter(line);
+            display: inline-block;
+            border-right: 1px solid #B9B9B9;
+            padding: 0 0.5em;
+            color: #888;
+            left: -5ex;
+            position: absolute;
+            text-align: right;
+            width: 6ex;
+        }
+    }
+}

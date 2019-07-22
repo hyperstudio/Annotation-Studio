@@ -1,0 +1,17 @@
+<%= content_for :page_title, "Confirm account" %>
+<%= form_for(resource, :as => resource_name, :url => confirmation_path(resource_name), :html => { :method => :post,  :class => "form-horizontal"}) do |f| %>
+<%= devise_error_messages! %>
+<fieldset>
+<legend>Resend confirmation instructions</legend>
+    <div class="form-group">
+        <%= f.label :email, :class => "control-label" %>
+        <div class="controls">
+        <%= f.email_field :email %>
+        </div>
+        <br>
+        <div class="controls">
+        <div><%= f.submit "Resend confirmation instructions", :class => "btn btn-default btn btn-default-primary" %></div>
+    </div>
+</fieldset>
+<% end %>
+

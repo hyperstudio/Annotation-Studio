@@ -1,0 +1,7 @@
+<ol class="breadcrumb breadcrumb-inverse hidden-xs">
+<% if params[:controller] == 'documents' %>
+  <% if params[:action] == 'show' && ! @document.draft?  %>
+    <li>Annotations</li>
+  <% end %>
+<% end %>
+</ol>

@@ -1,0 +1,11 @@
+<div class="row">
+
+  <% @mygroups.each do |g| %>
+    <div class= "column"> 
+       <strong>Name:</strong> <%= Group.find(g.group_id).name %> <br>
+       <br>
+       <br>
+       <%= link_to "Edit", edit_group_path(id: g.group_id) %>
+    </div>
+  <% end %>
+  </div>

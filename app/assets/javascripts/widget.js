@@ -58,8 +58,8 @@ Widget.RemoteAnnotationList = Backbone.Collection.extend({
 
 // Annotation View
 Widget.AnnotationView = Backbone.View.extend({
-	tagName: 'li',
-	className: 'list-group-item',
+	tagName: 'div',
+	className: 'column',
 	initialize: function (annotation) {
 		this.commenttemplate = $('#user-comment-template').html();
 		this.highlighttemplate = $('#user-highlight-template').html();
@@ -111,7 +111,7 @@ Widget.AnnotationView = Backbone.View.extend({
 // Annotation List View
 Widget.AnnotationListView = Backbone.View.extend({
 	initialize: function (options) {
-    this.el = $("ul#"+ options.container);
+    this.el = $("div#"+ options.container);
 	},
 	render: function () {
 		// Clear out existing annotations

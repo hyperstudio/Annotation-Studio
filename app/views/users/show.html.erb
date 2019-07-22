@@ -7,19 +7,21 @@
 <center>
 <div class="dropdown">
   <button class="dropbtn">Documents</button>
-  <div class="dropdown-content" >
-    <a id="documents-mine" style="display:inline">Mine <span class="badge"> <%= current_user.documents.size %></span></a>
-    <a id="documents-shared" style="display:inline">Shared <span class="badge"> <%= @sharedDocsCount %></span></a>
-    <a href="<%= new_document_path %>" style="display:inline">New</a>
+
+  <div class="dropdown-content">
+    <a href = "<%= dashboard_path(nav: 'mydocuments') %>" id="documents-mine" style="display:inline" >Mine <span class="badge"> <%= current_user.documents.size %></span></a>
+    <a href= "<%= dashboard_path(nav: 'shareddocuments') %>" id="documents-shared" style="display:inline">Shared <span class="badge"> <%= @sharedDocsCount %></span></a>
+    <a href="<%= new_document_path %>" style="display:inline" >New</a>
   </div>
 </div>
 
 <div class="dropdown">
   <button class="dropbtn">Annotations</button>
   <div class="dropdown-content">
+
     <a id= "annotations-mine" style="display:inline"> Mine</a>
     <a id="annotations-shared" style="display:inline">Shared</a>
-    <a href="#" style="display:inline">Bookmarked</a>
+
   </div>
 </div>
 
@@ -27,46 +29,29 @@
 <div class="dropdown">
   <button class="dropbtn">Groups</button>
   <div class="dropdown-content">
+
     <a id="groups-mine" style="display:inline">Mine <span class="badge"> <%= @mygroups.size %></span> </a>
     <a id="groups-joined" style="display:inline">Joined <span class="badge"> <%= current_user.groups.size %></span></a>
     <a href="<%= new_group_path %>" style="display:inline">New</a>
+    <a href="<%= groups_path %>" style="display:inline"> Join New Group</a>
+  
+    
+
   </div>
 </div>
 </center>
 
 
-
+<center>
   <h4 id= "current-page"> Shared Documents </h4>
 
 
-<div class= "content" id="my-docs" style="display:none">
-    
-  <div class="row">
-  <% @myDocs.each do |doc| %>
 
-    <div class= "column"> 
-       Title: <span><%= link_to doc.title, document_path(id: doc.id) %> <br>
-       <% if doc.author != "" %>
-          Author: <%= doc.author %> <br>
-      <% end %>
-       Created: <%= doc.created_at.strftime("%m/%d/%Y") %> 
-       <span class="title"> Groups: <%= doc.groups.pluck(:name) %> </span>
-       <br>
-
-       <%= link_to "Edit", controller: "documents", action: "edit", id: doc.id %>
-    </div> <!-- end column -->
-
-    <!-- change badge color if new doc since last login.  -->
-  <% end %> <!-- end doc loop -->
-  </div>  <!-- end row -->
-
-  <div class='pagination-controls flex-wrap'>
-      <%= will_paginate @myDocs, renderer: BootstrapPagination::Rails %>
-    </div>
-
+<div class= "content" id="my-docs">
+  
 </div><!--  end my-docs -->
 
-<div class= "content" id="shared-docs" style="display:block">
+<div class= "content" id="shared-docs">
   
   <div class="row">
 
@@ -108,63 +93,72 @@
 </div><!--  end shared-docs -->
 
 <div class = "content" id="my-annotations" style="display:none">
-  <ul id="my-annotation-list" class="list-group"></ul>
+  <div id="my-annotation-list" class="row"></div>
 </div>
 
 
 <div class = "content" id="shared-annotations" style="display:none">
-  <ul id="class-annotation-list" class="list-group"></ul>
+  <div id="class-annotation-list" class="row"></div>
 </div>
 
 
 <div class = "content" id="my-groups" style="display:none">
-  <div class="row">
-
-  <% @mygroups.each do |g| %>
-    <div class= "column"> 
-       <strong>Name:</strong> <%= Group.find(g.group_id).name %> <br>
-       <br>
-       <br>
-       <%= link_to "Edit", edit_group_path(id: g.group_id) %>
-    </div>
-  <% end %>
-  </div>
 </div>
 
 <div class = "content" id="joined-groups" style="display:none">
-  <div class="row">
-  <% current_user.groups.order("name ASC").each do |g| %>
-    <div class= "column"> 
-       <strong>Name:</strong> <%= g.name %> <br>
-       <strong>Role:</strong> <%= Membership.find_by(group_id: g.id, user_id: current_user.id).role %> <br>
-       <strong>Owner:</strong> 
-       <%= Membership.find_by(group_id: g.id, user_id: current_user.id).role == "owner" ? "Me" : User.find(Membership.find_by(group_id: g.id, role:"owner").user_id).firstname %> <br>
-       <strong>Members: </strong> <%= Membership.where(group_id: g.id).size %>
-    </div>
-  <% end %>
-  </div>
 </div>
-
-
 
 
 <script type="text/javascript">
 
-  $("#documents-mine").click(function(){
-    var myDocuments = document.getElementById("my-docs");
-    $(".content").hide();
-    myDocuments.style.display = "block";
-    $("#current-page").text("My Documents");
-  }); 
+  //a lot of repetition rn...clean up, or change page reload
+  <% if params[:nav] && params[:nav] == 'mydocuments' %>
 
-  $("#documents-shared").click(function(){
+    var myDocuments = document.getElementById("my-docs");
+    $(".content").hide(); //hide everything else 
+    
+    myDocuments.style.display = "block";
+    $(myDocuments).html("<%= j render 'my_documents' %>");
+    
+    $("#current-page").text("My Documents");
+
+
+  <% end %>
+
+
+//use href instead with a url param instead. downside: reloads the page. 
+  // $("#documents-mine").click(function(){
+  //   var myDocuments = document.getElementById("my-docs");
+  //   $(".content").hide(); //hide everything else 
+    
+  //   myDocuments.style.display = "block";
+  //   $(myDocuments).html("<%= j render 'my_documents' %>");
+    
+  //   $("#current-page").text("My Documents");
+  // }); 
+
+
+<% if params[:nav] && params[:nav] == 'shareddocuments' %>
+
     var sharedDocuments = document.getElementById("shared-docs");
     $(".content").hide();
     sharedDocuments.style.display = "block";
     $("#current-page").text("Shared Documents");
-  }); 
+
+
+  <% end %>
+
+
+  //use href instead with a url param. downside: reloads the page. 
+  // $("#documents-shared").click(function(){
+  //   var sharedDocuments = document.getElementById("shared-docs");
+  //   $(".content").hide();
+  //   sharedDocuments.style.display = "block";
+  //   $("#current-page").text("Shared Documents");
+  // }); 
 
   $("#annotations-mine").click(function(){
+
     var myAnnotations = document.getElementById("my-annotations");
     $(".content").hide();
     myAnnotations.style.display = "block";
@@ -172,18 +166,20 @@
   });
 
   $("#annotations-shared").click(function(){
+
     var sharedAnnotations = document.getElementById("shared-annotations");
     $(".content").hide();
     sharedAnnotations.style.display = "block";
     $("#current-page").text("Shared Annotations");
   });
-
   
 
   $("#groups-joined").click(function(){
+
     var joinedGroups = document.getElementById("joined-groups");
     $(".content").hide();
     joinedGroups.style.display = "block";
+    $(joinedGroups).html("<%= j render 'joined_groups' %>");
     $("#current-page").text("Joined Groups");
   });
 
@@ -191,6 +187,7 @@
     var mygroups = document.getElementById("my-groups");
     $(".content").hide();
     mygroups.style.display = "block";
+    $(mygroups).html("<%= j render 'my_groups' %>");
     $("#current-page").text("My Groups");
   });
 
@@ -203,6 +200,7 @@ $("#documents-shared").click(function(){
 })
 
 </script>
+
 
 
 
@@ -275,6 +273,7 @@ $("#documents-shared").click(function(){
 </style>
 
 
+
 <%= javascript_include_tag "widget" %>
 <script type="text/javascript" charset="utf-8">
 jQuery(function ($) {
@@ -324,13 +323,91 @@ var groups=[];
 
 </script>
 <script type="text/template" id="user-comment-template">
-  <span class="user-highlight" id="{{uuid}}"><span class="pull-right">{{formattedDate}}</span><div class="ellipsis"><a href="{{uri}}#hl{{uuid}}">{{{quote}}}</a></div>
+
+
+  <span class="user-highlight" id="{{uuid}}">
+  <div class="ellipsis"><a href="{{uri}}#hl{{uuid}}">"{{{quote}}}"</a></div>
+  
 </span>
-  <span class="user-comment"><div class="ellipsis">{{{text}}}</div><div class="secondary-text">{{title}} ({{username}})</div>
+
+<span class="user-comment"><div class="ellipsis">{{{text}}}</div>
+  <span class= "annotation-info">{{formattedDate}} <br>
+    Document: {{title}} <br>
+    Annotator: {{username}}
+  </span> 
   </span>
+  
 </script>
+
+
+
 <script type="text/template" id="user-highlight-template">
   <span class="user-highlight"><div class="ellipsis"><a href="{{uri}}#hl{{uuid}}">{{{quote}}}</a></div></span>
   <span class="user-comment"><div class="secondary-text">{{title}} ({{username}})</div></span>
 </script>
+
+<style>
+
+.dropbtn {
+  background-color: #ddd;
+  padding: 10px;
+  font-size: 14px;
+  border: none;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+  padding-right: 100px;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 10px 10px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {background-color: #e8d543;}
+
+.dropdown:hover .dropdown-content {display: block;}
+
+.dropdown:hover .dropbtn {background-color: #e8d543;}
+
+.row{
+  display:flex;
+  flex-wrap: wrap;
+}
+
+.column{
+  background-color: white;
+  float: left;
+  width: 14%;
+  height: 150px;
+  padding:5px;
+  margin:20px 2% 0;
+}
+
+.title{
+  text-overflow: ellipsis;
+  max-width: 10px;
+  overflow: hidden;
+
+}
+
+.annotation-info{
+  font-size:12px;
+}
+
+
+</style>
   

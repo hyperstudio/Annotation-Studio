@@ -1,0 +1,11 @@
+ <div class="row">
+  <% current_user.groups.order("name ASC").each do |g| %>
+    <div class= "column"> 
+       <strong>Name:</strong> <%= link_to g.name, group_path(id: g.id) %> <br>
+       <strong>Role:</strong> <%= Membership.find_by(group_id: g.id, user_id: current_user.id).role %> <br>
+       <strong>Owner:</strong> 
+       <%= Membership.find_by(group_id: g.id, user_id: current_user.id).role == "owner" ? "Me" : User.find(Membership.find_by(group_id: g.id, role:"owner").user_id).firstname %> <br>
+       <strong>Members: </strong> <%= Membership.where(group_id: g.id).size %>
+    </div>
+  <% end %>
+  </div>

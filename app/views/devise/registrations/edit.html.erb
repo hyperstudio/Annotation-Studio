@@ -21,12 +21,20 @@
                     	<%= f.label :lastname, "Last Name" %>
                     	<%= f.text_field :lastname, :value =>  resource.lastname, :class => "form-control" %>
                     </div>
-                    <div class="form-group">
+                     <div class="form-group">
+                        <%= f.label :affiliation, "Affiliation" %>
+                        <%= f.text_field :affiliation, :value =>  resource.affiliation, :class => "form-control" %>
+                    </div>
+                      <div class="form-group">
+                        <%= f.label :email, "Email" %>
+                        <%= f.text_field :email, :value =>  resource.email, :class => "form-control" %>
+                    </div>
+                    <div class="form-group" style= "display:none">
                         <%= f.label ENV["CLASS_TERM_PLURAL"] %>
                         <%= f.text_field :rep_group_list, :class => "form-control", 'data-role' => "tagsinput", 'placeholder'=> ENV["CLASS_TERM_PLURAL"], :value => resource.rep_group_list.join(',') %>
                         <p class="help-block">Enter the names of any <%= ENV["CLASS_TERM_PLURAL"] %> you're in (or want to join), and <strong>press ENTER after each</strong>.</p>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" style= "display:none">
                         <%= f.label ENV["GROUP_TERM_PLURAL"] %>
                         <%= f.text_field :rep_subgroup_list, :class => "form-control", 'data-role' => "tagsinput", 'placeholder'=> ENV["GROUP_TERM_PLURAL"], :value => resource.rep_subgroup_list.join(',') %>
                         <p class="help-block">Enter the names of any <%= ENV["GROUP_TERM_PLURAL"] %> you're in (or want to join), and <strong>press ENTER after each</strong></p>

@@ -2,7 +2,22 @@
   <% @myDocs.each do |doc| %>
 
     <div class= "column"> 
-       Title: <span><%= link_to doc.title, document_path(id: doc.id) %> <br>
+       <span id="status-icon"> 
+        <% case doc.state %>
+          <% when 'draft' %>
+            <i class="glyphicon glyphicon-pencil" title="<%= doc.state %>"></i>
+          <% when 'published' %>
+            <i class="glyphicon glyphicon-comment" title="<%= doc.state %>"></i>
+          <% when 'archived' %>
+            <i class="glyphicon glyphicon-folder-close" title="<%= doc.state %>"></i>
+          <% when 'public' %>
+            <i class="glyphicon glyphicon-globe" title="<%= doc.state %>"></i>
+          <% else %>
+            <%= doc.state %>
+          <% end %>
+       </span> 
+
+       <%= link_to doc.title, document_path(id: doc.id) %> <br>
        <% if doc.author != "" %>
           Author: <%= doc.author %> <br>
       <% end %>

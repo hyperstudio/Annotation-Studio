@@ -7,18 +7,21 @@
 <center>
 <div class="dropdown">
   <button class="dropbtn">Documents</button>
+
   <div class="dropdown-content">
-    <a href = "<%= dashboard_path(nav: 'mydocuments') %>" id="documents-mine">Mine <span class="badge"> <%= current_user.documents.size %></span></a>
-    <a href= "<%= dashboard_path(nav: 'shareddocuments') %>" id="documents-shared">Shared <span class="badge"> <%= @sharedDocsCount %></span></a>
-    <a href="<%= new_document_path %>">New</a>
+    <a href = "<%= dashboard_path(nav: 'mydocuments') %>" id="documents-mine" style="display:inline" >Mine <span class="badge"> <%= current_user.documents.size %></span></a>
+    <a href= "<%= dashboard_path(nav: 'shareddocuments') %>" id="documents-shared" style="display:inline">Shared <span class="badge"> <%= @sharedDocsCount %></span></a>
+    <a href="<%= new_document_path %>" style="display:inline" >New</a>
   </div>
 </div>
 
 <div class="dropdown">
   <button class="dropbtn">Annotations</button>
   <div class="dropdown-content">
-    <a id= "annotations-mine"> Mine</a>
-    <a id="annotations-shared">Shared</a>
+
+    <a id= "annotations-mine" style="display:inline"> Mine</a>
+    <a id="annotations-shared" style="display:inline">Shared</a>
+
   </div>
 </div>
 
@@ -26,17 +29,23 @@
 <div class="dropdown">
   <button class="dropbtn">Groups</button>
   <div class="dropdown-content">
-    <a id="groups-mine">Mine <span class="badge"> <%= @mygroups.size %></span> </a>
-    <a id="groups-joined">Joined <span class="badge"> <%= current_user.groups.size %></span></a>
-    <a href="<%= new_group_path %>">New</a>
-    <a href="<%= groups_path %>"> Join New Group</a>
+
+    <a id="groups-mine" style="display:inline">Mine <span class="badge"> <%= @mygroups.size %></span> </a>
+    <a id="groups-joined" style="display:inline">Joined <span class="badge"> <%= current_user.groups.size %></span></a>
+    <a href="<%= new_group_path %>" style="display:inline">New</a>
+    <a href="<%= groups_path %>" style="display:inline"> Join New Group</a>
+  
+    
+
   </div>
 </div>
 </center>
 
+
 <center>
   <h4 id= "current-page"> Shared Documents </h4>
-</center>
+
+
 
 <div class= "content" id="my-docs">
   
@@ -74,11 +83,12 @@
   </div>  <!-- end row -->
  
 
-  <p>
+  <center><p>
     <div class='pagination-controls'>
       <%= will_paginate @sharedDocs, renderer: BootstrapPagination::Rails %>
     </div>
   </p>
+</center>
 
 </div><!--  end shared-docs -->
 
@@ -190,6 +200,77 @@ $("#documents-shared").click(function(){
 })
 
 </script>
+
+
+
+
+
+<style>
+
+.dropbtn {
+  background-color: #FDE162;
+  padding: 5px;
+  width: 100px;
+  font-size: 16px;
+  border: none;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+  padding-right: 100px;
+}
+
+.dropdown-content {
+  margin-left: -100px;
+  display: none;
+  position: absolute;
+  background-color: white;
+  width: 150%;
+  padding:5px;
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 5px 10px;
+  text-decoration: none;
+  display: block;
+}
+
+
+
+.dropdown-content a:hover {background-color: #FDE162;}
+
+.dropdown:hover .dropdown-content {display: block;}
+
+.dropdown:hover .dropbtn {background-color: white;}
+
+.row{
+  display:flex;
+  flex-wrap: wrap;
+}
+
+.column{
+  background-color: white;
+  float: left;
+  width: 14%;
+  height: 200px;
+  padding:5px;
+  margin:20px 2% 0;
+}
+
+.title{
+  text-overflow: ellipsis;
+  max-width: 10px;
+  overflow: hidden;
+}
+
+.current-page{
+  margin-top: 5px;
+}
+
+</style>
 
 
 

@@ -106,11 +106,23 @@ class DocumentsController < ApplicationController
     @document = Document.new(documents_params)
     @document.user = current_user
 
-    #@group is an array of group_ids, from multiple_select
-    @group = params["groups"]
-    if @group
-      @document.groups << Group.find(@group)
-    end
+
+  #trying group entry with tags method
+  puts "hi"
+  puts @document.rep_group_list
+
+  #method: tag the documents, but also use the same tag names as "actual" group objects. 
+  
+
+
+
+    # #@group is an array of group_ids, from multiple_select
+    # @group = params["groups"]
+    # if @group
+    #   @document.groups << Group.find(@group)
+    # end
+
+
 
     respond_to do |format|
       if @document.save

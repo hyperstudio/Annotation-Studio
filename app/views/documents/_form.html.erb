@@ -135,7 +135,8 @@
     	<%= f.text_field :rep_group_list, :value => @document.rep_group_list.join(', '), :class => 'form-control', 'data-role' => "tagsinput", 'placeholder' => ENV["CLASS_TERM_PLURAL"] %>
     	</div>
 
-      <h4>New Groups (Testing) </h4>
+
+  <h4>New Groups (Testing) </h4>
       <p> Note: UI working but Ajax (form submission) is not :( </p>
 
       <% unless create %>
@@ -160,12 +161,11 @@
 
 
 
-
   </div><!-- end span 6 -->
   </div><!-- end row -->
 
       <%= f.submit nil, :class => 'btn btn-default btn btn-default-primary btn-primary' %>
-    	<%= link_to 'Cancel', documents_url, :class => 'btn btn-default' %>
+    	<%= link_to 'Cancel', dashboard_path, :class => 'btn btn-default' %>
     <% end %>
 
     <script type="text/javascript">

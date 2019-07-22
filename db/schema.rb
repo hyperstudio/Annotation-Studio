@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190717172928) do
+ActiveRecord::Schema.define(version: 20190722224656) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -89,7 +89,7 @@ ActiveRecord::Schema.define(version: 20190717172928) do
     t.string   "rights_status",       limit: 255
     t.string   "slug",                limit: 255
     t.integer  "user_id"
-    t.date     "publication_date"
+    t.string   "publication_date"
     t.text     "chapters"
     t.string   "state",               limit: 255
     t.string   "upload_file_name",    limit: 255

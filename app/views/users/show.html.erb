@@ -4,30 +4,30 @@
 <%= stylesheet_link_tag "users" %>
 <%= render "/shared/document_titles" %>
 
-<center>
+
 <div class="dropdown">
-  <button class="dropbtn">Documents</button>
+  <button class="dropbtn">Documents <span class="badge" style="display:inline-block"><%= @sharedDocsCount.to_i + current_user.documents.size.to_i %></span> </button>
 
   <div class="dropdown-content">
-    <a href = "<%= dashboard_path(nav: 'mydocuments') %>" id="documents-mine" style="display:inline" >Mine <span class="badge"> <%= current_user.documents.size %></span></a>
+    <a href= "<%= dashboard_path(nav: 'mydocuments') %>" id="documents-mine" style="display:inline" >Mine <span class="badge"> <%= current_user.documents.size %></span></a>
     <a href= "<%= dashboard_path(nav: 'shareddocuments') %>" id="documents-shared" style="display:inline">Shared <span class="badge"> <%= @sharedDocsCount %></span></a>
     <a href="<%= new_document_path %>" style="display:inline" >New</a>
   </div>
 </div>
 
 <div class="dropdown">
-  <button class="dropbtn">Annotations</button>
+  <button class="dropbtn" id="annotation-button">Annotations <span class="badge"></span></button>
   <div class="dropdown-content">
 
-    <a id= "annotations-mine" style="display:inline"> Mine</a>
-    <a id="annotations-shared" style="display:inline">Shared</a>
+    <a id= "annotations-mine" style="display:inline"> Mine <span class="badge"></span></a>
+    <a id="annotations-shared" style="display:inline">Shared <span class="badge"></span></a>
 
   </div>
 </div>
 
 
 <div class="dropdown">
-  <button class="dropbtn">Groups</button>
+  <button class="dropbtn">Groups <span class="badge" style="display:inline-block"><%= @current_user.groups.size %></span></button>
   <div class="dropdown-content">
 
     <a id="groups-mine" style="display:inline">Mine <span class="badge"> <%= @mygroups.size %></span> </a>
@@ -39,13 +39,10 @@
 
   </div>
 </div>
-</center>
 
 
-
-<center>
 <h4 id= "current-page"> Shared Documents </h4>
-</center>
+
 
 <div class= "content" id="my-docs">
   
@@ -139,16 +136,16 @@
   <% end %>
 
 
-//use href instead with a url param instead. downside: reloads the page. 
-  // $("#documents-mine").click(function(){
-  //   var myDocuments = document.getElementById("my-docs");
-  //   $(".content").hide(); //hide everything else 
+// use href instead with a url param instead. downside: reloads the page. 
+  $("#documents-mine").click(function(){
+    var myDocuments = document.getElementById("my-docs");
+    $(".content").hide(); //hide everything else 
     
-  //   myDocuments.style.display = "block";
-  //   $(myDocuments).html("<%= j render 'my_documents' %>");
+    myDocuments.style.display = "block";
+    $(myDocuments).html("<%= j render 'my_documents' %>");
     
-  //   $("#current-page").text("My Documents");
-  // }); 
+    $("#current-page").text("My Documents");
+  }); 
 
 
 <% if params[:nav] && params[:nav] == 'shareddocuments' %>
@@ -217,9 +214,9 @@ $("#documents-shared").click(function(){
 <style>
 
 .dropbtn {
-  background-color: #eeeeee;
+  background-color: white;
   padding: 5px;
-  width: 100px;
+  width: 150px;
   font-size: 16px;
   border: none;
 }
@@ -231,11 +228,11 @@ $("#documents-shared").click(function(){
 }
 
 .dropdown-content {
-  margin-left: -100px;
+  /*margin-left: -100px;*/
   display: none;
   position: absolute;
   background-color: white;
-  width: 150%;
+  /*width: 150%;*/
   padding:5px;
   z-index: 1;
 }
@@ -279,6 +276,9 @@ $("#documents-shared").click(function(){
   margin-top: 5px;
   font-size: 12px;
 }
+
+
+
 
 </style>
 

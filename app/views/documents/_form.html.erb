@@ -129,35 +129,16 @@
 	  </div><!-- end span 6 -->
 
   <div class="col-md-6">
-    	<h4><%= ENV["CLASS_TERM_PLURAL"].capitalize %></h4>
-    	<p class="help-block">Enter the <%= ENV["CLASS_TERM_PLURAL"] %> to which you wish to assign this document, <strong>and press enter after each.</strong></p>
-    	<div class="form-group">
-    	<%= f.text_field :rep_group_list, :value => @document.rep_group_list.join(', '), :class => 'form-control', 'data-role' => "tagsinput", 'placeholder' => ENV["CLASS_TERM_PLURAL"] %>
-    	</div>
-
-
-  <h4>New Groups (Testing) </h4>
-      <p> Note: UI working but Ajax (form submission) is not :( </p>
-
-      <% unless create %>
-      <!-- only show in edit document -->
-        <p> Current Groups: 
-          <%= @document.groups.pluck(:name)%>
-        </p>
-      <% end %>
-
-      <p class="help-block">Select the groups to which you wish to assign this document. For selecting multiple options, <strong> Hold Ctrl and then click. </strong></p>
-      <div class="form-group">
-          <!-- multiple input done through select tag, put ajax on hold for now -->
-        <!-- Selected Groups:  -->
-          <!-- <ul id="selected-groups">
-          </ul> -->
-
-      <% @groups = current_user.groups %>
-      <%= select_tag "groups", options_from_collection_for_select(@groups, "id", "name"), {:class => 'form-control', :id => 'my-groups', :multiple => true,:style=> "height:250px"} %>
+    	<h4><%= ENV["GROUP_TERM_PLURAL"].capitalize %></h4>
+    	<p class="help-block">Enter the <%= ENV["GROUP_TERM_PLURAL"] %> to which you wish to assign this document, <strong>and press enter after each.</strong></p>
       
+    	<div class="form-group" style="display:none">
+    	<%= f.text_field :rep_group_list, :value => @document.rep_group_list.join(', '), :class => 'form-control', 'data-role' => "tagsinput", 'placeholder' => ENV["CLASS_TERM_PLURAL"] %>
+    </div>
 
-      </div>
+      <div class="form-groups">
+      <%= text_field_tag "groups", @current_groups, :placeholder => "Groups", :data=> {:role => 'tagsinput'} %>
+    	</div>
 
 
 

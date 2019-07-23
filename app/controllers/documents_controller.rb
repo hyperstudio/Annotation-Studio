@@ -98,6 +98,8 @@ class DocumentsController < ApplicationController
 
   # GET /documents/1/edit
   def edit
+     #display current groups on tags input line. 
+    @current_groups = @document.groups.pluck(:name).join(",")
   end
 
   # POST /documents
@@ -106,22 +108,17 @@ class DocumentsController < ApplicationController
     @document = Document.new(documents_params)
     @document.user = current_user
 
-
-  #trying group entry with tags method
-  puts "hi"
-  puts @document.rep_group_list
-
-  #method: tag the documents, but also use the same tag names as "actual" group objects. 
   
-
-
-
-    # #@group is an array of group_ids, from multiple_select
-    # @group = params["groups"]
-    # if @group
-    #   @document.groups << Group.find(@group)
-    # end
-
+  #attach document to groups
+    @groups = params["groups"] if params["groups"]
+    # puts "groups"
+    # puts @groups
+    @groupList = @groups.split(",")
+    if @groups
+      @groupList.each do |g|
+        @document.groups << Group.find_by(name: g) if Group.find_by(name: g)
+      end
+    end
 
 
     respond_to do |format|
@@ -143,27 +140,23 @@ class DocumentsController < ApplicationController
   # PUT /documents/1.json
   def update
     @document = Document.friendly.find(params[:id])
-    @groups = params["groups"] #each element is a group id
-    updated = false
+    #attach document to groups
+    @groups = params["groups"].split(",") if params["groups"]
+    if @groups
+      @groups.each do |g|
+        unless @document.groups.pluck(:name).include? g #don't re-insert existing groups
+          @document.groups << Group.find_by(name: g)
+        end #unless 
+      end #each
+    end #if 
+    
+    @document.update_attribute("updated_at", Time.now)
 
-    if @groups 
-      @groups.each do |g| 
-        begin
-          @document.groups.find(g) 
-        rescue ActiveRecord::RecordNotFound
-          @document.groups << Group.find(g)
-          updated = true
-          
-        end #end begin-rescue
-      end #end loop
-      
-      @document.update_attribute("updated_at", Time.now) if updated
-
-    end #end if
+  
 
     respond_to do |format|
       if @document.update_attributes(documents_params)
-        format.html { redirect_to documents_url, notice: 'Document was successfully updated.' }
+        format.html { redirect_to dashboard_path(nav: "mydocuments"), notice: 'Document was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -266,3 +259,4 @@ private
                                      :publication_date, :source, :rights_status, :upload, :survey_link, groups: :group_id)
   end
 end
+

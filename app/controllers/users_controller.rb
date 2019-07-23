@@ -60,10 +60,13 @@ class UsersController < ApplicationController
       redirect_to dashboard_path
     end
     
+   
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @user }
+      format.json {render json: @user}
+      
     end
+
 
     gon.rabl template: 'app/views/users/show.rabl', as: 'user'
   end
@@ -75,6 +78,6 @@ class UsersController < ApplicationController
   def users_params
     params.require(:user).permit(:email, :password, :agreement, :affiliation, :password_confirmation,
                                  :remember_me, :firstname, :lastname, :rep_privacy_list, :rep_group_list,
-                                 :rep_subgroup_list, :first_name_last_initial, :username)
+                                 :rep_subgroup_list, :first_name_last_initial, :username, :new)
   end
 end

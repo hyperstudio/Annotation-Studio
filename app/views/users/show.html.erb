@@ -4,13 +4,12 @@
 <%= stylesheet_link_tag "users" %>
 <%= render "/shared/document_titles" %>
 
-
 <div class="dropdown">
   <button class="dropbtn">Documents <span class="badge" style="display:inline-block"><%= @sharedDocsCount.to_i + current_user.documents.size.to_i %></span> </button>
 
   <div class="dropdown-content">
-    <a href= "<%= dashboard_path(nav: 'mydocuments') %>" id="documents-mine" style="display:inline" >Mine <span class="badge"> <%= current_user.documents.size %></span></a>
-    <a href= "<%= dashboard_path(nav: 'shareddocuments') %>" id="documents-shared" style="display:inline">Shared <span class="badge"> <%= @sharedDocsCount %></span></a>
+    <a href= "<%= dashboard_path(nav: 'mydocuments')%>" id="documents-mine" style="display:inline" >Mine <span class="badge"> <%= current_user.documents.size %></span></a>
+    <a href= "<%= dashboard_path(nav: 'shareddocuments')%>" id="documents-shared" style="display:inline">Shared <span class="badge"> <%= @sharedDocsCount %></span></a>
     <a href="<%= new_document_path %>" style="display:inline" >New</a>
   </div>
 </div>
@@ -39,7 +38,6 @@
 
   </div>
 </div>
-
 
 <h4 id= "current-page"> Shared Documents </h4>
 
@@ -118,22 +116,12 @@
 <div class = "content" id="joined-groups" style="display:none">
 </div>
 
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script> -->
+
 
 <script type="text/javascript">
 
-  //a lot of repetition rn...clean up, or change page reload
-  <% if params[:nav] && params[:nav] == 'mydocuments' %>
-
-    var myDocuments = document.getElementById("my-docs");
-    $(".content").hide(); //hide everything else 
-    
-    myDocuments.style.display = "block";
-    $(myDocuments).html("<%= j render 'my_documents' %>");
-    
-    $("#current-page").text("My Documents");
-
-
-  <% end %>
+ 
 
 
 // use href instead with a url param instead. downside: reloads the page. 
@@ -145,7 +133,28 @@
     $(myDocuments).html("<%= j render 'my_documents' %>");
     
     $("#current-page").text("My Documents");
-  }); 
+
+    //change url: 
+    // window.history.pushState(null, null, "?nav=mydocuments");
+   
+ 
+  }); //end click
+
+   //a lot of repetition rn...clean up, or change page reload. need for pagination. 
+  <% if params[:nav] && params[:nav] == 'mydocuments' %>
+
+    // alert("mydocuments");
+
+    var myDocuments = document.getElementById("my-docs");
+    $(".content").hide(); //hide everything else 
+    
+    myDocuments.style.display = "block";
+    $(myDocuments).html("<%= j render 'my_documents' %>");
+    
+    $("#current-page").text("My Documents");
+
+
+  <% end %>
 
 
 <% if params[:nav] && params[:nav] == 'shareddocuments' %>
@@ -160,12 +169,12 @@
 
 
   //use href instead with a url param. downside: reloads the page. 
-  // $("#documents-shared").click(function(){
-  //   var sharedDocuments = document.getElementById("shared-docs");
-  //   $(".content").hide();
-  //   sharedDocuments.style.display = "block";
-  //   $("#current-page").text("Shared Documents");
-  // }); 
+  $("#documents-shared").click(function(){
+    var sharedDocuments = document.getElementById("shared-docs");
+    $(".content").hide();
+    sharedDocuments.style.display = "block";
+    $("#current-page").text("Shared Documents");
+  }); 
 
   $("#annotations-mine").click(function(){
 
@@ -173,7 +182,11 @@
     $(".content").hide();
     myAnnotations.style.display = "block";
     $("#current-page").text("My Annotations");
-  });
+
+    //update url params (problem: ruby doesn't actually see it rn..try to fix with AJAX!!!!!!
+    window.history.pushState(null, null, "?nav=myannotations");
+ 
+  }); //end click
 
   $("#annotations-shared").click(function(){
 
@@ -181,6 +194,7 @@
     $(".content").hide();
     sharedAnnotations.style.display = "block";
     $("#current-page").text("Shared Annotations");
+     window.history.pushState(null, null, "?nav=sharedannotations");
   });
   
 
@@ -191,6 +205,8 @@
     joinedGroups.style.display = "block";
     $(joinedGroups).html("<%= j render 'joined_groups' %>");
     $("#current-page").text("Joined Groups");
+
+     window.history.pushState(null, null, "?nav=joinedgroups");
   });
 
   $("#groups-mine").click(function(){
@@ -199,6 +215,8 @@
     mygroups.style.display = "block";
     $(mygroups).html("<%= j render 'my_groups' %>");
     $("#current-page").text("My Groups");
+
+     window.history.pushState(null, null, "?nav=mygroups");
   });
 
 $("#documents-shared").click(function(){

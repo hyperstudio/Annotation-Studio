@@ -35,10 +35,11 @@ class UsersController < ApplicationController
     #handling invite_token
     @token = params[:invite_token]
     if @token 
-      puts 'token found'
+
       #make sure token is valid 
       begin
         invite = Invite.find_by(token: @token)
+        
         #check for expiration 
         if invite.expiration_date && (invite.expiration_date < Time.now)
           flash[:error] = 'token expired. please get new token'

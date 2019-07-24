@@ -131,14 +131,14 @@
   <div class="col-md-6">
     	<h4><%= ENV["GROUP_TERM_PLURAL"].capitalize %></h4>
     	<p class="help-block">Enter the <%= ENV["GROUP_TERM_PLURAL"] %> to which you wish to assign this document, <strong>and press enter after each.</strong></p>
-      
-    	<div class="form-group" style="display:none">
-    	<%= f.text_field :rep_group_list, :value => @document.rep_group_list.join(', '), :class => 'form-control', 'data-role' => "tagsinput", 'placeholder' => ENV["CLASS_TERM_PLURAL"] %>
-    </div>
 
-      <div class="form-groups">
-      <%= text_field_tag "groups", @current_groups, :placeholder => "Groups", :data=> {:role => 'tagsinput'} %>
-    	</div>
+   <!--  <div class="form-group">
+    	<%= f.text_field :rep_group_list, :value => @document.rep_group_list.join(', '), :class => 'form-control', :id=> 'dg', 'data-role' => "tagsinput", 'placeholder' => ENV["CLASS_TERM_PLURAL"] %>
+    </div>  -->
+
+          <div class="form-groups">
+      <%= text_field_tag "groups", @current_groups, id: "document-groups", :placeholder => "Groups", :data=> {:role => 'tagsinput'} %>
+      </div>
 
 
 
@@ -161,7 +161,8 @@
             newline: '<br>', // Summernote's default is to use '<p><br></p>'
             notStyle: 'position:absolute;top:0;left:0;right:0', // Position of Notification
             keepHtml: true, // Remove all Html formats
-            keepOnlyTags: ['<p>', '<br>', '<ul>', '<li>', '<b>', '<strong>','<i>', '<a>'], // If keepHtml is true, remove all tags except these
+            keepOnlyTags: ['<p>', '<br>', '<ul>', '<li>', '<b>', '<strong>','<i>', '<a>', 
+            '<img>', '<div>', '<h1>', '<h2>', '<h3>', '<style>'], // If keepHtml is true, remove all tags except these
             keepClasses: true, // Remove Classes
             badTags: ['script', 'applet', 'embed', 'noframes', 'noscript'], // Remove full tags with contents
             badAttributes: ['start'], // Remove attributes from remaining tags

@@ -25,7 +25,14 @@
        <span class="title"> Groups: <%= doc.groups.pluck(:name) %> </span>
        <br>
 
-       <%= link_to "Edit", controller: "documents", action: "edit", id: doc.id %>
+       <%= link_to "Edit", controller: "documents", action: "edit", id: doc.id %> <br>
+
+       <%= link_to document_path(doc), method: :delete, data: {confirm: "Are you sure?", toggle: 'tooltip', placement: 'top', original_title: 'Delete'} do %>
+              Delete
+            <% end %>
+
+
+
     </div> <!-- end column -->
 
     <!-- change badge color if new doc since last login.  -->

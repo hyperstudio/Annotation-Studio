@@ -5,7 +5,7 @@
 <%= render "/shared/document_titles" %>
 
 <div class="dropdown">
-  <button class="dropbtn">Documents <span class="badge" style="display:inline-block"><%= @sharedDocsCount.to_i + current_user.documents.size.to_i %></span> </button>
+  <button class="dropbtn">Documents <span class="badge" style="display:inline-block"><%= @sharedDocsCount + current_user.documents.size %></span> </button>
 
   <div class="dropdown-content">
     <a href= "<%= dashboard_path(nav: 'mydocuments')%>" id="documents-mine" style="display:inline" >Mine <span class="badge"> <%= current_user.documents.size %></span></a>
@@ -17,7 +17,6 @@
 <div class="dropdown">
   <button class="dropbtn" id="annotation-button">Annotations <span class="badge"></span></button>
   <div class="dropdown-content">
-
     <a id= "annotations-mine" style="display:inline"> Mine <span class="badge"></span></a>
     <a id="annotations-shared" style="display:inline">Shared <span class="badge"></span></a>
 
@@ -116,38 +115,31 @@
 <div class = "content" id="joined-groups" style="display:none">
 </div>
 
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script> -->
 
 
 <script type="text/javascript">
 
- 
-
-
 // use href instead with a url param instead. downside: reloads the page. 
-  $("#documents-mine").click(function(){
-    var myDocuments = document.getElementById("my-docs");
-    $(".content").hide(); //hide everything else 
+  // $("#documents-mine").click(function(){
+  //   var myDocuments = document.getElementById("my-docs");
+  //   $(".content").hide(); //hide everything else 
     
-    myDocuments.style.display = "block";
-    $(myDocuments).html("<%= j render 'my_documents' %>");
+  //   myDocuments.style.display = "block";
+  //   $(myDocuments).html("<%= j render 'my_documents' %>");
     
-    $("#current-page").text("My Documents");
+  //   $("#current-page").text("My Documents");
 
     //change url: 
     // window.history.pushState(null, null, "?nav=mydocuments");
    
  
-  }); //end click
+  // }); //end click
 
    //a lot of repetition rn...clean up, or change page reload. need for pagination. 
   <% if params[:nav] && params[:nav] == 'mydocuments' %>
 
-    // alert("mydocuments");
-
     var myDocuments = document.getElementById("my-docs");
     $(".content").hide(); //hide everything else 
-    
     myDocuments.style.display = "block";
     $(myDocuments).html("<%= j render 'my_documents' %>");
     
@@ -164,17 +156,16 @@
     sharedDocuments.style.display = "block";
     $("#current-page").text("Shared Documents");
 
-
   <% end %>
 
 
   //use href instead with a url param. downside: reloads the page. 
-  $("#documents-shared").click(function(){
-    var sharedDocuments = document.getElementById("shared-docs");
-    $(".content").hide();
-    sharedDocuments.style.display = "block";
-    $("#current-page").text("Shared Documents");
-  }); 
+  // $("#documents-shared").click(function(){
+  //   var sharedDocuments = document.getElementById("shared-docs");
+  //   $(".content").hide();
+  //   sharedDocuments.style.display = "block";
+  //   $("#current-page").text("Shared Documents");
+  // }); 
 
   $("#annotations-mine").click(function(){
 
@@ -226,9 +217,6 @@ $("#documents-shared").click(function(){
 </script>
 
 
-
-
-
 <style>
 
 .dropbtn {
@@ -250,7 +238,6 @@ $("#documents-shared").click(function(){
   display: none;
   position: absolute;
   background-color: white;
-  /*width: 150%;*/
   padding:5px;
   z-index: 1;
 }
@@ -366,11 +353,3 @@ var groups=[];
   </span>
   
 </script>
-
-
-
-<script type="text/template" id="user-highlight-template">
-  <span class="user-highlight"><div class="ellipsis"><a href="{{uri}}#hl{{uuid}}">{{{quote}}}</a></div></span>
-  <span class="user-comment"><div class="secondary-text">{{title}} ({{username}})</div></span>
-</script>
-  

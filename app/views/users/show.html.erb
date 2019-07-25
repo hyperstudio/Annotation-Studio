@@ -29,8 +29,8 @@
   <button class="dropbtn">Groups <span class="badge" style="display:inline-block"><%= @current_user.groups.size %></span></button>
   <div class="dropdown-content">
 
-    <a id="groups-mine" style="display:inline">Mine <span class="badge"> <%= @mygroups.size %></span> </a>
-    <a id="groups-joined" style="display:inline">Joined <span class="badge"> <%= current_user.groups.size %></span></a>
+    <a href= "<%= dashboard_path(nav: 'mygroups')%>" id="groups-mine" style="display:inline">Mine <span class="badge"> <%= @mygroups.size %></span> </a>
+    <a href= "<%= dashboard_path(nav: 'joinedgroups')%>" id="groups-joined" style="display:inline">Joined <span class="badge"> <%= current_user.groups.size %></span></a>
     <a href="<%= new_group_path %>" style="display:inline">New</a>
     <a href="<%= groups_path %>" style="display:inline"> Join </a>
 
@@ -41,7 +41,7 @@
 
 <!-- sidebar -->
 <div id="side-menu" class="side-nav">
-  <a href ="" class="btn-close" onclick="closeSideMenu()">&times;</a>
+  <span class="glyphicon glyphicon-remove" onclick="closeSideMenu()"></span>
   <%= render "side_search_options" %>
 </div>
 
@@ -126,21 +126,7 @@
 
 <script type="text/javascript">
 
-// use href instead with a url param instead. downside: reloads the page. 
-  // $("#documents-mine").click(function(){
-  //   var myDocuments = document.getElementById("my-docs");
-  //   $(".content").hide(); //hide everything else 
-    
-  //   myDocuments.style.display = "block";
-  //   $(myDocuments).html("<%= j render 'my_documents' %>");
-    
-  //   $("#current-page").text("My Documents");
-
-    //change url: 
-    // window.history.pushState(null, null, "?nav=mydocuments");
-   
- 
-  // }); //end click
+// use href with a url param instead of onclick event. downside: reloads the page. 
 
    //a lot of repetition rn...clean up, or change page reload. need for pagination. 
   <% if params[:nav] && params[:nav] == 'mydocuments' %>
@@ -149,7 +135,6 @@
     $(".content").hide(); //hide everything else 
     myDocuments.style.display = "block";
     $(myDocuments).html("<%= j render 'my_documents' %>");
-    
     $("#current-page").text("My Documents");
 
 
@@ -165,14 +150,25 @@
 
   <% end %>
 
+  <% if params[:nav] && params[:nav] == 'mygroups' %>
 
-  //use href instead with a url param. downside: reloads the page. 
-  // $("#documents-shared").click(function(){
-  //   var sharedDocuments = document.getElementById("shared-docs");
-  //   $(".content").hide();
-  //   sharedDocuments.style.display = "block";
-  //   $("#current-page").text("Shared Documents");
-  // }); 
+    var mygroups = document.getElementById("my-groups");
+    $(".content").hide();
+    mygroups.style.display = "block";
+    $(mygroups).html("<%= j render 'my_groups' %>");
+    $("#current-page").text("My Groups");
+
+  <% end %>
+
+<% if params[:nav] && params[:nav] == 'joinedgroups' %>
+
+    var joinedGroups = document.getElementById("joined-groups");
+    $(".content").hide();
+    joinedGroups.style.display = "block";
+    $(joinedGroups).html("<%= j render 'joined_groups' %>");
+    $("#current-page").text("Joined Groups");
+
+  <% end %>
 
   $("#annotations-mine").click(function(){
 
@@ -195,27 +191,6 @@
      window.history.pushState(null, null, "?nav=sharedannotations");
   });
   
-
-  $("#groups-joined").click(function(){
-
-    var joinedGroups = document.getElementById("joined-groups");
-    $(".content").hide();
-    joinedGroups.style.display = "block";
-    $(joinedGroups).html("<%= j render 'joined_groups' %>");
-    $("#current-page").text("Joined Groups");
-
-     window.history.pushState(null, null, "?nav=joinedgroups");
-  });
-
-  $("#groups-mine").click(function(){
-    var mygroups = document.getElementById("my-groups");
-    $(".content").hide();
-    mygroups.style.display = "block";
-    $(mygroups).html("<%= j render 'my_groups' %>");
-    $("#current-page").text("My Groups");
-
-     window.history.pushState(null, null, "?nav=mygroups");
-  });
 
 $("#documents-shared").click(function(){
     $(".badge").css("background-color", "#777");
@@ -328,9 +303,7 @@ function closeSideMenu(){
   padding-top: 10px;
 }
 
-.side-nav a{
-  font-size:17px;
-  background-color: yellow;
+.side-nav span{
   float:right;
   padding-right: 50px;
 }

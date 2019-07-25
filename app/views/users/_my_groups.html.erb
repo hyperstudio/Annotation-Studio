@@ -9,3 +9,7 @@
     </div>
   <% end %>
   </div>
+
+  <div class='pagination-controls'>
+      <%= will_paginate @joinedGroups, renderer: BootstrapPagination::Rails %>
+    </div>

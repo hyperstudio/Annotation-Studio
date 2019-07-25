@@ -9,8 +9,6 @@ class UsersController < ApplicationController
     end
     @document_list = Document.select(:slug, :title) # for getting document name in annotations table.
 
-    @mygroups = Membership.where(user_id: current_user.id, role: "owner")
-
     whitelisted = params.permit(:docs, :page, :group)
     # if !%w[ assigned created all ].include?(whitelisted[:docs])
     #   document_set = 'assigned'
@@ -20,6 +18,7 @@ class UsersController < ApplicationController
 
     per_page = 10
 
+    #get all the user's groups' documents w/o repetition
     docList = []
       current_user.groups.each do |g| 
         g.documents.where.not(state: 'draft').each do |d|
@@ -31,6 +30,12 @@ class UsersController < ApplicationController
       @sharedDocsCount = docList.size
       @sharedDocs = docList.paginate(:page => whitelisted[:page], :per_page => per_page)
       @myDocs = current_user.documents.paginate(:page => whitelisted[:page], :per_page => per_page).order('created_at DESC')
+
+    #user's joined groups w/ pagination: 
+    @joinedGroups = current_user.groups.paginate(:page => whitelisted[:page], :per_page => per_page).order('created_at DESC')
+
+    #groups where current user is owner w/ pagination
+    @mygroups = Membership.where(user_id: current_user.id, role: "owner").paginate(:page => whitelisted[:page], :per_page => per_page).order('created_at DESC')
 
     #handling invite_token
     @token = params[:invite_token]

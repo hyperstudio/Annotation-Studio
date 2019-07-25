@@ -9,16 +9,17 @@ Join Group by entering name (case sensitive)
     <% end %>
  </div>
 
+<% if params[:search] %>
 
- <div style="display:none">
+<h2> Search By Name: <%= params[:search] %> </h2>
+
 <table class="group-table">
 	<tr class="group-table-row">
 		<th> Name </th>
 		<th> Role </th>
 		<th> Actions </th>
 	</tr>
-	<% if !current_user.groups.empty? %>
-		<% current_user.groups.each do |g| %>
+		<% @groups.each do |g| %>
 			<tr class="group-table-row"> 
 				<td> <%= link_to g.name, :controller => "groups", :action=> "show", :id => g.id %></td>
 				<td> <%= Membership.find_by(group_id: g.id, user_id: current_user.id).role %> </td> 
@@ -33,9 +34,9 @@ Join Group by entering name (case sensitive)
 				</td>
 			</tr>
 		<% end %>
-	<% end %>
 </table>
-</div>
+
+<% end %>
 
 
 	<style>

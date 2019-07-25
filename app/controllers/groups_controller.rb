@@ -4,6 +4,12 @@ class GroupsController < ApplicationController
 
 
   def index
+  	if params[:search]
+  		@groups = Group.where(["name LIKE ?", "%#{params['search']}%"])
+  	else
+  		@groups = current_user.groups
+
+  	end
   	
      
   end

@@ -1,5 +1,19 @@
 <div style="padding-left:30px">
 
+<% if params[:nav] && (params[:nav].include? "groups") %>
+
+<h4> Groups Search </h4>
+
+<%= form_tag groups_path, :method => 'get' do %>
+	<%= label_tag 'Search by Group name' %>
+	<%= text_field_tag 'search' %>
+	<%= submit_tag "Search" %>
+
+<% end #form_tag %>
+
+
+<% else %>
+
 <h4> Documents Search </h4>
 
 <%= form_tag documents_path, :method => 'get' do %>
@@ -21,6 +35,8 @@
 
 	<%= text_field_tag 'search' %>
 	<%= submit_tag "Search" %>
+
+<% end #form_tag %>
 
 <% end %>
 </div>

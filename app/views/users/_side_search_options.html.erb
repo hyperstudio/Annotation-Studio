@@ -1,0 +1,17 @@
+
+<h4> Documents Search </h4>
+
+<%= form_tag documents_path, :method => 'get' do %>
+	<p class="help-block"> Search by: </p>
+	<%= radio_button_tag 'method', 'title' %> <br>
+	<%= label_tag "Title" %>
+
+	<%= radio_button_tag 'method', 'author' %> <br>
+	<%= label_tag "Author" %>
+	
+	<%= radio_button_tag 'method', 'status' %> <br>
+	<%= label_tag "Status" %>
+
+	<%= text_field_tag params['search'] %>
+	<%= submit_tag "Search" %>
+<% end %>

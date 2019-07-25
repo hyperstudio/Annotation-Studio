@@ -141,6 +141,43 @@
       </div>
 
 
+      <script>  
+       var options = [];
+        //need to loop because .pluck gives [&quot;Wellesley&quot;
+        <% @current_user.groups.each do |group| %>
+          options.push("<%= group.name %>");
+
+        <% end %>
+        
+        // working when upgraded to newest version of bootstrap-tagsinput.js:
+        //https://raw.githubusercontent.com/bootstrap-tagsinput/bootstrap-tagsinput/master/dist/bootstrap-tagsinput.js 
+        //following code from:  http://bootstrap-tagsinput.github.io/bootstrap-tagsinput/examples/
+        // and: https://jsfiddle.net/dhirajbodicherla/aawmp3np/305/
+
+        console.log(options);
+        var groups = new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            local: $.map(options, function (name) { 
+        return {
+            name: name
+        };
+    })
+            });
+
+        groups.initialize();
+
+        $('#document-groups').tagsinput({
+            typeaheadjs: {
+                name: 'groups',
+                displayKey: 'name',
+                valueKey: 'name',
+                source: groups.ttAdapter()
+            }
+        });
+      </script>
+
+
 
   </div><!-- end span 6 -->
   </div><!-- end row -->
@@ -288,3 +325,4 @@
 
     </script>
 
+<style> </style>

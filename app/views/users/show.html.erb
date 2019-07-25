@@ -21,6 +21,7 @@
     <a id="annotations-shared" style="display:inline">Shared <span class="badge"></span></a>
 
   </div>
+
 </div>
 
 
@@ -32,10 +33,16 @@
     <a id="groups-joined" style="display:inline">Joined <span class="badge"> <%= current_user.groups.size %></span></a>
     <a href="<%= new_group_path %>" style="display:inline">New</a>
     <a href="<%= groups_path %>" style="display:inline"> Join </a>
-  
-    
 
   </div>
+
+  <div id="search" class="dropdown" onclick="openSideMenu()"> <i class="glyphicon glyphicon-option-vertical" ></i> </div>
+</div>
+
+<!-- sidebar -->
+<div id="side-menu" class="side-nav">
+  <a href ="" class="btn-close" onclick="closeSideMenu()">&times;</a>
+  <%= render "side_search_options" %>
 </div>
 
 <h4 id= "current-page"> Shared Documents </h4>
@@ -214,6 +221,23 @@ $("#documents-shared").click(function(){
     $(".badge").css("background-color", "#777");
 })
 
+var active = false
+//search animation stuff
+function openSideMenu(){
+  if (active){
+    document.getElementById('side-menu').style.width = '0';
+    active= false;
+    return;
+  }
+  document.getElementById('side-menu').style.width = '350px';
+  active = true
+}
+
+function closeSideMenu(){
+  document.getElementById('side-menu').style.width = '0';
+}
+
+
 </script>
 
 
@@ -283,6 +307,35 @@ $("#documents-shared").click(function(){
 }
 
 
+#search{
+  margin-left: 150px;
+  width:10%;
+  height:10%;
+  background-color: #ddd;
+
+}
+
+.side-nav{
+  height:100%;
+  width:0;
+  position:fixed;
+  z-index:1;
+  top:100px;
+  right:0;
+  background-color: white;
+  overflow-x:hidden;
+  text-decoration:none;
+  transition:0.5s;
+  padding-top: 10px
+  padding-left: 5px;
+}
+
+.side-nav a{
+  font-size:17px;
+  background-color: yellow;
+  float:right;
+  padding-right: 50px;
+}
 
 
 </style>

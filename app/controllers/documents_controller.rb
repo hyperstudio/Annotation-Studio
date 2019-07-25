@@ -9,6 +9,15 @@ class DocumentsController < ApplicationController
   # GET /documents
   # GET /documents.json
   def index
+    if params['search'] && params['search'] != ""
+      @documents = Document.where(["title LIKE ?", "%#{params['search']}%"])
+    else
+      @documents = Document.first
+    end
+  end
+
+
+  def old_index
     whitelisted = params.permit(:docs, :page, :group)
     if !%w[ assigned created all ].include?(whitelisted[:docs])
       document_set = 'assigned'

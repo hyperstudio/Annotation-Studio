@@ -186,6 +186,7 @@
     	<%= link_to 'Cancel', dashboard_path, :class => 'btn btn-default' %>
     <% end %>
 
+<script src="summernote-cleaner.js"></script>
     <script type="text/javascript">
     $(document).ready(function() {
 
@@ -194,7 +195,7 @@
         minHeight: null,             // set minimum height of editor
         maxHeight: null,             // set maximum height of editor
         cleaner:{
-            action: 'paste', // both|button|paste 'button' only cleans via toolbar button, 'paste' only clean when pasting content, both does both options.
+            action: 'button', // both|button|paste 'button' only cleans via toolbar button, 'paste' only clean when pasting content, both does both options.
             newline: '<br>', // Summernote's default is to use '<p><br></p>'
             notStyle: 'position:absolute;top:0;left:0;right:0', // Position of Notification
             keepHtml: true, // Remove all Html formats
@@ -205,7 +206,9 @@
             badAttributes: ['start'], // Remove attributes from remaining tags
             limitChars: false, // 0/false|# 0/false disables option
             limitDisplay: 'text', // text|html|both
-            limitStop: false // true/false
+            limitStop: false, // true/false
+            icon: '<i class="note-icon"><span class="glyphicon glyphicon-pencil"></span></i>'
+
           }
       });
       $('.chapter-area').summernote({

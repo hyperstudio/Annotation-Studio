@@ -7102,6 +7102,7 @@ $$1.summernote = $$1.extend($$1.summernote, {
         otherStaticBar: '',
         // toolbar
         toolbar: [
+            ['cleaner',['cleaner']],
             ['style', ['style']],
             ['font', ['bold', 'underline', 'clear']],
             ['fontname', ['fontname']],

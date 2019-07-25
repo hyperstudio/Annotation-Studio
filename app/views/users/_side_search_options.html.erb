@@ -1,17 +1,26 @@
+<div style="padding-left:30px">
 
 <h4> Documents Search </h4>
 
 <%= form_tag documents_path, :method => 'get' do %>
 	<p class="help-block"> Search by: </p>
-	<%= radio_button_tag 'method', 'title' %> <br>
-	<%= label_tag "Title" %>
+	<table>
+		<tr> 
+			<td><%= radio_button_tag 'method', 'title', :required => true %> </td>
+			<td><%= label_tag "Title" %></td>
+		</tr>
+		<tr>
+			<td><%= radio_button_tag 'method', 'author' %> </td>
+			<td> <%= label_tag "Author" %></td>
+		</tr>
+		<tr>
+			<td> <%= radio_button_tag 'method', 'status' %> </td>
+			<td> <%= label_tag "Status" %> </td>
+		</tr>
+	</table>
 
-	<%= radio_button_tag 'method', 'author' %> <br>
-	<%= label_tag "Author" %>
-	
-	<%= radio_button_tag 'method', 'status' %> <br>
-	<%= label_tag "Status" %>
-
-	<%= text_field_tag params['search'] %>
+	<%= text_field_tag 'search' %>
 	<%= submit_tag "Search" %>
+
 <% end %>
+</div>

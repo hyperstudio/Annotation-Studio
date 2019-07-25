@@ -8,13 +8,21 @@ class DocumentsController < ApplicationController
 
   # GET /documents
   # GET /documents.json
-  def index
+  def index #search results
     if params['search'] && params['search'] != ""
-      @documents = Document.where(["title LIKE ?", "%#{params['search']}%"])
-    else
-      @documents = Document.first
-    end
-  end
+      case params['method']
+        when "title"
+          @documents = Document.where(["title LIKE ?", "%#{params['search']}%"])
+          @title_text = "Title: '#{params['search']}'"
+        when "author"
+          @documents = Document.where(["author LIKE ?", "%#{params['search']}%"])
+          @title_text = "Author: '#{params['search']}'"
+        when "status"
+          @documents = Document.where(["state LIKE ?", "%#{params['search']}%"])
+          @title_text = "Status: '#{params['search']}'"
+      end #end case
+    end #end if
+  end #end index
 
 
   def old_index

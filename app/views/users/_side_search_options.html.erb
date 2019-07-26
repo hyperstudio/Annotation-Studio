@@ -1,4 +1,4 @@
-<div style="padding-left:30px">
+<div style="padding-left:30px; z-index: 1;" >
 
 <% if params[:nav] && (params[:nav].include? "groups") %>
 
@@ -6,7 +6,7 @@
 
 <%= form_tag groups_path, :method => 'get' do %>
 	<%= label_tag 'Search by Group name' %>
-	<%= text_field_tag 'search' %>
+	<%= text_field_tag 'search', nil, id: 'dashboard-search' %>
 	<%= submit_tag "Search" %>
 
 <% end #form_tag %>
@@ -20,23 +20,86 @@
 	<p class="help-block"> Search by: </p>
 	<table>
 		<tr> 
-			<td><%= radio_button_tag 'method', 'title', :required => true %> </td>
+			<td><%= radio_button_tag 'method', 'title', true, onchange: "opt(this)" %> </td>
 			<td><%= label_tag "Title" %></td>
 		</tr>
 		<tr>
-			<td><%= radio_button_tag 'method', 'author' %> </td>
+			<td><%= radio_button_tag 'method', 'author', nil, onchange: "opt(this)" %> </td>
 			<td> <%= label_tag "Author" %></td>
 		</tr>
-		<tr>
-			<td> <%= radio_button_tag 'method', 'status' %> </td>
+		<tr> 
+			<td> <%= radio_button_tag 'method', 'status', nil, onchange: "opt(this)" %> </td>
 			<td> <%= label_tag "Status" %> </td>
 		</tr>
 	</table>
 
-	<%= text_field_tag 'search' %>
+	<%= text_field_tag 'search', nil, id: 'dashboard-search' %>
 	<%= submit_tag "Search" %>
+
+
 
 <% end #form_tag %>
 
+
 <% end %>
 </div>
+
+<script>
+	<% if params[:nav] && (params[:nav].include? "groups") %>
+		data = <%= raw(@groupSuggestions) %>;
+	<% end %>
+
+	//default autocomplete
+	$("#dashboard-search").autocomplete({
+		source: <%= raw(@titleSuggestions) %>
+	});
+
+	//onchange function for doc radio buttons
+	function opt(obj){
+		var selected = obj.value;
+		var data;
+	if(selected == 'author'){
+		data = <%= raw(@authorSuggestions) %>;
+	}else if(selected == 'status') {
+		data = ["published", "draft", "archived"];
+	}else{
+		data = <%= raw(@titleSuggestions) %>;
+	}
+
+	$("#dashboard-search").autocomplete({
+		source: data
+	});
+		
+	} //end opt
+
+	
+
+</script>
+
+
+
+<style>
+	span.ui-helper-hidden-accessible{
+		display:none;
+	}
+
+	.ui-widget-content{
+		background-color: #fcfcfc;
+	}
+
+	.ui-state-focus{
+		background-color: #FCEE02;
+	}
+
+	ul.ui-autocomplete{
+		display:block;
+		padding:3px;
+		z-index:1000;
+		position:relative;
+		list-style:none;
+		border: solid 1px gray;
+		cursor:default;
+		float:right;
+	}
+
+</style>

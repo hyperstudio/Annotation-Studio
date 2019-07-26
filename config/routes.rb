@@ -29,6 +29,9 @@ AnnotationStudio::Application.routes.draw do
   authenticated :user do
     root :to => "users#show"
     get 'dashboard', to: 'users#show', as: :dashboard
+
+    # #ajax
+    # post 'dashboard', to: 'users#show'
     get 'annotations', to: 'annotations#index'
     get 'annotations/:id', to: 'annotations#show'
     get 'documents/:document_id/annotations/field/:field', to: 'annotations#field'

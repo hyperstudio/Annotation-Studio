@@ -56,6 +56,7 @@
   
   <div class="row">
 
+  <% @newDoc = false%>
   <% @sharedDocs.each do |doc| %>
 
     <div class= "column"> 
@@ -83,13 +84,14 @@
        <%= link_to "Edit", controller: "documents", action: "edit", id: doc.id if doc.user == current_user %>
     </div> <!-- end column -->
 
+    <!-- 'notifications' -->
     <% if doc.updated_at > current_user.last_sign_in_at && 
     doc.updated_at < current_user.current_sign_in_at &&
     doc.user_id != current_user.id %>
-  <script> 
-    console.log("new doc");
-    $("#documents-shared").find(".badge").css("background-color", "#6caef5");
- </script>
+        <script> 
+            console.log("new doc");
+            $("#documents-shared").find(".badge").css("background-color", "#6caef5");
+         </script>
 
     <% end %> <!-- end if -->
   <% end %> <!-- end doc loop -->
@@ -192,8 +194,9 @@
   });
   
 
-$("#documents-shared").click(function(){
+$("#documents-shared").click(function(event){
     $(".badge").css("background-color", "#777");
+
 })
 
 var active = false

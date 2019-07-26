@@ -27,6 +27,17 @@ class UsersController < ApplicationController
           end
         end
       end
+
+      #for document search autocomplete (user's docs and shared group docs)
+      #slow processing: try to find more efficient algo
+      shared = docList.map(&:title) 
+      mine = current_user.documents.pluck(:title)
+      @titleSuggestions = (shared + mine).uniq
+      @authorSuggestions = (docList.map(&:author) + current_user.documents.pluck(:author)).uniq
+
+      #group search autocomplete
+      @groupSuggestions = current_user.groups.pluck(:name)
+
       @sharedDocsCount = docList.size
       @sharedDocs = docList.paginate(:page => whitelisted[:page], :per_page => per_page)
       @myDocs = current_user.documents.paginate(:page => whitelisted[:page], :per_page => per_page).order('created_at DESC')
@@ -36,6 +47,8 @@ class UsersController < ApplicationController
 
     #groups where current user is owner w/ pagination
     @mygroups = Membership.where(user_id: current_user.id, role: "owner").paginate(:page => whitelisted[:page], :per_page => per_page).order('created_at DESC')
+
+
 
     #handling invite_token
     @token = params[:invite_token]
@@ -70,8 +83,14 @@ class UsersController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.json {render json: @user}
-      
     end
+
+    #ajax
+    # @selected = params[:method]
+    #  respond_to do |format|
+    #   format.html # show.html.erb
+    #   format.json { render json: { success: "It works", option: params[:method] } }
+    # end
 
 
     gon.rabl template: 'app/views/users/show.rabl', as: 'user'

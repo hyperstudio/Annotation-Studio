@@ -22,10 +22,12 @@ class DocumentsController < ApplicationController
           @title_text = "Status: '#{params['search']}'"
       end #end case
     end #end if
+
+    
   end #end index
 
 
-  def old_index
+  def old_index #index of the old version. 
     whitelisted = params.permit(:docs, :page, :group)
     if !%w[ assigned created all ].include?(whitelisted[:docs])
       document_set = 'assigned'
@@ -144,7 +146,7 @@ class DocumentsController < ApplicationController
           Delayed::Job.enqueue DocumentProcessor.new(@document.id, @document.state, Apartment::Tenant.current)
           @document.pending!
         end
-        format.html { redirect_to dashboard_path, notice: 'Document was successfully created.', anchor: 'created'}
+        format.html { redirect_to dashboard_path(nav: "mydocuments"), notice: 'Document was successfully created.', anchor: 'created'}
         format.json { render json: @document, status: :created, location: @document }
       else
         format.html { render action: "new" }
@@ -159,12 +161,27 @@ class DocumentsController < ApplicationController
     @document = Document.friendly.find(params[:id])
     #attach document to groups
     @groups = params["groups"].split(",") if params["groups"]
+    @oldGroups = @document.groups.pluck(:name)
+
+
+    #need to loop through oldGroups to find difference!!! 
+    puts @oldGroups
+    puts @groups
     if @groups
+
       @groups.each do |g|
-        unless @document.groups.pluck(:name).include? g #don't re-insert existing groups
+        unless @oldGroups.include? g #don't re-insert existing groups
           @document.groups << Group.find_by(name: g)
         end #unless 
       end #each
+
+      #delete group from documents
+      diff = @oldGroups - @groups
+      if !diff.empty?
+        diff.each do |d|
+          @document.groups.delete(Group.find_by(name: d))
+        end #each
+      end #if diff.empty?
     end #if 
     
     @document.update_attribute("updated_at", Time.now)

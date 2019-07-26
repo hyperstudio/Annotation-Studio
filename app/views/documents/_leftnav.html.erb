@@ -13,13 +13,13 @@
       Public <i class="glyphicon glyphicon-globe"></i>
     <% end %>
   </li>
-<% if ! @document.author.nil? %>
+<% if ! @document.author.blank? %>
   <li>Author: <%= @document.author %></li>
 <% end %>
-<% if ! @document.publisher.nil? %>
+<% if ! @document.publisher.blank? %>
   <li>Publisher: <%= @document.publisher %></li>
 <% end %>
-<% if ! @document.publication_date.nil? %>
+<% if ! @document.publication_date.blank? %>
   <li>Publication date: <%= @document.publication_date %></li>
 <% end %>
 <% if ! @document.edition.blank? %>

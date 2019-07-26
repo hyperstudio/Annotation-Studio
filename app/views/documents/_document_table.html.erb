@@ -3,7 +3,6 @@
     <th>Title</th>
     <th>Author</th>
     <th>Created</th>
-    <th><%= ENV["CLASS_TERM_PLURAL"].capitalize %></th>
     <th> (new) Groups</th>
     <th>Status</th>
     <th>Actions</th>
@@ -17,13 +16,6 @@
           <%= document.author %></td>
         <td>
           <%= document.created_at.strftime("%m/%d/%Y") %></td>
-        <td>
-          <% document.rep_group_list.each do |group| %>
-          <span class="label label-info">
-            <%= link_to group, params.permit(:group).merge(:group => group) %>
-          </span>&nbsp;
-          <% end %>
-        </td>
         <td>
           <% document.groups.each do |group| %>
           <span class="label label-info">

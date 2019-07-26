@@ -8,8 +8,25 @@
 	<%= label_tag 'Search by Group name' %>
 	<%= text_field_tag 'search', nil, id: 'dashboard-search' %>
 	<%= submit_tag "Search" %>
-
 <% end #form_tag %>
+
+<h4> Sort </h4>
+	<%= form_tag groups_path, :method => 'get', :data => {remote: true} do %>
+		<table>
+			<tr>
+				<td> <%= radio_button_tag 'time', 'timeASC', nil, onchange: "groupSort(this)", class: 'radio'%> </td>
+				<td> <%= label_tag 'Time Ascending' %> (oldest first) </td>
+			</tr>
+			<tr>
+				<td><%= radio_button_tag 'time', 'timeDESC', true, onchange: "groupSort(this)", class: 'radio' %></td>
+				<td> <%= label_tag 'Time Descending' %> (newest first) </td>
+
+			</tr>
+		</table>
+
+	<% end %>
+
+
 
 
 <% else %>
@@ -45,9 +62,6 @@
 </div>
 
 <script>
-	<% if params[:nav] && (params[:nav].include? "groups") %>
-		data = <%= raw(@groupSuggestions) %>;
-	<% end %>
 
 	//default autocomplete
 	$("#dashboard-search").autocomplete({
@@ -71,6 +85,26 @@
 	});
 		
 	} //end opt
+
+	//group sort/filter ajax
+	function groupSort(obj){
+		var selected = obj.value;
+		$.ajax({
+		    url: "/dashboard",
+		    type: "GET",
+		    data: {filter: selected},
+		    dataType: 'script'
+		}); //end ajax
+	}
+
+	//special group autocomplete
+	<% if params[:nav] && (params[:nav].include? "groups") %>
+		data = <%= raw(@groupSuggestions) %>;
+
+		$("#dashboard-search").autocomplete({
+		source: <%= raw(@groupSuggestions) %>
+	});
+	<% end %>
 
 	
 
@@ -101,5 +135,12 @@
 		cursor:default;
 		float:right;
 	}
+
+	tr{
+		background-color: #ddd;	
+		border: 3px solid white;
+	}
+
+
 
 </style>

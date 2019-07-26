@@ -207,14 +207,14 @@
             notStyle: 'position:absolute;top:0;left:0;right:0', // Position of Notification
             keepHtml: true, // Remove all Html formats
             keepOnlyTags: ['<p>', '<br>', '<ul>', '<li>', '<b>', '<strong>','<i>', '<a>', 
-            '<img>', '<div>', '<h1>', '<h2>', '<h3>', '<style>'], // If keepHtml is true, remove all tags except these
+            '<img>', '<div>', '<h1>', '<h2>', '<h3>', '<style>', '<html>', '<body>'], // If keepHtml is true, remove all tags except these
             keepClasses: true, // Remove Classes
             badTags: ['script', 'applet', 'embed', 'noframes', 'noscript'], // Remove full tags with contents
             badAttributes: ['start'], // Remove attributes from remaining tags
             limitChars: false, // 0/false|# 0/false disables option
             limitDisplay: 'text', // text|html|both
             limitStop: false, // true/false
-            icon: '<i class="fa fa-compress"></i>' //broom icon needs font-awesome 5.0, bathtub 4.7.0. current v is 4.1.0
+            icon: '<i class="fa fa-compress"></i>' //broom icon needs font-awesome 5.0
 
           }
       });

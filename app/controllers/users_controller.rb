@@ -42,14 +42,6 @@ class UsersController < ApplicationController
       @sharedDocs = docList.paginate(:page => whitelisted[:page], :per_page => per_page)
       @myDocs = current_user.documents.paginate(:page => whitelisted[:page], :per_page => per_page).order('created_at DESC')
 
-    #user's joined groups w/ pagination: 
-    @joinedGroups = current_user.groups.paginate(:page => whitelisted[:page], :per_page => per_page).order('created_at DESC')
-
-    #groups where current user is owner w/ pagination
-    @mygroups = Membership.where(user_id: current_user.id, role: "owner").paginate(:page => whitelisted[:page], :per_page => per_page).order('created_at DESC')
-
-
-
     #handling invite_token
     @token = params[:invite_token]
     if @token 
@@ -78,19 +70,30 @@ class UsersController < ApplicationController
       end
       redirect_to dashboard_path
     end
-    
+
+
+    #ajax for group filtering
+    owned = Membership.where(user_id: current_user.id, role: "owner").paginate(:page => whitelisted[:page], :per_page => per_page)
+    gPage = current_user.groups.paginate(:page => whitelisted[:page], :per_page => per_page)
+
+    filter = params[:filter]
+    if filter == "timeASC"
+      @joinedGroups = gPage.order('created_at ASC')
+      @mygroups = owned.order('created_at ASC')
+    else
+      @joinedGroups = gPage.order('created_at DESC')
+      @mygroups = owned.order('created_at DESC')
+    end
    
     respond_to do |format|
       format.html # show.html.erb
-      format.json {render json: @user}
+      # format.json {render json: @user}
+      format.json { render json: { success: "It works"} }
+      format.js
     end
 
-    #ajax
-    # @selected = params[:method]
-    #  respond_to do |format|
-    #   format.html # show.html.erb
-    #   format.json { render json: { success: "It works", option: params[:method] } }
-    # end
+
+    
 
 
     gon.rabl template: 'app/views/users/show.rabl', as: 'user'
@@ -103,6 +106,6 @@ class UsersController < ApplicationController
   def users_params
     params.require(:user).permit(:email, :password, :agreement, :affiliation, :password_confirmation,
                                  :remember_me, :firstname, :lastname, :rep_privacy_list, :rep_group_list,
-                                 :rep_subgroup_list, :first_name_last_initial, :username, :new)
+                                 :rep_subgroup_list, :first_name_last_initial, :username, :filter)
   end
 end

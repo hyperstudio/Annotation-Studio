@@ -46,7 +46,7 @@ class UsersController < ApplicationController
 
 
     #ajax for group filtering
-    owned = Membership.where(user_id: current_user.id, role: "owner").paginate(:page => whitelisted[:page], :per_page => per_page)
+    owned = current_user.groups.where(owner_id: current_user.id).paginate(:page => whitelisted[:page], :per_page => per_page)
     gPage = current_user.groups.paginate(:page => whitelisted[:page], :per_page => per_page)
 
     filter = params[:filter]

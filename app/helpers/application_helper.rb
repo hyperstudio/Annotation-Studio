@@ -68,9 +68,9 @@ module ApplicationHelper
   #lots of repetition -> how to simplify???
 
   def is_owner(group_id)
-    if !Group.find(group_id).nil?
-      @relation = Membership.find_by(group_id: group_id, user_id: current_user.id)
-      return !@relation.nil? && @relation.role == 'owner'
+    group = Group.find(group_id)
+    if !group.nil?
+      group.owner_id == current_user.id
     end
       false #if group is not found. 
     

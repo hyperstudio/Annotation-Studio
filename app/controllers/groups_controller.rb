@@ -33,16 +33,12 @@ class GroupsController < ApplicationController
 
 		@group = Group.new(group_params)
 		@group.users << current_user
-		#set role to owner 
 
 		if @group.save
-			rel = Membership.find_by(group_id: @group.id, user_id: current_user.id)
 
-			#consider using update_attribute instead. 
-			if rel #not sure if this check is necessary. consider begin-rescue instead
-				rel.update_attribute("role", "owner")
-			end
-
+			#set role to owner
+			Membership.find_by(group_id: @group.id, user_id: current_user.id).update_attribute("role", "owner")
+			
 			flash[:alert] = "New Group Created!"
 			redirect_to root_path
 		else
@@ -165,6 +161,6 @@ class GroupsController < ApplicationController
 	private 
 
 	def group_params
-    	params.require(:group).permit(:name)
+    	params.require(:group).permit(:name, :owner_id)
 	end
 end

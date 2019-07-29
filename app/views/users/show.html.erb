@@ -17,8 +17,8 @@
 <div class="dropdown">
   <button class="dropbtn" id="annotation-button">Annotations <span class="badge"></span></button>
   <div class="dropdown-content">
-    <a id= "annotations-mine" style="display:inline"> Mine <span class="badge"></span></a>
-    <a id="annotations-shared" style="display:inline">Shared <span class="badge"></span></a>
+    <a href = "<%= dashboard_path(nav: 'myannotations')%>" id= "annotations-mine" style="display:inline"> Mine <span class="badge"></span></a>
+    <a href = "<%= dashboard_path(nav: 'sharedannotations')%>" id="annotations-shared" style="display:inline">Shared <span class="badge"></span></a>
 
   </div>
 
@@ -172,26 +172,22 @@
 
   <% end %>
 
-  $("#annotations-mine").click(function(){
+  <% if params[:nav] && params[:nav] == 'myannotations'%>
 
     var myAnnotations = document.getElementById("my-annotations");
     $(".content").hide();
     myAnnotations.style.display = "block";
     $("#current-page").text("My Annotations");
 
-    //update url params (problem: ruby doesn't actually see it rn..try to fix with AJAX!!!!!!
-    window.history.pushState(null, null, "?nav=myannotations");
- 
-  }); //end click
+  <% end %>
 
-  $("#annotations-shared").click(function(){
+  <% if params[:nav] && params[:nav] == 'sharedannotations'%>
 
     var sharedAnnotations = document.getElementById("shared-annotations");
     $(".content").hide();
     sharedAnnotations.style.display = "block";
     $("#current-page").text("Shared Annotations");
-     window.history.pushState(null, null, "?nav=sharedannotations");
-  });
+     <% end %>
   
 
 $("#documents-shared").click(function(event){
@@ -330,7 +326,7 @@ var groups=[];
 <% end %>
 
   var myLoadOptions = {
-    'limit': 20,
+    'limit': 100,
     'groups': "<%= current_user.rep_group_list %>".split(/, /),
     'subgroups': "<%= current_user.rep_subgroup_list %>".split(/, /),
     'host': location.host,
@@ -339,7 +335,7 @@ var groups=[];
     'context': 'dashboard',
   };
   var classLoadOptions = {
-    'limit': 20,
+    'limit': 100,
     'groups': groups, //"<%= current_user.rep_group_list %>".split(/, /),
     'subgroups': "<%= current_user.rep_subgroup_list %>".split(/, /),
     'host': location.host,
@@ -347,19 +343,10 @@ var groups=[];
     'mode': 'class',
     'context': 'dashboard',
   };
-  var groupLoadOptions = {
-    'limit': 20,
-    'groups': "<%= current_user.rep_group_list %>".split(/, /),
-    'subgroups': "<%= current_user.rep_subgroup_list %>".split(/, /),
-    'host': location.host,
-    'user': "<%= current_user.email %>",
-    'mode': 'group',
-    'context': 'dashboard',
-  };
+
 
   widget.listAnnotations('my-annotation-list', myLoadOptions, endpoint, token);
   widget.listAnnotations('class-annotation-list', classLoadOptions, endpoint, token);
-  widget.listAnnotations('group-annotation-list', groupLoadOptions, endpoint, token);
 });
 
 </script>

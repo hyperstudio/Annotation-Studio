@@ -6,6 +6,8 @@ Enter new group info
 	<p> 
 		<%= f.label :group %>
 		<%= f.text_field :name %> <br />
+
+		<%= f.hidden_field :owner_id, value: current_user.id %>
 	</p>
 
 	<p>

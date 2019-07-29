@@ -1,12 +1,11 @@
 <div class="row">
 
-<!-- @mygroups are membership objects -->
   <% @mygroups.each do |g| %>
     <div class= "column"> 
-       <strong>Name:</strong> <%= Group.find(g.group_id).name %> <br>
+       <strong>Name:</strong> <%= g.name %> <br>
        <br>
        <br>
-       <%= link_to "Edit", edit_group_path(id: g.group_id) %>
+       <%= link_to "Edit", edit_group_path(id: g.id) %>
     </div>
   <% end %>
   </div>

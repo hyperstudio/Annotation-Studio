@@ -33,7 +33,8 @@ AnnotationStudio::Application.routes.draw do
     # #ajax
     # post 'dashboard', to: 'users#show'
     
-    get 'annotations', to: 'annotations#index'
+    post 'annotations', to: 'annotations#search'    
+    
     get 'annotations/:id', to: 'annotations#show'
     get 'documents/:document_id/annotations/field/:field', to: 'annotations#field'
     # get 'groups', to: 'groups#index'

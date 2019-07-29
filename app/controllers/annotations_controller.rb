@@ -3,6 +3,13 @@ require 'json'
 class AnnotationsController < ApplicationController
     before_action :authenticate_user!
 
+    #testing search results
+    def search
+        @method = params['method']
+        @query = params['search']
+        @document_list = Document.select(:slug, :title)
+    end
+
     def index
         loadOptions = {
             :limit =>       1000,

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190722224656) do
+ActiveRecord::Schema.define(version: 20190729161513) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -101,6 +101,11 @@ ActiveRecord::Schema.define(version: 20190722224656) do
     t.text     "default_state"
     t.text     "snapshot"
     t.string   "origin"
+    t.string   "page_numbers"
+    t.string   "series"
+    t.string   "location"
+    t.string   "journal_title"
+    t.text     "notes"
     t.index ["slug"], name: "index_documents_on_slug", unique: true, using: :btree
   end
 

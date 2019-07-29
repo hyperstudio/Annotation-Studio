@@ -1,5 +1,6 @@
 <div class="row">
 
+<!-- @mygroups are membership objects -->
   <% @mygroups.each do |g| %>
     <div class= "column"> 
        <strong>Name:</strong> <%= Group.find(g.group_id).name %> <br>
@@ -11,5 +12,5 @@
   </div>
 
   <div class='pagination-controls'>
-      <%= will_paginate @joinedGroups, renderer: BootstrapPagination::Rails %>
+      <%= will_paginate @mygroups, renderer: BootstrapPagination::Rails %>
     </div>

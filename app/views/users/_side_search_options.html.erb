@@ -12,7 +12,7 @@
 
 <h4> Sort </h4>
 	<%= form_tag groups_path, :method => 'get', :data => {remote: true} do %>
-		<table>
+		<table id="g-search-options">
 			<tr>
 				<td> <%= radio_button_tag 'time', 'timeASC', nil, onchange: "groupSort(this)", class: 'radio'%> </td>
 				<td> <%= label_tag 'Time Ascending' %> (oldest first) </td>
@@ -136,7 +136,7 @@
 		float:right;
 	}
 
-	tr{
+	#g-search-options tr{
 		background-color: #ddd;	
 		border: 3px solid white;
 	}

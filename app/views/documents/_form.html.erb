@@ -5,7 +5,7 @@
       <% if create %>
         <div class="form-group">
           <%= label_tag "Type of Resource" %>
-          <p class="help-block"> eg. Book, Journal, Article, etc...</p>
+          <p class="help-block"> eg. Book, Website, etc...</p>
 
           <%= select_tag "type", options_for_select([ "Book", "Website", "Journal", "Other" ]),  
           {:class => 'form-control', :prompt => "Choose one...", :id => 'type', 
@@ -26,14 +26,19 @@
     				<%= f.text_field :author, :class => 'form-control' %>
     			</div>
 
-          <div class="form-group">
+          <div class="form-group optional" id="source" >
             <%= f.label :source %>
             <%= f.text_field :source, :class => 'form-control' %>
           </div>
 
-          <div class="form-group" id="edition">
+          <div class="form-group optional" id="edition" style="display:none">
             <%= f.label :edition, "Edition/Volume" %>
             <%= f.text_field :edition, :class => 'form-control' %>
+          </div>
+
+          <div class="form-group optional" id="page_numbers" style="display:none">
+            <%= f.label :page_numbers %>
+            <%= f.text_field :page_numbers, :class => 'form-control' %>
           </div>
 
 		
@@ -50,6 +55,21 @@
           <%= f.text_field :publisher, :class => 'form-control' %>
       </div>
 
+      <div class="form-group optional" id="location" style="display:none">
+          <%= f.label :location, 'Publication Location' %>
+          <%= f.text_field :location, :class => 'form-control' %>
+      </div>
+
+      <div class="form-group optional" id="series" style="display:none">
+          <%= f.label :series %>
+          <%= f.text_field :series, :class => 'form-control' %>
+      </div>
+
+      <div class="form-group optional" id="journal_title" style="display:none">
+          <%= f.label :journal_title %>
+          <%= f.text_field :journal_title, :class => 'form-control' %>
+      </div>
+
     			
 			<div class="form-group">
 				<%= f.label :rights_status %>
@@ -58,6 +78,16 @@
     
     </div><!-- end span 6 -->
   </div><!-- end row -->
+
+  <div class="row"> 
+    <div class = "col-md-6">
+    <div class="form-group optional" id="notes" style="display:none">
+    <%= f.label :notes %>
+    <p class="help-block"> Additional Metadata Information </p>
+    <%= f.text_area :notes, :class => 'form-control' %>
+  </div>
+</div>
+  </div>
 
   <div class="row">
 	  <div class="col-md-6">
@@ -154,7 +184,7 @@
         //following code from:  http://bootstrap-tagsinput.github.io/bootstrap-tagsinput/examples/
         // and: https://jsfiddle.net/dhirajbodicherla/aawmp3np/305/
 
-        console.log(options);
+        // console.log(options);
         var groups = new Bloodhound({
             datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
             queryTokenizer: Bloodhound.tokenizers.whitespace,
@@ -313,24 +343,53 @@
       }
     }
 
-
-//     $('#my-groups option').mousedown(function(e) {
-//     e.preventDefault();
-//     $(this).prop('selected', !$(this).prop('selected'));
-//     return false;
-// });
-
   function change(selected){
-                var type = document.getElementById(selected);
-                var edition = document.getElementById("edition");
-                console.log(edition);
-                if(type.value == "Website"){
-                  console.log("website!");
-                  edition.style.display = "none";
-            } else {
-              edition.style.display = "block";
-            }
-          }
+    //use case to toggle metadata fields
+      var type = document.getElementById(selected);
+      var edition = document.getElementById("edition");
+      var location = document.getElementById("location");
+      var page_numbers = document.getElementById("page_numbers");
+      var series = document.getElementById("series");
+      var journal_title = document.getElementById("journal_title");
+      var notes = document.getElementById("notes");
+      var source = document.getElementById("source");
+
+      var optional_fields = document.getElementsByClassName("optional");
+
+      switch(type.value){
+        default:
+          $(optional_fields).hide();
+          source.style.display = "block";
+          break;
+
+        case "Website":
+          $(optional_fields).hide();
+          source.style.display = "block"
+          break;
+
+        case "Book":
+
+          $(optional_fields).show();
+          notes.style.display = "none";
+          journal_title.style.display = "none";
+          source.style.display = "none";
+          break;
+
+        case "Journal":
+          $(optional_fields).show();
+          source.style.display = "none";
+          notes.style.display = "none";
+          series.style.display = "none";
+          break;
+
+        case "Other":
+          $(optional_fields).hide();
+          source.style.display = "block";
+          notes.style.display = "block";
+          break;
+
+
+      } }
 
 
     </script>
@@ -339,9 +398,16 @@
 <style> 
 
 .tt-menu{
-  background-color: #ddd;
-  padding: 5px;
+  background-color: #fcfcfc;
+  padding: 3px;
+  border: gray 1px solid;
 }
+
+.tt-cursor{
+  background-color: #FCEE02;
+}
+
+
 
 
 </style>

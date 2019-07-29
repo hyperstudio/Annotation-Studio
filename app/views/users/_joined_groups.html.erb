@@ -4,8 +4,7 @@
        <strong>Name:</strong> <%= link_to g.name, group_path(id: g.id) %> <br>
        <% myRole = Membership.find_by(group_id: g.id, user_id: current_user.id).role %>
        <strong>Role:</strong> <%= myRole %> <br>
-       <strong>Owner:</strong> <%= myRole == "owner" ? "me" : 
-       User.find(Membership.find_by(group_id: g.id, role:"owner").user_id).firstname %>
+       
        
     </div>
   <% end %>

@@ -1,0 +1,51 @@
+  <div class="row">
+    
+  <% @newDoc = false%>
+  <% @sharedDocs.each do |doc| %>
+
+    <div class= "column"> 
+       <span id="status-icon"> 
+        <% case doc.state %>
+          <% when 'draft' %>
+            <i class="glyphicon glyphicon-pencil" title="<%= doc.state %>"></i>
+          <% when 'published' %>
+            <i class="glyphicon glyphicon-comment" title="<%= doc.state %>"></i>
+          <% when 'archived' %>
+            <i class="glyphicon glyphicon-folder-close" title="<%= doc.state %>"></i>
+          <% when 'public' %>
+            <i class="glyphicon glyphicon-globe" title="<%= doc.state %>"></i>
+          <% else %>
+            <%= doc.state %>
+          <% end %>
+       </span> 
+       <span class="title"><%= link_to doc.title, document_path(id: doc.id) %> </span><br>
+        <%= 'Author: '+ doc.author if doc.author != "" %> <br>
+      
+       Created: <%= doc.created_at.strftime("%m/%d/%Y") %> 
+       <span style="font-size: 12px"> Groups: <%= doc.groups.pluck(:name) %> </span>
+       <br>
+
+       <%= link_to "Edit", controller: "documents", action: "edit", id: doc.id if doc.user == current_user %>
+    </div> <!-- end column -->
+
+    <!-- 'notifications' -->
+    <% if doc.updated_at > current_user.last_sign_in_at && 
+    doc.updated_at < current_user.current_sign_in_at &&
+    doc.user_id != current_user.id %>
+        <script> 
+            console.log("new doc");
+            $("#documents-shared").find(".badge").css("background-color", "#6caef5");
+         </script>
+
+    <% end %> <!-- end if -->
+  <% end %> <!-- end doc loop -->
+
+  </div>  <!-- end row -->
+ 
+
+  <center><p>
+    <div class='pagination-controls'>
+      <%= will_paginate @sharedDocs, renderer: BootstrapPagination::Rails %>
+    </div>
+  </p>
+</center>

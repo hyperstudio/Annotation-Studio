@@ -290,7 +290,8 @@ private
   def documents_params
     params.require(:document).permit(:title, :state, :chapters, :text, :snapshot, :user_id, :rep_privacy_list,
                                      :rep_group_list, :new_group, :author, :edition, :publisher,
-                                     :publication_date, :source, :rights_status, :upload, :survey_link, groups: :group_id)
+                                     :publication_date, :source, :rights_status, :upload, :survey_link, :location, 
+                                     :page_numbers, :series, :journal_title, :notes, groups: :group_id)
   end
 end
 

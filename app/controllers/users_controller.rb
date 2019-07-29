@@ -32,6 +32,8 @@ class UsersController < ApplicationController
       #slow processing: try to find more efficient algo
       shared = docList.map(&:title) 
       mine = current_user.documents.pluck(:title)
+
+      #this might cause problems when shared docs get REALLY BIG...
       @titleSuggestions = (shared + mine).uniq
       @authorSuggestions = (docList.map(&:author) + current_user.documents.pluck(:author)).uniq
 
@@ -42,35 +44,6 @@ class UsersController < ApplicationController
       @sharedDocs = docList.paginate(:page => whitelisted[:page], :per_page => per_page)
       @myDocs = current_user.documents.paginate(:page => whitelisted[:page], :per_page => per_page).order('created_at DESC')
 
-    #handling invite_token
-    @token = params[:invite_token]
-    if @token 
-
-      #make sure token is valid 
-      begin
-        invite = Invite.find_by(token: @token)
-        
-        #check for expiration 
-        if invite.expiration_date && (invite.expiration_date < Time.now)
-          flash[:error] = 'token expired. please get new token'
-          redirect_to dashboard_path
-          return
-        end
-
-        org =  invite.group #find the user group attached to the invite
-        current_user.groups << org #add this user to the new user group as a member
-        flash[:alert] = 'Successfully joined group!'
-
-      rescue ActiveRecord::RecordNotUnique
-        flash[:error] = 'already in group'
-
-      rescue NoMethodError #if token is invalid, org will call .group on a nil class which returns this error
-        flash[:error] = 'invalid token'
-        
-      end
-      redirect_to dashboard_path
-    end
-
 
     #ajax for group filtering
     owned = Membership.where(user_id: current_user.id, role: "owner").paginate(:page => whitelisted[:page], :per_page => per_page)
@@ -79,16 +52,48 @@ class UsersController < ApplicationController
     filter = params[:filter]
     if filter == "timeASC"
       @joinedGroups = gPage.order('created_at ASC')
-      @mygroups = owned.order('created_at ASC')
+      @mygroups = owned.order('created_at ASC') #Membership objects
     else
       @joinedGroups = gPage.order('created_at DESC')
-      @mygroups = owned.order('created_at DESC')
+      @mygroups = owned.order('created_at DESC') #Membership objects
     end
+
+    #handling invite_token. need to put here because invite_token is a param of dashboard route
+    @token = params[:invite_token]
+    if @token 
+
+      #make sure token is valid 
+      begin
+        invite = Invite.find_by(token: @token)
+        
+        #check for expiration 
+        unless invite.expiration_date && (invite.expiration_date < Time.now)
+
+        org =  invite.group #find the user group attached to the invite
+        current_user.groups << org #add this user to the new user group as a member
+        flash[:alert] = 'Successfully joined group!'
+
+        else
+          flash[:error] = 'token expired. please get new token'
+          redirect_to dashboard_path
+          return
+
+        end #end unless
+
+      rescue ActiveRecord::RecordNotUnique
+        flash[:error] = 'already in group'
+
+      rescue NoMethodError #if token is invalid, org will call .group on a nil class which returns this error
+        flash[:error] = 'invalid token'
+        
+      end #end begin-rescue
+      redirect_to dashboard_path
+    end #end if 
    
     respond_to do |format|
       format.html # show.html.erb
-      # format.json {render json: @user}
-      format.json { render json: { success: "It works"} }
+      format.json {render json: @user}
+      # format.json { render json: { success: "It works"} }
       format.js
     end
 
@@ -106,6 +111,6 @@ class UsersController < ApplicationController
   def users_params
     params.require(:user).permit(:email, :password, :agreement, :affiliation, :password_confirmation,
                                  :remember_me, :firstname, :lastname, :rep_privacy_list, :rep_group_list,
-                                 :rep_subgroup_list, :first_name_last_initial, :username, :filter)
+                                 :rep_subgroup_list, :first_name_last_initial, :username, :nav, :filter)
   end
 end

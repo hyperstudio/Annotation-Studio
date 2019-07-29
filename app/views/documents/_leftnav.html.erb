@@ -22,12 +22,22 @@
 <% if ! @document.publication_date.blank? %>
   <li>Publication date: <%= @document.publication_date %></li>
 <% end %>
+<% if ! @document.location.blank? %>
+  <li>Publication Location: <%= @document.location %></li>
+<% end %>
 <% if ! @document.edition.blank? %>
   <li>Edition/Volume: <%= @document.edition %></li>
 <% end %>
 <% if ! @document.source.blank? %>
   <li>Source:<a href="<%= @document.source %>"><%= @document.source %> </a></li>
 <% end %>
+<% if ! @document.page_numbers.blank? %>
+  <li>Page Numbers: <%= @document.page_numbers %></li>
+<% end %>
+<% if ! @document.notes.blank? %>
+  <li> Additional Notes: <span id="metadata-notes"> <%= @document.notes %> </span></li>
+<% end %>
+
 </ul>
 
 <h4>Chapters</h4>

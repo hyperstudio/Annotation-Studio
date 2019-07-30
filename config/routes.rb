@@ -34,7 +34,7 @@ AnnotationStudio::Application.routes.draw do
     # post 'dashboard', to: 'users#show'
     
     post 'annotations', to: 'annotations#search'    
-
+    
     get 'annotations/:id', to: 'annotations#show'
     get 'documents/:document_id/annotations/field/:field', to: 'annotations#field'
     # get 'groups', to: 'groups#index'
@@ -44,6 +44,9 @@ AnnotationStudio::Application.routes.draw do
     post 'join_via_name' => "groups#join_via_name" #for joining new groups via name entry
     
     resources :groups
+
+    get 'groups/:id/edit', to: 'groups#edit'
+
     #should they be post instead? 
     get 'promote', to: 'groups#promote'
     get 'remove_member', to: 'groups#remove_member'

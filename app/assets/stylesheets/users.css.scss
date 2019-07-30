@@ -56,24 +56,32 @@
 .column{
   background-color: white;
   float: left;
-  width: 15%;
-  height: 200px;
+  width: 17%;
+  height: 220px;
   padding:5px;
-  margin:10px 2% 0;
+  margin:2% 1% 0;
 }
 .title{
   text-overflow: ellipsis;
   max-width: 10px;
   overflow: hidden;
+  font-size: 16px;
+
 }
+
+.tile-content{
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
 .current-page{
   margin-top: 5px;
   font-size: 12px;
 }
 #search-tab{
-  margin-left: 100px;
+  margin-left: 150px;
   height:10%;
-  background-color: #ddd;
+  background-color:#ddd;
 }
 .side-nav{
   height:100%;

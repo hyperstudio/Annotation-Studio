@@ -4,6 +4,8 @@
 <%= stylesheet_link_tag "users" %>
 <%= render "/shared/document_titles" %>
 
+<nav class= "dash-tabs">
+
 <div class="dropdown">
   <button class="dropbtn">Documents <span class="badge" style="display:inline-block"><%= @sharedDocsCount + current_user.documents.size %></span> </button>
 
@@ -36,8 +38,10 @@
 
   </div>
 
-  <div id="search-tab" class="dropdown" onclick="openSideMenu()"> <i class="glyphicon glyphicon-option-vertical" ></i> </div>
+  <div id="search-tab" class="dropdown" onclick="openSideMenu()"> <i class="glyphicon glyphicon-option-vertical"></i> </div>
 </div>
+
+</nav>
 
 <!-- sidebar -->
 <div id="side-menu" class="side-nav">
@@ -60,6 +64,20 @@
   <% @sharedDocs.each do |doc| %>
 
     <div class= "column"> 
+       
+       <span class="title"><%= link_to doc.title, document_path(id: doc.id) %> </span>
+       <br>
+       <br>
+
+        <div class="tile-content"> 
+
+        <%= 'Author: '+ doc.author if doc.author != "" %> <br> 
+      
+       Created: <%= doc.created_at.strftime("%m/%d/%Y") %> <br> 
+       
+       Groups: <%= doc.groups.pluck(:name) %> <br>
+
+       Status: 
        <span id="status-icon"> 
         <% case doc.state %>
           <% when 'draft' %>
@@ -74,11 +92,9 @@
             <%= doc.state %>
           <% end %>
        </span> 
-       <span class="title"><%= link_to doc.title, document_path(id: doc.id) %> </span><br>
-        <%= 'Author: '+ doc.author if doc.author != "" %> <br>
-      
-       Created: <%= doc.created_at.strftime("%m/%d/%Y") %> 
-       <span style="font-size: 12px"> Groups: <%= doc.groups.pluck(:name) %> </span>
+  
+     </div> <!-- tile-content-->
+
        <br>
 
        <%= link_to "Edit", controller: "documents", action: "edit", id: doc.id if doc.user == current_user %>

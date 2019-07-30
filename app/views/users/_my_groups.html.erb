@@ -2,7 +2,7 @@
 
   <% @mygroups.each do |g| %>
     <div class= "column"> 
-       <strong>Name:</strong> <%= g.name %> <br>
+       <span class="title"> <%= g.name %> <br></span>
        <br>
        <br>
        <%= link_to "Edit", edit_group_path(id: g.id) %>

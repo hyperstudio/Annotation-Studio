@@ -43,7 +43,7 @@ class UsersController < ApplicationController
       @sharedDocsCount = docList.size
       @sharedDocs = docList.paginate(:page => whitelisted[:page], :per_page => per_page)
       @myDocs = current_user.documents.paginate(:page => whitelisted[:page], :per_page => per_page).order('created_at DESC')
-
+      
 
     #ajax for group filtering
     owned = current_user.groups.where(owner_id: current_user.id).paginate(:page => whitelisted[:page], :per_page => per_page)

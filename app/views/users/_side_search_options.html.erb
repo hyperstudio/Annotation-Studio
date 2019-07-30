@@ -6,7 +6,7 @@
 
 <%= form_tag groups_path, :method => 'get' do %>
 	<%= label_tag 'Search by Group name' %>
-	<%= text_field_tag 'search', nil, id: 'dashboard-search' %>
+	<%= text_field_tag 'search', nil, id: 'dash-groups-search' %>
 	<%= submit_tag "Search" %>
 <% end #form_tag %>
 
@@ -27,6 +27,8 @@
 	<% end %>
 
 <% elsif params[:nav] && (params[:nav].include? "annotations") %>
+
+	<h4> Annotations Search </h4>
 	<p class="help-block"> Search by: </p>
 
 	<%= form_tag :controller=> 'annotations', :action=> 'search' do %>
@@ -42,7 +44,7 @@
 		</table>
 
 		<%= label_tag "Search" %>
-		<%= text_field_tag 'search', nil, id: 'dashboard-search' %>
+		<%= text_field_tag 'search', nil, id: 'dash-annotations-search' %>
 		<%= submit_tag "Search" %>
 <% end #form_tag %>
 
@@ -68,7 +70,7 @@
 		</tr>
 	</table>
 
-	<%= text_field_tag 'search', nil, id: 'dashboard-search' %>
+	<%= text_field_tag 'search', nil, id: 'dash-documents-search' %>
 	<%= submit_tag "Search" %>
 
 
@@ -81,8 +83,8 @@
 
 <script>
 
-	//default autocomplete
-	$("#dashboard-search").autocomplete({
+	//default autocomplete for docs
+	$("#dash-documents-search").autocomplete({
 		source: <%= raw(@titleSuggestions) %>
 	});
 
@@ -98,7 +100,7 @@
 		data = <%= raw(@titleSuggestions) %>;
 	}
 
-	$("#dashboard-search").autocomplete({
+	$("#dash-documents-search").autocomplete({
 		source: data
 	});
 		
@@ -115,14 +117,14 @@
 		}); //end ajax
 	}
 
-	//special group autocomplete
-	<% if params[:nav] && (params[:nav].include? "groups") %>
-		data = <%= raw(@groupSuggestions) %>;
-
-		$("#dashboard-search").autocomplete({
+	//group autocomplete
+	$("#dash-groups-search").autocomplete({
 		source: <%= raw(@groupSuggestions) %>
 	});
-	<% end %>
+
+
+
+
 
 	
 

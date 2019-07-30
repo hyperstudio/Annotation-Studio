@@ -127,76 +127,71 @@
 
 
 <script type="text/javascript">
-
 // use href with a url param instead of onclick event. downside: reloads the page. 
+   //a lot of repetition rn...clean up
 
-   //a lot of repetition rn...clean up, or change page reload. need for pagination. 
-  <% if params[:nav] && params[:nav] == 'mydocuments' %>
+  <% if params[:nav] %>
+    var nav = "<%= params[:nav] %>"
 
-    var myDocuments = document.getElementById("my-docs");
-    $(".content").hide(); //hide everything else 
-    myDocuments.style.display = "block";
-    $(myDocuments).html("<%= j render 'my_documents' %>");
-    $("#current-page").text("My Documents");
+    switch(nav) {
+      case 'mydocuments':
+        var myDocuments = document.getElementById("my-docs");
+        $(".content").hide(); //hide everything else 
+        myDocuments.style.display = "block";
+        $(myDocuments).html("<%= j render 'my_documents' %>");
+        $("#current-page").text("My Documents");
+        break;
+
+      case 'shareddocuments':
+        var sharedDocuments = document.getElementById("shared-docs");
+        $(".content").hide();
+        sharedDocuments.style.display = "block";
+        $("#current-page").text("Shared Documents");
+        break;
+
+      case 'myannotations':
+        var myAnnotations = document.getElementById("my-annotations");
+        $(".content").hide();
+        myAnnotations.style.display = "block";
+        $("#current-page").text("My Annotations");
+        break;
+
+      case 'sharedannotations':
+        var sharedAnnotations = document.getElementById("shared-annotations");
+        $(".content").hide();
+        sharedAnnotations.style.display = "block";
+        $("#current-page").text("Shared Annotations");
+        break;
+
+      case 'mygroups':
+        var mygroups = document.getElementById("my-groups");
+        $(".content").hide();
+        mygroups.style.display = "block";
+        $(mygroups).html("<%= j render 'my_groups' %>");
+        $("#current-page").text("My Groups");
+        break;
+
+      case 'joinedgroups':
+        var joinedGroups = document.getElementById("joined-groups");
+        $(".content").hide();
+        joinedGroups.style.display = "block";
+        $(joinedGroups).html("<%= j render 'joined_groups' %>");
+        $("#current-page").text("Joined Groups");
+        break;
+      
+  } //end switch
 
 
-  <% end %>
 
+  <% end #end if %>
 
-<% if params[:nav] && params[:nav] == 'shareddocuments' %>
-
-    var sharedDocuments = document.getElementById("shared-docs");
-    $(".content").hide();
-    sharedDocuments.style.display = "block";
-    $("#current-page").text("Shared Documents");
-
-  <% end %>
-
-  <% if params[:nav] && params[:nav] == 'mygroups' %>
-
-    var mygroups = document.getElementById("my-groups");
-    $(".content").hide();
-    mygroups.style.display = "block";
-    $(mygroups).html("<%= j render 'my_groups' %>");
-    $("#current-page").text("My Groups");
-
-  <% end %>
-
-<% if params[:nav] && params[:nav] == 'joinedgroups' %>
-
-    var joinedGroups = document.getElementById("joined-groups");
-    $(".content").hide();
-    joinedGroups.style.display = "block";
-    $(joinedGroups).html("<%= j render 'joined_groups' %>");
-    $("#current-page").text("Joined Groups");
-
-  <% end %>
-
-  <% if params[:nav] && params[:nav] == 'myannotations'%>
-
-    var myAnnotations = document.getElementById("my-annotations");
-    $(".content").hide();
-    myAnnotations.style.display = "block";
-    $("#current-page").text("My Annotations");
-
-  <% end %>
-
-  <% if params[:nav] && params[:nav] == 'sharedannotations'%>
-
-    var sharedAnnotations = document.getElementById("shared-annotations");
-    $(".content").hide();
-    sharedAnnotations.style.display = "block";
-    $("#current-page").text("Shared Annotations");
-     <% end %>
   
-
 $("#documents-shared").click(function(event){
     $(".badge").css("background-color", "#777");
-
 })
 
 var active = false
-//search animation stuff
+//sidebar visibility toggle
 function openSideMenu(){
   if (active){
     document.getElementById('side-menu').style.width = '0';
@@ -206,108 +201,10 @@ function openSideMenu(){
   document.getElementById('side-menu').style.width = '350px';
   active = true
 }
-
 function closeSideMenu(){
   document.getElementById('side-menu').style.width = '0';
 }
-
-
 </script>
-
-
-<style>
-
-.dropbtn {
-  background-color: white;
-  padding: 5px;
-  width: 150px;
-  font-size: 16px;
-  border: none;
-}
-
-.dropdown {
-  position: relative;
-  display: inline-block;
-  padding-right: 100px;
-}
-
-.dropdown-content {
-  /*margin-left: -100px;*/
-  display: none;
-  position: absolute;
-  background-color: white;
-  padding:5px;
-  z-index: 1;
-}
-
-.dropdown-content a {
-  color: black;
-  padding: 5px 10px;
-  text-decoration: none;
-  display: block;
-}
-
-
-.dropdown-content a:hover {background-color: #FDE162;}
-
-.dropdown:hover .dropdown-content {display: block;}
-
-.dropdown:hover .dropbtn {background-color: #FDE162;}
-
-.row{
-  display:flex;
-  flex-wrap: wrap;
-}
-
-.column{
-  background-color: white;
-  float: left;
-  width: 15%;
-  height: 200px;
-  padding:5px;
-  margin:10px 2% 0;
-}
-
-.title{
-  text-overflow: ellipsis;
-  max-width: 10px;
-  overflow: hidden;
-}
-
-.current-page{
-  margin-top: 5px;
-  font-size: 12px;
-}
-
-
-#search-tab{
-  margin-left: 100px;
-  height:10%;
-  background-color: #ddd;
-
-}
-
-.side-nav{
-  height:100%;
-  width:0;
-  position:fixed;
-  z-index:1;
-  top:100px;
-  right:0;
-  background-color: white;
-  overflow-x:hidden;
-  text-decoration:none;
-  transition:0.5s;
-  padding-top: 10px;
-}
-
-.side-nav span{
-  float:right;
-  padding-right: 50px;
-}
-
-
-</style>
 
 
 
@@ -318,15 +215,12 @@ jQuery(function ($) {
   var endpoint = '<%= ENV["API_URL"] %>';
   var token = '<%= session["jwt"] %>';
   // Backbone.history.start({pushState: true, root: window.location})
-
 var groups=[];
-
 <% current_user.groups.each do |g| %>
   groups.push("<%=g.name %>");
 <% end %>
-
   var myLoadOptions = {
-    'limit': 100,
+    'limit': 30,
     'groups': "<%= current_user.rep_group_list %>".split(/, /),
     'subgroups': "<%= current_user.rep_subgroup_list %>".split(/, /),
     'host': location.host,
@@ -335,7 +229,7 @@ var groups=[];
     'context': 'dashboard',
   };
   var classLoadOptions = {
-    'limit': 100,
+    'limit': 30,
     'groups': groups, //"<%= current_user.rep_group_list %>".split(/, /),
     'subgroups': "<%= current_user.rep_subgroup_list %>".split(/, /),
     'host': location.host,
@@ -343,12 +237,9 @@ var groups=[];
     'mode': 'class',
     'context': 'dashboard',
   };
-
-
   widget.listAnnotations('my-annotation-list', myLoadOptions, endpoint, token);
   widget.listAnnotations('class-annotation-list', classLoadOptions, endpoint, token);
 });
-
 </script>
 <script type="text/template" id="user-comment-template">
 

@@ -19,3 +19,76 @@
 .note-toolbar-wrapper.panel-default {
   margin-top: 0;
 }
+
+.dropbtn {
+  background-color: white;
+  padding: 5px;
+  width: 150px;
+  font-size: 16px;
+  border: none;
+}
+.dropdown {
+  position: relative;
+  display: inline-block;
+  padding-right: 100px;
+}
+.dropdown-content {
+  /*margin-left: -100px;*/
+  display: none;
+  position: absolute;
+  background-color: white;
+  padding:5px;
+  z-index: 1;
+}
+.dropdown-content a {
+  color: black;
+  padding: 5px 10px;
+  text-decoration: none;
+  display: block;
+}
+.dropdown-content a:hover {background-color: #FDE162;}
+.dropdown:hover .dropdown-content {display: block;}
+.dropdown:hover .dropbtn {background-color: #FDE162;}
+.row{
+  display:flex;
+  flex-wrap: wrap;
+}
+.column{
+  background-color: white;
+  float: left;
+  width: 15%;
+  height: 200px;
+  padding:5px;
+  margin:10px 2% 0;
+}
+.title{
+  text-overflow: ellipsis;
+  max-width: 10px;
+  overflow: hidden;
+}
+.current-page{
+  margin-top: 5px;
+  font-size: 12px;
+}
+#search-tab{
+  margin-left: 100px;
+  height:10%;
+  background-color: #ddd;
+}
+.side-nav{
+  height:100%;
+  width:0;
+  position:fixed;
+  z-index:1;
+  top:100px;
+  right:0;
+  background-color: white;
+  overflow-x:hidden;
+  text-decoration:none;
+  transition:0.5s;
+  padding-top: 10px;
+}
+.side-nav span{
+  float:right;
+  padding-right: 50px;
+}

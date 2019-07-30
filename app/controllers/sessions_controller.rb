@@ -1,5 +1,9 @@
 class SessionsController < Devise::SessionsController
 
+	def new
+		super
+	end
+	
 	def create
 		# #copied from devise github. can't just call super or else will throw "too many redirects error"
 		self.resource = warden.authenticate!(auth_options)

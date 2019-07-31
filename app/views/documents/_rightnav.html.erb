@@ -30,6 +30,9 @@
   <div class="input-group" id="tag-chooser">
     <input type="text" id="tagsearchbox" placeholder="Enter tag(s) to filter on">
   </div><!-- /input-group -->
+
+
+
   <% if Tenant.annotation_categories_enabled -%>
   <p><strong>How</strong> they are categorized:</p>
   <div class="btn-toolbar" id="category-chooser">
@@ -51,3 +54,12 @@
   </div><!-- /input-group -->
   <% end %>
 <% end %>
+
+
+<script>
+  $("#tagsearchbox").autocomplete({
+    source: ["one", "fish", "blue", "red"]
+  });
+
+
+</script>

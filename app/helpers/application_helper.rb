@@ -69,10 +69,7 @@ module ApplicationHelper
 
   def is_owner(group_id)
     group = Group.find(group_id)
-    if !group.nil?
-      group.owner_id == current_user.id
-    end
-      false #if group is not found. 
+    return group.nil? ? false : group.owner_id == current_user.id
     
   end
 

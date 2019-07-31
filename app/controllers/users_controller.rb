@@ -28,6 +28,8 @@ class UsersController < ApplicationController
         end
       end
 
+    #AUTOCOMPLETE STUFF
+
       #for document search autocomplete (user's docs and shared group docs)
       #slow processing: try to find more efficient algo
       shared = docList.map(&:title) 
@@ -40,23 +42,34 @@ class UsersController < ApplicationController
       #group search autocomplete
       @groupSuggestions = current_user.groups.pluck(:name)
 
+    #END AUTOCOMPLETE STUFF
+
       @sharedDocsCount = docList.size
       @sharedDocs = docList.paginate(:page => whitelisted[:page], :per_page => per_page)
       @myDocs = current_user.documents.paginate(:page => whitelisted[:page], :per_page => per_page).order('created_at DESC')
-      
 
-    #ajax for group filtering
+  #BEGIN AJAX STUFF 
+
+    #DOCUMENT FILTERING AJAX STUFF: disabled for now cuz of slow runtime
+    #docList = docList.sort_by &:created_at #sort by created_at ascending....
+
+
+    #GROUP FILTERING AJAX STUFF
     owned = current_user.groups.where(owner_id: current_user.id).paginate(:page => whitelisted[:page], :per_page => per_page)
     gPage = current_user.groups.paginate(:page => whitelisted[:page], :per_page => per_page)
 
     filter = params[:filter]
     if filter == "timeASC"
       @joinedGroups = gPage.order('created_at ASC')
-      @mygroups = owned.order('created_at ASC') #Membership objects
+      @mygroups = owned.order('created_at ASC') 
     else
       @joinedGroups = gPage.order('created_at DESC')
-      @mygroups = owned.order('created_at DESC') #Membership objects
+      @mygroups = owned.order('created_at DESC') 
     end
+
+
+  #END AJAX STUFF
+
 
     #handling invite_token. need to put here because invite_token is a param of dashboard route
     @token = params[:invite_token]
@@ -96,10 +109,6 @@ class UsersController < ApplicationController
       # format.json { render json: { success: "It works"} }
       format.js
     end
-
-
-    
-
 
     gon.rabl template: 'app/views/users/show.rabl', as: 'user'
   end

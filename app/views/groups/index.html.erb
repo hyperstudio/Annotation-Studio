@@ -10,53 +10,53 @@ Join Group by entering name (case sensitive)
  </div>
 
 <% if params[:search] %>
+	<script>
+		$("#join").hide();
+	</script>
 
 <h2> Search By Name: <%= params[:search] %> </h2>
 
-<table class="group-table">
-	<tr class="group-table-row">
-		<th> Name </th>
-		<th> Role </th>
-		<th> Actions </th>
-	</tr>
-		<% @groups.each do |g| %>
-			<tr class="group-table-row"> 
-				<td> <%= link_to g.name, :controller => "groups", :action=> "show", :id => g.id %></td>
-				<td> <%= Membership.find_by(group_id: g.id, user_id: current_user.id).role %> </td> 
-				<td> 
-					<% unless is_owner(g.id) %>
-						<%= link_to "Leave", :controller=> "groups", :action =>"leave", :id => g.id %>
-					<% end %>
+	<div class="row">
+	  <% @groups.each do |g| %>
+	    <div class= "column"> 
+	      <span class="title"> <%= link_to g.name, group_path(id: g.id) %> <br> </span>
 
-					<% unless is_member(g.id) %>
-						<%= link_to "Edit", :controller=> "groups", :action => "edit", :id => g.id %>
-					<% end %>
-				</td>
-			</tr>
-		<% end %>
-</table>
+	       <% myRole = Membership.find_by(group_id: g.id, user_id: current_user.id).role %>
+	       Role: <%= myRole %> <br>
 
+	       Owner: <%= User.find(g.owner_id).firstname %> 
+	    </div>
+	  <% end %>
+
+	  </div>
 <% end %>
 
 
 <style>
-.group-table {
-  border-collapse: collapse;
-  width: 50%;
-}
+	
+	.row{
+	  display:flex;
+	  flex-wrap: wrap;
+	}
+	.column{
+	  background-color: white;
+	  float: left;
+	  width: 17%;
+	  height: 220px;
+	  padding:5px;
+	  margin:2% 1% 0;
+	}
+	.title{
+	  text-overflow: ellipsis;
+	  max-width: 10px;
+	  overflow: hidden;
+	  font-size: 16px;
 
-td, th {
-  border: 2px solid #dddddd;
-  text-align: left;
-  padding: 5px;
-}
+	}
 
-.group-table-row:nth-child(even) {
-  background-color: #ced4de;
-}
-
-#join{
-	margin-bottom:40px;
-}
+	.tile-content{
+	  text-overflow: ellipsis;
+	  overflow: hidden;
+	}
 </style>
 

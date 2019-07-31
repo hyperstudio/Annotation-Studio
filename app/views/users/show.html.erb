@@ -34,7 +34,7 @@
     <a href= "<%= dashboard_path(nav: 'mygroups')%>" id="groups-mine" style="display:inline">Mine <span class="badge"> <%= @mygroups.size %></span> </a>
     <a href= "<%= dashboard_path(nav: 'joinedgroups')%>" id="groups-joined" style="display:inline">Joined <span class="badge"> <%= current_user.groups.size %></span></a>
     <a href="<%= new_group_path %>" style="display:inline">New</a>
-    <a href="<%= groups_path %>" style="display:inline"> Join </a>
+    <a href = "<%= groups_path %>" onclick="on()" style="display:inline"> Join </a>
 
   </div>
 
@@ -58,69 +58,7 @@
 
 <div class= "content" id="shared-docs">
   
-  <div class="row">
-
-  <% @newDoc = false%>
-  <% @sharedDocs.each do |doc| %>
-
-    <div class= "column"> 
-       
-       <span class="title"><%= link_to doc.title, document_path(id: doc.id) %> </span>
-       <br>
-       <br>
-
-        <div class="tile-content"> 
-
-        <%= 'Author: '+ doc.author if doc.author != "" %> <br> 
-      
-       Created: <%= doc.created_at.strftime("%m/%d/%Y") %> <br> 
-       
-       Groups: <%= doc.groups.pluck(:name) %> <br>
-
-       Status: 
-       <span id="status-icon"> 
-        <% case doc.state %>
-          <% when 'draft' %>
-            <i class="glyphicon glyphicon-pencil" title="<%= doc.state %>"></i>
-          <% when 'published' %>
-            <i class="glyphicon glyphicon-comment" title="<%= doc.state %>"></i>
-          <% when 'archived' %>
-            <i class="glyphicon glyphicon-folder-close" title="<%= doc.state %>"></i>
-          <% when 'public' %>
-            <i class="glyphicon glyphicon-globe" title="<%= doc.state %>"></i>
-          <% else %>
-            <%= doc.state %>
-          <% end %>
-       </span> 
-  
-     </div> <!-- tile-content-->
-
-       <br>
-
-       <%= link_to "Edit", controller: "documents", action: "edit", id: doc.id if doc.user == current_user %>
-    </div> <!-- end column -->
-
-    <!-- 'notifications' -->
-    <% if doc.updated_at > current_user.last_sign_in_at && 
-    doc.updated_at < current_user.current_sign_in_at &&
-    doc.user_id != current_user.id %>
-        <script> 
-            console.log("new doc");
-            $("#documents-shared").find(".badge").css("background-color", "#6caef5");
-         </script>
-
-    <% end %> <!-- end if -->
-  <% end %> <!-- end doc loop -->
-
-  </div>  <!-- end row -->
- 
-
-  <center><p>
-    <div class='pagination-controls'>
-      <%= will_paginate @sharedDocs, renderer: BootstrapPagination::Rails %>
-    </div>
-  </p>
-</center>
+  <%= render 'shared_documents' %>
 
 </div><!--  end shared-docs -->
 
@@ -140,7 +78,15 @@
 <div class = "content" id="joined-groups" style="display:none">
 </div>
 
+<!-- overlay for join group -->
+<!-- <div id="overlay">
+  <div id="overlay-content">
+  
+  <i class="glyphicon glyphicon-remove" onclick="off()"></i>
 
+  </div>
+
+</div> -->
 
 <script type="text/javascript">
 // use href with a url param instead of onclick event. downside: reloads the page. 
@@ -220,6 +166,18 @@ function openSideMenu(){
 function closeSideMenu(){
   document.getElementById('side-menu').style.width = '0';
 }
+
+function on(){
+  console.log("on");
+  document.getElementById("overlay").style.display = "block";
+  console.log("shown");
+}
+
+function off(){
+  console.log("off");
+  document.getElementById("overlay").style.display = "none";
+}
+
 </script>
 
 
@@ -265,11 +223,23 @@ var groups=[];
   <hr>
 </span>
 
-<span class="user-comment"><div class="ellipsis">{{{text}}}</div>
+<span class="user-comment"><div class="ellipsis">{{{text}}}</div> <br>
   <span class= "annotation-info">{{formattedDate}} <br>
     Document: {{title}} <br>
     Annotator: {{username}}
   </span> 
   </span>
   
+</script>
+
+<script type="text/template" id="user-highlight-template">
+  <span class="user-highlight"><div class="ellipsis"><a href="{{uri}}#hl{{uuid}}">{{{quote}}}</a></div>
+  <hr>
+  </span>
+  <span class="user-comment">
+    <span class= "annotation-info">{{formattedDate}} <br>
+    Document: {{title}} <br>
+    Annotator: {{username}}
+  </span> 
+</span>
 </script>

@@ -57,6 +57,9 @@ class GroupsController < ApplicationController
 		else
 			@memberships = @group.memberships
 		end
+
+		@ISstatus = @group.ideaSpaceOn ? 'Enabled' : 'Disabled' #whether Idea space is enabled or disabled rn
+		@IStoggle = @group.ideaSpaceOn ? 'Disable' : 'Enable' #toggle IS attachment button
 	end
 
 	def update
@@ -126,11 +129,6 @@ class GroupsController < ApplicationController
 		@uid = current_user.id
 		@membership =Membership.find_by(user_id: @uid, group_id: @gid)
 
-		#also remove the invite entry in invites table
-		# @invite = Invite.find_by(recipient_id: @pid)
-		# if @invite
-		# 	@invite.destroy
-		# end
 		if @membership
 			@membership.destroy
 			flash[:alert] = 'Left ' + Group.find(@gid).name.to_s 
@@ -154,6 +152,19 @@ class GroupsController < ApplicationController
 		end
 
 		redirect_to request.referrer
+	end
+
+	def toggleIS
+		thisGroup = Group.find(params[:group_id])
+		if params[:ideaSpace] == 'change'
+			puts 'change!'
+			current = thisGroup.ideaSpaceOn
+			puts current
+			puts !current
+			thisGroup.update_attribute("ideaSpaceOn", !current) #toggle between true and false
+			redirect_to edit_group_path(id: params[:group_id])
+
+		end
 	end
 
 

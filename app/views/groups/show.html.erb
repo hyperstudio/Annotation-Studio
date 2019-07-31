@@ -1,5 +1,14 @@
 <h1> <%= @group.name %></h1>
 
+<% if @group.ideaSpaceOn %>
+<br>
+<div id="idea-space">
+	<a href="http://annotation-studio-idea-space.herokuapp.com/" > Idea Space </a>
+</div>
+<br>
+
+<% end %>
+
 <% unless is_member(params[:id]) %>
 <%= link_to "Manage Group", :controller=> "groups", :action => "edit", :id => params[:id] %>
 <% end %>
@@ -44,6 +53,9 @@
 
 
 	<style>
+	#idea-space {
+		
+	}
 	.member-table {
 	  border-collapse: collapse;
 	  width: 50%;

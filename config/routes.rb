@@ -29,9 +29,6 @@ AnnotationStudio::Application.routes.draw do
   authenticated :user do
     root :to => "users#show"
     get 'dashboard', to: 'users#show', as: :dashboard
-
-    # #ajax
-    # post 'dashboard', to: 'users#show'
     
     post 'annotations', to: 'annotations#search'    
     
@@ -53,6 +50,9 @@ AnnotationStudio::Application.routes.draw do
     get 'demote', to: 'groups#demote'
 
     resources :invites
+
+    get 'toggleIS', to: 'groups#toggleIS'
+    post 'toggleIS', to: 'groups#toggleIS'
 
 
     

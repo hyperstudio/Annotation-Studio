@@ -1,4 +1,7 @@
-FactoryGirl.define do  factory :invite do
+FactoryGirl.define do  factory :documents_group do
+    
+  end
+  factory :invite do
     
   end
   factory :membership do

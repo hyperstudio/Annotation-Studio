@@ -4,10 +4,15 @@
 <%= stylesheet_link_tag "users" %>
 <%= render "/shared/document_titles" %>
 
-<nav class= "dash-tabs">
 
-<div class="dropdown">
-  <button class="dropbtn">Documents <span class="badge" style="display:inline-block"><%= @sharedDocsCount + current_user.documents.size %></span> </button>
+
+
+
+
+<nav class="navbar navbar-default navbar-fixed-top hidden-xs" id="lower-navbar">
+      <!--got rid of ashboard/document lower navbar buttons from here-->
+      <div class="dropdown">
+  <button class="dropbtn">Documents <span class="badge" ><%= @sharedDocsCount + current_user.documents.size %></span> </button>
 
   <div class="dropdown-content">
     <a href= "<%= dashboard_path(nav: 'mydocuments')%>" id="documents-mine" style="display:inline" >Mine <span class="badge"> <%= current_user.documents.size %></span></a>
@@ -28,8 +33,8 @@
 
 
 <div class="dropdown">
-  <button class="dropbtn">Groups <span class="badge" style="display:inline-block"><%= @current_user.groups.size %></span></button>
-  <div class="dropdown-content">
+  <button class="dropbtn">Groups <span class="badge" ><%= @current_user.groups.size %></span></button>
+  <div class="dropdown-content" style="background-color: white; width: 100%;">
 
     <a href= "<%= dashboard_path(nav: 'mygroups')%>" id="groups-mine" style="display:inline">Mine <span class="badge"> <%= @mygroups.size %></span> </a>
     <a href= "<%= dashboard_path(nav: 'joinedgroups')%>" id="groups-joined" style="display:inline">Joined <span class="badge"> <%= current_user.groups.size %></span></a>
@@ -37,11 +42,9 @@
     <a href = "<%= groups_path %>" onclick="on()" style="display:inline"> Join </a>
 
   </div>
+    </nav>
+   
 
-  <div id="search-tab" class="dropdown" onclick="openSideMenu()"> <i class="glyphicon glyphicon-option-vertical"></i> </div>
-</div>
-
-</nav>
 
 <!-- sidebar -->
 <div id="side-menu" class="side-nav">
@@ -49,7 +52,12 @@
   <%= render "side_search_options" %>
 </div>
 
+<div class="titleBar" style=" width:100%">
+
 <h4 id= "current-page"> Shared Documents </h4>
+  <button id="search-tab" class="dropdown" onclick="openSideMenu()" style="background-color: grey;"> <i class="glyphicon glyphicon-option-vertical"></i> 
+</button>
+</div>
 
 
 <div class= "content" id="my-docs">

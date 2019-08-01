@@ -21,7 +21,7 @@
 }
 
 .dropbtn {
-  background-color: white;
+  background-color: #FCCE01;
   padding: 5px;
   width: 150px;
   font-size: 16px;
@@ -36,15 +36,17 @@
   /*margin-left: -100px;*/
   display: none;
   position: absolute;
+  left:0;
+  width:100%;
   background-color: white;
-  padding:5px;
+  padding-right:20px;
   z-index: 1;
 }
 .dropdown-content a {
   color: black;
   padding: 5px 10px;
   text-decoration: none;
-  display: block;
+  display: inline-block;
 }
 .dropdown-content a:hover {background-color: #FDE162;}
 .dropdown:hover .dropdown-content {display: block;}
@@ -101,4 +103,17 @@
 .side-nav span{
   float:right;
   padding-right: 50px;
+}
+
+
+
+.badge{
+  background-color:#eee;
+  color:black;
+  display:inline-block;
+}
+
+.column {
+  float: left;
+  width: 50%;
 }

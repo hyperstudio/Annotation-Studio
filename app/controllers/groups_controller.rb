@@ -40,7 +40,7 @@ class GroupsController < ApplicationController
 			Membership.find_by(group_id: @group.id, user_id: current_user.id).update_attribute("role", "owner")
 			
 			flash[:alert] = "New Group Created!"
-			redirect_to root_path
+			redirect_to dashboard_path(nav: "mygroups")
 		else
 			flash[:alert] = "Error creating group. Group name taken. "
 			render :new

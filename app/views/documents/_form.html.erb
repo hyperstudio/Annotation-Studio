@@ -218,6 +218,12 @@
   </div><!-- end row -->
 
       <%= f.submit nil, :class => 'btn btn-default btn btn-default-primary btn-primary' %>
+      <% if @document.state == "draft" %>
+        <%= link_to document_path(@document), method: :delete, class: 'btn btn-default btn btn-danger', data: {confirm: "Are you sure? Delete cannot be undone.", toggle: 'tooltip', placement: 'top', 
+          original_title: 'Delete'} do %> Delete
+        <% end %>
+      <% end %>
+      
     	<%= link_to 'Cancel', dashboard_path(nav: "mydocuments"), :class => 'btn btn-default' %>
     <% end %>
 

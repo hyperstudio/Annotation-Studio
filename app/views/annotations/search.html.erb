@@ -47,7 +47,7 @@ var query;
 	    'subgroups': "<%= current_user.rep_subgroup_list %>".split(/, /),
 	    'host': location.host,
 	    'user': query,
-	    'mode': 'user',
+	    'mode': 'userSearch',
 	    'context': 'dashboard',
 	  };
 
@@ -92,6 +92,18 @@ var query;
   </span> 
   </span>
   
+</script>
+
+<script type="text/template" id="user-highlight-template">
+  <span class="user-highlight"><div class="ellipsis"><a href="{{uri}}#hl{{uuid}}">{{{quote}}}</a></div>
+  <hr>
+  </span>
+  <span class="user-comment">
+    <span class= "annotation-info">{{formattedDate}} <br>
+    Document: {{title}} <br>
+    Annotator: {{username}}
+  </span> 
+</span>
 </script>
 
 

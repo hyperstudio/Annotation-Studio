@@ -19,49 +19,36 @@ class UsersController < ApplicationController
     per_page = 10
 
     #get all the user's groups' documents w/o repetition
-    # docList = []
-    #   current_user.groups.each do |g| 
-    #     g.documents.where.not(state: 'draft').each do |d|
-    #       unless docList.include? d 
-    #         docList << d
-    #       end
-    #     end
-    #   end
-
       joined = current_user.groups.pluck(:id)
       docID = DocumentsGroup.where(group_id: joined).pluck(:document_id).uniq
-      docList1 = Document.where(id: docID).where.not(state: "draft")
+      docs = Document.where(id: docID).where.not(state: "draft")
 
     #AUTOCOMPLETE STUFF
 
       #for document search autocomplete (user's docs and shared group docs)
       #slow processing: try to find more efficient algo
-      # shared = docList.map(&:title) 
 
-      shared = docList1.pluck(:title)
+      shared = docs.pluck(:title)
       mine = current_user.documents.pluck(:title)
 
       #this might cause problems when shared docs get REALLY BIG...
       @titleSuggestions = (shared + mine).uniq
       # @authorSuggestions = (docList.map(&:author) + current_user.documents.pluck(:author)).uniq
-      @authorSuggestions = (docList1.pluck(:author) + current_user.documents.pluck(:author)).uniq
+      @authorSuggestions = (docs.pluck(:author) + current_user.documents.pluck(:author)).uniq
 
       #group search autocomplete
       @groupSuggestions = current_user.groups.pluck(:name)
 
     #END AUTOCOMPLETE STUFF
 
-      # @sharedDocsCount = docList.size
-
-      @sharedDocsCount = docList1.size
-      @sharedDocs = docList1.paginate(:page => whitelisted[:page], :per_page => per_page)
+      @sharedDocsCount = docs.size
+      @sharedDocs = docs.paginate(:page => whitelisted[:page], :per_page => per_page).order('created_at DESC')
       @myDocs = current_user.documents.paginate(:page => whitelisted[:page], :per_page => per_page).order('created_at DESC')
 
   #BEGIN AJAX STUFF 
 
     #DOCUMENT FILTERING AJAX STUFF: disabled for now cuz of slow runtime
     #docList = docList.sort_by &:created_at #sort by created_at ascending....
-
 
     #GROUP FILTERING AJAX STUFF
     @mode = params[:location]

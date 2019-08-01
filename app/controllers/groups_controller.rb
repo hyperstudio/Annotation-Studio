@@ -8,7 +8,6 @@ class GroupsController < ApplicationController
   		@groups = Group.where(["name LIKE ?", "%#{params['search']}%"])
   	else
   		@groups = current_user.groups
-
   	end
   	
      

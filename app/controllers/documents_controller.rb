@@ -165,8 +165,6 @@ class DocumentsController < ApplicationController
 
 
     #need to loop through oldGroups to find difference!!! 
-    puts @oldGroups
-    puts @groups
     if @groups
 
       @groups.each do |g|
@@ -182,6 +180,7 @@ class DocumentsController < ApplicationController
           @document.groups.delete(Group.find_by(name: d))
         end #each
       end #if diff.empty?
+      
     end #if 
     
     @document.update_attribute("updated_at", Time.now)

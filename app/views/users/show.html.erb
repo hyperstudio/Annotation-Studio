@@ -57,7 +57,7 @@
 
   <div style="width: 50%;float:left;">
     <h4 id= "current-page"> Shared Documents </h4>
-    <p class="greyText">Your group has access to shared documents.</p>
+    <p id="permissions-note" class="greyText">Your groups have access to shared documents.</p>
   </div>
 
   <div style="width:50%;float: right; ">
@@ -142,7 +142,7 @@
       <%= f.submit 'Submit'%>
 
   <% end %>
-    <span class="help-block" style="font-size:10px">After choosing a name, you'll be redirected to the edit page where you can manage this group's settings. </span>
+    <span class="help-block" style="font-size:11px">After choosing a name, you'll be redirected to the edit page where you can manage this group's settings. </span>
   </div>
 
 
@@ -163,6 +163,7 @@
         myDocuments.style.display = "block";
         $(myDocuments).html("<%= j render 'my_documents' %>");
         $("#current-page").text("My Documents");
+        $("#permissions-note").text("Documents you have uploaded");
         break;
 
       case 'shareddocuments':
@@ -170,6 +171,7 @@
         $(".content").hide();
         sharedDocuments.style.display = "block";
         $("#current-page").text("Shared Documents");
+        $("#permissions-note").text("Your groups have access to shared documents.");
         break;
 
       case 'myannotations':
@@ -177,6 +179,7 @@
         $(".content").hide();
         myAnnotations.style.display = "block";
         $("#current-page").text("My Annotations");
+        $("#permissions-note").text("All of the annotations you wrote");
         break;
 
       case 'sharedannotations':
@@ -184,6 +187,7 @@
         $(".content").hide();
         sharedAnnotations.style.display = "block";
         $("#current-page").text("Shared Annotations");
+        $("#permissions-note").text("Your groups can see shared annotations.");
         break;
 
       case 'mygroups':
@@ -192,6 +196,7 @@
         mygroups.style.display = "block";
         $(mygroups).html("<%= j render 'my_groups' %>");
         $("#current-page").text("My Groups");
+        $("#permissions-note").text("Groups you have created");
         break;
 
       case 'joinedgroups':
@@ -200,6 +205,7 @@
         joinedGroups.style.display = "block";
         $(joinedGroups).html("<%= j render 'joined_groups' %>");
         $("#current-page").text("Joined Groups");
+        $("#permissions-note").text("All the groups you are currently in");
         break;
       
   } //end switch

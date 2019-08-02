@@ -1,6 +1,9 @@
 
 <% unless is_member(params[:id])%>
-<h4> Editing <%= @group.name %> </h4>
+
+<h4> Editing <%= @group.name %>  </h4>
+<%= link_to "All Members", :controller => 'groups', :action => 'edit'%>
+
 
 <div id="wrapper">
 
@@ -8,9 +11,9 @@
 		<%= form_tag({:controller=>'groups', :action => 'edit'}, {:method => 'get'}) do %>
 			<i class="glyphicon glyphicon-search"> </i> <%= text_field_tag :search, params['search'], :style => 'width:55%' %>
 			<%= submit_tag "Search by first name" %>
-		<% end %>
-		<%= link_to "All Members", :controller => 'groups', :action => 'edit'%>
 
+		<% end %>
+		
 
 
 <br>
@@ -74,8 +77,7 @@
 
 </div> <!-- wrapper -->
 
-
-<h2> Members </h2>
+<br>
 <table class="member-table">
 	<tr class="member-table-row">
 		<th> Name </th>

@@ -34,7 +34,7 @@
     <a href= "<%= dashboard_path(nav: 'mygroups')%>" id="groups-mine" style="display:inline">Mine <span class="badge"> <%= @mygroups.size %></span> </a>
     <a href= "<%= dashboard_path(nav: 'joinedgroups')%>" id="groups-joined" style="display:inline">Joined <span class="badge"> <%= current_user.groups.size %></span></a>
     <a onclick="show()" style="display:inline">New</a>
-    <a onclick= "on()" style="display:inline"> Join (Popup) </a>
+    <a onclick= "on()" style="display:inline"> Join</a>
 
   </div>
 
@@ -78,6 +78,7 @@
 </div>
 
 <!-- overlay for join group -->
+<div id="join-background">
 
 <div class="overlay" id="join-form">
 
@@ -95,7 +96,11 @@
 
 </div>
 
-<!-- overlay for join group -->
+</div>
+
+<!-- overlay for create group -->
+
+<div id="create-background">
 
 <div class="overlay" id="new-group-form">
 
@@ -105,15 +110,17 @@
   <div class="form">
     <%= form_for Group.new do |f| %>
       <%= f.label :group, 'Name' %>
-      <%= f.text_field :name %> <br />
+      <%= f.text_field :name %>
 
       <%= f.hidden_field :owner_id, value: current_user.id %>
 
       <%= f.submit 'Submit'%>
 
   <% end %>
-    After choosing a name, you'll be redirected to the edit page where you can manage this group's settings. 
+    <span class="help-block" style="font-size:10px">After choosing a name, you'll be redirected to the edit page where you can manage this group's settings. </span>
   </div>
+
+</div>
 
 </div>
 
@@ -197,10 +204,12 @@ function closeSideMenu(){
 //group join form visibility toggle
 function on(){
   document.getElementById("join-form").style.display = "block";
+  document.getElementById("join-background").style.display = "block";
 }
 
 function off(){
   document.getElementById("join-form").style.display = "none";
+  document.getElementById("join-background").style.display = "none";
 }
 
 //autocomplete for joining groups?
@@ -212,11 +221,15 @@ function off(){
 
 //create group form visibility toggle. 
 function show(){
+  document.getElementById("create-background").style.display = "block";
   document.getElementById("new-group-form").style.display = "block";
+  
 }
 
 function hide(){
+  document.getElementById("create-background").style.display = "none";
   document.getElementById("new-group-form").style.display = "none";
+  
 }
 
 </script>
@@ -289,19 +302,34 @@ var groups=[];
 
 <!-- overlay styling source: https://www.w3schools.com/howto/howto_css_overlay.asp -->
 <style>
-  
-  .overlay{
+
+#join-background, #create-background{
   position: fixed; /* Sit on top of the page content */
   display: none; /* Hidden by default */
-  width: 40%; /* Full width (cover the whole page) */
-  height: 30%; /* Full height (cover the whole page) */
+  width: 100%; /* Full width (cover the whole page) */
+  height: 100%; /* Full height (cover the whole page) */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgb(0,0,0,0.5); /* Black background with opacity */
+  z-index: 1; /* Specify a stack order in case you're using a different order for other elements */
+  cursor: pointer; /* Add a pointer on hover */
+
+}
+  
+  .overlay{
+  position: absolute; 
+  display:none;
+  width: 40%; 
+  height: 30%; 
   top: 200px; 
   left: 25%;
   right: 0;
   bottom: 0;
-  background-color: white; /* Black background with opacity */
+  background-color: white; 
   border: grey 1px solid;
-  z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+  z-index: 2; 
   cursor: pointer; /* Add a pointer on hover */
   }
 
@@ -309,8 +337,7 @@ var groups=[];
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%,-50%);
-  -ms-transform: translate(-50%,-50%);
+  transform: translate(-50%,-30%);
 }
 
 .banner{

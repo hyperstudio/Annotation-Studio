@@ -2,18 +2,26 @@
 
 <% if in_group(params[:id])%>
 
+
+
 <% if @group.ideaSpaceOn %>
 <br>
 <div id="idea-space">
-	<a href="http://annotation-studio-idea-space.herokuapp.com/" > Idea Space </a>
+	<a href="http://annotation-studio-idea-space.herokuapp.com/" id='is-link'> Idea Space </a>
 </div>
 <br>
 
 <% end %>
 
 <% unless is_member(params[:id]) %>
-<%= link_to "Manage Group", :controller=> "groups", :action => "edit", :id => params[:id] %>
+<%= link_to "Manage Group", {:controller=> "groups", :action => "edit", :id => params[:id]}, {:class=> 'btn btn-default'} %>
 <% end %>
+
+<% unless is_owner(params[:id]) %>
+   <%= link_to "Leave", {:controller=> "groups", :action =>"leave", :id => params[:id]}, {:class=> 'btn btn-default', data: {confirm: "Are you sure you want to leave this group?", toggle: 'tooltip', placement: 'top', 
+          original_title: 'Delete'}} %>
+<% end %>
+
 
 
 <h2> Members </h2> 
@@ -34,9 +42,7 @@
 	<% end %>
 	</table>
 
-<% unless is_owner(params[:id]) %>
-   <%= link_to "Leave", :controller=> "groups", :action =>"leave", :id => params[:id] %>
-<% end %>
+
 
 
 
@@ -65,5 +71,19 @@ You do not have permission to view this page.
 	.member-table-row:nth-child(even) {
 	  background-color: #ced4de;
 	}
+
+	#is-link{
+		color:#FCCD03;
+		background-color: black;
+		padding:3px;
+		display:inline-block;
+		margin-right:20px;
+	}
+
+	a:hover{
+		text-decoration: none;
+	}
+
+
 	</style>
 

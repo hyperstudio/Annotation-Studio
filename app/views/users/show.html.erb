@@ -5,44 +5,41 @@
 <%= render "/shared/document_titles" %>
 
 
-
-
-
-
 <nav class="navbar navbar-default navbar-fixed-top hidden-xs" id="lower-navbar">
-      <!--got rid of ashboard/document lower navbar buttons from here-->
-      <div class="dropdown">
-  <button class="dropbtn">Documents <span class="badge" ><%= @sharedDocsCount + current_user.documents.size %></span> </button>
 
-  <div class="dropdown-content">
-    <a href= "<%= dashboard_path(nav: 'mydocuments')%>" id="documents-mine" style="display:inline" >Mine <span class="badge"> <%= current_user.documents.size %></span></a>
-    <a href= "<%= dashboard_path(nav: 'shareddocuments')%>" id="documents-shared" style="display:inline">Shared <span class="badge"> <%= @sharedDocsCount %></span></a>
-    <a href="<%= new_document_path %>" style="display:inline" >New</a>
+ <div class="dropdown">
+    <button class="dropbtn">Documents <span class="badge" ><%= @sharedDocsCount + current_user.documents.size %></span> </button>
+    <center><div class="arrow-up"></div></center>
+    <div class="dropdown-content" style="text-align:left; padding-left: 20%">
+      <a href= "<%= dashboard_path(nav: 'mydocuments')%>" id="documents-mine" style="display:inline" >Mine <span class="badge"> <%= current_user.documents.size %></span></a>
+      <a href= "<%= dashboard_path(nav: 'shareddocuments')%>" id="documents-shared" style="display:inline">Shared <span class="badge"> <%= @sharedDocsCount %></span></a>
+      <a href="<%= new_document_path %>" style="display:inline" >New</a>
+    </div>
+ </div>
+
+  <div class="dropdown">
+    <button class="dropbtn" id="annotation-button">Annotations <span class="badge"></span></button>
+    <center><div class="arrow-up"></div></center>
+    <div class="dropdown-content" style="text-align:center; padding-right:5%;">
+      <a href = "<%= dashboard_path(nav: 'myannotations')%>" id= "annotations-mine" style="display:inline"> Mine <span class="badge"></span></a>
+      <a href = "<%= dashboard_path(nav: 'sharedannotations')%>" id="annotations-shared" style="display:inline">Shared <span class="badge"></span></a>
+    </div>
   </div>
-</div>
 
-<div class="dropdown">
-  <button class="dropbtn" id="annotation-button">Annotations <span class="badge"></span></button>
-  <div class="dropdown-content">
-    <a href = "<%= dashboard_path(nav: 'myannotations')%>" id= "annotations-mine" style="display:inline"> Mine <span class="badge"></span></a>
-    <a href = "<%= dashboard_path(nav: 'sharedannotations')%>" id="annotations-shared" style="display:inline">Shared <span class="badge"></span></a>
 
+  <div class="dropdown">
+      <button class="dropbtn">Groups <span class="badge" ><%= @current_user.groups.size %></span></button>
+      <center><div class="arrow-up"></div></center>
+    <div class="dropdown-content" style="text-align:right; padding-right: 25%;">
+
+      <a href= "<%= dashboard_path(nav: 'mygroups')%>" id="groups-mine" style="display:inline">Mine <span class="badge"> <%= @mygroups.size %></span> </a>
+      <a href= "<%= dashboard_path(nav: 'joinedgroups')%>" id="groups-joined" style="display:inline">Joined <span class="badge"> <%= current_user.groups.size %></span></a>
+      <a href="<%= new_group_path %>" style="display:inline">New</a>
+      <a href = "<%= groups_path %>" onclick="on()" style="display:inline"> Join </a>
+    </div>
   </div>
-
-</div>
-
-
-<div class="dropdown">
-  <button class="dropbtn">Groups <span class="badge" ><%= @current_user.groups.size %></span></button>
-  <div class="dropdown-content" style="background-color: white; width: 100%;">
-
-    <a href= "<%= dashboard_path(nav: 'mygroups')%>" id="groups-mine" style="display:inline">Mine <span class="badge"> <%= @mygroups.size %></span> </a>
-    <a href= "<%= dashboard_path(nav: 'joinedgroups')%>" id="groups-joined" style="display:inline">Joined <span class="badge"> <%= current_user.groups.size %></span></a>
-    <a href="<%= new_group_path %>" style="display:inline">New</a>
-    <a href = "<%= groups_path %>" onclick="on()" style="display:inline"> Join </a>
-
-  </div>
-    </nav>
+  
+</nav> <!--navigation bar stops-->
    
 
 
@@ -52,14 +49,25 @@
   <%= render "side_search_options" %>
 </div>
 
-<div class="titleBar" style=" width:100%">
 
-<h4 id= "current-page"> Shared Documents </h4>
-  <button id="search-tab" class="dropdown" onclick="openSideMenu()" style="background-color: grey;"> <i class="glyphicon glyphicon-option-vertical"></i> 
-</button>
+<!--title part-->
+<div class="titleBar" >
+
+  <div style="width: 50%;float:left;">
+    <h4 id= "current-page"> Shared Documents </h4>
+    <p class="greyText">Your group has access to shared documents.</p>
+  </div>
+
+  <div style="width:50%;float: right; ">
+    <br>
+    <button id="search-tab" class="dropdown" onclick="openSideMenu()" >  <i class="glyphicon glyphicon-option-horizontal" style="margin-left:-20px; margin-right:-110px; margin-top:3px;"> </i>
+    </button>
+  </div>
+
 </div>
 
 
+<div class= "clearFloat" >
 <div class= "content" id="my-docs">
   
 </div><!--  end my-docs -->
@@ -95,6 +103,7 @@
   </div>
 
 </div> -->
+</div><!--clearFloat ends-->
 
 <script type="text/javascript">
 // use href with a url param instead of onclick event. downside: reloads the page. 

@@ -172,12 +172,8 @@
 
 
       <script>  
-       var options = [];
+       var options = <%= raw(current_user.groups.pluck(:name)) %>;
         //need to loop because .pluck gives [&quot;Wellesley&quot;
-        <% @current_user.groups.each do |group| %>
-          options.push("<%= group.name %>");
-
-        <% end %>
         
         // working when upgraded to newest version of bootstrap-tagsinput.js:
         //https://raw.githubusercontent.com/bootstrap-tagsinput/bootstrap-tagsinput/master/dist/bootstrap-tagsinput.js 
@@ -218,6 +214,7 @@
   </div><!-- end row -->
 
       <%= f.submit nil, :class => 'btn btn-default btn btn-default-primary btn-primary' %>
+
       <% if @document.state == "draft" %>
         <%= link_to document_path(@document), method: :delete, class: 'btn btn-default btn btn-danger', data: {confirm: "Are you sure? Delete cannot be undone.", toggle: 'tooltip', placement: 'top', 
           original_title: 'Delete'} do %> Delete
@@ -226,9 +223,6 @@
       
     	<%= link_to 'Cancel', dashboard_path(nav: "mydocuments"), :class => 'btn btn-default' %>
     <% end %>
-
-<!--font awesome 4.7 source: got through email from font awesome website: -->
-<script src="https://use.fontawesome.com/b2213462d3.js"></script>
 
     <script type="text/javascript">
     $(document).ready(function() {

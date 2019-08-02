@@ -1,36 +1,28 @@
 <h1> <%= @group.name %></h1>
 
+<% if in_group(params[:id])%>
+
+
+
 <% if @group.ideaSpaceOn %>
 <br>
 <div id="idea-space">
-	<a href="http://annotation-studio-idea-space.herokuapp.com/" > Idea Space </a>
+	<a href="http://annotation-studio-idea-space.herokuapp.com/" id='is-link'> Idea Space </a>
 </div>
 <br>
 
 <% end %>
 
 <% unless is_member(params[:id]) %>
-<%= link_to "Manage Group", :controller=> "groups", :action => "edit", :id => params[:id] %>
+<%= link_to "Manage Group", {:controller=> "groups", :action => "edit", :id => params[:id]}, {:class=> 'btn btn-default'} %>
+<% end %>
+
+<% unless is_owner(params[:id]) %>
+   <%= link_to "Leave", {:controller=> "groups", :action =>"leave", :id => params[:id]}, {:class=> 'btn btn-default', data: {confirm: "Are you sure you want to leave this group?", toggle: 'tooltip', placement: 'top', 
+          original_title: 'Delete'}} %>
 <% end %>
 
 
-
-<h2> Documents </h2> 
-	<table class="member-table">
-		<tr class="member-table-row">
-			<th> Title </th>
-			<th> Author </th>
-		</tr>
-	<% if !@documents.empty? %>
-	<% @documents.each do |d| %>
-			<tr class="member-table-row"> 
-				<td> <%= link_to d.title, document_path(id: d.id) %></td>
-
-				<td> <%= d.author %> </td> 
-			</tr>
-		<% end %>
-	<% end %>
-	</table>
 
 <h2> Members </h2> 
 	<table class="member-table">
@@ -52,6 +44,15 @@
 
 
 
+
+
+<% else %>
+
+You do not have permission to view this page. 
+
+<% end %>
+
+
 	<style>
 	#idea-space {
 		
@@ -70,5 +71,19 @@
 	.member-table-row:nth-child(even) {
 	  background-color: #ced4de;
 	}
+
+	#is-link{
+		color:#FCCD03;
+		background-color: black;
+		padding:3px;
+		display:inline-block;
+		margin-right:20px;
+	}
+
+	a:hover{
+		text-decoration: none;
+	}
+
+
 	</style>
 

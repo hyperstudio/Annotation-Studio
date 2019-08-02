@@ -1,5 +1,7 @@
 <h1> <%= @group.name %></h1>
 
+<% if in_group(params[:id])%>
+
 <% if @group.ideaSpaceOn %>
 <br>
 <div id="idea-space">
@@ -32,6 +34,17 @@
 	<% end %>
 	</table>
 
+<% unless is_owner(params[:id]) %>
+   <%= link_to "Leave", :controller=> "groups", :action =>"leave", :id => params[:id] %>
+<% end %>
+
+
+
+<% else %>
+
+You do not have permission to view this page. 
+
+<% end %>
 
 
 	<style>

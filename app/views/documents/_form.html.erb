@@ -172,12 +172,8 @@
 
 
       <script>  
-       var options = [];
+       var options = <%= raw(current_user.groups.pluck(:name)) %>;
         //need to loop because .pluck gives [&quot;Wellesley&quot;
-        <% @current_user.groups.each do |group| %>
-          options.push("<%= group.name %>");
-
-        <% end %>
         
         // working when upgraded to newest version of bootstrap-tagsinput.js:
         //https://raw.githubusercontent.com/bootstrap-tagsinput/bootstrap-tagsinput/master/dist/bootstrap-tagsinput.js 

@@ -10,7 +10,7 @@
 
         <div class="tile-content"> 
 
-        <%= 'Author: '+ doc.author + "<br>" if doc.author != "" %> 
+        <%= 'Author: '+ doc.author if doc.author != "" %> <br>
       
        Created: <%= doc.created_at.strftime("%m/%d/%Y") %> <br> 
        

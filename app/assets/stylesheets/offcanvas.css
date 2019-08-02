@@ -24,9 +24,11 @@
 }
 
 #lower-navbar {
-  z-index: 20;
+  z-index: 1000;
   top: 50px;
   border-width: 0 0 1px;
+  padding-top: 17px;
+
 }
 
 .nav-tabs.nav-tabs-xs {

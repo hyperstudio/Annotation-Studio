@@ -33,9 +33,13 @@
       <center><div class="arrow-up"></div></center>
     <div class="dropdown-content" style="text-align:right; padding-right: 25%;">
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 >>>>>>> a5d4da1be8126322bdbc73ee9be98b76a7cab268
+=======
+
+>>>>>>> a557d0ff77f3898ce601bde3ca5de70713f837c5
 
       <a href= "<%= dashboard_path(nav: 'mygroups')%>" id="groups-mine" style="display:inline">Mine <span class="badge"> <%= @mygroups.size %></span> </a>
       <a href= "<%= dashboard_path(nav: 'joinedgroups')%>" id="groups-joined" style="display:inline">Joined <span class="badge"> <%= current_user.groups.size %></span></a>
@@ -106,6 +110,7 @@
 
   <div class="banner"> <i class="glyphicon glyphicon-remove close" onclick="off()"></i>
      Join Group by entering name (case sensitive)</div>
+
   
   <div class="form">
     <%= form_tag({:controller=>'groups', :action => 'join_via_name'}) do %>
@@ -118,6 +123,7 @@
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 </div> 
 </div>
 =======
@@ -125,8 +131,49 @@
 </div><!--clearFloat ends-->
 
 >>>>>>> a5d4da1be8126322bdbc73ee9be98b76a7cab268
+=======
+</div> 
+</div>
+>>>>>>> a557d0ff77f3898ce601bde3ca5de70713f837c5
 
 </div> <!--clearFloat ends-->
+
+
+
+<!-- overlay for create group -->
+
+<div id="create-background">
+
+<div class="overlay" id="new-group-form">
+
+  <div class="banner"> <i class="glyphicon glyphicon-remove close" onclick="hide()"></i>
+     Create a New Group</div>
+  
+  <div class="form">
+    <%= form_for Group.new do |f| %>
+      <%= f.label :group, 'Name' %>
+      <%= f.text_field :name %>
+
+      <%= f.hidden_field :owner_id, value: current_user.id %>
+
+      <%= f.submit 'Submit'%>
+
+  <% end %>
+    <span class="help-block" style="font-size:10px">After choosing a name, you'll be redirected to the edit page where you can manage this group's settings. </span>
+  </div>
+
+
+</div>
+
+</div>
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+=======
+>>>>>>> a5d4da1be8126322bdbc73ee9be98b76a7cab268
+=======
+
+=======
 
 
 
@@ -155,10 +202,7 @@
 </div>
 
 </div>
-<<<<<<< HEAD
-
-=======
->>>>>>> a5d4da1be8126322bdbc73ee9be98b76a7cab268
+>>>>>>> a557d0ff77f3898ce601bde3ca5de70713f837c5
 
 <script type="text/javascript">
    //a lot of repetition rn...clean up

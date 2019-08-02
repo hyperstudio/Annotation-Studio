@@ -109,10 +109,11 @@
 	//group sort/filter ajax
 	function groupSort(obj){
 		var selected = obj.value;
+		var page = "<%= params[:nav]%>"
 		$.ajax({
 		    url: "/dashboard",
 		    type: "GET",
-		    data: {filter: selected},
+		    data: {filter: selected, location: page},
 		    dataType: 'script'
 		}); //end ajax
 	}

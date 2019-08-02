@@ -1,6 +1,12 @@
 //ajax response
+var mode = "<%= @mode %>"
+if (mode == "mygroups"){
 	$(document.getElementById("my-groups")).html("<%= j render 'my_groups' %>");
+}else{
 	$(document.getElementById("joined-groups")).html("<%= j render 'joined_groups' %>");
+}
+	
+	
 
 	
 	

@@ -126,7 +126,6 @@
 <%= link_to 'Cancel', documents_url, :class => 'btn btn-default' %>
 <% end %>
 
-<script src="summernote-cleaner.js"></script>
 <script type="text/javascript">
   $(document).ready(function() {
 
@@ -146,7 +145,7 @@
         limitChars: false, // 0/false|# 0/false disables option
         limitDisplay: 'text', // text|html|both
         limitStop: false, // true/false
-        icon: '<i class="note-icon"><span class="glyphicon glyphicon-pencil"></span></i>'
+        icon: '<i class="note-icon"><span class="fa fa-compress"></span></i>'
         }
       });
       $('.chapter-area').summernote({
@@ -165,7 +164,7 @@
           limitChars: false, // 0/false|# 0/false disables option
           limitDisplay: 'both', // text|html|both
           limitStop: false, // true/false
-          icon: '<i class="note-icon"><span class="glyphicon glyphicon-pencil"></span></i>'          }
+          icon: '<i class="note-icon"><span class="fa fa-compress"></span></i>'          }
         });
       $('#chapter-editor').hide();
       $('#chapter-label').click(function(){

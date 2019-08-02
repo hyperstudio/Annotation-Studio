@@ -27,33 +27,19 @@
   </div>
 
 
-<<<<<<< HEAD
+
   <div class="dropdown">
       <button class="dropbtn">Groups <span class="badge" ><%= @current_user.groups.size %></span></button>
       <center><div class="arrow-up"></div></center>
     <div class="dropdown-content" style="text-align:right; padding-right: 25%;">
-=======
-  </div>
-
-</div>
-
-
-<div class="dropdown">
-  <button class="dropbtn">Groups <span class="badge" style="display:inline-block"><%= @current_user.groups.size %></span></button>
-  <div class="dropdown-content">
-
-    <a href= "<%= dashboard_path(nav: 'mygroups')%>" id="groups-mine" style="display:inline">Mine <span class="badge"> <%= @mygroups.size %></span> </a>
-    <a href= "<%= dashboard_path(nav: 'joinedgroups')%>" id="groups-joined" style="display:inline">Joined <span class="badge"> <%= current_user.groups.size %></span></a>
-    <a onclick="show()" style="display:inline">New</a>
-    <a onclick= "on()" style="display:inline"> Join</a>
->>>>>>> pw-new-dashboard
 
       <a href= "<%= dashboard_path(nav: 'mygroups')%>" id="groups-mine" style="display:inline">Mine <span class="badge"> <%= @mygroups.size %></span> </a>
       <a href= "<%= dashboard_path(nav: 'joinedgroups')%>" id="groups-joined" style="display:inline">Joined <span class="badge"> <%= current_user.groups.size %></span></a>
-      <a href="<%= new_group_path %>" style="display:inline">New</a>
-      <a href = "<%= groups_path %>" onclick="on()" style="display:inline"> Join </a>
-    </div>
-  </div>
+      <a onclick="show()" style="display:inline">New</a>
+      <a onclick= "on()" style="display:inline"> Join</a>
+  </div> <!-- dropdown-content -->
+
+</div>
   
 </nav> <!--navigation bar stops-->
    
@@ -124,15 +110,15 @@
       <%= submit_tag 'Join'%>
     <% end %>
 
-  </div>
+  </div> <!-- end form -->
 
-<<<<<<< HEAD
-</div> -->
-</div><!--clearFloat ends-->
-=======
+
+</div> 
 </div>
 
-</div>
+</div> <!--clearFloat ends-->
+
+
 
 <!-- overlay for create group -->
 
@@ -159,7 +145,7 @@
 </div>
 
 </div>
->>>>>>> pw-new-dashboard
+
 
 <script type="text/javascript">
    //a lot of repetition rn...clean up

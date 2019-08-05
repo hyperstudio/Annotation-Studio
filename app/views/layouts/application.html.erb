@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="utf-8">
     <title><%= ENV["PAGE_TITLE"] %> :: <%= yield(:page_title) %></title>
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
@@ -45,22 +46,11 @@
         <%= render "#{params[:controller]}/rightnav" %>
       <% end %>
     </nav>
+<% end %>
 
-    <nav class="navbar navbar-default navbar-fixed-top hidden-xs" id="lower-navbar">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-8">
-            <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-recalc="false" data-target="#mainmenu" id="leftburger" title="Navigation"><i class="fa fa-bars"></i></button>
-            <%= render "shared/breadcrumbs" %>
-          </div>
-          <div class="col-md-4">
-            <%= render "shared/annotation_header" %>
-            <button type="button" class="navbar-toggle pull-right" data-toggle="offcanvas" data-recalc="false" data-target="#toolsmenu" id="rightburger" title="Tools"><i class="fa fa-gears"></i></button>
-          </div>
-        </div>
-      </div>
-    </nav>
-    <% end %>
+
+
+
 
 	<% if params[:controller] == 'devise/sessions' %>
 	<div class="home-image">

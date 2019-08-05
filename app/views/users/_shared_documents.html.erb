@@ -13,9 +13,11 @@
 
         <%= 'Author: '+ doc.author if doc.author != "" %> <br> 
       
-       Created: <%= doc.created_at.strftime("%m/%d/%Y") %> <br> 
+       <% if doc.publication_date && doc.publication_date != "" %>
+        Date: <%= doc.publication_date %> <br> 
+      <% end %>
        
-       Groups: <%= doc.groups.pluck(:name) %> <br>
+       Groups: <%= doc.groups.pluck(:name).join(", ") %> <br>
 
        Status: 
        <span id="status-icon"> 
@@ -36,16 +38,6 @@
      </div> <!-- tile-content-->
     </div> <!-- end column -->
 
-    <!-- 'notifications' -->
-    <% if doc.updated_at > current_user.last_sign_in_at && 
-    doc.updated_at < current_user.current_sign_in_at &&
-    doc.user_id != current_user.id %>
-        <script> 
-            console.log("new doc");
-            $("#documents-shared").find(".badge").css("background-color", "#6caef5");
-         </script>
-
-    <% end %> <!-- end if -->
   <% end %> <!-- end doc loop -->
 
   </div>  <!-- end row -->

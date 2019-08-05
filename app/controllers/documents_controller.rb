@@ -127,6 +127,10 @@ class DocumentsController < ApplicationController
     @document = Document.new(documents_params)
     @document.user = current_user
 
+    if params["type"]
+      @document.update_attribute(:resource_type, params["type"])
+    end
+
   
   #attach document to groups
     @groups = params["groups"] if params["groups"]
@@ -146,6 +150,7 @@ class DocumentsController < ApplicationController
           Delayed::Job.enqueue DocumentProcessor.new(@document.id, @document.state, Apartment::Tenant.current)
           @document.pending!
         end
+
         format.html { redirect_to dashboard_path(nav: "mydocuments"), notice: 'Document was successfully created.', anchor: 'created'}
         format.json { render json: @document, status: :created, location: @document }
       else
@@ -291,7 +296,7 @@ private
     params.require(:document).permit(:title, :state, :chapters, :text, :snapshot, :user_id, :rep_privacy_list,
                                      :rep_group_list, :new_group, :author, :edition, :publisher,
                                      :publication_date, :source, :rights_status, :upload, :survey_link, :location, 
-                                     :page_numbers, :series, :journal_title, :notes, groups: :group_id)
+                                     :page_numbers, :series, :journal_title, :notes, :resource_type, groups: :group_id)
   end
 end
 

@@ -11,10 +11,12 @@
         <div class="tile-content"> 
 
         <%= 'Author: '+ doc.author if doc.author != "" %> <br>
-      
-       Created: <%= doc.created_at.strftime("%m/%d/%Y") %> <br> 
+
+      <% if doc.publication_date && doc.publication_date != "" %>
+        Date: <%= doc.publication_date %> <br> 
+      <% end %>
        
-       Groups: <%= doc.groups.pluck(:name) %> <br>
+       Groups: <%= doc.groups.pluck(:name).join(", ") %> <br>
 
        Status: 
        <span id="status-icon"> 

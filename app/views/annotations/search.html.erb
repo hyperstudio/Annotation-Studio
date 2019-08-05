@@ -25,27 +25,39 @@ var groups=[];
   groups.push("<%=g.name %>");
 <% end %>
 
-var query;
+var query = [];
 
+//for loop handles users with conflicting first names
 <% if @method == 'user' %>
 
-	<% if User.find_by(firstname: params['search']).nil? %>
-		query = "nothing here";
-	<% else %>
-		query = "<%= User.find_by(firstname: params['search']).email %>"
-	<% end %>
+	<% if !User.where(firstname: params['search']).blank? %>
+		<% users = User.where(firstname: params['search']) %>;
 
-	 var searchLoadOptions = {
+		//only show results if user shares common group with current_user
+		<% users.each do |u| %>
+			<% if (u.groups & current_user.groups).size > 0 %>
+				query.push("<%= u.email %>");
+			<% end #end if %> 
+		<% end #end do %>
+	<% end #end if%>
+
+	var i;
+	for (i =0; i < query.length; i++){
+		var searchLoadOptions = {
 	    'limit': 100,
 	    'groups': "<%= current_user.rep_group_list %>".split(/, /),
 	    'subgroups': "<%= current_user.rep_subgroup_list %>".split(/, /),
 	    'host': location.host,
-	    'user': query,
+	    'user': query[i],
 	    'mode': 'user',
 	    //local API: 'mode': 'userSearch'
 	    'context': 'dashboard',
 	  };
 
+	  widget.listAnnotations('annotations-search-results', searchLoadOptions, endpoint, token);
+	} //end for
+
+	 
 <% else %>
 	query = ["<%= params['search'] %>"]
 	var searchLoadOptions = {
@@ -57,14 +69,12 @@ var query;
 	    'mode': 'class',
 	    'context': 'dashboard',
 	  };
+	 widget.listAnnotations('annotations-search-results', searchLoadOptions, endpoint, token);
 
 
-<% end #end @method %>
+<% end #end if @method %>
 
-	widget.listAnnotations('annotations-search-results', searchLoadOptions, endpoint, token);
-
-
-  if (query == "nothing here"){
+  if (query.length == 0){
 		$(".error").text("No Results Found");
 	}
 });
@@ -100,22 +110,3 @@ var query;
   </span> 
 </span>
 </script>
-
-
-<style>
-	
-.row{
-  display:flex;
-  flex-wrap: wrap;
-}
-
-.column{
-  background-color: white;
-  float: left;
-  width: 15%;
-  height: 200px;
-  padding:5px;
-  margin:10px 2% 0;
-}
-
-</style>

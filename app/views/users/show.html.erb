@@ -27,33 +27,26 @@
   </div>
 
 
-<<<<<<< HEAD
+
+
+
   <div class="dropdown">
       <button class="dropbtn">Groups <span class="badge" ><%= @current_user.groups.size %></span></button>
       <center><div class="arrow-up"></div></center>
     <div class="dropdown-content" style="text-align:right; padding-right: 25%;">
-=======
-  </div>
 
-</div>
+  
 
 
-<div class="dropdown">
-  <button class="dropbtn">Groups <span class="badge" style="display:inline-block"><%= @current_user.groups.size %></span></button>
-  <div class="dropdown-content">
 
-    <a href= "<%= dashboard_path(nav: 'mygroups')%>" id="groups-mine" style="display:inline">Mine <span class="badge"> <%= @mygroups.size %></span> </a>
-    <a href= "<%= dashboard_path(nav: 'joinedgroups')%>" id="groups-joined" style="display:inline">Joined <span class="badge"> <%= current_user.groups.size %></span></a>
-    <a onclick="show()" style="display:inline">New</a>
-    <a onclick= "on()" style="display:inline"> Join</a>
->>>>>>> peggy/pw-new-dashboard
 
       <a href= "<%= dashboard_path(nav: 'mygroups')%>" id="groups-mine" style="display:inline">Mine <span class="badge"> <%= @mygroups.size %></span> </a>
       <a href= "<%= dashboard_path(nav: 'joinedgroups')%>" id="groups-joined" style="display:inline">Joined <span class="badge"> <%= current_user.groups.size %></span></a>
-      <a href="<%= new_group_path %>" style="display:inline">New</a>
-      <a href = "<%= groups_path %>" onclick="on()" style="display:inline"> Join </a>
-    </div>
-  </div>
+      <a onclick="show()" style="display:inline">New</a>
+      <a onclick= "on()" style="display:inline"> Join</a>
+  </div> <!-- dropdown-content -->
+
+</div>
   
 </nav> <!--navigation bar stops-->
    
@@ -116,6 +109,8 @@
 
   <div class="banner"> <i class="glyphicon glyphicon-remove close" onclick="off()"></i>
      Join Group by entering name (case sensitive)</div>
+
+
   
   <div class="form">
     <%= form_tag({:controller=>'groups', :action => 'join_via_name'}) do %>
@@ -124,12 +119,45 @@
       <%= submit_tag 'Join'%>
     <% end %>
 
+  </div> <!-- end form -->
+
+
+</div> 
+</div>
+
+</div> <!--clearFloat ends-->
+
+
+
+
+
+
+<!-- overlay for create group -->
+
+<div id="create-background">
+
+<div class="overlay" id="new-group-form">
+
+  <div class="banner"> <i class="glyphicon glyphicon-remove close" onclick="hide()"></i>
+     Create a New Group</div>
+  
+  <div class="form">
+    <%= form_for Group.new do |f| %>
+      <%= f.label :group, 'Name' %>
+      <%= f.text_field :name %>
+
+      <%= f.hidden_field :owner_id, value: current_user.id %>
+
+
+      <%= f.submit 'Submit'%>
+
+  <% end %>
+    <span class="help-block" style="font-size:10px">After choosing a name, you'll be redirected to the edit page where you can manage this group's settings. </span>
   </div>
 
-<<<<<<< HEAD
-</div> -->
+
 </div><!--clearFloat ends-->
-=======
+
 </div>
 
 </div>
@@ -159,7 +187,11 @@
 </div>
 
 </div>
->>>>>>> peggy/pw-new-dashboard
+
+</div>
+
+</div>
+
 
 <script type="text/javascript">
    //a lot of repetition rn...clean up

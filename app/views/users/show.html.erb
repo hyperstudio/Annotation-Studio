@@ -58,7 +58,7 @@
 
   <div style="width: 50%;float:left;">
     <h4 id= "current-page"> Shared Documents </h4>
-    <p class="greyText">Your group has access to shared documents.</p>
+    <p class="greyText" id="current-description">Your group has access to shared documents.</p>
   </div>
 
   <div style="width:50%;float: right; ">
@@ -149,7 +149,7 @@
 
 </div>
 
-=======
+
 
 
 
@@ -192,6 +192,7 @@
         myDocuments.style.display = "block";
         $(myDocuments).html("<%= j render 'my_documents' %>");
         $("#current-page").text("My Documents");
+        $("#current-description").text("You can manage your documents.")
         break;
 
       case 'shareddocuments':
@@ -199,6 +200,7 @@
         $(".content").hide();
         sharedDocuments.style.display = "block";
         $("#current-page").text("Shared Documents");
+        $("#current-description").text("Your group has access to shared documents")
         break;
 
       case 'myannotations':
@@ -206,6 +208,7 @@
         $(".content").hide();
         myAnnotations.style.display = "block";
         $("#current-page").text("My Annotations");
+        $("#current-description").text("You can manage your annotations.")
         break;
 
       case 'sharedannotations':
@@ -213,6 +216,7 @@
         $(".content").hide();
         sharedAnnotations.style.display = "block";
         $("#current-page").text("Shared Annotations");
+        $("#current-description").text("Your group can view shared annotations.")
         break;
 
       case 'mygroups':
@@ -221,6 +225,7 @@
         mygroups.style.display = "block";
         $(mygroups).html("<%= j render 'my_groups' %>");
         $("#current-page").text("My Groups");
+        $("#current-description").text("You can manage your groups.")
         break;
 
       case 'joinedgroups':
@@ -229,6 +234,7 @@
         joinedGroups.style.display = "block";
         $(joinedGroups).html("<%= j render 'joined_groups' %>");
         $("#current-page").text("Joined Groups");
+        $("#current-description").text("You can see your status in joined groups.")
         break;
       
   } //end switch
@@ -236,9 +242,6 @@
   <% end #end if %>
 
   
-$("#documents-shared").click(function(event){
-    $(".badge").css("background-color", "#777");
-})
 
 
 //sidebar visibility toggle

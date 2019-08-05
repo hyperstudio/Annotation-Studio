@@ -1,7 +1,8 @@
     <%= form_for (@document), :html => { :role => 'form', class: "confirm-changes" } do |f| %>
     <%= render 'document_content', f: f %>
 
-          <h4>Metadata</h4>  
+          <h4>Metadata</h4> 
+
           <% if create %>
             <div class="form-group">
               <%= label_tag "Type of Resource" %>
@@ -13,6 +14,7 @@
             </div>
 
           <% end %>
+
 
           <div class="row">
             <div class="col-md-6">
@@ -47,6 +49,7 @@
         <div class="col-md-6">
           <div class="form-group">
               <%= f.label :publication_date %>
+              <p class="help-block"> Put 'unknown' if not known.  </p>
               <%= f.text_field :publication_date, :class => 'form-control' %>
           </div>
 
@@ -391,6 +394,6 @@
 
 
   <script>
-    //toggle metadata fields onload.
+    //toggle metadata fields onload. Ensures that the correct fields show up for EDIT
     window.onload(change("blah"));
   </script>

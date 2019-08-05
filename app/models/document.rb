@@ -47,6 +47,9 @@ application/pdf
   has_attached_file :upload
   validates_attachment_content_type :upload, content_type: ALLOWED_CONTENT_TYPES
 
+  #mandatory metadata fields NOT WORKING!!! -> NEED TO CHANGE DB?
+  # validates :title, presence: true
+
   scope :publicly, -> { where(:state => 'public').order("id desc") }
   scope :active, -> { where("state != ?", 'deleted').order("id desc") }
 

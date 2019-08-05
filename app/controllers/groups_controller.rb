@@ -41,7 +41,7 @@ class GroupsController < ApplicationController
 			flash[:alert] = "New Group Created!"
 			redirect_to edit_group_path(id: @group.id)
 		else
-			flash[:alert] = "Error creating group. Group name taken. "
+			flash[:alert] = "Error in creating group. (Name Taken)"
 			redirect_to request.referrer
 		end
 	end

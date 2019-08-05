@@ -108,7 +108,7 @@
 						<% end%>
 
 						<% if m.role == "manager" %>
-							<span class= "action demote"> <%= link_to "Demote to Member", :controller => "groups", 
+							<span class= "action demote"> <%= link_to "Make Member", :controller => "groups", 
 							:action => "demote", :m_id => m.id %>  </span>
 						<% end %>
 							

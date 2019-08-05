@@ -154,7 +154,7 @@ class DocumentsController < ApplicationController
         format.html { redirect_to dashboard_path(nav: "mydocuments"), notice: 'Document was successfully created.', anchor: 'created'}
         format.json { render json: @document, status: :created, location: @document }
       else
-        # flash[:alert] = @document.errors.full_messages.join(", ")
+         flash[:alert] = @document.errors.full_messages.join(", ")
         # format.html { redirect_to request.referrer }
 
         #render action: :new keeps on creating new documents, even with the validation. 

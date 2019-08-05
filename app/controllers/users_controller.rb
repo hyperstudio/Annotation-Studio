@@ -42,8 +42,6 @@ class UsersController < ApplicationController
     #END AUTOCOMPLETE STUFF
 
       @sharedDocsCount = docs.size
-      @sharedDocs = docs.paginate(:page => whitelisted[:page], :per_page => per_page).order('created_at DESC')
-      @myDocs = current_user.documents.paginate(:page => whitelisted[:page], :per_page => per_page).order('created_at DESC')
 
   #BEGIN AJAX STUFF 
 
@@ -51,19 +49,48 @@ class UsersController < ApplicationController
     #docList = docList.sort_by &:created_at #sort by created_at ascending....
 
     #GROUP FILTERING AJAX STUFF
-    @mode = params[:location]
+    @groupMode = params[:gPage]
 
     owned = current_user.groups.where(owner_id: current_user.id).paginate(:page => whitelisted[:page], :per_page => per_page)
-    gPage = current_user.groups.paginate(:page => whitelisted[:page], :per_page => per_page)
+    joined = current_user.groups.paginate(:page => whitelisted[:page], :per_page => per_page)
 
     filter = params[:filter]
     if filter == "timeASC"
-      @joinedGroups = gPage.order('created_at ASC')
+      @joinedGroups = joined.order('created_at ASC')
       @mygroups = owned.order('created_at ASC') 
     else
-      @joinedGroups = gPage.order('created_at DESC')
+      @joinedGroups = joined.order('created_at DESC')
       @mygroups = owned.order('created_at DESC') 
     end
+
+    #DOCUMENTS AJAX
+    @docMode = params[:dPage]
+    shared = docs.paginate(:page => whitelisted[:page], :per_page => per_page)
+    mine = current_user.documents.paginate(:page => whitelisted[:page], :per_page => per_page)
+
+    case params[:dFilter]
+      when "timeASC"
+        @sharedDocs = shared.order('created_at ASC')
+        @myDocs = mine.order('created_at ASC')
+
+      when "A-Z"
+        @sharedDocs = shared.order('title ASC')
+        @myDocs = mine.order('title ASC')
+
+      when "Z-A"
+        @sharedDocs = shared.order('title DESC')
+        @myDocs = mine.order('title DESC')
+
+      else #"timeDESC" is default
+        @sharedDocs = shared.order('created_at DESC')
+        @myDocs = mine.order('created_at DESC')
+
+    end #case
+
+
+#toggle ajax option for show.js.erb
+    @ajaxOption = params[:dFilter] ? "document" : "group"
+
 
 
   #END AJAX STUFF

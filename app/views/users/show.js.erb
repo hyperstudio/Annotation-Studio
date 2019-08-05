@@ -1,10 +1,29 @@
 //ajax response
-var mode = "<%= @mode %>"
-if (mode == "mygroups"){
-	$(document.getElementById("my-groups")).html("<%= j render 'my_groups' %>");
-}else{
-	$(document.getElementById("joined-groups")).html("<%= j render 'joined_groups' %>");
-}
+
+var option = "<%= @ajaxOption %>";
+
+if(option == "group"){
+	var mode = "<%= @groupMode %>";
+	if (mode == "mygroups"){
+		$(document.getElementById("my-groups")).html("<%= j render 'my_groups' %>");
+	} else{
+		$(document.getElementById("joined-groups")).html("<%= j render 'joined_groups' %>");
+	} //end else
+} //end if option
+
+else{
+	var mode = "<%= @docMode %>";
+	alert(mode);
+	if (mode == "mydocuments"){
+		$(document.getElementById("my-docs")).html("<%= j render 'my_documents' %>");
+	} else{
+		$(document.getElementById("shared-docs")).html("<%= j render 'shared_documents' %>");
+	} //end else
+	
+} // end else
+
+
+
 	
 	
 

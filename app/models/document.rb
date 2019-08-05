@@ -47,8 +47,9 @@ application/pdf
   has_attached_file :upload
   validates_attachment_content_type :upload, content_type: ALLOWED_CONTENT_TYPES
 
-  #mandatory metadata fields NOT WORKING!!! -> NEED TO CHANGE DB?
-  # validates :title, presence: true
+  # #make title mandatory.
+  # validates_presence_of :title --> not working?? document is still being created. problem possibly with
+  #respond to do: format html
 
   scope :publicly, -> { where(:state => 'public').order("id desc") }
   scope :active, -> { where("state != ?", 'deleted').order("id desc") }

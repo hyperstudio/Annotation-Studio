@@ -46,7 +46,12 @@ var plugin_options = function() {
         "groups": groups,
         "subgroups": subgroups
       },
-      loadFromSearch: annotation_studio.loadOptions({ mode: default_state[0], limit: 100 })
+      // loadFromSearch: annotation_studio.loadOptions({ mode: default_state[0], limit: 100 })
+
+      //default_state is nil for all current documents so set to empty string by var @ line 5
+      // changed code for now to get mode=user as default. 
+      loadFromSearch: annotation_studio.loadOptions({limit: 100 })
+
     },
     Markdown: false, // use RichText instead
     AnnotateItPermissions: false, // this is built into the kitchen sink, so cancel it

@@ -28,16 +28,10 @@
 
 
 
-
-
   <div class="dropdown">
       <button class="dropbtn">Groups <span class="badge" ><%= @current_user.groups.size %></span></button>
       <center><div class="arrow-up"></div></center>
     <div class="dropdown-content" style="text-align:right; padding-right: 25%;">
-
-  
-
-
 
 
       <a href= "<%= dashboard_path(nav: 'mygroups')%>" id="groups-mine" style="display:inline">Mine <span class="badge"> <%= @mygroups.size %></span> </a>
@@ -64,7 +58,7 @@
 
   <div style="width: 50%;float:left;">
     <h4 id= "current-page"> Shared Documents </h4>
-    <p class="greyText">Your group has access to shared documents.</p>
+    <p class="greyText" id="current-description">Your group has access to shared documents.</p>
   </div>
 
   <div style="width:50%;float: right; ">
@@ -110,7 +104,6 @@
   <div class="banner"> <i class="glyphicon glyphicon-remove close" onclick="off()"></i>
      Join Group by entering name (case sensitive)</div>
 
-
   
   <div class="form">
     <%= form_tag({:controller=>'groups', :action => 'join_via_name'}) do %>
@@ -129,39 +122,6 @@
 
 
 
-
-
-
-<!-- overlay for create group -->
-
-<div id="create-background">
-
-<div class="overlay" id="new-group-form">
-
-  <div class="banner"> <i class="glyphicon glyphicon-remove close" onclick="hide()"></i>
-     Create a New Group</div>
-  
-  <div class="form">
-    <%= form_for Group.new do |f| %>
-      <%= f.label :group, 'Name' %>
-      <%= f.text_field :name %>
-
-      <%= f.hidden_field :owner_id, value: current_user.id %>
-
-
-      <%= f.submit 'Submit'%>
-
-  <% end %>
-    <span class="help-block" style="font-size:10px">After choosing a name, you'll be redirected to the edit page where you can manage this group's settings. </span>
-  </div>
-
-
-</div><!--clearFloat ends-->
-
-</div>
-
-</div>
-
 <!-- overlay for create group -->
 
 <div id="create-background">
@@ -184,14 +144,40 @@
     <span class="help-block" style="font-size:10px">After choosing a name, you'll be redirected to the edit page where you can manage this group's settings. </span>
   </div>
 
-</div>
 
 </div>
 
 </div>
 
+
+
+
+
+<!-- overlay for create group -->
+
+<div id="create-background">
+
+<div class="overlay" id="new-group-form">
+
+  <div class="banner"> <i class="glyphicon glyphicon-remove close" onclick="hide()"></i>
+     Create a New Group</div>
+  
+  <div class="form">
+    <%= form_for Group.new do |f| %>
+      <%= f.label :group, 'Name' %>
+      <%= f.text_field :name %>
+
+      <%= f.hidden_field :owner_id, value: current_user.id %>
+
+      <%= f.submit 'Submit'%>
+
+  <% end %>
+    <span class="help-block" style="font-size:10px">After choosing a name, you'll be redirected to the edit page where you can manage this group's settings. </span>
+  </div>
+
 </div>
 
+</div>
 
 <script type="text/javascript">
    //a lot of repetition rn...clean up
@@ -206,6 +192,7 @@
         myDocuments.style.display = "block";
         $(myDocuments).html("<%= j render 'my_documents' %>");
         $("#current-page").text("My Documents");
+        $("#current-description").text("You can manage your documents.")
         break;
 
       case 'shareddocuments':
@@ -213,6 +200,7 @@
         $(".content").hide();
         sharedDocuments.style.display = "block";
         $("#current-page").text("Shared Documents");
+        $("#current-description").text("Your group has access to shared documents")
         break;
 
       case 'myannotations':
@@ -220,6 +208,7 @@
         $(".content").hide();
         myAnnotations.style.display = "block";
         $("#current-page").text("My Annotations");
+        $("#current-description").text("You can manage your annotations.")
         break;
 
       case 'sharedannotations':
@@ -227,6 +216,7 @@
         $(".content").hide();
         sharedAnnotations.style.display = "block";
         $("#current-page").text("Shared Annotations");
+        $("#current-description").text("Your group can view shared annotations.")
         break;
 
       case 'mygroups':
@@ -235,6 +225,7 @@
         mygroups.style.display = "block";
         $(mygroups).html("<%= j render 'my_groups' %>");
         $("#current-page").text("My Groups");
+        $("#current-description").text("You can manage your groups.")
         break;
 
       case 'joinedgroups':
@@ -243,6 +234,7 @@
         joinedGroups.style.display = "block";
         $(joinedGroups).html("<%= j render 'joined_groups' %>");
         $("#current-page").text("Joined Groups");
+        $("#current-description").text("You can see your status in joined groups.")
         break;
       
   } //end switch
@@ -250,9 +242,6 @@
   <% end #end if %>
 
   
-$("#documents-shared").click(function(event){
-    $(".badge").css("background-color", "#777");
-})
 
 
 //sidebar visibility toggle

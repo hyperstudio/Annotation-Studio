@@ -6,17 +6,20 @@
     <div class= "column"> 
        
        <span class="title"><%= link_to doc.title, document_path(id: doc.id) %> </span>
-       <br>
-       <br>
+       <div class="h_line"></div>
 
         <div class="tile-content"> 
 
-        <%= 'Author: '+ doc.author if doc.author != "" %> <br> 
+          <% if doc.author != "" %>
+        Author: <%= doc.author  %> <br>
+        <%end%>
+
       
-       Created: <%= doc.created_at.strftime("%m/%d/%Y") %> <br> 
+           <% if doc.publication_date && doc.publication_date != "" %>
+        Date: <%= doc.publication_date %> <br> 
+      <% end %>
        
-       
-       <% if !doc.groups.empty? %> 
+             <% if !doc.groups.empty? %> 
        Groups: <%= doc.groups.pluck(:name).join(", ") %> <br>
        <% end %>
 

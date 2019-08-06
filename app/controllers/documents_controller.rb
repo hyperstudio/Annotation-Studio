@@ -10,10 +10,7 @@ class DocumentsController < ApplicationController
   # GET /documents.json
   def index #search results
 
-    #get all the user's groups' documents w/o repetition
-      joined = current_user.groups.pluck(:id)
-      docID = DocumentsGroup.where(group_id: joined).pluck(:document_id).uniq
-      shared = Document.where(id: docID).where.not(state: "draft")
+      shared = helpers.getSharedDocs() #see application_helper.rb
       mine = current_user.documents
 
       #this might cause problems when shared docs get REALLY BIG...

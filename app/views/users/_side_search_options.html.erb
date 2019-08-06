@@ -80,38 +80,34 @@
 	<%= submit_tag "Search" %>
 
 	<h4> Sort </h4>
-	<%= form_tag documents_path, :method => 'get', :data => {remote: true} do %>
+		<%= form_tag documents_path, :method => 'get', :data => {remote: true} do %>
 
-		<table class="search-options">
-			<tr>
-				<td><%= radio_button_tag 'filter', 'timeDESC', true, onchange: "docSort(this)", class: 'radio' %></td>
-				<td> <%= label_tag :title, 'Newest first' %> </td>
-			</tr>
+			<table class="search-options">
+				<tr>
+					<td><%= radio_button_tag 'filter', 'timeDESC', true, onchange: "docSort(this)", class: 'radio' %></td>
+					<td> <%= label_tag :title, 'Newest first' %> </td>
+				</tr>
 
-			<tr>
-				<td> <%= radio_button_tag 'filter', 'timeASC', nil, onchange: "docSort(this)", class: 'radio'%> </td>
-				<td> <%= label_tag :title, 'Oldest first' %> </td>
-			</tr>
-			<tr>
-				<td> <%= radio_button_tag 'filter', 'A-Z', nil, onchange: "docSort(this)", class: 'radio'%> </td>
-				<td> <%= label_tag :title, 'A-Z' %> </td>
-			</tr>
-			<tr>
-				<td> <%= radio_button_tag 'filter', 'Z-A', nil, onchange: "docSort(this)", class: 'radio'%> </td>
-				<td> <%= label_tag :title, 'Z-A' %> </td>
-			</tr>
+				<tr>
+					<td> <%= radio_button_tag 'filter', 'timeASC', nil, onchange: "docSort(this)", class: 'radio'%> </td>
+					<td> <%= label_tag :title, 'Oldest first' %> </td>
+				</tr>
+				<tr>
+					<td> <%= radio_button_tag 'filter', 'A-Z', nil, onchange: "docSort(this)", class: 'radio'%> </td>
+					<td> <%= label_tag :title, 'A-Z' %> </td>
+				</tr>
+				<tr>
+					<td> <%= radio_button_tag 'filter', 'Z-A', nil, onchange: "docSort(this)", class: 'radio'%> </td>
+					<td> <%= label_tag :title, 'Z-A' %> </td>
+				</tr>
 
-		</table>
+			</table>
 
-	<% end %>
-
-
-
-
-<% end #form_tag %>
-
+		<% end #sort form_tag%>
+	<% end #form_tag %>
 
 <% end %>
+
 </div>
 
 <script>

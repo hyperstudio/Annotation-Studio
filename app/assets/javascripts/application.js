@@ -53,3 +53,4 @@
 //= require unload_confirmation
 //= require sign-in
 //= require_tree ./typeahead
+//=require dashboard

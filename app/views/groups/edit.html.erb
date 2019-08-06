@@ -1,4 +1,3 @@
-
 <% unless is_member(params[:id])%>
 
 <h4> Editing <%= @group.name %>  </h4>
@@ -81,24 +80,21 @@
 			<th> Actions </th>
 		<% end %>
 	</tr>
-<% if !@memberships.empty? %>
-	<% @memberships.each do |m| %>
+	<% if !@memberships.empty? %>
+		<% @memberships.each do |m| %>
 			<tr class="member-table-row"> 
 				<% @user = User.find(m.user_id) %>
-				<td> <!-- doesn't error check for missing last name -->
-					<%= @user.fullname %></td>
+				<td> <%= @user.fullname %></td> <!-- doesn't check for missing last name -->
 				<td> <%= m.role %> </td> 
 				<% if is_owner(params[:id]) %>
 					<td> 
 						<% unless m.role == "owner" %>
-							<span class= "action remove"> <%= link_to "Remove from Group", :controller => "groups", :action => "remove_member", 
-								:m_id => m.id, :username => @user.fullname %>  </span>
+							<span class= "action remove"> <%= link_to "Remove from Group", {:controller => "groups", :action => "remove_member", :m_id => m.id, :username => @user.fullname}, {data: {confirm: "Are you sure you want to remove this member?", toggle: 'tooltip', placement: 'top', original_title: 'Remove'}} %>  </span>
 						<% end %>
 
 						<% if m.role == "member" %>
 							<span class= "action promote"> 
-								<%= link_to "Make Manager", :controller => "groups", :action => "promote", 
-								:m_id => m.id %> 
+								<%= link_to "Make Manager", :controller => "groups", :action => "promote", :m_id => m.id %> 
 							</span>
 						<% end%>
 
@@ -108,10 +104,10 @@
 						<% end %>
 							
 					</td>
-				<% end %> <!-- end if -->
+				<% end %> <!-- end if is_owner -->
 			</tr>
-	<% end %> <!-- end loop -->
-<% end %> <!-- end if -->
+		<% end %> <!-- end membership loop -->
+	<% end %> <!-- end if -->
 	
 
 </table>
@@ -195,7 +191,7 @@
 
 	</style>
 
-<% else %>
+<% else #not allowed to see this page %>
 
 You do not have permission to view this page
 

@@ -22,8 +22,6 @@ class UsersController < ApplicationController
     #AUTOCOMPLETE STUFF
 
       #for document search autocomplete (user's docs and shared group docs)
-      #slow processing: try to find more efficient algo
-
       shared_t = docs.pluck(:title)
       my_t = current_user.documents.pluck(:title)
 

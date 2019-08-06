@@ -13,7 +13,7 @@ class DocumentsController < ApplicationController
       shared = helpers.getSharedDocs() #see application_helper.rb
       mine = current_user.documents
 
-      #this might cause problems when shared docs get REALLY BIG...
+      #this might cause problems when shared docs get REALLY BIG
       all = shared | mine #array
 
     if params['search'] && params['search'] != ""

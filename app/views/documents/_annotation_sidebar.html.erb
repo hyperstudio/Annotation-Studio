@@ -5,7 +5,7 @@ var document_slug = "<%= @document.slug %>";
 var default_state = <%= @document.default_state.present? ? (raw @document.default_state) : (raw "''") %>;
 // var groups = "<%= current_user.rep_group_list %>".split(/, /);
 
-//testingp per-group annotations
+//testing per-group annotations
 var userGroups = [];
 var docGroups = [];
 

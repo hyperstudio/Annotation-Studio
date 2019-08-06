@@ -17,38 +17,26 @@ class UsersController < ApplicationController
     # end
 
     per_page = 10
-
-    #get all the user's groups' documents w/o repetition
-      joined = current_user.groups.pluck(:id)
-      docID = DocumentsGroup.where(group_id: joined).pluck(:document_id).uniq
-      docs = Document.where(id: docID).where.not(state: "draft")
+    docs = helpers.getSharedDocs() #see application_helper.rb
 
     #AUTOCOMPLETE STUFF
 
       #for document search autocomplete (user's docs and shared group docs)
       #slow processing: try to find more efficient algo
 
-      shared = docs.pluck(:title)
-      mine = current_user.documents.pluck(:title)
+      shared_t = docs.pluck(:title)
+      my_t = current_user.documents.pluck(:title)
 
-      #this might cause problems when shared docs get REALLY BIG...
-      @titleSuggestions = (shared + mine).uniq
-      # @authorSuggestions = (docList.map(&:author) + current_user.documents.pluck(:author)).uniq
-      @authorSuggestions = (docs.pluck(:author) + current_user.documents.pluck(:author)).uniq
-
-      #group search autocomplete
+      @titleSuggestions = shared_t | my_t
+      @authorSuggestions = docs.pluck(:author) | current_user.documents.pluck(:author)
       @groupSuggestions = current_user.groups.pluck(:name)
 
     #END AUTOCOMPLETE STUFF
-
       @sharedDocsCount = docs.size
 
   #BEGIN AJAX STUFF 
 
-    #DOCUMENT FILTERING AJAX STUFF: disabled for now cuz of slow runtime
-    #docList = docList.sort_by &:created_at #sort by created_at ascending....
-
-    #GROUP FILTERING AJAX STUFF
+    #GROUP SORT AJAX STUFF
     @groupMode = params[:gPage]
 
     owned = current_user.groups.where(owner_id: current_user.id).paginate(:page => whitelisted[:page], :per_page => per_page)
@@ -63,7 +51,7 @@ class UsersController < ApplicationController
       @mygroups = owned.order('created_at DESC') 
     end
 
-    #DOCUMENTS AJAX
+    #DOCUMENT SORT AJAX
     @docMode = params[:dPage]
     shared = docs.paginate(:page => whitelisted[:page], :per_page => per_page)
     mine = current_user.documents.paginate(:page => whitelisted[:page], :per_page => per_page)
@@ -87,9 +75,8 @@ class UsersController < ApplicationController
 
     end #case
 
-#toggle ajax option for show.js.erb
+    #toggle ajax option for show.js.erb
     @ajaxOption = params[:dFilter] ? "document" : "group"
-
 
   #END AJAX STUFF
 
@@ -103,23 +90,22 @@ class UsersController < ApplicationController
         
         #check for expiration 
         unless invite.expiration_date && (invite.expiration_date < Time.now)
-
-        org =  invite.group #find the user group attached to the invite
-        current_user.groups << org #add this user to the new user group as a member
-        flash[:alert] = 'Successfully joined group!'
+          org =  invite.group #find the user group attached to the invite
+          current_user.groups << org #add this user to the new user group as a member
+          flash[:alert] = 'Successfully joined group!'
 
         else
-          flash[:error] = 'token expired. please get new token'
+          flash[:error] = 'Token expired. please get new token'
           redirect_to dashboard_path
           return
 
         end #end unless
 
       rescue ActiveRecord::RecordNotUnique
-        flash[:error] = 'already in group'
+        flash[:error] = 'Already in group'
 
       rescue NoMethodError #if token is invalid, org will call .group on a nil class which returns this error
-        flash[:error] = 'invalid token'
+        flash[:error] = 'Invalid token'
         
       end #end begin-rescue
       redirect_to dashboard_path
@@ -128,8 +114,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.json {render json: @user}
-      # format.json { render json: { success: "It works"} }
-      format.js
+      format.js #ajax
     end
 
     gon.rabl template: 'app/views/users/show.rabl', as: 'user'

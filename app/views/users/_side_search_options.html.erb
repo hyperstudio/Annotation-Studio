@@ -70,6 +70,10 @@
 			<td> <%= radio_button_tag 'method', 'status', nil, onchange: "opt(this)" %> </td>
 			<td> <%= label_tag "Status" %> </td>
 		</tr>
+		<tr> 
+			<td> <%= radio_button_tag 'method', 'group', nil, onchange: "opt(this)" %> </td>
+			<td> <%= label_tag "Group" %> </td>
+		</tr>
 	</table>
 
 	<%= text_field_tag 'search', nil, id: 'dash-documents-search' %>
@@ -117,21 +121,27 @@
 		source: <%= raw(@titleSuggestions) %>
 	});
 
-	//onchange function for doc radio buttons
+	//onchange function for doc search method
 	function opt(obj){
 		var selected = obj.value;
 		var data;
-	if(selected == 'author'){
-		data = <%= raw(@authorSuggestions) %>;
-	}else if(selected == 'status') {
-		data = ["published", "draft", "archived"];
-	}else{
-		data = <%= raw(@titleSuggestions) %>;
-	}
+		switch(selected){
+			default: 
+				data = <%= raw(@titleSuggestions) %>;
+				break;
+			case 'author':
+				data = <%= raw(@authorSuggestions) %>;
+				break;
+			case 'status':
+				data = ["published", "draft", "archived"];
+				break;
+			case 'group':
+				data = <%= raw(@groupSuggestions) %>;
+		} //end switch
 
-	$("#dash-documents-search").autocomplete({
-		source: data
-	});
+		$("#dash-documents-search").autocomplete({
+			source: data
+		}); //end autocomplete
 		
 	} //end opt
 

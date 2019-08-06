@@ -1,0 +1,18 @@
+<!-- rendered in dashboard(users/show.html.erb) -->
+
+<div class="banner"> <i class="glyphicon glyphicon-remove close" onclick="hide()"></i>
+   Create a New Group</div>
+
+<div class="form">
+	<%= form_for Group.new do |f| %>
+	    <%= f.label :group, 'Name' %>
+	    <%= f.text_field :name %>
+	    <%= f.hidden_field :owner_id, value: current_user.id %>
+	    <%= f.submit 'Submit'%>
+	<% end %>
+
+  <span class="help-block" style="font-size:11px">After choosing a name, you'll be redirected to the edit page where you can manage this group's settings. </span>
+
+</div>
+
+

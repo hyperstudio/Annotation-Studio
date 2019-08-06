@@ -13,8 +13,6 @@
 			<%= submit_tag "Search by first name" %>
 
 		<% end %>
-		
-
 
 <br>
 	</div> <!-- left -->
@@ -30,46 +28,43 @@
 			<% end %> <!-- form_for -->
 		<br>
 		<br>
+
+
 	<% @i = Invite.find_by(group_id: params[:id]) %>
 
 	<% if @i && (@i.expiration_date.nil? || @i.expiration_date > Time.now) %>
 		<%= label_tag 'Invite Link' %>
-		<%= text_field_tag "Invite Link:", "localhost:3000" + dashboard_path(:invite_token => @i.token).to_s, 
+		<%= text_field_tag "Invite Link:", request.base_url + dashboard_path(:invite_token => @i.token).to_s, 
 		{:size =>40, :class => 'copy-link'} %>
 		<%= button_tag 'Copy', {:class =>'copy-button'}%>
 
-	<% elsif @i && @i.expiration_date <= Time.now %>
-
-		<% puts "token expired, deleted from DB" %>
-		<% @i.destroy %>
-
-		<%= form_for Invite.new , :url => invites_path do |f| %>
-		    <%= f.hidden_field :group_id, :value => params[:id] %>
-		<%= f.label 'Invite Link' %>    
-		<%= f.submit 'Generate'%>
-		<% end %>
-
 	<% else %>
-		
+
+		<% if @i && @i.expiration_date <= Time.now %>
+			<% puts "token expired, deleted from DB" %>
+			<% @i.destroy %>
+		<% end %>
+
 		<%= form_for Invite.new , :url => invites_path do |f| %>
 		    <%= f.hidden_field :group_id, :value => params[:id] %>
-		<%= f.label 'Invite Link' %>    
-		<%= f.submit 'Generate'%>
+			<%= f.label 'Invite Link' %>    
+			<%= f.submit 'Generate'%>
 		<% end %>
+
 	<% end %>
 
 	<br>
 	<br>
 
-		<% if is_owner(params[:id]) %>
+	<% if is_owner(params[:id]) %>
 
-			<%= form_tag :controller=>'groups', :action => 'toggleIS' do %>
-				<%= label_tag :toggleIS, 'Idea Space: ' + @ISstatus %>
-				<%= hidden_field_tag :ideaSpace, 'change' %>
-				<%= hidden_field_tag :group_id, params[:id] %>
-				<%= submit_tag @IStoggle %>
-			<% end %>
+		<%= form_tag :controller=>'groups', :action => 'toggleIS' do %>
+			<%= label_tag :toggleIS, 'Idea Space: ' + @ISstatus %>
+			<%= hidden_field_tag :ideaSpace, 'change' %>
+			<%= hidden_field_tag :group_id, params[:id] %>
+			<%= submit_tag @IStoggle %>
 		<% end %>
+	<% end %>
 
 	</div> <!-- forms -->
 

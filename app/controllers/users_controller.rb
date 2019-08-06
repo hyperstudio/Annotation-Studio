@@ -87,10 +87,8 @@ class UsersController < ApplicationController
 
     end #case
 
-
 #toggle ajax option for show.js.erb
     @ajaxOption = params[:dFilter] ? "document" : "group"
-
 
 
   #END AJAX STUFF

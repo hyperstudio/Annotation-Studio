@@ -9,17 +9,34 @@ class DocumentsController < ApplicationController
   # GET /documents
   # GET /documents.json
   def index #search results
+
+    #get all the user's groups' documents w/o repetition
+      joined = current_user.groups.pluck(:id)
+      docID = DocumentsGroup.where(group_id: joined).pluck(:document_id).uniq
+      shared = Document.where(id: docID).where.not(state: "draft")
+      mine = current_user.documents
+
+      #this might cause problems when shared docs get REALLY BIG...
+      all = shared | mine #array
+
     if params['search'] && params['search'] != ""
       case params['method']
         when "title"
-          @documents = Document.where(["title LIKE ?", "%#{params['search']}%"])
+          # @documents = Document.where(["title LIKE ?", "%#{params['search']}%"])
+          @documents = all.select {|d| d.title.include? params['search']}
           @title_text = "Title: '#{params['search']}'"
         when "author"
-          @documents = Document.where(["author LIKE ?", "%#{params['search']}%"])
+          # @documents = Document.where(["author LIKE ?", "%#{params['search']}%"])
+          @documents = all.select {|d| d.author.include? params['search']}
           @title_text = "Author: '#{params['search']}'"
         when "status"
-          @documents = Document.where(["state LIKE ?", "%#{params['search']}%"])
+          # @documents = Document.where(["state LIKE ?", "%#{params['search']}%"])
+          @documents = all.select {|d| d.state.include? params['search']}
           @title_text = "Status: '#{params['search']}'"
+        when "group"
+          group = Group.find_by(name: params['search'])
+          @documents = group ? group.documents : []
+          @title_text = "Group: '#{params['search']}'"
       end #end case
     end #end if
 

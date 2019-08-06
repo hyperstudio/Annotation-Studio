@@ -13,7 +13,6 @@ if(option == "group"){
 
 else{
 	var mode = "<%= @docMode %>";
-	alert(mode);
 	if (mode == "mydocuments"){
 		$(document.getElementById("my-docs")).html("<%= j render 'my_documents' %>");
 	} else{

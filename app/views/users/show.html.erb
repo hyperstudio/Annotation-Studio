@@ -102,14 +102,14 @@
 <div class="overlay" id="join-form">
 
   <div class="banner"> <i class="glyphicon glyphicon-remove close" onclick="off()"></i>
-     Join Group by entering name (case sensitive)</div>
+     Join Group by Entering Name (Case Sensitive)</div>
 
   
   <div class="form">
     <%= form_tag({:controller=>'groups', :action => 'join_via_name'}) do %>
       <%= label_tag 'groupName', 'Group Name' %>
       <%= text_field_tag 'groupName'%>
-      <%= submit_tag 'Join'%>
+      <%= submit_tag 'Join', class:"redButton"%>
     <% end %>
 
   </div> <!-- end form -->
@@ -138,7 +138,7 @@
 
       <%= f.hidden_field :owner_id, value: current_user.id %>
 
-      <%= f.submit 'Submit'%>
+      <%= f.submit 'Submit', class: "redButton" %>
 
   <% end %>
     <span class="help-block" style="font-size:10px">After choosing a name, you'll be redirected to the edit page where you can manage this group's settings. </span>
@@ -162,14 +162,14 @@
   <div class="banner"> <i class="glyphicon glyphicon-remove close" onclick="hide()"></i>
      Create a New Group</div>
   
-  <div class="form">
+  <div class="form" >
     <%= form_for Group.new do |f| %>
       <%= f.label :group, 'Name' %>
       <%= f.text_field :name %>
 
       <%= f.hidden_field :owner_id, value: current_user.id %>
 
-      <%= f.submit 'Submit'%>
+      <%= f.submit 'Submit', class: "redButton"%>
 
   <% end %>
     <span class="help-block" style="font-size:10px">After choosing a name, you'll be redirected to the edit page where you can manage this group's settings. </span>
@@ -382,7 +382,7 @@ var groups=[];
   width: 40%; 
   height: 30%; 
   top: 200px; 
-  left: 25%;
+  left: 28%;
   right: 0;
   bottom: 0;
   background-color: white; 
@@ -394,20 +394,29 @@ var groups=[];
 .form{
   position: absolute;
   top: 50%;
-  left: 50%;
+  left: 45%;
   transform: translate(-50%,-30%);
 }
 
 .banner{
   position: relative;
-  background-color:#ddd;
-  height:20%;
-  padding: 3px;
+  background-color:#DDDEE7;
+  height:15%;
+  padding-top: 10px;
+  padding-left:10px;
 
 }
 
 .close{
   float:right;
+  padding-right:10px;
+}
+
+.redButton{
+  background-color: #DDDEE7;
+  border-radius: 3px;
+  border:none;
+  white-space: nowrap;
 }
 
 </style>

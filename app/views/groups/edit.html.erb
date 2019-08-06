@@ -1,13 +1,13 @@
 
 <% unless is_member(params[:id])%>
-<h4> Editing <%= @group.name %> </h4>
+<h4> Group Management: <%= @group.name %> </h4>
 
 <div id="wrapper">
 
 	<div id= "left"> 
 		<%= form_tag({:controller=>'groups', :action => 'edit'}, {:method => 'get'}) do %>
-			<i class="glyphicon glyphicon-search"> </i> <%= text_field_tag :search, params['search'], :style => 'width:55%' %>
-			<%= submit_tag "Search by first name" %>
+			 <%= text_field_tag :search, params['search'], :style => 'width:50%' %>
+			<%= submit_tag "Search by first name", class: "submitButton" %>
 		<% end %>
 		<%= link_to "All Members", :controller => 'groups', :action => 'edit'%>
 
@@ -194,6 +194,12 @@
 
 	#left{
 		width:65%;
+	}
+
+	.submitButton{
+		background-color:#DDDEE7;
+		border:none;
+		border-radius: 3px;
 	}
 
 	</style>

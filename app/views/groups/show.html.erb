@@ -1,4 +1,4 @@
-<h1> <%= @group.name %></h1>
+<h3> Group: <%= @group.name %></h3>
 
 <% if in_group(params[:id])%>
 
@@ -7,6 +7,7 @@
 <% if @group.ideaSpaceOn %>
 <br>
 <div id="idea-space">
+	<p class="greyText">Idea Space is enabled for this group; Organize annotations there.</p>
 	<a href="http://annotation-studio-idea-space.herokuapp.com/" id='is-link'> Idea Space </a>
 </div>
 <br>
@@ -24,7 +25,7 @@
 
 
 
-<h2> Members </h2> 
+<h4> Members </h4> 
 	<table class="member-table">
 		<tr class="member-table-row">
 			<th> Name </th>

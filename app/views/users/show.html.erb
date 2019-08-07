@@ -138,10 +138,10 @@
 
       <%= f.hidden_field :owner_id, value: current_user.id %>
 
-      <%= f.submit 'Submit', class: "redButton" %>
+      <%= f.submit 'Create', class: "redButton" %>
 
   <% end %>
-    <span class="help-block" style="font-size:10px">After choosing a name, you'll be redirected to the edit page where you can manage this group's settings. </span>
+    <span class="help-block" style="font-size:10px">Once you have created a name, you can edit your group in Group Management. </span>
   </div>
 
 
@@ -192,7 +192,7 @@
         myDocuments.style.display = "block";
         $(myDocuments).html("<%= j render 'my_documents' %>");
         $("#current-page").text("My Documents");
-        $("#current-description").text("You can manage your documents.")
+        $("#current-description").text("Documents Created by Me.")
         break;
 
       case 'shareddocuments':
@@ -200,7 +200,7 @@
         $(".content").hide();
         sharedDocuments.style.display = "block";
         $("#current-page").text("Shared Documents");
-        $("#current-description").text("Your group has access to shared documents")
+        $("#current-description").text("Documents Shared with My Groups.")
         break;
 
       case 'myannotations':
@@ -208,7 +208,7 @@
         $(".content").hide();
         myAnnotations.style.display = "block";
         $("#current-page").text("My Annotations");
-        $("#current-description").text("You can manage your annotations.")
+        $("#current-description").text("Annotations Created by Me.")
         break;
 
       case 'sharedannotations':
@@ -216,7 +216,7 @@
         $(".content").hide();
         sharedAnnotations.style.display = "block";
         $("#current-page").text("Shared Annotations");
-        $("#current-description").text("Your group can view shared annotations.")
+        $("#current-description").text("Annotations Created by Group Members.")
         break;
 
       case 'mygroups':
@@ -225,7 +225,7 @@
         mygroups.style.display = "block";
         $(mygroups).html("<%= j render 'my_groups' %>");
         $("#current-page").text("My Groups");
-        $("#current-description").text("You can manage your groups.")
+        $("#current-description").text("Groups Created by Me.")
         break;
 
       case 'joinedgroups':
@@ -234,7 +234,7 @@
         joinedGroups.style.display = "block";
         $(joinedGroups).html("<%= j render 'joined_groups' %>");
         $("#current-page").text("Joined Groups");
-        $("#current-description").text("You can see your status in joined groups.")
+        $("#current-description").text("Memberships in Other Groups.")
         break;
       
   } //end switch

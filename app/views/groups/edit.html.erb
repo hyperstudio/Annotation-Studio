@@ -8,6 +8,7 @@
 			 <%= text_field_tag :search, params['search'], :style => 'width:52%; margin-right:5px;' %>
 			<%= submit_tag "Search by first name", class: "submitButton" %>
 		<% end %>
+		<br>
 		<%= link_to "All Members", :controller => 'groups', :action => 'edit'%>
 
 <br>
@@ -32,7 +33,7 @@
 					<td> 
 						<% unless m.role == "owner" %>
 							<span class= "manageAction"> <%= link_to "Remove from Group", :controller => "groups", :action => "remove_member", 
-								:m_id => m.id, :username => @user.fullname %>  </span>
+								:m_id => m.id, :username => @user.fullname %></span>
 						<% end %>
 
 						<% if m.role == "member" %>
@@ -66,7 +67,7 @@
 <br><br>
 		<div class="forms">
 			<strong>Add Member by E-mail</strong>
-			<p class="greyText">Gruop members can annotate documents and see annotations shared to group.</p>
+			<p class="greyText">Gruop members can annotate documents and see annotations shared with the group.</p>
 			<%= form_for @group do |f| %>
 				Email: <%= email_field_tag "email" %>
 			<%= f.submit "Add", class: "manageAction"%>
@@ -90,7 +91,7 @@
 		<%= form_for Invite.new , :url => invites_path do |f| %>
 		    <%= f.hidden_field :group_id, :value => params[:id] %>
 		<%= f.label 'Generate Invite Link' %>    
-		<p class="greyText">Send this link to registered or new users</p>
+		<p class="greyText">Send this link to registered or new users.</p>
 		<%= f.submit 'Generate'%>
 		<% end %>
 
@@ -112,7 +113,7 @@
 			<%= form_tag :controller=>'groups', :action => 'toggleIS' do %>
 				<%= label_tag :toggleIS, 'Idea Space: ' + @ISstatus %>
 				
-				<p class="greyText">Enable or disable Idea Space to control whether your group see a link directing there.</p>
+				<p class="greyText">Enable or disable Idea Space for your groups.</p>
 			
 				<%= hidden_field_tag :ideaSpace, 'change' %>
 				<%= hidden_field_tag :group_id, params[:id] %>
@@ -224,8 +225,12 @@
 	.manageAction{
 		background-color: #DDDEE7;
 		margin-right: 10px;
-		padding: 3px;
-		padding-right: 5px;
+
+		padding-right: 7px;
+		padding-left: 7px;
+		padding-top:5px: 
+		padding-bottom:5px;
+
 		border-radius: 5px;
 		border:none;
 

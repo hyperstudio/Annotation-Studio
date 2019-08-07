@@ -1,13 +1,12 @@
 <div class="row">
 
-  <% @mygroups.each do |g| %>
+  <% @mygroups.includes(:memberships).each do |g| %>
     <div class= "column"> 
        <span class="title"> <%= link_to g.name, group_path(id: g.id) %> <br> </span>
        <br>
+       
+        Members: <%= g.memberships.size %> <br>
 
-       <% m = Membership.where(group_id: g.id) %>
-        Members: <%= m.size %> <br>
-        Managers: <%= m.where(role: "manager").size %>
 
        <br>
        <br>

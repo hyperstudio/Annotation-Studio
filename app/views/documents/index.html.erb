@@ -16,7 +16,7 @@
       
        Created: <%= doc.created_at.strftime("%m/%d/%Y") %> <br> 
        
-       Groups: <%= doc.groups.pluck(:name) %> <br>
+       Groups: <%= doc.groups.pluck(:name).join(", ") %> <br>
 
        Status: 
        <span id="status-icon"> 

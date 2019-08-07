@@ -40,7 +40,6 @@
 	<% else %>
 
 		<% if @i && @i.expiration_date <= Time.now %>
-			<% puts "token expired, deleted from DB" %>
 			<% @i.destroy %>
 		<% end %>
 

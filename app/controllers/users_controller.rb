@@ -10,11 +10,6 @@ class UsersController < ApplicationController
     @document_list = Document.select(:slug, :title) # for getting document name in annotations table.
 
     whitelisted = params.permit(:docs, :page, :group)
-    # if !%w[ assigned created all ].include?(whitelisted[:docs])
-    #   document_set = 'assigned'
-    # else
-    #   document_set = whitelisted[:docs]
-    # end
 
     per_page = 10
     docs = helpers.getSharedDocs() #see application_helper.rb

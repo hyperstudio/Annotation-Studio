@@ -21,7 +21,7 @@ class GroupsController < ApplicationController
 
   def new
 		@group = Group.new
-		#race condition? need to double check
+
 		respond_to do |format|
 		    format.html # new.html.erb
 		    format.xml  { render :xml => @group }

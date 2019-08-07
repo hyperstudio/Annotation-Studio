@@ -7,6 +7,9 @@ class InvitesController < ApplicationController
 
 		if @invite.save
 			redirect_to request.referrer
+		else
+			flash[:alert] = "Error creating invite"
+			redirect_to request.referrer
 		end
 
 	end

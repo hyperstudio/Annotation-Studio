@@ -156,7 +156,7 @@
         $(".content").hide();
         myAnnotations.style.display = "block";
         $("#current-page").text("My Annotations");
-        $("#permissions-note").text("All of the annotations you wrote");
+        $("#permissions-note").text("First 100 annotations you wrote");
         break;
 
       case 'sharedannotations':
@@ -164,7 +164,7 @@
         $(".content").hide();
         sharedAnnotations.style.display = "block";
         $("#current-page").text("Shared Annotations");
-        $("#permissions-note").text("Your groups can see shared annotations.");
+        $("#permissions-note").text("Your groups can see shared annotations. (up to 100 shown)");
         break;
 
       case 'mygroups':
@@ -204,7 +204,7 @@ var groups=[];
   groups.push("<%=g.name %>");
 <% end %>
   var myLoadOptions = {
-    'limit': 30,
+    'limit': 100,
     'groups': "<%= current_user.rep_group_list %>".split(/, /),
     'subgroups': "<%= current_user.rep_subgroup_list %>".split(/, /),
     'host': location.host,
@@ -213,7 +213,7 @@ var groups=[];
     'context': 'dashboard',
   };
   var classLoadOptions = {
-    'limit': 30,
+    'limit': 100,
     'groups': groups, //"<%= current_user.rep_group_list %>".split(/, /),
     'subgroups': "<%= current_user.rep_subgroup_list %>".split(/, /),
     'host': location.host,

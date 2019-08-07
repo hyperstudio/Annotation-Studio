@@ -83,23 +83,22 @@ class GroupsController < ApplicationController
 	#post
 	def join_via_name
 	#add user to group if form is submitted. 
-		@groupName = params['groupName']
-	     if @groupName
+		groupName = params['groupName']
+	    if groupName
 	      begin
+	      	group = Group.find_by(name: groupName)
+	        if group
+	            current_user.groups << group
+	            flash[:alert] = 'Successfully Joined ' + groupName
 
-	          if Group.find_by(name: @groupName)
-	            @group = Group.find_by(name: @groupName)
-	            current_user.groups << @group
-
-	            flash[:alert] = 'Successfully Joined Group!'
-
-	          elsif Group.find_by(name: @groupName).nil?
-	            flash[:alert] = 'Group not found!'
-	          end
+	        else
+	        	flash[:alert] = 'Group not found!'
+	        end
 
 	      rescue ActiveRecord::RecordNotUnique
 	          flash[:alert] = 'Already in Group!'
-	      end
+	      end #end begin-rescue
+
 	    end
 	    redirect_to request.referrer
 	end
@@ -115,7 +114,7 @@ class GroupsController < ApplicationController
 	def demote #make group manager a member
 		@membership = Membership.find(params[:m_id])
 		@membership.update_attribute("role", "member")
-		flash[:alert] = "Manager demoted"
+		flash[:alert] = "Manager Demoted to Member"
 
 		redirect_to request.referrer
 	end
@@ -162,7 +161,7 @@ class GroupsController < ApplicationController
 	end
 
 
-	private 
+private 
 
 	def group_params
     	params.require(:group).permit(:name, :owner_id)

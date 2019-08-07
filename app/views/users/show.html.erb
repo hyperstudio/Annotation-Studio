@@ -29,11 +29,11 @@
 
 
   <div class="dropdown">
-      <button class="dropbtn">Groups <span class="badge" ><%= @current_user.groups.size %></span></button>
+      <button class="dropbtn">Groups <span class="badge" ><%= current_user.groups.size %></span></button>
       <center><div class="arrow-up"></div></center>
     <div class="dropdown-content" style="text-align:right; padding-right: 25%;">
 
-      <a href= "<%= dashboard_path(nav: 'mygroups')%>" id="groups-mine" style="display:inline">Mine <span class="badge"> <%= @mygroups.size %></span> </a>
+      <a href= "<%= dashboard_path(nav: 'mygroups')%>" id="groups-mine" style="display:inline">Mine <span class="badge"> <%= current_user.groups.where(owner_id: current_user.id).size %></span> </a>
       <a href= "<%= dashboard_path(nav: 'joinedgroups')%>" id="groups-joined" style="display:inline">Joined <span class="badge"> <%= current_user.groups.size %></span></a>
       <a onclick="show()" style="display:inline">New</a>
       <a onclick= "on()" style="display:inline"> Join</a>
@@ -107,54 +107,31 @@
      Join Group by entering name (case sensitive)</div>
 
   
-  <div class="form">
-    <%= form_tag({:controller=>'groups', :action => 'join_via_name'}) do %>
-      <%= label_tag 'groupName', 'Group Name' %>
-      <%= text_field_tag 'groupName'%>
-      <%= submit_tag 'Join'%>
-    <% end %>
-
-  </div> <!-- end form -->
-
-
-
-</div> 
+    <div class="form">
+      <%= form_tag({:controller=>'groups', :action => 'join_via_name'}) do %>
+        <%= label_tag 'groupName', 'Group Name' %>
+        <%= text_field_tag 'groupName'%>
+        <%= submit_tag 'Join'%>
+      <% end %>
+    </div> <!-- end form -->
+  </div> 
 </div>
-
 
 
 <!-- overlay for create group -->
 
 <div id="create-background">
+  <div class="overlay" id="new-group-form">
 
-<div class="overlay" id="new-group-form">
+  <%= render 'groups/new' %>
 
-  <div class="banner"> <i class="glyphicon glyphicon-remove close" onclick="hide()"></i>
-     Create a New Group</div>
-  
-  <div class="form">
-    <%= form_for Group.new do |f| %>
-      <%= f.label :group, 'Name' %>
-      <%= f.text_field :name %>
-
-      <%= f.hidden_field :owner_id, value: current_user.id %>
-
-      <%= f.submit 'Submit'%>
-
-  <% end %>
-    <span class="help-block" style="font-size:11px">After choosing a name, you'll be redirected to the edit page where you can manage this group's settings. </span>
   </div>
-
-
-</div>
-
 </div>
 
 <script type="text/javascript">
-   //a lot of repetition rn...clean up
-
-  <% if params[:nav] %>
-    var nav = "<%= params[:nav] %>"
+   //side bar toggling  moved to dashboard.js
+   <% if params[:nav] %>
+   var nav = "<%= params[:nav] %>"
 
     switch(nav) {
       case 'mydocuments':
@@ -209,56 +186,7 @@
         break;
       
   } //end switch
-
-  <% end #end if %>
-
-
-
-//sidebar visibility toggle
-var active = false
-function openSideMenu(){
-  if (active){
-    document.getElementById('side-menu').style.width = '0';
-    active= false;
-    return;
-  }
-  document.getElementById('side-menu').style.width = '350px';
-  active = true
-}
-function closeSideMenu(){
-  document.getElementById('side-menu').style.width = '0';
-}
-
-//group join form visibility toggle
-function on(){
-  document.getElementById("join-form").style.display = "block";
-  document.getElementById("join-background").style.display = "block";
-}
-
-function off(){
-  document.getElementById("join-form").style.display = "none";
-  document.getElementById("join-background").style.display = "none";
-}
-
-//autocomplete for joining groups?
-// $(document.getElementById("groupName")).autocomplete({
-//   source: <%= raw(Group.all.pluck(:name)) %>
-// })
-
-
-
-//create group form visibility toggle. 
-function show(){
-  document.getElementById("create-background").style.display = "block";
-  document.getElementById("new-group-form").style.display = "block";
-  
-}
-
-function hide(){
-  document.getElementById("create-background").style.display = "none";
-  document.getElementById("new-group-form").style.display = "none";
-  
-}
+  <% end %>
 
 </script>
 

@@ -14,14 +14,16 @@
 	<%= form_tag groups_path, :method => 'get', :data => {remote: true} do %>
 		<table class="search-options">
 			<tr>
-				<td> <%= radio_button_tag 'time', 'timeASC', nil, onchange: "groupSort(this)", class: 'radio'%> </td>
-				<td> <%= label_tag 'Time Ascending' %> (oldest first) </td>
-			</tr>
-			<tr>
 				<td><%= radio_button_tag 'time', 'timeDESC', true, onchange: "groupSort(this)", class: 'radio' %></td>
 				<td> <%= label_tag 'Time Descending' %> (newest first) </td>
 
 			</tr>
+
+			<tr>
+				<td> <%= radio_button_tag 'time', 'timeASC', nil, onchange: "groupSort(this)", class: 'radio'%> </td>
+				<td> <%= label_tag 'Time Ascending' %> (oldest first) </td>
+			</tr>
+			
 		</table>
 
 	<% end %>
@@ -68,17 +70,44 @@
 			<td> <%= radio_button_tag 'method', 'status', nil, onchange: "opt(this)" %> </td>
 			<td> <%= label_tag "Status" %> </td>
 		</tr>
+		<tr> 
+			<td> <%= radio_button_tag 'method', 'group', nil, onchange: "opt(this)" %> </td>
+			<td> <%= label_tag "Group" %> </td>
+		</tr>
 	</table>
 
 	<%= text_field_tag 'search', nil, id: 'dash-documents-search' %>
 	<%= submit_tag "Search" %>
 
+	<h4> Sort </h4>
+		<%= form_tag documents_path, :method => 'get', :data => {remote: true} do %>
 
+			<table class="search-options">
+				<tr>
+					<td><%= radio_button_tag 'filter', 'timeDESC', true, onchange: "docSort(this)", class: 'radio' %></td>
+					<td> <%= label_tag :title, 'Newest first' %> </td>
+				</tr>
 
-<% end #form_tag %>
+				<tr>
+					<td> <%= radio_button_tag 'filter', 'timeASC', nil, onchange: "docSort(this)", class: 'radio'%> </td>
+					<td> <%= label_tag :title, 'Oldest first' %> </td>
+				</tr>
+				<tr>
+					<td> <%= radio_button_tag 'filter', 'A-Z', nil, onchange: "docSort(this)", class: 'radio'%> </td>
+					<td> <%= label_tag :title, 'A-Z' %> </td>
+				</tr>
+				<tr>
+					<td> <%= radio_button_tag 'filter', 'Z-A', nil, onchange: "docSort(this)", class: 'radio'%> </td>
+					<td> <%= label_tag :title, 'Z-A' %> </td>
+				</tr>
 
+			</table>
+
+		<% end #sort form_tag%>
+	<% end #form_tag %>
 
 <% end %>
+
 </div>
 
 <script>
@@ -88,32 +117,38 @@
 		source: <%= raw(@titleSuggestions) %>
 	});
 
-	//onchange function for doc radio buttons
+	//onchange function for doc search method
 	function opt(obj){
 		var selected = obj.value;
 		var data;
-	if(selected == 'author'){
-		data = <%= raw(@authorSuggestions) %>;
-	}else if(selected == 'status') {
-		data = ["published", "draft", "archived"];
-	}else{
-		data = <%= raw(@titleSuggestions) %>;
-	}
+		switch(selected){
+			default: 
+				data = <%= raw(@titleSuggestions) %>;
+				break;
+			case 'author':
+				data = <%= raw(@authorSuggestions) %>;
+				break;
+			case 'status':
+				data = ["published", "draft", "archived"];
+				break;
+			case 'group':
+				data = <%= raw(@groupSuggestions) %>;
+		} //end switch
 
-	$("#dash-documents-search").autocomplete({
-		source: data
-	});
+		$("#dash-documents-search").autocomplete({
+			source: data
+		}); //end autocomplete
 		
 	} //end opt
 
 	//group sort/filter ajax
 	function groupSort(obj){
 		var selected = obj.value;
-		var page = "<%= params[:nav]%>"
+		var location = "<%= params[:nav]%>"
 		$.ajax({
 		    url: "/dashboard",
 		    type: "GET",
-		    data: {filter: selected, location: page},
+		    data: {filter: selected, gPage: location},
 		    dataType: 'script'
 		}); //end ajax
 	}
@@ -124,11 +159,17 @@
 	});
 
 
-	
-
-
-
-
+	//doc sort/filter ajax
+	function docSort(obj){
+		var selected= obj.value;
+		var location = "<%= params[:nav]%>"
+		$.ajax({
+			url: "/dashboard",
+		    type: "GET",
+		    data: {dFilter: selected, dPage: location},
+		    dataType: 'script'
+		});
+	}
 
 	
 

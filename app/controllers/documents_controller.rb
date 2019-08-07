@@ -9,17 +9,31 @@ class DocumentsController < ApplicationController
   # GET /documents
   # GET /documents.json
   def index #search results
+
+      shared = helpers.getSharedDocs() #see application_helper.rb
+      mine = current_user.documents
+
+      #this might cause problems when shared docs get REALLY BIG
+      all = shared | mine #array
+
     if params['search'] && params['search'] != ""
       case params['method']
         when "title"
-          @documents = Document.where(["title LIKE ?", "%#{params['search']}%"])
+          # @documents = Document.where(["title LIKE ?", "%#{params['search']}%"])
+          @documents = all.select {|d| d.title.include? params['search']}
           @title_text = "Title: '#{params['search']}'"
         when "author"
-          @documents = Document.where(["author LIKE ?", "%#{params['search']}%"])
+          # @documents = Document.where(["author LIKE ?", "%#{params['search']}%"])
+          @documents = all.select {|d| d.author.include? params['search']}
           @title_text = "Author: '#{params['search']}'"
         when "status"
-          @documents = Document.where(["state LIKE ?", "%#{params['search']}%"])
+          # @documents = Document.where(["state LIKE ?", "%#{params['search']}%"])
+          @documents = all.select {|d| d.state.include? params['search']}
           @title_text = "Status: '#{params['search']}'"
+        when "group"
+          group = Group.find_by(name: params['search'])
+          @documents = group ? group.documents : []
+          @title_text = "Group: '#{params['search']}'"
       end #end case
     end #end if
 
@@ -154,7 +168,11 @@ class DocumentsController < ApplicationController
         format.html { redirect_to dashboard_path(nav: "mydocuments"), notice: 'Document was successfully created.', anchor: 'created'}
         format.json { render json: @document, status: :created, location: @document }
       else
-        format.html { render action: "new" }
+         flash[:alert] = @document.errors.full_messages.join(", ")
+        # format.html { redirect_to request.referrer }
+
+        #render action: :new keeps on creating new documents, even with the validation. 
+        format.html {render action: "new"}
         format.json { render json: @document.errors, status: :unprocessable_entity }
       end
     end

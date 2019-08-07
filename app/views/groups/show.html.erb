@@ -1,31 +1,24 @@
-<h3> Group: <%= @group.name %></h3>
+<h4Bold> Group: <%= @group.name %></h4Bold>
+<br><br><br>
 
 <% if in_group(params[:id])%>
-
-
-
 <% if @group.ideaSpaceOn %>
-<br>
-<div id="idea-space">
-	<p class="greyText">Idea Space is enabled for this group; Organize annotations there.</p>
-	<a href="http://annotation-studio-idea-space.herokuapp.com/" id='is-link'> Idea Space </a>
-</div>
-<br>
-
+	<button class="btn btn-primary"><a href="http://annotation-studio-idea-space.herokuapp.com/" id='is-link'> Idea Space </a>
+	</button>
 <% end %>
 
 <% unless is_member(params[:id]) %>
-<%= link_to "Manage Group", {:controller=> "groups", :action => "edit", :id => params[:id]}, {:class=> 'btn btn-default'} %>
+<%= link_to "Manage Group", {:controller=> "groups", :action => "edit", :id => params[:id]}, {:class=> 'btn btn-primary'} %>
 <% end %>
 
 <% unless is_owner(params[:id]) %>
-   <%= link_to "Leave", {:controller=> "groups", :action =>"leave", :id => params[:id]}, {:class=> 'btn btn-default', data: {confirm: "Are you sure you want to leave this group?", toggle: 'tooltip', placement: 'top', 
+   <%= link_to "Leave", {:controller=> "groups", :action =>"leave", :id => params[:id]}, {:class=> 'btn btn-primary', data: {confirm: "Are you sure you want to leave this group?", toggle: 'tooltip', placement: 'top', 
           original_title: 'Delete'}} %>
 <% end %>
 
 
 
-<h4> Members </h4> 
+ <br><br>All Members 
 	<table class="member-table">
 		<tr class="member-table-row">
 			<th> Name </th>
@@ -60,25 +53,26 @@ You do not have permission to view this page.
 	}
 	.member-table {
 	  border-collapse: collapse;
-	  width: 50%;
+	  width: 60%;
+	  background-color: white;
 	}
 
 	td, th {
-	  border: 2px solid #dddddd;
+	  border: 2px solid #EFEFEF;
 	  text-align: left;
 	  padding: 5px;
 	}
 
 	.member-table-row:nth-child(even) {
-	  background-color: #ced4de;
+	  background-color: #DFDFDF;
 	}
 
 	#is-link{
-		color:#FCCD03;
-		background-color: black;
-		padding:3px;
-		display:inline-block;
-		margin-right:20px;
+		color:black;
+	}
+
+	#is-link:hover{
+		color:white;
 	}
 
 	a:hover{

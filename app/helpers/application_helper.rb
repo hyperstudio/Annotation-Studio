@@ -101,4 +101,12 @@ module ApplicationHelper
     shared = Document.where(id: docIDs).where.not(state: "draft")
     return shared
   end
+
+  #check valid url for document source
+  def validUrl?(url)
+    #source: https://stackoverflow.com/questions/3809401/
+    #and https://code.tutsplus.com/tutorials/8-regular-expressions-you-should-know--net-6149
+    re =/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/
+    url =~ re ? true : false 
+  end
 end

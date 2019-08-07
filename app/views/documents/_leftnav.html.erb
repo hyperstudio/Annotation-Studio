@@ -28,8 +28,24 @@
 <% if ! @document.edition.blank? %>
   <li>Edition/Volume: <%= @document.edition %></li>
 <% end %>
-<% if ! @document.source.blank? %>
-  <li>Source:<a href="<%= @document.source %>"><%= @document.source %> </a></li>
+
+<% source = @document.source %>
+<% if !source.blank? %>
+  <li>Source:
+    <% if validUrl?(source) && (source.include? 'http') %>
+      <a href="<%= source %>"><%= source %> </a>
+
+    <% elsif validUrl?(source) #append '//' to href %>
+      <% link = '//' + source %>
+        <a href="<%= link %>"><%= source %> </a>
+
+    <% else %>
+      <%= source %>
+
+    <% end %>
+
+
+  </li>
 <% end %>
 <% if ! @document.page_numbers.blank? %>
   <li>Page Numbers: <%= @document.page_numbers %></li>

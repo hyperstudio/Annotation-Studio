@@ -5,7 +5,8 @@ class GroupsController < ApplicationController
 
   def index
   	if params[:search]
-  		@groups = Group.where(["name LIKE ?", "%#{params['search']}%"])
+  		q = "%#{params['search']}%"
+  		@groups = Group.where(["LOWER(name) LIKE ?", q.downcase ])
   	else
   		@groups = current_user.groups
   	end

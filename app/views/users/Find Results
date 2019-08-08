@@ -990,7 +990,7 @@ Searching 1498 files for "background-color"
  3155  }
  3156  .btn-info {
  3157    color: #fff;
- 3158:   background-color: #5bc0de;
+ 3158:   background-color: #337AB7;
  3159    border-color: #46b8da;
  3160  }
  ....
@@ -1002,11 +1002,11 @@ Searching 1498 files for "background-color"
  ....
  3192  .btn-info[disabled].active,
  3193  fieldset[disabled] .btn-info.active {
- 3194:   background-color: #5bc0de;
+ 3194:   background-color: #337AB7;
  3195    border-color: #46b8da;
  3196  }
  3197  .btn-info .badge {
- 3198    color: #5bc0de;
+ 3198    color: #337AB7;
  3199:   background-color: #fff;
  3200  }
  3201  .btn-warning {
@@ -1351,7 +1351,7 @@ Searching 1498 files for "background-color"
  4772:   background-color: #449d44;
  4773  }
  4774  .label-info {
- 4775:   background-color: #5bc0de;
+ 4775:   background-color: #337AB7;
  4776  }
  4777  .label-info[href]:hover,
  4778  .label-info[href]:focus {
@@ -1441,7 +1441,7 @@ Searching 1498 files for "background-color"
  ....
  5049  }
  5050  .progress-bar-info {
- 5051:   background-color: #5bc0de;
+ 5051:   background-color: #337AB7;
  5052  }
  5053  .progress-striped .progress-bar-info {
  ....
@@ -2744,7 +2744,7 @@ Searching 1498 files for "background-color"
  3155  }
  3156  .btn-info {
  3157    color: #fff;
- 3158:   background-color: #5bc0de;
+ 3158:   background-color: #337AB7;
  3159    border-color: #46b8da;
  3160  }
  ....
@@ -2756,11 +2756,11 @@ Searching 1498 files for "background-color"
  ....
  3192  .btn-info[disabled].active,
  3193  fieldset[disabled] .btn-info.active {
- 3194:   background-color: #5bc0de;
+ 3194:   background-color: #337AB7;
  3195    border-color: #46b8da;
  3196  }
  3197  .btn-info .badge {
- 3198    color: #5bc0de;
+ 3198    color: #337AB7;
  3199:   background-color: #fff;
  3200  }
  3201  .btn-warning {
@@ -3105,7 +3105,7 @@ Searching 1498 files for "background-color"
  4772:   background-color: #449d44;
  4773  }
  4774  .label-info {
- 4775:   background-color: #5bc0de;
+ 4775:   background-color: #337AB7;
  4776  }
  4777  .label-info[href]:hover,
  4778  .label-info[href]:focus {
@@ -3195,7 +3195,7 @@ Searching 1498 files for "background-color"
  ....
  5049  }
  5050  .progress-bar-info {
- 5051:   background-color: #5bc0de;
+ 5051:   background-color: #337AB7;
  5052  }
  5053  .progress-striped .progress-bar-info {
  ....

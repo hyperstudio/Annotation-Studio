@@ -52,7 +52,7 @@ class GroupsController < ApplicationController
 		if params['search'] #group member search
 			queryStr = "%" + params['search'].downcase + "%"
 			matches = User.where(["lower(users.firstname) LIKE ?", queryStr]).pluck(:id)
-			@memberships = Membership.includes(:users).where(group_id: params[:id], user_id: matches)
+			@memberships = Membership.includes(:user).where(group_id: params[:id], user_id: matches)
 			
 		else
 			@memberships = @group.memberships

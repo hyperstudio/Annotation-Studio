@@ -1,9 +1,8 @@
 <%= render "/shared/document_titles" %>
 
-<h1>Search Annotations</h1>
+<h4>Search Results</h4>
 
-<p> Query: <%= params['search'] %></p>
-<p> Search Mode: <%= @method %></p>
+<p class="greyText"> Search Annotations by <%= @method %>: <%= params['search'] %></p>
 
 
 
@@ -75,7 +74,7 @@ var query = [];
 <% end #end if @method %>
 
   if (query.length == 0){
-		$(".error").text("No Results Found");
+		$(".error").text("Sorry, No Results Found");
 	}
 });
 
@@ -87,8 +86,9 @@ var query = [];
 
   <span class="user-highlight" id="{{uuid}}">
   <div class="ellipsis"><a href="{{uri}}#hl{{uuid}}">"{{{quote}}}"</a></div>
-  <hr>
+  <br>
 </span>
+<div class="line"></div>
 
 <span class="user-comment"><div class="ellipsis">{{{text}}}</div>
   <span class= "annotation-info">{{formattedDate}} <br>
@@ -110,3 +110,10 @@ var query = [];
   </span> 
 </span>
 </script>
+
+<style>
+.line { width:100%; height:1px; background: #eeeeee; margin-top:-5px; margin-bottom:10px;}
+
+
+
+</style>

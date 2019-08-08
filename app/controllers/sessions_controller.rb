@@ -13,7 +13,6 @@ class SessionsController < Devise::SessionsController
 	 	
 	    #custom logic: pass in :invite_token if found
 		if params[:invite_token]
-			puts 'hi'
 			@location= dashboard_path(invite_token: params[:invite_token])
 		else
 			@location= after_sign_in_path_for(resource)

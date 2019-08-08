@@ -14,22 +14,22 @@ class UsersController < ApplicationController
     per_page = 10
     docs = helpers.getSharedDocs() #see application_helper.rb
 
-    #AUTOCOMPLETE STUFF
+  #AUTOCOMPLETE
 
-      #for document search autocomplete (user's docs and shared group docs)
-      shared_t = docs.pluck(:title)
-      my_t = current_user.documents.pluck(:title)
+    #for document search autocomplete (user's docs and shared group docs)
+    shared_t = docs.pluck(:title)
+    my_t = current_user.documents.pluck(:title)
 
-      @titleSuggestions = shared_t | my_t
-      @authorSuggestions = docs.pluck(:author) | current_user.documents.pluck(:author)
-      @groupSuggestions = current_user.groups.pluck(:name)
+    @titleSuggestions = shared_t | my_t
+    @authorSuggestions = docs.pluck(:author) | current_user.documents.pluck(:author)
+    @groupSuggestions = current_user.groups.pluck(:name)
 
-    #END AUTOCOMPLETE STUFF
-      @sharedDocsCount = docs.size
+  #END AUTOCOMPLETE
+    @sharedDocsCount = docs.size
 
-  #BEGIN AJAX STUFF 
+  #ajax 
 
-    #GROUP SORT AJAX STUFF
+    #GROUP SORT AJAX 
     @groupMode = params[:gPage]
 
     owned = current_user.groups.where(owner_id: current_user.id).paginate(:page => whitelisted[:page], :per_page => per_page)
@@ -71,7 +71,7 @@ class UsersController < ApplicationController
     #toggle ajax option for show.js.erb
     @ajaxOption = params[:dFilter] ? "document" : "group"
 
-  #END AJAX STUFF
+  #END AJAX 
 
     #handling invite_token. need to put here because invite_token is a param of dashboard route
     @token = params[:invite_token]

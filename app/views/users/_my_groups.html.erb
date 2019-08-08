@@ -6,7 +6,7 @@
        <br>
        
         Members: <%= g.memberships.size %> <br>
-
+        Managers: <%= g.memberships.where(role: "manager").size %>
 
        <br>
        <br>

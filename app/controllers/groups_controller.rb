@@ -52,7 +52,7 @@ class GroupsController < ApplicationController
 		if params['search'] #group member search
 			queryStr = "%" + params['search'].downcase + "%"
 			matches = User.where(["lower(users.firstname) LIKE ?", queryStr]).pluck(:id)
-			@memberships = Membership.where(group_id: params[:id], user_id: matches)
+			@memberships = Membership.includes(:users).where(group_id: params[:id], user_id: matches)
 			
 		else
 			@memberships = @group.memberships
@@ -71,7 +71,7 @@ class GroupsController < ApplicationController
 		if user && (!user.groups.include? @group)
 			@group.users << user
 			flash[:alert] = user.fullname + " added."
-			InviteMailer.notify_existing_user(user, @group).deliver_now
+			# InviteMailer.notify_existing_user(user, @group).deliver_now
 		else
 			flash[:alert] = "User not found or already in group."
 		end

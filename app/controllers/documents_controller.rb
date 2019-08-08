@@ -16,31 +16,26 @@ class DocumentsController < ApplicationController
       #this might cause problems when shared docs get REALLY BIG
       all = shared | mine #array
 
-
     if params['search'] && params['search'] != ""
       q = params['search'].downcase
       
       case params['method']
         when "title"
-          # @documents = Document.where(["title LIKE ?", "%#{params['search']}%"])
           @documents = all.select {|d| d.title.downcase.include? q}
           @title_text = "Title: '#{params['search']}'"
         when "author"
-          # @documents = Document.where(["author LIKE ?", "%#{params['search']}%"])
           @documents = all.select {|d| d.author.downcase.include? q}
           @title_text = "Author: '#{params['search']}'"
         when "status"
-          # @documents = Document.where(["state LIKE ?", "%#{params['search']}%"])
           @documents = all.select {|d| d.state.downcase.include? q}
           @title_text = "Status: '#{params['search']}'"
         when "group"
           group = Group.find_by("LOWER(name)= ?", q)
           @documents = group ? group.documents : []
           @title_text = "Group: '#{params['search']}'"
+
       end #end case
     end #end if
-
-    
   end #end index
 
 
@@ -99,8 +94,6 @@ class DocumentsController < ApplicationController
   
   #attach document to groups
     @groups = params["groups"] if params["groups"]
-    # puts "groups"
-    # puts @groups
     @groupList = @groups.split(",")
     if @groups
       @groupList.each do |g|
@@ -129,22 +122,23 @@ class DocumentsController < ApplicationController
   # PUT /documents/1.json
   def update
     @document = Document.friendly.find(params[:id])
+
     #attach document to groups
-    @groups = params["groups"].split(",") if params["groups"]
-    @oldGroups = @document.groups.pluck(:name)
+    #params['groups'] is a string of bootstrap tags separated by ,
+    groups = params["groups"].split(",") if params["groups"]
+    oldGroups = @document.groups.pluck(:name)
 
 
-    #need to loop through oldGroups to find difference!!! 
-    if @groups
-
-      @groups.each do |g|
-        unless @oldGroups.include? g #don't re-insert existing groups
+    #need to loop through oldGroups to find difference
+    if groups
+      groups.each do |g|
+        unless oldGroups.include? g #don't re-insert existing groups
           @document.groups << Group.find_by(name: g)
         end #unless 
       end #each
 
       #delete group from documents
-      diff = @oldGroups - @groups
+      diff = oldGroups - groups
       if !diff.empty?
         diff.each do |d|
           @document.groups.delete(Group.find_by(name: d))
@@ -155,7 +149,6 @@ class DocumentsController < ApplicationController
     
     @document.update_attribute("updated_at", Time.now)
 
-  
 
     respond_to do |format|
       if @document.update_attributes(documents_params)

@@ -1,6 +1,6 @@
 <% unless is_member(params[:id])%>
 
-<h4> Editing <%= @group.name %>  </h4>
+<h4> Editing <%= link_to @group.name, group_path(@group.id) %>  </h4>
 <%= link_to "All Members", :controller => 'groups', :action => 'edit'%>
 
 
@@ -82,7 +82,7 @@
 	<% if !@memberships.empty? %>
 		<% @memberships.each do |m| %>
 			<tr class="member-table-row"> 
-				<% @user = User.find(m.user_id) %>
+				<% @user = m.user %>
 				<td> <%= @user.fullname %></td> <!-- doesn't check for missing last name -->
 				<td> <%= m.role %> </td> 
 				<% if is_owner(params[:id]) %>

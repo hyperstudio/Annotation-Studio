@@ -33,7 +33,7 @@ html {
 }
 
 body {
-  background-color:#eee;
+  background-color:#EFEFEF;
   padding: 100px 0 100px 0;
   margin-bottom: 60px;
 }
@@ -143,8 +143,8 @@ body.index .panel {
 }
 
 body.index .panel-heading {
-  border-bottom: 0;
-}
+  border:none;
+  }
 
 body.index ul.nav-pills li a:hover {
   background-color: #fff;
@@ -207,3 +207,37 @@ img#neh-logo {
     color: #fff;
   }
 }
+
+.chapterButton{
+  background-color:#DDDEE7;
+  padding:7px;
+  border-radius: 3pt;
+  font-weight:normal;
+}
+
+
+
+.metadataStyle{
+  background-color:white;
+  padding:12px;
+  padding-top:5px;
+
+}
+
+.left{
+  width:62%;
+  float:left;
+}
+
+.right{
+  width:35%;
+  backgrond-color:white;
+  float:right;
+
+}
+
+.clearFloat{
+  clear:both;
+}
+
+

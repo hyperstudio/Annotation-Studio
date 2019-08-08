@@ -192,32 +192,36 @@
         myDocuments.style.display = "block";
         $(myDocuments).html("<%= j render 'my_documents' %>");
         $("#current-page").text("My Documents");
+
         $("#current-description").text("Documents Created by Me.")
-        break;
+
 
       case 'shareddocuments':
         var sharedDocuments = document.getElementById("shared-docs");
         $(".content").hide();
         sharedDocuments.style.display = "block";
         $("#current-page").text("Shared Documents");
+
         $("#current-description").text("Documents Shared with My Groups.")
-        break;
+
 
       case 'myannotations':
         var myAnnotations = document.getElementById("my-annotations");
         $(".content").hide();
         myAnnotations.style.display = "block";
         $("#current-page").text("My Annotations");
+
         $("#current-description").text("Annotations Created by Me.")
-        break;
+
 
       case 'sharedannotations':
         var sharedAnnotations = document.getElementById("shared-annotations");
         $(".content").hide();
         sharedAnnotations.style.display = "block";
         $("#current-page").text("Shared Annotations");
+
         $("#current-description").text("Annotations Created by Group Members.")
-        break;
+
 
       case 'mygroups':
         var mygroups = document.getElementById("my-groups");
@@ -225,8 +229,9 @@
         mygroups.style.display = "block";
         $(mygroups).html("<%= j render 'my_groups' %>");
         $("#current-page").text("My Groups");
+
         $("#current-description").text("Groups Created by Me.")
-        break;
+
 
       case 'joinedgroups':
         var joinedGroups = document.getElementById("joined-groups");
@@ -234,8 +239,9 @@
         joinedGroups.style.display = "block";
         $(joinedGroups).html("<%= j render 'joined_groups' %>");
         $("#current-page").text("Joined Groups");
+
         $("#current-description").text("Memberships in Other Groups.")
-        break;
+
       
   } //end switch
 

@@ -1,6 +1,6 @@
 .user-highlight {
-	font-style: italic;
-	font-weight: bold;
+  font-style: italic;
+  font-weight: bold;
 }
 
 .nav-tabs {
@@ -14,6 +14,7 @@
 
 .panel-default {
   margin-top: 30px;
+  border:none;
 }
 
 .note-toolbar-wrapper.panel-default {
@@ -126,6 +127,7 @@
 
 .greyText{
   color:#939393;
+  font-style:normal;
 }
 
 .clearFloat{
@@ -152,4 +154,41 @@
   border-right: 7px solid transparent;
   border-bottom: 7px solid white;
 }
+
+.title {
+  font-weight:bold;
+}
+
+/*.title a{
+  color: #001BA0
+}*/
+
+
+.editButton{
+  background-color:#DDDEE7;
+  border-style:none;
+  border-radius:2px;
+  padding: 0px 10px 0 10px;
+  position:fixed;
+  bottom:40px;
+}
+
+.editButton a{
+  color:black;
+  font-size:8pt;
+}
+
+.column{
+  padding:8px 8px 8px 8px;
+  -webkit-transform: translateZ(0);
+
+}
+
+.pagination-controls{
+  margin-top: 30px;
+}
+
+
+.h_line { width:100%; height:1px; background: #EEEEEE; margin-top:10px; margin-bottom:10px;}
+
 

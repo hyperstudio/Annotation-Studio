@@ -1,198 +1,187 @@
 <% unless is_member(params[:id])%>
-
-<h4> Editing <%= link_to @group.name, group_path(@group.id) %>  </h4>
-<%= link_to "All Members", :controller => 'groups', :action => 'edit'%>
-
-
-<div id="wrapper">
-
-	<div id= "left"> 
-		<%= form_tag({:controller=>'groups', :action => 'edit'}, {:method => 'get'}) do %>
-			<i class="glyphicon glyphicon-search"> </i> <%= text_field_tag :search, params['search'], :style => 'width:55%' %>
-			<%= submit_tag "Search by first name" %>
-
-		<% end %>
-
+<h4Bold> Group Management: <%= @group.name %> </h4Bold><br><br>
+<div id= "left"> 
+        <%= form_tag({:controller=>'groups', :action => 'edit'}, {:method => 'get'}) do %>
+             <%= text_field_tag :search, params['search'], :style => 'width:52%; margin-right:5px;' %>
+            <%= submit_tag "Search by first name", class: "submitButton" %>
+        <% end %>
+        <br>
+        <%= link_to "All Members", :controller => 'groups', :action => 'edit'%>
 <br>
-	</div> <!-- left -->
-
-
-	<div id="right">
-
-		<div class="forms">
-			Add new Member
-			<%= form_for @group do |f| %>
-				Email: <%= email_field_tag "email" %>
-			<%= f.submit "Add" %>
-			<% end %> <!-- form_for -->
-		<br>
-		<br>
-
-
-	<% @i = Invite.find_by(group_id: params[:id]) %>
-
-	<% if @i && (@i.expiration_date.nil? || @i.expiration_date > Time.now) %>
-		<%= label_tag 'Invite Link' %>
-		<%= text_field_tag "Invite Link:", request.base_url + dashboard_path(:invite_token => @i.token).to_s, 
-		{:size =>40, :class => 'copy-link'} %>
-		<%= button_tag 'Copy', {:class =>'copy-button'}%>
-
-	<% else %>
-
-		<% if @i && @i.expiration_date <= Time.now %>
-			<% @i.destroy %>
-		<% end %>
-
-		<%= form_for Invite.new , :url => invites_path do |f| %>
-		    <%= f.hidden_field :group_id, :value => params[:id] %>
-			<%= f.label 'Invite Link' %>    
-			<%= f.submit 'Generate'%>
-		<% end %>
-
-	<% end %>
-
-	<br>
-	<br>
-
-	<% if is_owner(params[:id]) %>
-
-		<%= form_tag :controller=>'groups', :action => 'toggleIS' do %>
-			<%= label_tag :toggleIS, 'Idea Space: ' + @ISstatus %>
-			<%= hidden_field_tag :ideaSpace, 'change' %>
-			<%= hidden_field_tag :group_id, params[:id] %>
-			<%= submit_tag @IStoggle %>
-		<% end %>
-	<% end %>
-
-	</div> <!-- forms -->
-
-	</div> <!-- right -->
-
-</div> <!-- wrapper -->
-
-<br>
+    
 <table class="member-table">
-	<tr class="member-table-row">
-		<th> Name </th>
-		<th> Role </th>
-		<% if is_owner(params[:id]) %>
-			<th> Actions </th>
-		<% end %>
-	</tr>
-	<% if !@memberships.empty? %>
-		<% @memberships.each do |m| %>
-			<tr class="member-table-row"> 
-				<% @user = m.user %>
-				<td> <%= @user.fullname %></td> <!-- doesn't check for missing last name -->
-				<td> <%= m.role %> </td> 
-				<% if is_owner(params[:id]) %>
-					<td> 
-						<% unless m.role == "owner" %>
-							<span class= "action remove"> <%= link_to "Remove from Group", {:controller => "groups", :action => "remove_member", :m_id => m.id, :username => @user.fullname}, {data: {confirm: "Are you sure you want to remove this member?", toggle: 'tooltip', placement: 'top', original_title: 'Remove'}} %>  </span>
-						<% end %>
-
-						<% if m.role == "member" %>
-							<span class= "action promote"> 
-								<%= link_to "Make Manager", :controller => "groups", :action => "promote", :m_id => m.id %> 
-							</span>
-						<% end%>
-
-						<% if m.role == "manager" %>
-							<span class= "action demote"> <%= link_to "Make Member", :controller => "groups", 
-							:action => "demote", :m_id => m.id %>  </span>
-						<% end %>
-							
-					</td>
-				<% end %> <!-- end if is_owner -->
-			</tr>
-		<% end %> <!-- end membership loop -->
-	<% end %> <!-- end if -->
-	
-
+    <tr class="member-table-row">
+        <th> Name </th>
+        <th> Role </th>
+        <% if is_owner(params[:id]) %>
+            <th> Actions </th>
+        <% end %>
+    </tr>
+<% if !@memberships.empty? %>
+    <% @memberships.each do |m| %>
+            <tr class="member-table-row"> 
+                <% @user = User.find(m.user_id) %>
+                <td> <!-- doesn't error check for missing last name -->
+                    <%= @user.fullname %></td>
+                <td> <%= m.role %> </td> 
+                <% if is_owner(params[:id]) %>
+                    <td> 
+                        <% unless m.role == "owner" %>
+                            <span class= "manageAction"> <%= link_to "Remove from Group", :controller => "groups", :action => "remove_member", 
+                                :m_id => m.id, :username => @user.fullname %></span>
+                        <% end %>
+                        <% if m.role == "member" %>
+                            <span class= "manageAction"> 
+                                <%= link_to "Make Manager", :controller => "groups", :action => "promote", 
+                                :m_id => m.id %> 
+                            </span>
+                        <% end%>
+                        <% if m.role == "manager" %>
+                            <span class= "action demote"> <%= link_to "Demote to Member", :controller => "groups", 
+                            :action => "demote", :m_id => m.id %>  </span>
+                        <% end %>
+                            
+                    </td>
+                <% end %> <!-- end if -->
+            </tr>
+    <% end %> <!-- end loop -->
+<% end %> <!-- end if -->
+    
 </table>
+</div> <!-- left -->
+<div id="right">
+<br><br>
+        <div class="forms">
+            <strong>Add Member by E-mail</strong>
+            <p class="greyText">Gruop members can annotate documents and see annotations shared with the group.</p>
+            <%= form_for @group do |f| %>
+                Email: <%= email_field_tag "email" %>
+            <%= f.submit "Add", class: "manageAction"%>
+            <% end %> <!-- form_for -->
+        <br>
+        <br>
+    <% @i = Invite.find_by(group_id: params[:id]) %>
 
+    <% if @i && (@i.expiration_date.nil? || @i.expiration_date > Time.now) %>
+
+        <%= label_tag 'Generate Invite Link' %>
+        <p class="greyText">Send this link to registered or new users</p>
+        <%= text_field_tag "Generate Invite Link:", request.base_url + dashboard_path(:invite_token => @i.token).to_s, {:size =>40, :class => 'copy-link'} %>
+        <%= button_tag 'Copy', {:class =>'manageAction', :id=> 'copy-button'}%>
+
+    <% else %>
+
+        <% if @i && @i.expiration_date <= Time.now %>
+            <% @i.destroy %>
+        <% end %>
+
+        <%= form_for Invite.new , :url => invites_path do |f| %>
+            <%= f.hidden_field :group_id, :value => params[:id] %>
+        <%= f.label 'Generate Invite Link' %>    
+        <p class="greyText">Send this link to registered or new users.</p>
+        <%= f.submit 'Generate'%>
+        <% end #form_for %>
+    <% end #if @i %>
+    
+    <br>
+    <br>
+        <% if is_owner(params[:id]) %>
+            <%= form_tag :controller=>'groups', :action => 'toggleIS' do %>
+                <%= label_tag :toggleIS, 'Idea Space: ' + @ISstatus %>
+                
+                <p class="greyText">Enable or disable Idea Space for your groups.</p>
+            
+                <%= hidden_field_tag :ideaSpace, 'change' %>
+                <%= hidden_field_tag :group_id, params[:id] %>
+                <%= submit_tag @IStoggle, class: "manageAction" %>
+            <% end %>
+        <% end %>
+    </div> <!-- forms -->
+    </div> <!-- right -->
 <script>
-	//for invite link copy to clipboard
-	//source: https://stackoverflow.com/questions/400212/how-do-i-copy-to-the-clipboard-in-javascript
-
-	var copyButton = document.querySelector('.copy-button');
-
-	copyButton.addEventListener('click', function(event){
-
-		var copyLink = document.querySelector('.copy-link');
-		copyLink.focus();
-		copyLink.select();
-
-		try{
-			var successful = document.execCommand('copy');
-			var msg = successful ? 'successful' : 'unsuccessful';
-			console.log(msg);
-		} catch (err){
-			console.log('unable to copy')
-		}
-
-	});
-
+    //for invite link copy to clipboard
+    //source: https://stackoverflow.com/questions/400212/how-do-i-copy-to-the-clipboard-in-javascript
+    var copyButton = document.getElementById('copy-button');
+    copyButton.addEventListener('click', function(event){
+        var copyLink = document.querySelector('.copy-link');
+        copyLink.focus();
+        copyLink.select();
+        try{
+            var successful = document.execCommand('copy');
+            var msg = successful ? 'successful' : 'unsuccessful';
+            console.log(msg);
+        } catch (err){
+            console.log('unable to copy')
+        }
+    });
 </script>
-
-
-
-	<style>
-
-	.member-table {
-	  border-collapse: collapse;
-	  width: 50%;
-	  height:250px;
-	  overflow-y:scroll;
-	  display:block;
-	}
-
-	td, th {
-	  border: 2px solid #dddddd;
-	  text-align: left;
-	  padding: 5px;
-	}
-
-	/*.member-table-row:nth-child(even) {
-	  background-color: #ced4de;
-	}*/
-
-	.member-table-row{
-		background-color: white;
-	}
-
-	.action {
-		padding: 3px;
-		margin-left: 3px;
-	}
-
-	.copy-button{
-	background-color:#ffed29;
-	}
-
-	#wrapper{
-		margin: 0 auto;
-		position: relative;
-	}
-
-
-	#right{
-		float:right;
-	}
-
-	.forms{
-		float:left;
-	}
-
-	#left{
-		width:65%;
-	}
-
-	</style>
-
-<% else #not allowed to see this page %>
-
+    <style>
+    .member-table {
+      border-collapse: collapse;
+      width: 200%;
+      
+      overflow-y:scroll;
+      display:block;
+    }
+    td, th {
+      border: 2px solid #eeeeee;
+      text-align: left;
+      padding-top:6px;
+      padding-bottom: 6px;
+      padding-left:15px;
+      padding-right: 40px;
+    }
+    /*.member-table-row:nth-child(even) {
+      background-color: #ced4de;
+    }*/
+    .member-table-row{
+        background-color: white;
+        padding:3px;
+    }
+    .action {
+        padding: 3px;
+        margin-left: 3px;
+    }
+    .copy-button{
+    background-color:#DDDEE7;
+    }
+    #wrapper{
+        margin: 0 auto;
+        position: relative;
+    }
+    #right{
+        float:right;
+        width: 35%;
+    }
+    .forms{
+        float:left;
+    }
+    #left{
+        width:65%;
+        float: left;
+    }
+    .submitButton{
+        background-color:#DDDEE7;
+        border:none;
+        border-radius: 3px;
+    }
+    .manageAction{
+        background-color: #DDDEE7;
+        margin-right: 10px;
+        padding-right: 7px;
+        padding-left: 7px;
+        padding-top:5px: 
+        padding-bottom:5px;
+        border-radius: 5px;
+        border:none;
+    }
+    .manageAction a{
+        color:black;
+    }
+    .manageAction a:hover{
+        text-decoration: none;
+    }
+    </style>
+<% else %>
 You do not have permission to view this page
-
 <% end %>
-

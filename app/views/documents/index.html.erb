@@ -1,6 +1,5 @@
-<h4> Search Result </h4>
+<h1> Search By <%= @title_text %> </h1>
 
-<p class="greyText"> Search Documents by: <%= @title_text %> </p>
 <div class="row">
 
   <% @documents.each do |doc| %>
@@ -9,23 +8,15 @@
        
        <span class="title"><%= link_to doc.title, document_path(id: doc.id) %> </span>
        <br>
-       
+       <br>
 
         <div class="tile-content"> 
-          <div class="line"></div>
 
-          <% if doc.author != "" %>
-        Author: <%= doc.author  %> <br>
-        <%end%>
-        
-      <% if doc.publication_date && doc.publication_date != "" %>
-        Date: <%= doc.publication_date %> <br> 
-      <% end %>
+        <%= 'Author: '+ doc.author if doc.author != "" && doc.author %> <br> 
       
+       Created: <%= doc.created_at.strftime("%m/%d/%Y") %> <br> 
        
-                    <% if !doc.groups.empty? %> 
        Groups: <%= doc.groups.pluck(:name).join(", ") %> <br>
-       <% end %>
 
        Status: 
        <span id="status-icon"> 
@@ -46,9 +37,8 @@
      </div> <!-- tile-content-->
 
        <br>
-       <% if doc.state == 'draft'%>
-       <button class="editButton"><%= link_to "Edit", controller: "documents", action: "edit", id: doc.id if doc.user == current_user %></button>
-       <% end %>
+
+       <%= link_to "Edit", controller: "documents", action: "edit", id: doc.id if doc.user == current_user %>
     </div> <!-- end column -->
 
   <% end %> <!-- end doc loop -->
@@ -83,7 +73,4 @@
 	  text-overflow: ellipsis;
 	  overflow: hidden;
 	}
-
-  .line { width:100%; height:2px; background: #eeeeee; margin-top:10px; margin-bottom:10px;}
-</style>
 </style>

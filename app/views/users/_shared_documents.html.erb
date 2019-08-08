@@ -1,27 +1,22 @@
 <div class="row">
 
-  <% @newDoc = false%>
   <% @sharedDocs.each do |doc| %>
 
     <div class= "column"> 
        
        <span class="title"><%= link_to doc.title, document_path(id: doc.id) %> </span>
-       <div class="h_line"></div>
+       <br>
+       <br>
 
         <div class="tile-content"> 
 
-          <% if doc.author != "" %>
-        Author: <%= doc.author  %> <br>
-        <%end%>
-
+        <%= 'Author: '+ doc.author if doc.author != "" %> <br> 
       
-           <% if doc.publication_date && doc.publication_date != "" %>
+       <% if doc.publication_date && doc.publication_date != "" %>
         Date: <%= doc.publication_date %> <br> 
       <% end %>
        
-             <% if !doc.groups.empty? %> 
        Groups: <%= doc.groups.pluck(:name).join(", ") %> <br>
-       <% end %>
 
        Status: 
        <span id="status-icon"> 

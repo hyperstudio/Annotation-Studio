@@ -1,8 +1,9 @@
 <%= render "/shared/document_titles" %>
 
-<h4>Search Results</h4>
+<h1>Search Annotations</h1>
 
-<p class="greyText"> Search Annotations by <%= @method %>: <%= params['search'] %></p>
+<p> Query: <%= params['search'] %></p>
+<p> Search Mode: <%= @method %></p>
 
 
 
@@ -48,7 +49,7 @@ var query = [];
 	    'subgroups': "<%= current_user.rep_subgroup_list %>".split(/, /),
 	    'host': location.host,
 	    'user': query[i],
-	    'mode': 'user',
+	    'mode': 'userSearch',
 	    //local API: 'mode': 'userSearch'
 	    'context': 'dashboard',
 	  };
@@ -74,7 +75,7 @@ var query = [];
 <% end #end if @method %>
 
   if (query.length == 0){
-		$(".error").text("Sorry, No Results Found");
+		$(".error").text("No Results Found");
 	}
 });
 
@@ -86,9 +87,8 @@ var query = [];
 
   <span class="user-highlight" id="{{uuid}}">
   <div class="ellipsis"><a href="{{uri}}#hl{{uuid}}">"{{{quote}}}"</a></div>
-  <br>
+  <hr>
 </span>
-<div class="line"></div>
 
 <span class="user-comment"><div class="ellipsis">{{{text}}}</div>
   <span class= "annotation-info">{{formattedDate}} <br>
@@ -110,10 +110,3 @@ var query = [];
   </span> 
 </span>
 </script>
-
-<style>
-.line { width:100%; height:1px; background: #eeeeee; margin-top:-5px; margin-bottom:10px;}
-
-
-
-</style>

@@ -1,44 +1,42 @@
-<h4Bold> Group: <%= @group.name %></h4Bold>
-<br><br><br>
+<h1> <%= @group.name %></h1>
 
 <% if in_group(params[:id])%>
-<% if @group.ideaSpaceOn %>
-	<button class="btn btn-primary"><a href="http://annotation-studio-idea-space.herokuapp.com/" id='is-link'> Access Idea Space </a>
-	</button>
-<% end %>
 
-<% unless is_member(params[:id]) %>
-<%= link_to "Manage Group", {:controller=> "groups", :action => "edit", :id => params[:id]}, {:class=> 'btn btn-primary'} %>
-<% end %>
+	<div id="action-buttons">
+		<% if @group.ideaSpaceOn %>
+		<div id="idea-space">
+			<a href="http://annotation-studio-idea-space.herokuapp.com/" id='is-link' target="_blank"> Idea Space </a>
+		</div>
 
-<% unless is_owner(params[:id]) %>
-   <%= link_to "Leave", {:controller=> "groups", :action =>"leave", :id => params[:id]}, {:class=> 'btn btn-primary', data: {confirm: "Are you sure you want to leave this group?", toggle: 'tooltip', placement: 'top', 
-          original_title: 'Delete'}} %>
-<% end %>
-
-
-
- <br><br>All Members 
-	<table class="member-table">
-		<tr class="member-table-row">
-			<th> Name </th>
-			<th> Role </th>
-		</tr>
-	<% if !@memberships.empty? %>
-	<% @memberships.each do |m| %>
-			<tr class="member-table-row"> 
-				<% @user = User.find(m.user_id) %>
-				<td> <%= @user.firstname + " " + @user.lastname[0] + "." %></td>
-
-				<td> <%= m.role %> </td> 
-			</tr>
 		<% end %>
-	<% end %>
-	</table>
 
+		<% unless is_member(params[:id]) %>
+		<%= link_to "Manage Group", {:controller=> "groups", :action => "edit", :id => params[:id]}, {:class=> 'btn btn-default'} %>
+		<% end %>
 
+		<% unless is_owner(params[:id]) %>
+		   <%= link_to "Leave", {:controller=> "groups", :action =>"leave", :id => params[:id]}, {:class=> 'btn btn-default', data: {confirm: "Are you sure you want to leave this group?", toggle: 'tooltip', placement: 'top', 
+		          original_title: 'Delete'}} %>
+		<% end %>
+	</div>
+ 
+		<h2> Members </h2> 
+		<table class="member-table">
+			<tr class="member-table-row">
+				<th> Name </th>
+				<th> Role </th>
+			</tr>
+		<% if !@memberships.empty? %>
+		<% @memberships.each do |m| %>
+				<tr class="member-table-row"> 
+					<% @user = User.find(m.user_id) %>
+					<td> <%= @user.firstname + " " + @user.lastname[0] + "." %></td>
 
-
+					<td> <%= m.role %> </td> 
+				</tr>
+			<% end %>
+		<% end %>
+		</table>
 
 <% else %>
 
@@ -48,37 +46,38 @@ You do not have permission to view this page.
 
 
 	<style>
-	#idea-space {
-		
-	}
+
 	.member-table {
 	  border-collapse: collapse;
-	  width: 60%;
-	  background-color: white;
+	  width: 50%;
+	  background-color:white;
+	  height:250px;
+	  overflow-y:scroll;
+	  display:block;
 	}
 
 	td, th {
-	  border: 2px solid #EFEFEF;
+	  border: 2px solid #dddddd;
 	  text-align: left;
 	  padding: 5px;
-	}
-
-	.member-table-row:nth-child(even) {
-	  background-color: #DFDFDF;
+	  width:100%;
 	}
 
 	#is-link{
-		color:black;
-	}
-
-	#is-link:hover{
-		color:white;
+		color:#FCCD03;
+		background-color: black;
+		padding:3px;
+		display:inline-block;
+		margin-right:20px;
 	}
 
 	a:hover{
 		text-decoration: none;
 	}
 
+	#action-buttons{
+		display:flex;
+	}
 
 	</style>
 

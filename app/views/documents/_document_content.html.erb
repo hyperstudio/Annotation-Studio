@@ -1,11 +1,11 @@
 
 <% if controller.action_name == "new" or @document.draft? %>
-	
+	<h4>Content</h4>
 
-	<div class="panel-group" id="accordion" >
-		<div class="panel panel-default" >
-			<div class="panel-heading" style="background-color: #DFDFDF;">
-				<h4 class="panel-title" >
+	<div class="panel-group" id="accordion">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h4 class="panel-title">
 					<a data-toggle="collapse" data-parent="#accordion" href="#paster">
 						Paste or type directly into the form
 					</a>
@@ -17,7 +17,7 @@
 					<%= f.label :text %>
 					<%= f.text_area :text, :class => 'form-control text-area', :size => "18x18" %>
 					<br>
-					<label id="chapter-label" for="chapters" class="chapterButton">Add Chapters</label>
+					<label id="chapter-label" for="chapters" class="btn btn-default">Add Chapters</label>
 
 					<div id="chapter-editor">
 						<p class="help-block">For chapters links to work, insert named anchors in the text above, in the
@@ -31,7 +31,3 @@
 		</div>
 	</div>
 <% end %>
-
-
-
-<!--stylesheet: application.css.scss-->

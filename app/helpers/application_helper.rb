@@ -74,23 +74,40 @@ module ApplicationHelper
   end
 
 
-def is_manager(group_id)
-  if !Group.find(group_id).nil?
-      @relation = Membership.find_by(group_id: group_id, user_id: current_user.id)
-      return !@relation.nil? && @relation.role == 'manager'
+  def is_manager(group_id)
+    if Group.find(group_id)
+        relation = Membership.find_by(group_id: group_id, user_id: current_user.id)
+        return !relation.nil? && relation.role == 'manager'
+    end
+      false #if group is not found. 
   end
-    false #if group is not found. 
-end
 
-def is_member(group_id)
-  if !Group.find(group_id).nil?
-      @relation = Membership.find_by(group_id: group_id, user_id: current_user.id)
-      return !@relation.nil? && @relation.role == 'member'
+  def is_member(group_id)
+    if !Group.find(group_id).nil?
+        relation = Membership.find_by(group_id: group_id, user_id: current_user.id)
+        return !relation.nil? && relation.role == 'member'
+    end
+      false #if group is not found. 
   end
-    false #if group is not found. 
-end
 
-def in_group(group_id)
-    !Membership.find_by(group_id: group_id, user_id: current_user.id).nil? 
-end
+  def in_group(group_id)
+      !Membership.find_by(group_id: group_id, user_id: current_user.id).nil? 
+  end
+
+  #get all docs shared with current_user's groups
+  def getSharedDocs()
+    joined = current_user.groups.pluck(:id)
+    docIDs = DocumentsGroup.where(group_id: joined).pluck(:document_id).uniq
+    shared = Document.where(id: docIDs).where.not(state: "draft")
+    # shared = Document.where.not(state: "draft").includes(:groups).where('groups.id': joined).references(:groups)
+    return shared
+  end
+
+  #validate url for document source
+  def validUrl?(url)
+    #source: https://stackoverflow.com/questions/3809401/
+    #and https://code.tutsplus.com/tutorials/8-regular-expressions-you-should-know--net-6149
+    re =/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/
+    url =~ re ? true : false 
+  end
 end

@@ -2,6 +2,23 @@
 <%= content_for :body_class, 'show' %>
 <%= content_for :page_title, @document.title %>
 <%= stylesheet_link_tag "documents" %>
+
+ <nav class="navbar navbar-default navbar-fixed-top hidden-xs" id="lower-navbar" style="background-color:#eeeeee;">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-8">
+            <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-recalc="false" data-target="#mainmenu" id="leftburger" title="Navigation"><i class="fa fa-bars"></i></button>
+            
+          </div>
+          <div class="col-md-4">
+            <%= render "shared/annotation_header" %>
+            <button type="button" class="navbar-toggle pull-right" data-toggle="offcanvas" data-recalc="false" data-target="#toolsmenu" id="rightburger" title="Tools"><i class="fa fa-gears"></i></button>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+
 <div class="row">
   <div class="col-md-8">
     <% if ! @document.processed? %>

@@ -1,91 +1,113 @@
-<div style="padding-left:50px; padding-top:35px; z-index: 1;" >
+<div style="padding-left:30px; z-index: 1;" >
 
-
-<!--Group search and sort-->
 <% if params[:nav] && (params[:nav].include? "groups") %>
 
 <h4> Groups Search </h4>
 
 <%= form_tag groups_path, :method => 'get' do %>
-	<p class="greyText">Search by Group name</p>
-	<%= text_field_tag 'search', nil, id: 'dash-groups-search', class: "searchTextField" %>
-	<%= submit_tag "Search" , class: "submit"%>
+	<%= label_tag 'Search by Group name' %>
+	<%= text_field_tag 'search', nil, id: 'dash-groups-search' %>
+	<%= submit_tag "Search" %>
 <% end #form_tag %>
-<br>
 
 <h4> Sort </h4>
 	<%= form_tag groups_path, :method => 'get', :data => {remote: true} do %>
-		<table >
+		<table class="search-options">
 			<tr>
-				<td class="radioButton"> <%= radio_button_tag 'time', 'timeASC', nil, onchange: "groupSort(this)"%> 
-				 Time Ascending (oldest first) </td>
-			</tr>
-			<tr>
-				<td class="radioButton"><%= radio_button_tag 'time', 'timeDESC', true, onchange: "groupSort(this)" %>
-				Time Descending (newest first) </td>
+				<td><%= radio_button_tag 'time', 'timeDESC', true, onchange: "groupSort(this)", class: 'radio' %></td>
+				<td> <%= label_tag 'Time Descending' %> (newest first) </td>
 
 			</tr>
+
+			<tr>
+				<td> <%= radio_button_tag 'time', 'timeASC', nil, onchange: "groupSort(this)", class: 'radio'%> </td>
+				<td> <%= label_tag 'Time Ascending' %> (oldest first) </td>
+			</tr>
+			
 		</table>
 
 	<% end %>
 
-<!--annotation search-->
 <% elsif params[:nav] && (params[:nav].include? "annotations") %>
 
 	<h4> Annotations Search </h4>
-	<p class="greyText" > Search by: </p>
+	<p class="help-block"> Search by: </p>
 
 	<%= form_tag :controller=> 'annotations', :action=> 'search' do %>
 		<table>
 			<tr> 
-				<td class="radioButton"><%= radio_button_tag 'method', "user", true %> 
-				 Annotator's first name </td>
+				<td><%= radio_button_tag 'method', "user", true %> </td>
+				<td><%= label_tag "Annotator's first name " %></td>
 			</tr>
 			<tr>
-				<td class="radioButton"><%= radio_button_tag 'method', 'groups' %> 
-				Groups (only shared annotations)</td>
+				<td><%= radio_button_tag 'method', 'groups' %> </td>
+				<td> <%= label_tag "Groups (only shared annotations)" %></td>
 			</tr>
 		</table>
-		<br>
-		
-		<%= text_field_tag 'search', nil, id: 'dash-annotations-search', class: "searchTextField" %>
-		<%= submit_tag "Search", class: "submit" %>
+
+		<%= label_tag "Search" %>
+		<%= text_field_tag 'search', nil, id: 'dash-annotations-search' %>
+		<%= submit_tag "Search" %>
 <% end #form_tag %>
 
 
-
-<!--document search-->
 <% else %>
 
 <h4> Documents Search </h4>
 
 <%= form_tag documents_path, :method => 'get' do %>
-	<p class="greyText"> Search by: </p>
-
-
-
-
-	<table class="radioButtonTable">
-		<tr > 
-			<td class="radioButton"><%= radio_button_tag 'method', 'title', true, onchange: "opt(this)"%> Title</td>
+	<p class="help-block"> Search by: </p>
+	<table>
+		<tr> 
+			<td><%= radio_button_tag 'method', 'title', true, onchange: "opt(this)" %> </td>
+			<td><%= label_tag "Title" %></td>
 		</tr>
-		<tr >
-			<td class="radioButton"><%= radio_button_tag 'method', 'author', nil, onchange: "opt(this)" %> Author</td>
+		<tr>
+			<td><%= radio_button_tag 'method', 'author', nil, onchange: "opt(this)" %> </td>
+			<td> <%= label_tag "Author" %></td>
 		</tr>
-		<tr >
-			<td class="radioButton"> <%= radio_button_tag 'method', 'status', nil, onchange: "opt(this)" %> Status</td>
+		<tr> 
+			<td> <%= radio_button_tag 'method', 'status', nil, onchange: "opt(this)" %> </td>
+			<td> <%= label_tag "Status" %> </td>
 		</tr>
-	</table><br>
+		<tr> 
+			<td> <%= radio_button_tag 'method', 'group', nil, onchange: "opt(this)" %> </td>
+			<td> <%= label_tag "Group" %> </td>
+		</tr>
+	</table>
 
-	<%= text_field_tag 'search', nil, id: 'dash-documents-search', class: "searchTextField" %>
-	<%= submit_tag "Search", class: "submit" %>
+	<%= text_field_tag 'search', nil, id: 'dash-documents-search' %>
+	<%= submit_tag "Search" %>
 
+	<h4> Sort </h4>
+		<%= form_tag documents_path, :method => 'get', :data => {remote: true} do %>
 
+			<table class="search-options">
+				<tr>
+					<td><%= radio_button_tag 'filter', 'timeDESC', true, onchange: "docSort(this)", class: 'radio' %></td>
+					<td> <%= label_tag :title, 'Newest first' %> </td>
+				</tr>
 
-<% end #form_tag %>
+				<tr>
+					<td> <%= radio_button_tag 'filter', 'timeASC', nil, onchange: "docSort(this)", class: 'radio'%> </td>
+					<td> <%= label_tag :title, 'Oldest first' %> </td>
+				</tr>
+				<tr>
+					<td> <%= radio_button_tag 'filter', 'A-Z', nil, onchange: "docSort(this)", class: 'radio'%> </td>
+					<td> <%= label_tag :title, 'A-Z' %> </td>
+				</tr>
+				<tr>
+					<td> <%= radio_button_tag 'filter', 'Z-A', nil, onchange: "docSort(this)", class: 'radio'%> </td>
+					<td> <%= label_tag :title, 'Z-A' %> </td>
+				</tr>
 
+			</table>
+
+		<% end #sort form_tag%>
+	<% end #form_tag %>
 
 <% end %>
+
 </div>
 
 <script>
@@ -95,32 +117,38 @@
 		source: <%= raw(@titleSuggestions) %>
 	});
 
-	//onchange function for doc radio buttons
+	//onchange function for doc search method
 	function opt(obj){
 		var selected = obj.value;
 		var data;
-	if(selected == 'author'){
-		data = <%= raw(@authorSuggestions) %>;
-	}else if(selected == 'status') {
-		data = ["published", "draft", "archived"];
-	}else{
-		data = <%= raw(@titleSuggestions) %>;
-	}
+		switch(selected){
+			default: 
+				data = <%= raw(@titleSuggestions) %>;
+				break;
+			case 'author':
+				data = <%= raw(@authorSuggestions) %>;
+				break;
+			case 'status':
+				data = ["published", "draft", "archived"];
+				break;
+			case 'group':
+				data = <%= raw(@groupSuggestions) %>;
+		} //end switch
 
-	$("#dash-documents-search").autocomplete({
-		source: data
-	});
+		$("#dash-documents-search").autocomplete({
+			source: data
+		}); //end autocomplete
 		
 	} //end opt
 
 	//group sort/filter ajax
 	function groupSort(obj){
 		var selected = obj.value;
-		var page = "<%= params[:nav]%>"
+		var location = "<%= params[:nav]%>"
 		$.ajax({
 		    url: "/dashboard",
 		    type: "GET",
-		    data: {filter: selected, location: page},
+		    data: {filter: selected, gPage: location},
 		    dataType: 'script'
 		}); //end ajax
 	}
@@ -131,11 +159,17 @@
 	});
 
 
-	
-
-
-
-
+	//doc sort/filter ajax
+	function docSort(obj){
+		var selected= obj.value;
+		var location = "<%= params[:nav]%>"
+		$.ajax({
+			url: "/dashboard",
+		    type: "GET",
+		    data: {dFilter: selected, dPage: location},
+		    dataType: 'script'
+		});
+	}
 
 	
 
@@ -153,7 +187,7 @@
 	}
 
 	.ui-state-focus{
-		background-color: #EEEEEE;
+		background-color: #FCEE02;
 	}
 
 	ul.ui-autocomplete{
@@ -162,7 +196,7 @@
 		z-index:1000;
 		position:relative;
 		list-style:none;
-		border: solid 1px #EEEEEE;
+		border: solid 1px gray;
 		cursor:default;
 		float:right;
 	}
@@ -173,32 +207,6 @@
 		padding: 5px;
 	}
 
-	.radioButtonTable {
-		width: 75%;
-	}
-
-	.radioButton{
-		background-color: #EEEEEE;
-		border: 1px solid #DFDFDF;
-		padding:2px 10px 2px 10px;
-		margin-bottom:5px;
-		
-	}
-
-	.submit{
-		background-color: #FCCE02;
-		border-style: none;
-		border-radius: 5pt;
-	}
-
-	.searchTextField{
-		border-radius: 3pt;
-		border: 1px solid #EEEEEE;
-	}
-
-
-
-	
 
 
 </style>

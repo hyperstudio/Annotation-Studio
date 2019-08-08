@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190731184827) do
+ActiveRecord::Schema.define(version: 20190806205016) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -77,11 +77,11 @@ ActiveRecord::Schema.define(version: 20190731184827) do
   end
 
   create_table "documents", force: :cascade do |t|
-    t.string   "title",               limit: 255
+    t.string   "title"
     t.text     "text"
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
-    t.string   "author",              limit: 255
+    t.datetime "created_at",                                        null: false
+    t.datetime "updated_at",                                        null: false
+    t.string   "author"
     t.datetime "year_published"
     t.string   "edition",             limit: 255
     t.string   "publisher",           limit: 255
@@ -106,6 +106,7 @@ ActiveRecord::Schema.define(version: 20190731184827) do
     t.string   "location"
     t.string   "journal_title"
     t.text     "notes"
+    t.string   "resource_type",                   default: "Other"
     t.index ["slug"], name: "index_documents_on_slug", unique: true, using: :btree
   end
 
@@ -276,4 +277,6 @@ ActiveRecord::Schema.define(version: 20190731184827) do
   end
 
   add_foreign_key "groups", "users", column: "owner_id"
+  add_foreign_key "memberships", "groups"
+  add_foreign_key "memberships", "users"
 end

@@ -1,0 +1,57 @@
+// Place all the styles related to the annotations controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.user-highlight {
+  font-style: italic;
+  font-weight: bold;
+}
+
+#annotation-list li {
+  margin:0 8px;
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+}
+
+#annotation-list {
+  border: 1px solid #dddddd;
+  border-collapse: separate;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+}
+
+.viewer_indicator {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  margin: 0px 15px 0px 5px;
+}
+
+.annotator-item button.btn {
+  margin: 5px;
+  padding: 2px 5px;
+}
+.annotator-item button.btn-default:focus {
+  background-color: #FFF;
+  outline: none;
+}
+
+.row{
+  display:flex;
+  flex-wrap: wrap;
+}
+.column{
+  background-color: white;
+  float: left;
+  width: 17%;
+  height: 220px;
+  padding:5px;
+  margin:2% 1% 0;
+}
+
+.error{
+  font-weight:bold;
+  margin-left: 15px;
+}

@@ -1,0 +1,119 @@
+<%= render "/shared/document_titles" %>
+
+<h4>Search Results</h4>
+
+<p class="greyText"> Search Annotations by <%= @method %>: <%= params['search'] %></p>
+
+
+
+<div id="annotations-search-results" class="row">
+	<p class="error"></p>
+</div>
+
+<%= javascript_include_tag "widget" %>
+<script type="text/javascript" charset="utf-8">
+jQuery(function ($) {
+  var widget = new Widget.App();
+  var endpoint = '<%= ENV["API_URL"] %>';
+  var token = '<%= session["jwt"] %>';
+  // Backbone.history.start({pushState: true, root: window.location})
+
+var groups=[];
+
+<% current_user.groups.each do |g| %>
+  groups.push("<%=g.name %>");
+<% end %>
+
+var query = [];
+
+//for loop handles users with conflicting first names
+<% if @method == 'user' %>
+
+	<% if !User.where(firstname: params['search']).blank? %>
+		<% users = User.where(firstname: params['search']) %>;
+
+		//only show results if user shares common group with current_user
+		<% users.each do |u| %>
+			<% if (u.groups & current_user.groups).size > 0 %>
+				query.push("<%= u.email %>");
+			<% end #end if %> 
+		<% end #end do %>
+	<% end #end if%>
+
+	var i;
+	for (i =0; i < query.length; i++){
+		var searchLoadOptions = {
+	    'limit': 100,
+	    'groups': "<%= current_user.rep_group_list %>".split(/, /),
+	    'subgroups': "<%= current_user.rep_subgroup_list %>".split(/, /),
+	    'host': location.host,
+	    'user': query[i],
+	    'mode': 'userSearch',
+	    //local API: 'mode': 'userSearch'
+	    'context': 'dashboard',
+	  };
+
+	  widget.listAnnotations('annotations-search-results', searchLoadOptions, endpoint, token);
+	} //end for
+
+	 
+<% else %>
+	query = ["<%= params['search'] %>"]
+	var searchLoadOptions = {
+	    'limit': 100,
+	    'groups': query,
+	    'subgroups': "<%= current_user.rep_subgroup_list %>".split(/, /),
+	    'host': location.host,
+	    'user': "<%= current_user.email%>",
+	    'mode': 'class',
+	    'context': 'dashboard',
+	  };
+	 widget.listAnnotations('annotations-search-results', searchLoadOptions, endpoint, token);
+
+
+<% end #end if @method %>
+
+  if (query.length == 0){
+		$(".error").text("Sorry, No Results Found");
+	}
+});
+
+	
+
+</script>
+<script type="text/template" id="user-comment-template">
+
+
+  <span class="user-highlight" id="{{uuid}}">
+  <div class="ellipsis"><a href="{{uri}}#hl{{uuid}}">"{{{quote}}}"</a></div>
+  <br>
+</span>
+<div class="line"></div>
+
+<span class="user-comment"><div class="ellipsis">{{{text}}}</div>
+  <span class= "annotation-info">{{formattedDate}} <br>
+    Document: {{title}} <br>
+    Annotator: {{username}}
+  </span> 
+  </span>
+  
+</script>
+
+<script type="text/template" id="user-highlight-template">
+  <span class="user-highlight"><div class="ellipsis"><a href="{{uri}}#hl{{uuid}}">{{{quote}}}</a></div>
+  <hr>
+  </span>
+  <span class="user-comment">
+    <span class= "annotation-info">{{formattedDate}} <br>
+    Document: {{title}} <br>
+    Annotator: {{username}}
+  </span> 
+</span>
+</script>
+
+<style>
+.line { width:100%; height:1px; background: #eeeeee; margin-top:-5px; margin-bottom:10px;}
+
+
+
+</style>

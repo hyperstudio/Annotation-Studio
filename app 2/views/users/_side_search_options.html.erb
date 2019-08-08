@@ -1,0 +1,236 @@
+<div style="padding-left:50px; padding-top:35px; z-index: 1;" >
+
+
+<!--Group search and sort-->
+<% if params[:nav] && (params[:nav].include? "groups") %>
+
+<h4> Groups Search </h4>
+
+<%= form_tag groups_path, :method => 'get' do %>
+	<p class="greyText">Search by Group name</p>
+	<%= text_field_tag 'search', nil, id: 'dash-groups-search', class: "searchTextField" %>
+	<%= submit_tag "Search" , class: "submit"%>
+<% end #form_tag %>
+<br>
+
+<h4> Sort </h4>
+    <%= form_tag groups_path, :method => 'get', :data => {remote: true} do %>
+        <table >
+            <tr>
+                <td class="radioButton"> <%= radio_button_tag 'time', 'timeASC', nil, onchange: "groupSort(this)"%> 
+                 <%= label_tag :title, 'Time Ascending (oldest first)' %> </td>
+            </tr>
+            <tr>
+                <td class="radioButton"><%= radio_button_tag 'time', 'timeDESC', true, onchange: "groupSort(this)" %>
+                <%= label_tag :title, 'Time Descending (newest first)' %> </td>
+
+            </tr>
+        </table>
+    <% end %>
+
+<!--annotation search-->
+<% elsif params[:nav] && (params[:nav].include? "annotations") %>
+
+	<h4> Annotations Search </h4>
+	<p class="greyText" > Search by: </p>
+
+	<%= form_tag :controller=> 'annotations', :action=> 'search' do %>
+		<table>
+			<tr> 
+				<td class="radioButton"><%= radio_button_tag 'method', "user", true %> 
+				 Annotator's first name </td>
+			</tr>
+			<tr>
+				<td class="radioButton"><%= radio_button_tag 'method', 'groups' %> 
+				Groups (only shared annotations)</td>
+			</tr>
+		</table>
+		<br>
+		
+		<%= text_field_tag 'search', nil, id: 'dash-annotations-search', class: "searchTextField" %>
+		<%= submit_tag "Search", class: "submit" %>
+<% end #form_tag %>
+
+
+
+<!--document search-->
+<% else %>
+
+<h4> Documents Search </h4>
+
+<%= form_tag documents_path, :method => 'get' do %>
+	<p class="greyText"> Search by: </p>
+
+
+	<table class="radioButtonTable">
+		<tr > 
+			<td class="radioButton"><%= radio_button_tag 'method', 'title', true, onchange: "opt(this)"%> <%= label_tag :title, 'Title' %></td>
+		</tr>
+		<tr >
+			<td class="radioButton"><%= radio_button_tag 'method', 'author', nil, onchange: "opt(this)" %> <%= label_tag :title, 'Author' %></td>
+		</tr>
+		<tr >
+			<td class="radioButton"> <%= radio_button_tag 'method', 'status', nil, onchange: "opt(this)" %> <%= label_tag :title, 'Status' %></td>
+		</tr>
+		<tr> 
+			<td class="radioButton"> <%= radio_button_tag 'method', 'group', nil, onchange: "opt(this)" %> <%= label_tag :title, 'Group' %> </td>
+		</tr>
+	</table></br>
+
+
+	<%= text_field_tag 'search', nil, id: 'dash-documents-search', class: "searchTextField" %>
+	<%= submit_tag "Search", class: "submit" %>
+
+	<h4> Sort </h4>
+		<%= form_tag documents_path, :method => 'get', :data => {remote: true} do %>
+
+			<table class="search-options">
+				<tr>
+					<td class="radioButton"><%= radio_button_tag 'filter', 'timeDESC', true, onchange: "docSort(this)" %> <%= label_tag :title, 'Newest first' %> </td>
+				</tr>
+
+				<tr>
+					<td class="radioButton"> <%= radio_button_tag 'filter', 'timeASC', nil, onchange: "docSort(this)" %> <%= label_tag :title, 'Oldest first' %> </td>
+				</tr>
+				<tr>
+					<td class="radioButton"> <%= radio_button_tag 'filter', 'A-Z', nil, onchange: "docSort(this)" %> <%= label_tag :title, 'A-Z' %> </td>
+				</tr>
+				<tr>
+					<td class="radioButton"> <%= radio_button_tag 'filter', 'Z-A', nil, onchange: "docSort(this)" %> <%= label_tag :title, 'Z-A' %> </td>
+				</tr>
+
+			</table>
+
+		<% end #sort form_tag%>
+	<% end #form_tag %>
+
+<% end %>
+
+</div>
+
+<script>
+
+	//default autocomplete for docs
+	$("#dash-documents-search").autocomplete({
+		source: <%= raw(@titleSuggestions) %>
+	});
+
+	//onchange function for doc search method
+	function opt(obj){
+		var selected = obj.value;
+		var data;
+		switch(selected){
+			default: 
+				data = <%= raw(@titleSuggestions) %>;
+				break;
+			case 'author':
+				data = <%= raw(@authorSuggestions) %>;
+				break;
+			case 'status':
+				data = ["published", "draft", "archived"];
+				break;
+			case 'group':
+				data = <%= raw(@groupSuggestions) %>;
+		} //end switch
+
+		$("#dash-documents-search").autocomplete({
+			source: data
+		}); //end autocomplete
+		
+	} //end opt
+
+	//group sort/filter ajax
+	function groupSort(obj){
+		var selected = obj.value;
+		var location = "<%= params[:nav]%>"
+		$.ajax({
+		    url: "/dashboard",
+		    type: "GET",
+		    data: {filter: selected, gPage: location},
+		    dataType: 'script'
+		}); //end ajax
+	}
+
+	//group autocomplete
+	$("#dash-groups-search").autocomplete({
+		source: <%= raw(@groupSuggestions) %>
+	});
+
+
+	//doc sort/filter ajax
+	function docSort(obj){
+		var selected= obj.value;
+		var location = "<%= params[:nav]%>"
+		$.ajax({
+			url: "/dashboard",
+		    type: "GET",
+		    data: {dFilter: selected, dPage: location},
+		    dataType: 'script'
+		});
+	}
+
+	
+
+</script>
+
+
+
+<style>
+	span.ui-helper-hidden-accessible{
+		display:none;
+	}
+
+	.ui-widget-content{
+		background-color: #fcfcfc;
+	}
+
+	.ui-state-focus{
+		background-color: #EEEEEE;
+	}
+
+	ul.ui-autocomplete{
+		display:block;
+		padding:3px;
+		z-index:1000;
+		position:relative;
+		list-style:none;
+		border: solid 1px #EEEEEE;
+		cursor:default;
+		float:right;
+	}
+
+	.search-options tr{
+		background-color: #ddd;	
+		border: 3px solid white;
+		padding: 5px;
+	}
+
+	.radioButtonTable {
+		width: 75%;
+	}
+
+	.radioButton{
+		background-color: #EEEEEE;
+		border: 1px solid #DFDFDF;
+		padding:2px 10px 2px 10px;
+		margin-bottom:5px;
+		
+	}
+
+	.submit{
+		background-color: #FCCE02;
+		border-style: none;
+		border-radius: 5pt;
+	}
+
+	.searchTextField{
+		border-radius: 3pt;
+		border: 1px solid #EEEEEE;
+	}
+
+
+
+	
+
+
+</style>

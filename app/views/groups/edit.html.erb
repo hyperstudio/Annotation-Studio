@@ -78,7 +78,7 @@
             <%= f.hidden_field :group_id, :value => params[:id] %>
         <%= f.label 'Generate Invite Link' %>    
         <p class="greyText">Send this link to registered or new users.</p>
-        <%= f.submit 'Generate'%>
+        <%= f.submit 'Generate', class: "manageAction"%>
         <% end #form_for %>
     <% end #if @i %>
     

@@ -17,23 +17,25 @@
           original_title: 'Delete'}} %>
 <% end %>
 
+	<% unless @group.name == 'Public' && is_member(@group.id) %>
+	 <br><br>All Members 
+		<table class="member-table">
+			<tr class="member-table-row">
+				<th> Name </th>
+				<th> Role </th>
+			</tr>
+		<% if !@memberships.empty? %>
+			<% @memberships.includes(:user).each do |m| %>
+					<tr class="member-table-row"> 
+						<% @user = m.user %>
+						<td> <%= @user.firstname + " " + @user.lastname[0] + "." %></td>
+						<td> <%= m.role %> </td> 
+					</tr>
+			<% end #.each %>
+		<% end #if%>
+		</table>
 
- <br><br>All Members 
-	<table class="member-table">
-		<tr class="member-table-row">
-			<th> Name </th>
-			<th> Role </th>
-		</tr>
-	<% if !@memberships.empty? %>
-		<% @memberships.includes(:user).each do |m| %>
-				<tr class="member-table-row"> 
-					<% @user = m.user %>
-					<td> <%= @user.firstname + " " + @user.lastname[0] + "." %></td>
-					<td> <%= m.role %> </td> 
-				</tr>
-		<% end #.each %>
-	<% end #if%>
-	</table>
+	<% end #unless %>
 
 <% else %>
 

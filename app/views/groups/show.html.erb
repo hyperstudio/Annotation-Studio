@@ -19,7 +19,9 @@
 
 	<% unless @group.name == 'Public' && is_member(@group.id) %>
 	 <br><br>All Members 
+	 
 		<table class="member-table">
+			
 			<tr class="member-table-row">
 				<th> Name </th>
 				<th> Role </th>
@@ -34,6 +36,7 @@
 			<% end #.each %>
 		<% end #if%>
 		</table>
+	
 
 	<% end #unless %>
 

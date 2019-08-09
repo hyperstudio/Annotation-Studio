@@ -1,15 +1,13 @@
 <% if params[:action] == 'show' && ! @document.draft? %>
-  <h4>Filter annotations by:</h4>
-  <p><strong>Who</strong> made them:</p>
+  <h4 style="color: black;">Filter annotations by:</h4>
+  <p style="color: black;"><strong style="color: black;">Who</strong> made them:</p>
   <div class="btn-group btn-group-sm" data-toggle="buttons" id="view-chooser">
     <label class="btn btn-default btn-sm viewchoice active" id="user">
       <input type="radio" checked value="user">Me</input>
     </label>
-    <label class="btn btn-default btn-sm viewchoice" id="group">
-      <input type="radio" value="group"><%= ENV["GROUP_TERM_PLURAL"] %></input>
-    </label>
+    
     <label class="btn btn-default btn-sm viewchoice" id="class">
-      <input type="radio" value="class"><%= ENV["CLASS_TERM_PLURAL"] %></input>
+      <input type="radio" value="class"><%= ENV["GROUP_TERM_PLURAL"] %></input>
     </label>
     <% if current_user.has_role?(:admin) %>
     <label class="btn btn-default btn-sm viewchoice" id="admin">
@@ -17,7 +15,7 @@
     </label>
     <% end %>
   </div>
-  <p><strong>Where</strong> they occur:</p>
+  <p style="color: black;"><strong style="color: black;">Where</strong> they occur:</p>
   <div class="btn-group btn-group-sm" data-toggle="buttons" id="filter-chooser">
     <label class="btn btn-default btn-sm active" id="visibleannotations">
       <input type="radio" class="btn btn-default btn-sm active" checked value="visibleannotations">Visible portion</input>
@@ -26,12 +24,12 @@
       <input type="radio" class="btn btn-default btn-sm" value="allannotations">Whole document</input>
     </label>
   </div>
-  <p><strong>How</strong> they are tagged:</p>
+  <p style="color: black;"><strong style="color: black;">How</strong> they are tagged:</p>
   <div class="input-group" id="tag-chooser">
     <input type="text" id="tagsearchbox" placeholder="Enter tag(s) to filter on">
   </div><!-- /input-group -->
 
-
+<!--styling of the radio selection are in boot.docs.css.scss for class view-chooser; and in bootstrap.css.erb for class btn-groupsm-->
 
   <% if Tenant.annotation_categories_enabled -%>
   <p><strong>How</strong> they are categorized:</p>

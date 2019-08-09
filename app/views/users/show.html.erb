@@ -1,4 +1,4 @@
-<%= content_for :body_id, 'dashboard' %>
+ <%= content_for :body_id, 'dashboard' %>
 <%= content_for :body_class, 'index' %>
 <%= content_for :page_title, 'Dashboard' %>
 <%= stylesheet_link_tag "users" %>
@@ -26,8 +26,6 @@
     </div>
   </div>
 
-
-
   <div class="dropdown">
       <button class="dropbtn">Groups <span class="badge" ><%= current_user.groups.size %></span></button>
       <center><div class="arrow-up"></div></center>
@@ -37,8 +35,7 @@
       <a href= "<%= dashboard_path(nav: 'joinedgroups')%>" id="groups-joined" style="display:inline">Joined <span class="badge"> <%= current_user.groups.size %></span></a>
       <a onclick="show()" style="display:inline">New</a>
       <a onclick= "on()" style="display:inline"> Join</a>
-  </div> <!-- dropdown-content -->
-
+   </div> <!-- dropdown-content -->
 </div>
   
 </nav> <!--navigation bar stops-->
@@ -56,7 +53,8 @@
 <div class="titleBar" >
 
   <div style="width: 50%;float:left;">
-    <h4 id= "current-page"> Shared Documents </h4>
+    
+    <h4 id= "current-page" > Shared Documents </h4>
 
     <p class="greyText" id="current-description">Documents Shared with My Groups</p>
   </div>

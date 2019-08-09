@@ -27,8 +27,7 @@
                 <% if is_owner(params[:id]) %>
                     <td> 
                         <% unless m.role == "owner" %>
-                            <span class= "manageAction"> <%= link_to "Remove from Group", :controller => "groups", :action => "remove_member", 
-                                :m_id => m.id, :username => @user.fullname %></span>
+                            <span class="manageAction"> <%= link_to "Remove from Group", {:controller=> "groups", :action =>"remove_member", :m_id => m.id, :username => @user.fullname}, {data: {confirm: "Are you sure you want to remove this member?", toggle: 'tooltip', placement: 'top', original_title: 'Remove'}} %></span>
                         <% end %>
                         <% if m.role == "member" %>
                             <span class= "manageAction"> 

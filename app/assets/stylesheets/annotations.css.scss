@@ -36,3 +36,8 @@
   background-color: #FFF;
   outline: none;
 }
+
+.annotator-viewer div:first-of-type.richText-annotation p {
+  max-width: 400px;
+  word-wrap: break-word;
+}

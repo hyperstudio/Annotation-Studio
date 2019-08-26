@@ -5,8 +5,13 @@ class InvitesController < ApplicationController
 		#set to 1 month for now. 
 		@invite.expiration_date = Time.now + 1.month
 
-		if @invite.save
-			redirect_to request.referrer
+		respond_to do |format|
+			if @invite.save
+				format.html { redirect_to request.referrer, notice: 'Invite Link Generated' }
+			else
+				format.html { redirect_to request.referrer, notice: 'Error Creating Invite Link'}
+			end
+
 		end
 
 	end

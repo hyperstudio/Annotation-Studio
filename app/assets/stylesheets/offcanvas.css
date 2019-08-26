@@ -90,7 +90,9 @@ body#documents.show .navbar button#leftburger,body#documents.show .navbar button
   z-index: 5;
   padding: 40px;
   padding-top: 60px;
-	padding-bottom: 20px;
+  padding-bottom: 20px;
+  background-color: white;
+  border:1px solid #DFDFDF;
 }
 
 #mainmenu {
@@ -98,6 +100,8 @@ body#documents.show .navbar button#leftburger,body#documents.show .navbar button
   padding: 40px;
   padding-left: 20px;
   padding-top: 60px;
+  background-color: white;
+  border:1px solid #DFDFDF;
 }
 
 .navmenu h4, .navmenu p {
@@ -134,6 +138,8 @@ body#documents.show .navbar button#leftburger,body#documents.show .navbar button
 
 .home-image img {
 	width: 100%;
+	height:200px;
+
 }
 
 .well.devise, #omniauth-links {
@@ -217,5 +223,5 @@ ul.annotation-tags {
 }
 
 .panel-title > a {
-	color: #337ab7;
+	color: black;
 }

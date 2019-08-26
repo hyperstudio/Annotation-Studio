@@ -6,6 +6,12 @@ h1, h2, h3, h4, h5, h6, blockquote {
 	font-weight: 300;
 }
 
+h4Bold{
+	font-family: "source-sans-pro",sans-serif;
+	font-style: normal;
+	font-weight: bold;
+}
+
 body {
 	background-color: #eee;
 }
@@ -103,6 +109,9 @@ div#textcontent, section#textcontent {
 
 li.annotation-item.focuswhite {
 	background-color:#fff;
+	.details {
+		display: block !important;
+	}
 }
 
 #annotation-well {
@@ -111,12 +120,6 @@ li.annotation-item.focuswhite {
 	padding:0 15px;
   margin-top: 30px;
 	overflow:auto;
-  li.annotation-item {
-    a.catalog-popup {
-      display: inline-block;
-      outline: none;
-    }
-  }
   img {
     margin: 3px;
     max-width: 300px;
@@ -354,7 +357,7 @@ span.highlightborder {
 #view-chooser, #filter-chooser, #sort-chooser {
     margin-bottom:10px;
     label.active {
-		background-color: #444;
+		background-color: #FCCE02;
 	    color: white;
 	}
 }

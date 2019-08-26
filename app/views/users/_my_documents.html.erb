@@ -1,22 +1,25 @@
 <div class="row">
   <% @myDocs.each do |doc| %>
 
-
-
-    <div class= "column"> 
+    <div class= "column" > 
       <span class="title"><%= link_to doc.title, document_path(id: doc.id) %> </span>
-       <br>
-       <br>
+      <div class="h_line"></div>
+       
 
         <div class="tile-content"> 
 
-        <%= 'Author: '+ doc.author if doc.author != "" %> <br>
 
+        <% if doc.author != "" && doc.author %>
+        Author: <%= doc.author  %> <br>
+        <%end%>
+      
       <% if doc.publication_date && doc.publication_date != "" %>
         Date: <%= doc.publication_date %> <br> 
       <% end %>
-       
+
+      <% if !doc.groups.empty? %> 
        Groups: <%= doc.groups.pluck(:name).join(", ") %> <br>
+       <% end %>
 
        Status: 
        <span id="status-icon"> 
@@ -38,7 +41,7 @@
 
        <br>
 
-       <%= link_to "Edit", controller: "documents", action: "edit", id: doc.id %> <br>
+       <button class="editButton" ><%= link_to "Edit", controller: "documents", action: "edit", id: doc.id %> </button>
 
        
 
@@ -50,6 +53,6 @@
   <% end %> <!-- end doc loop -->
   </div>  <!-- end row -->
 
-  <div class='pagination-controls flex-wrap'>
+  <center><div class='pagination-controls flex-wrap' ">
       <%= will_paginate @myDocs, renderer: BootstrapPagination::Rails %>
-  </div>
+  </div></center>

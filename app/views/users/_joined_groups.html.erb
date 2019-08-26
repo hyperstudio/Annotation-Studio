@@ -2,19 +2,26 @@
   <% @joinedGroups.each do |g| %>
     <div class= "column"> 
       <span class="title"> <%= link_to g.name, group_path(id: g.id) %> <br> </span>
-      <br>
+      
+      <div class="h_line"></div>
+
 
        <% myRole = Membership.find_by(group_id: g.id, user_id: current_user.id).role %>
        Role: <%= myRole %> <br>
 
-       Owner: <%= User.find(g.owner_id).firstname %>
+       Owner: <%= User.find(g.owner_id).firstname %><br>
        
-       
+       <% m = Membership.where(group_id: g.id) %>
+       Members: <%= m.size %> 
+
     </div>
   <% end %>
 
   </div>
 
+<center>
   <div class='pagination-controls'>
       <%= will_paginate @joinedGroups, renderer: BootstrapPagination::Rails %>
     </div>
+</center>
+  

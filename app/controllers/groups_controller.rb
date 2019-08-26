@@ -5,7 +5,8 @@ class GroupsController < ApplicationController
 
   def index
   	if params[:search]
-  		@groups = Group.where(["name LIKE ?", "%#{params['search']}%"])
+  		q = "%#{params['search']}%"
+  		@groups = Group.where(["LOWER(name) LIKE ?", q.downcase ])
   	else
   		@groups = current_user.groups
   	end
@@ -21,7 +22,7 @@ class GroupsController < ApplicationController
 
   def new
 		@group = Group.new
-		#race condition? need to double check
+
 		respond_to do |format|
 		    format.html # new.html.erb
 		    format.xml  { render :xml => @group }
@@ -51,7 +52,7 @@ class GroupsController < ApplicationController
 		if params['search'] #group member search
 			queryStr = "%" + params['search'].downcase + "%"
 			matches = User.where(["lower(users.firstname) LIKE ?", queryStr]).pluck(:id)
-			@memberships = Membership.where(group_id: params[:id], user_id: matches)
+			@memberships = Membership.includes(:user).where(group_id: params[:id], user_id: matches)
 			
 		else
 			@memberships = @group.memberships
@@ -70,7 +71,7 @@ class GroupsController < ApplicationController
 		if user && (!user.groups.include? @group)
 			@group.users << user
 			flash[:alert] = user.fullname + " added."
-			InviteMailer.notify_existing_user(user, @group).deliver_now
+			# InviteMailer.notify_existing_user(user, @group).deliver_now
 		else
 			flash[:alert] = "User not found or already in group."
 		end
@@ -82,23 +83,22 @@ class GroupsController < ApplicationController
 	#post
 	def join_via_name
 	#add user to group if form is submitted. 
-		@groupName = params['groupName']
-	     if @groupName
+		groupName = params['groupName']
+	    if groupName
 	      begin
+	      	group = Group.find_by(name: groupName)
+	        if group
+	            current_user.groups << group
+	            flash[:alert] = 'Successfully Joined ' + groupName
 
-	          if Group.find_by(name: @groupName)
-	            @group = Group.find_by(name: @groupName)
-	            current_user.groups << @group
-
-	            flash[:alert] = 'Successfully Joined Group!'
-
-	          elsif Group.find_by(name: @groupName).nil?
-	            flash[:alert] = 'Group not found!'
-	          end
+	        else
+	        	flash[:alert] = 'Group not found!'
+	        end
 
 	      rescue ActiveRecord::RecordNotUnique
 	          flash[:alert] = 'Already in Group!'
-	      end
+	      end #end begin-rescue
+
 	    end
 	    redirect_to request.referrer
 	end
@@ -114,7 +114,7 @@ class GroupsController < ApplicationController
 	def demote #make group manager a member
 		@membership = Membership.find(params[:m_id])
 		@membership.update_attribute("role", "member")
-		flash[:alert] = "Manager demoted"
+		flash[:alert] = "Manager Demoted to Member"
 
 		redirect_to request.referrer
 	end
@@ -161,7 +161,7 @@ class GroupsController < ApplicationController
 	end
 
 
-	private 
+private 
 
 	def group_params
     	params.require(:group).permit(:name, :owner_id)

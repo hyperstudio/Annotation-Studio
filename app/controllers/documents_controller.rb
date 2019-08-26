@@ -17,81 +17,27 @@ class DocumentsController < ApplicationController
       all = shared | mine #array
 
     if params['search'] && params['search'] != ""
+      q = params['search'].downcase
+      
       case params['method']
         when "title"
-          # @documents = Document.where(["title LIKE ?", "%#{params['search']}%"])
-          @documents = all.select {|d| d.title.include? params['search']}
+          @documents = all.select {|d| d.title.downcase.include? q}
           @title_text = "Title: '#{params['search']}'"
         when "author"
-          # @documents = Document.where(["author LIKE ?", "%#{params['search']}%"])
-          @documents = all.select {|d| d.author.include? params['search']}
+          @documents = all.select {|d| d.author.downcase.include? q}
           @title_text = "Author: '#{params['search']}'"
         when "status"
-          # @documents = Document.where(["state LIKE ?", "%#{params['search']}%"])
-          @documents = all.select {|d| d.state.include? params['search']}
+          @documents = all.select {|d| d.state.downcase.include? q}
           @title_text = "Status: '#{params['search']}'"
         when "group"
-          group = Group.find_by(name: params['search'])
+          group = Group.find_by("LOWER(name)= ?", q)
           @documents = group ? group.documents : []
           @title_text = "Group: '#{params['search']}'"
+
       end #end case
     end #end if
-
-    
   end #end index
 
-
-  def old_index #index of the old version. 
-    whitelisted = params.permit(:docs, :page, :group)
-    if !%w[ assigned created all ].include?(whitelisted[:docs])
-      document_set = 'assigned'
-    else
-      document_set = whitelisted[:docs]
-    end
-
-    @tab_state = { document_set => 'active' }
-    @assigned_documents_count = (Document.active.tagged_with(current_user.rep_group_list, :any =>true)).where.not(state: 'draft').count
-    @created_documents_count = current_user.documents.count
-    @all_documents_count = Document.all.count
-
-    per_page = 20
-
-
-    if document_set == 'assigned'
-      #@documents = Document.active.tagged_with(current_user.rep_group_list, :any =>true).where.not(state: 'draft').paginate(:page => whitelisted[:page], :per_page => per_page).order('created_at DESC')
-
-      #use an array instead of activeRecordAssociation
-      #problem: can't sort documents by creation date
-      #also need to loop through each individual group's docs in order to return document objects
-
-      docList = []
-      current_user.groups.each do |g| 
-        g.documents.where.not(state: 'draft').each do |d|
-          unless docList.include? d 
-            docList << d
-          end
-        end
-      end
-
-      @documents = docList.paginate(:page => whitelisted[:page], :per_page => per_page)
-     
-      
-
-    elsif document_set == 'created'
-      @documents = current_user.documents.paginate(:page => whitelisted[:page], :per_page => per_page).order('created_at DESC')
-    elsif can? :manage, Document && document_set == 'all'
-      @documents = Document.paginate(:page => whitelisted[:page], :per_page => per_page ).order("created_at DESC")
-    end
-
-    if whitelisted[:group]
-      @documents = @documents.tagged_with(whitelisted[:group]).where.not(state: 'draft').paginate(:page => whitelisted[:page], :per_page => per_page).order('created_at DESC')
-    end
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @documents }
-    end
-  end
 
   # GET /documents/1
   # GET /documents/1.json
@@ -148,8 +94,6 @@ class DocumentsController < ApplicationController
   
   #attach document to groups
     @groups = params["groups"] if params["groups"]
-    # puts "groups"
-    # puts @groups
     @groupList = @groups.split(",")
     if @groups
       @groupList.each do |g|
@@ -168,10 +112,6 @@ class DocumentsController < ApplicationController
         format.html { redirect_to dashboard_path(nav: "mydocuments"), notice: 'Document was successfully created.', anchor: 'created'}
         format.json { render json: @document, status: :created, location: @document }
       else
-         flash[:alert] = @document.errors.full_messages.join(", ")
-        # format.html { redirect_to request.referrer }
-
-        #render action: :new keeps on creating new documents, even with the validation. 
         format.html {render action: "new"}
         format.json { render json: @document.errors, status: :unprocessable_entity }
       end
@@ -182,22 +122,23 @@ class DocumentsController < ApplicationController
   # PUT /documents/1.json
   def update
     @document = Document.friendly.find(params[:id])
+
     #attach document to groups
-    @groups = params["groups"].split(",") if params["groups"]
-    @oldGroups = @document.groups.pluck(:name)
+    #params['groups'] is a string of bootstrap tags separated by ,
+    groups = params["groups"].split(",") if params["groups"]
+    oldGroups = @document.groups.pluck(:name)
 
 
-    #need to loop through oldGroups to find difference!!! 
-    if @groups
-
-      @groups.each do |g|
-        unless @oldGroups.include? g #don't re-insert existing groups
+    #need to loop through oldGroups to find difference
+    if groups
+      groups.each do |g|
+        unless oldGroups.include? g #don't re-insert existing groups
           @document.groups << Group.find_by(name: g)
         end #unless 
       end #each
 
       #delete group from documents
-      diff = @oldGroups - @groups
+      diff = oldGroups - groups
       if !diff.empty?
         diff.each do |d|
           @document.groups.delete(Group.find_by(name: d))
@@ -208,7 +149,6 @@ class DocumentsController < ApplicationController
     
     @document.update_attribute("updated_at", Time.now)
 
-  
 
     respond_to do |format|
       if @document.update_attributes(documents_params)

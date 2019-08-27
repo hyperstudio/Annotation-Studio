@@ -12,8 +12,8 @@
         <div class="form-group">
             <%= label_tag "Type of Resource" %>
             <p class="help-block"> eg. Book, Website, etc...</p>
-            <%= select_tag "type", options_for_select([ "Book", "Website", "Journal", "Other" ]),  
-            {:class => 'form-control', :prompt => "Choose one...", :id => 'type', 
+            <%= select_tag "type", options_for_select([ "Book", "Website", "Journal", "Other" ], "Book"),
+            {:class => 'form-control', :id => 'type',
             :onchange => "change(this.id)", :style=> "width:300px"} %>
         </div>
       
@@ -335,9 +335,9 @@
         var type = document.getElementById(selected);
         var type_value;
         <% if !create %>
-          type_value = "<%= @document.resource_type %>"
+          type_value = "<%= @document.resource_type %>";
         <% else %>
-          type_value = type.value
+          type_value = type.value;
         <% end %>
         //use case to toggle metadata fields
           var edition = document.getElementById("edition");
@@ -350,8 +350,10 @@
           var optional_fields = document.getElementsByClassName("optional");
           switch(type_value){
             default:
-              $(optional_fields).hide();
-              source.style.display = "block";
+              $(optional_fields).show();
+              notes.style.display = "none";
+              journal_title.style.display = "none";
+              source.style.display = "none";
               break;
             case "Website":
               $(optional_fields).hide();
@@ -374,9 +376,12 @@
               source.style.display = "block";
               notes.style.display = "block";
               break;
-          } }
+          }
+        }
   </script>
   <script>
     //toggle metadata fields onload. Ensures that the correct fields show up for EDIT
-    window.onload(change("blah"));
+    $(document).ready(function(){
+      $("#type").trigger('change');
+    });
   </script>

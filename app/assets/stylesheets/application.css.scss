@@ -25,6 +25,7 @@
  *= require "annotations"
  *= require "ekko-lightbox.min"
  *= require "navbar-overrides.css"
+ *= require "bootstrap-font-overrides"
  */
 
 html {
@@ -197,7 +198,7 @@ img#neh-logo {
     }
     display: inline-block;
     max-height: 50px;
-    font-family: Frutiger;
+    font-family: Frutiger, sans-serif;
     font-variant-caps: small-caps;
     font-size: 1.4em;
     font-weight: lighter;

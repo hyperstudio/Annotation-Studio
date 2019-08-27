@@ -7,29 +7,29 @@
 
 <nav class="navbar navbar-default navbar-fixed-top hidden-xs" id="lower-navbar">
 
- <div class="dropdown">
-    <button class="dropbtn">Documents <span class="badge" ><%= @sharedDocsCount + current_user.documents.size %></span> </button>
+ <div class="dropdown" style="padding-right:100px;">
+    <button class="dropbtn" >Documents <span class="badge" ><%= @sharedDocsCount + current_user.documents.size %></span> </button>
     <center><div class="arrow-up"></div></center>
-    <div class="dropdown-content" style="text-align:left; padding-left: 20%">
+    <div class="dropdown-content" style="text-align:left; padding-left: 18%">
       <a href= "<%= dashboard_path(nav: 'mydocuments')%>" id="documents-mine" style="display:inline" >Mine <span class="badge"> <%= current_user.documents.size %></span></a>
       <a href= "<%= dashboard_path(nav: 'shareddocuments')%>" id="documents-shared" style="display:inline">Shared <span class="badge"> <%= @sharedDocsCount %></span></a>
       <a href="<%= new_document_path %>" style="display:inline" >New</a>
     </div>
  </div>
 
-  <div class="dropdown">
+  <div class="dropdown" style="padding-right:100px;">
     <button class="dropbtn" id="annotation-button">Annotations <span class="badge"></span></button>
     <center><div class="arrow-up"></div></center>
-    <div class="dropdown-content" style="text-align:center; padding-right:5%;">
+    <div class="dropdown-content" style="text-align:center; padding-right: 5%">
       <a href = "<%= dashboard_path(nav: 'myannotations')%>" id= "annotations-mine" style="display:inline"> Mine <span class="badge"></span></a>
       <a href = "<%= dashboard_path(nav: 'sharedannotations')%>" id="annotations-shared" style="display:inline">Shared <span class="badge"></span></a>
     </div>
   </div>
 
-  <div class="dropdown">
+  <div class="dropdown" style="padding-right:100px;">
       <button class="dropbtn">Groups <span class="badge" ><%= current_user.groups.size %></span></button>
       <center><div class="arrow-up"></div></center>
-    <div class="dropdown-content" style="text-align:right; padding-right: 25%;">
+    <div class="dropdown-content" style="text-align:right; padding-right: 20%;">
 
       <a href= "<%= dashboard_path(nav: 'mygroups')%>" id="groups-mine" style="display:inline">Mine <span class="badge"> <%= current_user.groups.where(owner_id: current_user.id).size %></span> </a>
       <a href= "<%= dashboard_path(nav: 'joinedgroups')%>" id="groups-joined" style="display:inline">Joined <span class="badge"> <%= current_user.groups.size %></span></a>
@@ -37,9 +37,9 @@
       <a onclick= "on()" style="display:inline"> Join</a>
    </div> <!-- dropdown-content -->
 </div>
-  
+
 </nav> <!--navigation bar stops-->
-   
+
 
 
 <!-- sidebar -->
@@ -50,30 +50,34 @@
 
 
 <!--title part-->
-<div class="titleBar" >
+<div class="titleBar" style="margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);">
+</div><!--white bg for title bar-->
 
-  <div style="width: 50%;float:left;">
+
+<!--text for title bar-->
+<div style="width: 50%;float:left; margin-top: -160px;">
 
     <h4 id= "current-page" > Shared Documents </h4>
 
     <p class="greyText" id="current-description">Documents Shared with My Groups</p>
   </div>
 
-  <div style="width:50%;float: right; ">
+  <div style="width:50%;float: right; margin-top: -160px;">
     <br>
-    <button id="search-tab" class="dropdown" onclick="openSideMenu()" >  <i class="glyphicon glyphicon-option-horizontal" style="margin-left:-20px; margin-right:-110px; margin-top:3px;"> </i>
+    <button id="search-tab" class="dropdown" style="padding-right: 100px;" onclick="openSideMenu()" >  <i class="glyphicon glyphicon-option-horizontal" style="margin-left:-20px; margin-right:-110px; margin-top:3px;"> </i>
     </button>
   </div>
+<!--title bar ends-->
 
-</div>
 
 
-<div class= "clearFloat" >
+<div class= "clearFloat" style="margin-top: -50px;">
 <div class= "content" id="my-docs">
 </div><!--  end my-docs -->
 
 <div class= "content" id="shared-docs">
-  
+
   <%= render 'shared_documents' %>
 
 </div><!--  end shared-docs -->
@@ -105,7 +109,7 @@
   <div class="banner"> <i class="glyphicon glyphicon-remove close" onclick="off()"></i>
      Join Group by Entering Name (Case Sensitive)</div>
 
-  
+
   <div class="form">
     <%= form_tag({:controller=>'groups', :action => 'join_via_name'}) do %>
       <%= label_tag 'groupName', 'Group Name' %>
@@ -116,7 +120,7 @@
   </div> <!-- end form -->
 
 
-</div> 
+</div>
 </div>
 
 
@@ -138,7 +142,7 @@
     switch(nav) {
       case 'mydocuments':
         var myDocuments = document.getElementById("my-docs");
-        $(".content").hide(); //hide everything else 
+        $(".content").hide(); //hide everything else
         myDocuments.style.display = "block";
         $(myDocuments).html("<%= j render 'my_documents' %>");
         $("#current-page").text("My Documents");
@@ -186,7 +190,7 @@
         $("#current-page").text("Joined Groups");
         $("#current-description").text("Memberships in Other Groups.");
         break;
-      
+
   } //end switch
   <% end #if %>
 
@@ -240,9 +244,9 @@ var groups=[];
     Document: {{title}} <br>
     Annotator: {{username}} <br>
     <!-- Tags: {{tags}} -->
-  </span> 
   </span>
-  
+  </span>
+
 </script>
 
 <script type="text/template" id="user-highlight-template">
@@ -253,7 +257,7 @@ var groups=[];
     <span class= "annotation-info">{{formattedDate}} <br>
     Document: {{title}} <br>
     Annotator: {{username}}
-  </span> 
+  </span>
 </span>
 </script>
 
@@ -275,19 +279,19 @@ var groups=[];
   cursor: pointer; /* Add a pointer on hover */
 
 }
-  
+
   .overlay{
-  position: absolute; 
+  position: absolute;
   display:none;
-  width: 40%; 
-  height: 30%; 
-  top: 200px; 
+  width: 40%;
+  height: 30%;
+  top: 200px;
   left: 28%;
   right: 0;
   bottom: 0;
-  background-color: white; 
+  background-color: white;
   border: grey 1px solid;
-  z-index: 2; 
+  z-index: 2;
   cursor: pointer; /* Add a pointer on hover */
   }
 

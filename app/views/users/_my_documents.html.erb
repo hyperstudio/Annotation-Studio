@@ -18,7 +18,7 @@
       <% end %>
 
       <% if !doc.groups.empty? %> 
-       Groups: <%= doc.groups.pluck(:name).join(", ") %> <br>
+       Group(s): <%= doc.groups.pluck(:name).join(", ") %> <br>
        <% end %>
 
        Status: 

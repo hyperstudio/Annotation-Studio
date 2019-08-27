@@ -1,13 +1,13 @@
 /* Add additional stylesheets below
 -------------------------------------------------- */
 h1, h2, h3, h4, h5, h6, blockquote {
-	font-family: "source-sans-pro",sans-serif;
+	font-family: Frutiger, sans-serif;
 	font-style: normal;
 	font-weight: 300;
 }
 
 h4Bold{
-	font-family: "source-sans-pro",sans-serif;
+	font-family: Frutiger, sans-serif;
 	font-style: normal;
 	font-weight: bold;
 }
@@ -17,7 +17,7 @@ body {
 }
 
 pre {
-	font-family: "source-sans-pro",sans-serif;
+	font-family: Frutiger,sans-serif;
 	font-style: normal;
 	font-weight: 400;
 	display: block;
@@ -34,7 +34,7 @@ pre {
 
 div#textcontent, section#textcontent {
   margin-top: 30px;
-	font-family: "calluna";
+	font-family: Frutiger,sans-serif;
 	padding: 60px;
 	background-color: #fff;
 	-webkit-box-shadow: 0px 6px 6px 6px #ddd;
@@ -75,7 +75,7 @@ div#textcontent, section#textcontent {
 }
 
 .highlightlink.comment {
-	font-family: "source-sans-pro",sans-serif;
+	font-family: Frutiger, sans-serif;
 	font-style: normal;
 	font-weight: 400;
 	display: block;
@@ -94,13 +94,13 @@ div#textcontent, section#textcontent {
 	display: block;
 	border-top: 1px solid #ccc;
 	padding-bottom: 10px;
-	font-family: "source-sans-pro",sans-serif;
+	font-family: Frutiger, sans-serif;
 	font-style: normal;
 	font-weight: 400;
 }
 
 .sbquote {
-	font-family: "calluna";
+	font-family: Frutiger, sans-serif;
 }
 
 .details {
@@ -136,7 +136,7 @@ li.annotation-item.focuswhite {
 
 #annotation-well ul#annotation-list li span.label, #annotation-well ul#annotation-list li span.badge {
 	color: #fff;
-	font-family: "source-sans-pro",sans-serif;
+	font-family: Frutiger, sans-serif;
 	font-style: normal;
 	font-weight: 400;  
 }
@@ -307,7 +307,7 @@ span.highlightborder {
 
 #chapters a {
 	color:#000;
-	font-family: "source-sans-pro",sans-serif;
+	font-family: Frutiger, sans-serif;
 	font-style: normal;
 	font-weight: 300;
 	line-height:1.1em;

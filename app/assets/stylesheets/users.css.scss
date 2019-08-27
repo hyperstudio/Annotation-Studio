@@ -31,7 +31,7 @@
 .dropdown {
   position: relative;
   display: inline-block;
-  padding-right: 100px;
+  padding-right:10px;
 }
 .dropdown-content {
   /*margin-left: -100px;*/
@@ -95,6 +95,7 @@
   margin-top:15px;
 
 
+
 }
 .side-nav{
   height:100%;
@@ -138,11 +139,13 @@
 }
 
 .titleBar{
-  margin-top:40px;
+  
   margin-right:50px;
   margin-bottom: 50px;
-  backgrond-color:black;
-  z-index:3000;
+ 
+  background-color: white;
+  height:170px;
+  
 }
 
 
@@ -170,7 +173,8 @@
   border-radius:2px;
   padding: 0px 10px 0 10px;
   position:fixed;
-  bottom:40px;
+  bottom:20px;
+  right:20px;
 }
 
 .editButton a{

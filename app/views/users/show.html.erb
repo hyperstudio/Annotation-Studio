@@ -7,29 +7,29 @@
 
 <nav class="navbar navbar-default navbar-fixed-top hidden-xs" id="lower-navbar">
 
- <div class="dropdown">
-    <button class="dropbtn">Documents <span class="badge" ><%= @sharedDocsCount + current_user.documents.size %></span> </button>
+ <div class="dropdown" style="padding-right:100px;">
+    <button class="dropbtn" >Documents <span class="badge" ><%= @sharedDocsCount + current_user.documents.size %></span> </button>
     <center><div class="arrow-up"></div></center>
-    <div class="dropdown-content" style="text-align:left; padding-left: 20%">
+    <div class="dropdown-content" style="text-align:left; padding-left: 18%">
       <a href= "<%= dashboard_path(nav: 'mydocuments')%>" id="documents-mine" style="display:inline" >Mine <span class="badge"> <%= current_user.documents.size %></span></a>
       <a href= "<%= dashboard_path(nav: 'shareddocuments')%>" id="documents-shared" style="display:inline">Shared <span class="badge"> <%= @sharedDocsCount %></span></a>
       <a href="<%= new_document_path %>" style="display:inline" >New</a>
     </div>
  </div>
 
-  <div class="dropdown">
+  <div class="dropdown" style="padding-right:100px;">
     <button class="dropbtn" id="annotation-button">Annotations <span class="badge"></span></button>
     <center><div class="arrow-up"></div></center>
-    <div class="dropdown-content" style="text-align:center; padding-right:5%;">
+    <div class="dropdown-content" style="text-align:center; padding-right: 5%">
       <a href = "<%= dashboard_path(nav: 'myannotations')%>" id= "annotations-mine" style="display:inline"> Mine <span class="badge"></span></a>
       <a href = "<%= dashboard_path(nav: 'sharedannotations')%>" id="annotations-shared" style="display:inline">Shared <span class="badge"></span></a>
     </div>
   </div>
 
-  <div class="dropdown">
+  <div class="dropdown" style="padding-right:100px;">
       <button class="dropbtn">Groups <span class="badge" ><%= current_user.groups.size %></span></button>
       <center><div class="arrow-up"></div></center>
-    <div class="dropdown-content" style="text-align:right; padding-right: 25%;">
+    <div class="dropdown-content" style="text-align:right; padding-right: 20%;">
 
       <a href= "<%= dashboard_path(nav: 'mygroups')%>" id="groups-mine" style="display:inline">Mine <span class="badge"> <%= current_user.groups.where(owner_id: current_user.id).size %></span> </a>
       <a href= "<%= dashboard_path(nav: 'joinedgroups')%>" id="groups-joined" style="display:inline">Joined <span class="badge"> <%= current_user.groups.size %></span></a>
@@ -50,25 +50,29 @@
 
 
 <!--title part-->
-<div class="titleBar" >
+<div class="titleBar" style="margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);">
+</div><!--white bg for title bar-->
 
-  <div style="width: 50%;float:left;">
+
+<!--text for title bar-->
+<div style="width: 50%;float:left; margin-top: -160px;">
     
     <h4 id= "current-page" > Shared Documents </h4>
 
     <p class="greyText" id="current-description">Documents Shared with My Groups</p>
   </div>
 
-  <div style="width:50%;float: right; ">
+  <div style="width:50%;float: right; margin-top: -160px;">
     <br>
-    <button id="search-tab" class="dropdown" onclick="openSideMenu()" >  <i class="glyphicon glyphicon-option-horizontal" style="margin-left:-20px; margin-right:-110px; margin-top:3px;"> </i>
+    <button id="search-tab" class="dropdown" style="padding-right: 100px;" onclick="openSideMenu()" >  <i class="glyphicon glyphicon-option-horizontal" style="margin-left:-20px; margin-right:-110px; margin-top:3px;"> </i>
     </button>
   </div>
+<!--title bar ends-->
 
-</div>
 
 
-<div class= "clearFloat" >
+<div class= "clearFloat" style="margin-top: -50px;">
 <div class= "content" id="my-docs">
 </div><!--  end my-docs -->
 

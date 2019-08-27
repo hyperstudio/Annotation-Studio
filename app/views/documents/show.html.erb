@@ -3,30 +3,31 @@
 <%= content_for :page_title, @document.title %>
 <%= stylesheet_link_tag "documents" %>
 
- <!-- <nav class="navbar navbar-default navbar-fixed-top hidden-xs" id="lower-navbar" style="background-color:#eeeeee;">
+ <<nav class="navbar navbar-default navbar-fixed-top hidden-xs" id="lower-navbar" style="background-color:#eeeeee;">
       <div class="container">
         <div class="row">
           <div class="col-md-8">
-            <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-recalc="false" data-target="#mainmenu" id="leftburger" title="Navigation"><i class="fa fa-bars"></i></button>
+            <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-recalc="false" data-target="#mainmenu" id="leftburger" title="Navigation" style="border-width: 0px;"><i class="glyphicon glyphicon-option-horizontal" ></i>&nbsp; &nbsp; &nbsp;<%= @document.title %></button>
             
           </div>
           <div class="col-md-4">
-            <!%= render "shared/annotation_header" %>
-            <button type="button" class="navbar-toggle pull-right" data-toggle="offcanvas" data-recalc="false" data-target="#toolsmenu" id="rightburger" title="Tools"><i class="fa fa-gears"></i></button>
+            
+            <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-recalc="false" data-target="#toolsmenu" id="rightburger" title="Tools" style="border-width: 0px;">Annotations&nbsp; &nbsp; &nbsp;<i class="glyphicon glyphicon-option-horizontal" > </i></button>
           </div>
         </div>
       </div>
-    </nav> -->
+    </nav>
 
-<div class="row">
-  <div class="left">
-    <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-recalc="false" data-target="#mainmenu" id="leftburger" title="Navigation"><i class="fa fa-bars"></i></button><br>Document: <%= @document.title %>
+
+<!--div class="row" >
+  <div class="left" >
+    <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-recalc="false" data-target="#mainmenu" id="leftburger" title="Navigation"><i class="glyphicon glyphicon-option-horizontal" > </i></button><br><%= @document.title %>
     
   </div>
   <div class="right">
-    <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-recalc="false" data-target="#toolsmenu" id="rightburger" title="Tools"><i class="fa fa-gears"></i>
+    <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-recalc="false" data-target="#toolsmenu" id="rightburger" title="Tools">Annotations&nbsp; &nbsp; &nbsp; <i class="glyphicon glyphicon-option-horizontal" > </i></button>
   </div>
-</div>
+</div-->
 
 
 

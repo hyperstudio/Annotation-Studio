@@ -16,21 +16,28 @@
             {:class => 'form-control', :prompt => "Choose one...", :id => 'type', 
             :onchange => "change(this.id)", :style=> "width:300px"} %>
         </div>
+      
+
+      <% else %>
+      <%= label_tag "Type: " + (@document.resource_type == '' ? 'none' : @document.resource_type) %>
       <% end %>
            <div class="row">
                 <div class="col-md-6">
-                     <div class="form-group">
-                          <%= f.label :title %>
-                     <%= f.text_field :title, :class => 'form-control' %>
-                     </div>
+                     
                      <div class="form-group">
                         <%= f.label :author %>
                         <%= f.text_field :author, :class => 'form-control' %>
                      </div>
-                <div class="form-group optional" id="source" >
-                  <%= f.label :source %>
-                  <%= f.text_field :source, :class => 'form-control' %>
+<div class="form-group">
+                  <%= f.label :publication_date %>
+                  <%= f.text_field :publication_date, :class => 'form-control' %>
                 </div>
+
+                     
+                <div class="form-group">
+                          <%= f.label :rights_status %>
+                          <%= f.select :rights_status, [ 'Copyrighted', 'Public Domain', 'Creative Commons'], {}, {:class => 'form-control'} %>
+                     </div>
                 <div class="form-group optional" id="edition" style="display:none">
                   <%= f.label :edition, "Edition/Volume" %>
                   <%= f.text_field :edition, :class => 'form-control' %>
@@ -41,10 +48,11 @@
                 </div>
              </div><!-- end span 6 -->
             <div class="col-md-6">
+                
                 <div class="form-group">
-                  <%= f.label :publication_date %>
-                  <%= f.text_field :publication_date, :class => 'form-control' %>
-                </div>
+                          <%= f.label :title %>
+                     <%= f.text_field :title, :class => 'form-control' %>
+                     </div>
                 <div class="form-group">
                  <%= f.label :publisher %>
                  <%= f.text_field :publisher, :class => 'form-control' %>
@@ -61,10 +69,11 @@
                   <%= f.label :journal_title %>
                   <%= f.text_field :journal_title, :class => 'form-control' %>
                 </div>
-                     <div class="form-group">
-                          <%= f.label :rights_status %>
-                          <%= f.select :rights_status, [ 'Copyrighted', 'Public Domain', 'Creative Commons'], {}, {:class => 'form-control'} %>
-                     </div>
+                <div class="form-group optional" id="source" >
+                  <%= f.label :source %>
+                  <%= f.text_field :source, :class => 'form-control' %>
+                </div>
+                     
           </div><!-- end span 6 -->
         </div><!-- end row -->
         <div class="row"> 

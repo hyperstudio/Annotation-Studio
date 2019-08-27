@@ -1,18 +1,8 @@
 <!-- documents/_leftnav.html.erb -->
 <% if params[:action] == 'show' %>
-<h4 style="color:black;">Info</h4>
+<h4 style="color:black;">Document Info</h4>
 <ul class="nav navmenu-nav" >
-  <li style="color:black">Status:
-    <% if @document.state == "draft" %>
-      Draft <i class="glyphicon glyphicon-pencil"></i>
-    <% elsif @document.state == "published" %>
-      Published <i class="glyphicon glyphicon-comment"></i>
-    <% elsif @document.state == "archived" %>
-      Archived <i class="glyphicon glyphicon-folder-close"></i>
-    <% elsif @document.state == "public" %>
-      Public <i class="glyphicon glyphicon-globe"></i>
-    <% end %>
-  </li>
+  
 <% if ! @document.author.blank? %>
   <li style="color:black">Author: <%= @document.author %></li>
 <% end %>
@@ -29,15 +19,28 @@
   <li style="color:black">Edition/Volume: <%= @document.edition %></li>
 <% end %>
 
+<li style="color:black">Status:
+    <% if @document.state == "draft" %>
+      Draft <i class="glyphicon glyphicon-pencil"></i>
+    <% elsif @document.state == "published" %>
+      Published <i class="glyphicon glyphicon-comment"></i>
+    <% elsif @document.state == "archived" %>
+      Archived <i class="glyphicon glyphicon-folder-close"></i>
+    <% elsif @document.state == "public" %>
+      Public <i class="glyphicon glyphicon-globe"></i>
+    <% end %>
+  </li>
+
+
 <% source = @document.source %>
 <% if !source.blank? %>
   <li style="color:black">Source:
     <% if validUrl?(source) && (source.include? 'http') %>
-      <a href="<%= source %>"><%= source %> </a>
+      <a href="<%= source %>" style="color:grey;"><%= source %> </a>
 
     <% elsif validUrl?(source) #append '//' to href %>
       <% link = '//' + source %>
-        <a href="<%= link %>"><%= source %> </a>
+        <a href="<%= link %>" style="color:grey;"><%= source %> </a>
 
     <% else %>
       <%= source %>
@@ -45,6 +48,9 @@
     <% end %>
   </li>
 <% end %>
+
+
+
 <% if ! @document.page_numbers.blank? %>
   <li style="color:black">Page Numbers: <%= @document.page_numbers %></li>
 <% end %>
@@ -69,3 +75,9 @@
 </script>
 <% end %>
 <% end %>
+
+  <style>
+  .bg a:hover{
+    background-color: blue;
+  }
+  </style>

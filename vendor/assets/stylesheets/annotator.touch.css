@@ -18,7 +18,7 @@
 
 /* Generic Touch Widget Styles */
 .annotator-touch-widget {
-  font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
+  font-family: frutiger, sans-serif;
   border: 1px solid rgba(0, 0, 0, 0.8);
   background: rgba(0, 0, 0, 0.85);
   background: -webkit-gradient(
@@ -319,7 +319,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   color: #a58129;
-  font-family: Georgia, serif;
+  font-family: Frutiger, serif;
 }
 
 .annotator-item-quote.annotator-touch-expand span {

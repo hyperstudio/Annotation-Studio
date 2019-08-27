@@ -42,6 +42,13 @@
   display:flex;
   flex-wrap: wrap;
 }
+
+.fixedRow{
+  display:flex;
+  flex-wrap: wrap;
+  position:fixed;
+  z-index:3000;
+}
 .column{
   background-color: white;
   float: left;

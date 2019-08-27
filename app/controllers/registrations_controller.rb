@@ -19,6 +19,12 @@ class RegistrationsController < Devise::RegistrationsController
 			resource.groups << @group
 
 			flash[:alert] = "Successfully joined group"
+			
+		elsif resource.save
+			g = Group.find_by(name: "Public")
+			if g
+				resource.groups << g
+			end
 		end
 
 

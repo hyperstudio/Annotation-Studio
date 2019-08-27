@@ -34,6 +34,7 @@
 
 <% source = @document.source %>
 <% if !source.blank? %>
+
   <li style="color:black">Source:
     <% if validUrl?(source) && (source.include? 'http') %>
       <a href="<%= source %>" style="color:grey;"><%= source %> </a>

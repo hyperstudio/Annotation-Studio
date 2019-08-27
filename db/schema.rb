@@ -77,11 +77,11 @@ ActiveRecord::Schema.define(version: 20190806205016) do
   end
 
   create_table "documents", force: :cascade do |t|
-    t.string   "title"
+    t.string   "title",               limit: 255
     t.text     "text"
     t.datetime "created_at",                                        null: false
     t.datetime "updated_at",                                        null: false
-    t.string   "author"
+    t.string   "author",              limit: 255
     t.datetime "year_published"
     t.string   "edition",             limit: 255
     t.string   "publisher",           limit: 255

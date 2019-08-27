@@ -34,7 +34,7 @@ pre {
 
 div#textcontent, section#textcontent {
   margin-top: 30px;
-	font-family: Frutiger,sans-serif;
+	font-family: "calluna";
 	padding: 60px;
 	background-color: #fff;
 	-webkit-box-shadow: 0px 6px 6px 6px #ddd;
@@ -100,7 +100,7 @@ div#textcontent, section#textcontent {
 }
 
 .sbquote {
-	font-family: Frutiger, sans-serif;
+	font-family: "calluna";
 }
 
 .details {
@@ -125,20 +125,20 @@ li.annotation-item.focuswhite {
     max-width: 300px;
     height: auto;
   }
-  
+
   iframe {
     margin: 3px;
     width: 300px;
     height: 225px;
   }
-  
+
 }
 
 #annotation-well ul#annotation-list li span.label, #annotation-well ul#annotation-list li span.badge {
 	color: #fff;
 	font-family: Frutiger, sans-serif;
 	font-style: normal;
-	font-weight: 400;  
+	font-weight: 400;
 }
 
 .text_area {

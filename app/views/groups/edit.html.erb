@@ -27,8 +27,7 @@
                 <% if is_owner(params[:id]) %>
                     <td> 
                         <% unless m.role == "owner" %>
-                            <span class= "manageAction"> <%= link_to "Remove from Group", :controller => "groups", :action => "remove_member", 
-                                :m_id => m.id, :username => @user.fullname %></span>
+                            <span class="manageAction"> <%= link_to "Remove from Group", {:controller=> "groups", :action =>"remove_member", :m_id => m.id, :username => @user.fullname}, {data: {confirm: "Are you sure you want to remove this member?", toggle: 'tooltip', placement: 'top', original_title: 'Remove'}} %></span>
                         <% end %>
                         <% if m.role == "member" %>
                             <span class= "manageAction"> 
@@ -79,7 +78,7 @@
             <%= f.hidden_field :group_id, :value => params[:id] %>
         <%= f.label 'Generate Invite Link' %>    
         <p class="greyText">Send this link to registered or new users.</p>
-        <%= f.submit 'Generate'%>
+        <%= f.submit 'Generate', class: "manageAction"%>
         <% end #form_for %>
     <% end #if @i %>
     

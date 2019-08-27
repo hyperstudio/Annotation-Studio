@@ -32,17 +32,6 @@
         <%= f.password_field :password_confirmation, :class => "form-control" %>
     </div>
 
-    <div class="form-group">
-        <%= f.label :rep_group_list, "Class" %><br />
-        <% if Apartment::Tenant.current == 'demo' %>
-            <%= f.text_field :rep_group_list, 'data-role' => "tagsinput", 'placeholder' => "Enter class name(s)", :class => "form-control", :value => ENV["ALT_DEFAULT_USER_GROUP"] %>
-        <% else %>
-            <%= f.text_field :rep_group_list, 'data-role' => "tagsinput", 'placeholder' => "Enter class name(s)", :class => "form-control", :value => ENV["DEFAULT_USER_GROUP"] %>
-        <% end %>
-
-        <span class="help-block">Please enter the class(es) you would like to join. Press ENTER after each class.</span>
-
-    </div>
 
     <div class="checkbox">
         <label class='checkbox agreement'> <%= f.check_box :agreement %> I have read and accept the <%= link_to 'terms of service', page_path('terms') %></label>

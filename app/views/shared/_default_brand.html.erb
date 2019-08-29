@@ -1,6 +1,9 @@
 
 <a class="navbar-brand" href="/">Annotation Studio <span style="color:<%= $DOMAIN_CONFIG['site_color'] %>;"><%= $DOMAIN_CONFIG['site_name'] %></span></a>
+
 <ul class="nav navbar-nav pull-right hidden-xs" id="globalnav" >
+
+  	<!--About-->
   <li><div class="dropdown">
 	  <button class="dropdown-toggle menu-button" type="button" id="about-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:black; ">
 		  About <i class="fa fa-external-link-square"></i>
@@ -13,13 +16,29 @@
 		  <li><a href="http://www.annotationstudio.org/news/" target="_blank">News </a></li>
 	  </ul>
   </div></li>
+  <!--About ends-->
+
+<!--signed in-->
 <% if user_signed_in? %>
-<li class="<%= 'active' if current_page?(edit_user_registration_path) %>"><%= link_to("My Profile", edit_user_registration_path, :id => "user-account-edit") %></li>
+
+
 <li><a href="http://support.annotationstudio.org/" target="_blank">Help <i class="fa fa-external-link-square"></i></a></li>
-<li class="<%= 'active' if current_page?(destroy_user_session_path) %>"><%= link_to('Logout', destroy_user_session_path) %></li>
+
+<li><div class="dropdown">
+	<button class="dropdown-toggle menu-button" type="button" id="about-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:black; ">
+		  <i class="fa fa-user" ></i> &nbsp <%= current_user.fullname %> 
+		</button>
+		<ul class="dropdown-menu" aria-labelledby="about-menu">
+		  <li class="<%= 'active' if current_page?(edit_user_registration_path) %>"><%= link_to("My Profile", edit_user_registration_path, :id => "user-account-edit") %></li>
+		  <li class="<%= 'active' if current_page?(destroy_user_session_path) %>"><%= link_to('Logout', destroy_user_session_path) %></li>
+	  </ul>
+	</div></li>
+
 <% if can? :manage, UserSet %>
 <li class="<%= 'active' if current_page?(admin_students_path) %>"><%= link_to(raw('Manage Users <i class="fa fa-external-link-square"></i>'), admin_students_path, :target => '_blank') %></li>
 <% end %>
+
+<!--not signed in -->
 <% else %>
 	  <% if defined?(resource) != nil %>
 	  <li><div class="dropdown dont-overflow">

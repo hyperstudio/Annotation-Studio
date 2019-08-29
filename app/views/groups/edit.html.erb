@@ -1,13 +1,30 @@
 <% unless is_member(params[:id])%>
 <h4Bold> Manage Group: <%= @group.name %> </h4Bold><br><br>
 <div id= "left"> 
+    
+
+
+        
+
+
+
+        <div id="searchBar">
+            <a id="icon" onclick="demoVisibility(); this.style.display='none';"><i class="glyphicon glyphicon-search"></i></a>
+           <div id="searchh" style="visibility: hidden; margin-top: 0px;">
         <%= form_tag({:controller=>'groups', :action => 'edit'}, {:method => 'get'}) do %>
-             <%= text_field_tag :search, params['search'], :style => 'width:52%; margin-right:5px;' %>
-            <%= submit_tag "Search by first name", class: "submitButton" %>
+             <%= text_field_tag :search, params['search'], :placeholder=> 'Input First Name', :style => 'width:52%; margin-right:5px;'  %>
+            <%= submit_tag "Search", class: "submitButton" %>
         <% end %>
-        <br>
+        </div>
+
+
+     
         <%= link_to "All Members", :controller => 'groups', :action => 'edit'%>
 <br>
+</div>
+
+
+
     
 <table class="member-table">
     <tr class="member-table-row">
@@ -82,7 +99,7 @@
             <strong>Add Registered Users</strong>
             <p class="greyText">Group members can annotate documents and see annotations shared with the group.</p>
             <%= form_for @group do |f| %>
-                Email: <%= email_field_tag "email" %>
+                <%= email_field_tag "email", 'Input Email' %>
             <%= f.submit "Add", class: "manageAction"%>
             <% end %> <!-- form_for -->
         <br>
@@ -118,6 +135,11 @@
             console.log('unable to copy')
         }
     });
+
+function demoVisibility() {
+  document.getElementById("searchh").style.visibility = "visible";
+}
+
 </script>
     <style>
     .member-table {
@@ -185,6 +207,17 @@
     .manageAction a:hover{
         text-decoration: none;
     }
+
+    #searchBar{
+ 
+    }
+
+    #icon .activate{
+        display:none;
+    }
+
+
+    
     </style>
 <% else %>
 You do not have permission to view this page

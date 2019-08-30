@@ -107,6 +107,8 @@ washjeff:
   site_color: '#FF0000'
 wellesley:
   site_name: 'Wellesley'
+  welcome_message: "Welcome to Annotation Studio"
+  welcome_blurb: "Annotation Studio is a web application that supports close reading and collaborative interpretation of online documents. For more information on the project click the About link at the top. If you don’t have an account yet, click Register at the top of this page otherwise just log in."
   site_color: '#002776'
 wheatoncollege:
   site_name: 'Wheaton College'

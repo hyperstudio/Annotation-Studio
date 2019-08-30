@@ -126,8 +126,23 @@ div#login, div#blurb {
 }
 
 #mainalerts {
-  margin-top:20px;
-  margin-bottom:0;
+  margin-top:0px;
+  margin-bottom:0px;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+}
+
+.alert-success {
+  color: #3c763d;
+  background-color: #dff0d8;
+  border-color: #d6e9c6;
+  margin-top:0px;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+}
+
+.alert-dismissle {
+  margin-top: 0px;
 }
 
 .page-header {

@@ -1,6 +1,43 @@
 <div id="annotation-well" class="affix">
-  <ul id="annotation-list"></ul>
+
+  <ul id="annotation-list" style="padding-left: 8px;">
+
+    <div class="btn-group btn-group-sm" data-toggle="buttons" id="view-chooser" style="padding-top: 8px;">
+    <label class="btn btn-default btn-sm viewchoice active" id="user">
+      <input type="radio" checked value="user">Mine</input>
+    </label>
+    
+    <label class="btn btn-default btn-sm viewchoice" id="class">
+      <input type="radio" value="class">Groups'</input>
+    </label>
+    <% if current_user.has_role?(:admin) %>
+    <label class="btn btn-default btn-sm viewchoice" id="admin">
+      <input type="radio" value="admin">All</input>
+    </label>
+    <% end %>
+  </div>
+
+
+  <div class="btn-group btn-group-sm" data-toggle="buttons" id="filter-chooser" style="padding-top: 8px;">
+    <label class="btn btn-default btn-sm active" id="visibleannotations">
+      <input type="radio" class="btn btn-default btn-sm active" checked value="visibleannotations">Visible portion</input>
+    </label>
+    <label class="btn btn-default btn-sm" id="allannotations">
+      <input type="radio" class="btn btn-default btn-sm" value="allannotations">Whole document</input>
+    </label>
+  </div>
+  
+<!--styling of the radio selection are in boot.docs.css.scss for class view-chooser; and in bootstrap.css.erb for class btn-groupsm-->
+<style>
+.btn-group-sm > .btn {
+  background-color: #E1E1E1;
+
+}
+</style>
+</ul>
+
   <script type="text/template" id="comment-template">
+
     <span class="handle"><span class="glyphicon glyphicon-option-vertical"></span></span>
     <span id="sb{{uuid}}" href="#full{{uuid}}" data-highlight="#hl{{uuid}}" rel="tooltip" title="{{username}}" class="highlightlink comment">{{{text}}}</span>
     <span id="quote{{uuid}}" class="sbquote details">&quot;{{{quote}}}&quot;</span>
@@ -9,7 +46,10 @@
     <div id="tags{{uuid}}" class="sbtags details">{{#tags}}<span class="label label-default">{{.}}</span> {{/tags}}</div>
     <!-- <div id="categories{{uuid}}" class="sbcats details">{{#annotation_categories}}<span class="label label-default">{{.}}</span> {{/annotation_categories}}</div> -->
   </script>
+
+
   <script type="text/template" id="highlight-template">
+
     <span class="handle"><span class="glyphicon glyphicon-option-vertical"></span></span>
     <span id="sb{{uuid}}" data-highlight="#hl{{uuid}}" rel="tooltip" title="{{username}}" class="highlightlink highlight sbquote">&quot;{{{quote}}}&quot;</span>
     <span id="quote{{uuid}}" class="sbquote details">&quot;{{{quote}}}&quot;</span>

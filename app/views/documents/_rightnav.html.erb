@@ -1,6 +1,7 @@
 <% if params[:action] == 'show' && ! @document.draft? %>
-  <h4 style="color: black;">Filter annotations by:</h4>
-  <p style="color: black;"><strong style="color: black;">Who</strong> made them:</p>
+  <!--hide-->
+<div style="display: none;">
+
   <div class="btn-group btn-group-sm" data-toggle="buttons" id="view-chooser">
     <label class="btn btn-default btn-sm viewchoice active" id="user">
       <input type="radio" checked value="user">Me</input>
@@ -15,7 +16,7 @@
     </label>
     <% end %>
   </div>
-  <p style="color: black;"><strong style="color: black;">Where</strong> they occur:</p>
+  
   <div class="btn-group btn-group-sm" data-toggle="buttons" id="filter-chooser">
     <label class="btn btn-default btn-sm active" id="visibleannotations">
       <input type="radio" class="btn btn-default btn-sm active" checked value="visibleannotations">Visible portion</input>
@@ -24,7 +25,11 @@
       <input type="radio" class="btn btn-default btn-sm" value="allannotations">Whole document</input>
     </label>
   </div>
-  <p style="color: black;"><strong style="color: black;">How</strong> they are tagged:</p>
+</div>
+<!--hide ends-->
+ 
+
+  <br><h4>Filter by Tags</h4>
   <div class="input-group" id="tag-chooser">
     <input type="text" id="tagsearchbox" placeholder="Enter tag(s) to filter on">
   </div><!-- /input-group -->

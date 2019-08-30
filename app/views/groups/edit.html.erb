@@ -99,7 +99,8 @@
             <strong>Add Registered Users</strong>
             <p class="greyText">Group members can annotate documents and see annotations shared with the group.</p>
             <%= form_for @group do |f| %>
-                <%= email_field_tag "email", 'Input Email' %>
+            <%= email_field_tag :email, params['search'], :placeholder=> 'Input Email'  %>
+                
             <%= f.submit "Add", class: "manageAction"%>
             <% end %> <!-- form_for -->
         <br>

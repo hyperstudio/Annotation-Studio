@@ -11,9 +11,13 @@ public:
   site_color: '#CCC'
 amherst:
   site_name: 'Amherst'
+  welcome_message: "Welcome to Annotation Studio"
+  welcome_blurb: "Annotation Studio is a web application that supports close reading and collaborative interpretation of online documents. For more information on the project click the About link at the top. If you don’t have an account yet, click Register at the top of this page otherwise just log in."
   site_color: '#2C0463'
 andersen:
   site_name: 'Andersen'
+  welcome_message: "Welcome to Annotation Studio"
+  welcome_blurb: "Annotation Studio is a web application that supports close reading and collaborative interpretation of online documents. For more information on the project click the About link at the top. If you don’t have an account yet, click Register at the top of this page otherwise just log in."
   site_color: '#997F3D'
 barnard:
   site_name: 'Barnard College'
@@ -22,6 +26,8 @@ barnard:
   site_color: '#005596'
 breck:
   site_name: 'Breck'
+  welcome_message: "Welcome to Annotation Studio"
+  welcome_blurb: "Annotation Studio is a web application that supports close reading and collaborative interpretation of online documents. For more information on the project click the About link at the top. If you don’t have an account yet, click Register at the top of this page otherwise just log in."
   site_color: '#000080'
 bucknell:
   site_name: 'Bucknell University'
@@ -30,21 +36,33 @@ bucknell:
   site_color: '#00337F'
 demo:
   site_name: 'Demo'
+  welcome_message: "Welcome to Annotation Studio"
+  welcome_blurb: "Annotation Studio is a web application that supports close reading and collaborative interpretation of online documents. For more information on the project click the About link at the top. If you don’t have an account yet, click Register at the top of this page otherwise just log in."
   site_color: '#BDBDBD'
 gatech:
   site_name: 'Georgia Tech'
+  welcome_message: "Welcome to Annotation Studio"
+  welcome_blurb: "Annotation Studio is a web application that supports close reading and collaborative interpretation of online documents. For more information on the project click the About link at the top. If you don’t have an account yet, click Register at the top of this page otherwise just log in."
   site_color: '#B3A369'
 grinnell:
   site_name: 'Grinnell College'
+  welcome_message: "Welcome to Annotation Studio"
+  welcome_blurb: "Annotation Studio is a web application that supports close reading and collaborative interpretation of online documents. For more information on the project click the About link at the top. If you don’t have an account yet, click Register at the top of this page otherwise just log in."
   site_color: '#DA291C'
 harvard:
   site_name: 'Harvard'
+  welcome_message: "Welcome to Annotation Studio"
+  welcome_blurb: "Annotation Studio is a web application that supports close reading and collaborative interpretation of online documents. For more information on the project click the About link at the top. If you don’t have an account yet, click Register at the top of this page otherwise just log in."
   site_color: '#A51C30'
 humboldt:
   site_name: 'HU Berlin'
+  welcome_message: "Welcome to Annotation Studio"
+  welcome_blurb: "Annotation Studio is a web application that supports close reading and collaborative interpretation of online documents. For more information on the project click the About link at the top. If you don’t have an account yet, click Register at the top of this page otherwise just log in."
   site_color: '#010963'
 merchant-of-venice:
   site_name: 'Merchant of Venice'
+  welcome_message: "Welcome to Annotation Studio"
+  welcome_blurb: "Annotation Studio is a web application that supports close reading and collaborative interpretation of online documents. For more information on the project click the About link at the top. If you don’t have an account yet, click Register at the top of this page otherwise just log in."
   site_color: '#D2B48C'
 mit:
   site_name: 'MIT'
@@ -64,6 +82,8 @@ stonybrook:
   site_color: '#990000'
 uma:
   site_name: 'UMass Amherst'
+  welcome_message: "Welcome to Annotation Studio"
+  welcome_blurb: "Annotation Studio is a web application that supports close reading and collaborative interpretation of online documents. For more information on the project click the About link at the top. If you don’t have an account yet, click Register at the top of this page otherwise just log in."
   site_color: '#881c1c'
 umb:
   site_name: 'UMass Boston'
@@ -72,6 +92,8 @@ umb:
   site_color: '#38197A'
 uw:
   site_name: 'University of Washington'
+  welcome_message: "Welcome to Annotation Studio"
+  welcome_blurb: "Annotation Studio is a web application that supports close reading and collaborative interpretation of online documents. For more information on the project click the About link at the top. If you don’t have an account yet, click Register at the top of this page otherwise just log in."
   site_color: '#B7A57A'
 vassar:
   site_name: 'Vassar'

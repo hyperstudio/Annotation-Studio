@@ -22,14 +22,14 @@
     <h4>Or find your domain</h4>
     <form name="domain-form">
       <div class="form-group">
-          <select id="login-chooser" class="form-control"
-            <% if !Apartment::tenant_names.blank? && !Apartment::Tenant.current.blank? %>
-              selected="http://<%= Apartment::Tenant.current %>.annotationstudio.org"
-            <% end %>
-          >
+          <select id="login-chooser" class="form-control">
           <% if !Apartment::tenant_names.blank? %>
             <% for database in Apartment::tenant_names.map{|d| d.downcase}.sort! %>
-              <option value="http://<%= database %>.annotationstudio.org">http://<%= database %>.annotationstudio.org</option>
+              <option value="http://<%= database %>.annotationstudio.org"
+                <% if database == Apartment::Tenant.current %>
+                  selected
+                <% end %>
+                >http://<%= database %>.annotationstudio.org</option>
             <% end %>
           <% end %>
           </select>

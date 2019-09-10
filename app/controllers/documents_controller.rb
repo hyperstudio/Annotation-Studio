@@ -44,18 +44,23 @@ class DocumentsController < ApplicationController
   # GET /documents/1
   # GET /documents/1.json
   def show
-    if request.path != document_path(@document)
-      redirect_to @document, status: :moved_permanently
+    if @document.nil?
+      raise ActionController::RoutingError.new('Not Found')
     end
+    else
+      if request.path != document_path(@document)
+        redirect_to @document, status: :moved_permanently
+      end
 
-    # configuration for annotator
-    @annotation_categories_enabled =  Tenant.annotation_categories_enabled
-    @enable_rich_text_editor = ENV["ANNOTATOR_RICHTEXT"]
-    @tiny_mce_toolbar = ENV["ANNOTATOR_RICHTEXT_CONFIG"]
+      # configuration for annotator
+      @annotation_categories_enabled =  Tenant.annotation_categories_enabled
+      @enable_rich_text_editor = ENV["ANNOTATOR_RICHTEXT"]
+      @tiny_mce_toolbar = ENV["ANNOTATOR_RICHTEXT_CONFIG"]
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @document }
+      respond_to do |format|
+        format.html # show.html.erb
+        format.json { render json: @document }
+      end
     end
   end
 

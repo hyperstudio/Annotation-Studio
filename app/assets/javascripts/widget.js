@@ -77,7 +77,10 @@ Widget.AnnotationView = Backbone.View.extend({
 		if (slug) {
 			slug = slug.split("/");
 			slug = slug[slug.length - 1];
-			var title = documentList[slug];
+			if(!documentList)
+				var title = slug;
+			else
+				var title = documentList[slug];
 			this.model.set('title', title);
 		}
 

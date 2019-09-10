@@ -46,7 +46,6 @@ class DocumentsController < ApplicationController
   def show
     if @document.nil?
       raise ActionController::RoutingError.new('Not Found')
-    end
     else
       if request.path != document_path(@document)
         redirect_to @document, status: :moved_permanently

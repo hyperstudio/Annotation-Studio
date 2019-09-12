@@ -10,7 +10,7 @@ gem 'pg'
 
 gem 'scout_apm'
 
-gem 'devise', '4.0.0'
+gem 'devise', '4.7.1'
 gem "switch_user"
 gem 'cancancan', '~> 1.10'
 gem 'repertoire-groups', '0.0.1', :path => 'vendor/repertoire-groups-0.0.1'

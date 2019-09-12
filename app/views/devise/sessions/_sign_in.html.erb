@@ -1,7 +1,7 @@
 <div class="well devise">
     <h4>Log into <span style="color:<%= $DOMAIN_CONFIG['site_color'] %>;"><%= $DOMAIN_CONFIG['site_name'] %></span></h4>
     <%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :role => "form"}) do |f| %>
-        <%= devise_error_messages! %>
+        <%= render "devise/shared/error_messages" %>
 
         <div class="form-group">
             <%= f.label :email %>

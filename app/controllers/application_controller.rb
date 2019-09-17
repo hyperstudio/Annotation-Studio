@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticate
-    redirect_to root_path, notice: "You need to be signed in" unless user_signed_in?
+    redirect_to root_path, notice: "Please sign in" unless user_signed_in?
   end
 
   # Copied from Miximize!

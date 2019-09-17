@@ -1,15 +1,14 @@
 <% if params[:action] == 'show' && ! @document.draft? %>
-  <h4>Filter annotations by:</h4>
-  <p><strong>Who</strong> made them:</p>
+  <!--hide-->
+<div style="display: none;">
+
   <div class="btn-group btn-group-sm" data-toggle="buttons" id="view-chooser">
     <label class="btn btn-default btn-sm viewchoice active" id="user">
       <input type="radio" checked value="user">Me</input>
     </label>
-    <label class="btn btn-default btn-sm viewchoice" id="group">
-      <input type="radio" value="group"><%= ENV["GROUP_TERM_PLURAL"] %></input>
-    </label>
+
     <label class="btn btn-default btn-sm viewchoice" id="class">
-      <input type="radio" value="class"><%= ENV["CLASS_TERM_PLURAL"] %></input>
+      <input type="radio" value="class"><%= ENV["GROUP_TERM_PLURAL"] %></input>
     </label>
     <% if current_user.has_role?(:admin) %>
     <label class="btn btn-default btn-sm viewchoice" id="admin">
@@ -17,7 +16,7 @@
     </label>
     <% end %>
   </div>
-  <p><strong>Where</strong> they occur:</p>
+
   <div class="btn-group btn-group-sm" data-toggle="buttons" id="filter-chooser">
     <label class="btn btn-default btn-sm active" id="visibleannotations">
       <input type="radio" class="btn btn-default btn-sm active" checked value="visibleannotations">Visible portion</input>
@@ -26,10 +25,17 @@
       <input type="radio" class="btn btn-default btn-sm" value="allannotations">Whole document</input>
     </label>
   </div>
-  <p><strong>How</strong> they are tagged:</p>
+</div>
+<!--hide ends-->
+
+
+  <br><h4>Filter by Tags</h4>
   <div class="input-group" id="tag-chooser">
     <input type="text" id="tagsearchbox" placeholder="Enter tag(s) to filter on">
   </div><!-- /input-group -->
+
+<!--styling of the radio selection are in boot.docs.css.scss for class view-chooser; and in bootstrap.css.erb for class btn-groupsm-->
+
   <% if Tenant.annotation_categories_enabled -%>
   <p><strong>How</strong> they are categorized:</p>
   <div class="btn-toolbar" id="category-chooser">

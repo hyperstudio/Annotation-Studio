@@ -8,7 +8,7 @@
       </label>
 
       <label class="btn btn-default btn-sm viewchoice" id="class">
-        <input type="radio" value="class">Groups'</input>
+        <input type="radio" value="class"><%= ENV["CLASS_TERM_PLURAL"] %></input>
       </label>
       <% if current_user.has_role?(:admin) %>
       <label class="btn btn-default btn-sm viewchoice" id="admin">

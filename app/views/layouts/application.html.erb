@@ -35,13 +35,13 @@
 
     <% if !current_user.nil?  %>
     <nav class="navmenu navmenu-inverse navmenu-fixed-left offcanvas" id="mainmenu" role="navigation">
-      <% unless params[:controller].include?('registrations') || params[:controller].include?('confirmations') %>
+      <% unless params[:controller].include?('registrations') || params[:controller].include?('confirmations') || params[:controller].include?('terms')  || params[:controller].include?('high_voltage') %>
         <%= render "#{params[:controller]}/leftnav" %>
       <% end %>
     </nav>
 
     <nav class="navmenu navmenu-inverse navmenu-fixed-right offcanvas" id="toolsmenu" role="navigation">
-      <% unless params[:controller].include?('registrations') || params[:controller].include?('confirmations') %>
+      <% unless params[:controller].include?('registrations') || params[:controller].include?('confirmations') || params[:controller].include?('terms')  || params[:controller].include?('high_voltage') %>
         <%= render "#{params[:controller]}/rightnav" %>
       <% end %>
     </nav>

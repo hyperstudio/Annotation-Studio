@@ -20,13 +20,11 @@ The MIT Annotation Data Store requires Node.js, NPM and MongoDB
 ## General Installation
 Use rbenv or rvm to install and run the Ruby version specified in `.ruby-version`.
 
-(optional additional software: [thoughtbot's Laptop repo]
-(https://github.com/thoughtbot/laptop))
+(optional additional software: [thoughtbot's Laptop repo](https://github.com/thoughtbot/laptop))
 
-- ```git clone git@github.com:hyperstudio/Annotation-Studio.git
-annotation-studio```
-- ```cd annotation-studio```
-- ```./bin/setup```
+```git clone https://github.com/hyperstudio/Annotation-Studio.git```
+```cd Annotation-Studio```
+```./bin/setup```
 
 which will:
 

@@ -22,9 +22,11 @@ Use rbenv or rvm to install and run the Ruby version specified in `.ruby-version
 
 (optional additional software: [thoughtbot's Laptop repo](https://github.com/thoughtbot/laptop))
 
-```git clone https://github.com/hyperstudio/Annotation-Studio.git```
-```cd Annotation-Studio```
-```./bin/setup```
+```
+git clone https://github.com/hyperstudio/Annotation-Studio.git
+cd Annotation-Studio
+./bin/setup
+```
 
 which will:
 

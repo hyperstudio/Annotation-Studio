@@ -13,13 +13,14 @@ annotations.
 # Getting Started
 
 ## Things to install
-Annotation Studio uses PostgreSQL
+Annotation Studio uses PostgreSQL and Ruby
 
-The MIT Annotation Data Store requires Node.js (0.10.21), NPM (1.3.11) and
-MongoDB
+The MIT Annotation Data Store requires Node.js, NPM and MongoDB
 
 ## General Installation
-Set up Rails (if you haven't yet, try: [thoughtbot's Laptop repo]
+Use rbenv or rvm to install and run the Ruby version specified in `.ruby-version`.
+
+(optional additional software: [thoughtbot's Laptop repo]
 (https://github.com/thoughtbot/laptop))
 
 - ```git clone git@github.com:hyperstudio/Annotation-Studio.git

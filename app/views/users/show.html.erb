@@ -68,30 +68,11 @@
     <div class="panel panel-default" id="dashboard-groups">
       <div class="panel-heading">
         <span class="panel-title">
-          <%= link_to ENV["CLASS_TERM_PLURAL"], groups_path %></span>
-        <ul class="nav nav-tabs nav-tabs-xs pull-right" id="group-tabs" role="tablist">
-          <li>
-            <a href="#subgroups" data-toggle="tab">
-              <span class="badge"><%= current_user.rep_subgroup_list.size %></span> <%= ENV["GROUP_TERM_PLURAL"].capitalize %>
-            </a>
-          </li>
-          <li class="active">
-            <a href="#groups" data-toggle="tab">
-              <span class="badge"><%= current_user.rep_group_list.size %></span> <%= ENV["CLASS_TERM_PLURAL"].capitalize %>
-            </a>
-          </li>
-        </ul>
+          <%= link_to ENV["CLASS_TERM_PLURAL"].capitalize, groups_path %></span>
       </div>
       <!-- / .panel-heading -->
 
       <div class="tab-content">
-        <div class="tab-pane no-padding fade in" id="subgroups">
-          <ul class="list-group">
-            <% current_user.rep_subgroup_list.each do |subgroup| %>
-              <li class="list-group-item"><%= link_to subgroup, documents_path(docs: 'assigned', subgroup: subgroup) %></li>
-            <% end %>
-          </ul>
-        </div>
         <div class="tab-pane no-padding fade active in" id="groups">
           <ul class="list-group">
             <% current_user.rep_group_list.each do |group| %>
@@ -114,36 +95,27 @@
         <span class="panel-title">
           <%= link_to "Annotations", annotations_path %></span>
         <ul class="nav nav-tabs nav-tabs-xs pull-right" id="annotation-tabs" role="tablist">
+          <li>
+            <a href="#class" data-toggle="tab">
+              <span class="badge"></span>
+              Shared
+            </a>
+          </li>
           <li class="active">
             <a href="#mine" data-toggle="tab">
               <span class="badge"></span>
               Mine
             </a>
           </li>
-          <li>
-            <a href="#group" data-toggle="tab">
-              <span class="badge"></span>
-              <%= ENV["GROUP_TERM_PLURAL"].capitalize %>
-            </a>
-          </li>
-          <li>
-            <a href="#class" data-toggle="tab">
-              <span class="badge"></span>
-              <%= ENV["CLASS_TERM_PLURAL"].capitalize %>
-            </a>
-          </li>
         </ul>
       </div>
       <!-- / .panel-heading -->
       <div class="tab-content">
-        <div class="tab-pane no-padding fade active in" id="mine">
-          <ul id="my-annotation-list" class="list-group"></ul>
-        </div>
         <div class="tab-pane no-padding fade in" id="class">
           <ul id="class-annotation-list" class="list-group"></ul>
         </div>
-        <div class="tab-pane no-padding fade in" id="group">
-          <ul id="group-annotation-list" class="list-group"></ul>
+        <div class="tab-pane no-padding fade in active" id="mine">
+          <ul id="my-annotation-list" class="list-group"></ul>
         </div>
       </div>
       <!--<ul class="nav nav-pills">-->
@@ -195,7 +167,6 @@ jQuery(function ($) {
 
   widget.listAnnotations('my-annotation-list', myLoadOptions, endpoint, token);
   widget.listAnnotations('class-annotation-list', classLoadOptions, endpoint, token);
-  widget.listAnnotations('group-annotation-list', groupLoadOptions, endpoint, token);
 });
 
 </script>

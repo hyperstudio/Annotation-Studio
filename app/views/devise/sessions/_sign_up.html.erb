@@ -59,7 +59,7 @@
         <select id="registration-chooser" class="form-control">
         <% if !Apartment::tenant_names.blank? %>
           <% for database in Apartment::tenant_names.map{|d| d.downcase}.sort! %>
-            <option value="http://<%= database %>.annotationstudio.org">http://<%= database %>.annotationstudio.org</option>
+            <option value="https://<%= database %>.annotationstudio.org">https://<%= database %>.annotationstudio.org</option>
           <% end %>
       <% end %>
         </select>

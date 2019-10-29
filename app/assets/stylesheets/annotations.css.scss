@@ -33,6 +33,7 @@
   margin: 5px;
   padding: 2px 5px;
 }
+
 .annotator-item button.btn-default:focus {
   background-color: #FFF;
   outline: none;
@@ -61,4 +62,12 @@
 .error{
   font-weight:bold;
   margin-left: 15px;
+}
+.annotator-adder, .annotator-outer, .annotator-notice {
+  z-index: 10 !important;
+}
+
+.annotator-viewer div:first-of-type.richText-annotation p {
+  max-width: 400px;
+  word-wrap: break-word;
 }

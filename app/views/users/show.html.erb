@@ -202,7 +202,7 @@
 <script type="text/javascript" charset="utf-8">
 jQuery(function ($) {
   var widget = new Widget.App();
-  var endpoint = '<%= ENV["API_URL"] %>';
+  var endpoint = location.protocol+'//'+'<%= ENV["API_URL"] %>';
   var token = '<%= session["jwt"] %>';
   // Backbone.history.start({pushState: true, root: window.location})
 var groups=[];

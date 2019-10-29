@@ -7,7 +7,7 @@
         </h4>
   </div>
   <!--white metadata panel starts-->
-  <div class="metadataStyle"> 
+  <div class="metadataStyle">
       <% if create %>
         <div class="form-group">
             <%= label_tag "Type of Resource" %>
@@ -16,14 +16,14 @@
             {:class => 'form-control', :id => 'type',
             :onchange => "change(this.id)", :style=> "width:300px"} %>
         </div>
-      
+
 
       <% else %>
       <%= label_tag "Type: " + (@document.resource_type == '' ? 'none' : @document.resource_type) %>
       <% end %>
            <div class="row">
                 <div class="col-md-6">
-                     
+
                      <div class="form-group">
                         <%= f.label :author %>
                         <%= f.text_field :author, :class => 'form-control' %>
@@ -33,7 +33,7 @@
                   <%= f.text_field :publication_date, :class => 'form-control' %>
                 </div>
 
-                     
+
                 <div class="form-group">
                           <%= f.label :rights_status %>
                           <%= f.select :rights_status, [ 'Copyrighted', 'Public Domain', 'Creative Commons'], {}, {:class => 'form-control'} %>
@@ -48,7 +48,7 @@
                 </div>
              </div><!-- end span 6 -->
             <div class="col-md-6">
-                
+
                 <div class="form-group">
                           <%= f.label :title %>
                      <%= f.text_field :title, :class => 'form-control' %>
@@ -73,10 +73,10 @@
                   <%= f.label :source %>
                   <%= f.text_field :source, :class => 'form-control' %>
                 </div>
-                     
+
           </div><!-- end span 6 -->
         </div><!-- end row -->
-        <div class="row"> 
+        <div class="row">
             <div class = "col-md-6">
                 <div class="form-group optional" id="notes" style="display:none">
                   <%= f.label :notes %>
@@ -153,7 +153,7 @@
           </div>
           <% end %>
         </div>
-      
+
         <% if current_user.has_role? :admin %>
           <% @docStatusAdmin = "a status marked with an asterisk (*)" %>
         <% else %>
@@ -164,8 +164,8 @@
         Note: You can no longer edit the content, or revert the status of a document once it has been published or archived. If you wish to modify the content of a document, save it as a draft. Metadata can be edited regardless of document status.
         </p>
       </div><br><br>
-      
-  
+
+
         <strong>Share with <%= ENV["GROUP_TERM_PLURAL"].capitalize %></strong>
         <p class="greyText">Enter the <%= ENV["GROUP_TERM_PLURAL"] %> to which you wish to assign this document, <strong>and press enter after each.</strong></p>
    <!--  <div class="form-group">
@@ -173,20 +173,20 @@
     </div>  -->
           <div class="form-groups">
       <%= text_field_tag "groups", @current_groups, id: "document-groups", :placeholder => "Groups", :data=> {:role => 'tagsinput'} %>
-      
-      <script>  
+
+      <script>
        var options = <%= raw(current_user.groups.pluck(:name)) %>;
         //need to loop because .pluck gives [&quot;Wellesley&quot;
-        
+
         // working when upgraded to newest version of bootstrap-tagsinput.js:
-        //https://raw.githubusercontent.com/bootstrap-tagsinput/bootstrap-tagsinput/master/dist/bootstrap-tagsinput.js 
+        //https://raw.githubusercontent.com/bootstrap-tagsinput/bootstrap-tagsinput/master/dist/bootstrap-tagsinput.js
         //following code from:  http://bootstrap-tagsinput.github.io/bootstrap-tagsinput/examples/
         // and: https://jsfiddle.net/dhirajbodicherla/aawmp3np/305/
         // console.log(options);
         var groups = new Bloodhound({
             datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
             queryTokenizer: Bloodhound.tokenizers.whitespace,
-            local: $.map(options, function (name) { 
+            local: $.map(options, function (name) {
         return {
             name: name
         };
@@ -199,7 +199,7 @@
               hint:true,
               highlight: true
             },
-            
+
             { name: 'groups',
               displayKey: 'name',
               valueKey: 'name',
@@ -214,11 +214,11 @@
  <br>
       <%= f.submit nil, :class => 'btn btn-default btn btn-default-primary btn-primary' %>
       <% if @document.state == "draft" %>
-        <%= link_to document_path(@document), method: :delete, class: 'btn btn-default btn btn-default-primary btn-primary', data: {confirm: "Are you sure? Delete cannot be undone.", toggle: 'tooltip', placement: 'top', 
+        <%= link_to document_path(@document), method: :delete, class: 'btn btn-default btn btn-default-primary btn-primary', data: {confirm: "Are you sure? Delete cannot be undone.", toggle: 'tooltip', placement: 'top',
           original_title: 'Delete'} do %> Delete
         <% end %>
       <% end %>
-      
+
         <%= link_to 'Cancel', dashboard_path(nav: "mydocuments"), :class => 'btn btn-default btn btn-default-primary btn-primary' %>
     <% end %>
   </div><!--ends div clearFloat-->
@@ -233,7 +233,7 @@
             newline: '<br>', // Summernote's default is to use '<p><br></p>'
             notStyle: 'position:absolute;top:0;left:0;right:0', // Position of Notification
             keepHtml: true, // Remove all Html formats
-            keepOnlyTags: ['<p>', '<br>', '<ul>', '<li>', '<b>', '<strong>','<i>', '<a>', 
+            keepOnlyTags: ['<p>', '<br>', '<ul>', '<li>', '<b>', '<strong>','<i>', '<a>',
             '<img>', '<div>', '<h1>', '<h2>', '<h3>', '<style>', '<html>', '<body>'], // If keepHtml is true, remove all tags except these
             keepClasses: true, // Remove Classes
             badTags: ['script', 'applet', 'embed', 'noframes', 'noscript'], // Remove full tags with contents

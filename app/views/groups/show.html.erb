@@ -13,36 +13,36 @@
 <% end %>
 
 <% unless is_owner(params[:id]) %>
-   <%= link_to "Leave", {:controller=> "groups", :action =>"leave", :id => params[:id]}, {:class=> 'btn btn-primary', data: {confirm: "Are you sure you want to leave this group?", toggle: 'tooltip', placement: 'top', 
+   <%= link_to "Leave", {:controller=> "groups", :action =>"leave", :id => params[:id]}, {:class=> 'btn btn-primary', data: {confirm: "Are you sure you want to leave this group?", toggle: 'tooltip', placement: 'top',
           original_title: 'Delete'}} %>
 <% end %>
 
 	<% unless @group.name == 'Public' && is_member(@group.id) %>
-	 <br><br>All Members 
-	 
+	 <br><br>All Members
+
 		<table class="member-table">
-			
+
 			<tr class="member-table-row">
 				<th> Name </th>
 				<th> Role </th>
 			</tr>
 		<% if !@memberships.empty? %>
 			<% @memberships.includes(:user).each do |m| %>
-					<tr class="member-table-row"> 
+					<tr class="member-table-row">
 						<% @user = m.user %>
 						<td> <%= @user.firstname + " " + @user.lastname[0] + "." %></td>
-						<td> <%= m.role %> </td> 
+						<td> <%= m.role %> </td>
 					</tr>
 			<% end #.each %>
 		<% end #if%>
 		</table>
-	
+
 
 	<% end #unless %>
 
 <% else %>
 
-You do not have permission to view this page. 
+You do not have permission to view this page.
 
 <% end %>
 
@@ -82,4 +82,3 @@ You do not have permission to view this page.
 	}
 
 	</style>
-

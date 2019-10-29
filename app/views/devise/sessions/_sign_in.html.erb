@@ -2,7 +2,7 @@
 
     <center><p id="title">Log into <span style="color:<%= $DOMAIN_CONFIG['site_color'] %>;"><%= $DOMAIN_CONFIG['site_name'] %></span></p></center>
     <%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :role => "form"}) do |f| %>
-        <%= devise_error_messages! %>
+        <%= render "devise/shared/error_messages" %>
 
         <div class="form-group" >
             <%= f.label :email %>
@@ -25,18 +25,22 @@
     <% end %>
 </div><!--/well -->
 <%= render "/devise/links" %>
-<div class="well devise" style="background-color: transparent; border-style: none; border-width: 0px;">
-    <center><p id="title">Or find your domain</p></center>
-    <form>
-    <div class="form-group">
-        <select id="login-chooser" class="form-control">
-        <% if !Apartment::tenant_names.blank? %>
-          <% for database in Apartment::tenant_names.map{|d| d.downcase}.sort! %>
-            <option value="http://<%= database %>.annotationstudio.org">http://<%= database %>.annotationstudio.org</option>
+<div class="well devise">
+    <h4>Or find your domain</h4>
+    <form name="domain-form">
+      <div class="form-group">
+          <select id="login-chooser" class="form-control">
+          <% if !Apartment::tenant_names.blank? %>
+            <% for database in Apartment::tenant_names.map{|d| d.downcase}.sort! %>
+              <option value="https://<%= database %>.annotationstudio.org"
+                <% if database == Apartment::Tenant.current %>
+                  selected
+                <% end %>
+                >https://<%= database %>.annotationstudio.org</option>
+            <% end %>
           <% end %>
-      <% end %>
-        </select>
-    </div>
+          </select>
+      </div>
     </form>
 </div><!--/well -->
 <script type="text/javascript">
@@ -55,7 +59,7 @@ $("document").ready(function(){
 #title{
     font-size: 18pt;
     margin-bottom: -5px;
-    
+
 
 }
 </style>

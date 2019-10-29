@@ -26,7 +26,7 @@
 
 <li><div class="dropdown">
 	<button class="dropdown-toggle menu-button" type="button" id="about-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:black; ">
-		  <i class="fa fa-user" ></i> &nbsp <%= current_user.fullname %> 
+		  <i class="fa fa-user" ></i> &nbsp <%= current_user.fullname %>
 		</button>
 		<ul class="dropdown-menu" aria-labelledby="about-menu">
 		  <li class="<%= 'active' if current_page?(edit_user_registration_path) %>"><%= link_to("My Profile", edit_user_registration_path, :id => "user-account-edit") %></li>
@@ -65,4 +65,3 @@
 <li><a href="http://support.annotationstudio.org/" target="_blank">Help <i class="fa fa-external-link-square"></i></a></li>
 <% end %>
 </ul>
-

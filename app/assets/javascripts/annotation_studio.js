@@ -294,11 +294,11 @@ jQuery(function($) {
     $(window).scroll(lazyShowAndHideAnnotations);
 
   // Toggle filtered variable
-  $('#visibleannotations').on('click', function(){
+  $("body").on('click', '#visibleannotations', function(){
     sidebar.filtered = true;
     sidebar.showAndHideAnnotations();
   });
-  $('#allannotations').on('click', function(){
+  $("body").on('click', '#allannotations', function(){
     sidebar.filtered = false;
     sidebar.showAllAnnotations();
   });

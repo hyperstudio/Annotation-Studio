@@ -10,14 +10,14 @@
 	      <span class="title"> <%= link_to g.name, group_path(id: g.id) %> <br> </span>
 
 		<div class="line"></div>
-	      
+
 	       <% myRole = Membership.find_by(group_id: g.id, user_id: current_user.id).role %>
 	       Role: <%= myRole %> <br>
 
 	       Owner: <%= User.find(g.owner_id).firstname %> <br>
 
 	        <% m = Membership.where(group_id: g.id) %>
-      		 Members: <%= m.size %> 
+      		 Members: <%= m.size %>
 
 
       		 <% if myRole == "owner" %>
@@ -31,7 +31,7 @@
 
 
 <style>
-	
+
 	.row{
 	  display:flex;
 	  flex-wrap: wrap;
@@ -69,4 +69,3 @@
   margin-left: -70px;
 }
 </style>
-

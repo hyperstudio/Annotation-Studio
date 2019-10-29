@@ -1,11 +1,11 @@
 <table class="table table-striped table-bordered">
   <tr>
     <th>Title</th>
-    <th>Author</th>
+    <th id="author-column">Author</th>
     <th>Created</th>
     <th> (new) Groups</th>
     <th>Status</th>
-    <th>Actions</th>
+    <th id="button-column">Actions</th>
   </tr>
   <% unless documents.nil? || documents.empty? %>
     <% documents.each do |document| %>
@@ -38,7 +38,7 @@
           <% end %>
 
         </td>
-        <td class="button-column">
+        <td>
           <% if can? :update, document %>
             <% if document.draft? %>
               <%= link_to edit_document_path(document), :class => 'btn btn-default btn-sm', data: { toggle: 'tooltip', placement: 'top', original_title: 'Text and metadata are editable' } do %>

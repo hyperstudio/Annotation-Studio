@@ -88,7 +88,9 @@ awesome and supporting the Annotator Community
 plugins and being awesome.
 
 ## Contributors
-### Lab
+### Institutions
+- Active Archives Initiative at MIT
+- http://aai.mit.edu
 - MIT HyperStudio
 - http://hyperstudio.mit.edu/
 
@@ -100,6 +102,10 @@ plugins and being awesome.
 - Seth Woodworth [@sethwoodworth](http://github.com/sethwoodworth)
 - Ayse Gursoy [@gursoy](http://github.com/gursoy)
 - Jacob Hilker [@jhilker](http://github.com/jhilker)
+- Ben Silverman [@blms](http://github.com/blms)
+- Peggy Wang [@pegolegoeggo](http://github.com/pegolegoeggo)
+- Lizao Wang [@LizaoWang](http://github.com/LizaoWang)
+- Joshua Mbogo [@mbogo-mit](http://github.com/mbogo-mit)
 
 ## License
 GPL2: http://www.gnu.org/licenses/gpl-2.0.html

@@ -25,7 +25,7 @@
 		}
 	</script>
 </head>
-<body id="<%= yield(:body_id) %>" class="<%= yield(:body_class) %>">
+<body id="<%= yield(:body_id) %>" class="<%= yield(:body_class) %>" style="overflow-y:hidden;">
 
     <nav class="navbar navbar-inverse navbar-fixed-top" id="navbar">
       <div class="container">
@@ -87,6 +87,7 @@
     })();
     </script>
     <script type="text/javascript">
+      var _documentTitle = "";
     $('document').ready(function() {
       // $('#lower-navbar').affix({
       //   offset: {top: 50}
@@ -101,6 +102,56 @@
       // });
       // $('#mainmenu').offcanvas();
       // $('#toolsmenu').offcanvas();
+
+      /*
+      This piece of code is applied to _breadcrumbs.html.erb to
+      the li tags document-title-overflow-#. Checks if text has
+      overflown if so then cut the document title down and add ...
+      also adds an on hover functionality which makes it if the
+      user hovers over the title they can scroll through the whole
+      length of the title
+      */
+      function CutDownTextToDesiredLength(text,container_width){
+        /*
+        Function: This function takes in text and cuts the text down until
+        the text fits inside the container and has a ... to represent
+        that there is more text that can be displayed if the user
+        hovers over the document title.
+        Returns: the new text with a "..." at the end
+        */
+
+        /*
+        Record that the text is to long and put an on hover event
+        so when the user hovers over the text they can scroll and
+        see the whole document title
+        */
+        _documentTitle = text;
+        dto1.hover(function(){
+          $(this).text(_documentTitle);
+        });
+        dto1.mouseout(function(){
+          $(this).text(CutDownTextToDesiredLength($(this).text(),$(this).innerWidth()));
+        });
+
+        //Adjust the text so it is cut down and has "..." at the end
+        var conversionFactor = 120/714;//converting pixel width to number of characters that can fit in that width
+        var numberOfAllowedCharacters = Math.floor(conversionFactor * container_width) - 3;//the minus 3 is because we are going to add '...' to the end of the string
+        var textArray = text.substring(0, numberOfAllowedCharacters).split(' ');
+        if(textArray.length > 1){
+          textArray.pop();
+        }
+        textArray.push("...");
+        return(textArray.join(" "));
+      }
+
+      var dto1 = $('#document-title-overflow-1');
+      /*if(dto1 != undefined){
+        if (dto1[0].scrollWidth >  dto1.innerWidth()) {
+          //Text has over-flown
+          dto1.text(CutDownTextToDesiredLength(dto1.text(),dto1.innerWidth()));
+        }
+      }*/
+
     });
     </script>
 </body>

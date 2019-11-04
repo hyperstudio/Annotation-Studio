@@ -3,6 +3,33 @@
 	<h4>Content</h4>
 
 	<div class="panel-group" id="accordion">
+
+		<!-- Block to edit for file upload: -->
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h4 class="panel-title">
+					<a data-toggle="collapse" data-parent="#accordion" href="#uploader">
+						Upload a file (Word, PDF or plain text)
+					</a>
+				</h4>
+			</div>
+			<div id="uploader" class="panel-collapse collapse">
+				<div class="panel-body">
+					<%= f.label :upload, 'Select a file from your computer' %>
+					<div class="fileinput fileinput-new input-group" data-provides="fileinput">
+						<div class="form-control" data-trigger="fileinput">
+							<i class="glyphicon glyphicon-file fileinput-exists"></i>
+							<span class="fileinput-filename"></span></div>
+						<span class="input-group-addon btn btn-default btn-file"><span class="fileinput-new">Select file</span><span class="fileinput-exists">Change</span><%= f.file_field :upload %></span>
+						<a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
+					</div>
+					<p class="help-block">This feature converts your documents for use within Annotation Studio, and
+						strips out all formatting. Simple, single-column documents work best.</p>
+				</div>
+			</div>
+		</div>
+		<!-- End block to edit for file upload -->
+
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<h4 class="panel-title">

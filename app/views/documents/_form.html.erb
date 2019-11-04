@@ -129,7 +129,69 @@
 <script type="text/javascript">
   $(document).ready(function() {
 
+
+    function selectText(node) {
+        node = document.getElementById(node);
+
+        if (document.body.createTextRange) {
+            const range = document.body.createTextRange();
+            range.moveToElementText(node);
+            range.select();
+        } else if (window.getSelection) {
+            const selection = window.getSelection();
+            const range = document.createRange();
+            range.selectNodeContents(node);
+            selection.removeAllRanges();
+            selection.addRange(range);
+        } else {
+            console.warn("Could not select text in node: Unsupported browser.");
+        }
+    }
+
+    //const clickable = document.querySelector('#click-me');
+    //clickable.addEventListener('click', () => selectText('target'));
+
+    var chapterNumbers = 1;
+    var ChapterButton = function (context) {
+      var ui = $.summernote.ui;
+
+      // create button
+      var button = ui.button({
+        contents: '<i class="fa fa-bars"/> Add Chapter',
+        tooltip: 'Add chapters to bookmark places in the text',
+        click: function () {
+          // invoke insertText method with 'hello' on editor module.
+          context.invoke('editor.pasteHTML', "|<span style='font-style: italic;' id='chapter-bookmark-" + chapterNumbers + "' class='chapter-bookmark bg-success '>Name The Chapter</span>|");
+          $("#chapter-bookmark-" + chapterNumbers).click(function(){
+            console.log($(this).attr('id'));
+            selectText($(this).attr('id'));
+          });
+          chapterNumbers += 1;
+
+          //var cursorPosition = $('.text-area').prop("selectionStart");
+          //document.getElementsByClassName("text-area")[0].setSelectionRange(cursorPosition+7,cursorPosition+7);
+          //$('.text-area').summernote('pasteHTML', "<div>markupStr</div>");
+        }
+      });
+
+      return button.render();   // return button as jquery object
+    }
+
     $('.text-area').summernote({
+      toolbar: [
+        // [groupName, [list of button]]
+        ['mybuttons',['chapterbutton']],
+        ['style', ['bold', 'italic', 'underline', 'clear']],
+        ['font', ['strikethrough', 'superscript', 'subscript']],
+        ['fontsize', ['fontsize']],
+        ['color', ['color']],
+        ['link',['link','chapterbookmark']],
+        ['para', ['ul', 'ol', 'paragraph']],
+        ['height', ['height','cleaner']]
+      ],
+      buttons: {
+        chapterbutton: ChapterButton
+      },
       height: 300,                 // set editor height
       minHeight: null,             // set minimum height of editor
       maxHeight: null,             // set maximum height of editor

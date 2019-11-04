@@ -25,4 +25,4 @@ Rails.application.config.middleware.use 'Apartment::Elevators::Generic', lambda 
   end
 }
 
-Rails.application.config.default_email_link_protocol = (ENV['DEFAULT_EMAIL_LINK_PROTOCOL'] || 'http')
+Rails.application.config.default_email_link_protocol = (ENV['DEFAULT_EMAIL_LINK_PROTOCOL'] || 'https')

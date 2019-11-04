@@ -8,7 +8,7 @@ Doorkeeper.configure do
     # Put your resource owner authentication logic here.
     # Example implementation:
      # User.find_by_id(session[:user_id]) || redirect_to(new_user_session_url)
-     
+
     session[:user_return_to] = request.fullpath
     current_user || redirect_to(new_user_session_url)
   end
@@ -78,7 +78,7 @@ Doorkeeper.configure do
   # by default in non-development environments). OAuth2 delegates security in
   # communication to the HTTPS protocol so it is wise to keep this enabled.
   #
-  # force_ssl_in_redirect_uri !Rails.env.development?
+  force_ssl_in_redirect_uri !Rails.env.development?
 
   # Specify what grant flows are enabled in array of Strings. The valid
   # strings and the flows they enable are:

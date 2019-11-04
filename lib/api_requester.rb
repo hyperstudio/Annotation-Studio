@@ -5,7 +5,7 @@ require 'csv'
 require "json"
 
 class ApiRequester
-    @@api_url = ENV['API_URL']
+    @@api_url = ENV['PROTOCOL']+'//'+ENV['API_URL']
 
     def self.get_by_uuid(params, token)
 

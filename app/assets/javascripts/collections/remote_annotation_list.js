@@ -2,8 +2,8 @@ var Sidebar = Sidebar || {};
 
 Sidebar.RemoteAnnotationList = Backbone.Collection.extend({
   model: Sidebar.Annotation,
-  url: 'http://localhost:3000/api/search',
-  // url: 'http://localhost:5000/api/search',
+  url: 'https://localhost:3000/api/search',
+  // url: 'https://localhost:5000/api/search',
   // comparator: function(annotation) {
   //   try {
   //     var startOffset = annotation.get("ranges")[0].startOffset;

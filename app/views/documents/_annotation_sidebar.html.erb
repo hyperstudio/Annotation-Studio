@@ -12,7 +12,7 @@ var annotation_username = "<%= current_user.first_name_last_initial %>";
 var sidebar_sort_editable = <%= current_user && current_user.has_document_permissions?(@document) %>;
 var mobile_device = <%= mobile_device? -%>;
 var search_context = 'document';
-var api_url = location.protocol+'//'+'<%= ENV["API_URL"] %>';
+var api_url = '<%= ENV["API_URL"] %>';
 var doc_uri = [location.protocol, '//', location.host, location.pathname].join('');
 
 var plugin_options = function() {

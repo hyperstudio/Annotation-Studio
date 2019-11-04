@@ -1,6 +1,6 @@
 jQuery(function ($) {
     var widget = new Widget.App();
-    var endpoint = location.protocol+'//'+'<%= ENV["API_URL"] %>';
+    var endpoint = '<%= ENV["API_URL"] %>';
     var token = '<%= session["jwt"] %>';
     // Backbone.history.start({pushState: true, root: window.location})
 

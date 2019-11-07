@@ -1,3 +1,4 @@
+<%= stylesheet_link_tag "breadcrumbs-overrides" %>
 <% second_line = params[:controller] == 'documents' && (params[:action] == 'show' || params[:action] == 'edit') %>
 <ol class="breadcrumb breadcrumb-inverse hidden-xs<%= " second-line" if second_line %>">
   <% if current_page?(dashboard_path) || current_page?(root_path) %>

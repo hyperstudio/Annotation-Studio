@@ -2,29 +2,23 @@
 <%= content_for :body_class, 'show' %>
 <%= content_for :page_title, @document.title %>
 <%= stylesheet_link_tag "documents" %>
-<div class="row" style="margin-left:-120px;">
-  <div id="chapter-bookmark-well" class="col-md-2" style="padding-top:40px;">
-    <div id="chapter-bookmark-list-group-container" class="list-group">
-      <a href="#" class="list-group-item list-group-item-action active">
-        Chapter Bookmarks
-      </a>
-    </div>
-  </div>
-  <div class="col-md-7 w-75 height-size-to-page-scroll" id="my-document-container">
+<div class="row">
+  <div class="col-md-8 w-75" id="my-document-container">
     <% if ! @document.processed? %>
       <%= render 'processed_message' %>
     <% end %>
     <% if @document.survey_link.present? %>
       <%= render 'survey_button' %>
     <% end %>
-    <div id="textcontent" style="overflow-y:scroll;height:95%;margin-top:20px;">
-      <div id="snapshot">
-        <%= @document.text.html_safe %>
+    <div id="textcontent-container">
+      <div id="textcontent" >
+        <div id="snapshot">
+          <%= @document.text.html_safe %>
+        </div>
       </div>
     </div>
-
   </div><!--/col-md-8 -->
-  <div class="col-md-3">
+  <div class="col-md-4">
     <% if @document.processed? and !@document.draft? %>
       <%= render "documents/annotation_sidebar" %>
     <% end %>
@@ -42,10 +36,10 @@
 <script type="text/javascript">
 //console.log($("span"));
 //var textareaHTML = $("#snapshot").html();
-$(".chapter-bookmark").each(function(){
-  $("#chapter-bookmark-list-group-container").append("<a id='chapter-bookmark-listgroup-" + $(this).attr("id") + "' class='list-group-item list-group-item-action chapter-bookmark-onclick-event'>" + $(this).html() +"</a>");
+//$(".chapter-bookmark").each(function(){
+  //$("#chapter-bookmark-list-group-container").append("<a id='chapter-bookmark-listgroup-" + $(this).attr("id") + "' class='list-group-item list-group-item-action chapter-bookmark-onclick-event'>" + $(this).html() +"</a>");
   //$("#chapter-bookmark-well").append("<button type='button' class='btn btn-info chapter-bookmark-buttons'>" + $(this).html() + "</button>");
-});
+//});
 
 //This onclick event scrolls to the bookmark in the #snapshot div
 $(".chapter-bookmark-onclick-event").click(function(){
@@ -82,6 +76,14 @@ $('#annotation-list').slimScroll({
   disableFadeOut: true
 });
 
+$('#textcontent').slimScroll({
+  height: '100%',
+  width: '100%',
+  alwaysVisible: false,
+  allowPageScroll: true,
+  disableFadeOut: true
+});
+
 $('#chapternav').slimScroll({
   height: '90%',
   width: '250px',
@@ -94,5 +96,6 @@ $('#chapternav').slimScroll({
   disableFadeOut: true
 });
 
-$('#my-document-container').height(0.4*($(document).height()));
+$('#my-document-container').height(0.71*($(window).height()));
+$("body").css("overflow-y", "hidden");
 </script>

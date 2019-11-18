@@ -26,10 +26,13 @@ pre {
 	border-radius: 0;
 }
 
-
+#textcontent-container {
+	height:103%;
+	margin-top:30px;
+}
 
 div#textcontent, section#textcontent {
-  margin-top: 30px;
+  margin-top: 0px;
 	font-family: "calluna";
 	padding: 60px;
 	background-color: #fff;

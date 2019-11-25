@@ -50,12 +50,18 @@
       <div class="container">
         <div class="row">
           <div class="col-md-8">
-            <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-recalc="false" data-target="#mainmenu" id="leftburger" title="Navigation"><i class="fa fa-bars"></i></button>
+            <label class="navbar-switch" id="leftburger">
+              <input type="checkbox" class="" data-toggle="offcanvas"  data-target="#mainmenu"  title="Navigation" />
+              <span class="navbar-toggle"><i class="fa fa-bars"></i></span>
+            </label>
             <%= render "shared/breadcrumbs" %>
           </div>
           <div class="col-md-4">
             <%= render "shared/annotation_header" %>
-            <button type="button" class="navbar-toggle pull-right" data-toggle="offcanvas" data-recalc="false" data-target="#toolsmenu" id="rightburger" title="Tools"><i class="fa fa-gears"></i></button>
+            <label class="navbar-switch" id="rightburger">
+              <input type="checkbox" class=" pull-right" data-toggle="offcanvas" data-target="#toolsmenu"  title="Tools" />
+              <span class="navbar-toggle"><i class="fa fa-gears"></i></span>
+            </label>
           </div>
         </div>
       </div>
@@ -88,20 +94,21 @@
     </script>
     <script type="text/javascript">
     $('document').ready(function() {
-      // $('#lower-navbar').affix({
-      //   offset: {top: 50}
-      // });
-      // $('#mainmenu').offcanvas({
-      //   disableScrolling: false,
-      //   autohide: true,
-      // });
-      // $('#toolsmenu').offcanvas({
-      //   disableScrolling: false,
-      //   autohide: true,
-      // });
-      // $('#mainmenu').offcanvas();
-      // $('#toolsmenu').offcanvas();
+      $('#mainmenu').bind('show.bs.offcanvas',function(){checkmark('left',true);});
+      $('#mainmenu').bind('hide.bs.offcanvas',function(){checkmark('left',false);});
+      $('#toolsmenu').bind('show.bs.offcanvas',function(){checkmark('right',true);});
+      $('#toolsmenu').bind('hide.bs.offcanvas',function(){checkmark('right',false);});
     });
+      function checkmark(side,on) {
+        if(side=='left')
+          var el = $('#leftburger span');
+        else if(side=='right')
+          var el = $('#rightburger span');
+        if(on==true)
+          el.addClass("navbutton-pushed");
+        else
+          el.removeClass("navbutton-pushed");
+      }
     </script>
 </body>
 </html>

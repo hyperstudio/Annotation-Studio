@@ -25,6 +25,7 @@
  *= require "annotations"
  *= require "ekko-lightbox.min"
  *= require "navbar-overrides.css"
+ *= require "bootstrap-font-overrides"
  */
 
 html {
@@ -33,7 +34,7 @@ html {
 }
 
 body {
-  background-color:#eee;
+  background-color:#EFEFEF;
   padding: 100px 0 100px 0;
   margin-bottom: 60px;
 }
@@ -125,8 +126,23 @@ div#login, div#blurb {
 }
 
 #mainalerts {
-  margin-top:20px;
-  margin-bottom:0;
+  margin-top:0px;
+  margin-bottom:0px;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+}
+
+.alert-success {
+  color: #3c763d;
+  background-color: #dff0d8;
+  border-color: #d6e9c6;
+  margin-top:0px;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+}
+
+.alert-dismissle {
+  margin-top: 0px;
 }
 
 .page-header {
@@ -143,8 +159,8 @@ body.index .panel {
 }
 
 body.index .panel-heading {
-  border-bottom: 0;
-}
+  border:none;
+  }
 
 body.index ul.nav-pills li a:hover {
   background-color: #fff;
@@ -197,7 +213,7 @@ img#neh-logo {
     }
     display: inline-block;
     max-height: 50px;
-    font-family: serif;
+    font-family: Frutiger, sans-serif;
     font-variant-caps: small-caps;
     font-size: 1.4em;
     font-weight: lighter;
@@ -207,6 +223,39 @@ img#neh-logo {
     color: #fff;
   }
 }
+
+.chapterButton{
+  background-color:#DDDEE7;
+  padding:7px;
+  border-radius: 3pt;
+  font-weight:normal;
+}
+
+
+
+.metadataStyle{
+  background-color:white;
+  padding:12px;
+  padding-top:5px;
+
+}
+
+.left{
+  width:62%;
+  float:left;
+}
+
+.right{
+  width:35%;
+  backgrond-color:white;
+  float:right;
+
+}
+
+.clearFloat{
+  clear:both;
+}
+
 
 #author-column {
   min-width: 150px;

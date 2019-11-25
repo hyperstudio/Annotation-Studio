@@ -1,0 +1,26 @@
+<div class="row">
+
+  <% @mygroups.includes(:memberships).each do |g| %>
+    <div class= "column"> 
+       <span class="title"> <%= link_to g.name, group_path(id: g.id) %> <br> </span>
+
+       <div class="h_line"></div>
+        Owner: <%=current_user.firstname=%><!--%= User.find(g.owner_id)%--><br>
+        Members: <%= g.memberships.size %> <br>
+        Editors: <%= g.memberships.where(role: "manager").size %>
+
+
+       <br>
+       <br>
+
+       <button class="editButton" ><%= link_to "Manage", edit_group_path(id: g.id) %></button>
+
+    </div>
+  <% end %>
+  </div>
+
+<center>
+  <div class='pagination-controls'>
+      <%= will_paginate @mygroups, renderer: BootstrapPagination::Rails %>
+    </div>
+</center>

@@ -1,246 +1,386 @@
 <%= form_for (@document), :html => { :role => 'form', class: "confirm-changes" } do |f| %>
 <%= render 'document_content', f: f %>
+<div class="left"><!--column layout for metadata and status-->
+  <div class="panel-heading" style="background-color: #DFDFDF;">
+        <h4 class="panel-title" >
+          Metadata
+        </h4>
+  </div>
+  <!--white metadata panel starts-->
+  <div class="metadataStyle">
+      <% if create %>
+        <div class="form-group">
+            <%= label_tag "Type of Resource" %>
+            <p class="help-block"> eg. Book, Website, etc...</p>
+            <%= select_tag "type", options_for_select([ "Book", "Website", "Journal", "Other" ], "Book"),
+            {:class => 'form-control', :id => 'type',
+            :onchange => "change(this.id)", :style=> "width:300px"} %>
+        </div>
 
-<h4>Metadata</h4>
 
-<div class="row">
-  <div class="col-md-6">
-    <div class="form-group">
-      <%= f.label :title %>
-      <%= f.text_field :title, :class => 'form-control' %>
-    </div>
-
-    <div class="form-group">
-      <%= f.label :author %>
-      <%= f.text_field :author, :class => 'form-control' %>
-    </div>
-
-    <div class="form-group">
-      <%= f.label :publication_date %>
-      <%= f.text_field :publication_date, :class => 'form-control' %>
-    </div>
-
-    <div class="form-group">
-      <%= f.label :publisher %>
-      <%= f.text_field :publisher, :class => 'form-control' %>
-    </div>
-  </div><!-- end span 6 -->
-
-  <div class="col-md-6">
-    <div class="form-group">
-      <%= f.label :edition, "Edition/Volume" %>
-      <%= f.text_field :edition, :class => 'form-control' %>
-    </div>
-
-    <div class="form-group">
-      <%= f.label :source %>
-      <%= f.text_field :source, :class => 'form-control' %>
-    </div>
-
-    <div class="form-group">
-      <%= f.label :rights_status %>
-      <%= f.select :rights_status, [ 'Copyrighted', 'Public Domain', 'Creative Commons'], {}, {:class => 'form-control'} %>
-    </div>
-  </div><!-- end span 6 -->
-</div><!-- end row -->
-
-<div class="row">
-  <div class="col-md-6">
-    <h4>Status</h4>
-    <div class="form-group">
-      <table class="help-block">
-        <tr><th></th><th><i class="glyphicon glyphicon-eye-open"></i> View</th><th><i class="glyphicon glyphicon-edit"></i> Edit</th><th><i class="glyphicon glyphicon-comment"></i> Annotate</th></tr>
-        <tr>
-          <th><i class="glyphicon glyphicon-user"></i> Me</th>
-          <th><i class="glyphicon glyphicon-ok"></i></th>
-          <th><i class="glyphicon glyphicon-ok"></i></th>
-          <th><i class="glyphicon glyphicon-remove"></i></th>
-        </tr>
-        <tr>
-          <th><i class="glyphicon glyphicon-blackboard"></i> <%= ENV["CLASS_TERM_PLURAL"].capitalize %></th>
-          <th><i class="glyphicon glyphicon-ok"></i></th>
-          <th><i class="glyphicon glyphicon-remove"></i></th>
-          <th><i class="glyphicon glyphicon-remove"></i></th>
-        </tr>
-        <% if can? :publish, Document %>
-        <tr>
-          <th><i class="glyphicon glyphicon-globe"></i> Public</th>
-          <th><i class="glyphicon glyphicon-remove"></i></th>
-          <th><i class="glyphicon glyphicon-remove"></i></th>
-          <th><i class="glyphicon glyphicon-remove"></i></th>
-        </tr>
-        <% end %>
-      </table>
-      <div class="radio">
-        <label>
-          <%= f.radio_button :state, "draft", checked: controller.action_name == "new" ? true : @document.draft?, disabled: !@document.draft? && controller.action_name == "edit" %>
-          <i class="glyphicon glyphicon-pencil"></i> Draft
-        </label>
-      </div>
-      <div class="radio">
-        <label>
-          <%= f.radio_button :state, "published", checked: @document.published? %>
-          <i class="glyphicon glyphicon-comment"></i> Published <b>*</b>
-        </label>
-      </div>
-      <% if can? :archive, Document %>
-      <div class="radio">
-        <label>
-          <%= f.radio_button :state, "archived", checked: @document.archived? %>
-          <i class="glyphicon glyphicon-folder-close"></i> Archived <b>*</b>
-        </label>
-      </div>
-      <% end %>
-      <% if current_user.has_role? :admin %>
-      <div class="radio">
-        <label>
-          <%= f.radio_button :state, "public", checked: @document.public? %>
-          <i class="glyphicon glyphicon-globe"></i> Public <b>*</b>
-        </label>
-      </div>
-      <% end %>
-    </div>
-    <div class="draftnote"><b>* Note:</b>
-      <% if current_user.has_role? :admin %>
-      <% @docStatusAdmin = "a status marked with an asterisk (*)" %>
       <% else %>
-      <% @docStatusAdmin = "Published or Archived" %>
+      <%= label_tag "Type: " + (@document.resource_type == '' ? 'none' : @document.resource_type) %>
       <% end %>
-      <label class="draftnote">
-        If you set the document to <%= @docStatusAdmin %>, you will no longer be able to edit its content, and you cannot revert back to Draft. You will still be able to edit metadata and status. Make sure your document is finalized before choosing a status other than Draft.
-      </label>
-    </div>
+           <div class="row">
+                <div class="col-md-6">
 
+                     <div class="form-group">
+                        <%= f.label :author %>
+                        <%= f.text_field :author, :class => 'form-control' %>
+                     </div>
+            <div class="form-group">
+                  <%= f.label :publication_date %>
+                  <%= f.text_field :publication_date, :class => 'form-control' %>
+                </div>
+
+                <div class="form-group">
+                          <%= f.label :rights_status %>
+                          <%= f.select :rights_status, [ 'Copyrighted', 'Public Domain', 'Creative Commons'], {}, {:class => 'form-control'} %>
+                     </div>
+                <div class="form-group optional" id="edition" style="display:none">
+                  <%= f.label :edition, "Edition/Volume" %>
+                  <%= f.text_field :edition, :class => 'form-control' %>
+                </div>
+                <div class="form-group optional" id="page_numbers" style="display:none">
+                  <%= f.label :page_numbers %>
+                  <%= f.text_field :page_numbers, :class => 'form-control' %>
+                </div>
+             </div><!-- end span 6 -->
+            <div class="col-md-6">
+
+                <div class="form-group">
+                          <%= f.label :title %>
+                     <%= f.text_field :title, :class => 'form-control' %>
+                     </div>
+                <div class="form-group">
+                 <%= f.label :publisher %>
+                 <%= f.text_field :publisher, :class => 'form-control' %>
+                </div>
+                <div class="form-group optional" id="location" style="display:none">
+                  <%= f.label :location, 'Publication Location' %>
+                  <%= f.text_field :location, :class => 'form-control' %>
+                </div>
+                <div class="form-group optional" id="series" style="display:none">
+                  <%= f.label :series %>
+                  <%= f.text_field :series, :class => 'form-control' %>
+                </div>
+                <div class="form-group optional" id="journal_title" style="display:none">
+                  <%= f.label :journal_title %>
+                  <%= f.text_field :journal_title, :class => 'form-control' %>
+                </div>
+                <div class="form-group optional" id="source" >
+                  <%= f.label :source %>
+                  <%= f.text_field :source, :class => 'form-control' %>
+                </div>
+
+          </div><!-- end span 6 -->
+        </div><!-- end row -->
+        <div class="row">
+            <div class = "col-md-6">
+                <div class="form-group optional" id="notes" style="display:none">
+                  <%= f.label :notes %>
+                  <p class="help-block"> Additional Metadata Information </p>
+                  <%= f.text_area :notes, :class => 'form-control' %>
+                </div>
+            </div><!--ends row-->
+        </div><!--ends row-->
+</div><!--metadata style div ends-->
+</div><!--ends div left-->
+<!--start of right column for status-->
+<div class="right">
+  <div class="panel-heading" style="background-color: #DFDFDF; ">
+        <h4 class="panel-title" >
+          Status
+        </h4>
+  </div>
+  <div class="metadataStyle">
+        <div class="form-group">
+        <table class="help-block" style="width: 50%;">
+          <tr>
+            <th></th><th><i class="glyphicon glyphicon-eye-open"></i> View</th>
+            <th><i class="glyphicon glyphicon-edit"></i> Edit</th>
+            <th><i class="glyphicon glyphicon-comment"></i> Annotate</th>
+          </tr>
+          <tr>
+            <th><i class="glyphicon glyphicon-user"></i> Me</th>
+            <th><i class="glyphicon glyphicon-ok"></i></th>
+            <th><i class="glyphicon glyphicon-ok"></i></th>
+            <th><i class="glyphicon glyphicon-remove"></i></th>
+          </tr>
+          <tr>
+            <th><i class="glyphicon glyphicon-blackboard"></i> <%= ENV["CLASS_TERM_PLURAL"].capitalize %></th>
+            <th><i class="glyphicon glyphicon-ok"></i></th>
+            <th><i class="glyphicon glyphicon-remove"></i></th>
+            <th><i class="glyphicon glyphicon-remove"></i></th>
+          </tr>
+          <% if can? :publish, Document %>
+            <tr>
+              <th><i class="glyphicon glyphicon-globe"></i> Public</th>
+              <th><i class="glyphicon glyphicon-remove"></i></th>
+              <th><i class="glyphicon glyphicon-remove"></i></th>
+              <th><i class="glyphicon glyphicon-remove"></i></th>
+            </tr>
+          <% end %>
+        </table>
+          <div class="radio">
+            <br>
+            <label>
+              <%= f.radio_button :state, "draft", checked: controller.action_name == "new" ? true : @document.draft?, disabled: !@document.draft? && controller.action_name == "edit" %>
+              <i class="glyphicon glyphicon-pencil"></i> Draft
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <%= f.radio_button :state, "published", checked: @document.published? %>
+              <i class="glyphicon glyphicon-comment"></i> Published <b>*</b>
+            </label>
+          </div>
+          <% if can? :archive, Document %>
+          <div class="radio">
+            <label>
+              <%= f.radio_button :state, "archived", checked: @document.archived? %>
+              <i class="glyphicon glyphicon-folder-close"></i> Archived <b>*</b>
+            </label>
+          </div>
+          <% end %>
+          <% if current_user.has_role? :admin %>
+          <div class="radio">
+            <label>
+              <%= f.radio_button :state, "public", checked: @document.public? %>
+              <i class="glyphicon glyphicon-globe"></i> Public <b>*</b>
+            </label>
+          </div>
+          <% end %>
+        </div>
+
+        <% if current_user.has_role? :admin %>
+          <% @docStatusAdmin = "a status marked with an asterisk (*)" %>
+        <% else %>
+          <% @docStatusAdmin = "Published or Archived" %>
+        <% end %>
+      <div class="draftnote">
+        <p class="greyText">
+        Note: You can no longer edit the content, or revert the status of a document once it has been published or archived. If you wish to modify the content of a document, save it as a draft. Metadata can be edited regardless of document status.
+        </p>
+      </div><br><br>
+
+
+        <strong>Share with <%= ENV["GROUP_TERM_PLURAL"].capitalize %></strong>
+        <p class="greyText">Enter the <%= ENV["GROUP_TERM_PLURAL"] %> to which you wish to assign this document, <strong>and press enter after each.</strong></p>
+   <!--  <div class="form-group">
+        <%= f.text_field :rep_group_list, :value => @document.rep_group_list.join(', '), :class => 'form-control', :id=> 'dg', 'data-role' => "tagsinput", 'placeholder' => ENV["CLASS_TERM_PLURAL"] %>
+    </div>  -->
+          <div class="form-groups">
+      <%= text_field_tag "groups", @current_groups, id: "document-groups", :placeholder => "Groups", :data=> {:role => 'tagsinput'} %>
+
+      <script>
+       var options = <%= raw(current_user.groups.pluck(:name)) %>;
+        //need to loop because .pluck gives [&quot;Wellesley&quot;
+
+        // working when upgraded to newest version of bootstrap-tagsinput.js:
+        //https://raw.githubusercontent.com/bootstrap-tagsinput/bootstrap-tagsinput/master/dist/bootstrap-tagsinput.js
+        //following code from:  http://bootstrap-tagsinput.github.io/bootstrap-tagsinput/examples/
+        // and: https://jsfiddle.net/dhirajbodicherla/aawmp3np/305/
+        // console.log(options);
+        var groups = new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            local: $.map(options, function (name) {
+        return {
+            name: name
+        };
+    })
+            });
+        groups.initialize();
+        $('#document-groups').tagsinput({
+            typeaheadjs: [{
+              minLength: 1,
+              hint:true,
+              highlight: true
+            },
+
+            { name: 'groups',
+              displayKey: 'name',
+              valueKey: 'name',
+              source: groups.ttAdapter()
+            }]
+        });
+      </script>
   </div><!-- end span 6 -->
+  </div><!-- end row -->
+  </div> <!--ends right-->
+  <div class="clearFloat" >
+ <br>
+      <%= f.submit nil, :class => 'btn btn-default btn btn-default-primary btn-primary' %>
+      <% if @document.state == "draft" %>
+        <%= link_to document_path(@document), method: :delete, class: 'btn btn-default btn btn-default-primary btn-primary', data: {confirm: "Are you sure? Delete cannot be undone.", toggle: 'tooltip', placement: 'top',
+          original_title: 'Delete'} do %> Delete
+        <% end %>
+      <% end %>
 
-  <div class="col-md-6">
-    <h4><%= ENV["CLASS_TERM_PLURAL"].capitalize %></h4>
-    <p class="help-block">Enter the <%= ENV["CLASS_TERM_PLURAL"] %> to which you wish to assign this document, <strong>and press enter after each.</strong></p>
-    <div class="form-group">
-      <%= f.text_field :rep_group_list, :value => @document.rep_group_list.join(', '), :class => 'form-control', 'data-role' => "tagsinput", 'placeholder' => ENV["CLASS_TERM_PLURAL"] %>
-    </div>
-  </div><!-- end span 6 -->
-</div><!-- end row -->
-
-<%= f.submit nil, :class => 'btn btn-default btn btn-default-primary btn-primary' %>
-<%= link_to 'Cancel', documents_url, :class => 'btn btn-default' %>
-<% end %>
-
-<script type="text/javascript">
-  $(document).ready(function() {
-
-    $('.text-area').summernote({
-      height: 300,                 // set editor height
-      minHeight: null,             // set minimum height of editor
-      maxHeight: null,             // set maximum height of editor
-      cleaner:{
-        action: 'button', // both|button|paste 'button' only cleans via toolbar button, 'paste' only clean when pasting content, both does both options.
-        newline: '<br>', // Summernote's default is to use '<p><br></p>'
-        notStyle: 'position:absolute;top:0;left:0;right:0', // Position of Notification
-        keepHtml: true, // Remove all Html formats
-        keepOnlyTags: ['<img>','<table>','<tr>','<td>','<p>', '<br>', '<ul>', '<li>', '<b>', '<strong>','<i>', '<a>'], // If keepHtml is true, remove all tags except these
-        keepClasses: false, // Remove Classes
-        badTags: ['script', 'applet', 'embed', 'noframes', 'noscript'], // Remove full tags with contents
-        badAttributes: ['start'], // Remove attributes from remaining tags
-        limitChars: false, // 0/false|# 0/false disables option
-        limitDisplay: 'text', // text|html|both
-        limitStop: false, // true/false
-        icon: '<i class="note-icon"><span class="fa fa-compress"></span></i>'
-        }
+        <%= link_to 'Cancel', dashboard_path(nav: "mydocuments"), :class => 'btn btn-default btn btn-default-primary btn-primary' %>
+    <% end %>
+  </div><!--ends div clearFloat-->
+    <script type="text/javascript">
+    $(document).ready(function() {
+      $('.text-area').summernote({
+        height: 300,                 // set editor height
+        minHeight: null,             // set minimum height of editor
+        maxHeight: null,             // set maximum height of editor
+        cleaner:{
+            action: 'button', // both|button|paste 'button' only cleans via toolbar button, 'paste' only clean when pasting content, both does both options.
+            newline: '<br>', // Summernote's default is to use '<p><br></p>'
+            notStyle: 'position:absolute;top:0;left:0;right:0', // Position of Notification
+            keepHtml: true, // Remove all Html formats
+            keepOnlyTags: ['<img>','<table>','<tr>','<td>','<p>', '<br>', '<ul>', '<li>', '<b>', '<strong>','<i>', '<a>',
+            '<img>', '<div>', '<h1>', '<h2>', '<h3>', '<style>', '<html>', '<body>'], // If keepHtml is true, remove all tags except these
+            keepClasses: false, // Remove Classes
+            badTags: ['script', 'applet', 'embed', 'noframes', 'noscript'], // Remove full tags with contents
+            badAttributes: ['start'], // Remove attributes from remaining tags
+            limitChars: false, // 0/false|# 0/false disables option
+            limitDisplay: 'text', // text|html|both
+            limitStop: false, // true/false
+            icon: '<i class="fa fa-compress"></i>' //broom icon needs font-awesome 5.0
+          }
       });
       $('.chapter-area').summernote({
-        height: 300,
-        minHeight: null,
-        maxHeight: null,
-        cleaner:{
-          action: 'button', // both|button|paste 'button' only cleans via toolbar button, 'paste' only clean when pasting content, both does both options.
-          newline: '<br>', // Summernote's default is to use '<p><br></p>'
-          notStyle: 'position:absolute;top:0;left:0;right:0', // Position of Notification
-          keepHtml: true, // Keep or remove all Html formats
-          keepOnlyTags: ['<p>', '<br>', '<ul>', '<li>', '<b>', '<strong>','<i>', '<a>'], // If keepHtml is true, remove all tags except these
-          keepClasses: false, // Keep or remove Classes
-          badTags: ['style', 'script', 'applet', 'embed', 'noframes', 'noscript', 'html'], // Remove full tags with contents
-          badAttributes: ['style', 'start'], // Remove attributes from remaining tags
-          limitChars: false, // 0/false|# 0/false disables option
-          limitDisplay: 'both', // text|html|both
-          limitStop: false, // true/false
-          icon: '<i class="note-icon"><span class="fa fa-compress"></span></i>'          }
-        });
+          height: 300,
+          minHeight: null,
+          maxHeight: null,
+          cleaner:{
+              action: 'paste', // both|button|paste 'button' only cleans via toolbar button, 'paste' only clean when pasting content, both does both options.
+              newline: '<br>', // Summernote's default is to use '<p><br></p>'
+              notStyle: 'position:absolute;top:0;left:0;right:0', // Position of Notification
+              keepHtml: true, // Keep or remove all Html formats
+              keepOnlyTags: ['<p>', '<br>', '<ul>', '<li>', '<b>', '<strong>','<i>', '<a>'], // If keepHtml is true, remove all tags except these
+              keepClasses: false, // Keep or remove Classes
+              badTags: ['style', 'script', 'applet', 'embed', 'noframes', 'noscript', 'html'], // Remove full tags with contents
+              badAttributes: ['style', 'start'], // Remove attributes from remaining tags
+              limitChars: false, // 0/false|# 0/false disables option
+              limitDisplay: 'both', // text|html|both
+              limitStop: false // true/false
+            }
+      });
       $('#chapter-editor').hide();
       $('#chapter-label').click(function(){
         $("[data-event='codeview']").click()
         $('#chapter-editor').toggle();
       });
-
       // handle catalog texts
-
       var text = {};
-
       $('.clickable').on('click', function (e) {
-        var id = $( this ).attr( "id" );
-        var entry = text[ id ];
-        $( "#document_title").val( entry['name'] );
-        $( "#document_author").val( entry[ 'author'] );
-        $( "#document_edition").val( entry[ 'edition'] );
-        $( "#document_publisher").val( entry[ 'publisher'] );
-        $( "#document_publication_date").val( entry[ 'publication_date'] );
-        $( "#document_source").val( entry[ 'manuscript'] );
-        $( "#document_rights_status").val( entry[ 'permissions'] );
-        $( ".note-editable").html( "EID:" + id );
+          var id = $( this ).attr( "id" );
+          var entry = text[ id ];
+          $( "#document_title").val( entry['name'] );
+          $( "#document_author").val( entry[ 'author'] );
+          $( "#document_edition").val( entry[ 'edition'] );
+          $( "#document_publisher").val( entry[ 'publisher'] );
+          $( "#document_publication_date").val( entry[ 'publication_date'] );
+          $( "#document_source").val( entry[ 'manuscript'] );
+          $( "#document_rights_status").val( entry[ 'permissions'] );
+          $( ".note-editable").html( "EID:" + id );
       })
-
       // Document status permissions table management
       var permissionsTable = $("table.help-block tbody")[0];
       manageTable(permissionsTable);
       $('input:radio').change(
-      function(){
-        manageTable(permissionsTable);
-      });
-
+        function(){
+          manageTable(permissionsTable);
+        });
       // Show or hide "Classes" permissions depending on if classes are assigned
       showHideClasses(permissionsTable);
       var tagFields = $('.bootstrap-tagsinput');
       var tagLabels = $('.bootstrap-tagsinput span.tag.label.label-info');
       tagFields.bind("keyup change click", function(){showHideClasses(permissionsTable);});
       tagLabels.bind("keyup change click",function(){showHideClasses(permissionsTable);});
-
       <% unless (current_user.has_role? :admin) %>
-      $(permissionsTable.rows[3]).children().attr('style','display:none');
-      $(permissionsTable.rows[2]).children().attr('style','border-bottom:1px solid #BBB');
+        $(permissionsTable.rows[3]).children().attr('style','display:none');
+        $(permissionsTable.rows[2]).children().attr('style','border-bottom:1px solid #BBB');
       <% end %>
     });
-
-  function manageTable(table){
-    var tableState = '';
-    var cell;
-    if($('#document_state_draft').prop("checked") == true)
-    tableState = '110000000'
-    else if($('#document_state_published').prop("checked") == true)
-    tableState = '101101000';
-    else if($('#document_state_archived').prop("checked") == true)
-    tableState = '100100000';
-    else if($('#document_state_public').prop("checked") == true)
-    tableState = '100100100';
-    for (var j = 0; j < 3; j++){
-      for(var k = 0; k < 3; k++){
-        cell = $(table.rows[j+1].cells[k+1]).children();
-        if(!!+tableState.charAt(k+(3*j)) == true)
-        cell.attr('class','glyphicon glyphicon-ok');
-        else
-        cell.attr('class','glyphicon glyphicon-remove');
+    function manageTable(table){
+      var tableState = '';
+      var cell;
+      if($('#document_state_draft').prop("checked") == true)
+        tableState = '110000000'
+      else if($('#document_state_published').prop("checked") == true)
+        tableState = '101101000';
+      else if($('#document_state_archived').prop("checked") == true)
+        tableState = '100100000';
+      else if($('#document_state_public').prop("checked") == true)
+        tableState = '100100100';
+      for (var j = 0; j < 3; j++){
+        for(var k = 0; k < 3; k++){
+          cell = $(table.rows[j+1].cells[k+1]).children();
+          if(!!+tableState.charAt(k+(3*j)) == true)
+            cell.attr('class','glyphicon glyphicon-ok');
+          else
+            cell.attr('class','glyphicon glyphicon-remove');
+        }
       }
     }
-  }
-
-  function showHideClasses(table){
-    if ($('.bootstrap-tagsinput span.tag.label.label-info').length == 0){
-      $(table.rows[2]).attr('style','display:none');
-      $(table.rows[1]).attr('style','border-bottom:1px solid #BBB');
+    function showHideClasses(table){
+      if ($('.bootstrap-tagsinput span.tag.label.label-info').length == 0){
+        $(table.rows[2]).attr('style','display:none');
+        $(table.rows[1]).attr('style','border-bottom:1px solid #BBB');
+      }
+      else{
+        $(table.rows[2]).attr('style','border-bottom:1px solid #BBB');
+        $(table.rows[1]).attr('style','border-bottom: none');
+      }
     }
-    else{
-      $(table.rows[2]).attr('style','border-bottom:1px solid #BBB');
-      $(table.rows[1]).attr('style','border-bottom: none');
-    }
-  }
-
-</script>
+//toggle metadata fields depending on document type
+  function change(selected){
+        var type = document.getElementById(selected);
+        var type_value;
+        <% if !create %>
+          type_value = "<%= @document.resource_type %>";
+        <% else %>
+          type_value = type.value;
+        <% end %>
+        //use case to toggle metadata fields
+          var edition = document.getElementById("edition");
+          var location = document.getElementById("location");
+          var page_numbers = document.getElementById("page_numbers");
+          var series = document.getElementById("series");
+          var journal_title = document.getElementById("journal_title");
+          var notes = document.getElementById("notes");
+          var source = document.getElementById("source");
+          var optional_fields = document.getElementsByClassName("optional");
+          switch(type_value){
+            default:
+              $(optional_fields).show();
+              notes.style.display = "none";
+              journal_title.style.display = "none";
+              source.style.display = "none";
+              break;
+            case "Website":
+              $(optional_fields).hide();
+              source.style.display = "block"
+              break;
+            case "Book":
+              $(optional_fields).show();
+              notes.style.display = "none";
+              journal_title.style.display = "none";
+              source.style.display = "none";
+              break;
+            case "Journal":
+              $(optional_fields).show();
+              source.style.display = "none";
+              notes.style.display = "none";
+              series.style.display = "none";
+              break;
+            case "Other":
+              $(optional_fields).hide();
+              source.style.display = "block";
+              notes.style.display = "block";
+              break;
+          }
+        }
+  </script>
+  <script>
+    //toggle metadata fields onload. Ensures that the correct fields show up for EDIT
+    $(document).ready(function(){
+      $("#type").trigger('change');
+    });
+  </script>

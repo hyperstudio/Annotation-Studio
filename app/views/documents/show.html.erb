@@ -2,8 +2,38 @@
 <%= content_for :body_class, 'show' %>
 <%= content_for :page_title, @document.title %>
 <%= stylesheet_link_tag "documents" %>
+
+ <<nav class="navbar navbar-default navbar-fixed-top hidden-xs" id="lower-navbar" style="background-color:#eeeeee;">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-8">
+            <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-recalc="false" data-target="#mainmenu" id="leftburger" title="Navigation" style="border-width: 0px;"><i class="glyphicon glyphicon-option-horizontal" ></i>&nbsp; &nbsp; &nbsp;<%= @document.title %></button>
+
+          </div>
+          <div class="col-md-4">
+
+            <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-recalc="false" data-target="#toolsmenu" id="rightburger" title="Tools" style="border-width: 0px;">Annotations&nbsp; &nbsp; &nbsp;<i class="glyphicon glyphicon-option-horizontal" > </i></button>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+
+<!--div class="row" >
+  <div class="left" >
+    <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-recalc="false" data-target="#mainmenu" id="leftburger" title="Navigation"><i class="glyphicon glyphicon-option-horizontal" > </i></button><br><%= @document.title %>
+
+  </div>
+  <div class="right">
+    <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-recalc="false" data-target="#toolsmenu" id="rightburger" title="Tools">Annotations&nbsp; &nbsp; &nbsp; <i class="glyphicon glyphicon-option-horizontal" > </i></button>
+  </div>
+</div-->
+
+
+
 <div class="row">
-  <div class="col-md-8">
+  <div class="col-md-8" >
+
     <% if ! @document.processed? %>
       <%= render 'processed_message' %>
     <% end %>
@@ -15,9 +45,10 @@
         <%= @document.text.html_safe %>
       </div>
     </div>
-
   </div><!--/col-md-8 -->
   <div class="col-md-4">
+    
+
     <% if @document.processed? and !@document.draft? %>
       <%= render "documents/annotation_sidebar" %>
     <% end %>
@@ -27,23 +58,17 @@
 <%= render "documents/snapshot_progress" %>
 <%= render "documents/spinner_modal" %>
 <div id="snapshot-staging">
-
 </div>
-
 <%# render "documents/metadata" %>
-
 <script type="text/javascript">
-
 var annotationStudioConfig = {
   enableRichTextEditor: '<%= @enable_rich_text_editor %>',
   tinyMCEToolbar: '<%= @tiny_mce_toolbar %>',
   apiURL: '<%= @api_url %>'
 };
-
 <% if !@document.processed? or @document.draft? %>
   $("#rightburger input").prop("disabled", true);
 <% end %>
-
 $('#annotation-list').slimScroll({
   height: '99%',
   width: '340px',
@@ -51,7 +76,6 @@ $('#annotation-list').slimScroll({
   allowPageScroll: true,
   disableFadeOut: true
 });
-
 $('#chapternav').slimScroll({
   height: '90%',
   width: '250px',
@@ -63,4 +87,8 @@ $('#chapternav').slimScroll({
   allowPageScroll: true,
   disableFadeOut: true
 });
+</script>
+<script type="text/template" id="user-highlight-template">
+  <span class="user-highlight"><div class="ellipsis"><a href="{{uri}}#hl{{uuid}}">{{{quote}}}</a></div></span>
+  <span class="user-comment"><div class="secondary-text">{{title}} ({{username}})</div></span>
 </script>

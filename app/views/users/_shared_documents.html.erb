@@ -1,0 +1,55 @@
+<div class="row">
+
+  <% @sharedDocs.each do |doc| %>
+
+    <div class= "column"> 
+       
+       <span class="title"><%= link_to doc.title, document_path(id: doc.id) %> </span>
+       <div class="h_line"></div>
+
+        <div class="tile-content"> 
+
+          <% if doc.author != "" %>
+        Author: <%= doc.author  %> <br>
+        <%end%>
+
+      
+
+      <% if doc.publication_date && doc.publication_date != "" %>
+        Date: <%= doc.publication_date %> <br> 
+      <% end %>
+       
+      <% if !doc.groups.empty? %> 
+         Group(s): <%= doc.groups.pluck(:name).join(", ") %> <br>
+       <% end %>
+
+       Status: 
+       <span id="status-icon"> 
+        <% case doc.state %>
+          <% when 'draft' %>
+            <i class="glyphicon glyphicon-pencil" title="<%= doc.state %>"></i>
+          <% when 'published' %>
+            <i class="glyphicon glyphicon-comment" title="<%= doc.state %>"></i>
+          <% when 'archived' %>
+            <i class="glyphicon glyphicon-folder-close" title="<%= doc.state %>"></i>
+          <% when 'public' %>
+            <i class="glyphicon glyphicon-globe" title="<%= doc.state %>"></i>
+          <% else %>
+            <%= doc.state %>
+          <% end %>
+       </span> 
+  
+     </div> <!-- tile-content-->
+    </div> <!-- end column -->
+
+  <% end %> <!-- end doc loop -->
+
+  </div>  <!-- end row -->
+ 
+
+  <center><p>
+    <div class='pagination-controls'>
+      <%= will_paginate @sharedDocs, renderer: BootstrapPagination::Rails %>
+    </div>
+  </p>
+</center>

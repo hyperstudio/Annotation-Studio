@@ -1,8 +1,25 @@
 <!-- documents/_leftnav.html.erb -->
 <% if params[:action] == 'show' %>
-<h4>Info</h4>
-<ul class="nav navmenu-nav">
-  <li>Status:
+<h4 style="color:black;">Document Info</h4>
+<ul class="nav navmenu-nav" >
+  
+<% if ! @document.author.blank? %>
+  <li style="color:black">Author: <%= @document.author %></li>
+<% end %>
+<% if ! @document.publisher.blank? %>
+  <li style="color:black">Publisher: <%= @document.publisher %></li>
+<% end %>
+<% if ! @document.publication_date.blank? %>
+  <li style="color:black">Publication date: <%= @document.publication_date %></li>
+<% end %>
+<% if ! @document.location.blank? %>
+  <li style="color:black">Publication Location: <%= @document.location %></li>
+<% end %>
+<% if ! @document.edition.blank? %>
+  <li style="color:black">Edition/Volume: <%= @document.edition %></li>
+<% end %>
+
+<li style="color:black">Status:
     <% if @document.state == "draft" %>
       Draft <i class="glyphicon glyphicon-pencil"></i>
     <% elsif @document.state == "published" %>
@@ -13,21 +30,40 @@
       Public <i class="glyphicon glyphicon-globe"></i>
     <% end %>
   </li>
-<% if ! @document.author.nil? %>
-  <li>Author: <%= @document.author %></li>
+
+
+<% source = @document.source %>
+<% if !source.blank? %>
+
+  <li style="color:black">Source:
+    <% if validUrl?(source) && (source.include? 'http') %>
+      <a href="<%= source %>" style="color:grey;"><%= source %> </a>
+
+    <% elsif validUrl?(source) #append '//' to href %>
+      <% link = '//' + source %>
+        <a href="<%= link %>" style="color:grey;"><%= source %> </a>
+
+    <% else %>
+      <%= source %>
+
+    <% end %>
+  </li>
 <% end %>
-<% if ! @document.publisher.nil? %>
-  <li>Publisher: <%= @document.publisher %></li>
+
+
+
+<% if ! @document.page_numbers.blank? %>
+  <li style="color:black">Page Numbers: <%= @document.page_numbers %></li>
 <% end %>
-<% if ! @document.publication_date.nil? %>
-  <li>Publication date: <%= @document.publication_date %></li>
+<% if ! @document.notes.blank? %>
+  <li style="color:black"> Additional Notes: <span id="metadata-notes"> <%= @document.notes %> </span></li>
 <% end %>
-<% if ! @document.edition.nil? %>
-  <li>Edition/Volume: <%= @document.edition %></li>
-<% end %>
+
 </ul>
 
-<h4>Chapters</h4>
+<br>
+<% if ! @document.chapters.blank? %>
+<h4 style="color:black">Chapters</h4>
 <ul class="nav navmenu-nav" id="chapternav">
 <%= @document.chapters.try(:html_safe) %>
 </ul>
@@ -39,3 +75,10 @@
   });
 </script>
 <% end %>
+<% end %>
+
+  <style>
+  .bg a:hover{
+    background-color: blue;
+  }
+  </style>

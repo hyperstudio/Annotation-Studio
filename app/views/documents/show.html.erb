@@ -41,7 +41,7 @@ var annotationStudioConfig = {
 };
 
 <% if !@document.processed? or @document.draft? %>
-  $("#rightburger").attr("disabled", true);
+  $("#rightburger input").prop("disabled", true);
 <% end %>
 
 $('#annotation-list').slimScroll({

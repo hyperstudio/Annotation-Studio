@@ -50,12 +50,18 @@
       <div class="container">
         <div class="row">
           <div class="col-md-8">
-            <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-recalc="false" data-target="#mainmenu" id="leftburger" title="Navigation"><i class="fa fa-bars"></i></button>
+            <label class="navbar-switch" id="leftburger">
+              <input type="checkbox" class="" data-toggle="collapse"  data-target="#mainmenu"  title="Navigation" />
+              <span class="navbar-toggle"><i class="fa fa-bars"></i></span>
+            </label>
             <%= render "shared/breadcrumbs" %>
           </div>
           <div class="col-md-4">
             <%= render "shared/annotation_header" %>
-            <button type="button" class="navbar-toggle pull-right" data-toggle="offcanvas" data-recalc="false" data-target="#toolsmenu" id="rightburger" title="Tools"><i class="fa fa-gears"></i></button>
+            <label class="navbar-switch" id="rightburger">
+              <input type="checkbox" class=" pull-right" data-toggle="collapse" data-target="#toolsmenu"  title="Tools" />
+              <span class="navbar-toggle"><i class="fa fa-gears"></i></span>
+            </label>
           </div>
         </div>
       </div>

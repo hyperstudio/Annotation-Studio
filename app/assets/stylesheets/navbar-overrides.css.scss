@@ -44,7 +44,7 @@ $dropDown       : false;
         background-color: $bgHighlight; }}}
   .navbar-toggle {
     border-color: $bgHighlight;
-    &:hover, &:focus {
+    &:hover {
       background-color: $bgHighlight; }
     .icon-bar {
       background-color: $colDefault; }}
@@ -65,4 +65,16 @@ $dropDown       : false;
       > a, > a:hover, > a:focus {
         color: $colHighlight;
         background-color: $bgHighlight; }}}
+}
+
+/* Hide default HTML checkbox */
+.navbar-switch input {
+  opacity: 0%;
+  width: 0;
+  height: 0;
+  display:none;
+}
+
+input:checked + .navbar-toggle {
+  background-color: #ddd;
 }

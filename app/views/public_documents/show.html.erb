@@ -3,7 +3,7 @@
 <%= content_for :page_title, @document.title %>
 <%= stylesheet_link_tag "documents" %>
 <div class="row">
-  <div class="col-md-8 w-75 height-size-to-page-scroll" id="my-document-container">
+  <div class="col-md-8 w-75" id="my-document-container">
     <% if ! @document.processed? %>
       <%= render 'processed_message' %>
     <% end %>
@@ -26,7 +26,7 @@
 <%= render "public_documents/metadata" %>
 <script type="text/javascript">
 
-console.log($("#snapshot").html());  
+console.log($("#snapshot").html());
 
 var annotationStudioConfig = {
   enableRichTextEditor: '<%= @enable_rich_text_editor %>',
@@ -60,7 +60,7 @@ $('#chapternav').slimScroll({
   disableFadeOut: true
 });
 
-$('#my-document-container').height(0.4*($(document).height()));
+$('#my-document-container').height(0.71*($(window).height()));
 
 
 </script>

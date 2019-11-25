@@ -29,13 +29,54 @@
 
 <h4>Chapters</h4>
 <ul class="nav navmenu-nav" id="chapternav">
-<%= @document.chapters.try(:html_safe) %>
+  <%= @document.chapters.try(:html_safe) %>
 </ul>
 <script type="text/javascript" charset="utf-8">
-  $("#chapternav a").click(function(event){
-    event.preventDefault();
-    var idtarget = $(this).attr("href");
-    $('html,body').animate({scrollTop: $(idtarget).offset().top}, 500);
+  $( document ).ready(function() {
+
+    $("#chapternav a").click(function(event){
+      event.preventDefault();
+      var idtarget = $(this).attr("href");
+      $('html,body').animate({scrollTop: $(idtarget).offset().top}, 500);
+    });
+
+    $(".chapter-bookmark").each(function(){
+      console.log($("#chapter-bookmark-list-group-container"));
+      //$("#chapter-bookmark-list-group-container").append("<a id='chapter-bookmark-listgroup-" + $(this).attr("id") + "' class='list-group-item list-group-item-action chapter-bookmark-onclick-event'>" + $(this).html() +"</a>");
+      $("#chapternav").append("<li class='chapter-bookmark-onclick-event-li' style='padding:0px;margin:0px;'><a style='margin:0px;padding-top:3px;padding-bottom:0px;' id='chapter-bookmark-listgroup-" + $(this).attr("id") + "' class='chapter-bookmark-onclick-event'>" + $(this).html() +"</a></li>");
+      //$("#chapter-bookmark-well").append("<button type='button' class='btn btn-info chapter-bookmark-buttons'>" + $(this).html() + "</button>");
+    });
+
+    $(".chapter-bookmark-onclick-event").click(function(){
+      //formatting parent ID to get the ID of a specific element
+      var bookmarkID = $(this).attr("id");
+      bookmarkID = bookmarkID.split("-");
+      bookmarkID.splice(0,3);
+      bookmarkID = "#" + bookmarkID.join("-");//formating to a jquery id
+      var bookmarkPosition = $(bookmarkID).position();
+
+      //animates the scrolling to a specific bookmark
+      $('#textcontent').scroll();
+      $("#textcontent").animate({
+        scrollTop: bookmarkPosition.top
+      }, 1000);
+
+      //animate movement of scroll bar
+      var positionOfScrollBar = (bookmarkPosition.top / $("#snapshot").prop("scrollHeight")) * $("#textcontent-container > .slimScrollDiv").height();
+      console.log(positionOfScrollBar);
+      var maxValue = ($("#textcontent-container > .slimScrollDiv").height()) - ($("#textcontent-container > .slimScrollDiv > .slimScrollBar").height());
+      console.log(maxValue);
+      if(positionOfScrollBar > maxValue){
+        positionOfScrollBar = maxValue;
+      }
+      $("#textcontent-container > .slimScrollDiv > .slimScrollBar").css({ top: positionOfScrollBar + 'px' });
+      //console.log($("#textcontent-container > .slimScrollDiv > .slimScrollBar").position());
+      //console.log($("#snapshot").prop("scrollHeight"));
+      //console.log($("#textcontent-container > .slimScrollDiv").height());
+
+
+    });
+
   });
 </script>
 <% end %>

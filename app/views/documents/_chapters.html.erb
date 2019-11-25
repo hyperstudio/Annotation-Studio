@@ -7,15 +7,14 @@
         <%= @document.chapters.try(:html_safe) %>
       </ul>
       <script type="text/javascript" charset="utf-8">
-        $("#chapternav a").click(function(event){
+        /*$("#chapternav a").click(function(event){
           event.preventDefault();
           var idtarget = $(this).attr("href");
           $('html,body').animate({scrollTop: $(idtarget).offset().top}, 500);
           // $(idtarget).prepend('<i class="glyphicon-comment"></i>');
           // event.stopPropagation();
-        });
+        });*/
       </script>
     </div>
   </div><!--/col-md-1 -->
 %>
-

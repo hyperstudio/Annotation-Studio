@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190617185106) do
+ActiveRecord::Schema.define(version: 20191125040751) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -79,8 +79,8 @@ ActiveRecord::Schema.define(version: 20190617185106) do
   create_table "documents", force: :cascade do |t|
     t.string   "title",               limit: 255
     t.text     "text"
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
+    t.datetime "created_at",                                        null: false
+    t.datetime "updated_at",                                        null: false
     t.string   "author",              limit: 255
     t.datetime "year_published"
     t.string   "edition",             limit: 255
@@ -89,7 +89,7 @@ ActiveRecord::Schema.define(version: 20190617185106) do
     t.string   "rights_status",       limit: 255
     t.string   "slug",                limit: 255
     t.integer  "user_id"
-    t.date     "publication_date"
+    t.text     "publication_date"
     t.text     "chapters"
     t.string   "state",               limit: 255
     t.string   "upload_file_name",    limit: 255
@@ -101,7 +101,19 @@ ActiveRecord::Schema.define(version: 20190617185106) do
     t.text     "default_state"
     t.text     "snapshot"
     t.string   "origin"
+    t.string   "page_numbers"
+    t.string   "series"
+    t.string   "location"
+    t.string   "journal_title"
+    t.text     "notes"
+    t.string   "resource_type",                   default: "Other"
     t.index ["slug"], name: "index_documents_on_slug", unique: true, using: :btree
+  end
+
+  create_table "documents_groups", id: false, force: :cascade do |t|
+    t.integer "document_id", null: false
+    t.integer "group_id",    null: false
+    t.index ["document_id", "group_id"], name: "index_documents_groups_on_document_id_and_group_id", unique: true, using: :btree
   end
 
   create_table "friendly_id_slugs", force: :cascade do |t|
@@ -112,6 +124,32 @@ ActiveRecord::Schema.define(version: 20190617185106) do
     t.index ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type", unique: true, using: :btree
     t.index ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id", using: :btree
     t.index ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type", using: :btree
+  end
+
+  create_table "groups", force: :cascade do |t|
+    t.string  "name"
+    t.integer "owner_id"
+    t.boolean "ideaSpaceOn", default: false
+    t.index ["name"], name: "index_groups_on_name", unique: true, using: :btree
+    t.index ["owner_id"], name: "index_groups_on_owner_id", using: :btree
+  end
+
+  create_table "invites", force: :cascade do |t|
+    t.integer  "group_id"
+    t.string   "token"
+    t.datetime "expiration_date"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.index ["group_id"], name: "index_invites_on_group_id", unique: true, using: :btree
+  end
+
+  create_table "memberships", force: :cascade do |t|
+    t.integer  "group_id"
+    t.integer  "user_id"
+    t.string   "role",       default: "member"
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.index ["group_id", "user_id"], name: "index_memberships_on_group_id_and_user_id", unique: true, using: :btree
   end
 
   create_table "oauth_access_grants", force: :cascade do |t|
@@ -180,8 +218,15 @@ ActiveRecord::Schema.define(version: 20190617185106) do
     t.string   "tagger_type",   limit: 255
     t.string   "context",       limit: 128
     t.datetime "created_at"
+    t.index ["context"], name: "index_taggings_on_context", using: :btree
     t.index ["tag_id", "taggable_id", "taggable_type", "context", "tagger_id", "tagger_type"], name: "taggings_idx", unique: true, using: :btree
+    t.index ["tag_id"], name: "index_taggings_on_tag_id", using: :btree
     t.index ["taggable_id", "taggable_type", "context"], name: "index_taggings_on_taggable_id_and_taggable_type_and_context", using: :btree
+    t.index ["taggable_id", "taggable_type", "tagger_id", "context"], name: "taggings_idy", using: :btree
+    t.index ["taggable_id"], name: "index_taggings_on_taggable_id", using: :btree
+    t.index ["taggable_type"], name: "index_taggings_on_taggable_type", using: :btree
+    t.index ["tagger_id", "tagger_type"], name: "index_taggings_on_tagger_id_and_tagger_type", using: :btree
+    t.index ["tagger_id"], name: "index_taggings_on_tagger_id", using: :btree
   end
 
   create_table "tags", force: :cascade do |t|
@@ -231,4 +276,7 @@ ActiveRecord::Schema.define(version: 20190617185106) do
     t.index ["slug"], name: "index_users_on_slug", using: :btree
   end
 
+  add_foreign_key "groups", "users", column: "owner_id"
+  add_foreign_key "memberships", "groups"
+  add_foreign_key "memberships", "users"
 end

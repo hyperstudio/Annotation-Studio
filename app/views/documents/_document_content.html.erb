@@ -17,15 +17,6 @@
 					<%= f.label :text %>
 					<%= f.text_area :text, :class => 'form-control text-area', :size => "18x18" %>
 					<br>
-					<label id="chapter-label" for="chapters" class="btn btn-default">Add Chapters</label>
-
-					<div id="chapter-editor">
-						<p class="help-block">For chapters links to work, insert named anchors in the text above, in the
-							form:"&lt;a name=&quot;2HCH0001&quot; id=&quot;2HCH0001&quot;&gt;&lt;/a&gt;"</p>
-						<p class="help-block">Put chapters links in the field below, in the form:"&lt;li&gt;&lt;a href=&quot;#2HCH0001&quot;&gt;1.
-							Loomings.&lt;/a&gt;&lt;/li&gt;"</p>
-						<%= f.text_area :chapters, :class => 'form-control chapter-area', :size => "18x6" %>
-					</div>
 				</div>
 			</div>
 		</div>

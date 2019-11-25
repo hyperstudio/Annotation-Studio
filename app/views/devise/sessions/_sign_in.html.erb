@@ -1,10 +1,9 @@
-<div class="well devise" style="background-color: transparent; border-style: none;">
-
-    <center><p id="title">Log into <span style="color:<%= $DOMAIN_CONFIG['site_color'] %>;"><%= $DOMAIN_CONFIG['site_name'] %></span></p></center>
+<div class="well devise">
+    <h4>Log into <span style="color:<%= $DOMAIN_CONFIG['site_color'] %>;"><%= $DOMAIN_CONFIG['site_name'] %></span></h4>
     <%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :role => "form"}) do |f| %>
         <%= render "devise/shared/error_messages" %>
 
-        <div class="form-group" >
+        <div class="form-group">
             <%= f.label :email %>
             <%= f.email_field :email, :class => "form-control" %>
         </div>
@@ -14,13 +13,7 @@
             <%= f.password_field :password, :class => "form-control" %>
         </div>
 
-        <!-- Registering with a group invitation attached -->
-        <% if params[:invite_token] %>
-            <%= hidden_field_tag :invite_token, params[:invite_token] %>
-        <% end %>
-
-
-        <div style="float: right; margin-top: 5px;"><%= f.submit "Log in", :class => "btn btn-default btn-default-primary log-in-button" %></div>
+        <div><%= f.submit "Log in", :class => "btn btn-default btn-default-primary" %></div>
 
     <% end %>
 </div><!--/well -->
@@ -50,16 +43,3 @@ $("document").ready(function(){
     });
 });
 </script>
-
-<style>
-.log-in-button{
-    background-color: #DDDEE7;
-}
-
-#title{
-    font-size: 18pt;
-    margin-bottom: -5px;
-
-
-}
-</style>

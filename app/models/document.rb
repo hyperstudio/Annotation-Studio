@@ -41,15 +41,8 @@ application/pdf
   # acts_as_taggable_on :rep_group, :courses, :semesters, :genres, :categories
   acts_as_taggable_on :rep_privacy, :rep_group
 
-  #new groups table structure:
-  has_and_belongs_to_many :groups
-
   has_attached_file :upload
   validates_attachment_content_type :upload, content_type: ALLOWED_CONTENT_TYPES
-
-  # #make title mandatory.
-  # validates_presence_of :title --> not working?? document is still being created. problem possibly with
-  #respond to do: format html
 
   scope :publicly, -> { where(:state => 'public').order("id desc") }
   scope :active, -> { where("state != ?", 'deleted').order("id desc") }

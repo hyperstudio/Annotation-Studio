@@ -1,18 +1,4 @@
-FactoryGirl.define do  factory :documents_group do
-    
-  end
-  factory :invite do
-    
-  end
-  factory :membership do
-    group_id 1
-user_id 1
-role "MyString"
-  end
-  factory :group do
-    
-  end
-
+FactoryGirl.define do
   factory :user do
     email 'foo@example.com'
     password '123pass'

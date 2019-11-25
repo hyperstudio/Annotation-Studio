@@ -34,7 +34,7 @@
       "required": true
     },
     "FAVICON": {
-      "required": false
+      "required": true
     },
     "ALERT_LEVEL": {
       "required": true

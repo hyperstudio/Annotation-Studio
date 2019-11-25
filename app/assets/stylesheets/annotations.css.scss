@@ -4,7 +4,6 @@
 
 .user-highlight {
   font-style: italic;
-  font-weight: bold;
 }
 
 #annotation-list li {
@@ -39,30 +38,6 @@
   outline: none;
 }
 
-.row{
-  display:flex;
-  flex-wrap: wrap;
-}
-
-.fixedRow{
-  display:flex;
-  flex-wrap: wrap;
-  position:fixed;
-  z-index:3000;
-}
-.column{
-  background-color: white;
-  float: left;
-  width: 17%;
-  height: 220px;
-  padding:5px;
-  margin:2% 1% 0;
-}
-
-.error{
-  font-weight:bold;
-  margin-left: 15px;
-}
 .annotator-adder, .annotator-outer, .annotator-notice {
   z-index: 10 !important;
 }

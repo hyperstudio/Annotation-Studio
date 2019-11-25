@@ -42,14 +42,21 @@
 				<%= f.password_field :password_confirmation, :class => "form-control" %>
 				</div>
 
+        <div class="form-group">
+        <%= f.label :rep_group_list, ENV["CLASS_TERM"] %><br />
+        <% if Apartment::Tenant.current == 'demo' %>
+        <%= f.text_field :rep_group_list, 'data-role' => "tagsinput", 'placeholder' => "Enter class name(s)", :class => "form-control", :value => ENV["ALT_DEFAULT_USER_GROUP"] %>
+        <% else %>
+        <%= f.text_field :rep_group_list, 'data-role' => "tagsinput", 'placeholder' => "Enter class name(s)", :class => "form-control", :value => ENV["DEFAULT_USER_GROUP"] %>
+        <% end %>
+
+        <span class="help-block">If you have a group or groups to join, put those here, and press enter after each. This will determine which documents are assigned to you.</span>
+
+        </div>
+
         <div class="checkbox">
           <label class='checkbox agreement'> <%= f.check_box :agreement %> I have read and accept the <%= link_to 'terms of service', page_path('terms') %></label>
         </div>
-
-        <!-- Registering with a group invitation attached -->
-        <% if params[:invite_token] %>
-    		<%= hidden_field_tag :invite_token, params[:invite_token] %>
-  		<% end %>
 
 				<%= f.submit "Register", :class => "btn btn-primary" %>
 
@@ -58,11 +65,3 @@
     <%= render "links" %>
 	</div><!--/col -->
 </div><!--/row -->
-
-<style>
-#title{
-    font-size: 18pt;
-    margin-bottom: -5px;
-
-}
-</style>

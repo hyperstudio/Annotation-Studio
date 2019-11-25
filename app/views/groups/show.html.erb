@@ -1,84 +1,58 @@
-<h4Bold> Group: <%= @group.name %></h4Bold>
-<br><br><br>
+<%= content_for :page_title, 'Groups' %>
+<%= stylesheet_link_tag "groups" %>
+<%= javascript_include_tag "widget" %>
+<script type="text/javascript">
+jQuery(function ($) {
+    var widget = new Widget.App();
+    var endpoint = location.protocol+'//'+'<%= ENV["API_URL"] %>';
+    var token = '<%= session["jwt"] %>';
+    // Backbone.history.start({pushState: true, root: window.location})
 
-<% if in_group(params[:id])%>
+    var loadOptions = {
+        'limit': 20,
+        // 'groups': "<%= current_user.rep_group_list %>".split(/, /),
+        // 'subgroups': "<%= current_user.rep_subgroup_list %>".split(/, /),
+        'host': location.host,
+        'user': "<%= current_user.email %>",
+        'mode': 'user',
+        'context': 'dashboard',
+    };
+    widget.listAnnotations(loadOptions, endpoint, token);
+});
+</script>
+<div class="row">
+    <div class="col-md-12">
+        <ul class="nav nav-tabs" id="document-tabs">
+          <li class="active"><a href="#mine" data-toggle="tab"><span class="badge"></span> Mine</a></li>
+          <li><a href="#group" data-toggle="tab"><span class="badge"></span> <%= ENV["GROUP_TERM_PLURAL"].capitalize %></a></li>
+          <li><a href="#class" data-toggle="tab"><span class="badge"></span> <%= ENV["CLASS_TERM_PLURAL"].capitalize %></a></li>
+        </ul>
 
-<% if @group.ideaSpaceOn %>
-	<button class="btn btn-primary"><a href="http://annotation-studio-idea-space.herokuapp.com/" id='is-link' target="_blank"> Access Idea Space </a>
-	</button>
-<% end %>
-
-<% unless is_member(params[:id]) %>
-<%= link_to "Manage Group", {:controller=> "groups", :action => "edit", :id => params[:id]}, {:class=> 'btn btn-primary'} %>
-<% end %>
-
-<% unless is_owner(params[:id]) %>
-   <%= link_to "Leave", {:controller=> "groups", :action =>"leave", :id => params[:id]}, {:class=> 'btn btn-primary', data: {confirm: "Are you sure you want to leave this group?", toggle: 'tooltip', placement: 'top',
-          original_title: 'Delete'}} %>
-<% end %>
-
-	<% unless @group.name == 'Public' && is_member(@group.id) %>
-	 <br><br>All Members
-
-		<table class="member-table">
-
-			<tr class="member-table-row">
-				<th> Name </th>
-				<th> Role </th>
-			</tr>
-		<% if !@memberships.empty? %>
-			<% @memberships.includes(:user).each do |m| %>
-					<tr class="member-table-row">
-						<% @user = m.user %>
-						<td> <%= @user.firstname + " " + @user.lastname[0] + "." %></td>
-						<td> <%= m.role %> </td>
-					</tr>
-			<% end #.each %>
-		<% end #if%>
-		</table>
-
-
-	<% end #unless %>
-
-<% else %>
-
-You do not have permission to view this page.
-
-<% end %>
-
-
-	<style>
-
-	.member-table {
-	  border-collapse: collapse;
-	  width: 60%;
-	  background-color:white;
-	}
-
-	td, th {
-	  border: 2px solid #EFEFEF;
-	  text-align: left;
-	  padding: 5px;
-	}
-
-	.member-table-row:nth-child(even) {
-	  background-color: #DFDFDF;
-	}
-
-	#is-link{
-		color:black;
-	}
-
-	#is-link:hover{
-		color:white;
-	}
-
-	a:hover{
-		text-decoration: none;
-	}
-
-	#action-buttons{
-		display:flex;
-	}
-
-	</style>
+        <div class="tab-content">
+            <div class="tab-pane active" id="mine">
+                <ul id="annotation-list" class="unstyled">
+                    <script type="text/template" id="user-comment-template">
+                        <span class="user-comment"><a href="{{uri}}#hl{{uuid}}" target="_blank">{{{text}}}</a></span>
+                    </script>
+                    <script type="text/template" id="user-highlight-template">
+                        <span class="user-highlight"><a href="{{uri}}#hl{{uuid}}" target="_blank">{{{quote}}}</a></span>
+                    </script>
+                </ul>
+            </div>
+            <div class="tab-pane" id="group">
+            <table class="table table-bordered">
+                <tr>
+                  <td>Coming soon...</td>
+                </tr>
+            </table>
+            </div>
+            <div class="tab-pane" id="class">
+            <table class="table table-bordered">
+                <tr>
+                  <td>Coming soon...</td>
+                </tr>
+            </table>
+            </div>
+        </div>
+    </div><!--/col-md-4 -->
+</div><!--/row -->

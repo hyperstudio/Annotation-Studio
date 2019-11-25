@@ -3,23 +3,7 @@
 <script type="text/javascript" charset="utf-8">
 var document_slug = "<%= @document.slug %>";
 var default_state = <%= @document.default_state.present? ? (raw @document.default_state) : (raw "''") %>;
-// var groups = "<%= current_user.rep_group_list %>".split(/, /);
-
-//testing per-group annotations
-var userGroups = [];
-var docGroups = [];
-
-<% current_user.groups.each do |g| %>
-  userGroups.push("<%=g.name %>");
-<% end %>
-
-<% @document.groups.each do |g| %>
-  docGroups.push("<%=g.name %>");
-<% end %>
-
-// get intersection of document's groups and user's groups
-var groups = userGroups.filter(value => docGroups.includes(value));
-
+var groups = "<%= current_user.rep_group_list %>".split(/, /);
 var subgroups = "<%= current_user.rep_subgroup_list %>".split(/, /);
 var annotatorOptions = {'readOnly': <%= @document.archived? %>};
 var filter_user = "<%= current_user.email %>";
@@ -46,12 +30,7 @@ var plugin_options = function() {
         "groups": groups,
         "subgroups": subgroups
       },
-      // loadFromSearch: annotation_studio.loadOptions({ mode: default_state[0], limit: 100 })
-
-      //default_state is nil for all current documents so set to empty string by var @ line 5
-      // changed code for now to get mode=user as default.
-      loadFromSearch: annotation_studio.loadOptions({limit: 100 })
-
+      loadFromSearch: annotation_studio.loadOptions({ limit: 100 })
     },
     Markdown: false, // use RichText instead
     AnnotateItPermissions: false, // this is built into the kitchen sink, so cancel it

@@ -341,5 +341,3 @@ var inlineData = __bind(function(a) {
     console.info("Annotation: " + a.uuid + "has no highlights.");
   }
 }, this);
-
-

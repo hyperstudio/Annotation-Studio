@@ -1,201 +1,132 @@
- <%= content_for :body_id, 'dashboard' %>
+<%= content_for :body_id, 'dashboard' %>
 <%= content_for :body_class, 'index' %>
 <%= content_for :page_title, 'Dashboard' %>
 <%= stylesheet_link_tag "users" %>
 <%= render "/shared/document_titles" %>
+<div id="users" class="row">
+  <div class="col-md-6">
+    <div class="panel panel-default" id="dashboard-documents">
+      <div class="panel-heading">
+        <span class="panel-title"><%= link_to "Documents", documents_path %></span>
+        <ul class="nav nav-tabs nav-tabs-xs pull-right" id="document-tabs" role="tablist">
+          <li class="active"><a href="#assigned" data-toggle="tab"><span class="badge"><%= Document.tagged_with(current_user.rep_group_list, :any =>true).where.not(state: 'draft').size %></span> Shared</a></li>
+          <li><a href="#created" data-toggle="tab"><span class="badge"><%= current_user.documents.size %></span> Mine</a></li>
+        </ul>
+      </div><!-- / .panel-heading -->
+      <div class="tab-content">
+        <div class="tab-pane no-padding fade active in" id="assigned">
+          <ul id="documents-assigned" class="list-group">
+            <% unless Document.tagged_with(current_user.rep_group_list, :any =>
+            true).empty? || Document.tagged_with(current_user.rep_group_list).nil? %>
+            <% Document.order("created_at DESC").tagged_with(current_user.rep_group_list, :any =>
+            true).where.not(state: 'draft').limit(10).each do |document| %>
+            <li class="list-group-item">
+              <%= link_to document.title, document_path(document.friendly_id) %>
+              <span class="pull-right">
+          <% if document.rep_group_list.length > 0 %>
+              <span class="label label-info">
+                <%= document.rep_group_list[0] %></span>
+              <% end %>
+                <%= document.created_at.strftime("%m/%d/%Y") %></span>
+        <div class="clearfix"></div>
+            </li>
+            <% end %>
+            <li class="list-group-item"><strong><a href="/documents?docs=assigned">See more shared documents&hellip;</a></strong></li>
+            <% else %>
+            <li class="list-group-item">
+              No documents to view.
+            </li>
+            <% end %></ul>
+        </div><!-- / .tab-pane -->
+        <div class="tab-pane no-padding fade in" id="created">
+          <ul id="documents-created" class="list-group">
+            <% unless current_user.documents.empty? || current_user.documents.nil? %>
+              <% current_user.documents.order("created_at DESC").limit(10).each do |document| %>
+                <% if can? :read, document %>
+                  <li class="list-group-item">
+                    <%= link_to document.title, document_path(document.friendly_id) %>
+                    <span class="pull-right">
+                      <%= document.created_at.strftime("%m/%d/%Y") %></span>
+                  </li>
+                <% end %>
+              <% end %>
+            <li class="list-group-item"><strong><a href="/documents?docs=created">See more of my documents&hellip;</a></strong></li>
+            <% else %>
+            <li class="list-group-item">
+              No documents to view.
+            </li>
+            <% end %>
+          </ul>
+        </div>
+      </div><!-- / .tab-pane -->
+      <ul class="nav nav-pills">
+        <!--<li><%#= link_to "Go to document list", documents_path %></li>-->
+        <li><%= link_to raw("<span class=\"glyphicon glyphicon-plus\" aria-hidden=\"true\"></span> Create new document"), document_path('new') %></li>
+      </ul>
+    </div><!--/ panel -->
 
+    <div class="panel panel-default" id="dashboard-groups">
+      <div class="panel-heading">
+        <span class="panel-title">
+          <%= link_to ENV["CLASS_TERM_PLURAL"].capitalize, groups_path %></span>
+      </div>
+      <!-- / .panel-heading -->
 
-<nav class="navbar navbar-default navbar-fixed-top hidden-xs" id="lower-navbar">
+      <div class="tab-content">
+        <div class="tab-pane no-padding fade active in" id="groups">
+          <ul class="list-group">
+            <% current_user.rep_group_list.each do |group| %>
+              <li class="list-group-item"><%= link_to group, documents_path(docs: 'assigned', group: group) %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+      <!--<ul class="nav nav-pills">-->
+      <!--<li>-->
+      <!--<%#= link_to "Go to class and group list", groups_path %>-->
+      <!--</li>-->
+      <!--</ul>-->
+    </div><!--/ panel -->
 
- <div class="dropdown" style="padding-right:100px;">
-    <button class="dropbtn" >Documents <span class="badge" ><%= @sharedDocsCount + current_user.documents.size %></span> </button>
-    <center><div class="arrow-up"></div></center>
-    <div class="dropdown-content" style="text-align:left; padding-left: 18%">
-      <a href= "<%= dashboard_path(nav: 'mydocuments')%>" id="documents-mine" style="display:inline" >Mine <span class="badge"> <%= current_user.documents.size %></span></a>
-      <a href= "<%= dashboard_path(nav: 'shareddocuments')%>" id="documents-shared" style="display:inline">Shared <span class="badge"> <%= @sharedDocsCount %></span></a>
-      <a href="<%= new_document_path %>" style="display:inline" >New</a>
+  </div><!--/ col-md-6 -->
+  <div class="col-md-6">
+    <div class="panel panel-default" id="dashboard-annotations">
+      <div class="panel-heading">
+        <span class="panel-title">
+          <%= link_to "Annotations", annotations_path %></span>
+        <ul class="nav nav-tabs nav-tabs-xs pull-right" id="annotation-tabs" role="tablist">
+          <li>
+            <a href="#class" data-toggle="tab">
+              <span class="badge"></span>
+              Shared
+            </a>
+          </li>
+          <li class="active">
+            <a href="#mine" data-toggle="tab">
+              <span class="badge"></span>
+              Mine
+            </a>
+          </li>
+        </ul>
+      </div>
+      <!-- / .panel-heading -->
+      <div class="tab-content">
+        <div class="tab-pane no-padding fade in" id="class">
+          <ul id="class-annotation-list" class="list-group"></ul>
+        </div>
+        <div class="tab-pane no-padding fade in active" id="mine">
+          <ul id="my-annotation-list" class="list-group"></ul>
+        </div>
+      </div>
+      <!--<ul class="nav nav-pills">-->
+        <!--<li>-->
+    <!--  <%#= link_to "Go to annotation list", annotations_path %></li>-->
+      <!--</ul>-->
     </div>
- </div>
-
-  <div class="dropdown" style="padding-right:100px;">
-    <button class="dropbtn" id="annotation-button">Annotations <span class="badge"></span></button>
-    <center><div class="arrow-up"></div></center>
-    <div class="dropdown-content" style="text-align:center; padding-right: 5%">
-      <a href = "<%= dashboard_path(nav: 'myannotations')%>" id= "annotations-mine" style="display:inline"> Mine <span class="badge"></span></a>
-      <a href = "<%= dashboard_path(nav: 'sharedannotations')%>" id="annotations-shared" style="display:inline">Shared <span class="badge"></span></a>
-    </div>
-  </div>
-
-  <div class="dropdown" style="padding-right:100px;">
-      <button class="dropbtn">Groups <span class="badge" ><%= current_user.groups.size %></span></button>
-      <center><div class="arrow-up"></div></center>
-    <div class="dropdown-content" style="text-align:right; padding-right: 20%;">
-
-      <a href= "<%= dashboard_path(nav: 'mygroups')%>" id="groups-mine" style="display:inline">Mine <span class="badge"> <%= current_user.groups.where(owner_id: current_user.id).size %></span> </a>
-      <a href= "<%= dashboard_path(nav: 'joinedgroups')%>" id="groups-joined" style="display:inline">Joined <span class="badge"> <%= current_user.groups.size %></span></a>
-      <a onclick="show()" style="display:inline">New</a>
-      <a onclick= "on()" style="display:inline"> Join</a>
-   </div> <!-- dropdown-content -->
+    <!--/ panel --> </div>
+  <!--/col-md-3 -->
 </div>
-
-</nav> <!--navigation bar stops-->
-
-
-
-<!-- sidebar -->
-<div id="side-menu" class="side-nav">
-  <span class="glyphicon glyphicon-remove" onclick="closeSideMenu()"></span>
-  <%= render "side_search_options" %>
-</div>
-
-
-<!--title part-->
-<div class="titleBar" style="margin-left: calc(50% - 50vw);
-  margin-right: calc(50% - 50vw);">
-</div><!--white bg for title bar-->
-
-
-<!--text for title bar-->
-<div style="width: 50%;float:left; margin-top: -160px;">
-
-    <h4 id= "current-page" > Shared Documents </h4>
-
-    <p class="greyText" id="current-description">Documents Shared with My Groups</p>
-  </div>
-
-  <div style="width:50%;float: right; margin-top: -160px;">
-    <br>
-    <button id="search-tab" class="dropdown" style="padding-right: 100px;" onclick="openSideMenu()" >  <i class="glyphicon glyphicon-option-horizontal" style="margin-left:-20px; margin-right:-110px; margin-top:3px;"> </i>
-    </button>
-  </div>
-<!--title bar ends-->
-
-
-
-<div class= "clearFloat" style="margin-top: -50px;">
-<div class= "content" id="my-docs">
-</div><!--  end my-docs -->
-
-<div class= "content" id="shared-docs">
-
-  <%= render 'shared_documents' %>
-
-</div><!--  end shared-docs -->
-
-<div class = "content" id="my-annotations" style="display:none">
-  <div id="my-annotation-list" class="row"></div>
-</div>
-
-
-<div class = "content" id="shared-annotations" style="display:none">
-  <div id="class-annotation-list" class="row"></div>
-</div>
-
-
-<div class = "content" id="my-groups" style="display:none">
-</div>
-
-<div class = "content" id="joined-groups" style="display:none">
-</div>
-
-
-</div> <!--clearFloat ends-->
-
-<!-- overlay for join group -->
-<div id="join-background">
-
-<div class="overlay" id="join-form">
-
-  <div class="banner"> <i class="glyphicon glyphicon-remove close" onclick="off()"></i>
-     Join Group by Entering Name (Case Sensitive)</div>
-
-
-  <div class="form">
-    <%= form_tag({:controller=>'groups', :action => 'join_via_name'}) do %>
-      <%= label_tag 'groupName', 'Group Name' %>
-      <%= text_field_tag 'groupName'%>
-      <%= submit_tag 'Join', class:"redButton"%>
-    <% end %>
-
-  </div> <!-- end form -->
-
-
-</div>
-</div>
-
-
-<!-- overlay for create group -->
-
-<div id="create-background">
-  <div class="overlay" id="new-group-form">
-    <%= render 'groups/new' %>
-  </div>
-</div>
-
-</div>
-
-<script type="text/javascript">
-   //side bar toggling  moved to dashboard.js
-   <% if params[:nav] %>
-   var nav = "<%= params[:nav] %>"
-
-    switch(nav) {
-      case 'mydocuments':
-        var myDocuments = document.getElementById("my-docs");
-        $(".content").hide(); //hide everything else
-        myDocuments.style.display = "block";
-        $(myDocuments).html("<%= j render 'my_documents' %>");
-        $("#current-page").text("My Documents");
-        $("#current-description").text("Documents Created by Me.");
-        break;
-
-      case 'shareddocuments':
-        var sharedDocuments = document.getElementById("shared-docs");
-        $(".content").hide();
-        sharedDocuments.style.display = "block";
-        $("#current-page").text("Shared Documents");
-        $("#current-description").text("Documents Shared with My Groups.");
-        break;
-
-      case 'myannotations':
-        var myAnnotations = document.getElementById("my-annotations");
-        $(".content").hide();
-        myAnnotations.style.display = "block";
-        $("#current-page").text("My Annotations");
-        $("#current-description").text("Annotations Created by Me.");
-        break;
-
-      case 'sharedannotations':
-        var sharedAnnotations = document.getElementById("shared-annotations");
-        $(".content").hide();
-        sharedAnnotations.style.display = "block";
-        $("#current-page").text("Shared Annotations");
-        $("#current-description").text("Annotations Created by Group Members.");
-        break;
-
-      case 'mygroups':
-        var mygroups = document.getElementById("my-groups");
-        $(".content").hide();
-        mygroups.style.display = "block";
-        $(mygroups).html("<%= j render 'my_groups' %>");
-        $("#current-page").text("My Groups");
-        $("#current-description").text("Groups Created by Me.");
-        break;
-
-      case 'joinedgroups':
-        var joinedGroups = document.getElementById("joined-groups");
-        $(".content").hide();
-        joinedGroups.style.display = "block";
-        $(joinedGroups).html("<%= j render 'joined_groups' %>");
-        $("#current-page").text("Joined Groups");
-        $("#current-description").text("Memberships in Other Groups.");
-        break;
-
-  } //end switch
-  <% end #if %>
-
-</script>
-
+<!--/row -->
 
 
 <%= javascript_include_tag "widget" %>
@@ -205,12 +136,9 @@ jQuery(function ($) {
   var endpoint = location.protocol+'//'+'<%= ENV["API_URL"] %>';
   var token = '<%= session["jwt"] %>';
   // Backbone.history.start({pushState: true, root: window.location})
-var groups=[];
-<% current_user.groups.each do |g| %>
-  groups.push("<%=g.name %>");
-<% end %>
+
   var myLoadOptions = {
-    'limit': 100,
+    'limit': 10,
     'groups': "<%= current_user.rep_group_list %>".split(/, /),
     'subgroups': "<%= current_user.rep_subgroup_list %>".split(/, /),
     'host': location.host,
@@ -219,108 +147,34 @@ var groups=[];
     'context': 'dashboard',
   };
   var classLoadOptions = {
-    'limit': 100,
-    'groups': groups, //"<%= current_user.rep_group_list %>".split(/, /),
+    'limit': 10,
+    'groups': "<%= current_user.rep_group_list %>".split(/, /),
     'subgroups': "<%= current_user.rep_subgroup_list %>".split(/, /),
     'host': location.host,
     'user': "<%= current_user.email %>",
     'mode': 'class',
     'context': 'dashboard',
   };
+  var groupLoadOptions = {
+    'limit': 10,
+    'groups': "<%= current_user.rep_group_list %>".split(/, /),
+    'subgroups': "<%= current_user.rep_subgroup_list %>".split(/, /),
+    'host': location.host,
+    'user': "<%= current_user.email %>",
+    'mode': 'group',
+    'context': 'dashboard',
+  };
+
   widget.listAnnotations('my-annotation-list', myLoadOptions, endpoint, token);
   widget.listAnnotations('class-annotation-list', classLoadOptions, endpoint, token);
 });
+
 </script>
 <script type="text/template" id="user-comment-template">
-
-
-  <span class="user-highlight" id="{{uuid}}">
-  <div class="ellipsis"><a href="{{uri}}#hl{{uuid}}">"{{{quote}}}"</a></div>
-  <hr>
-</span>
-
-<span class="user-comment"><div class="ellipsis">{{{text}}}</div> <br>
-  <span class= "annotation-info">{{formattedDate}} <br>
-    Document: {{title}} <br>
-    Annotator: {{username}} <br>
-    <!-- Tags: {{tags}} -->
-  </span>
-  </span>
-
+  <span class="user-highlight"><span class="pull-right">{{formattedDate}}</span><div class="ellipsis"><a href="{{uri}}#hl{{uuid}}">{{{quote}}}</a></div></span>
+  <span class="user-comment"><div class="ellipsis">{{{text}}}</div><div class="secondary-text">{{title}} ({{username}})</div></span>
 </script>
-
 <script type="text/template" id="user-highlight-template">
-  <span class="user-highlight"><div class="ellipsis"><a href="{{uri}}#hl{{uuid}}">{{{quote}}}</a></div>
-  <hr>
-  </span>
-  <span class="user-comment">
-    <span class= "annotation-info">{{formattedDate}} <br>
-    Document: {{title}} <br>
-    Annotator: {{username}}
-  </span>
-</span>
+  <span class="user-highlight"><div class="ellipsis"><a href="{{uri}}#hl{{uuid}}">{{{quote}}}</a></div></span>
+  <span class="user-comment"><div class="secondary-text">{{title}} ({{username}})</div></span>
 </script>
-
-
-<!-- overlay styling source: https://www.w3schools.com/howto/howto_css_overlay.asp -->
-<style>
-
-#join-background, #create-background{
-  position: fixed; /* Sit on top of the page content */
-  display: none; /* Hidden by default */
-  width: 100%; /* Full width (cover the whole page) */
-  height: 100%; /* Full height (cover the whole page) */
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgb(0,0,0,0.5); /* Black background with opacity */
-  z-index: 1; /* Specify a stack order in case you're using a different order for other elements */
-  cursor: pointer; /* Add a pointer on hover */
-
-}
-
-  .overlay{
-  position: absolute;
-  display:none;
-  width: 40%;
-  height: 30%;
-  top: 200px;
-  left: 28%;
-  right: 0;
-  bottom: 0;
-  background-color: white;
-  border: grey 1px solid;
-  z-index: 2;
-  cursor: pointer; /* Add a pointer on hover */
-  }
-
-.form{
-  position: absolute;
-  top: 50%;
-  left: 45%;
-  transform: translate(-50%,-30%);
-}
-
-.banner{
-  position: relative;
-  background-color:#DDDEE7;
-  height:15%;
-  padding-top: 2%;
-  padding-left:3%;
-
-}
-
-.close{
-  float:right;
-  padding-right:10px;
-}
-
-.redButton{
-  background-color: #DDDEE7;
-  border-radius: 3px;
-  border:none;
-  white-space: nowrap;
-}
-
-</style>

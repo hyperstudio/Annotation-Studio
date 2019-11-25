@@ -1,15 +1,9 @@
 /* Add additional stylesheets below
 -------------------------------------------------- */
 h1, h2, h3, h4, h5, h6, blockquote {
-	font-family: Frutiger, sans-serif;
+	font-family: "source-sans-pro",sans-serif;
 	font-style: normal;
 	font-weight: 300;
-}
-
-h4Bold{
-	font-family: Frutiger, sans-serif;
-	font-style: normal;
-	font-weight: bold;
 }
 
 body {
@@ -17,7 +11,7 @@ body {
 }
 
 pre {
-	font-family: Frutiger,sans-serif;
+	font-family: "source-sans-pro",sans-serif;
 	font-style: normal;
 	font-weight: 400;
 	display: block;
@@ -75,7 +69,7 @@ div#textcontent, section#textcontent {
 }
 
 .highlightlink.comment {
-	font-family: Frutiger, sans-serif;
+	font-family: "source-sans-pro",sans-serif;
 	font-style: normal;
 	font-weight: 400;
 	display: block;
@@ -94,7 +88,7 @@ div#textcontent, section#textcontent {
 	display: block;
 	border-top: 1px solid #ccc;
 	padding-bottom: 10px;
-	font-family: Frutiger, sans-serif;
+	font-family: "source-sans-pro",sans-serif;
 	font-style: normal;
 	font-weight: 400;
 }
@@ -125,20 +119,20 @@ li.annotation-item.focuswhite {
     max-width: 300px;
     height: auto;
   }
-
+  
   iframe {
     margin: 3px;
     width: 300px;
     height: 225px;
   }
-
+  
 }
 
 #annotation-well ul#annotation-list li span.label, #annotation-well ul#annotation-list li span.badge {
 	color: #fff;
-	font-family: Frutiger, sans-serif;
+	font-family: "source-sans-pro",sans-serif;
 	font-style: normal;
-	font-weight: 400;
+	font-weight: 400;  
 }
 
 .text_area {
@@ -307,7 +301,7 @@ span.highlightborder {
 
 #chapters a {
 	color:#000;
-	font-family: Frutiger, sans-serif;
+	font-family: "source-sans-pro",sans-serif;
 	font-style: normal;
 	font-weight: 300;
 	line-height:1.1em;
@@ -357,8 +351,8 @@ span.highlightborder {
 #view-chooser, #filter-chooser, #sort-chooser {
     margin-bottom:10px;
     label.active {
-		background-color: #FCCE02;
-	    color: black;
+		background-color: #444;
+	    color: white;
 	}
 }
 

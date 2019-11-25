@@ -1,11 +1,11 @@
-$bgDefault      : #FCCE02;
-$bgHighlight    : #FDE162;
-$colDefault     : black;
-$colHighlight   : black;
+$bgDefault      : #000000;
+$bgHighlight    : #3a3a3a;
+$colDefault     : #ecf0f1;
+$colHighlight   : #ffffff;
 $dropDown       : false;
 .navbar-inverse  {
   background-color: $bgDefault;
-  border-color: #FCCE01;
+  border-color: $bgHighlight;
   .navbar-brand {
     color: $colDefault;
     &:hover, &:focus {

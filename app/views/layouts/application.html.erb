@@ -51,7 +51,7 @@
         <div class="row">
           <div class="col-md-8">
             <label class="navbar-switch" id="leftburger">
-              <input type="checkbox" class="" data-toggle="collapse"  data-target="#mainmenu"  title="Navigation" />
+              <input type="checkbox" class="" data-toggle="offcanvas"  data-target="#mainmenu"  title="Navigation" />
               <span class="navbar-toggle"><i class="fa fa-bars"></i></span>
             </label>
             <%= render "shared/breadcrumbs" %>
@@ -59,7 +59,7 @@
           <div class="col-md-4">
             <%= render "shared/annotation_header" %>
             <label class="navbar-switch" id="rightburger">
-              <input type="checkbox" class=" pull-right" data-toggle="collapse" data-target="#toolsmenu"  title="Tools" />
+              <input type="checkbox" class=" pull-right" data-toggle="offcanvas" data-target="#toolsmenu"  title="Tools" />
               <span class="navbar-toggle"><i class="fa fa-gears"></i></span>
             </label>
           </div>
@@ -107,7 +107,22 @@
       // });
       // $('#mainmenu').offcanvas();
       // $('#toolsmenu').offcanvas();
+
+      $('#mainmenu').bind('show.bs.offcanvas',function(){checkmark('left',true);});
+      $('#mainmenu').bind('hide.bs.offcanvas',function(){checkmark('left',false);});
+      $('#toolsmenu').bind('show.bs.offcanvas',function(){checkmark('right',true);});
+      $('#toolsmenu').bind('hide.bs.offcanvas',function(){checkmark('right',false);});
     });
+      function checkmark(side,on) {
+        if(side=='left')
+          var el = $('#leftburger span');
+        else if(side=='right')
+          var el = $('#rightburger span');
+        if(on==true)
+          el.addClass("navbutton-pushed");
+        else
+          el.removeClass("navbutton-pushed");
+      }
     </script>
 </body>
 </html>

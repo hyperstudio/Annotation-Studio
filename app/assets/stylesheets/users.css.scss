@@ -70,9 +70,9 @@
   margin:2% 1% 0;
 }
 .title{
-  text-overflow: ellipsis;
-  max-width: 10px;
   overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
   font-size: 16px;
 
 }

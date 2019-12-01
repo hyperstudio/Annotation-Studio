@@ -3,8 +3,9 @@
   <% @sharedDocs.each do |doc| %>
 
     <div class= "column"> 
-       
-       <span class="title"><%= link_to doc.title, document_path(id: doc.id) %> </span>
+    <div class= "column">
+
+       <div class="title"><%= link_to doc.title, document_path(id: doc.id) %> </div>
        <div class="h_line"></div>
 
         <div class="tile-content"> 

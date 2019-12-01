@@ -7,28 +7,28 @@
 
     <div class= "column">
 
-       <div class="title"><%= link_to doc.title, document_path(id: doc.id) %> </div>
+       <span class="title"><%= link_to doc.title, document_path(id: doc.id) %> </span>
        <br>
-       
 
-        <div class="tile-content"> 
+
+        <div class="tile-content">
           <div class="line"></div>
 
           <% if doc.author != "" %>
         Author: <%= doc.author  %> <br>
         <%end%>
-        
+
       <% if doc.publication_date && doc.publication_date != "" %>
-        Date: <%= doc.publication_date %> <br> 
+        Date: <%= doc.publication_date %> <br>
       <% end %>
-      
-       
-      <% if !doc.groups.empty? %> 
+
+
+      <% if !doc.groups.empty? %>
        Groups: <%= doc.groups.pluck(:name).join(", ") %> <br>
       <% end %>
 
-       Status: 
-       <span id="status-icon"> 
+       Status:
+       <span id="status-icon">
         <% case doc.state %>
           <% when 'draft' %>
             <i class="glyphicon glyphicon-pencil" title="<%= doc.state %>"></i>
@@ -41,8 +41,8 @@
           <% else %>
             <%= doc.state %>
           <% end %>
-       </span> 
-  
+       </span>
+
      </div> <!-- tile-content-->
 
        <br>
@@ -58,7 +58,7 @@
 
 
 <style>
-	
+
 	.row{
 	  display:flex;
 	  flex-wrap: wrap;

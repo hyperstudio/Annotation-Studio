@@ -2,27 +2,27 @@
   <% @myDocs.each do |doc| %>
 
     <div class= "column" >
-      <div class="title"><%= link_to doc.title, document_path(id: doc.id) %> </div>
+      <span class="title"><%= link_to doc.title, document_path(id: doc.id) %> </<span></span>>
       <div class="h_line"></div>
-       
 
-        <div class="tile-content"> 
+
+        <div class="tile-content">
 
 
         <% if doc.author != "" && doc.author %>
         Author: <%= doc.author  %> <br>
         <%end%>
-      
+
       <% if doc.publication_date && doc.publication_date != "" %>
-        Date: <%= doc.publication_date %> <br> 
+        Date: <%= doc.publication_date %> <br>
       <% end %>
 
-      <% if !doc.groups.empty? %> 
+      <% if !doc.groups.empty? %>
        Group(s): <%= doc.groups.pluck(:name).join(", ") %> <br>
        <% end %>
 
-       Status: 
-       <span id="status-icon"> 
+       Status:
+       <span id="status-icon">
         <% case doc.state %>
           <% when 'draft' %>
             <i class="glyphicon glyphicon-pencil" title="<%= doc.state %>"></i>
@@ -35,15 +35,15 @@
           <% else %>
             <%= doc.state %>
           <% end %>
-       </span> 
-  
+       </span>
+
      </div> <!-- tile-content-->
 
        <br>
 
        <button class="editButton" ><%= link_to "Edit", controller: "documents", action: "edit", id: doc.id %> </button>
 
-       
+
 
 
 

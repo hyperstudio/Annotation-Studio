@@ -4,11 +4,14 @@
     <div class= "column">
        <div class="title"> <%= link_to g.name, group_path(id: g.id) %> <br> </div>
 
+
+        <div class="tile-content">
        <div class="h_line"></div>
         Owner: <%=current_user.firstname=%><!--%= User.find(g.owner_id)%--><br>
         Members: <%= g.memberships.size %> <br>
         Editors: <%= g.memberships.where(role: "manager").size %>
 
+           </div> <!-- tile-content-->
 
        <br>
        <br>
@@ -23,4 +26,4 @@
   <div class='pagination-controls'>
       <%= will_paginate @mygroups, renderer: BootstrapPagination::Rails %>
     </div>
-</center>
+</center></center></center></center></center>

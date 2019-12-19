@@ -384,7 +384,7 @@ GEM
     puma (3.12.2)
     rabl (0.11.6)
       activesupport (>= 2.3.14)
-    rack (2.0.7)
+    rack (2.0.8)
     rack-contrib (2.1.0)
       rack (~> 2.0)
     rack-test (0.6.3)
@@ -573,7 +573,7 @@ DEPENDENCIES
   public_suffix (= 3.0.3)
   puma
   rabl
-  rack (= 2.0.7)
+  rack (= 2.0.8)
   rails (= 5.0.0)
   rails_12factor
   rails_best_practices

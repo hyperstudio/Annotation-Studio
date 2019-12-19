@@ -3,7 +3,7 @@
 ruby '2.2.4'
 
 gem 'rails', '5.0.0'
-gem 'rack', '2.0.7'
+gem 'rack', '2.0.8'
 gem 'puma'
 
 gem 'pg'

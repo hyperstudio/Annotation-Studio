@@ -11,27 +11,54 @@ class DocumentsController < ApplicationController
   # GET /documents
   # GET /documents.json
   def index
-
+    Rails.logger.info("The params are #{params.inspect}")
     if params[:docs] != 'assigned' && params[:docs] != 'created' && params[:docs] != 'all'
       document_set = 'assigned'
     else
       document_set = params[:docs]
-    end    
-    
-    @tab_state = { document_set => 'active' }
-    @assigned_documents_count = Document.active.tagged_with(current_user.rep_group_list, :any =>true).count
-    @created_documents_count = current_user.documents.count
-    @all_documents_count = Document.all.count
-    per_page = 20
-    
-    if document_set == 'assigned'
-      @documents = Document.active.tagged_with(current_user.rep_group_list, :any =>true).paginate(:page => params[:page], :per_page => per_page).order('created_at DESC')
-    elsif document_set == 'created'
-      @documents = current_user.documents.paginate(:page => params[:page], :per_page => per_page).order('created_at DESC')
-    elsif can? :manage, Document && document_set == 'all'
-      @documents = Document.paginate(:page => params[:page], :per_page => per_page ).order("created_at DESC")
     end
-  
+
+    [:title, :author, :edition].each do |query|
+      if params.has_key?(query) && params[query].present?
+        if query == :edition
+          @documents = Document.tagged_with(params[query])
+        elsif params.has_key?(query) && params[query].present?
+          @documents = @documents.where("#{query} LIKE ?", "%#{params[query]}%")
+        end
+      end
+    end
+    @tab_state = { document_set => 'active' }
+    @assigned_documents_count = @documents.active.tagged_with(current_user.rep_group_list, :any =>true).count
+    @all_documents_count = @documents.all.count
+    @created_documents = current_user.documents
+    [:title, :author, :edition].each do |query|
+      if params.has_key?(query) && params[query].present?
+        if query == :edition
+          @created_documents = @created_documents.tagged_with(params[query])
+        elsif params.has_key?(query) && params[query].present?
+          @created_documents.where("#{query} LIKE ?", "%#{params[query]}%")
+        end
+      end
+    end
+    @created_documents_count = @created_documents.count
+
+    per_page = 20
+
+    if document_set == 'assigned'
+      @documents = @documents.active.tagged_with(current_user.rep_group_list, :any =>true)
+    elsif document_set == 'created'
+      @documents = @created_documents
+    elsif can? :manage, Document && document_set == 'all'
+      @documents = @documents
+    end
+    # add search parameters if they are there
+
+    if params[:group]
+      @documents = @documents.tagged_with(params[:group])
+    end
+
+    # paginate the documents after the search parameters are applied
+    @documents = @documents.paginate(:page => params[:page], :per_page => per_page).order('created_at DESC')
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @documents }
@@ -59,7 +86,7 @@ class DocumentsController < ApplicationController
   end
 
   # GET /documents/1/preview
-  def preview 
+  def preview
     respond_to do |format|
       format.html # preview.html.erb
     end
@@ -202,11 +229,11 @@ class DocumentsController < ApplicationController
   #POST document to COVE
   def post_to_cove
     document = {
-        title: @document.title,
-        body: { "und": [ { "value": @document.snapshot } ] },
-        "type":"editions_page",
-        format: "unfiltered_html",
-        "field_doc_owner":{"und":[@document.user.cove_id]}
+      title: @document.title,
+      body: { "und": [ { "value": @document.snapshot } ] },
+      "type":"editions_page",
+      format: "unfiltered_html",
+      "field_doc_owner":{"und":[@document.user.cove_id]}
     }
 
     unauth_token = ApiRequester::CoveClient.get_unauth_session
@@ -241,7 +268,7 @@ class DocumentsController < ApplicationController
     end
   end
 
-    before_filter :prepare_for_mobile
+  before_filter :prepare_for_mobile
 
   def prepare_for_mobile
     session[:mobile_param] = params[:mobile] if params[:mobile]
@@ -252,8 +279,8 @@ class DocumentsController < ApplicationController
   def catalog_texts
 
     if catalogue_enabled?
-       status, results = Melcatalog.texts
-       return results[:text] unless results[:text].nil?
+      status, results = Melcatalog.texts
+      return results[:text] unless results[:text].nil?
     end
     return []
   end
@@ -263,13 +290,13 @@ class DocumentsController < ApplicationController
     if catalogue_enabled?
       # we put placeholder content in earlier and replace with the real thing now
       if doc.text.start_with?( "EID:" )
-         eid = doc.text.split( ":",2 )[ 1 ]
-         status, entry = Melcatalog.get( eid, 'stripxml' )
-         if status == 200 && entry && entry[:text] && entry[:text][ 0 ] && entry[:text][ 0 ]['content']
-           doc.text = entry[:text][ 0 ]['content']
-         else
-           doc.text = "Error getting document content from the catalog; status = #{status}, eid = #{eid}"
-         end
+        eid = doc.text.split( ":",2 )[ 1 ]
+        status, entry = Melcatalog.get( eid, 'stripxml' )
+        if status == 200 && entry && entry[:text] && entry[:text][ 0 ] && entry[:text][ 0 ]['content']
+          doc.text = entry[:text][ 0 ]['content']
+        else
+          doc.text = "Error getting document content from the catalog; status = #{status}, eid = #{eid}"
+        end
       end
     end
   end
@@ -279,8 +306,8 @@ class DocumentsController < ApplicationController
   def catalog_texts
 
     if catalogue_enabled?
-       status, results = Melcatalog.texts
-       return results[:text] unless results[:text].nil?
+      status, results = Melcatalog.texts
+      return results[:text] unless results[:text].nil?
     end
     return []
   end
@@ -289,31 +316,31 @@ class DocumentsController < ApplicationController
   def catalogue_enabled?
     Tenant.current_tenant.mel_catalog_enabled
   end
-  
+
   def catalog_content( doc )
 
     if catalogue_enabled?
       # we put placeholder content in earlier and replace with the real thing now
       if doc.text.start_with?( "EID:" )
-         eid = doc.text.split( ":",2 )[ 1 ]
-         status, entry = Melcatalog.get( eid, 'stripxml' )
-         if status == 200 && entry && entry[:text] && entry[:text][ 0 ] && entry[:text][ 0 ]['content']
-           doc.text = entry[:text][ 0 ]['content']
-         else
-           doc.text = "Error getting document content from the catalog; status = #{status}, eid = #{eid}"
-         end
+        eid = doc.text.split( ":",2 )[ 1 ]
+        status, entry = Melcatalog.get( eid, 'stripxml' )
+        if status == 200 && entry && entry[:text] && entry[:text][ 0 ] && entry[:text][ 0 ]['content']
+          doc.text = entry[:text][ 0 ]['content']
+        else
+          doc.text = "Error getting document content from the catalog; status = #{status}, eid = #{eid}"
+        end
       end
     end
   end
 
-private
+  private
   def find_document
     @document = Document.friendly.find(params.has_key?(:document_id) ? params[:document_id] : params[:id])
   end
 
   def documents_params
     params.require(:document).permit(:title, :state, :chapters, :text, :snapshot, :user_id, :rep_privacy_list,
-                                     :rep_group_list, :new_group, :author, :edition, :publisher, 
+                                     :rep_group_list, :new_group, :author, :edition, :publisher,
                                      :publication_date, :source, :rights_status, :upload, :survey_link)
   end
 end

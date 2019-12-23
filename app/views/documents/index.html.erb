@@ -2,7 +2,38 @@
 <%= content_for :body_class, 'index' %>
 <%= content_for :page_title, 'Documents' %>
 <%= stylesheet_link_tag "documents" %>
-
+<div class="row">
+  <div class="col-md-4">
+    <%= form_tag(documents_path, :method => "get", class: 'navbar-form navbar-left') do %>
+      <div class="input-group">
+        <%= search_field_tag :title, params[:title], placeholder: "Title", class: "form-control" %>
+        <div class="input-group-btn">
+          <%= button_tag "", :class => 'btn btn-info glyphicon glyphicon-search',:name => nil%>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <div class="col-md-4">
+    <%= form_tag(documents_path, :method => "get", class: 'navbar-form navbar-left') do %>
+      <div class="input-group">
+        <%= search_field_tag :author, params[:author], placeholder: "Author", class: "form-control" %>
+        <div class="input-group-btn">
+          <%= button_tag "", :class => 'btn btn-info glyphicon glyphicon-search',:name => nil%>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <div class="col-md-4">
+    <%= form_tag(documents_path, :method => "get", class: 'navbar-form navbar-left') do %>
+      <div class="input-group">
+        <%= search_field_tag :edition, params[:edition], placeholder: "Edition", class: "form-control" %>
+        <div class="input-group-btn">
+          <%= button_tag "", :class => 'btn btn-info glyphicon glyphicon-search',:name => nil%>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
 <div class="row">
   <div class="col-md-12">
     <div class="panel panel-default" id="dashboard-documents">
@@ -10,41 +41,42 @@
         <span class="panel-title">
           <%= link_to "Documents", documents_path %></span>
         <ul class="nav nav-tabs nav-tabs-xs pull-right" id="document-tabs" role="tablist">
-          <li class="<%= @tab_state['assigned'] %>" id="assigned-tab">
-            <%= link_to documents_path( docs: 'assigned' ) do %>
+          <li class="<%= @tab_state['assigned'] %>">
+            <%= link_to documents_path( docs: 'assigned', title: params[:title],author: params[:author], edition: params[:edition] ), params do %>
               <span class='badge'><%= @assigned_documents_count %></span> Shared
             <% end %>
           </li>
-          <li class="<%= @tab_state['created'] %>" id="created-tab">
-            <%= link_to documents_path( docs: 'created' ) do %>
+          <li class="<%= @tab_state['created'] %>">
+            <%= link_to documents_path( docs: 'created', title: params[:title],author: params[:author], edition: params[:edition] ),params do %>
               <span class='badge'><%= @created_documents_count %></span> Mine
             <% end %>
           </li>
           <% if can? :manage, Document %>
-            <li class="<%= @tab_state['all'] %>" id="all-tab">
-              <%= link_to documents_path( docs: 'all' ) do %>
+            <li class="<%= @tab_state['all'] %>">
+              <%= link_to documents_path( docs: 'all', title: params[:title],author: params[:author], edition: params[:edition] ), params do %>
                 <span class='badge'><%= @all_documents_count %></span> All
               <% end %>
             </li>
           <% end %>
         </ul>
-      </div><!-- / .panel-heading -->
-    <div class="tab-content">
-      <div class="tab-pane no-padding active" id="all">
-        <%= render partial: 'document_table', locals: { documents: @documents } %>
       </div>
-    </div>
-    <div class="panel-footer doc-set-footer">
-      <% if can? :create, Document %>
-        <%= link_to document_path('new'), class: 'btn btn-primary create-new-button' do %>
-          <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create New Document
+      <!-- / .panel-heading -->
+      <div class="tab-content">
+        <div class="tab-pane no-padding active" id="all">
+          <%= render partial: 'document_table', locals: { documents: @documents } %>
+        </div>
+      </div>
+      <div class="panel-footer doc-set-footer">
+        <% if can? :create, Document %>
+          <%= link_to document_path('new'), class: 'btn btn-primary create-new-button' do %>
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create New Document
+          <% end %>
         <% end %>
-      <% end %>
-      <div class='pagination-controls'>
-        <%= will_paginate @documents, renderer: BootstrapPagination::Rails %>
+        <div class='pagination-controls'>
+          <%= will_paginate @documents, renderer: BootstrapPagination::Rails %>
+        </div>
       </div>
-    </div>
-  </div><!--/panel -->
+    </div><!--/panel -->
   </div><!--/col-md-12 -->
 </div><!--/row -->
 

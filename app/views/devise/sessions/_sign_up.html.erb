@@ -35,9 +35,9 @@
     <div class="form-group">
         <%= f.label :rep_group_list, "Class" %><br />
         <% if Apartment::Tenant.current == 'demo' %>
-            <%= f.text_field :rep_group_list, 'data-role' => "tagsinput", 'placeholder' => "Enter class name(s)", :class => "form-control", :value => ENV["ALT_DEFAULT_USER_GROUP"] %>
+            <%= f.text_field :rep_group_list, 'data-role' => "tagsinput", 'placeholder' => "Enter class name(s)", :class => "form-control" %>
         <% else %>
-            <%= f.text_field :rep_group_list, 'data-role' => "tagsinput", 'placeholder' => "Enter class name(s)", :class => "form-control", :value => ENV["DEFAULT_USER_GROUP"] %>
+            <%= f.text_field :rep_group_list, 'data-role' => "tagsinput", 'placeholder' => "Enter class name(s)", :class => "form-control" %>
         <% end %>
 
         <span class="help-block">Please enter the class(es) you would like to join. Press ENTER after each class.</span>

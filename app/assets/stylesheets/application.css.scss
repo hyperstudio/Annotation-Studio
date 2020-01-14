@@ -25,7 +25,6 @@
  *= require "annotations"
  *= require "ekko-lightbox.min"
  *= require "navbar-overrides.css"
- *= require "bootstrap-font-overrides"
  */
 
 html {
@@ -34,7 +33,7 @@ html {
 }
 
 body {
-  background-color:#EFEFEF;
+  background-color:#eee;
   padding: 100px 0 100px 0;
   margin-bottom: 60px;
 }
@@ -64,7 +63,7 @@ ol.breadcrumb {
   position: absolute;
   bottom: 0;
   width: 100%;
-  height: 60px;
+  height: 70px;
   background-color: #f5f5f5;
 }
 
@@ -126,23 +125,8 @@ div#login, div#blurb {
 }
 
 #mainalerts {
-  margin-top:0px;
-  margin-bottom:0px;
-  margin-left: calc(50% - 50vw);
-  margin-right: calc(50% - 50vw);
-}
-
-.alert-success {
-  color: #3c763d;
-  background-color: #dff0d8;
-  border-color: #d6e9c6;
-  margin-top:0px;
-  margin-left: calc(50% - 50vw);
-  margin-right: calc(50% - 50vw);
-}
-
-.alert-dismissle {
-  margin-top: 0px;
+  margin-top:20px;
+  margin-bottom:0;
 }
 
 .page-header {
@@ -159,8 +143,8 @@ body.index .panel {
 }
 
 body.index .panel-heading {
-  border:none;
-  }
+  border-bottom: 0;
+}
 
 body.index ul.nav-pills li a:hover {
   background-color: #fff;
@@ -213,7 +197,7 @@ img#neh-logo {
     }
     display: inline-block;
     max-height: 50px;
-    font-family: Frutiger, sans-serif;
+    font-family: sans-serif;
     font-variant-caps: small-caps;
     font-size: 1.4em;
     font-weight: lighter;
@@ -231,31 +215,12 @@ img#neh-logo {
   font-weight:normal;
 }
 
-
-
 .metadataStyle{
   background-color:white;
   padding:12px;
   padding-top:5px;
 
 }
-
-.left{
-  width:62%;
-  float:left;
-}
-
-.right{
-  width:35%;
-  backgrond-color:white;
-  float:right;
-
-}
-
-.clearFloat{
-  clear:both;
-}
-
 
 #author-column {
   min-width: 150px;
@@ -271,9 +236,4 @@ img#neh-logo {
   margin:15px;
   border-top:1px solid #AAA;
   border-bottom:1px solid #AAA;
-}
-
-.footer{
-  background-color: #EEEEEE;
-  height: 60px;
 }

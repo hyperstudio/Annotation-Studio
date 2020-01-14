@@ -5,7 +5,7 @@
 
   	<!--About-->
   <li><div class="dropdown">
-	  <button class="dropdown-toggle menu-button" type="button" id="about-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:black; ">
+	  <button class="dropdown-toggle menu-button" type="button" id="about-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 		  About <i class="fa fa-external-link-square"></i>
 	  </button>
 	  <ul class="dropdown-menu" aria-labelledby="about-menu">
@@ -25,7 +25,7 @@
 <li><a href="http://support.annotationstudio.org/" target="_blank">Help <i class="fa fa-external-link-square"></i></a></li>
 
 <li><div class="dropdown">
-	<button class="dropdown-toggle menu-button" type="button" id="about-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:black; ">
+	<button class="dropdown-toggle menu-button" type="button" id="about-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 		  <i class="fa fa-user" ></i> &nbsp <%= current_user.fullname %>
 		</button>
 		<ul class="dropdown-menu" aria-labelledby="about-menu">
@@ -42,21 +42,21 @@
 <% else %>
 	  <% if defined?(resource) != nil %>
 	  <li><div class="dropdown dont-overflow">
-		  <button class="dropdown-toggle menu-button" type="button" id="login-form" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="color:black;">
+		  <button class="dropdown-toggle menu-button" type="button" id="login-form" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
 			  Log in
 			  <span class="caret"></span>
 		  </button>
-		  <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="login-form" style="background-color: #EEEEEE; ">
+		  <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="login-form">
 			  <li><%= render "/devise/sessions/sign_in" %></li>
 		  </ul>
 	  </div></li>
 
 	  <li><div class="dropdown dont-overflow">
-		  <button class="dropdown-toggle menu-button" type="button" id="login-form" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style=" color:black;">
+		  <button class="dropdown-toggle menu-button" type="button" id="login-form" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" >
 			  Register
 			  <span class="caret"></span>
 		  </button>
-		  <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="login-form" style="background-color: #EEEEEE">
+		  <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="login-form">
 			  <li><%= render "/devise/sessions/sign_up" %></li>
 		  </ul>
 	  </div></li>

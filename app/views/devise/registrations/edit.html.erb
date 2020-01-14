@@ -3,75 +3,54 @@
 <%= content_for :body_class, 'edit' %>
 
 
-<div class="row" >
-    <div class="col-md-12" >
-        <div class="panel panel-default" id="user-form">
-            <div class="panel-heading" style="background-color: #DFDFDF">
-                <span class="panel-title">My Profile</span>
-            </div><!-- / .panel-heading -->
-            <div class="panel-body" style="padding-left:50px;padding-right:50px;">
-                <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :role => "form", class: "confirm-changes"}) do |f| %>
-                    <%= devise_error_messages! %>
-			<!--row 1 -->
-                    <div class="left" style="width: 45%">
-                    <div class="form-group">
-                    	<%= f.label :firstname, "First Name" %>
-                    	<%= f.text_field :firstname, :value =>  resource.firstname, :class => "form-control" %>
-                    </div>
-                </div>
-                <div class="right" style="width: 45%">
-                    <div class="form-group">
-                    	<%= f.label :lastname, "Last Name" %>
-                    	<%= f.text_field :lastname, :value =>  resource.lastname, :class => "form-control" %>
-                    </div>
-                </div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <span class="panel-title">My Profile</span>
+    </div><!-- / .panel-heading -->
+    <div class="user-form">
+      <div class="panel-body child">
+          <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :role => "form", class: "confirm-changes"}) do |f| %>
+              <%= devise_error_messages! %>
+          <div class="form-group">
+          	<%= f.label :firstname, "First Name" %>
+          	<%= f.text_field :firstname, :value =>  resource.firstname, :class => "form-control" %>
+          </div>
+          <div class="form-group">
+          	<%= f.label :lastname, "Last Name" %>
+          	<%= f.text_field :lastname, :value =>  resource.lastname, :class => "form-control" %>
+          </div>
+           <div class="form-group">
+              <%= f.label :affiliation, "Affiliation" %>
+              <%= f.text_field :affiliation, :value =>  resource.affiliation, :class => "form-control" %>
+          </div>
+      </div><!--/panel-body -->
+      <div class="panel-body child">
+          <div class="form-group">
+              <%= f.label :email, "Email" %>
+              <%= f.text_field :email, :value =>  resource.email, :class => "form-control" %>
+          </div>
+          <div class="form-group">
+             <%= f.label :password, "New Password" %>
+             <%= f.password_field :password,  :class => "form-control" %>
+         </div>
+           <div class="form-group">
+             <%= f.label :password_confirmation, "Confirm New Password" %>
+             <%= f.password_field :password_confirmation,  :class => "form-control" %>
+         </div>
+         </div><!--/panel-body -->
+       </div><!--/user-form -->
 
+       <div class="panel-body">
+              <!--div class="left" style="width: 45%">
+                   <div class="form-group">
+                      <%= f.label :current_password, "Current Password" %>
+                   <p class="help-block"> Only required if you are changing your password. </p>
+                      <%= f.password_field :current_password,  :class => "form-control" %>
+                  </div>
+              </div-->
 
-                <!--row 2 -->
-                <div class="left" style="width: 45%">
-                     <div class="form-group">
-                        <%= f.label :affiliation, "Affiliation" %>
-                        <%= f.text_field :affiliation, :value =>  resource.affiliation, :class => "form-control" %>
-                    </div>
-                </div>
-
-                <div class="right" style="width: 45%">
-                      <div class="form-group">
-                        <%= f.label :email, "Email" %>
-                        <%= f.text_field :email, :value =>  resource.email, :class => "form-control" %>
-                    </div>
-                </div>
-
-                <!--row 3-->
-<div class="left" style="width: 45%">
-                    <div class="form-group">
-                       <%= f.label :password, "New Password" %>
-                       <%= f.password_field :password,  :class => "form-control" %>
-                   </div>
-               </div>
-               <div class="right" style="width: 45%">
-                     <div class="form-group">
-                       <%= f.label :password_confirmation, "Confirm New Password" %>
-                       <%= f.password_field :password_confirmation,  :class => "form-control" %>
-                   </div>
-               </div>
-
-               <!--div class="left" style="width: 45%">
-                    <div class="form-group">
-                       <%= f.label :current_password, "Current Password" %>
-                    <p class="help-block"> Only required if you are changing your password. </p>
-                       <%= f.password_field :current_password,  :class => "form-control" %>
-                   </div>
-               </div-->
-
-
-
-                <div class="clearFloat">
-                    <%= f.submit "Update", :class => "btn btn-default btn-default-primary btn-primary" %>
-                    <%= link_to "Cancel", :back, :class => "btn btn-primary" %>
-                </div>
-                <% end %>
-            </div><!--/panel-body -->
-        </div><!--/panel -->
-	</div><!--/col-md-12 -->
-</div><!--/row -->
+            <%= f.submit "Update", :class => "btn btn-default btn-default-primary btn-primary" %>
+            <%= link_to "Cancel", :back, :class => "btn btn-danger" %>
+        <% end %>
+        </div>
+</div><!--/panel -->

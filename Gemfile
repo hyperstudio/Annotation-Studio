@@ -1,8 +1,8 @@
   source 'https://rubygems.org'
 
-ruby '2.2.4'
+ruby '2.4.9'
 
-gem 'rails', '5.0.0'
+gem 'rails', '5.0.7.2'
 gem 'rack', '2.0.7'
 gem 'puma'
 
@@ -44,7 +44,7 @@ group :development do
 end
 
 group :assets do
-  gem "therubyracer", :platforms => :ruby
+  gem "therubyracer", '0.12.3', :platforms => :ruby
   gem 'coffee-rails', '4.2.2'
   gem 'uglifier'
   gem 'underscore-rails'

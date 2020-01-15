@@ -1,10 +1,10 @@
-<div class="well devise" style="background-color: transparent; border-style: none;">
+<div class="well devise">
 
-    <center><p id="title">Log into <span style="color:<%= $DOMAIN_CONFIG['site_color'] %>;"><%= $DOMAIN_CONFIG['site_name'] %></span></p></center>
+    <h4>Log into <span style="color:<%= $DOMAIN_CONFIG['site_color'] %>;"><%= $DOMAIN_CONFIG['site_name'] %></span></h4>
     <%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :role => "form"}) do |f| %>
         <%= render "devise/shared/error_messages" %>
 
-        <div class="form-group" >
+        <div class="form-group">
             <%= f.label :email %>
             <%= f.email_field :email, :class => "form-control" %>
         </div>
@@ -20,7 +20,7 @@
         <% end %>
 
 
-        <div style="float: right; margin-top: 5px;"><%= f.submit "Log in", :class => "btn btn-default btn-default-primary log-in-button" %></div>
+        <div><%= f.submit "Log in", :class => "btn btn-default btn-default-primary log-in-button" %></div>
 
     <% end %>
 </div><!--/well -->
@@ -50,16 +50,3 @@ $("document").ready(function(){
     });
 });
 </script>
-
-<style>
-.log-in-button{
-    background-color: #DDDEE7;
-}
-
-#title{
-    font-size: 18pt;
-    margin-bottom: -5px;
-
-
-}
-</style>

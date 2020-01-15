@@ -72,6 +72,7 @@ gem 'jquery-rails', '4.3.5'
 gem 'jquery-ui-rails'
 gem 'tinymce-rails'
 
+gem 'xmlrpc'
 gem "fog"
 gem "mini_magick"
 gem "carrierwave"

@@ -522,6 +522,7 @@ GEM
     will_paginate (3.1.7)
     will_paginate-bootstrap (1.0.1)
       will_paginate (>= 3.0.3)
+    xmlrpc (0.3.0)
     yomu (0.2.3)
       json (~> 1.8)
       mime-types (~> 1.23)
@@ -596,6 +597,7 @@ DEPENDENCIES
   underscore-rails
   will_paginate (= 3.1.7)
   will_paginate-bootstrap
+  xmlrpc
   yomu
 
 RUBY VERSION

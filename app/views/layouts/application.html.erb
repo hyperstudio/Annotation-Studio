@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
     <meta charset="utf-8">
     <title><%= ENV["PAGE_TITLE"] %> :: <%= yield(:page_title) %></title>
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
@@ -46,11 +45,28 @@
         <%= render "#{params[:controller]}/rightnav" %>
       <% end %>
     </nav>
-<% end %>
 
-
-
-
+    <nav class="navbar navbar-default navbar-fixed-top hidden-xs" id="lower-navbar">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-8">
+            <label class="navbar-switch" id="leftburger">
+              <input type="checkbox" class="" data-toggle="offcanvas"  data-target="#mainmenu"  title="Navigation" />
+              <span class="navbar-toggle"><i class="fa fa-bars"></i></span>
+            </label>
+            <%= render "shared/breadcrumbs" %>
+          </div>
+          <div class="col-md-4">
+            <%= render "shared/annotation_header" %>
+            <label class="navbar-switch" id="rightburger">
+              <input type="checkbox" class=" pull-right" data-toggle="offcanvas" data-target="#toolsmenu"  title="Tools" />
+              <span class="navbar-toggle"><i class="fa fa-gears"></i></span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <% end %>
 
 	<% if params[:controller] == 'devise/sessions' %>
 	<div class="home-image">
@@ -78,20 +94,21 @@
     </script>
     <script type="text/javascript">
     $('document').ready(function() {
-      // $('#lower-navbar').affix({
-      //   offset: {top: 50}
-      // });
-      // $('#mainmenu').offcanvas({
-      //   disableScrolling: false,
-      //   autohide: true,
-      // });
-      // $('#toolsmenu').offcanvas({
-      //   disableScrolling: false,
-      //   autohide: true,
-      // });
-      // $('#mainmenu').offcanvas();
-      // $('#toolsmenu').offcanvas();
+      $('#mainmenu').bind('show.bs.offcanvas',function(){checkmark('left',true);});
+      $('#mainmenu').bind('hide.bs.offcanvas',function(){checkmark('left',false);});
+      $('#toolsmenu').bind('show.bs.offcanvas',function(){checkmark('right',true);});
+      $('#toolsmenu').bind('hide.bs.offcanvas',function(){checkmark('right',false);});
     });
+      function checkmark(side,on) {
+        if(side=='left')
+          var el = $('#leftburger span');
+        else if(side=='right')
+          var el = $('#rightburger span');
+        if(on==true)
+          el.addClass("navbutton-pushed");
+        else
+          el.removeClass("navbutton-pushed");
+      }
     </script>
 </body>
 </html>

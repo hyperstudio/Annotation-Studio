@@ -72,10 +72,6 @@ p.help-block {
   margin-top:10px;
 }
 
-div.form-group {
-  margin-top: 20px;
-}
-
 table.help-block {
   display: inline-table;
   float: right;
@@ -216,10 +212,33 @@ img#neh-logo {
 }
 
 .metadataStyle{
-  background-color:white;
   padding:12px;
   padding-top:5px;
 
+}
+
+.document-meta-wrapper{
+    display: grid;
+    grid-gap: 5px;
+    /* Space between items */
+    grid-template-columns: 1fr 1fr;
+    /* Decide the number of columns and size */
+}
+
+.document-meta-section{
+  display: flex;
+  flex-direction: column;
+
+}
+
+.document-form-buttons{
+  display:flex;
+  align-items:flex-end;
+  justify-content: flex-end;
+  flex-grow: 2;
+}
+.document-form-buttons a{
+  margin-left:5px;
 }
 
 #author-column {

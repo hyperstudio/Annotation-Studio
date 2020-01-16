@@ -1,18 +1,13 @@
 <%= content_for :page_title, "Editing #{@document.title}" %>
 <%= content_for :body_id, 'documents' %>
 <%= content_for :body_class, 'edit' %>
-<div class="row">
-    <div class="col-md-12">
-      
-          
-        <h4Bold>Create/Edit Document</h4Bold>
+<div class="panel panel-default">
 
-        <div class="panel-body">
-         <%= render :partial => 'form', :locals => {:create => false} %>
-      </div><!--/panel-body -->
-   
-  </div><!--/col-md-12 -->
+  <div class="panel-heading">
+    <h4 class="panel-title">Create/Edit Document</h4>
+  </div>
+  <div class="panel-body">
+    <%= render :partial => 'form', :locals => {:create => false} %>
+  </div><!--/panel-body -->
+
 </div><!--/row -->
-
-
-

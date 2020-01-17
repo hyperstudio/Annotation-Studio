@@ -9,7 +9,7 @@
   <% if current_page?(documents_path) %>
     <li class="active">Documents</li>
   <% elsif params[:controller] == 'documents' %>
-    <li><%= link_to("Documents", "/documents", :id => "documents-link") %></li>
+    <li><%= link_to("Documents", "/dashboard", :id => "documents-link") %></li>
     <% if params[:action] == 'show' %>
       <li class="active"><%= @document.title %></li>
     <% elsif params[:action] == 'preview' %>

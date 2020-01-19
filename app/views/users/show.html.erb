@@ -16,10 +16,8 @@
       <div class="tab-content">
         <div class="tab-pane no-padding fade active in" id="assigned">
           <ul id="documents-assigned" class="list-group">
-            <% unless Document.tagged_with(current_user.rep_group_list, :any =>
-            true).empty? || Document.tagged_with(current_user.rep_group_list).nil? %>
-            <% Document.order("created_at DESC").tagged_with(current_user.rep_group_list, :any =>
-            true).where.not(state: 'draft').limit(10).each do |document| %>
+            <% unless @sharedDocs.empty? || @sharedDocs.nil? %>
+            <% @sharedDocs.order("created_at DESC").where.not(state: 'draft').limit(10).each do |document| %>
             <li class="list-group-item">
               <%= link_to document.title, document_path(document.friendly_id) %>
               <span class="pull-right">
@@ -68,15 +66,15 @@
     <div class="panel panel-default" id="dashboard-groups">
       <div class="panel-heading">
         <span class="panel-title">
-          <%= link_to ENV["CLASS_TERM_PLURAL"].capitalize, groups_path %></span>
+          <%= link_to 'Groups', groups_path %></span>
       </div>
       <!-- / .panel-heading -->
 
       <div class="tab-content">
         <div class="tab-pane no-padding fade active in" id="groups">
           <ul class="list-group">
-            <% current_user.rep_group_list.each do |group| %>
-              <li class="list-group-item"><%= link_to group, documents_path(docs: 'assigned', group: group) %></li>
+            <% current_user.groups.each do |group| %>
+              <li class="list-group-item"><%= link_to group.name, group_path(id: group.id) %></li>
             <% end %>
           </ul>
         </div>

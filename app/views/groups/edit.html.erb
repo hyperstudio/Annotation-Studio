@@ -107,6 +107,7 @@
         <br>
     
 
+    <% if ENV["GLOBAL_IDEA_SPACE"] == "true" %>
         <% if is_owner(params[:id]) %>
             <%= form_tag :controller=>'groups', :action => 'toggleIS' do %>
                 <%= label_tag :toggleIS, 'Idea Space: ' + @ISstatus %>
@@ -117,7 +118,8 @@
                 <%= hidden_field_tag :group_id, params[:id] %>
                 <%= submit_tag @IStoggle, class: "manageAction" %>
             <% end %>
-        <% end %>
+        <% end %> 
+    <% end %>
     </div> <!-- forms -->
     </div> <!-- right -->
 <script>

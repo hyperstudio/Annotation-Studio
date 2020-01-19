@@ -35,7 +35,7 @@ AnnotationStudio::Application.routes.draw do
     get 'documents/:document_id/annotations/field/:field', to: 'annotations#field'
     get 'leave' => 'groups#leave'
     
-    post 'join_via_name' => "groups#join_via_name" #for joining new groups via name entry
+    #post 'join_via_name' => "groups#join_via_name" #for joining new groups via name entry
     
     resources :groups
 

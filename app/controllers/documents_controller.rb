@@ -9,9 +9,26 @@ class DocumentsController < ApplicationController
   # GET /documents
   # GET /documents.json
   def index #search results
+      whitelisted = params.permit(:docs, :page, :group)
+      if !%w[ assigned created all ].include?(whitelisted[:docs])
+        document_set = 'assigned'
+      else
+        document_set = whitelisted[:docs]
+      end
+
+      @tab_state = { document_set => 'active' }
 
       shared = helpers.getSharedDocs() #see application_helper.rb
       mine = current_user.documents
+
+      per_page = 20
+
+      if document_set == 'assigned'
+        @documents = shared.where.not(state: 'draft').paginate(:page => whitelisted[:page], :per_page => per_page).order('created_at DESC')
+      elsif document_set == 'created'
+        @documents = mine.paginate(:page => whitelisted[:page], :per_page => per_page).order('created_at DESC')
+      end
+      
 
       #this might cause problems when shared docs get REALLY BIG
       all = shared | mine #array

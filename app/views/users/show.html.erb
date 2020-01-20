@@ -26,7 +26,6 @@
                 <%= document.groups.pluck(:name).join(", ") %></span>
               <% end %>
                 <%= document.created_at.strftime("%m/%d/%Y") %></span>
-        <div class="clearfix"></div>
             </li>
             <% end %>
             <li class="list-group-item"><strong><a href="/documents?docs=assigned">See more shared documents&hellip;</a></strong></li>
@@ -74,7 +73,11 @@
         <div class="tab-pane no-padding fade active in" id="groups">
           <ul class="list-group">
             <% current_user.groups.each do |group| %>
-              <li class="list-group-item"><%= link_to group.name, group_path(id: group.id) %></li>
+              <li class="list-group-item"><%= link_to group.name, group_path(id: group.id) %>
+              
+              <span class="pull-right">
+                <%= Membership.find_by(group_id: group.id, user_id: current_user.id).role %></span>
+                </li>
             <% end %>
           </ul>
         </div>

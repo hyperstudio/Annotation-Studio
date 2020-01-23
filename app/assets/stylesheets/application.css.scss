@@ -142,6 +142,14 @@ body.index .panel-heading {
   border-bottom: 0;
 }
 
+body.index ul.nav-pills li{
+  float:right;
+}
+
+ul.list-group{
+  margin-bottom:0px;
+}
+
 body.index ul.nav-pills li a:hover {
   background-color: #fff;
 }

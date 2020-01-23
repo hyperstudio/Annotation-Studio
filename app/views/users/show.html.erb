@@ -12,29 +12,34 @@
           <li class="active"><a href="#assigned" data-toggle="tab"><span class="badge"><%= @sharedDocs.size %></span> Shared</a></li>
           <li><a href="#created" data-toggle="tab"><span class="badge"><%= current_user.documents.size %></span> Mine</a></li>
         </ul>
-      </div><!-- / .panel-heading -->
+      </div>
+      <!-- / .panel-heading -->
       <div class="tab-content">
         <div class="tab-pane no-padding fade active in" id="assigned">
           <ul id="documents-assigned" class="list-group">
             <% unless @sharedDocs.empty? || @sharedDocs.nil? %>
-            <% @sharedDocs.order("created_at DESC").where.not(state: 'draft').limit(10).each do |document| %>
-            <li class="list-group-item">
-              <%= link_to document.title, document_path(document.friendly_id) %>
-              <span class="pull-right">
-          <% if !document.groups.empty? %>
-              <span class="label label-info">
-                <%= document.groups.pluck(:name).join(", ") %></span>
+              <% @sharedDocs.order("created_at DESC").where.not(state: 'draft').limit(10).each do |document| %>
+                <li class="list-group-item">
+                  <%= link_to document.title, document_path(document.friendly_id) %>
+                  <span class="pull-right">
+                    <% if !document.groups.empty? %>
+                      <span class="label label-info">
+                        <%= document.groups.pluck(:name).join(", ") %></span>
+                    <% end %>
+                    <%= document.created_at.strftime("%m/%d/%Y") %></span>
+                </li>
               <% end %>
-                <%= document.created_at.strftime("%m/%d/%Y") %></span>
-            </li>
-            <% end %>
-            <li class="list-group-item"><strong><a href="/documents?docs=assigned">See more shared documents&hellip;</a></strong></li>
+              <li class="list-group-item"><strong><a href="/documents?docs=assigned">See more shared documents&hellip;</a></strong></li>
             <% else %>
-            <li class="list-group-item">
-              No documents to view.
-            </li>
+              <li class="list-group-item">
+                No documents to view.
+              </li>
             <% end %></ul>
-        </div><!-- / .tab-pane -->
+          <ul class="nav nav-pills">
+            <li><%= link_to raw("<span class=\"glyphicon glyphicon-plus\" aria-hidden=\"true\"></span> Create new document"), document_path('new') %></li>
+          </ul>
+        </div>
+        <!-- / .tab-pane -->
         <div class="tab-pane no-padding fade in" id="created">
           <ul id="documents-created" class="list-group">
             <% unless current_user.documents.empty? || current_user.documents.nil? %>
@@ -47,54 +52,59 @@
                   </li>
                 <% end %>
               <% end %>
-            <li class="list-group-item"><strong><a href="/documents?docs=created">See more of my documents&hellip;</a></strong></li>
+              <li class="list-group-item"><strong><a href="/documents?docs=created">See more of my documents&hellip;</a></strong></li>
             <% else %>
-            <li class="list-group-item">
-              No documents to view.
-            </li>
+              <li class="list-group-item">
+                No documents to view.
+              </li>
             <% end %>
           </ul>
+          <ul class="nav nav-pills">
+            <li><%= link_to raw("<span class=\"glyphicon glyphicon-plus\" aria-hidden=\"true\"></span> Create new document"), document_path('new') %></li>
+          </ul>
         </div>
-      </div><!-- / .tab-pane -->
-      <ul class="nav nav-pills">
-        <!--<li><%#= link_to "Go to document list", documents_path %></li>-->
-        <li><%= link_to raw("<span class=\"glyphicon glyphicon-plus\" aria-hidden=\"true\"></span> Create new document"), document_path('new') %></li>
-      </ul>
-    </div><!--/ panel -->
-
+      </div>
+      <!-- / .tab-pane -->
+    </div>
+    <!--/ panel -->
     <div class="panel panel-default" id="dashboard-groups">
       <div class="panel-heading">
         <span class="panel-title">
           <%= link_to 'Groups', groups_path %></span>
       </div>
       <!-- / .panel-heading -->
-
       <div class="tab-content">
         <div class="tab-pane no-padding fade active in" id="groups">
           <ul class="list-group">
-            <% current_user.groups.each do |group| %>
-              <li class="list-group-item"><%= link_to group.name, group_path(id: group.id) %>
-              
-              <span class="pull-right">
-                <%= Membership.find_by(group_id: group.id, user_id: current_user.id).role %></span>
+            <% if !current_user.groups.empty? %>
+              <% current_user.groups.each do |group| %>
+                <li class="list-group-item"><%= link_to group.name, group_path(id: group.id) %>
+                  <span class="pull-right">
+                    <%= Membership.find_by(group_id: group.id, user_id: current_user.id).role %></span>
                 </li>
+              <% end %>
+               <li class="list-group-item"><strong><a href="/groups">See more groups&hellip;</a></strong></li>
+            <% else %>
+              <li class="list-group-item">
+                You are not a member or owner of any groups.
+              </li>
             <% end %>
+          </ul>
+          <ul class="nav nav-pills">
+            <li><%= link_to raw("<span class=\"glyphicon glyphicon-plus\" aria-hidden=\"true\"></span> Create new group"), group_path('new') %></li>
           </ul>
         </div>
       </div>
-      <!--<ul class="nav nav-pills">-->
-      <!--<li>-->
-      <!--<%#= link_to "Go to class and group list", groups_path %>-->
-      <!--</li>-->
-      <!--</ul>-->
-    </div><!--/ panel -->
-
-  </div><!--/ col-md-6 -->
+    </div>
+    <!--/ panel -->
+  </div>
+  <!--/ col-md-6 -->
+  
   <div class="col-md-6">
     <div class="panel panel-default" id="dashboard-annotations">
       <div class="panel-heading">
         <span class="panel-title">
-          <%= link_to "Annotations", dashboard_path(nav: 'myannotations') %></span>
+          <%= link_to "Annotations", annotations_path %></span>
         <ul class="nav nav-tabs nav-tabs-xs pull-right" id="annotation-tabs" role="tablist">
           <li>
             <a href="#class" data-toggle="tab">
@@ -120,49 +130,46 @@
         </div>
       </div>
       <!--<ul class="nav nav-pills">-->
-        <!--<li>-->
-    <!--  <%#= link_to "Go to annotation list", annotations_path %></li>-->
+      <!--<li>-->
+      <!--  <%#= link_to "Go to annotation list", annotations_path %></li>-->
       <!--</ul>-->
     </div>
     <!--/ panel --> </div>
   <!--/col-md-3 -->
 </div>
 <!--/row -->
-
-
 <%= javascript_include_tag "widget" %>
 <script type="text/javascript" charset="utf-8">
-jQuery(function ($) {
-  var widget = new Widget.App();
-  var endpoint = location.protocol+'//'+'<%= ENV["API_URL"] %>';
-  var token = '<%= session["jwt"] %>';
-  // Backbone.history.start({pushState: true, root: window.location})
-var groups=[];
-<% current_user.groups.each do |g| %>
-  groups.push("<%=g.name %>");
-<% end %>
-  var myLoadOptions = {
-    'limit': 100,
-    'groups': "<%= current_user.rep_group_list %>".split(/, /),
-    'subgroups': "<%= current_user.rep_subgroup_list %>".split(/, /),
-    'host': location.host,
-    'user': "<%= current_user.email %>",
-    'mode': 'user',
-    'context': 'dashboard',
-  };
-  var classLoadOptions = {
-    'limit': 100,
-    'groups': groups, //"<%= current_user.rep_group_list %>".split(/, /),
-    'subgroups': "<%= current_user.rep_subgroup_list %>".split(/, /),
-    'host': location.host,
-    'user': "<%= current_user.email %>",
-    'mode': 'class',
-    'context': 'dashboard',
-  };
-  widget.listAnnotations('my-annotation-list', myLoadOptions, endpoint, token);
-  widget.listAnnotations('class-annotation-list', classLoadOptions, endpoint, token);
-});
-
+  jQuery(function ($) {
+    var widget = new Widget.App();
+    var endpoint = location.protocol+'//'+'<%= ENV["API_URL"] %>';
+    var token = '<%= session["jwt"] %>';
+    // Backbone.history.start({pushState: true, root: window.location})
+  var groups=[];
+  <% current_user.groups.each do |g| %>
+    groups.push("<%=g.name %>");
+  <% end %>
+    var myLoadOptions = {
+      'limit': 100,
+      'groups': groups,
+      'subgroups': "<%= current_user.rep_subgroup_list %>".split(/, /),
+      'host': location.host,
+      'user': "<%= current_user.email %>",
+      'mode': 'user',
+      'context': 'dashboard',
+    };
+    var classLoadOptions = {
+      'limit': 100,
+      'groups': groups, //"<%= current_user.rep_group_list %>".split(/, /),
+      'subgroups': "<%= current_user.rep_subgroup_list %>".split(/, /),
+      'host': location.host,
+      'user': "<%= current_user.email %>",
+      'mode': 'class',
+      'context': 'dashboard',
+    };
+    widget.listAnnotations('my-annotation-list', myLoadOptions, endpoint, token);
+    widget.listAnnotations('class-annotation-list', classLoadOptions, endpoint, token);
+  });
 </script>
 <script type="text/template" id="user-comment-template">
   <span class="user-highlight"><span class="pull-right">{{formattedDate}}</span><div class="ellipsis"><a href="{{uri}}#hl{{uuid}}">{{{quote}}}</a></div></span>

@@ -6,7 +6,7 @@
   	<!--About-->
   <li><div class="dropdown">
 	  <button class="dropdown-toggle menu-button" type="button" id="about-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-		  About <i class="fa fa-external-link-square"></i>
+		  About <i class="fa fa-chevron-down"></i>
 	  </button>
 	  <ul class="dropdown-menu" aria-labelledby="about-menu">
 		  <li><a href="http://www.annotationstudio.org/project/" target="_blank">Project </a></li>
@@ -26,7 +26,7 @@
 
 <li><div class="dropdown">
 	<button class="dropdown-toggle menu-button" type="button" id="about-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-		  <i class="fa fa-user" ></i> &nbsp <%= current_user.fullname %>
+		  <i class="fa fa-user" ></i> <%= current_user.fullname %> <i class="fa fa-chevron-down"></i>
 		</button>
 		<ul class="dropdown-menu" aria-labelledby="about-menu">
 		  <li class="<%= 'active' if current_page?(edit_user_registration_path) %>"><%= link_to("My Profile", edit_user_registration_path, :id => "user-account-edit") %></li>

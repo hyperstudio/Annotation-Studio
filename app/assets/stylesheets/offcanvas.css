@@ -120,7 +120,7 @@ body#documents.show .navbar #leftburger,body#documents.show .navbar #rightburger
 .menu-button {
 	border: none;
 	background: transparent;
-	color: #9d9d9d;
+	color: #fff;
 	padding-top: 15px;
 	padding-bottom: 15px;
 }

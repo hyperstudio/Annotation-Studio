@@ -58,8 +58,8 @@ Widget.RemoteAnnotationList = Backbone.Collection.extend({
 
 // Annotation View
 Widget.AnnotationView = Backbone.View.extend({
-	tagName: 'div',
-	className: 'column',
+	tagName: 'li',
+	className: 'list-group-item',
 	initialize: function (annotation) {
 		this.commenttemplate = $('#user-comment-template').html();
 		this.highlighttemplate = $('#user-highlight-template').html();
@@ -114,7 +114,7 @@ Widget.AnnotationView = Backbone.View.extend({
 // Annotation List View
 Widget.AnnotationListView = Backbone.View.extend({
 	initialize: function (options) {
-    this.el = $("div#"+ options.container);
+    this.el = $("ul#"+ options.container);
 	},
 	render: function () {
 		// Clear out existing annotations
@@ -147,37 +147,18 @@ Widget.App = Backbone.Router.extend({
 		Widget.annotations.deferred.done(function () {
 			annotationsList.render();
 			// Put the annotation count on the tab.
-			// var id = annotationsList.el[0].id;
-			// var el = $("#"+id);
-			// var tabName = el.closest(".tab-pane").attr('id');
-			// var parent = el.closest(".panel");
-			// var tab = parent.find(".nav-tabs a[href='#" + tabName + "']");
-			// var badge = tab.find(".badge");
+			var id = annotationsList.el[0].id;
+			var el = $("#"+id);
+			var tabName = el.closest(".tab-pane").attr('id');
+			var parent = el.closest(".panel");
+			var tab = parent.find(".nav-tabs a[href='#" + tabName + "']");
+			var badge = tab.find(".badge");
 
-			//show total number of annotations
-			var button = document.getElementById("annotation-button");
-			var badge = $(button).find(".badge");
-			var my_annos_count = $('#my-annotation-list .column').length;
-			var shared_annos_count = $('#class-annotation-list .column').length;
-			badge.text(my_annos_count + shared_annos_count);
-
-			//show my annotations count 
-			var mine = $(document.getElementById("annotations-mine")).find(".badge");
-			mine.text(my_annos_count);
-
-			//show shared annotations count
-			var shared = $(document.getElementById("annotations-shared")).find(".badge");
-			shared.text(shared_annos_count);
-
-
-
-			// List the count on dashboard without re-querying API just to get count. (old method)
-			// if(annotationsList.collection.length >= 10 && parent[0].id == "dashboard-annotations")
-			// 	badge.text("10+");
-			// else
-			// 	badge.text(annotationsList.collection.length);
-
-			
+			// List the count on dashboard without re-querying API just to get count.
+			if(annotationsList.collection.length >= 10 && parent[0].id == "dashboard-annotations")
+				badge.text("10+");
+			else
+				badge.text(annotationsList.collection.length);
 		});
 	}
 });

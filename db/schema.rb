@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191125040751) do
+ActiveRecord::Schema.define(version: 20200124025912) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -130,7 +130,6 @@ ActiveRecord::Schema.define(version: 20191125040751) do
     t.string  "name"
     t.integer "owner_id"
     t.boolean "ideaSpaceOn", default: false
-    t.index ["name"], name: "index_groups_on_name", unique: true, using: :btree
     t.index ["owner_id"], name: "index_groups_on_owner_id", using: :btree
   end
 

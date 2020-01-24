@@ -10,31 +10,39 @@
   <div class="tab-content">
     <div class="tab-pane no-padding active" id="all">
       <table class="table table-striped table-bordered">
-	 	<tr>
-  		  <th>Group Name</th>
-  		  <th>Role</th>
-  		  <th>Owner</th>
-  		  <th>Members</th>
-  		  <th id="button-column">Actions</th>
-		</tr>
-          <% @groups.each do |g| %>
-        	<tr>
-              <td><%= link_to g.name, group_path(id: g.id) %> </td>
-              <% myRole = Membership.find_by(group_id: g.id, user_id: current_user.id).role %>
-              <td><%= myRole %> </td>
-              <td><%= User.find(g.owner_id).first_name_last_initial %> </td>
-              <% m = Membership.where(group_id: g.id) %>
-              <td><%= m.size %></td>
-              <td><% if myRole == "owner" %>
-                <button class="editButton" ><%= link_to "Manage", edit_group_path(id: g.id) %></button>
+        <tr>
+          <th>Group Name</th>
+          <th>Role</th>
+          <th>Owner</th>
+          <th>Members</th>
+          <th id="button-column">Actions</th>
+        </tr>
+        <% @groups.each do |g| %>
+          <tr>
+            <td><%= link_to g.name, group_path(id: g.id) %> </td>
+            <% myRole = Membership.find_by(group_id: g.id, user_id: current_user.id).role %>
+            <td><%= myRole %> </td>
+            <td><%= User.find(g.owner_id).first_name_last_initial %> </td>
+            <% m = Membership.where(group_id: g.id) %>
+            <td><%= m.size %></td>
+            <td>
+              <% if myRole == "owner" %>
+                <%= link_to edit_group_path(id: g.id) , :class => 'btn btn-default btn-sm' do %>
+                  <i class="glyphicon glyphicon-pencil" title="Edit"></i> Manage
+                <% end %>
               <%end%>
-				</td>
-            </tr>
-          <% end %>
-
-        </table>
-      </div>
+            </td>
+          </tr>
+        <% end %>
+      </table>
     </div>
+  </div>
+  <div class="panel-footer doc-set-footer">
+    <% if can? :create, Group %>
+      <%= link_to group_path('new'), class: 'btn btn-primary create-new-button' do %>
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create New Group
+      <% end %>
+    <% end %>
   </div>
 </div>
 <!--/.panel-->

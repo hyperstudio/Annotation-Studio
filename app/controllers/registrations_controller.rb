@@ -34,11 +34,12 @@ class RegistrationsController < Devise::RegistrationsController
 	protected
 
 	def update_resource(resource, params)
-		if params['password']
+		puts(params)
+		if !params['password'].blank?
 			resource.update_with_password(params)
 		else
+			params.delete("current_password")
 			resource.update_without_password(params)
 		end
-		resource.update_without_password(params)
 	end
 end

@@ -1,56 +1,61 @@
 <%= content_for :page_title, "Editing: #{@user.fullname}" %>
 <%= content_for :body_id, 'registrations' %>
 <%= content_for :body_class, 'edit' %>
-
-
 <div class="panel panel-default">
-    <div class="panel-heading">
-        <span class="panel-title">My Profile</span>
-    </div><!-- / .panel-heading -->
-    <div class="user-form">
-      <div class="panel-body child">
-          <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :role => "form", class: "confirm-changes"}) do |f| %>
-              <%= devise_error_messages! %>
-          <div class="form-group">
-          	<%= f.label :firstname, "First Name" %>
-          	<%= f.text_field :firstname, :value =>  resource.firstname, :class => "form-control" %>
-          </div>
-          <div class="form-group">
-          	<%= f.label :lastname, "Last Name" %>
-          	<%= f.text_field :lastname, :value =>  resource.lastname, :class => "form-control" %>
-          </div>
-           <div class="form-group">
+  <div class="panel-heading">
+    <span class="panel-title">My Profile</span>
+  </div>
+  <!-- / .panel-heading -->
+  <div class="user-form">
+    <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :role => "form", class: "confirm-changes"}) do |f| %>
+      <%= render partial: 'devise/shared/error_messages' %>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="panel-body child">
+            <div class="form-group">
+              <%= f.label :firstname, "First Name" %>
+              <%= f.text_field :firstname, :value =>  resource.firstname, :class => "form-control" %>
+            </div>
+            <div class="form-group">
+              <%= f.label :lastname, "Last Name" %>
+              <%= f.text_field :lastname, :value =>  resource.lastname, :class => "form-control" %>
+            </div>
+            <div class="form-group">
               <%= f.label :affiliation, "Affiliation" %>
               <%= f.text_field :affiliation, :value =>  resource.affiliation, :class => "form-control" %>
-          </div>
-      </div><!--/panel-body -->
-      <div class="panel-body child">
-          <div class="form-group">
+            </div>
+            <div class="form-group">
               <%= f.label :email, "Email" %>
               <%= f.text_field :email, :value =>  resource.email, :class => "form-control" %>
+            </div>
           </div>
-          <div class="form-group">
-             <%= f.label :password, "New Password" %>
-             <%= f.password_field :password,  :class => "form-control" %>
-         </div>
-           <div class="form-group">
-             <%= f.label :password_confirmation, "Confirm New Password" %>
-             <%= f.password_field :password_confirmation,  :class => "form-control" %>
-         </div>
-         </div><!--/panel-body -->
-       </div><!--/user-form -->
-
-       <div class="panel-body">
-              <!--div class="left" style="width: 45%">
-                   <div class="form-group">
-                      <%= f.label :current_password, "Current Password" %>
-                   <p class="help-block"> Only required if you are changing your password. </p>
-                      <%= f.password_field :current_password,  :class => "form-control" %>
-                  </div>
-              </div-->
-
-            <%= f.submit "Update", :class => "btn btn-default btn-default-primary btn-primary" %>
-            <%= link_to "Cancel", :back, :class => "btn btn-danger" %>
-        <% end %>
+          <!--/panel-body -->
         </div>
-</div><!--/panel -->
+        <div class="col-md-6">
+          <div class="panel-body child">
+            <div class="form-group">
+              <%= f.label :password, "New Password" %>
+              <%= f.password_field :password, autocomplete: "off",  :class => "form-control" %>
+            </div>
+            <div class="form-group">
+              <%= f.label :password_confirmation, "Confirm New Password" %>
+              <%= f.password_field :password_confirmation, autocomplete: "off",  :class => "form-control" %>
+            </div>
+            <div class="form-group">
+              <%= f.label :current_password, "Current Password" %>
+              <p class="help-block"> Only required if you are changing your password. </p>
+              <%= f.password_field :current_password, autocomplete: "off",  :class => "form-control" %>
+            </div>
+          </div>
+          <!--/panel-body -->
+        </div>
+      </div>
+      <div class="panel-footer">
+        <%= f.submit "Update", :class => "btn btn-default btn-default-primary btn-primary" %>
+        <%= link_to "Cancel", :back, :class => "btn btn-default" %>
+      </div>
+    <% end %>
+  </div>
+  <!--/user-form -->
+</div>
+<!--/panel -->

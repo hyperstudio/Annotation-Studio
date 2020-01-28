@@ -73,6 +73,7 @@ gem 'jquery-ui-rails'
 gem 'tinymce-rails'
 
 gem 'xmlrpc'
+gem "fog-xenserver", '0.3.0'
 gem "fog"
 gem "mini_magick"
 gem "carrierwave"

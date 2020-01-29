@@ -7,7 +7,6 @@ class AnnotationsController < ApplicationController
         loadOptions = {	
             :limit =>       1000,	
             :groups =>      current_user.groups.pluck(:name),	
-            :subgroups =>   current_user.rep_subgroup_list,	
             :host =>        request.host_with_port,	
             :user =>        current_user.email,	
             :context =>     'search'	

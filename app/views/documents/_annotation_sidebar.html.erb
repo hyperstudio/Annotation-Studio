@@ -20,7 +20,6 @@ var docGroups = [];
 // get intersection of document's groups and user's groups
 var groups = userGroups.filter(value => docGroups.includes(value));
 
-var subgroups = "<%= current_user.rep_subgroup_list %>".split(/, /);
 var annotatorOptions = {'readOnly': <%= @document.archived? %>};
 var filter_user = "<%= current_user.email %>";
 var token = '<%= session["jwt"] %>';
@@ -43,8 +42,7 @@ var plugin_options = function() {
       prefix: api_url,
       annotationData: {
         'uri': doc_uri,
-        "groups": groups,
-        "subgroups": subgroups
+        "groups": groups
       },
       // loadFromSearch: annotation_studio.loadOptions({ mode: default_state[0], limit: 100 })
 

@@ -61,7 +61,6 @@ function tagFilter(event) {
   var loadOptions = {
     'limit': 1000,
     "groups": "<%= current_user.rep_group_list %>".split(/, /),
-    "subgroups": "<%= current_user.rep_subgroup_list %>".split(/, /),
     'user': "<%= current_user.email %>",
     'mode': 'user',
     'context': 'document',

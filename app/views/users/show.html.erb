@@ -152,7 +152,6 @@
     var myLoadOptions = {
       'limit': 100,
       'groups': groups,
-      'subgroups': "<%= current_user.rep_subgroup_list %>".split(/, /),
       'host': location.host,
       'user': "<%= current_user.email %>",
       'mode': 'user',
@@ -161,7 +160,6 @@
     var classLoadOptions = {
       'limit': 100,
       'groups': groups, //"<%= current_user.rep_group_list %>".split(/, /),
-      'subgroups': "<%= current_user.rep_subgroup_list %>".split(/, /),
       'host': location.host,
       'user': "<%= current_user.email %>",
       'mode': 'class',

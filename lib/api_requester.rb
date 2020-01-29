@@ -163,7 +163,7 @@ end
 
 class CsvGenerator
     @@fields = ['id', 'user', 'username', 'text', 'uri', 'quote',
-                'tags', 'ranges', 'subgroups', 'groups', 'updated', 'created']
+                'tags', 'ranges', 'groups', 'updated', 'created']
 
     def self.to_csv(data)
         csv_string = CSV.generate do |csv|

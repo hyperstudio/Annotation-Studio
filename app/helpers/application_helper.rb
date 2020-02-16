@@ -110,4 +110,52 @@ module ApplicationHelper
     re =/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/
     url =~ re ? true : false 
   end
+
+  # convert tags into groups
+  def tagsToGroups
+    tags = Tag.where('name != ?','public').order('id ASC')
+    # loop through all tags
+    tags.each do |t|
+      # find first instance of tag where taggable type is user in taggings table
+      ownerTagging = Tagging.where({tag_id: t.id, taggable_type:'User'}).order('created_at ASC').first
+      if !ownerTagging.nil?
+        # get remaining members' taggings
+        membersTaggings = Tagging.where({tag_id: t.id, taggable_type:'User'})
+        # find tagged docs' taggings
+        docsTaggings = Tagging.where({tag_id: t.id, taggable_type:'Document'})
+        # find owner user
+        owner = User.find(ownerTagging.taggable_id)
+
+        # create new group w/ owner, add user to group, and save
+        group = Group.new({name: t.name, owner_id: owner.id}) 
+        group.users << owner
+        if group.save
+          # Update owner's membership role to owner
+          Membership.find_by(group_id: group.id, user_id: owner.id).update_attribute("role", "owner")
+          membersTaggings.each do |memberTagging|
+            # find other member
+            member = User.find(memberTagging.taggable_id)
+            if !group.users.include? member
+              # create membership
+              group.users << member
+              group.save
+            end
+          end #membersTaggings.each
+          docsTaggings.each do |docTagging|
+            # find actual tagged doc
+            doc = Document.find(docTagging.taggable_id)
+            if !doc.groups.include? group
+              # create DocumentsGroup
+              doc.groups << group
+              doc.save
+            end
+          end #docsTaggings.each
+        else
+          flash[:alert] = "Error in creating group."
+        end #if group.save
+      else
+        flash[:alert] = "Error: no user tagged with group id = " + t.id.to_s + " and name = " + t.name
+      end #if ownerTagging.nil?
+    end #tags.each
+  end #tagsToGroups
 end

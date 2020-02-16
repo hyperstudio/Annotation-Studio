@@ -43,12 +43,9 @@ var query = [];
 	for (i =0; i < query.length; i++){
 		var searchLoadOptions = {
 	    'limit': 100,
-	    'groups': "<%= current_user.rep_group_list %>".split(/, /),
-	    'subgroups': "<%= current_user.rep_subgroup_list %>".split(/, /),
 	    'host': location.host,
 	    'user': query[i],
 	    'mode': 'userSearch',
-	    //local API: 'mode': 'userSearch'
 	    'context': 'dashboard',
 	  };
 
@@ -61,7 +58,6 @@ var query = [];
 	var searchLoadOptions = {
 	    'limit': 100,
 	    'groups': query,
-	    'subgroups': "<%= current_user.rep_subgroup_list %>".split(/, /),
 	    'host': location.host,
 	    'user': "<%= current_user.email%>",
 	    'mode': 'class',

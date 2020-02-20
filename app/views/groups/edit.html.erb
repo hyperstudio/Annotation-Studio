@@ -86,8 +86,8 @@
             </span>
           </div>
         <% end %> <!-- form_for -->
-        </div>
-        <div class="col-md-3">
+      </div>
+      <div class="col-md-3">
         <% if ENV["GLOBAL_IDEA_SPACE"] == "true"  && is_owner(params[:id]) %>
           <%= form_tag :controller=>'groups', :action => 'toggleIS' do %>
             <%= label_tag :toggleIS, 'Idea Space: ' + @ISstatus %>
@@ -97,10 +97,9 @@
             <%= submit_tag @IStoggle, :class=>'btn btn-default' %>
           <% end %>
         <% end %>
-        </div>
       </div>
-      <!-- forms -->
     </div>
+    <!-- forms -->
   </div>
   <div class="panel panel-default">
     <div class="panel-heading">

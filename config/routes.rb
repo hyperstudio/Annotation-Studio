@@ -41,9 +41,8 @@ AnnotationStudio::Application.routes.draw do
     resources :groups
 
     #should they be post instead? 
-    get 'promote', to: 'groups#promote'
     get 'remove_member', to: 'groups#remove_member'
-    get 'demote', to: 'groups#demote'
+    post 'update_member_role', to: 'groups#update_member_role'
 
     resources :invites
 

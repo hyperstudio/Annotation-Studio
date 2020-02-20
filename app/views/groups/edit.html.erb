@@ -19,27 +19,36 @@
             <th> Role </th>
             <% if is_owner(params[:id]) %>
               <th> Actions </th>
-            <% end %>
+            <% end #if.is_owner %>
           </tr>
           <% if !@memberships.empty? %>
             <% @memberships.each do |m| %>
               <tr>
                 <% @user = User.find(m.user_id) %>
                 <td> <!-- doesn't error check for missing last name -->
-                  <%= @user.fullname %></td>
-                <td> <%= m.role %> </td>
+                  <%= @user.fullname %>
+                </td>
+                <td>
+                  <% case m.role %>
+                  <% when 'owner' %>
+                    <span class="label label-info"><%= m.role %> </span>
+                  <% when 'member' %>
+                    <%= form_tag :controller=>'groups', :action => 'update_member_role', :method => :post, :m_id=>m.id,:username => @user.fullname do %>
+                      <%= select_tag :role, options_for_select([ "member", "manager" ], "member"), {onchange: "this.form.submit();"} %>
+                      <%= hidden_field_tag :group_id, params[:id] %>
+                    <% end %>
+                  <% when 'manager' %>
+                    <%= form_tag :controller=>'groups', :action => 'update_member_role', :method => :post, :m_id=>m.id,:username => @user.fullname do %>
+                      <%= select_tag :role, options_for_select([ "member", "manager" ], "manager"), {onchange: "this.form.submit();"} %>
+                      <%= hidden_field_tag :group_id, params[:id] %>
+                    <% end %>
+                  <% else %>
+                    <span class="label label-default"><%= m.role %> </span>
+                  <% end %>
+
+                </td>
                 <% if is_owner(params[:id]) %>
                   <td>
-                    <% if m.role == "member" %>
-                      <%= link_to promote_path(:m_id => m.id), :class => 'btn btn-primary btn-sm' do %>
-                        <i class="glyphicon glyphicon-arrow-up" title="Promote"></i> Promote to Manager
-                      <% end %>
-                    <% end%>
-                    <% if m.role == "manager" %>
-                      <%= link_to demote_path(:m_id => m.id), :class => 'btn btn-warning btn-sm' do %>
-                        <i class="glyphicon glyphicon-arrow-down" title="Demote"></i> Demote to Member
-                      <% end %>
-                    <% end %>
                     <% unless m.role == "owner" %>
                       <%= link_to remove_member_path({:m_id => m.id, :username => @user.fullname}), {:class => 'btn btn-danger btn-sm', data: {confirm: "Are you sure you want to remove this member?", toggle: 'tooltip', placement: 'top', original_title: 'Remove'}} do %>
                         <i class="glyphicon glyphicon-remove" title="Remove"></i> Remove
@@ -52,13 +61,14 @@
           <% end %> <!-- end if -->
         </table>
       </div>
-      <div class="col-md-3">
+      <% optionsCol = is_owner(params[:id]) ? "3" : "6" %>
+      <div class="col-md-<%= optionsCol %>">
         <% @i = Invite.find_by(group_id: params[:id]) %>
         <% if @i && (@i.expiration_date.nil? || @i.expiration_date > Time.now) %>
-          <%= label_tag 'Invite Link' %>
-          <p>Send this link to registered or new users</p>
+          <h5><%= label_tag 'Invite Link' %></h5>
+          <p>Send this link to registered or new users.</p>
           <div class="input-group">
-            <%= text_field_tag "Generate Invite Link:", request.base_url + dashboard_path(:invite_token => @i.token).to_s, {:size =>40, :class => 'form-control'} %>
+            <%= text_field_tag "Generate Invite Link:", request.base_url + dashboard_path(:invite_token => @i.token).to_s, {:size =>40, :class => 'form-control', :id=>"invite-link"} %>
             <span class="input-group-btn">
               <%= button_tag 'Copy', {:class=>'btn btn-default',:id=> 'copy-button'} %>
             </span>
@@ -69,15 +79,15 @@
           <% end %>
           <%= form_for Invite.new , :url => invites_path do |f| %>
             <%= f.hidden_field :group_id, :value => params[:id] %>
-            <%= f.label 'Invite Link' %>
-            <p>Send this link to registered or new users.</p>
+            <h5><%= f.label 'Invite Link' %></h5>
+            <p>Generate an invite link to send to registered or new users.</p>
             <div class="input-group">
               <%= f.submit 'Generate',:class=>'btn btn-default' %>
             </div>
           <% end #form_for %>
         <% end #if @i %>
-        <strong>Add registered user</strong>
-        <p>If a user is already registered, automatically add them to a group by entering their email here.</p>
+        <h5><%= label_tag 'Add registered user' %></h5>
+        <p>Automatically add a registered user to this group by entering their email here.</p>
         <%= form_for @group do |f| %>
           <div class="input-group">
             <%= email_field_tag :email, params['search'], :placeholder=> 'User\'s email', :class=>"form-control" %>
@@ -90,11 +100,18 @@
       <div class="col-md-3">
         <% if ENV["GLOBAL_IDEA_SPACE"] == "true"  && is_owner(params[:id]) %>
           <%= form_tag :controller=>'groups', :action => 'toggleIS' do %>
-            <%= label_tag :toggleIS, 'Idea Space: ' + @ISstatus %>
-            <p>Enable or disable Idea Space for your groups.</p>
+            <h5><%= label_tag :toggleIS, 'Idea Space: ' + @ISstatus %></h5>
+            <p>Enable or disable Idea Space for this group.</p>
             <%= hidden_field_tag :ideaSpace, 'change' %>
             <%= hidden_field_tag :group_id, params[:id] %>
             <%= submit_tag @IStoggle, :class=>'btn btn-default' %>
+          <% end %>
+        <% end %>
+        <% if is_owner(params[:id]) %>
+          <h5><%= label_tag 'Delete Group' %></h5>
+          <p>Delete this group permanently. This action cannot be undone.</p>
+          <%= link_to group_path(@group), data: {:confirm => "Are you sure?"}, :method => :delete, :class=>'btn btn-danger' do %>
+            <i class="glyphicon glyphicon-trash" title="Delete"></i> Delete Group
           <% end %>
         <% end %>
       </div>
@@ -116,7 +133,7 @@
     //source: https://stackoverflow.com/questions/400212/how-do-i-copy-to-the-clipboard-in-javascript
     var copyButton = document.getElementById('copy-button');
     copyButton.addEventListener('click', function (event) {
-      var copyLink = document.querySelector('.copy-link');
+      var copyLink = document.querySelector('#invite-link');
       copyLink.focus();
       copyLink.select();
       try {
@@ -128,12 +145,14 @@
       }
     });
     
+    // Case-insensitive contains method, source: https://jsfiddle.net/bipen/dyfRa/
     $.extend($.expr[":"], {
     "containsIN": function(elem, i, match, array) {
     return (elem.textContent || elem.innerText || "").toLowerCase().indexOf((match[3] || "").toLowerCase()) >= 0;
     }
-    }); // Source:
+    }); 
     
+    // Jquery filter, source: https://stackoverflow.com/a/17075148/394067
     $("#first-name-search").keyup(function () {
     //split the current value of searchInput
     var data = this.value.split(" ");
@@ -143,10 +162,7 @@
       nameTable.show();
       return;
     }
-    //hide all the rows
     nameTable.hide();
-    
-    //Recusively filter the jquery object to get results.
     nameTable.filter(function (i, v) {
       var $t = $(this);
       for (var d = 0; d < data.length; ++d) {
@@ -156,13 +172,19 @@
       }
       return true;
     })
-      //show the rows that match.
       .show();
     }).focus(function () {
       this.value = "";
       $(this).unbind('focus');
-    }); // Source: https://stackoverflow.com/a/17075148/394067
+    }); 
+    
+    // Copying and tooltip
+    document.getElementById("invite-link").onclick = function() {
+      this.select();
+      document.execCommand('copy');
+    }
+    $('#invite-link').tooltip({'trigger':'focus', 'title': 'Link copied!' });
   </script>
 <% else %>
-  You do not have permission to view this page
+  <% bad_permissions %>
 <% end %>

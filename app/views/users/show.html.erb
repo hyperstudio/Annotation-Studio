@@ -29,7 +29,7 @@
                     <%= document.created_at.strftime("%m/%d/%Y") %></span>
                 </li>
               <% end %>
-              <li class="list-group-item"><strong><a href="/documents?docs=assigned">See more shared documents&hellip;</a></strong></li>
+              <li class="list-group-item"><strong><a href="/documents?docs=assigned">See all shared documents&hellip;</a></strong></li>
             <% else %>
               <li class="list-group-item">
                 No documents to view.
@@ -52,7 +52,7 @@
                   </li>
                 <% end %>
               <% end %>
-              <li class="list-group-item"><strong><a href="/documents?docs=created">See more of my documents&hellip;</a></strong></li>
+              <li class="list-group-item"><strong><a href="/documents?docs=created">See all of my documents&hellip;</a></strong></li>
             <% else %>
               <li class="list-group-item">
                 No documents to view.
@@ -80,10 +80,20 @@
               <% current_user.groups.each do |group| %>
                 <li class="list-group-item"><%= link_to group.name, group_path(id: group.id) %>
                   <span class="pull-right">
-                    <%= Membership.find_by(group_id: group.id, user_id: current_user.id).role %></span>
+                    <% myRole = Membership.find_by(group_id: group.id, user_id: current_user.id).role %>
+                    <% case myRole %>
+                    <% when 'owner' %>
+                      <% labelcolor = 'label-info' %>
+                    <% when 'manager' %>
+                      <% labelcolor = 'label-warning' %>
+                    <% else %>
+                      <% labelcolor = 'label-default' %>
+                    <% end %>
+                    <span class="label <%= labelcolor %>"><%= myRole %> </span>
+                  </span>
                 </li>
               <% end %>
-               <li class="list-group-item"><strong><a href="/groups">See more groups&hellip;</a></strong></li>
+               <li class="list-group-item"><strong><a href="/groups">See all groups&hellip;</a></strong></li>
             <% else %>
               <li class="list-group-item">
                 You are not a member or owner of any groups.

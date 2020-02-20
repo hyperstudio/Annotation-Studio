@@ -22,12 +22,22 @@
           <tr>
             <td><%= link_to g.name, group_path(id: g.id) %> </td>
             <% myRole = Membership.find_by(group_id: g.id, user_id: current_user.id).role %>
-            <td><%= myRole %> </td>
+            <td>
+              <% case myRole %>
+              <% when 'owner' %>
+                <% labelcolor = 'label-info' %>
+              <% when 'manager' %>
+                <% labelcolor = 'label-warning' %>
+              <% else %>
+                <% labelcolor = 'label-default' %>
+              <% end %>
+            <span class="label <%= labelcolor %>"><%= myRole %> </span>
+            </td>
             <td><%= User.find(g.owner_id).first_name_last_initial %> </td>
             <% m = Membership.where(group_id: g.id) %>
             <td><%= m.size %></td>
             <td>
-              <% if myRole == "owner" %>
+              <% if myRole == "owner" or myRole == "manager" %>
                 <%= link_to edit_group_path(id: g.id) , :class => 'btn btn-default btn-sm' do %>
                   <i class="glyphicon glyphicon-pencil" title="Edit"></i> Manage
                 <% end %>

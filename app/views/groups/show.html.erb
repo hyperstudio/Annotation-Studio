@@ -20,7 +20,17 @@
               <tr>
                 <% @user = m.user %>
                 <td> <%= @user.firstname + " " + @user.lastname %></td>
-                <td> <%= m.role %> </td>
+                <td>
+                  <% case m.role %>
+                  <% when 'owner' %>
+                    <% labelcolor = 'label-info' %>
+                  <% when 'manager' %>
+                    <% labelcolor = 'label-warning' %>
+                  <% else %>
+                    <% labelcolor = 'label-default' %>
+                  <% end %>
+                  <span class="label <%= labelcolor %>"><%= m.role %> </span>
+                </td>
               </tr>
             <% end #.each %>
           <% end #if%>

@@ -36,7 +36,7 @@ class GroupsController < ApplicationController
       #set role to owner
       Membership.find_by(group_id: @group.id, user_id: current_user.id).update_attribute("role", "owner")
 
-      flash[:alert] = "New Group Created!"
+      flash[:success] = "New Group Created!"
       redirect_to edit_group_path(id: @group.id)
     else
       flash[:alert] = "Error in creating group."
@@ -66,13 +66,24 @@ class GroupsController < ApplicationController
     user = User.find_by(email: new_email)
     if user && (!user.groups.include? @group)
       @group.users << user
-      flash[:alert] = user.fullname + " added."
+      flash[:success] = user.fullname + " added."
       # InviteMailer.notify_existing_user(user, @group).deliver_now
     else
       flash[:alert] = "User not found or already in group."
     end
 
     redirect_to request.referrer
+  end
+
+  def destroy
+    @group_id = params["id"]
+    @group = Group.find(@group_id)
+    if @group.destroy
+      flash[:success] = "Group " + @group.name.to_s + " was deleted."
+    else
+      flash[:alert] = "Error deleting group " + @group.name.to_s + "."
+    end
+    redirect_to groups_path
   end
 
   #post
@@ -98,20 +109,15 @@ class GroupsController < ApplicationController
   #     redirect_to request.referrer
   # end
 
-  def promote #make member a group manager/editor
+  def update_member_role
     @membership = Membership.find(params[:m_id])
-    @membership.update_attribute("role", "manager")
-    flash[:alert] = "New Manager Added"
+    if @membership.update_attribute("role", params[:role])
+      flash[:success] = "Changed  " + params[:username] + "'s role to " + params[:role]
+    else
+      flash[:alert] = "Error changing " + params[:username] + "'s role to " + params[:role]
+    end
 
-    redirect_to request.referrer
-  end
-
-  def demote #make group manager a member
-    @membership = Membership.find(params[:m_id])
-    @membership.update_attribute("role", "member")
-    flash[:alert] = "Manager Demoted to Member"
-
-    redirect_to request.referrer
+    redirect_to edit_group_path(id: params[:group_id])
   end
 
   def leave
@@ -121,7 +127,7 @@ class GroupsController < ApplicationController
 
     if @membership
       @membership.destroy
-      flash[:alert] = "Left " + Group.find(@gid).name.to_s
+      flash[:success] = "Left " + Group.find(@gid).name.to_s
     else
       flash[:alert] = "Error leaving group"
     end
@@ -136,7 +142,7 @@ class GroupsController < ApplicationController
     @membership = Membership.find(params[:m_id])
     if @membership
       @membership.destroy
-      flash[:alert] = "Removed " + params[:username]
+      flash[:success] = "Removed " + params[:username]
     else
       flash[:alert] = "Error removing member"
     end
@@ -148,10 +154,21 @@ class GroupsController < ApplicationController
     thisGroup = Group.find(params[:group_id])
     if params[:ideaSpace] == "change"
       current = thisGroup.ideaSpaceOn
-      thisGroup.update_attribute("ideaSpaceOn", !current) #toggle between true and false
+      state = !current ? "on" : "off"
+      if thisGroup.update_attribute("ideaSpaceOn", !current) #toggle between true and false
+        flash[:success] = "Turned Idea Space " + state
+      else
+        flash[:alert] = "Error turning Idea Space " + state
+      end
       redirect_to edit_group_path(id: params[:group_id])
     end
   end
+
+  def bad_permissions
+    flash[:alert] = "You do not have permission to manage " + @group.name.to_s + "."
+    redirect_to groups_path
+  end
+  helper_method :bad_permissions
 
   private
 

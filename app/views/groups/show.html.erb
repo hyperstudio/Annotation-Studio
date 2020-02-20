@@ -27,12 +27,6 @@
         </table>
       </div>
       <div class="col-md-3">
-        <% if ENV["GLOBAL_IDEA_SPACE"] == "true" %>
-          <% if @group.ideaSpaceOn %>
-            <button class="btn btn-primary"><a href="http://annotation-studio-idea-space.herokuapp.com/" id='is-link' target="_blank"> Access Idea Space </a>
-            </button>
-          <% end %>
-        <% end %>
         <% if is_owner(params[:id]) %>
           <%= link_to edit_group_path(id: @group.id) , :class => 'btn btn-primary' do %>
             <i class="glyphicon glyphicon-pencil" title="Edit"></i> Manage

@@ -52,45 +52,52 @@
           <% end %> <!-- end if -->
         </table>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-3">
         <% @i = Invite.find_by(group_id: params[:id]) %>
         <% if @i && (@i.expiration_date.nil? || @i.expiration_date > Time.now) %>
-          <%= label_tag 'Generate Invite Link' %>
+          <%= label_tag 'Invite Link' %>
           <p>Send this link to registered or new users</p>
-          <%= text_field_tag "Generate Invite Link:", request.base_url + dashboard_path(:invite_token => @i.token).to_s, {:size =>40, :class => 'copy-link'} %>
-          <%= button_tag 'Copy', {:class=>'btn btn-default',:id=> 'copy-button'}%>
+          <div class="input-group">
+            <%= text_field_tag "Generate Invite Link:", request.base_url + dashboard_path(:invite_token => @i.token).to_s, {:size =>40, :class => 'form-control'} %>
+            <span class="input-group-btn">
+              <%= button_tag 'Copy', {:class=>'btn btn-default',:id=> 'copy-button'} %>
+            </span>
+          </div>
         <% else %>
           <% if @i %>
             <% @i.destroy %>
           <% end %>
           <%= form_for Invite.new , :url => invites_path do |f| %>
             <%= f.hidden_field :group_id, :value => params[:id] %>
-            <%= f.label 'Generate Invite Link' %>
+            <%= f.label 'Invite Link' %>
             <p>Send this link to registered or new users.</p>
-            <%= f.submit 'Generate' %>
+            <div class="input-group">
+              <%= f.submit 'Generate',:class=>'btn btn-default' %>
+            </div>
           <% end #form_for %>
         <% end #if @i %>
-        <br>
-        <br>
-        <strong>Add Registered Users</strong>
-        <p>If a user is already registered, you can automatically add them to a group.</p>
+        <strong>Add registered user</strong>
+        <p>If a user is already registered, automatically add them to a group by entering their email here.</p>
         <%= form_for @group do |f| %>
-          <%= email_field_tag :email, params['search'], :placeholder=> 'Input Email'  %>
-          <%= f.submit :Add,:class=>'btn btn-default' %>
+          <div class="input-group">
+            <%= email_field_tag :email, params['search'], :placeholder=> 'User\'s email', :class=>"form-control" %>
+            <span class="input-group-btn">
+              <%= f.submit :Add,:class=>'btn btn-default' %>
+            </span>
+          </div>
         <% end %> <!-- form_for -->
-        <br>
-        <br>
-        <% if ENV["GLOBAL_IDEA_SPACE"] == "true" %>
-          <% if is_owner(params[:id]) %>
-            <%= form_tag :controller=>'groups', :action => 'toggleIS' do %>
-              <%= label_tag :toggleIS, 'Idea Space: ' + @ISstatus %>
-              <p>Enable or disable Idea Space for your groups.</p>
-              <%= hidden_field_tag :ideaSpace, 'change' %>
-              <%= hidden_field_tag :group_id, params[:id] %>
-              <%= submit_tag @IStoggle %>
-            <% end %>
+        </div>
+        <div class="col-md-3">
+        <% if ENV["GLOBAL_IDEA_SPACE"] == "true"  && is_owner(params[:id]) %>
+          <%= form_tag :controller=>'groups', :action => 'toggleIS' do %>
+            <%= label_tag :toggleIS, 'Idea Space: ' + @ISstatus %>
+            <p>Enable or disable Idea Space for your groups.</p>
+            <%= hidden_field_tag :ideaSpace, 'change' %>
+            <%= hidden_field_tag :group_id, params[:id] %>
+            <%= submit_tag @IStoggle, :class=>'btn btn-default' %>
           <% end %>
         <% end %>
+        </div>
       </div>
       <!-- forms -->
     </div>
@@ -99,13 +106,12 @@
     <div class="panel-heading">
       <span class="panel-title">Group role permissions explained</span>
     </div>
-      <ul class="list-group">
-        <li class="list-group-item"><b>Members</b>: Group members can see documents and annotations shared with the group, and can annotate those documents. They can also see who else is in the group.</li>
-        <li class="list-group-item"><b>Managers</b>: Group managers are group members who can also invite users to the group.</li>
-        <li class="list-group-item"><b>Owners</b>: Group owners are group managers who can also promote/demote managers, remove users from the group, and delete the group.</li>
-      </ul>
+    <ul class="list-group">
+      <li class="list-group-item"><b>Members</b>: Group members can see documents and annotations shared with the group, and can annotate those documents. They can also see who else is in the group.</li>
+      <li class="list-group-item"><b>Managers</b>: Group managers are group members who can also invite users to the group.</li>
+      <li class="list-group-item"><b>Owners</b>: Group owners are group managers who can also promote/demote managers, remove users from the group, and delete the group.</li>
+    </ul>
   </div>
-
   <script type="text/javascript">
     //for invite link copy to clipboard
     //source: https://stackoverflow.com/questions/400212/how-do-i-copy-to-the-clipboard-in-javascript
@@ -133,7 +139,7 @@
     //split the current value of searchInput
     var data = this.value.split(" ");
     //create a jquery object of the rows
-    var nameTable = $("#names-table").find("tr");
+    var nameTable = $("#names-table").find("tr:not(:first)");
     if (this.value == "") {
       nameTable.show();
       return;

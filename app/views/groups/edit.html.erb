@@ -1,227 +1,163 @@
-<% unless is_member(params[:id])%>
-<h4Bold> Manage Group: <%= @group.name %> </h4Bold><br><br>
-<div id= "left"> 
-    
-
-
-        
-
-
-
-        <div id="searchBar">
-            <a id="icon" onclick="demoVisibility(); this.style.display='none';"><i class="glyphicon glyphicon-search"></i></a>
-           <div id="searchh" style="visibility: hidden; margin-top: 0px;">
-        <%= form_tag({:controller=>'groups', :action => 'edit'}, {:method => 'get'}) do %>
-             <%= text_field_tag :search, params['search'], :placeholder=> 'Input First Name', :style => 'width:52%; margin-right:5px;'  %>
-            <%= submit_tag "Search", class: "submitButton" %>
-        <% end %>
+<%= content_for :page_title, "Manage Group: #{@group.name}" %>
+<%= content_for :body_id, 'groups' %>
+<%= content_for :body_class, 'edit' %>
+<%= stylesheet_link_tag "groups" %>
+<% if is_owner(params[:id]) or is_manager(params[:id]) %>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <span class="panel-title"> <%= @group.name %> </span>
+    </div>
+    <!-- / .panel-heading -->
+    <div class="panel-body">
+      <div class="col-md-6">
+        <div class="form-group">
+          <input id="first-name-search" placeholder="Search for a member by name" class="form-control" type="text">
         </div>
-
-
-     
-        <%= link_to "All Members", :controller => 'groups', :action => 'edit'%>
-<br>
-</div>
-
-
-
-    
-<table class="member-table">
-    <tr class="member-table-row">
-        <th> Name </th>
-        <th> Role </th>
-        <% if is_owner(params[:id]) %>
-            <th> Actions </th>
-        <% end %>
-    </tr>
-<% if !@memberships.empty? %>
-    <% @memberships.each do |m| %>
-            <tr class="member-table-row"> 
+        <table id="names-table" class="table table-striped table-bordered">
+          <tr>
+            <th> Name </th>
+            <th> Role </th>
+            <% if is_owner(params[:id]) %>
+              <th> Actions </th>
+            <% end %>
+          </tr>
+          <% if !@memberships.empty? %>
+            <% @memberships.each do |m| %>
+              <tr>
                 <% @user = User.find(m.user_id) %>
                 <td> <!-- doesn't error check for missing last name -->
-                    <%= @user.fullname %></td>
-                <td> <%= m.role %> </td> 
+                  <%= @user.fullname %></td>
+                <td> <%= m.role %> </td>
                 <% if is_owner(params[:id]) %>
-                    <td> 
-                        <% unless m.role == "owner" %>
-                            <span class="manageAction"> <%= link_to "Remove from Group", {:controller=> "groups", :action =>"remove_member", :m_id => m.id, :username => @user.fullname}, {data: {confirm: "Are you sure you want to remove this member?", toggle: 'tooltip', placement: 'top', original_title: 'Remove'}} %></span>
-                        <% end %>
-                        <% if m.role == "member" %>
-                            <span class= "manageAction"> 
-                                <%= link_to "Make Manager", :controller => "groups", :action => "promote", 
-                                :m_id => m.id %> 
-                            </span>
-                        <% end%>
-                        <% if m.role == "manager" %>
-                            <span class= "action demote"> <%= link_to "Demote to Member", :controller => "groups", 
-                            :action => "demote", :m_id => m.id %>  </span>
-                        <% end %>
-                            
-                    </td>
+                  <td>
+                    <% if m.role == "member" %>
+                      <%= link_to promote_path(:m_id => m.id), :class => 'btn btn-primary btn-sm' do %>
+                        <i class="glyphicon glyphicon-arrow-up" title="Promote"></i> Promote to Manager
+                      <% end %>
+                    <% end%>
+                    <% if m.role == "manager" %>
+                      <%= link_to demote_path(:m_id => m.id), :class => 'btn btn-warning btn-sm' do %>
+                        <i class="glyphicon glyphicon-arrow-down" title="Demote"></i> Demote to Member
+                      <% end %>
+                    <% end %>
+                    <% unless m.role == "owner" %>
+                      <%= link_to remove_member_path({:m_id => m.id, :username => @user.fullname}), {:class => 'btn btn-danger btn-sm', data: {confirm: "Are you sure you want to remove this member?", toggle: 'tooltip', placement: 'top', original_title: 'Remove'}} do %>
+                        <i class="glyphicon glyphicon-remove" title="Remove"></i> Remove
+                      <% end %>
+                    <% end %>
+                  </td>
                 <% end %> <!-- end if -->
-            </tr>
-    <% end %> <!-- end loop -->
-<% end %> <!-- end if -->
-    
-</table>
-</div> <!-- left -->
-<div id="right">
-<br><br>
-
-
-        <div class="forms">
-
-            <% @i = Invite.find_by(group_id: params[:id]) %>
-
-    <% if @i && (@i.expiration_date.nil? || @i.expiration_date > Time.now) %>
-
-        <%= label_tag 'Generate Invite Link' %>
-        <p class="greyText">Send this link to registered or new users</p>
-        <%= text_field_tag "Generate Invite Link:", request.base_url + dashboard_path(:invite_token => @i.token).to_s, {:size =>40, :class => 'copy-link'} %>
-        <%= button_tag 'Copy', {:class =>'manageAction', :id=> 'copy-button'}%>
-
-    <% else %>
-
-        <% if @i && @i.expiration_date <= Time.now %>
+              </tr>
+            <% end %> <!-- end loop -->
+          <% end %> <!-- end if -->
+        </table>
+      </div>
+      <div class="col-md-6">
+        <% @i = Invite.find_by(group_id: params[:id]) %>
+        <% if @i && (@i.expiration_date.nil? || @i.expiration_date > Time.now) %>
+          <%= label_tag 'Generate Invite Link' %>
+          <p>Send this link to registered or new users</p>
+          <%= text_field_tag "Generate Invite Link:", request.base_url + dashboard_path(:invite_token => @i.token).to_s, {:size =>40, :class => 'copy-link'} %>
+          <%= button_tag 'Copy', {:class=>'btn btn-default',:id=> 'copy-button'}%>
+        <% else %>
+          <% if @i %>
             <% @i.destroy %>
-        <% end %>
-
-        <%= form_for Invite.new , :url => invites_path do |f| %>
+          <% end %>
+          <%= form_for Invite.new , :url => invites_path do |f| %>
             <%= f.hidden_field :group_id, :value => params[:id] %>
-        <%= f.label 'Generate Invite Link' %>    
-        <p class="greyText">Send this link to registered or new users.</p>
-        <%= f.submit 'Generate', class: "manageAction"%>
-        <% end #form_for %>
-    <% end #if @i %>
-
-
-    <br><br>
-            <strong>Add Registered Users</strong>
-            <p class="greyText">Group members can annotate documents and see annotations shared with the group.</p>
-            <%= form_for @group do |f| %>
-            <%= email_field_tag :email, params['search'], :placeholder=> 'Input Email'  %>
-                
-            <%= f.submit "Add", class: "manageAction"%>
-            <% end %> <!-- form_for -->
+            <%= f.label 'Generate Invite Link' %>
+            <p>Send this link to registered or new users.</p>
+            <%= f.submit 'Generate' %>
+          <% end #form_for %>
+        <% end #if @i %>
         <br>
         <br>
-    
-
-    <% if ENV["GLOBAL_IDEA_SPACE"] == "true" %>
-        <% if is_owner(params[:id]) %>
+        <strong>Add Registered Users</strong>
+        <p>If a user is already registered, you can automatically add them to a group.</p>
+        <%= form_for @group do |f| %>
+          <%= email_field_tag :email, params['search'], :placeholder=> 'Input Email'  %>
+          <%= f.submit :Add,:class=>'btn btn-default' %>
+        <% end %> <!-- form_for -->
+        <br>
+        <br>
+        <% if ENV["GLOBAL_IDEA_SPACE"] == "true" %>
+          <% if is_owner(params[:id]) %>
             <%= form_tag :controller=>'groups', :action => 'toggleIS' do %>
-                <%= label_tag :toggleIS, 'Idea Space: ' + @ISstatus %>
-                
-                <p class="greyText">Enable or disable Idea Space for your groups.</p>
-            
-                <%= hidden_field_tag :ideaSpace, 'change' %>
-                <%= hidden_field_tag :group_id, params[:id] %>
-                <%= submit_tag @IStoggle, class: "manageAction" %>
+              <%= label_tag :toggleIS, 'Idea Space: ' + @ISstatus %>
+              <p>Enable or disable Idea Space for your groups.</p>
+              <%= hidden_field_tag :ideaSpace, 'change' %>
+              <%= hidden_field_tag :group_id, params[:id] %>
+              <%= submit_tag @IStoggle %>
             <% end %>
-        <% end %> 
-    <% end %>
-    </div> <!-- forms -->
-    </div> <!-- right -->
-<script>
+          <% end %>
+        <% end %>
+      </div>
+      <!-- forms -->
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <span class="panel-title">Group role permissions explained</span>
+    </div>
+      <ul class="list-group">
+        <li class="list-group-item"><b>Members</b>: Group members can see documents and annotations shared with the group, and can annotate those documents. They can also see who else is in the group.</li>
+        <li class="list-group-item"><b>Managers</b>: Group managers are group members who can also invite users to the group.</li>
+        <li class="list-group-item"><b>Owners</b>: Group owners are group managers who can also promote/demote managers, remove users from the group, and delete the group.</li>
+      </ul>
+  </div>
+
+  <script type="text/javascript">
     //for invite link copy to clipboard
     //source: https://stackoverflow.com/questions/400212/how-do-i-copy-to-the-clipboard-in-javascript
     var copyButton = document.getElementById('copy-button');
-    copyButton.addEventListener('click', function(event){
-        var copyLink = document.querySelector('.copy-link');
-        copyLink.focus();
-        copyLink.select();
-        try{
-            var successful = document.execCommand('copy');
-            var msg = successful ? 'successful' : 'unsuccessful';
-            console.log(msg);
-        } catch (err){
-            console.log('unable to copy')
-        }
+    copyButton.addEventListener('click', function (event) {
+      var copyLink = document.querySelector('.copy-link');
+      copyLink.focus();
+      copyLink.select();
+      try {
+        var successful = document.execCommand('copy');
+        var msg = successful ? 'successful' : 'unsuccessful';
+        console.log(msg);
+      } catch (err) {
+        console.log('unable to copy')
+      }
     });
-
-function demoVisibility() {
-  document.getElementById("searchh").style.visibility = "visible";
-}
-
-</script>
-    <style>
-    .member-table {
-      border-collapse: collapse;
-      width: 200%;
-      
-      overflow-y:scroll;
-      display:block;
-    }
-    td, th {
-      border: 2px solid #eeeeee;
-      text-align: left;
-      padding-top:6px;
-      padding-bottom: 6px;
-      padding-left:15px;
-      padding-right: 40px;
-    }
-    /*.member-table-row:nth-child(even) {
-      background-color: #ced4de;
-    }*/
-    .member-table-row{
-        background-color: white;
-        padding:3px;
-    }
-    .action {
-        padding: 3px;
-        margin-left: 3px;
-    }
-    .copy-button{
-    background-color:#DDDEE7;
-    }
-    #wrapper{
-        margin: 0 auto;
-        position: relative;
-    }
-    #right{
-        float:right;
-        width: 35%;
-    }
-    .forms{
-        float:left;
-    }
-    #left{
-        width:65%;
-        float: left;
-    }
-    .submitButton{
-        background-color:#DDDEE7;
-        border:none;
-        border-radius: 3px;
-    }
-    .manageAction{
-        background-color: #DDDEE7;
-        margin-right: 10px;
-        padding-right: 7px;
-        padding-left: 7px;
-        padding-top:5px: 
-        padding-bottom:5px;
-        border-radius: 5px;
-        border:none;
-    }
-    .manageAction a{
-        color:black;
-    }
-    .manageAction a:hover{
-        text-decoration: none;
-    }
-
-    #searchBar{
- 
-    }
-
-    #icon .activate{
-        display:none;
-    }
-
-
     
-    </style>
+    $.extend($.expr[":"], {
+    "containsIN": function(elem, i, match, array) {
+    return (elem.textContent || elem.innerText || "").toLowerCase().indexOf((match[3] || "").toLowerCase()) >= 0;
+    }
+    }); // Source:
+    
+    $("#first-name-search").keyup(function () {
+    //split the current value of searchInput
+    var data = this.value.split(" ");
+    //create a jquery object of the rows
+    var nameTable = $("#names-table").find("tr");
+    if (this.value == "") {
+      nameTable.show();
+      return;
+    }
+    //hide all the rows
+    nameTable.hide();
+    
+    //Recusively filter the jquery object to get results.
+    nameTable.filter(function (i, v) {
+      var $t = $(this);
+      for (var d = 0; d < data.length; ++d) {
+        if (!$t.find("td:first-of-type").is(":containsIN('" + data[d] + "')") || $t.is("tr:first-of-type")) {
+          return false;
+        }
+      }
+      return true;
+    })
+      //show the rows that match.
+      .show();
+    }).focus(function () {
+      this.value = "";
+      $(this).unbind('focus');
+    }); // Source: https://stackoverflow.com/a/17075148/394067
+  </script>
 <% else %>
-You do not have permission to view this page
+  You do not have permission to view this page
 <% end %>

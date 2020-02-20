@@ -1,86 +1,51 @@
-<h4Bold> Group: <%= @group.name %></h4Bold>
-<br><br><br>
-
+<%= content_for :page_title, "Group: #{@group.name}" %>
+<%= content_for :body_id, 'groups' %>
+<%= content_for :body_class, 'show' %>
+<%= stylesheet_link_tag "groups" %>
 <% if in_group(params[:id])%>
-
-<% if ENV["GLOBAL_IDEA_SPACE"] == "true" %>
-	<% if @group.ideaSpaceOn %>
-		<button class="btn btn-primary"><a href="http://annotation-studio-idea-space.herokuapp.com/" id='is-link' target="_blank"> Access Idea Space </a>
-		</button>
-	<% end %>
-<% end %>
-
-<% unless is_member(params[:id]) %>
-<%= link_to "Manage Group", {:controller=> "groups", :action => "edit", :id => params[:id]}, {:class=> 'btn btn-primary'} %>
-<% end %>
-
-<% unless is_owner(params[:id]) %>
-   <%= link_to "Leave", {:controller=> "groups", :action =>"leave", :id => params[:id]}, {:class=> 'btn btn-primary', data: {confirm: "Are you sure you want to leave this group?", toggle: 'tooltip', placement: 'top',
-          original_title: 'Delete'}} %>
-<% end %>
-
-	<% unless @group.name == 'Public' && is_member(@group.id) %>
-	 <br><br>All Members
-
-		<table class="member-table">
-
-			<tr class="member-table-row">
-				<th> Name </th>
-				<th> Role </th>
-			</tr>
-		<% if !@memberships.empty? %>
-			<% @memberships.includes(:user).each do |m| %>
-					<tr class="member-table-row">
-						<% @user = m.user %>
-						<td> <%= @user.firstname + " " + @user.lastname[0] + "." %></td>
-						<td> <%= m.role %> </td>
-					</tr>
-			<% end #.each %>
-		<% end #if%>
-		</table>
-
-
-	<% end #unless %>
-
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <span class="panel-title"> <%= @group.name %> </span>
+    </div>
+    <!-- / .panel-heading -->
+    <div class="panel-body">
+      <div class="col-md-9">
+        <table class="table table-striped table-bordered">
+          <tr>
+            <th> Name </th>
+            <th> Role </th>
+          </tr>
+          <% if !@memberships.empty? %>
+            <% @memberships.includes(:user).each do |m| %>
+              <tr>
+                <% @user = m.user %>
+                <td> <%= @user.firstname + " " + @user.lastname %></td>
+                <td> <%= m.role %> </td>
+              </tr>
+            <% end #.each %>
+          <% end #if%>
+        </table>
+      </div>
+      <div class="col-md-3">
+        <% if ENV["GLOBAL_IDEA_SPACE"] == "true" %>
+          <% if @group.ideaSpaceOn %>
+            <button class="btn btn-primary"><a href="http://annotation-studio-idea-space.herokuapp.com/" id='is-link' target="_blank"> Access Idea Space </a>
+            </button>
+          <% end %>
+        <% end %>
+        <% if is_owner(params[:id]) %>
+          <%= link_to edit_group_path(id: @group.id) , :class => 'btn btn-primary' do %>
+            <i class="glyphicon glyphicon-pencil" title="Edit"></i> Manage
+          <% end %>
+        <% end %>
+        <% unless is_owner(params[:id]) %>
+          <%= link_to "Leave", {:controller=> "groups", :action =>"leave", :id => params[:id], :class=> 'btn btn-danger', data: {confirm: "Are you sure you want to leave this group?", toggle: 'tooltip', placement: 'top', original_title: 'Delete'}} do %>
+            <i class="glyphicon glyphicon-remove" title="Edit"></i> Leave
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
 <% else %>
-
-You do not have permission to view this page.
-
+  You do not have permission to view this page.
 <% end %>
-
-
-	<style>
-
-	.member-table {
-	  border-collapse: collapse;
-	  width: 60%;
-	  background-color:white;
-	}
-
-	td, th {
-	  border: 2px solid #EFEFEF;
-	  text-align: left;
-	  padding: 5px;
-	}
-
-	.member-table-row:nth-child(even) {
-	  background-color: #DFDFDF;
-	}
-
-	#is-link{
-		color:black;
-	}
-
-	#is-link:hover{
-		color:white;
-	}
-
-	a:hover{
-		text-decoration: none;
-	}
-
-	#action-buttons{
-		display:flex;
-	}
-
-	</style>

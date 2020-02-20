@@ -31,6 +31,10 @@ class ApplicationController < ActionController::Base
     render action: 404, status: :not_found
   end
 
+  rescue_from Apartment::TenantNotFound do |exception|
+    render action: 404, status: :not_found
+  end
+
   def current_tenant
     Apartment::Tenant.current
   end

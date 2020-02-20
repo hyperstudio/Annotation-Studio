@@ -421,7 +421,7 @@ GEM
       json
       require_all
       ruby-progressbar
-    rails_serve_static_assets (0.0.4)
+    rails_serve_static_assets (0.0.5)
     rails_stdout_logging (0.0.4)
     railties (5.0.7.2)
       actionpack (= 5.0.7.2)
@@ -582,6 +582,7 @@ DEPENDENCIES
   rails (= 5.0.7.2)
   rails_12factor
   rails_best_practices
+  rails_serve_static_assets (= 0.0.5)
   repertoire-groups (= 0.0.1)!
   rest-client
   rspec-rails (= 3.8.2)

@@ -10,6 +10,7 @@ gem 'pg'
 
 gem 'scout_apm'
 
+gem 'rails_serve_static_assets', '0.0.5'
 gem 'devise', '4.7.1'
 gem "switch_user"
 gem 'cancancan', '~> 1.10'

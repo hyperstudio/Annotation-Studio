@@ -31,7 +31,7 @@
                 <td>
                   <% case m.role %>
                   <% when 'owner' %>
-                    <span class="label label-info"><%= m.role %> </span>
+                    <span class="label label-primary"><%= m.role %> </span>
                   <% when 'member' %>
                     <%= form_tag :controller=>'groups', :action => 'update_member_role', :method => :post, :m_id=>m.id,:username => @user.fullname do %>
                       <%= select_tag :role, options_for_select([ "member", "manager" ], "member"), {onchange: "this.form.submit();"} %>

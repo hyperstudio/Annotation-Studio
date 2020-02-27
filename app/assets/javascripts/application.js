@@ -53,3 +53,4 @@
 //= require sign-in
 //= require_tree ./typeahead
 //= require dashboard
+//= require intro.min

@@ -54,3 +54,4 @@
 //= require_tree ./typeahead
 //= require dashboard
 //= require intro.min
+//= require js.cookie.min

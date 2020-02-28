@@ -36,8 +36,8 @@ html {
 }
 
 body {
-  background-color:#eee;
-  padding: 100px 0 100px 0;
+  background-color: #eee;
+  padding: 120px 0 100px 0;
   margin-bottom: 60px;
 }
 
@@ -57,7 +57,7 @@ h1 {
 
 ol.breadcrumb {
   margin: 8px 0 0 0;
-  float:left;
+  float: left;
   font-size: 14px;
   padding: 0 15px;
 }
@@ -77,8 +77,8 @@ p.help-block {
 table.help-block {
   display: inline-table;
   float: right;
-  margin: 0 0 0 auto;
-  border: 1px solid #BBB;
+  margin: 0 0 15px auto;
+  border: 1px solid #bbb;
 }
 
 table.help-block tr th {
@@ -96,35 +96,31 @@ table.help-block .glyphicon.glyphicon-remove {
 }
 
 table.help-block tr th:first-child {
-  font-style:normal;
+  font-style: normal;
+  min-width:80px;
 }
 table.help-block tr:first-child th {
-  font-style:normal;
+  font-style: normal;
 }
 
-table.help-block tr th:nth-child(n+2) {
-  text-align:center;
-  padding-left:30px;
+table.help-block tr th:nth-child(n + 2) {
+  text-align: center;
+  padding-left: 30px;
 }
 
-div.draftnote{
-  margin: 30px 0 10px 0;
-  clear:both;
+div.draftnote {
+  margin: 0 0 0 0;
+  clear: both;
 }
-label.draftnote{
-  text-align: justify;
+
+label.draftnote {
   font-weight: normal;
   padding-left: 20px;
 }
 
-
-div#login, div#blurb {
-  margin-top:20px;
-}
-
-#mainalerts {
-  margin-top:20px;
-  margin-bottom:0;
+div#login,
+div#blurb {
+  margin-top: 20px;
 }
 
 .page-header {
@@ -144,19 +140,20 @@ body.index .panel-heading {
   border-bottom: 0;
 }
 
-body.index ul.nav-pills li{
-  float:right;
+body.index ul.nav-pills li {
+  float: right;
 }
 
-ul.list-group{
-  margin-bottom:0px;
+ul.list-group {
+  margin-bottom: 0px;
 }
 
 body.index ul.nav-pills li a:hover {
   background-color: #fff;
 }
 
-body.index .table-striped > tbody > tr:nth-child(odd) > td, .table-striped > tbody > tr:nth-child(odd) > th {
+body.index .table-striped > tbody > tr:nth-child(odd) > td,
+.table-striped > tbody > tr:nth-child(odd) > th {
   background-color: #fff;
 }
 
@@ -178,7 +175,8 @@ img#neh-logo {
   top: -2px;
 }
 
-#dashboard-documents, #dashboard-annotations {
+#dashboard-documents,
+#dashboard-annotations {
   img {
     margin: 3px;
     width: 300px;
@@ -214,41 +212,39 @@ img#neh-logo {
   }
 }
 
-.chapterButton{
-  background-color:#DDDEE7;
-  padding:7px;
+.chapterButton {
+  background-color: #dddee7;
+  padding: 7px;
   border-radius: 3pt;
-  font-weight:normal;
+  font-weight: normal;
 }
 
-.metadataStyle{
-  padding:12px;
-  padding-top:5px;
-
+.metadataStyle {
+  padding: 12px;
+  padding-top: 5px;
 }
 
-.document-meta-wrapper{
-    display: grid;
-    grid-gap: 5px;
-    /* Space between items */
-    grid-template-columns: 1fr 1fr;
-    /* Decide the number of columns and size */
+.document-meta-wrapper {
+  display: grid;
+  grid-gap: 5px;
+  /* Space between items */
+  grid-template-columns: 1fr 1fr;
+  /* Decide the number of columns and size */
 }
 
-.document-meta-section{
+.document-meta-section {
   display: flex;
   flex-direction: column;
-
 }
 
-.document-form-buttons{
-  display:flex;
-  align-items:flex-end;
+.document-form-buttons {
+  display: flex;
+  align-items: flex-end;
   justify-content: flex-end;
   flex-grow: 2;
 }
-.document-form-buttons a{
-  margin-left:5px;
+.document-form-buttons a {
+  margin-left: 5px;
 }
 
 #author-column {
@@ -259,10 +255,41 @@ img#neh-logo {
   min-width: 114px;
 }
 
-#screenshot-thumb{
+#screenshot-thumb {
   float: right;
-  width:250px;
-  margin:15px;
-  border-top:1px solid #AAA;
-  border-bottom:1px solid #AAA;
+  width: 250px;
+  margin: 15px;
+  border-top: 1px solid #aaa;
+  border-bottom: 1px solid #aaa;
+}
+
+// Semantic UI overrides
+.ui.label {
+  background-color: #eee;
+  color: #666 !important;
+  font-size: 13px;
+}
+.ui.label .icon:before {
+  content: "\f00d";
+  font-family: fontAwesome;
+  font-style: normal;
+  font-size: 12px;
+  padding-left: 5px;
+  position: relative;
+  top: -1px;
+}
+.ui.label .icon:hover:before {
+  color: #f00;
+}
+.ui.dropdown .menu > .item {
+  font-size: 14px !important;
+}
+.ui.selection.active.dropdown {
+  border-color: #66afe9 !important;
+  outline: 0 !important;
+}
+
+.ui.selection.active.dropdown .menu {
+  border-color: #66afe9 !important;
+  outline: 0 !important;
 }

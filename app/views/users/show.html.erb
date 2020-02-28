@@ -23,8 +23,9 @@
                   <%= link_to document.title, document_path(document.friendly_id) %>
                   <span class="pull-right">
                     <% if !document.groups.empty? %>
-                      <span class="label label-info">
-                        <%= document.groups.pluck(:name).join(", ") %></span>
+                      <% document.groups.each do |g| %>
+                        <a class="label label-info" href="<%= group_path(id: g.id) %>"><%= g.name %></a>&nbsp;
+                    <% end %>
                     <% end %>
                     <%= document.created_at.strftime("%m/%d/%Y") %></span>
                 </li>

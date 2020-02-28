@@ -3,7 +3,7 @@
     <th>Title</th>
     <th id="author-column">Author</th>
     <th>Created</th>
-    <th> (new) Groups</th>
+    <th>Groups</th>
     <th>Status</th>
     <th id="button-column">Actions</th>
   </tr>
@@ -18,9 +18,9 @@
           <%= document.created_at.strftime("%m/%d/%Y") %></td>
         <td>
           <% document.groups.each do |group| %>
-          <span class="label label-info">
+          <a class="label label-info" href="<%= group_path(id: group.id) %>">
             <%= group.name %>
-          </span>&nbsp;
+          </a>&nbsp;
           <% end %>
         </td>
         <td>

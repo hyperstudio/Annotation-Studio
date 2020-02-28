@@ -95,8 +95,7 @@ class DocumentsController < ApplicationController
 
   # GET /documents/1/edit
   def edit
-    #display current groups on tags input line.
-    @current_groups = @document.groups.pluck(:name).join(",")
+    
   end
 
   # POST /documents
@@ -110,11 +109,11 @@ class DocumentsController < ApplicationController
     end
 
     #attach document to groups
-    @groups = params["groups"] if params["groups"]
-    @groupList = @groups.split(",")
-    if @groups
-      @groupList.each do |g|
-        @document.groups << Group.find_by(name: g) if Group.find_by(name: g)
+    if !params[:document][:groups].nil?
+      params[:document][:groups].each do |g|
+        if !g.empty? and Group.find_by(id: g.to_i)
+          @document.groups << Group.find_by(id: g.to_i) 
+        end
       end
     end
 
@@ -125,7 +124,7 @@ class DocumentsController < ApplicationController
           @document.pending!
         end
 
-        format.html { redirect_to dashboard_path(nav: "mydocuments"), notice: "Document was successfully created.", anchor: "created" }
+        format.html { redirect_to documents_path(docs: "created"), notice: "Document was successfully created.", anchor: "created" }
         format.json { render json: @document, status: :created, location: @document }
       else
         format.html { render action: "new" }
@@ -138,34 +137,37 @@ class DocumentsController < ApplicationController
   # PUT /documents/1.json
   def update
     @document = Document.friendly.find(params[:id])
+    @group_params = params[:document][:groups]
 
     #attach document to groups
-    #params['groups'] is a string of bootstrap tags separated by ,
-    groups = params["groups"].split(",") if params["groups"]
-    oldGroups = @document.groups.pluck(:name)
+    if !@group_params.nil?
 
-    #need to loop through oldGroups to find difference
-    if groups
-      groups.each do |g|
-        unless oldGroups.include? g #don't re-insert existing groups
-          @document.groups << Group.find_by(name: g)
-        end #unless
-      end #each
-
-      #delete group from documents
-      diff = oldGroups - groups
-      if !diff.empty?
-        diff.each do |d|
-          @document.groups.delete(Group.find_by(name: d))
-        end #each
-      end #if diff.empty?
-    end #if
+      # destroy deleted groups
+      @document.groups.each do |g|
+        if !@group_params.include?(g.id.to_s)
+          @document.groups.destroy(g)
+        end
+      end
+      
+      # add new groups
+      @group_params.each do |g|
+        if !g.empty?
+          @foundgroup = Group.find_by(id: g.to_i)
+          if !@foundgroup.nil? and !@document.groups.include?(@foundgroup)
+            @document.groups << @foundgroup
+          end
+        end
+      end
+    end
+    if @group_params.length == 1 and @group_params[0].empty?
+      @document.groups.destroy_all
+    end
 
     @document.update_attribute("updated_at", Time.now)
 
     respond_to do |format|
       if @document.update_attributes(documents_params)
-        format.html { redirect_to dashboard_path(nav: "mydocuments"), notice: "Document was successfully updated." }
+        format.html { redirect_to documents_path(docs: "created"), notice: "Document was successfully updated." }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -268,6 +270,6 @@ class DocumentsController < ApplicationController
     params.require(:document).permit(:title, :state, :chapters, :text, :snapshot, :user_id, :rep_privacy_list,
                                      :rep_group_list, :new_group, :author, :edition, :publisher,
                                      :publication_date, :source, :rights_status, :upload, :survey_link, :location,
-                                     :page_numbers, :series, :journal_title, :notes, :resource_type, groups: :group_id)
+                                     :page_numbers, :series, :journal_title, :notes, :resource_type, :groups)
   end
 end

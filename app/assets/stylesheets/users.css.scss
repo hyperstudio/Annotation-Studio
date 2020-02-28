@@ -11,10 +11,17 @@
   z-index: 10;
 }
 
-.panel-default {
-  margin-top: 30px;
-}
-
 .note-toolbar-wrapper.panel-default {
   margin-top: 0;
+}
+.note-popover .popover-content, .panel-heading.note-toolbar{
+  z-index:2;
+}
+
+.panel-heading{
+  position: relative;
+}
+}
+
+
 }

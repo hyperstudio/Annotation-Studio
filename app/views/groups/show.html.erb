@@ -43,7 +43,7 @@
           <% end %>
         <% end %>
         <% unless is_owner(params[:id]) %>
-          <%= link_to "Leave", {:controller=> "groups", :action =>"leave", :id => params[:id], :class=> 'btn btn-danger', data: {confirm: "Are you sure you want to leave this group?", toggle: 'tooltip', placement: 'top', original_title: 'Delete'}} do %>
+          <%= link_to leave_path(:id => params[:id]), {:class=> 'btn btn-danger', data: {confirm: "Are you sure you want to leave this group?", toggle: 'tooltip', placement: 'top', original_title: 'Delete'}} do %>
             <i class="glyphicon glyphicon-remove" title="Edit"></i> Leave
           <% end %>
         <% end %>

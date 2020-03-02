@@ -9,7 +9,7 @@
     </div>
     <!-- / .panel-heading -->
     <div class="panel-body">
-      <div class="col-md-6">
+      <div class="col-md-6" id="table-col">
         <div class="form-group">
           <input id="first-name-search" placeholder="Search for a member by name" class="form-control" type="text">
         </div>
@@ -17,7 +17,7 @@
           <tr>
             <th> Name </th>
             <th> Role </th>
-            <% if is_owner(params[:id]) %>
+            <% if is_owner(params[:id]) or is_manager(params[:id]) %>
               <th> Actions </th>
             <% end #if.is_owner %>
           </tr>
@@ -47,7 +47,7 @@
                   <% end %>
 
                 </td>
-                <% if is_owner(params[:id]) %>
+                <% if is_owner(params[:id]) or is_manager(params[:id]) %>
                   <td>
                     <% unless m.role == "owner" %>
                       <%= link_to remove_member_path({:m_id => m.id, :username => @user.fullname}), {:class => 'btn btn-danger btn-sm', data: {confirm: "Are you sure you want to remove this member?", toggle: 'tooltip', placement: 'top', original_title: 'Remove'}} do %>
@@ -62,11 +62,18 @@
         </table>
       </div>
       <% optionsCol = is_owner(params[:id]) ? "3" : "6" %>
-      <div class="col-md-<%= optionsCol %>">
+      <div class="col-md-<%= optionsCol %>" id="options-col">
         <% @i = Invite.find_by(group_id: params[:id]) %>
-        <% if @i && (@i.expiration_date.nil? || @i.expiration_date > Time.now) %>
+        <% if @i && params[:destroy_invite] == "true" %>
+          <% if @i.destroy %>
+            <% flash[:notice] = "Invite link successfully removed." %>
+          <% else %>
+            <% flash[:notice] = "Invite link removal failed." %>
+          <% end %>
+        <% end %>
+        <% if @i && (@i.expiration_date.nil? || @i.expiration_date > Time.now) && params[:destroy_invite] != "true" %>
           <h5><%= label_tag 'Invite Link' %></h5>
-          <p>Send this link to registered or new users.</p>
+          <p>Send this link to registered or new users. (If the link is not working, you can <a href="<%= edit_group_path(@group.id, :destroy_invite=>'true') %>">click here to remove it</a> and generate a new one. The old link will no longer work.)</p>
           <div class="input-group">
             <%= text_field_tag "Generate Invite Link:", request.base_url + dashboard_path(:invite_token => @i.token).to_s, {:size =>40, :class => 'form-control', :id=>"invite-link"} %>
             <span class="input-group-btn">
@@ -97,7 +104,7 @@
           </div>
         <% end %> <!-- form_for -->
       </div>
-      <div class="col-md-3">
+      <div class="col-md-3" id="delete-col">
         <% if ENV["GLOBAL_IDEA_SPACE"] == "true"  && is_owner(params[:id]) %>
           <%= form_tag :controller=>'groups', :action => 'toggleIS' do %>
             <h5><%= label_tag :toggleIS, 'Idea Space: ' + @ISstatus %></h5>
@@ -118,20 +125,21 @@
     </div>
     <!-- forms -->
   </div>
-  <div class="panel panel-default">
+  <div class="panel panel-default" id="permissions-panel">
     <div class="panel-heading">
       <span class="panel-title">Group role permissions explained</span>
     </div>
     <ul class="list-group">
-      <li class="list-group-item"><b>Members</b>: Group members can see documents and annotations shared with the group, and can annotate those documents. They can also see who else is in the group.</li>
-      <li class="list-group-item"><b>Managers</b>: Group managers are group members who can also invite users to the group.</li>
-      <li class="list-group-item"><b>Owners</b>: Group owners are group managers who can also promote/demote managers, remove users from the group, and delete the group.</li>
+      <li class="list-group-item"><b>Members</b>: Group Members can see documents and annotations shared with the group, and can annotate those documents. They can also see who else is in the group.</li>
+      <li class="list-group-item"><b>Managers</b>: Group Managers are Members who can also invite users to the group, remove users from the group, and change users' roles between Manager and Member.</li>
+      <li class="list-group-item"><b>Owners</b>: Group Owners are Managers who can also delete the group.</li>
     </ul>
   </div>
   <script type="text/javascript">
     //for invite link copy to clipboard
     //source: https://stackoverflow.com/questions/400212/how-do-i-copy-to-the-clipboard-in-javascript
     var copyButton = document.getElementById('copy-button');
+    if (copyButton != undefined){
     copyButton.addEventListener('click', function (event) {
       var copyLink = document.querySelector('#invite-link');
       copyLink.focus();
@@ -144,13 +152,14 @@
         console.log('unable to copy')
       }
     });
+    }
     
     // Case-insensitive contains method, source: https://jsfiddle.net/bipen/dyfRa/
     $.extend($.expr[":"], {
     "containsIN": function(elem, i, match, array) {
     return (elem.textContent || elem.innerText || "").toLowerCase().indexOf((match[3] || "").toLowerCase()) >= 0;
     }
-    }); 
+    });
     
     // Jquery filter, source: https://stackoverflow.com/a/17075148/394067
     $("#first-name-search").keyup(function () {
@@ -176,14 +185,120 @@
     }).focus(function () {
       this.value = "";
       $(this).unbind('focus');
-    }); 
+    });
     
     // Copying and tooltip
-    document.getElementById("invite-link").onclick = function() {
-      this.select();
-      document.execCommand('copy');
+    var inviteLink = document.getElementById("invite-link");
+    if(inviteLink != undefined){
+      inviteLink.onclick = function() {
+        this.select();
+        document.execCommand('copy');
+      }
     }
     $('#invite-link').tooltip({'trigger':'focus', 'title': 'Link copied!' });
+   
+    function startGroupManagementTour() {
+      var intro = introJs();
+      intro.setOptions({
+        doneLabel: 'Done',
+        skipLabel: 'Exit tour',
+        disableInteraction: true,
+        showBullets: false,
+        showStepNumbers: false,
+        scrollToElement: false,
+        exitOnOverlayClick: true,
+        steps: [
+          {
+            element: '.panel',
+            intro: "This is the Management page for the Group \"<%= @group.name %>\"."
+          },
+          {
+            element: '#table-col',
+            intro: "On the left is a table showing all Group members and their roles. This table can be quickly filtered with the search box."
+          },
+          {
+            element: '#table-col',
+            intro: "Here, Managers and Owners can remove people from the Group, as well as make changes to their roles. (Owners cannot be removed or change roles.)"
+          },
+          <% if is_manager(params[:id]) %>
+          {
+            element: '#table-col',
+            intro: "If you are a Manager and not an Owner, be careful! It is possible to change your own role or remove yourself from the group."
+          },
+          <% end %>
+          {
+            element: '#permissions-panel',
+            intro: "Below is a helpful cheatsheet to explain what each role means."
+          },
+          {
+            element: '#options-col',
+            intro: "Here are two options for adding Members to your Group."
+          },
+          {
+            element: '#options-col',
+            intro: "The first option allows you to generate an invite link to send to anyone. If you give someone this link who has not signed up for Annotation Studio, they will automatically be added to the group on signup."
+          },
+          {
+            element: '#options-col',
+            intro: "The second option allows you to quickly add people to your Group who have already signed up for Annotation Studio. Just enter their email and they will be automatically added."
+          },
+          <% if is_owner(params[:id]) %>
+            {
+              element: '#delete-col',
+              intro: "Since you are an Owner, you can delete this group. (Managers cannot delete the Group.)"
+            },
+          <% end %>
+            {
+              intro: "This concludes the Annotation Studio Groups tour. If something is wrong or broken, or you need more help, please do not hesitate to contact us at <a href=\"mailto:annotationstudio-support@mit.edu\">annotationstudio-support@mit.edu</a>."
+            }
+        ]
+      });
+      intro.start();
+    }
+    
+    function startFirstTimeTour() {
+      var intro = introJs();
+      intro.setOptions({
+        doneLabel: 'OK',
+        nextLabel: 'Yes',
+        skipLabel: 'No',
+        hideNext: true,
+        hidePrev: true,
+        disableInteraction: true,
+        showBullets: false,
+        showStepNumbers: false,
+        scrollToElement: false,
+        exitOnOverlayClick: true,
+        steps: [
+          {
+          intro: "It looks like this is your first time managing a Group. Would you like to learn about Group management functions?<br /><br />(If you choose \"No,\" you can always start the tour from the Dashboard by clicking on the \"How to use Groups\" button.)"
+          },
+          {
+            intro: "OK, let's begin the Group Management tour."
+          }
+        ]
+      });
+      intro.start().oncomplete(function(){
+        window.location.href = "<%= edit_group_path(id: params[:id], tour: 'true') %>";
+      }).onexit(function(){
+        Cookies.set('seenManagementTour', 'true');
+      });
+    }
+
+    if("<%= params[:tour] %>" == "true"){
+      Cookies.set('seenManagementTour', 'true');
+      startGroupManagementTour();
+    }
+    else if(Cookies.get('seenManagementTour') == undefined){
+      Cookies.set('seenManagementTour', 'false');
+    }
+    if("<%= params[:tour] %>" != "true" && Cookies.get('seenManagementTour') == 'false'){
+      startFirstTimeTour();
+    }
+    // If @groups.length == 1 and user is owner or manager and hasEditedAGroup cookie is false
+    // It looks like this is your first time managing a Group. Would you like to learn about Group management functions?
+    // Maybe later
+    
   </script>
 <% else %>
   <% bad_permissions %>

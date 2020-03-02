@@ -37,7 +37,7 @@
         </table>
       </div>
       <div class="col-md-3">
-        <% if is_owner(params[:id]) %>
+        <% if is_owner(params[:id]) or is_manager(params[:id]) %>
           <%= link_to edit_group_path(id: @group.id) , :class => 'btn btn-primary' do %>
             <i class="glyphicon glyphicon-pencil" title="Edit"></i> Manage
           <% end %>
@@ -50,6 +50,55 @@
       </div>
     </div>
   </div>
+
+  <script type="text/javascript">
+    function startGroupDetailTour() {
+
+      var intro = introJs();
+      intro.setOptions({
+        doneLabel: 'OK',
+        skipLabel: 'Exit tour',
+        disableInteraction: true,
+        showBullets: false,
+        showStepNumbers: false,
+        scrollToElement: false,
+        exitOnOverlayClick: true,
+        steps: [
+          {
+            element: '.panel',
+            intro: "This is the detail page for the Group \"<%= @group.name %>\"."
+          },
+          {
+            element: '.panel-body .col-md-9',
+            intro: "The table on the left tells you each Group member's full name and role."
+          },
+          {
+            element: '.panel-body .col-md-3',
+            intro: "Owners and Managers will see a \"Manage\" button here to the right of the table, while Managers and Members will also see a button to \"Leave\" the Group."
+          },
+          <% if is_owner(params[:id]) or is_manager(params[:id]) %>
+            {
+              element: '.panel-body .col-md-3',
+              intro: "Looks like you are an Owner or Manager of this group. Let's navigate to this Group's Management page."
+            }
+          <% else %>
+            {
+              element: '.panel-body .col-md-3',
+              intro: "Looks like you are not an Owner or Manager of this group, so the tour will end here.<br /><br /> If you would like to learn about the Group Management page, please create a new Group (or ask a Group Owner to make you a Manager), then restart this tour from the dashboard."
+            }
+          <% end %>
+        ]
+      });
+      intro.start().oncomplete(function() {
+        <% if is_owner(params[:id]) or is_manager(params[:id]) %>
+          window.location.href = "<%= edit_group_path(id: params[:id], tour: 'true') %>";
+        <% end %>
+      });
+    }
+    if("<%= params[:tour] %>" == "true"){
+      startGroupDetailTour();
+    }
+  </script>
 <% else %>
   You do not have permission to view this page.
 <% end %>

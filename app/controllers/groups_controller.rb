@@ -36,7 +36,7 @@ class GroupsController < ApplicationController
       #set role to owner
       Membership.find_by(group_id: @group.id, user_id: current_user.id).update_attribute("role", "owner")
 
-      flash[:success] = "New Group Created!"
+      flash[:success] = "Created Group " + @group.name + " successfully!"
       redirect_to edit_group_path(id: @group.id)
     else
       flash[:alert] = "Error in creating group."

@@ -7,9 +7,9 @@ class InvitesController < ApplicationController
 
 		respond_to do |format|
 			if @invite.save
-				format.html { redirect_to request.referrer, notice: 'Invite Link Generated' }
+				format.html { redirect_to edit_group_path(:id=>invite_params[:group_id], :destroy_invite => "false"), notice: 'Invite link generated.' }
 			else
-				format.html { redirect_to request.referrer, notice: 'Error Creating Invite Link'}
+				format.html { redirect_to request.referrer, notice: 'Error creating invite link.'}
 			end
 
 		end

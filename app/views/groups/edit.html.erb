@@ -293,7 +293,7 @@
       Cookies.set('seenManagementTour', 'false');
       startFirstTimeTour();
     }
-    else{
+    else if (Cookies.get('seenManagementTour') != 'true'){
       startFirstTimeTour();
     }
   </script>

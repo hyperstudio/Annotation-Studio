@@ -291,11 +291,11 @@
     }
     else if(Cookies.get('seenManagementTour') == undefined){
       Cookies.set('seenManagementTour', 'false');
-    }
-    if("<%= params[:tour] %>" != "true" && (Cookies.get('seenManagementTour') == 'false' || Cookies.get('seenManagementTour') == undefined)){
-      Cookies.set('seenManagementTour', 'false');
       startFirstTimeTour();
-    }    
+    }
+    else{
+      startFirstTimeTour();
+    }
   </script>
 <% else %>
   <% bad_permissions %>

@@ -292,13 +292,11 @@
     else if(Cookies.get('seenManagementTour') == undefined){
       Cookies.set('seenManagementTour', 'false');
     }
-    if("<%= params[:tour] %>" != "true" && Cookies.get('seenManagementTour') == 'false'){
+    if("<%= params[:tour] %>" != "true" && (Cookies.get('seenManagementTour') == 'false' || Cookies.get('seenManagementTour') == undefined)){
+      Cookies.set('seenManagementTour', 'false');
       startFirstTimeTour();
-    }
-    // If @groups.length == 1 and user is owner or manager and hasEditedAGroup cookie is false
-    // It looks like this is your first time managing a Group. Would you like to learn about Group management functions?
-    // Maybe later
-    
+    }    
+    Console.log(Cookies.get('seenManagementTour'));
   </script>
 <% else %>
   <% bad_permissions %>

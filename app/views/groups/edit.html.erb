@@ -281,21 +281,24 @@
       intro.start().oncomplete(function(){
         window.location.href = "<%= edit_group_path(id: params[:id], tour: 'true') %>";
       }).onexit(function(){
-        Cookies.set('seenManagementTour', 'true');
+        //Cookies.set('seenManagementTour', 'true');
+        window.location.href = "<%= edit_group_path(id: params[:id]) %>";
       });
     }
 
     if("<%= params[:tour] %>" == "true"){
-      Cookies.set('seenManagementTour', 'true');
+      //Cookies.set('seenManagementTour', 'true');
       startGroupManagementTour();
     }
-    else if(Cookies.get('seenManagementTour') == undefined){
+
+    /* Disabling cookies for the time being.
+    else if(Cookies.get('seenManagementTour') == undefined){ //Undefined every time...?
       Cookies.set('seenManagementTour', 'false');
       startFirstTimeTour();
     }
     else if (Cookies.get('seenManagementTour') != 'true'){
       startFirstTimeTour();
-    }
+    }*/
   </script>
 <% else %>
   <% bad_permissions %>

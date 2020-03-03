@@ -199,7 +199,7 @@
       ]
     });
     intro.start().oncomplete(function(){
-      Cookies.set('seenGroupsIntro', 'true');
+      //Cookies.set('seenGroupsIntro', 'true');
     });
   }
   // Groups intro tour
@@ -258,12 +258,12 @@
     });
   }
   $(document).ready(function(){
-    if(Cookies.get('seenGroupsIntro') == undefined){
+    /*if(Cookies.get('seenGroupsIntro') == undefined){
       Cookies.set('seenGroupsIntro', 'false');
     }
     if(Cookies.get('seenGroupsIntro') == 'false'){
       startGroupsIntro();
-    }
+    }*/
     $('#groups-tour').click(startGroupsTour);
   });
 

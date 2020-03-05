@@ -49,6 +49,11 @@
                   <li class="list-group-item">
                     <%= link_to document.title, document_path(document.friendly_id) %>
                     <span class="pull-right">
+                      <% if !document.groups.empty? %>
+                        <% document.groups.each do |g| %>
+                          <a class="label label-info" href="<%= group_path(id: g.id) %>"><%= g.name %></a>&nbsp;
+                        <% end %>
+                      <% end %>
                       <%= document.created_at.strftime("%m/%d/%Y") %></span>
                   </li>
                 <% end %>
@@ -194,57 +199,57 @@
       steps: [
         {
           element: '#dashboard-groups',
-          intro: "Welcome to the Groups system in Annotation Studio. Groups are now the main way to share documents and annotations with other users. <br /><br /> If you get lost during this tour, you can restart it by returning to this page and clicking the button again."
-        },
-        {
-          element: '#dashboard-groups',
-          intro: "Groups can be viewed at a glance on the dashboard here."
-        },
-        <% if current_user.groups.empty? %>
-          {
-            element: '#dashboard-groups .tab-content .tab-pane ul li:first-child',
-            intro: "Looks like you are not a member or owner of any Groups."
-          }, 
-          {
-            element: '#dashboard-groups .tab-content .tab-pane .nav-pills li:first-child',
-            intro: "Click here to create a new Group."
-          }
-        <% else %>
-          {
-            element: '#dashboard-groups .tab-content .tab-pane ul li:first-child',
-            intro: "Here is one of your Groups."
-          },
-          {
-            element: '#dashboard-groups .tab-content .tab-pane ul li:first-child .label',
-            intro: "This label indicates your role in the Group: member, manager, or owner."
-          },
-          {
-            element: '#dashboard-groups .tab-content .tab-pane .nav-pills li:first-child',
-            intro: "You can quickly navigate to the Group creation page here."
-          },
-          {
-            element: '#dashboard-groups .tab-content .tab-pane ul li:last-child',
-            intro: "Let's navigate to the Groups overview page."
-          }
-        <% end %>
-      ]
-    });
-    intro.start().oncomplete(function() {
-      <% if !current_user.groups.empty? %>
-        window.location.href = "<%= groups_path(tour: 'true') %>";
-      <% end %>
-    });
-  }
-  $(document).ready(function(){
-    $('#groups-tour').click(startGroupsTour);
-  });
-
-</script>
-<script type="text/template" id="user-comment-template">
-  <span class="user-highlight"><span class="pull-right">{{formattedDate}}</span><div class="ellipsis"><a href="{{uri}}#hl{{uuid}}">{{{quote}}}</a></div></span>
-  <span class="user-comment"><div class="ellipsis">{{{text}}}</div><div class="secondary-text">{{title}} ({{username}})</div></span>
-</script>
-<script type="text/template" id="user-highlight-template">
-  <span class="user-highlight"><div class="ellipsis"><a href="{{uri}}#hl{{uuid}}">{{{quote}}}</a></div></span>
-  <span class="user-comment"><div class="secondary-text">{{title}} ({{username}})</div></span>
-</script>
+          intro: "Welcome to the Groups system in Annotation Studio. Groups are now the main way to share documents and annotations with other users. <br /><br />
+                        If you get lost during this tour, you can restart it by returning to this page and clicking the button again."
+                        },
+                        {
+                        element: '#dashboard-groups',
+                        intro: "Groups can be viewed at a glance on the dashboard here."
+                        },
+                        <% if current_user.groups.empty? %>
+                          {
+                          element: '#dashboard-groups .tab-content .tab-pane ul li:first-child',
+                          intro: "Looks like you are not a member or owner of any Groups."
+                          }, 
+                          {
+                          element: '#dashboard-groups .tab-content .tab-pane .nav-pills li:first-child',
+                          intro: "Click here to create a new Group."
+                          }
+                        <% else %>
+                          {
+                          element: '#dashboard-groups .tab-content .tab-pane ul li:first-child',
+                          intro: "Here is one of your Groups."
+                          },
+                          {
+                          element: '#dashboard-groups .tab-content .tab-pane ul li:first-child .label',
+                          intro: "This label indicates your role in the Group: member, manager, or owner."
+                          },
+                          {
+                          element: '#dashboard-groups .tab-content .tab-pane .nav-pills li:first-child',
+                          intro: "You can quickly navigate to the Group creation page here."
+                          },
+                          {
+                          element: '#dashboard-groups .tab-content .tab-pane ul li:last-child',
+                          intro: "Let's navigate to the Groups overview page."
+                          }
+                        <% end %>
+                        ]
+                        });
+                        intro.start().oncomplete(function() {
+                        <% if !current_user.groups.empty? %>
+                          window.location.href = "<%= groups_path(tour: 'true') %>";
+                        <% end %>
+                        });
+                        }
+                        $(document).ready(function(){
+                        $('#groups-tour').click(startGroupsTour);
+                        });
+                      </script>
+                      <script type="text/template" id="user-comment-template">
+                        <span class="user-highlight"><span class="pull-right">{{formattedDate}}</span><div class="ellipsis"><a href="{{uri}}#hl{{uuid}}">{{{quote}}}</a></div></span>
+                        <span class="user-comment"><div class="ellipsis">{{{text}}}</div><div class="secondary-text">{{title}} ({{username}})</div></span>
+                      </script>
+                      <script type="text/template" id="user-highlight-template">
+                        <span class="user-highlight"><div class="ellipsis"><a href="{{uri}}#hl{{uuid}}">{{{quote}}}</a></div></span>
+                        <span class="user-comment"><div class="secondary-text">{{title}} ({{username}})</div></span>
+                      </script>

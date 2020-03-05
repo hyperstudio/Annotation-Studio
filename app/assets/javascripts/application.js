@@ -54,6 +54,5 @@
 //= require_tree ./typeahead
 //= require dashboard
 //= require intro.min
-//= require js.cookie.min
 //= require semantic-ui-transition.min
 //= require semantic-ui-dropdown

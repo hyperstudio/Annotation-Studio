@@ -5,7 +5,9 @@
 <% if is_owner(params[:id]) or is_manager(params[:id]) %>
   <div class="panel panel-default">
     <div class="panel-heading">
-      <span class="panel-title"> <%= @group.name %> </span>
+      <span class="panel-title"> <%= @group.name %> 
+        <a class="btn btn-default btn-sm" id="group-management-tour"><i class="fa fa-info-circle"></i> &nbsp;How to use this page</a>
+      </span>
     </div>
     <!-- / .panel-heading -->
     <div class="panel-body">
@@ -255,50 +257,14 @@
       });
       intro.start();
     }
-    
-    function startFirstTimeTour() {
-      var intro = introJs();
-      intro.setOptions({
-        doneLabel: 'OK',
-        nextLabel: 'Yes',
-        skipLabel: 'No',
-        hideNext: true,
-        hidePrev: true,
-        disableInteraction: true,
-        showBullets: false,
-        showStepNumbers: false,
-        scrollToElement: false,
-        exitOnOverlayClick: true,
-        steps: [
-          {
-          intro: "It looks like this is your first time managing a Group. Would you like to learn about Group management functions?<br /><br />(If you choose \"No,\" you can always start the tour from the Dashboard by clicking on the \"How to use Groups\" button.)"
-          },
-          {
-            intro: "OK, let's begin the Group Management tour."
-          }
-        ]
-      });
-      intro.start().oncomplete(function(){
-        window.location.href = "<%= edit_group_path(id: params[:id], tour: 'true') %>";
-      }).onexit(function(){
-        //Cookies.set('seenManagementTour', 'true');
-        window.location.href = "<%= edit_group_path(id: params[:id]) %>";
-      });
-    }
 
     if("<%= params[:tour] %>" == "true"){
-      //Cookies.set('seenManagementTour', 'true');
       startGroupManagementTour();
     }
 
-    /* Disabling cookies for the time being.
-    else if(Cookies.get('seenManagementTour') == undefined){ //Undefined every time...?
-      Cookies.set('seenManagementTour', 'false');
-      startFirstTimeTour();
-    }
-    else if (Cookies.get('seenManagementTour') != 'true'){
-      startFirstTimeTour();
-    }*/
+    $('#group-management-tour').click(startGroupManagementTour);
+  
+
   </script>
 <% else %>
   <% bad_permissions %>

@@ -1,16 +1,22 @@
 .user-highlight {
-    font-style: italic;
+  font-style: italic;
 }
 
 #annotation-list li {
-    margin:0 8px;
-    padding: 8px;
-    border-bottom: 1px solid #ddd;
+  margin: 0 8px;
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
 }
 #annotation-list {
-    border: 1px solid #dddddd;
-    border-collapse: separate;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    border-radius: 4px;
+  border: 1px solid #dddddd;
+  border-collapse: separate;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+}
+
+#group-management-tour {
+  position: absolute;
+  right: 15px;
+  top: 5.5px;
 }

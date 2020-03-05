@@ -156,8 +156,7 @@
     var widget = new Widget.App();
     var endpoint = location.protocol+'//'+'<%= ENV["API_URL"] %>';
     var token = '<%= session["jwt"] %>';
-    // Backbone.history.start({pushState: true, root: window.location})
-  var groups=[];
+    var groups=[];
   <% current_user.groups.each do |g| %>
     groups.push("<%=g.name %>");
   <% end %>
@@ -181,27 +180,6 @@
     widget.listAnnotations('class-annotation-list', classLoadOptions, endpoint, token);
   });
 
-  // Groups intro button highlighter
-  function startGroupsIntro() {
-    var intro = introJs();
-    intro.setOptions({
-      doneLabel: 'Got it!',
-      disableInteraction: true,
-      showBullets: false,
-      showStepNumbers: false,
-      scrollToElement: true,
-      exitOnOverlayClick: true,
-      steps: [
-        {
-          element: '#groups-tour',
-          intro: "To learn about using the new groups functionality, click this button."
-        }
-      ]
-    });
-    intro.start().oncomplete(function(){
-      //Cookies.set('seenGroupsIntro', 'true');
-    });
-  }
   // Groups intro tour
   function startGroupsTour(){
     var intro = introJs();
@@ -258,12 +236,6 @@
     });
   }
   $(document).ready(function(){
-    /*if(Cookies.get('seenGroupsIntro') == undefined){
-      Cookies.set('seenGroupsIntro', 'false');
-    }
-    if(Cookies.get('seenGroupsIntro') == 'false'){
-      startGroupsIntro();
-    }*/
     $('#groups-tour').click(startGroupsTour);
   });
 

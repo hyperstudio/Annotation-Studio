@@ -1,0 +1,45 @@
+// Semantic UI overrides
+.ui.label {
+    background-color: #eee;
+    color: #666 !important;
+    font-size: 13px;
+  }
+  .label-wrapper{
+    display:flex;
+    flex-direction: row;
+  }
+  
+  .ui.label div.text{
+    max-width: 250px;
+    white-space: nowrap !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .ui.label .icon:before {
+    content: "\f00d";
+    font-family: fontAwesome;
+    font-style: normal;
+    font-size: 12px;
+    padding-left: 5px;
+    position: relative;
+    top: -1px;
+  }
+  .ui.label .icon:hover:before {
+    color: #f00;
+  }
+  .ui.dropdown .menu > .item {
+    font-size: 14px !important;
+    white-space: nowrap !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .ui.selection.active.dropdown {
+    border-color: #66afe9 !important;
+    outline: 0 !important;
+  }
+  
+  .ui.selection.active.dropdown .menu {
+    border-color: #66afe9 !important;
+    outline: 0 !important;
+  }
+  

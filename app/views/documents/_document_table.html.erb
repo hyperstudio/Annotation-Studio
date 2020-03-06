@@ -19,7 +19,7 @@
         <td>
           <% document.groups.each do |group| %>
           <a class="label label-info" href="<%= group_path(id: group.id) %>">
-            <%= group.name %>
+            <%= group.name.truncate(50) %>
           </a>&nbsp;
           <% end %>
         </td>

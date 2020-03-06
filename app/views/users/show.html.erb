@@ -20,17 +20,20 @@
             <% unless @sharedDocs.empty? || @sharedDocs.nil? %>
               <% @sharedDocs.order("created_at DESC").where.not(state: 'draft').limit(10).each do |document| %>
                 <li class="list-group-item">
-                  <%= link_to document.title, document_path(document.friendly_id) %>
+                  <%= link_to document.title.truncate(40), document_path(document.friendly_id) %>
                   <span class="pull-right">
                     <% if !document.groups.empty? %>
-                      <% document.groups.each do |g| %>
-                        <a class="label label-info" href="<%= group_path(id: g.id) %>"><%= g.name %></a>&nbsp;
+                      <% document.groups.take(2).each do |g| %>
+                        <a class="label label-info" href="<%= group_path(id: g.id) %>"><%= g.name.truncate(16) %></a>&nbsp;
+                      <% end %>
+                      <% if document.groups.length > 2 %>
+                        <a class="label label-default" href="<%= documents_path(docs: 'assigned') %>">+<%= (document.groups.length-2).to_s %></a>&nbsp;
                       <% end %>
                     <% end %>
                     <%= document.created_at.strftime("%m/%d/%Y") %></span>
                 </li>
               <% end %>
-              <li class="list-group-item"><strong><a href="/documents?docs=assigned">See all shared documents&hellip;</a></strong></li>
+              <li class="list-group-item"><strong><a href="<%= documents_path(docs: 'assigned') %>">See all shared documents&hellip;</a></strong></li>
             <% else %>
               <li class="list-group-item">
                 No documents to view.
@@ -47,11 +50,14 @@
               <% current_user.documents.order("created_at DESC").limit(10).each do |document| %>
                 <% if can? :read, document %>
                   <li class="list-group-item">
-                    <%= link_to document.title, document_path(document.friendly_id) %>
+                    <%= link_to document.title.truncate(40), document_path(document.friendly_id) %>
                     <span class="pull-right">
                       <% if !document.groups.empty? %>
-                        <% document.groups.each do |g| %>
-                          <a class="label label-info" href="<%= group_path(id: g.id) %>"><%= g.name %></a>&nbsp;
+                        <% document.groups.take(2).each do |g| %>
+                          <a class="label label-info" href="<%= group_path(id: g.id) %>"><%= g.name.truncate(16) %></a>&nbsp;
+                        <% end %>
+                        <% if document.groups.length > 2 %>
+                          <a class="label label-default" href="<%= documents_path(docs: 'created') %>">+<%= (document.groups.length-2).to_s %></a>&nbsp;
                         <% end %>
                       <% end %>
                       <%= document.created_at.strftime("%m/%d/%Y") %></span>
@@ -85,7 +91,7 @@
           <ul class="list-group">
             <% if !current_user.groups.empty? %>
               <% current_user.groups.each do |group| %>
-                <li class="list-group-item"><%= link_to group.name, group_path(id: group.id) %>
+                <li class="list-group-item"><%= link_to group.name.truncate(50), group_path(id: group.id) %>
                   <span class="pull-right">
                     <% myRole = Membership.find_by(group_id: group.id, user_id: current_user.id).role %>
                     <% case myRole %>

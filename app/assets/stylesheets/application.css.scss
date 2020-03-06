@@ -29,6 +29,7 @@
  *= require "introjs-overrides"
  *= require "semantic-ui-transition.min"
  *= require "semantic-ui-dropdown"
+ *= require "semantic-ui-overrides.css"
  */
 
 html {
@@ -61,6 +62,16 @@ ol.breadcrumb {
   float: left;
   font-size: 14px;
   padding: 0 15px;
+  li {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width:500px;
+  }
+}
+
+td {
+  max-width:450px;
 }
 
 .footer {
@@ -262,35 +273,4 @@ img#neh-logo {
   margin: 15px;
   border-top: 1px solid #aaa;
   border-bottom: 1px solid #aaa;
-}
-
-// Semantic UI overrides
-.ui.label {
-  background-color: #eee;
-  color: #666 !important;
-  font-size: 13px;
-}
-.ui.label .icon:before {
-  content: "\f00d";
-  font-family: fontAwesome;
-  font-style: normal;
-  font-size: 12px;
-  padding-left: 5px;
-  position: relative;
-  top: -1px;
-}
-.ui.label .icon:hover:before {
-  color: #f00;
-}
-.ui.dropdown .menu > .item {
-  font-size: 14px !important;
-}
-.ui.selection.active.dropdown {
-  border-color: #66afe9 !important;
-  outline: 0 !important;
-}
-
-.ui.selection.active.dropdown .menu {
-  border-color: #66afe9 !important;
-  outline: 0 !important;
 }

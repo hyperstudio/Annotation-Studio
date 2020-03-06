@@ -62,16 +62,29 @@ class GroupsController < ApplicationController
     @group_id = params["id"]
     @group = Group.find(@group_id)
 
-    new_email = params["email"]
-    user = User.find_by(email: new_email)
-    if user && (!user.groups.include? @group)
-      @group.users << user
-      flash[:success] = user.fullname + " added."
-      # InviteMailer.notify_existing_user(user, @group).deliver_now
-    else
-      flash[:alert] = "User not found or already in group."
+    if params["email"]
+      new_email = params["email"]
+      user = User.find_by(email: new_email)
+      if user && (!user.groups.include? @group)
+        @group.users << user
+        flash[:success] = user.fullname + " added."
+        # InviteMailer.notify_existing_user(user, @group).deliver_now
+      else
+        flash[:alert] = "User not found or already in group."
+      end
     end
-
+    if params["name"] && params["commit"] == "Save"
+      if params["name"] == ""
+        flash[:alert] = "Group name cannot be blank."
+      else
+        @group.name = params["name"]
+        if @group.save
+          flash[:success] = "Group name changed to \"" + params["name"] + "\" successfully."
+        else
+          flash[:alert] = "Error changing Group name."
+        end
+      end
+    end
     redirect_to request.referrer
   end
 

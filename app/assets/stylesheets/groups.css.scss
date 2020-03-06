@@ -20,3 +20,42 @@
   right: 15px;
   top: 5.5px;
 }
+
+.editable-title{
+  background-color: transparent;
+  min-width:0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  max-height: 20px !important;
+  border-top: none;
+  border-left: none;
+  border-right:none;
+  border-bottom: 1px dashed gray;
+  font-weight: 400 !important;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 70%;
+  
+}
+#edit-title-btn{
+  cursor: pointer;
+}
+
+.form-control-inline {
+  display:inline;
+}
+.editing-title{
+  background-color: white;
+  font-weight: 400 !important;
+}
+
+.editing-title-btns {
+  display:inline;
+  margin-left: 10px;
+}
+.panel-heading .edit_group {
+  display:flex;
+  flex-direction: row;
+  max-width: 70%;
+}

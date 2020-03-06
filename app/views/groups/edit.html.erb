@@ -5,9 +5,15 @@
 <% if is_owner(params[:id]) or is_manager(params[:id]) %>
   <div class="panel panel-default">
     <div class="panel-heading">
-      <span class="panel-title"> <%= @group.name %> 
-        <a class="btn btn-default btn-sm" id="group-management-tour"><i class="fa fa-info-circle"></i> &nbsp;How to use this page</a>
-      </span>
+      <%= form_for @group do |f| %>
+        <%= f.hidden_field :group_id, :value => params[:id] %>
+        <%= f.label :name, {:class=>"panel-title"} do %>
+          <%= text_field_tag 'name', @group.name, maxlength: 255, size: @group.name.length+5, class: 'editable-title' %><a id="edit-title-btn"><i class="fa fa-pencil panel-title"></i> </a>
+        <% end %>
+        <%= f.submit :Save, {:class=>'btn btn-success btn-sm editing-title-btns'} %>
+        <%= f.submit 'Cancel', :type => "reset", :class=>'btn btn-default btn-sm editing-title-btns', :id=>"edit-title-cancel" %>
+      <% end %>
+      <a class="btn btn-default btn-sm" id="group-management-tour"><i class="fa fa-info-circle"></i> &nbsp;How to use this page</a>
     </div>
     <!-- / .panel-heading -->
     <div class="panel-body">
@@ -212,7 +218,11 @@
         steps: [
           {
             element: '.panel',
-            intro: "This is the Management page for the Group \"<%= @group.name %>\"."
+            intro: "This is the Management page for the Group \"<%= @group.name.truncate(50) %>\"."
+          },
+          {
+            element: '#name',
+            intro: "The Group can be renamed by clicking in the editable area here."
           },
           {
             element: '#table-col',
@@ -263,7 +273,23 @@
     }
 
     $('#group-management-tour').click(startGroupManagementTour);
-  
+
+    function editTitle(){
+      $('#name').attr("class","form-control form-control-inline editing-title");
+      $('#name').focus();
+      $('.editing-title-btns').show();
+      $('#edit-title-btn').hide();
+    }
+
+    $('.editing-title-btns').hide();
+    $('#name').click(editTitle);
+    $('#edit-title-btn').click(editTitle);
+    $('#edit-title-cancel').click(function(){
+      $('.editing-title-btns').hide();
+      $('#edit-title-btn').show();
+      $('#name').attr("class", "editable-title");
+      $('#name').html("<%= @group.name %>");
+    })
 
   </script>
 <% else %>

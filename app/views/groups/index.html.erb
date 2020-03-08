@@ -56,6 +56,8 @@
 </div>
 </div>
 <!--/.panel-->
+<%= render "groups/permissions" %>
+
 <script type="text/javascript">
 
   function startGroupsIndexTour() {
@@ -89,6 +91,10 @@
         {
           element: '#groups-panel .tab-content',
           intro: "This overview tells you things about all of your Groups, including your role, the owner's name, and the number of members."
+        },
+        {
+          element: '#permissions-panel',
+          intro: "Below is a helpful cheatsheet to explain what each role means."
         },
         <% if managedGroupId == -1 %>
           {

@@ -6,8 +6,7 @@
   <div class="col-md-12">
     <div class="panel panel-default" id="dashboard-documents">
       <div class="panel-heading">
-        <span class="panel-title">
-          <%= link_to "Documents", documents_path %></span>
+        <span class="panel-title">Documents</span>
         <ul class="nav nav-tabs nav-tabs-xs pull-right" id="document-tabs" role="tablist">
           <li class="<%= @tab_state['assigned'] %>">
             <%= link_to documents_path( docs: 'assigned' ), params.permit(:docs) do %>
@@ -50,6 +49,8 @@
   <!--/col-md-12 -->
 </div>
 <!--/row -->
+  <%= render "documents/status" %>
+
 <script type="text/javascript">
   $(document).ready(
     function(){

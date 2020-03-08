@@ -133,16 +133,8 @@
     </div>
     <!-- forms -->
   </div>
-  <div class="panel panel-default" id="permissions-panel">
-    <div class="panel-heading">
-      <span class="panel-title">Group role permissions explained</span>
-    </div>
-    <ul class="list-group">
-      <li class="list-group-item"><b>Members</b>: Group Members can see documents and annotations shared with the group, and can annotate those documents. They can also see who else is in the group.</li>
-      <li class="list-group-item"><b>Managers</b>: Group Managers are Members who can also invite users to the group, remove users from the group, and change users' roles between Manager and Member.</li>
-      <li class="list-group-item"><b>Owners</b>: Group Owners are Managers who can also delete the group.</li>
-    </ul>
-  </div>
+  <%= render "groups/permissions" %>
+
   <script type="text/javascript">
     //for invite link copy to clipboard
     //source: https://stackoverflow.com/questions/400212/how-do-i-copy-to-the-clipboard-in-javascript
@@ -238,10 +230,6 @@
             intro: "If you are a Manager and not an Owner, be careful! It is possible to change your own role or remove yourself from the group."
           },
           <% end %>
-          {
-            element: '#permissions-panel',
-            intro: "Below is a helpful cheatsheet to explain what each role means."
-          },
           {
             element: '#options-col',
             intro: "Here are two options for adding Members to your Group."

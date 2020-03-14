@@ -2,12 +2,7 @@ class GroupsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    # if params[:search]
-    # q = "%#{params['search']}%"
-    # @groups = Group.where(["LOWER(name) LIKE ?", q.downcase ])
-    # else
     @groups = current_user.groups
-    # end
   end
 
   def show
@@ -99,28 +94,7 @@ class GroupsController < ApplicationController
     redirect_to groups_path
   end
 
-  #post
-  # def join_via_name
-  # #add user to group if form is submitted.
-  # 	groupName = params['groupName']
-  #     if groupName
-  #       begin
-  #       	group = Group.find_by(name: groupName)
-  #         if group
-  #             current_user.groups << group
-  #             flash[:alert] = 'Successfully Joined ' + groupName
 
-  #         else
-  #         	flash[:alert] = 'Group not found!'
-  #         end
-
-  #       rescue ActiveRecord::RecordNotUnique
-  #           flash[:alert] = 'Already in Group!'
-  #       end #end begin-rescue
-
-  #     end
-  #     redirect_to request.referrer
-  # end
 
   def update_member_role
     @membership = Membership.find(params[:m_id])

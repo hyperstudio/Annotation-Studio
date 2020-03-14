@@ -3,8 +3,8 @@
 ruby '2.5.7'
 
 gem 'rails', '5.0.7.2'
-gem 'rack', '2.0.7'
-gem 'puma', '3.7.0'
+gem 'rack', '2.0.8'
+gem 'puma', '3.12.4'
 
 gem 'pg'
 
@@ -20,7 +20,7 @@ gem "friendly_id"
 gem "babosa"
 gem 'high_voltage', '3.1.0'
 gem "aws-sdk", '< 2.0'
-gem "aws-sdk-s3"
+gem 'aws-sdk-s3'
 gem "paperclip"
 gem "delayed_job_active_record", '4.1.3'
 gem 'pdf-reader'

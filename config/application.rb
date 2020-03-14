@@ -45,5 +45,9 @@ module AnnotationStudio
     config.assets.version = '2.0'
 
     config.assets.initialize_on_precompile = false
+
+    # sanitization allowed tags
+    config.action_view.sanitized_allowed_attributes = ["href", "src", "width", "height", "alt", "cite", "datetime", "title", "class", "name", "xml:lang", "abbr", "style"]
+
   end
 end

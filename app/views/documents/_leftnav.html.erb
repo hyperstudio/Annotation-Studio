@@ -1,78 +1,62 @@
 <!-- documents/_leftnav.html.erb -->
 <% if params[:action] == 'show' %>
-<h4>Document Info</h4>
-<ul class="nav navmenu-nav">
-
-<% if ! @document.author.blank? %>
-  <li>Author: <%= @document.author %></li>
-<% end %>
-<% if ! @document.publisher.blank? %>
-  <li>Publisher: <%= @document.publisher %></li>
-<% end %>
-<% if ! @document.publication_date.blank? %>
-  <li>Publication date: <%= @document.publication_date %></li>
-<% end %>
-<% if ! @document.location.blank? %>
-  <li>Publication Location: <%= @document.location %></li>
-<% end %>
-<% if ! @document.edition.blank? %>
-  <li>Edition/Volume: <%= @document.edition %></li>
-<% end %>
-
-<li>Status:
-    <% if @document.state == "draft" %>
-      Draft <i class="glyphicon glyphicon-pencil"></i>
-    <% elsif @document.state == "published" %>
-      Published <i class="glyphicon glyphicon-comment"></i>
-    <% elsif @document.state == "archived" %>
-      Archived <i class="glyphicon glyphicon-folder-close"></i>
-    <% elsif @document.state == "public" %>
-      Public <i class="glyphicon glyphicon-globe"></i>
+  <h4>Document Info</h4>
+  <ul class="nav navmenu-nav">
+    <% if ! @document.author.blank? %>
+      <li>Author: <%= sanitize @document.author %></li>
     <% end %>
-  </li>
-
-
-<% source = @document.source %>
-<% if !source.blank? %>
-
-  <li>Source:
-    <% if validUrl?(source) && (source.include? 'http') %>
-      <a href="<%= source %>"><%= source %> </a>
-
-    <% elsif validUrl?(source) #append '//' to href %>
-      <% link = '//' + source %>
-        <a href="<%= link %>"><%= source %> </a>
-
-    <% else %>
-      <%= source %>
-
+    <% if ! @document.publisher.blank? %>
+      <li>Publisher: <%= sanitize @document.publisher %></li>
     <% end %>
-  </li>
-<% end %>
-
-
-
-<% if ! @document.page_numbers.blank? %>
-  <li>Page Numbers: <%= @document.page_numbers %></li>
-<% end %>
-<% if ! @document.notes.blank? %>
-  <li> Additional Notes: <span id="metadata-notes"> <%= @document.notes %> </span></li>
-<% end %>
-
-</ul>
-
-<br>
-<% if ! @document.chapters.blank? %>
-<h4>Chapters</h4>
-<ul class="nav navmenu-nav" id="chapternav">
-<%= @document.chapters.try(:html_safe) %>
-</ul>
-<script type="text/javascript" charset="utf-8">
-  $("#chapternav a").click(function(event){
-    event.preventDefault();
-    var idtarget = $(this).attr("href");
-    $('html,body').animate({scrollTop: $(idtarget).offset().top}, 500);
-  });
-</script>
-<% end %>
+    <% if ! @document.publication_date.blank? %>
+      <li>Publication date: <%= sanitize @document.publication_date %></li>
+    <% end %>
+    <% if ! @document.location.blank? %>
+      <li>Publication Location: <%= sanitize @document.location %></li>
+    <% end %>
+    <% if ! @document.edition.blank? %>
+      <li>Edition/Volume: <%= sanitize @document.edition %></li>
+    <% end %>
+    <li>Status:
+      <% if @document.state == "draft" %>
+        Draft <i class="glyphicon glyphicon-pencil"></i>
+      <% elsif @document.state == "published" %>
+        Published <i class="glyphicon glyphicon-comment"></i>
+      <% elsif @document.state == "archived" %>
+        Archived <i class="glyphicon glyphicon-folder-close"></i>
+      <% elsif @document.state == "public" %>
+        Public <i class="glyphicon glyphicon-globe"></i>
+      <% end %>
+    </li>
+    <% source = (sanitize @document.source) %>
+    <% if !source.blank? %>
+      <li>Source:
+        <% if valid_url?(source) %>
+          <a href="<%= source %>"><%= source %> </a>
+        <% else %>
+          <%= source %>
+        <% end %>
+      </li>
+    <% end %>
+    <% if ! @document.page_numbers.blank? %>
+      <li>Page Numbers: <%= sanitize @document.page_numbers %></li>
+    <% end %>
+    <% if ! @document.notes.blank? %>
+      <li> Additional Notes: <span id="metadata-notes"> <%= sanitize @document.notes %> </span></li>
+    <% end %>
+  </ul>
+  <br>
+  <% if ! @document.chapters.blank? %>
+    <h4>Chapters</h4>
+    <ul class="nav navmenu-nav" id="chapternav">
+      <%= sanitize @document.chapters %>
+    </ul>
+    <script type="text/javascript" charset="utf-8">
+      $("#chapternav a").click(function(event){
+        event.preventDefault();
+        var idtarget = $(this).attr("href");
+        $('html,body').animate({scrollTop: $(idtarget).offset().top}, 500);
+      });
+    </script>
+  <% end %>
 <% end %>

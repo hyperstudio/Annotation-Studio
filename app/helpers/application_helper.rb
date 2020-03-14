@@ -1,6 +1,7 @@
 module ApplicationHelper
 
   include DeviseMailerUrlHelper
+  require 'uri'
 
   def bootstrap_class_for flash_type
     { success: "alert-success", error: "alert-danger", alert: "alert-warning", notice: "alert-info" }[flash_type.to_sym] || flash_type.to_s
@@ -103,12 +104,11 @@ module ApplicationHelper
     return shared
   end
 
-  #validate url for document source
-  def validUrl?(url)
-    #source: https://stackoverflow.com/questions/3809401/
-    #and https://code.tutsplus.com/tutorials/8-regular-expressions-you-should-know--net-6149
-    re =/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/
-    url =~ re ? true : false 
+  def valid_url?(url)
+    uri = URI.parse(url)
+    uri.is_a?(URI::HTTP) && !uri.host.nil?
+  rescue URI::InvalidURIError
+    false
   end
 
   # convert tags into groups

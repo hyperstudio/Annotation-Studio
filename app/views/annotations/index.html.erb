@@ -14,16 +14,13 @@
     var loadOptions = JSON.parse('<%== @loadOptions %>');
 
     var myLoadOptions = {'mode': 'user'};
-        classLoadOptions = {'mode': 'class'};
-        groupLoadOptions = {'mode': 'group'};
+        classLoadOptions = {'mode': 'groupId'};
     for (var attrname in loadOptions) {
         myLoadOptions[attrname] = loadOptions[attrname];
         classLoadOptions[attrname] = loadOptions[attrname];
-        groupLoadOptions[attrname] = loadOptions[attrname];
     };
     widget.listAnnotations('my-annotation-list', myLoadOptions, endpoint, token);
     widget.listAnnotations('class-annotation-list', classLoadOptions, endpoint, token);
-    widget.listAnnotations('group-annotation-list', groupLoadOptions, endpoint, token);
   });
 </script>
 <script type="text/template" id="user-comment-template">

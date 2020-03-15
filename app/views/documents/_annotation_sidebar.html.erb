@@ -3,22 +3,21 @@
 <script type="text/javascript" charset="utf-8">
 var document_slug = "<%= @document.slug %>";
 var default_state = <%= @document.default_state.present? ? (raw @document.default_state) : (raw "''") %>;
-// var groups = "<%= current_user.rep_group_list %>".split(/, /);
 
 //testing per-group annotations
-var userGroups = [];
-var docGroups = [];
+var userGroupIds = [];
+var docGroupIds = [];
 
 <% current_user.groups.each do |g| %>
-  userGroups.push("<%=g.name %>");
+  userGroupIds.push(<%=g.id %>);
 <% end %>
 
 <% @document.groups.each do |g| %>
-  docGroups.push("<%=g.name %>");
+  docGroupIds.push(<%=g.id %>);
 <% end %>
 
 // get intersection of document's groups and user's groups
-var groups = userGroups.filter(value => docGroups.includes(value));
+var group_ids = userGroupIds.filter(value => docGroupIds.includes(value));
 
 var annotatorOptions = {'readOnly': <%= @document.archived? %>};
 var filter_user = "<%= current_user.email %>";
@@ -42,7 +41,7 @@ var plugin_options = function() {
       prefix: api_url,
       annotationData: {
         'uri': doc_uri,
-        "groups": groups
+        "group_ids": group_ids
       },
       // loadFromSearch: annotation_studio.loadOptions({ mode: default_state[0], limit: 100 })
 

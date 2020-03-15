@@ -17,10 +17,10 @@ jQuery(function ($) {
   var token = '<%= session["jwt"] %>';
   // Backbone.history.start({pushState: true, root: window.location})
 
-var groups=[];
+var group_ids=[];
 
 <% current_user.groups.each do |g| %>
-  groups.push("<%=g.name %>");
+  group_ids.push(<%=g.id %>);
 <% end %>
 
 var query = [];
@@ -60,7 +60,7 @@ var query = [];
 	    'groups': query,
 	    'host': location.host,
 	    'user': "<%= current_user.email%>",
-	    'mode': 'class',
+	    'mode': 'groupId',
 	    'context': 'dashboard',
 	  };
 	 widget.listAnnotations('annotations-search-results', searchLoadOptions, endpoint, token);

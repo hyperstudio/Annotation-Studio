@@ -5,8 +5,8 @@ class AnnotationsController < ApplicationController
 
     def index	
         loadOptions = {	
-            :limit =>       1000,	
-            :groups =>      current_user.groups.pluck(:name),	
+            :limit =>       1000,		
+            :group_ids =>      current_user.groups.pluck(:id),	
             :host =>        request.host_with_port,	
             :user =>        current_user.email,	
             :context =>     'search'	

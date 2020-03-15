@@ -167,13 +167,13 @@
     var widget = new Widget.App();
     var endpoint = location.protocol+'//'+'<%= ENV["API_URL"] %>';
     var token = '<%= session["jwt"] %>';
-    var groups=[];
+    var group_ids = [];
   <% current_user.groups.each do |g| %>
-    groups.push("<%=g.name %>");
+    group_ids.push(<%=g.id %>);
   <% end %>
     var myLoadOptions = {
       'limit': 100,
-      'groups': groups,
+      'group_ids': group_ids,
       'host': location.host,
       'user': "<%= current_user.email %>",
       'mode': 'user',
@@ -181,10 +181,10 @@
     };
     var classLoadOptions = {
       'limit': 100,
-      'groups': groups, //"<%= current_user.rep_group_list %>".split(/, /),
+      'group_ids': group_ids,
       'host': location.host,
       'user': "<%= current_user.email %>",
-      'mode': 'class',
+      'mode': 'groupId',
       'context': 'dashboard',
     };
     widget.listAnnotations('my-annotation-list', myLoadOptions, endpoint, token);

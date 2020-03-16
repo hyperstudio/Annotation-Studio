@@ -64,6 +64,7 @@ var annotation_studio = {
       'user': filter_user,
       'mode': annotation_studio.getMode(),
       'context': search_context,
+      'host': location.host,
       'uri': [location.protocol, '//', location.host, location.pathname].join(''),
       'annotation_categories': annotation_categories
     };

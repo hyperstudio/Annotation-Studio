@@ -48,7 +48,6 @@
 //= require self_removing
 //= require show_password_fields
 //= require format_date
-//= require dont_overflow_dropdown
 //= require unload_confirmation
 //= require sign-in
 //= require_tree ./typeahead

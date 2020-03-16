@@ -19,32 +19,29 @@
 </div>
 <% if ENV["SHOW_DOMAIN_MESSAGE"] == "true" %>
 <div class="row">
-  <div class="col-md-8" id="blurb">
-    <p>
-      <legend><h1>NEW: Annotation Studio 2.5</h1>
-      <h3>We just launched Annotation Studio 2.5 with updated features, improved navigation, and several bug fixes.</h3>
-      <br />
-      <h4>Changes include:</h4>
-      <ul>
-        <li>New register/log-in menus: if your school or institution has its own Annotation Studio site, you can switch to it from the dropdown menu at log-in</li>
-        <li>Improved functionality when creating new documents</li>
-        <li>Streamlined annotation filtering</li>
-      </ul>
-      Please let us know if you have questions or feedback at annotationstudio-support[at]mit.edu or on the <a href="http://support.annotationstudio.org/">support forum</a>.
-      <br />  <br />
-      <img src="<%= asset_path('ans-next.png') %>" id="screenshot-thumb" />
-      <h4>In the works</h4>
+  <div class="col-md-8 col-md-offset-2">
+    <div class="panel panel-default">
+      <div class="panel-body">
+      <h1>&#x1F4DD; Introducing <strong>Annotation Studio 2.6</strong></h1>
+        <h3>We have just released the latest version of Annotation Studio, featuring a new Groups system and several bugfixes.</h3>
+        <hr />
+        <h4>What are Groups?</h4>
+        <ul>
+          <li>Groups replace the Classes from previous versions of Annotation Studio. All of your Classes have been migrated to Groups.</li>
+          <li>Groups now keep track of their memberships, so you can easily add or remove people from your Group.</li>
+          <li>Assigning documents to Groups is as easy as picking from a dropdown menu.</li>
+        </ul>
+        Please let us know if you have questions or feedback at <a href="mailto:annotationstudio-support@mit.edu">annotationstudio-support@mit.edu</a> or on the <a href="http://support.annotationstudio.org/">support forum</a>.
 
-      We are busily working on a brand new version of Annotation Studio that features a completely redesigned interface that makes it even easier to create, select, annotate documents, and create/manage groups. Moreover, we are very excited about the integration of our new project “Idea Space” that extends the reading and annotation process into essay writing. The new version is already being tested with several classes at MIT; we are aiming for a public release by mid-2020.
+        <br /><br />
+        <h4>We need your support!</h4>
 
-      <br /><br />
-      <h4>We need your support!</h4>
-
-      As you might know, Annotation Studio has been developed with funds from the National Endowment for the Humanities (NEH) and MIT-internal support. Our goal has always been to create a flexible and easy to use educational tool for collaborative close reading and annotation and offer it free to educators and students. Over time, costs for hosting and maintenance have increased and it has been challenging to secure the necessary funds to cover the ongoing costs for running Annotation Studio, to develop updates and integrate security and bug fixes, let alone the development of new functionality.
-      Therefore, we would very much appreciate your support which allows us to keep the project free for all users. For your donation, please contact us at annotationstudio-support[at]mit.edu.
-      <br /><br />
-      <h5 align="right">The Annotation Studio Team</h5></legend>
-    </p>
+        As you might know, Annotation Studio has been developed with funds from the National Endowment for the Humanities (NEH) and MIT-internal support. Our goal has always been to create a flexible and easy to use educational tool for collaborative close reading and annotation and offer it free to educators and students. Over time, costs for hosting and maintenance have increased and it has been challenging to secure the necessary funds to cover the ongoing costs for running Annotation Studio, to develop updates and integrate security and bug fixes, let alone the development of new functionality.
+        Therefore, we would very much appreciate your support which allows us to keep the project free for all users. For your donation, please contact us at <a href="mailto:annotationstudio-support@mit.edu">annotationstudio-support@mit.edu</a>.
+        <br /><br />
+        <h5>Kurt Fendt, Ben Silverman, and the Annotation Studio Team</h5>
+        </div>
+    </div>
   </div>
 </div><!--/row -->
 <% end %>

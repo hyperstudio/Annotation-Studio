@@ -135,7 +135,7 @@ body#documents.show .navbar #leftburger,body#documents.show .navbar #rightburger
 
 .well.devise, #omniauth-links {
 	width: 360px;
-	padding-top: 0;
+	margin-bottom:0;
 }
 
 .well.devise h4 {
@@ -144,15 +144,11 @@ body#documents.show .navbar #leftburger,body#documents.show .navbar #rightburger
 	text-align: center;
 	font-weight: bold;
 	font-size: 24px;
-	margin-top: 0;
+	margin-top: -10px;
 }
 
 #manual-login {
   display: none;
-}
-
-.dropdown-menu-right {
-	padding-top: 0;
 }
 
 #navbar {

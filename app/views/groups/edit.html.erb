@@ -83,7 +83,7 @@
           <h5><%= label_tag 'Invite Link' %></h5>
           <p>Send this link to registered or new users. (If the link is not working, you can <a href="<%= edit_group_path(@group.id, :destroy_invite=>'true') %>">click here to remove it</a> and generate a new one. The old link will no longer work.)</p>
           <div class="input-group">
-            <%= text_field_tag "Generate Invite Link:", request.base_url + dashboard_path(:invite_token => @i.token).to_s, {:size =>40, :class => 'form-control', :id=>"invite-link"} %>
+            <%= text_field_tag "Generate Invite Link:", request.base_url + new_user_registration_path(:invite_token => @i.token).to_s, {:size =>40, :class => 'form-control', :id=>"invite-link"} %>
             <span class="input-group-btn">
               <%= button_tag 'Copy', {:class=>'btn btn-default',:id=> 'copy-button'} %>
             </span>

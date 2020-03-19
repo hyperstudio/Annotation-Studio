@@ -111,7 +111,7 @@ module ApplicationHelper
     false
   end
 
-  # convert tags into groups
+  # convert tags into groups —- needs to be done separately per tenant.
   def tagsToGroups
     tags = Tag.where('name != ?','public').order('id ASC')
     # loop through all tags
@@ -126,36 +126,73 @@ module ApplicationHelper
         # find owner user
         owner = User.find(ownerTagging.taggable_id)
 
-        # create new group w/ owner, add user to group, and save
-        group = Group.new({name: t.name, owner_id: owner.id}) 
-        group.users << owner
-        if group.save
-          # Update owner's membership role to owner
-          Membership.find_by(group_id: group.id, user_id: owner.id).update_attribute("role", "owner")
-          membersTaggings.each do |memberTagging|
-            # find other member
-            member = User.find(memberTagging.taggable_id)
-            if !group.users.include? member
-              # create membership
-              group.users << member
-              group.save
-            end
-          end #membersTaggings.each
-          docsTaggings.each do |docTagging|
-            # find actual tagged doc
-            doc = Document.find(docTagging.taggable_id)
-            if !doc.groups.include? group
-              # create DocumentsGroup
-              doc.groups << group
-              doc.save
-            end
-          end #docsTaggings.each
-        else
-          flash[:alert] = "Error in creating group."
-        end #if group.save
+        # ensure that group with this name does not already exist
+        if (Group.find_by name: t.name).nil?
+          # create new group w/ owner, add user to group, and save
+          group = Group.new({name: t.name, owner_id: owner.id}) 
+          group.users << owner
+          if group.save
+            # Update owner's membership role to owner
+            Membership.find_by(group_id: group.id, user_id: owner.id).update_attribute("role", "owner")
+            membersTaggings.each do |memberTagging|
+              # find each other member
+              member = User.find(memberTagging.taggable_id)
+              if !group.users.include? member
+                # create membership (add user to group as member)
+                group.users << member
+                group.save
+              end
+            end #membersTaggings.each
+            docsTaggings.each do |docTagging|
+              # find each tagged doc
+              doc = Document.find(docTagging.taggable_id)
+              if !doc.groups.include? group
+                # create DocumentsGroup relation (add group to document)
+                doc.groups << group
+                doc.save
+              end
+            end #docsTaggings.each
+          else
+            flash[:alert] = "Error in creating group."
+          end #if group.save
+        end #if (group.find by name).nil?
       else
         flash[:alert] = "Error: no user tagged with group id = " + t.id.to_s + " and name = " + t.name
       end #if ownerTagging.nil?
     end #tags.each
   end #tagsToGroups
+
+  # convert annotation groups into groupIds —- needs to be done separately per tenant.
+  def annoTagsToGroups
+    groups_list = Group.select(:id, :name)
+    
+    groups_list.first(100).each do |g|
+      if g.name != 'public' && g.id > 610
+        opts = {	
+          'groups[]' => g.name,
+          :context => 'search',
+          :mode => 'class'
+        }
+        tok = session['jwt']
+        results = ApiRequester.search(opts, tok)
+        if(!results.blank?)
+          puts '----------------------------------------------------'
+          puts 'group '+g.id.to_s+': '+g.name
+          puts '----------------------------------------------------'
+          results.each do |anno|
+            reqAnno = anno
+            gid_array = anno["group_ids"]
+            if !gid_array.include? g.id
+              gid_array << g.id
+              anno["group_ids"] = gid_array
+              ApiRequester.update(anno,tok)
+              puts 'added group '+g.id.to_s+' to anno '+anno["id"].to_s
+            else  
+              puts 'group '+ g.id.to_s + ' already in anno ' + anno["id"].to_s
+            end #if !gid_array.include? g.id
+          end #results.each
+        end #if !results.blank?
+      end #if g.name != public
+    end #groups_list.each
+  end #def annoTagsToGroups
 end

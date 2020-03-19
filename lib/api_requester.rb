@@ -38,21 +38,30 @@ class ApiRequester
         # request['accept'] = 'application/json'
         request['accept'] = 'text/csv'
         request['x-annotator-auth-token'] = token
-        response = Net::HTTP.start(url.host, url.port) {|http| http.request(request)}
-        response.body
-        data = MultiJson.load(response.body)
+        http = Net::HTTP.new(url.host, url.port)
+        if ENV['RAILS_ENV'] == 'development'
+          http.use_ssl = true
+          http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+          http.ca_file = 'lib/local-data-store.cert'
+        end
+        response = http.request(request)
+        if(response.body)
+          data = MultiJson.load(response.body)
+        else
+          data = nil
+        end
         to_csv == false ? data : CsvGenerator.to_csv(data)
     end
 
     def self.field(params, token, to_csv: false)
-        url = URI.parse(@@api_url + '/field')
-        url.query = URI.encode_www_form(params)
-        request = Net::HTTP::Get.new(url)
-        request['accept'] = 'application/json'
-        request['x-annotator-auth-token'] = token
-        response = Net::HTTP.start(url.host, url.port) {|http| http.request(request)}
-        data = MultiJson.load(response.body)
-    end
+      url = URI.parse(@@api_url + '/field')
+      url.query = URI.encode_www_form(params)
+      request = Net::HTTP::Get.new(url)
+      request['accept'] = 'application/json'
+      request['x-annotator-auth-token'] = token
+      response = Net::HTTP.start(url.host, url.port) {|http| http.request(request)}
+      data = MultiJson.load(response.body)
+  end
 
     def self.create(annotation, token)
         headers = {
@@ -83,7 +92,7 @@ class ApiRequester
 
         # binding.pry
 
-        response = RestClient.put(@@api_url + '/annotations/' + annotation["id"], annotation.to_json, headers)
+        response = RestClient::Request.execute(:method => :put, :url => @@api_url + '/annotations/' + annotation["id"], :payload => annotation.to_json, :headers => headers, :verify_ssl => false)
 
         case response.code
         when 200
@@ -91,6 +100,7 @@ class ApiRequester
             return response
         else
             puts "Annotation PUT request not successful"
+            return response
         end
 
         # binding.pry

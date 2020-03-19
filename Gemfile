@@ -4,7 +4,7 @@ ruby '2.5.7'
 
 gem 'rails', '5.0.7.2'
 gem 'rack', '2.0.8'
-gem 'puma', '3.12.4'
+gem 'puma', '4.3.1'
 
 gem 'pg'
 
@@ -94,7 +94,7 @@ gem 'will_paginate-bootstrap'
 
 gem 'exception_notification'
 
-gem "rest-client"
+gem "rest-client", "2.1.0"
 
 gem "doorkeeper", "5.0.0"
 gem "octokit", "~> 4.0"

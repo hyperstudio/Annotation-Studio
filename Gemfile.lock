@@ -150,7 +150,7 @@ GEM
       warden (~> 1.2.3)
     diff-lcs (1.3)
     docile (1.1.5)
-    domain_name (0.5.25)
+    domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
     doorkeeper (5.0.0)
       railties (>= 4.2)
@@ -285,7 +285,8 @@ GEM
     high_voltage (3.1.0)
     highline (1.7.2)
     html_writer (0.2.0)
-    http-cookie (1.0.2)
+    http-accept (1.7.0)
+    http-cookie (1.0.3)
       domain_name (~> 0.5)
     i18n (1.8.2)
       concurrent-ruby (~> 1.0)
@@ -384,7 +385,8 @@ GEM
     pry-rails (0.3.4)
       pry (>= 0.9.10)
     public_suffix (3.0.3)
-    puma (3.12.4)
+    puma (4.3.1)
+      nio4r (~> 2.0)
     rabl (0.11.6)
       activesupport (>= 2.3.14)
     rack (2.0.8)
@@ -442,10 +444,11 @@ GEM
     responders (2.4.1)
       actionpack (>= 4.2.0, < 6.0)
       railties (>= 4.2.0, < 6.0)
-    rest-client (1.8.0)
+    rest-client (2.1.0)
+      http-accept (>= 1.7.0, < 2.0)
       http-cookie (>= 1.0.2, < 2.0)
-      mime-types (>= 1.16, < 3.0)
-      netrc (~> 0.7)
+      mime-types (>= 1.16, < 4.0)
+      netrc (~> 0.8)
     rspec-core (3.8.1)
       rspec-support (~> 3.8.0)
     rspec-expectations (3.8.4)
@@ -516,7 +519,7 @@ GEM
     underscore-rails (1.8.2)
     unf (0.1.4)
       unf_ext
-    unf_ext (0.0.7.1)
+    unf_ext (0.0.7.6)
     warden (1.2.8)
       rack (>= 2.0.6)
     websocket-driver (0.6.5)
@@ -576,7 +579,7 @@ DEPENDENCIES
   pg
   pry-rails
   public_suffix (= 3.0.3)
-  puma (= 3.12.4)
+  puma (= 4.3.1)
   rabl
   rack (= 2.0.8)
   rails (= 5.0.7.2)
@@ -584,7 +587,7 @@ DEPENDENCIES
   rails_best_practices
   rails_serve_static_assets (= 0.0.5)
   repertoire-groups (= 0.0.1)!
-  rest-client
+  rest-client (= 2.1.0)
   rspec-rails (= 3.8.2)
   sass-rails (= 5.0.7)
   scout_apm

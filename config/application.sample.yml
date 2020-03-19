@@ -1,41 +1,42 @@
 development:
-    ANNOTATOR_FILTER:                      false
-    ANNOTATOR_RICHTEXT:                    true
-    ANNOTATOR_RICHTEXT_CONFIG:             undo redo | styleselect | bold italic | link image media | code
-    ANNOTATOR_RICHTEXT_WITH_CATALOG:       undo redo | styleselect | bold italic | link image media | code | mellink melimage
-    RUNTIMEERROR_EMAIL:                    example@example.com
-    GOOGLE_VERIFICATION_CODE:
-    DEFAULT_USER_GROUP: public
-    GOOGLE_ANALYTICS_CODE:
-    ENVIRONMENT_TAG:
-    DEFAULT_USERS_CAN_CHOOSE_GROUPS: true
-    DEFAULT_USERS_CAN_CONTROL_PERMISSIONS: true
-    DEFAULT_USERS_CAN_CREATE_TEXTS: true
-    DEFAULT_USERS_CAN_SEE_OTHERS_WORK: true
-    GMAIL_USER: # to send user emails while in development
-    GMAIL_PASS: # to send user emails while in development
-    UNICORN_BACKLOG: 16
-    # make the following the path to your local (or hosted) instance of the MIT-Annotation-Data-Store
-    API_URL: http://localhost:5000/
-    API_SECRET:
-    API_CONSUMER: localhost
-    CONFIRMATION_GRACE_PERIOD: 2
-    ANNOTATOR_CUSTOM_SORT:                  true
-    ANNOTATOR_RICHTEXT_WITH_CATALOG:        undo redo | styleselect | bold italic | link image media | code | mellink melimage
-    DEVISE_SECRET_KEY:                     blah-blah # use: `rails g secret` to generate a value
-    GLOBAL_ALERT:                           "Global Alert Goes Here. Very important information!"
-    ALERT_LEVEL:                            "success"
-    EXCEPTION_PREFIX: "[STAGING: Annotation]"
-    EXCEPTION_SENDER: "example@example.com"
-    EXCEPTION_RECIPIENTS: "first@example.com second@example.com"
-    ALT_DEFAULT_USER_GROUP:                "French 101"
-    ANNOTATOR_CUSTOM_SORT:                 "true"
-    AWS_ACCESS_KEY_ID:                     "xxxxx"
-    AWS_SECRET_ACCESS_KEY:                 "xxxxxx"
-    EMAIL_DOMAIN:                          "staging-annotationstudio.herokuapp.com"
-    S3_BUCKET_NAME:                        "annotationstudio-public"
-    SENDGRID_PASSWORD:                     "xxxx"
-    SENDGRID_USERNAME:                     "xxxx"
+  CLASS_TERM_PLURAL:                      classes
+  GROUP_TERM_PLURAL:                      groups
+  PAGE_TITLE:                             Annotation Studio Dev
+  API_CONSUMER:                           localhost
+  API_SECRET:                             super_secret_secret
+  API_URL:                                localhost:5000/api
+  AWS_ACCESS_KEY_ID:                      aws_access_key
+  AWS_SECRET_ACCESS_KEY:                  aws_secret_key
+  ANNOTATOR_FILTER:                       "false"
+  ANNOTATOR_RICHTEXT:                     "true"
+  ANNOTATOR_RICHTEXT_CONFIG:              "undo redo | styleselect | bold italic | link image media | code"
+  CONFIRMATION_GRACE_PERIOD:              "2"
+  DEFAULT_USERS_CAN_CHOOSE_GROUPS:        "true"
+  DEFAULT_USERS_CAN_CONTROL_PERMISSIONS:  "true"
+  DEFAULT_USERS_CAN_CREATE_TEXTS:         "true"
+  DEFAULT_USERS_CAN_SEE_OTHERS_WORK:      "true"
+  DEFAULT_USER_GROUP:                     public
+  DEFAULT_NEW_USER_GROUP:                 public
+  ENVIRONMENT_TAG:                        Development
+  GLOBAL_ALERT:                           "test alert"
+  GMAIL_PASS:                             gmail_password
+  GMAIL_USER:                             gmail_username
+  GOOGLE_ANALYTICS_CODE:                  analytics_code
+  GOOGLE_VERIFICATION_CODE:               verification_code
+  UNICORN_BACKLOG:                        "16"
+  scope:                                  google_api_stuff
+  issuer:                                 more_google_api_stuff
+  DEVISE_SECRET_KEY:                      super_secret_key
+  ALERT_LEVEL:                            "success"
+  RAILS_SERVE_STATIC_FILES:               "false"
+  EMAIL_DOMAIN:                           "localhost:3000"
+  SHOW_WELCOME_MESSAGE:                   "false"
+  SHOW_DOMAIN_MESSAGE:                    "true"
+  PROTOCOL:                               "https:"
+  GLOBAL_IDEA_SPACE:                      "false"
+  RAILS_ENV:                              "development"
+  SSL_KEY_PATH:                           "lib/local-only.key"
+  SSL_CERT_PATH:                          "lib/local-only.cert"
 
 production:
     DEFAULT_NEW_USER_GROUP: public

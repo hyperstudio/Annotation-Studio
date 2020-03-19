@@ -39,8 +39,8 @@ class ApiRequester
         request['accept'] = 'text/csv'
         request['x-annotator-auth-token'] = token
         http = Net::HTTP.new(url.host, url.port)
+        http.use_ssl = true
         if ENV['RAILS_ENV'] == 'development'
-          http.use_ssl = true
           http.verify_mode = OpenSSL::SSL::VERIFY_NONE
           http.ca_file = 'lib/local-data-store.cert'
         end

@@ -45,11 +45,11 @@ class ApiRequester
           http.ca_file = 'lib/local-data-store.cert'
         end
         if !request.body.nil? 
-          puts request.body.to_json # debug
+          puts request.body # debug
         end
         response = http.request(request)
         if !response.body.nil?
-          puts response.body.to_json # debug
+          puts response.body # debug
           data = MultiJson.load(response.body)
         else
           data = nil

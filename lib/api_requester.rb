@@ -44,7 +44,9 @@ class ApiRequester
           http.verify_mode = OpenSSL::SSL::VERIFY_NONE
           http.ca_file = 'lib/local-data-store.cert'
         end
+        puts request # debug
         response = http.request(request)
+        puts response # debug
         if(response.body)
           data = MultiJson.load(response.body)
         else

@@ -167,7 +167,7 @@ module ApplicationHelper
     groups_list = Group.select(:id, :name)
     
     groups_list.first(100).each do |g|
-      if g.name != 'public' && g.id > 610
+      if g.name != 'public'
         opts = {	
           'groups[]' => g.name,
           :context => 'search',

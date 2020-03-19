@@ -49,5 +49,11 @@ module AnnotationStudio
     # sanitization allowed tags
     config.action_view.sanitized_allowed_attributes = ["href", "src", "width", "height", "alt", "cite", "datetime", "title", "class", "name", "xml:lang", "abbr", "style"]
 
+    # force HTTPS on all environments
+    config.force_ssl = true
+
+    # add lib to eager load paths
+    config.eager_load_paths << "#{Rails.root}/lib"
+
   end
 end

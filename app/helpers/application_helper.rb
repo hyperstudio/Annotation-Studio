@@ -166,7 +166,7 @@ module ApplicationHelper
   def annoTagsToGroups
     groups_list = Group.select(:id, :name)
     
-    groups_list.first(100).each do |g|
+    groups_list.each do |g|
       if g.name != 'public'
         opts = {	
           'groups[]' => g.name,

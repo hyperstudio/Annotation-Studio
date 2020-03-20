@@ -3,9 +3,15 @@
 
   <!-- Registering with a group invitation attached -->
   <% if params[:invite_token] %>
+    <% invite = Invite.find_by(token: params[:invite_token]) %>
+    <% if !invite.nil? %>
+      <% groupName = invite.group.name %>
+    <% else%>
+      <% groupName = "[group not found!]" %>
+    <% end %>
     <div class="alert alert-info alert-dismissible" role="alert" style="margin-top:-25px;">
       <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-    Welcome! You have been invited to Annotation Studio. <br /><br />If you are already registered, please use the link in the upper right corner to log in.
+    Welcome! You have been invited to join the group <b><%= groupName %></b> in Annotation Studio. <br /><br />If you are already registered, please use the link in the upper right corner to log in.
     </div>
     <%= hidden_field_tag :invite_token, params[:invite_token] %>
   <% end %>

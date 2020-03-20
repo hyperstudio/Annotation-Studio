@@ -47,7 +47,7 @@ module AnnotationStudio
     config.assets.initialize_on_precompile = false
 
     # sanitization allowed tags
-    config.action_view.sanitized_allowed_attributes = ["href", "src", "width", "height", "alt", "cite", "datetime", "title", "class", "name", "xml:lang", "abbr", "style"]
+    config.action_view.sanitized_allowed_attributes = ["href", "src", "width", "height", "alt", "cite", "datetime", "title", "class", "name", "xml:lang", "abbr"]
 
     # force HTTPS on all environments
     config.force_ssl = true

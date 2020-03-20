@@ -3,17 +3,16 @@
 
   <!-- Registering with a group invitation attached -->
   <% if params[:invite_token] %>
-    <div class="panel panel-default">
-      <div class="panel-body">
-      Welcome! You have been invited to Annotation Studio. If you are already registered, please use the link in the upper right corner to log in.
-      </div>
+    <div class="alert alert-info alert-dismissible" role="alert" style="margin-top:-25px;">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    Welcome! You have been invited to Annotation Studio. <br /><br />If you are already registered, please use the link in the upper right corner to log in.
     </div>
     <%= hidden_field_tag :invite_token, params[:invite_token] %>
   <% end %>
   
   <div class="panel panel-default devise">
     <div class="panel-heading">
-      <h4>Register with <span style="color:<%= $DOMAIN_CONFIG['site_color'] %>;"><%= $DOMAIN_CONFIG['site_name'] %></span></h4>
+      <h4>Register with Annotation Studio <span style="color:<%= $DOMAIN_CONFIG['site_color'] %>;"><%= $DOMAIN_CONFIG['site_name'] %></span></h4>
     </div>
     <div class="panel-body">
       <div class="col-md-6">

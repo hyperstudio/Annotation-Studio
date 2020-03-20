@@ -124,7 +124,7 @@
         <% end %>
         <% if is_owner(params[:id]) %>
           <h5><%= label_tag 'Delete Group' %></h5>
-          <p>Delete this group permanently. This action cannot be undone.</p>
+          <p>Delete this group permanently. This action cannot be undone. <br />Documents assigned to this group will not be deleted, but may become inaccessible to group members.</p>
           <%= link_to group_path(@group), data: {:confirm => "Are you sure?"}, :method => :delete, :class=>'btn btn-danger' do %>
             <i class="glyphicon glyphicon-trash" title="Delete"></i> Delete Group
           <% end %>

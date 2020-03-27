@@ -17,6 +17,7 @@
           </div>
         <% else %>
           <%= label_tag "Type: " + (@document.resource_type == '' ? 'none' : @document.resource_type) %>
+          <%= hidden_field_tag 'type', @document.resource_type, onchange: "change(this.id)" %>
         <% end %>
         <div class="row">
           <div class="col-md-6">

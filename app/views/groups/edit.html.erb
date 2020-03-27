@@ -8,7 +8,7 @@
       <%= form_for @group do |f| %>
         <%= f.hidden_field :group_id, :value => params[:id] %>
         <%= f.label :name, {:class=>"panel-title"} do %>
-          <%= text_field_tag 'name', @group.name, maxlength: 255, size: @group.name.length+5, class: 'editable-title' %><a id="edit-title-btn"><i class="fa fa-pencil panel-title"></i> </a>
+          <%= text_field_tag 'name', @group.name, size: @group.name.length+5, class: 'editable-title' %><a id="edit-title-btn"><i class="fa fa-pencil panel-title"></i> </a>
         <% end %>
         <%= f.submit :Save, {:class=>'btn btn-success btn-sm editing-title-btns'} %>
         <%= f.submit 'Cancel', :type => "reset", :class=>'btn btn-default btn-sm editing-title-btns', :id=>"edit-title-cancel" %>
@@ -267,6 +267,7 @@
       $('#name').focus();
       $('.editing-title-btns').show();
       $('#edit-title-btn').hide();
+      $('.edit_group').addClass("editing-group");
     }
 
     $('.editing-title-btns').hide();
@@ -277,6 +278,7 @@
       $('#edit-title-btn').show();
       $('#name').attr("class", "editable-title");
       $('#name').html("<%= @group.name %>");
+      $('.edit_group').removeClass("editing-group");
     })
 
   </script>

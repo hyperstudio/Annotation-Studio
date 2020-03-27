@@ -32,12 +32,12 @@
   border-right:none;
   border-bottom: 1px dashed gray;
   font-weight: 400 !important;
-  text-overflow: ellipsis;
-  white-space: nowrap;
   overflow: hidden;
-  max-width: 70%;
-  
+  text-overflow: ellipsis;
+  max-width: 60%;
 }
+
+
 #edit-title-btn{
   cursor: pointer;
 }
@@ -48,14 +48,33 @@
 .editing-title{
   background-color: white;
   font-weight: 400 !important;
+  white-space: nowrap;
 }
 
 .editing-title-btns {
   display:inline;
-  margin-left: 10px;
+  margin-left: 5px;
 }
-.panel-heading .edit_group {
+.editing-group {
   display:flex;
   flex-direction: row;
+  max-width: 65%;
+}
+
+@media (min-width: 767px) {
+  .editable-title{
   max-width: 70%;
+  }
+
+  .editing-group {
+  max-width: 75%;
+  } 
+}
+@media (min-width: 979px) {
+  .editable-title{
+  max-width: 80%;
+  }
+  .editing-group {
+  max-width: 85%;
+  } 
 }

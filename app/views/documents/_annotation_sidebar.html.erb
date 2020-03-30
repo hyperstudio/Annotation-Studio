@@ -41,7 +41,13 @@ var plugin_options = function() {
       prefix: api_url,
       annotationData: {
         'uri': doc_uri,
-        "group_ids": group_ids
+        'group_ids': group_ids,
+        'doc_title': '<%= @document.title %>',
+        'doc_author': '<%= @document.author %>',
+        'doc_date': '<%= @document.publication_date %>',
+        'doc_publisher': '<%= @document.publisher %>',
+        'doc_edition': '<%= @document.edition %>',
+        'doc_source': '<%= @document.source %>'
       },
       // loadFromSearch: annotation_studio.loadOptions({ mode: default_state[0], limit: 100 })
 

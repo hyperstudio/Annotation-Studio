@@ -7,7 +7,7 @@
 }
 
 #annotation-list li {
-  margin:0 8px;
+  margin: 0 8px;
   padding: 8px;
   border-bottom: 1px solid #ddd;
 }
@@ -45,4 +45,8 @@
 .annotator-viewer div:first-of-type.richText-annotation p {
   max-width: 400px;
   word-wrap: break-word;
+}
+
+.nav-tabs > li.active a, .nav-tabs > li.active a:hover {
+  background-color: rgb(238, 238, 238);
 }

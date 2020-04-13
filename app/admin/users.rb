@@ -19,10 +19,20 @@ ActiveAdmin.register User, :as => "Student" do
   end
 
   batch_action :make_admin do |selection|
+    success = false
     User.find(selection).each do |user|
       user.set_roles = ['admin']
+      if user.save
+        success = true
+      else
+        success = false
+      end
     end
-    redirect_to collection_path, :notice => "Admins created!"
+    if success
+      redirect_to collection_path, :notice => "Admins created!"
+    else
+      redirect_to collection_path, :notice => "Admins not created."
+    end
   end
     
   index do |t|

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200216012538) do
+ActiveRecord::Schema.define(version: 20200413035045) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -178,13 +178,14 @@ ActiveRecord::Schema.define(version: 20200216012538) do
   end
 
   create_table "oauth_applications", force: :cascade do |t|
-    t.string   "name",                      null: false
-    t.string   "uid",                       null: false
-    t.string   "secret",                    null: false
-    t.text     "redirect_uri",              null: false
-    t.string   "scopes",       default: "", null: false
+    t.string   "name",                        null: false
+    t.string   "uid",                         null: false
+    t.string   "secret",                      null: false
+    t.text     "redirect_uri",                null: false
+    t.string   "scopes",       default: "",   null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "confidential", default: true, null: false
     t.index ["uid"], name: "index_oauth_applications_on_uid", unique: true, using: :btree
   end
 

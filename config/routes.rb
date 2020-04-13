@@ -1,6 +1,5 @@
 AnnotationStudio::Application.routes.draw do
 
-  get "api/me"
 
   use_doorkeeper
 
@@ -70,4 +69,11 @@ AnnotationStudio::Application.routes.draw do
     to: 'admin/students#autocomplete_tags',
     as: 'autocomplete_tags'
 
+  namespace :api do
+    namespace :v1 do
+      # api routes
+      get '/me' => "credentials#me"
+      get '/my_groups' => "credentials#my_groups"
+    end
+  end
 end

@@ -74,7 +74,7 @@ AnnotationStudio::Application.routes.draw do
       # api routes
       get '/me' => "credentials#me"
       get '/my_groups' => "credentials#my_groups"
-      get '/docmeta' => "docometa#docmeta"
+      get '/docmeta' => "docmeta#docmeta"
     end
   end
 end

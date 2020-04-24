@@ -1,5 +1,6 @@
 module Api::V1
   class DocmetaController < ApiController
+    before_action :doorkeeper_authorize!
     respond_to    :json
 
     def docmeta

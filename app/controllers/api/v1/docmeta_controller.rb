@@ -5,7 +5,7 @@ module Api::V1
     def docmeta
       if !params[:slug].nil?
         slug = params[:slug]
-        @doc = Document.where(:slug=>s).select(
+        @doc = Document.where(:slug=>slug).select(
           :id, :resource_type, :title, :author, :publication_date, 
           :edition, :publisher, :source, :rights_status, 
           :page_numbers, :series, :location, :journal_title,

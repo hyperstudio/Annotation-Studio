@@ -24,6 +24,7 @@
 //= require backbone
 //= require summernote
 //= require summernote-cleaner
+//= require summernote-en-US
 //= require showdown
 //= require gettext
 //= require xpath

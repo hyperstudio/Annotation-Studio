@@ -5,11 +5,9 @@ jQuery(function ($) {
     var widget = new Widget.App();
     var endpoint = location.protocol+'//'+'<%= ENV["API_URL"] %>';
     var token = '<%= session["jwt"] %>';
-    // Backbone.history.start({pushState: true, root: window.location})
 
     var loadOptions = {
         'limit': 20,
-        // 'groups': "<%= current_user.rep_group_list %>".split(/, /),
         'host': location.host,
         'user': "<%= current_user.email %>",
         'mode': 'user',
@@ -43,20 +41,6 @@ jQuery(function ($) {
                         <span class="user-highlight"><a href="{{uri}}#hl{{uuid}}" target="_blank">{{{quote}}}</a></span>
                     </script>
                 </ul>
-            </div>
-            <div class="tab-pane" id="team">
-            <table class="table table-bordered">
-                <tr>
-                  <td>Coming soon...</td>
-                </tr>
-            </table>
-            </div>
-            <div class="tab-pane" id="group">
-            <table class="table table-bordered">
-                <tr>
-                  <td>Coming soon...</td>
-                </tr>
-            </table>
             </div>
         </div>
     </div><!--/col-md-4 -->

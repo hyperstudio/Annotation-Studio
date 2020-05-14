@@ -59,8 +59,6 @@ function tagFilter(event) {
   console.log(event);
   var tags = $('#tagsearchbox').val()
   var loadOptions = {
-    'limit': 1000,
-    "groups": "<%= current_user.rep_group_list %>".split(/, /),
     'user': "<%= current_user.email %>",
     'mode': 'user',
     'context': 'document',

@@ -38,9 +38,6 @@ application/pdf
   extend FriendlyId
   friendly_id :title, use: [:slugged, :history, :finders]
 
-  # acts_as_taggable_on :rep_group, :courses, :semesters, :genres, :categories
-  acts_as_taggable_on :rep_privacy, :rep_group
-
   #new groups table structure:
   has_and_belongs_to_many :groups
 
@@ -64,10 +61,6 @@ application/pdf
     define_method("#{state}!") do
       self.update_attribute(:state, state)
     end
-  end
-
-  def new_group=(group_name)
-    rep_group_list << group_name unless group_name.nil? || group_name.empty?
   end
 
   def normalize_friendly_id(input)

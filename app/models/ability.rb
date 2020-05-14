@@ -31,7 +31,6 @@ class Ability
       can [:read, :update, :publish, :archive], Document, { :user_id => user.id }
       can :destroy, Document, { :user_id => user.id, :published? => false }
       can :read, Document do |tors|
-        # !(user.rep_group_list & tors.rep_group_list).empty?
         !(user.groups & tors.groups).empty?
       end
 

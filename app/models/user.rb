@@ -11,7 +11,6 @@ class User < ApplicationRecord
   friendly_id :username, use: [:slugged, :history]
 
   acts_as_role_user
-  acts_as_taggable_on :rep_group, :rep_privacy, :rep_subgroup
 
   has_many :documents
 

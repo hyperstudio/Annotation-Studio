@@ -10,8 +10,10 @@ Doorkeeper.configure do
      # User.find_by_id(session[:user_id]) || redirect_to(new_user_session_url)
      # session[:user_return_to] = request.fullpath
      # current_user || redirect_to(new_user_session_url)
- 
-     current_user || warden.authenticate!(:scope => :user)
+    if request.params[:ideaspace]
+      puts 'got request.params[:ideaspace] in oauth'
+    end
+    current_user || warden.authenticate!(:scope => :user)
   end
 
   # # If you want to restrict access to the web interface for adding oauth authorized applications, you need to declare the block below.

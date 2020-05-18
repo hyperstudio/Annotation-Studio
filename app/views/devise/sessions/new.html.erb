@@ -3,19 +3,19 @@
 <%= content_for :page_title, "Sign in" %>
 <div class="row">
   <div class="col-md-12" id="blurb">
-      <% if ENV["GLOBAL_ALERT"] != "" && !params[:ideaspace] %>
+      <% if ENV["GLOBAL_ALERT"] != "" && !session[:ideaspace] %>
       <div class="alert alert-dismissible alert-<%= ENV["ALERT_LEVEL"] %>" role="alert">
         <%= ENV["GLOBAL_ALERT"].html_safe %>
         <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
       </div>
       <% end %>
-      <% if ENV["SHOW_WELCOME_MESSAGE"] == "true" && !params[:ideaspace] %>
+      <% if ENV["SHOW_WELCOME_MESSAGE"] == "true" && !session[:ideaspace] %>
       <div class="alert alert-success alert-dismissible" role="alert">
         <%= $DOMAIN_CONFIG['welcome_message'].html_safe %>
         <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
       </div>
       <% end %>
-      <% if params[:ideaspace] %>
+      <% if session[:ideaspace] %>
         <div class="alert alert-warning alert-dismissible" role="alert">
           To access Idea Space, please sign in to Annotation Studio.
           <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
@@ -24,7 +24,7 @@
   </div>
 </div>
 
-<% if params[:ideaspace] %>
+<% if session[:ideaspace] %>
   <div class="row">
     <div class="col-md-6 col-md-offset-4">
       <%= render "/devise/sessions/sign_in" %>
@@ -32,7 +32,7 @@
   </div>
 <% end %>
 
-<% if ENV["SHOW_DOMAIN_MESSAGE"] == "true" && !params[:ideaspace] %>
+<% if ENV["SHOW_DOMAIN_MESSAGE"] == "true" && !session[:ideaspace] %>
 <div class="row">
   <div class="col-md-8 col-md-offset-2">
     <div class="panel panel-default">

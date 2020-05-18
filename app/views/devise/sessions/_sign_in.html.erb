@@ -20,7 +20,6 @@
         <% end %>
 
         <% if session[:ideaspace] %>
-            <% puts 'got session[:ideaspace] in signin view' %>
             <% session[:return_to] ||= request.referer %>
         <% end %>
 

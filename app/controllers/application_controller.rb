@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
   def authenticate
     if request.params[:ideaspace]
       puts 'got request.params[:ideaspace] in app controller'
-    elsif params[:ideaspace]]
+    elsif params[:ideaspace]
       puts 'got params[:ideaspace] in app controller'
     end
     redirect_to root_path, notice: "Please sign in" unless user_signed_in?

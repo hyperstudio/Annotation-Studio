@@ -14,9 +14,10 @@ class SessionsController < Devise::SessionsController
 	    #custom logic: pass in :invite_token if found
 		if params[:invite_token]
 			@location= dashboard_path(invite_token: params[:invite_token])
+		elsif params[:ideaspace]
+			@location= session.delete(:return_to)
 		else
 			@location= after_sign_in_path_for(resource)
-			
 		end
 			respond_with resource, location: @location
 	end

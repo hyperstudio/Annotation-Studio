@@ -11,7 +11,7 @@ Doorkeeper.configure do
      # session[:user_return_to] = request.fullpath
      # current_user || redirect_to(new_user_session_url)
     if request.params[:ideaspace]
-      puts 'got request.params[:ideaspace] in oauth'
+      session[:ideaspace] ||= request.params[:ideaspace]
     end
     current_user || warden.authenticate!(:scope => :user)
   end

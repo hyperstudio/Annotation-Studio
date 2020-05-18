@@ -19,8 +19,8 @@
             <%= hidden_field_tag :invite_token, params[:invite_token] %>
         <% end %>
 
-        <% if params[:ideaspace] %>
-            <%= hidden_field_tag :ideaspace, params[:ideaspace] %>
+        <% if session[:ideaspace] %>
+            <% puts 'got session[:ideaspace] in signin view' %>
             <% session[:return_to] ||= request.referer %>
         <% end %>
 

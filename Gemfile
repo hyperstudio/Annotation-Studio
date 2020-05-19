@@ -87,7 +87,7 @@ gem "nokogiri", '1.9.1'
 
 gem 'tilt', '1.1'
 gem 'sass-rails', '5.0.7'
-gem 'activeadmin', '1.0.0.pre5'
+gem 'activeadmin', '2.4.0'
 
 gem 'will_paginate', '3.1.7'
 gem 'will_paginate-bootstrap'

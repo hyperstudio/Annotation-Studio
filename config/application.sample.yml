@@ -1,6 +1,4 @@
 development:
-  CLASS_TERM_PLURAL:                      classes
-  GROUP_TERM_PLURAL:                      groups
   PAGE_TITLE:                             Annotation Studio Dev
   API_CONSUMER:                           localhost
   API_SECRET:                             super_secret_secret
@@ -11,13 +9,6 @@ development:
   ANNOTATOR_RICHTEXT:                     "true"
   ANNOTATOR_RICHTEXT_CONFIG:              "undo redo | styleselect | bold italic | link image media | code"
   CONFIRMATION_GRACE_PERIOD:              "2"
-  DEFAULT_USERS_CAN_CHOOSE_GROUPS:        "true"
-  DEFAULT_USERS_CAN_CONTROL_PERMISSIONS:  "true"
-  DEFAULT_USERS_CAN_CREATE_TEXTS:         "true"
-  DEFAULT_USERS_CAN_SEE_OTHERS_WORK:      "true"
-  DEFAULT_USER_GROUP:                     public
-  DEFAULT_NEW_USER_GROUP:                 public
-  ENVIRONMENT_TAG:                        Development
   GLOBAL_ALERT:                           "test alert"
   GMAIL_PASS:                             gmail_password
   GMAIL_USER:                             gmail_username
@@ -39,40 +30,41 @@ development:
   SSL_CERT_PATH:                          "lib/local-only.cert"
 
 production:
-    DEFAULT_NEW_USER_GROUP: public
-    GOOGLE_ANALYTICS_CODE:
-    ENVIRONMENT_TAG: Welcome
-    DEFAULT_USER_GROUP:
-    DEFAULT_USERS_CAN_CHOOSE_GROUPS: false
-    DEFAULT_USERS_CAN_CONTROL_PERMISSIONS: false
-    DEFAULT_USERS_CAN_CREATE_TEXTS: false
-    DEFAULT_USERS_CAN_SEE_OTHERS_WORK: false
-    UNICORN_BACKLOG: 16
-    # Url to a running instance of MIT-Annotation-data-store
-    API_URL: http://path.to.your.api.com/api
-    # Shared secret key between the Annotation Studio and Annotation Store
-    # Make up a <32 character random string
-    API_SECRET:
-    # domain name of the current website
-    API_CONSUMER: http://your.site.domain.com
-    CONFIRMATION_GRACE_PERIOD: 2
-    GMAIL_USER: # or an SMTP account if you prefer
-    GMAIL_PASS: # or an SMTP account if you prefer
-    RUNTIMEERROR_EMAIL:                    example@example.com
-    ANNOTATOR_CUSTOM_SORT:                false
-    ANNOTATOR_FILTER:                     false
-    ANNOTATOR_RICHTEXT:                   true
-    ANNOTATOR_RICHTEXT_CONFIG:            undo redo | styleselect | bold italic | link image media | code
-    DEVISE_SECRET_KEY:                    blah-blah # use: `rails g secret` to generate a value
-    ANNOTATOR_RICHTEXT_WITH_CATALOG:      undo redo | styleselect | bold italic | link image media | code | mellink melimage
-    EXCEPTION_PREFIX: "[PRODUCTION: Annotation]"
-    EXCEPTION_SENDER: "example@example.com"
-    EXCEPTION_RECIPIENTS: "first@example.com second@example.com"
-    ALT_DEFAULT_USER_GROUP:                "French 101"
-    ANNOTATOR_CUSTOM_SORT:                 "true"
-    AWS_ACCESS_KEY_ID:                     "xxxxx"
-    AWS_SECRET_ACCESS_KEY:                 "xxxxxx"
-    EMAIL_DOMAIN:                          "staging-annotationstudio.herokuapp.com"
-    S3_BUCKET_NAME:                        "annotationstudio-public"
-    SENDGRID_PASSWORD:                     "xxxx"
-    SENDGRID_USERNAME:                     "xxxx"
+  ANNOTATOR_FILTER:                      false
+  ANNOTATOR_RICHTEXT:                    true
+  ANNOTATOR_RICHTEXT_CONFIG:             "undo redo | styleselect | bold italic | link image media | code"
+  API_CONSUMER:                          annotationstudio.mit.edu
+  API_SECRET:                            super_secret_secret
+  API_URL:                               annotation-store-url + /api
+  AWS_ACCESS_KEY_ID:                     aws_access_key
+  AWS_SECRET_ACCESS_KEY:                 aws_secret
+  CONFIRMATION_GRACE_PERIOD:             2
+  DATABASE_URL:                          postgres://DATABASE_URL
+  DEVISE_SECRET_KEY:                     devise_secret_key
+  EMAIL_DOMAIN:                          annotation-studio-url
+  EMAIL_SENDER:                          support_email
+  EXCEPTION_PREFIX:                      [Production: Annotation Studio]
+  EXCEPTION_RECIPIENTS:                  dev_email
+  EXCEPTION_SENDER:                      support_email
+  GIT_DISCOVERY_ACROSS_FILESYSTEM:       1
+  GLOBAL_ALERT:                          Change config vars!
+  GOOGLE_ANALYTICS_CODE:                 google_analytics_code
+  GOOGLE_PASS:                           google_pass
+  GOOGLE_USER:                           google_user
+  GOOGLE_VERIFICATION_CODE:              google_verification
+  LANG:                                  en_US.UTF-8
+  PAGE_TITLE:                            Annotation Studio
+  PAPERTRAIL_API_TOKEN:                  papertrail_api_token
+  PROTOCOL:                              https:
+  RACK_ENV:                              production
+  RAILS_ENV:                             production
+  RAILS_LOG_TO_STDOUT:                   enabled
+  RAILS_SERVE_STATIC_FILES:              enabled
+  S3_BUCKET_NAME:                        s3_bucket_name
+  SCOUT_KEY:                             scout_key
+  SCOUT_LOG_LEVEL:                       WARN
+  SCOUT_MONITOR:                         true
+  SENDGRID_PASSWORD:                     pass
+  SENDGRID_USERNAME:                     user
+  SHOW_DOMAIN_MESSAGE:                   true
+  UNICORN_BACKLOG:                       16

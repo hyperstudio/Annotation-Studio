@@ -14,7 +14,6 @@ ActiveAdmin.register Document do
     selectable_column
     id_column
     column "Title", :title
-    column "Source", :source
     column "Groups", :groups, :sortable => false
     column "Creation date", :created_at
     actions

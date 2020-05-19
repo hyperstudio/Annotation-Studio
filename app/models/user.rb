@@ -43,7 +43,7 @@ class User < ApplicationRecord
   end
 
   def self.all_tags()
-    tags = User.rep_group_counts.map{|t| t.name}
+    tags = User.groups.map{|t| t.name}
     return tags.sort!
   end
 

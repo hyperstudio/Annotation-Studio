@@ -56,4 +56,3 @@
 //= require intro.min
 //= require semantic-ui-transition.min
 //= require semantic-ui-dropdown
-//= require semantic-ui-dropdown-overrides

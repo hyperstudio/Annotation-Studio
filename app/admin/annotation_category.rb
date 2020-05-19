@@ -22,6 +22,5 @@ ActiveAdmin.register AnnotationCategory do
       row :hex
       row :css_classes
     end
-    active_admin_comments
   end
 end

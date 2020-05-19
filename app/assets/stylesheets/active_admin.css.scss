@@ -23,7 +23,37 @@
 //   }
 
 body.active_admin {
-  @import 'select2'
+  @import 'select2';
+  @import "font-awesome.css";
+  @import "semantic-ui-transition.min";
+  @import "semantic-ui-dropdown";
+  @import "semantic-ui-overrides.css";
+
+  .ui.fluid.dropdown {
+    max-width: calc(80% - 45px);
+    float: right;
+    margin-right: 10px;
+    font-size: 13px;
+  }
+  .ui.label {
+    background-color: #eee !important;
+    color: #666 !important;
+    font-size: 13px !important;
+    text-decoration: none;
+  }
+  .ui.label .delete.icon:before {
+    content: "\f00d";
+    font-family: fontAwesome !important;
+    font-style: normal;
+    font-size: 12px;
+    padding-left: 5px;
+    position: relative;
+    top: -1px;
+  }
+  .ui.dropdown .dropdown.icon:before {
+    content: "\f0d7";
+    font-family: fontAwesome !important;
+  }
 }
 
 // Notice that Active Admin CSS rules are nested within a
@@ -36,13 +66,4 @@ body.active_admin {
 // .admin_namespace    applies to the admin namespace (eg: /admin)
 // .other_namespace    applies to a custom namespace named other (eg: /other)
 
-#student_rep_group_list_input ol, #document_rep_group_list_input ol {
-    width: 800px;
-}
-
-#student_rep_group_list_input ol li, #document_rep_group_list_input ol li {
-    width: 150px;
-    float: left;
-    padding: 0 0 0 20px;
-}
 

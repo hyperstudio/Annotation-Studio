@@ -20,7 +20,7 @@
         <% end %>
 
         <% if session[:ideaspace] %>
-            <% session[:return_to] ||= request.referer %>
+            <% session[:return_to] ||= request.referer + '?loggedin=true' %>
         <% end %>
 
         <div><%= f.submit "Log in", :class => "btn btn-default btn-default-primary log-in-button" %></div>

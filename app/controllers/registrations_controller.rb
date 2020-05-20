@@ -8,9 +8,9 @@ class RegistrationsController < Devise::RegistrationsController
 	def create 
 		super
 		if params[:invite_token] && resource.save
-			@token = params[:invite_token]
+			@invitetoken = params[:invite_token]
 			begin
-				@group = Invite.find_by(token: @token).group
+				@group = Invite.find_by(token: @invitetoken).group
 
 			rescue NoMethodError
 				flash[:error] = 'Invalid token. unable to join group'

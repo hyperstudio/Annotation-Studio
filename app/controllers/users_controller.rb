@@ -74,12 +74,12 @@ class UsersController < ApplicationController
   #END AJAX 
 
     #handling invite_token. need to put here because invite_token is a param of dashboard route
-    @token = params[:invite_token]
-    if @token 
+    @invitetoken = params[:invite_token]
+    if @invitetoken 
 
       #make sure token is valid 
       begin
-        invite = Invite.find_by(token: @token)
+        invite = Invite.find_by(token: @invitetoken)
         
         #check for expiration 
         unless invite.expiration_date && (invite.expiration_date < Time.now)

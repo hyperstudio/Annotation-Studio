@@ -1,10 +1,11 @@
-ActiveAdmin.register User, :as => "Student" do
+ActiveAdmin.register User, :as => "User" do
   permit_params :firstname, :lastname, :affiliation, :email, :groups
 
   scope :all, :default => true
 
   filter :firstname
   filter :lastname
+  filter :email
   filter :affiliation
   filter :created_at
   filter :updated_at

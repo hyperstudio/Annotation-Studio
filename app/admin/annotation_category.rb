@@ -1,6 +1,8 @@
 ActiveAdmin.register AnnotationCategory do
   permit_params :name, :hex, :css_classes
 
+  menu false
+
   scope :all, :default => true
 
   filter :name

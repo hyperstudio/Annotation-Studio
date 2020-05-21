@@ -1,0 +1,46 @@
+<script type="text/javascript" charset="utf-8">
+jQuery(function ($) {
+    var endpoint = location.protocol+'//'+'<%= ENV["API_URL"] %>/search';
+    var token = '<%= session["jwt"] %>';
+    var loadOptions = {
+        'host': location.host,
+        'user': "<%= user.email %>",
+        'mode': 'user',
+        'context': 'dashboard'
+    };
+     $('#annotation-lister').on('click', function () {
+        $.ajax({ 
+            type : "GET", 
+            url : endpoint, 
+            data: loadOptions,
+            headers: {'x-annotator-auth-token': token},
+            success: function(result) { 
+                if(result && result.length > 0)
+                    print_annos(result);
+                else
+                    $("#annotation-list").html('No annotations found.');    
+            }, 
+            error: function(result) { 
+                console.log(error);
+            } 
+        }); 
+     });
+    function print_annos(data){
+        collected_annos = '';
+        for (const anno of data){
+            collected_annos += ("<strong>Annotation created " + window.formatDateTime(anno.created) +"</strong>")
+            collected_annos += ("<br />Quote: " + anno.quote);
+            collected_annos += ("<br />Tags: " + anno.tags);
+            collected_annos += ("<br />Comment: " + anno.text);
+            collected_annos += ("Document: " + anno.uri);
+            collected_annos += "<hr />";
+        }
+        $("#annotation-list").html(collected_annos);
+
+    }
+});
+</script>
+
+<div id="annotation-list">
+    <a href="#" id="annotation-lister">Click here to fetch annotations.</a>
+</div>

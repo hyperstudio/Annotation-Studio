@@ -33,8 +33,13 @@ ActiveAdmin.register User, :as => "User" do
   show do |user|
     attributes_table do
       row :fullname
+      row :affiliation
       row :email
       row :groups
+      row :documents
+      row :annotations do 
+        render 'show_annotations', { user: user }
+      end
     end
   end
 
@@ -57,9 +62,6 @@ ActiveAdmin.register User, :as => "User" do
     end
     def permitted_params
       params.permit!
-    end
-    def export_data
-      puts resource
     end
   end
 end

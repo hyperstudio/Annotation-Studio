@@ -58,13 +58,8 @@ ActiveAdmin.register User, :as => "User" do
     def permitted_params
       params.permit!
     end
-    def autocomplete_tags
-      @tags = ActsAsTaggableOn::Tag.
-        where("name LIKE ?", "#{params[:q]}%").
-        order(:name)
-      respond_to do |format|
-        format.json { render :json => @tags.collect{|t| {:id => t.name, :name => t.name }}}
-      end
+    def export_data
+      puts resource
     end
   end
 end

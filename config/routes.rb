@@ -65,10 +65,6 @@ AnnotationStudio::Application.routes.draw do
 	get 'exception_test' => "annotations#exception_test"
   # root :to => "devise/sessions#new"
 
-  get '/admin/autocomplete_tags',
-    to: 'admin/students#autocomplete_tags',
-    as: 'autocomplete_tags'
-
   namespace :api do
     namespace :v1 do
       # api routes

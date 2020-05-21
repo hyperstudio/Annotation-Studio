@@ -79,6 +79,9 @@ body.active_admin {
   min-width: 300px;
   max-width: 300px;
 }
+.annos-table tr td img {
+  max-width: 200px;
+}
 .received-anno {
   border: 1px solid gray;
   padding: 10px;

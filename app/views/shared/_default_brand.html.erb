@@ -35,7 +35,7 @@
 	</div></li>
 
 <% if can? :manage, UserSet %>
-<li class="<%= 'active' if current_page?(admin_students_path) %>"><%= link_to(raw('Manage Users <i class="fa fa-external-link-square"></i>'), admin_students_path, :target => '_blank') %></li>
+<li class="<%= 'active' if current_page?(admin_users_path) %>"><%= link_to(raw('Manage Users <i class="fa fa-external-link-square"></i>'), admin_users_path, :target => '_blank') %></li>
 <% end %>
 
 <!--not signed in -->

@@ -28,12 +28,15 @@ jQuery(function ($) {
     function print_annos(data){
         collected_annos = '';
         for (const anno of data){
-            collected_annos += ("<strong>Annotation created " + window.formatDateTime(anno.created) +"</strong>")
-            collected_annos += ("<br />Quote: " + anno.quote);
-            collected_annos += ("<br />Tags: " + anno.tags);
-            collected_annos += ("<br />Comment: " + anno.text);
-            collected_annos += ("Document: " + anno.uri);
-            collected_annos += "<hr />";
+            collected_annos += ("<div class='received-anno'><h4>Annotation created " + window.formatDateTime(anno.created) +"</h4><table class='annos-table'>")
+            if(anno.quote && anno.quote != '')
+                collected_annos += ("<tr><td><strong>Quote</strong></td><td> " + anno.quote + "</td></tr>");
+            if(anno.tags && anno.tags != [] && anno.tags != '')
+                collected_annos += ("<tr><td><strong>Tags</strong></td><td> " + anno.tags + "</td></tr>");
+            if(anno.text && anno.text != '')
+                collected_annos += ("<tr><td><strong>Comment</strong></td><td> " + anno.text+ "</td></tr>");
+            collected_annos += ("<tr><td><strong>Document</strong></td><td>  " + anno.uri+ "</td></tr>");
+            collected_annos += "</table></div><br />";
         }
         $("#annotation-list").html(collected_annos);
 

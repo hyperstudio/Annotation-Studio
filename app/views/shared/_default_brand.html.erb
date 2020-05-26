@@ -22,21 +22,21 @@
 <% if user_signed_in? %>
 
 
-<li><a href="http://support.annotationstudio.org/" target="_blank">Help <i class="fa fa-external-link-square"></i></a></li>
+	<li><a href="http://support.annotationstudio.org/" target="_blank">Help <i class="fa fa-external-link-square"></i></a></li>
 
-<li><div class="dropdown">
-	<button class="dropdown-toggle menu-button" type="button" id="about-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-		  <i class="fa fa-user" ></i> <%= current_user.fullname %> <span class="caret"></span>
-		</button>
-		<ul class="dropdown-menu" aria-labelledby="about-menu">
-		  <li class="<%= 'active' if current_page?(edit_user_registration_path) %>"><%= link_to("My Profile", edit_user_registration_path, :id => "user-account-edit") %></li>
-		  <li class="<%= 'active' if current_page?(destroy_user_session_path) %>"><%= link_to('Logout', destroy_user_session_path) %></li>
-	  </ul>
-	</div></li>
+	<li><div class="dropdown">
+		<button class="dropdown-toggle menu-button" type="button" id="about-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			<i class="fa fa-user" ></i> <%= current_user.fullname %> <span class="caret"></span>
+			</button>
+			<ul class="dropdown-menu" aria-labelledby="about-menu">
+			<li class="<%= 'active' if current_page?(edit_user_registration_path) %>"><%= link_to("My Profile", edit_user_registration_path, :id => "user-account-edit") %></li>
+			<li class="<%= 'active' if current_page?(destroy_user_session_path) %>"><%= link_to('Logout', destroy_user_session_path) %></li>
+		</ul>
+		</div></li>
 
-<% if can? :manage, UserSet %>
-<li class="<%= 'active' if current_page?(admin_users_path) %>"><%= link_to(raw('Manage Users <i class="fa fa-external-link-square"></i>'), admin_users_path, :target => '_blank') %></li>
-<% end %>
+	<% if can? :manage, UserSet %>
+		<li class="<%= 'active' if current_page?(admin_users_path) %>"><%= link_to(raw('Manage Users <i class="fa fa-external-link-square"></i>'), admin_users_path, :target => '_blank') %></li>
+	<% end %>
 
 <!--not signed in -->
 <% else %>

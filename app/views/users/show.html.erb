@@ -3,6 +3,18 @@
 <%= content_for :page_title, 'Dashboard' %>
 <%= stylesheet_link_tag "users" %>
 <%= render "/shared/document_titles" %>
+
+<div class="row">
+  <div class="col-md-12" id="blurb">
+      <% if ENV["GLOBAL_ALERT"] != "" %>
+      <div class="alert alert-dismissible alert-<%= ENV["ALERT_LEVEL"] %>" role="alert">
+        <%= ENV["GLOBAL_ALERT"].html_safe %>
+        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      </div>
+      <% end %>
+  </div>
+</div>
+
 <div id="users" class="row">
   <div class="col-md-6">
     <div class="panel panel-default" id="dashboard-documents">

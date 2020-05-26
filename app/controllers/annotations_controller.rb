@@ -14,13 +14,13 @@ class AnnotationsController < ApplicationController
         if params[:document_id]	
             loadOptions[:uri] = request.base_url + '/documents/' + params[:document_id]	
         end	
-        @jwttoken = session['jwt']	
+        @token = session['jwt']	
         @loadOptions = loadOptions.to_json	
         @document_list = Document.select(:slug, :title) # for getting document name in annotations table.	
         respond_to do |format|	
             format.html { render :index }	
-            format.json { render json: ApiRequester.search(loadOptions, @jwttoken) }	
-            format.csv { send_data ApiRequester.search(loadOptions, @jwttoken, to_csv: true) }	
+            format.json { render json: ApiRequester.search(loadOptions, @token) }	
+            format.csv { send_data ApiRequester.search(loadOptions, @token, to_csv: true) }	
         end	
     end
     
@@ -40,10 +40,10 @@ class AnnotationsController < ApplicationController
         if params[:document_id]
             loadOptions[:uri] = request.base_url + '/documents/' + params[:document_id]
         end
-        @jwttoken = session['jwt']
+        @token = session['jwt']
         @loadOptions = loadOptions.to_json
 
-        json = ApiRequester.field(loadOptions, @jwttoken)
+        json = ApiRequester.field(loadOptions, @token)
 
         if params[:field] == "tags"
             json["tags"].each do |tag|
@@ -74,8 +74,8 @@ class AnnotationsController < ApplicationController
     end
 
     def create(params)
-        @jwttoken = session['jwt']
-        ApiRequester.create(params, @jwttoken)
+        @token = session['jwt']
+        ApiRequester.create(params, @token)
     end
 
     def show

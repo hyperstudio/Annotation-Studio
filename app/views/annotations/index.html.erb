@@ -8,7 +8,7 @@
   jQuery(function ($) {
     var widget = new Widget.App();
     var endpoint = location.protocol+'//'+'<%= ENV["API_URL"] %>';
-    var token = '<%= @jwttoken %>';
+    var token = '<%= @token %>';
     // Backbone.history.start({pushState: true, root: window.location})
 
     var loadOptions = JSON.parse('<%== @loadOptions %>');

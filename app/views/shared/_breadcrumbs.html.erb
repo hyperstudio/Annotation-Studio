@@ -2,7 +2,7 @@
 <ol class="breadcrumb breadcrumb-inverse hidden-xs<%= " second-line" if second_line %>">
   <% if current_page?(dashboard_path) || current_page?(root_path) %>
     <li class="active">Dashboard</li>
-  <% elsif !current_page?(page_path('cookiepolicy')) && !current_page?(page_path('terms')) && !CURRENT_PAGE?(page_path('privacypolicy')) %>
+  <% elsif !current_page?(page_path('cookiepolicy')) && !current_page?(page_path('terms')) && !current_page?(page_path('privacypolicy')) %>
     <li><%= link_to("Dashboard", "/dashboard", :id => "dashboard-link") %></li>
   <% end %>
 

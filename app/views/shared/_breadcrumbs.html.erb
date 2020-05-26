@@ -2,7 +2,7 @@
 <ol class="breadcrumb breadcrumb-inverse hidden-xs<%= " second-line" if second_line %>">
   <% if current_page?(dashboard_path) || current_page?(root_path) %>
     <li class="active">Dashboard</li>
-  <% else %>
+  <% elsif !current_page?(page_path) %>
     <li><%= link_to("Dashboard", "/dashboard", :id => "dashboard-link") %></li>
   <% end %>
 
@@ -41,4 +41,16 @@
   <% if current_page?(edit_user_registration_path) %>
     <li class="active">My Profile</li>
   <% end %>
+
+  <% if current_page?(page_path('terms')) %>
+    <li class="active">Terms and Conditions</li>
+    <li>See also our our <%= link_to("Privacy Policy", page_path('privacypolicy')) %> and <%= link_to("Cookie Policy", page_path('cookiepolicy')) %>.</li>
+  <% elsif current_page?(page_path('privacypolicy')) %>
+    <li class="active">Privacy Policy</li>
+    <li>See also our our <%= link_to("Cookie Policy", page_path('cookiepolicy')) %> and <%= link_to("Terms of Service", page_path('terms')) %>.</li>
+  <% elsif current_page?(page_path('cookiepolicy')) %>
+    <li class="active">Cookie Policy</li>
+    <li>See also our our <%= link_to("Privacy Policy", page_path('privacypolicy')) %> and <%= link_to("Terms of Service", page_path('terms')) %>.</li>
+  <% end %>
+
 </ol>

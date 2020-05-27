@@ -83,6 +83,10 @@ Widget.AnnotationView = Backbone.View.extend({
 			}
 			this.model.set('title', title);
 		}
+		else{
+			this.model.set('title', this.model.get("doc_title"));
+		}
+		console.log(this.model);
 
 		var groups = this.model.get("groups");
 		if (groups && groups.length > 0)

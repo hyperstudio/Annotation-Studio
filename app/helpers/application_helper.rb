@@ -114,6 +114,9 @@ module ApplicationHelper
   # convert tags into groups —- needs to be done separately per tenant.
   def tagsToGroups
     tags = Tag.where('name != ?','public').order('id ASC')
+    total = tags.size
+    current = 0
+    puts "Got "+total.to_s+" tags"
     # loop through all tags
     tags.each do |t|
       # find first instance of tag where taggable type is user in taggings table
@@ -153,13 +156,16 @@ module ApplicationHelper
               end
             end #docsTaggings.each
           else
-            flash[:alert] = "Error in creating group."
+            puts "Error in creating group with id = " + group.id.to_s + "and name = " + group.name
           end #if group.save
         end #if (group.find by name).nil?
       else
-        flash[:alert] = "Error: no user tagged with group id = " + t.id.to_s + " and name = " + t.name
+        puts "Error: no user tagged with group id = " + t.id.to_s + " and name = " + t.name
       end #if ownerTagging.nil?
+      current += 1
+      print "Progress: "+ current.to_s + "/" + total.to_s + " (" + ((current.to_f/total.to_f * 100).round(2)).to_s + "%) \r"
     end #tags.each
+    puts 'Finished convereting tags to groups.'
   end #tagsToGroups
 
   # convert annotation groups into groupIds —- needs to be done separately per tenant.

@@ -19,6 +19,7 @@ ActiveAdmin.register Group do
       u.fullname
     end
     column "Idea Space On", :ideaSpaceOn
+    column "Creation date", :created_at
     actions
   end
   

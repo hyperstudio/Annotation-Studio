@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200413035045) do
+ActiveRecord::Schema.define(version: 20200529183409) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -127,9 +127,11 @@ ActiveRecord::Schema.define(version: 20200413035045) do
   end
 
   create_table "groups", force: :cascade do |t|
-    t.string  "name"
-    t.integer "owner_id"
-    t.boolean "ideaSpaceOn", default: false
+    t.string   "name"
+    t.integer  "owner_id"
+    t.boolean  "ideaSpaceOn", default: false
+    t.datetime "created_at",  default: -> { "now()" }, null: false
+    t.datetime "updated_at",  default: -> { "now()" }, null: false
     t.index ["owner_id"], name: "index_groups_on_owner_id", using: :btree
   end
 

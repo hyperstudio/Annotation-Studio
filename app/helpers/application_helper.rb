@@ -132,7 +132,7 @@ module ApplicationHelper
         # ensure that group with this name does not already exist
         if (Group.find_by name: t.name).nil?
           # create new group w/ owner, add user to group, and save
-          group = Group.new({name: t.name, owner_id: owner.id}) 
+          group = Group.new({name: t.name, owner_id: owner.id, created_at: ownerTagging.created_at}) 
           group.users << owner
           if group.save
             # Update owner's membership role to owner

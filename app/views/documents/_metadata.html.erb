@@ -15,19 +15,19 @@
   var docMetaInfo = "";
   docMetaInfo = docMetaInfo + "<li>Status: " + statusMessage;
   if ("<%= @document.author %>" != "") {
-    docMetaInfo = docMetaInfo + "<li>Author: <%= @document.author %></li>";
+    docMetaInfo = docMetaInfo + "<li>Author: <%= sanitize @document.author %></li>";
   }
   if ("<%= @document.publisher %>" != "") {
-    docMetaInfo = docMetaInfo + "<li>Publisher: <%= @document.publisher %></li>";
+    docMetaInfo = docMetaInfo + "<li>Publisher: <%= sanitize @document.publisher %></li>";
   }
   if ("<%= @document.publication_date %>" != "") {
-    docMetaInfo = docMetaInfo + "<li>Publication date: <%= @document.publication_date %></li>";
+    docMetaInfo = docMetaInfo + "<li>Publication date: <%= sanitize @document.publication_date %></li>";
   }
   if ("<%= @document.edition %>" != "") {
-    docMetaInfo = docMetaInfo + "<li>Edition/Volume: <%= @document.edition %></li>";
+    docMetaInfo = docMetaInfo + "<li>Edition/Volume: <%= sanitize @document.edition %></li>";
   }
   if ("<%= @document.source %>" != "") {
-    docMetaInfo = docMetaInfo + "<li>Source: <%= @document.source %></li>";
+    docMetaInfo = docMetaInfo + "<li>Source: <%= sanitize @document.source %></li>";
   }
   if (docMetaInfo != "") {
     docMetaInfo = "<ul>"+ docMetaInfo + "</ul>";

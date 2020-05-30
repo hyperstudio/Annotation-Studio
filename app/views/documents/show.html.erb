@@ -12,7 +12,7 @@
     <% end %>
     <div id="textcontent">
       <div id="snapshot">
-        <%= @document.text.html_safe %>
+        <%= sanitize @document.text  %>
       </div>
     </div>
 

@@ -3,39 +3,51 @@
 <%= content_for :page_title, "Sign in" %>
 <div class="row">
   <div class="col-md-12" id="blurb">
-      <% if ENV["GLOBAL_ALERT"] != "" %>
+      <% if ENV["GLOBAL_ALERT"] != "" && !session[:ideaspace] %>
       <div class="alert alert-dismissible alert-<%= ENV["ALERT_LEVEL"] %>" role="alert">
         <%= ENV["GLOBAL_ALERT"].html_safe %>
         <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
       </div>
       <% end %>
-      <% if ENV["SHOW_WELCOME_MESSAGE"] == "true" %>
+      <% if ENV["SHOW_WELCOME_MESSAGE"] == "true" && !session[:ideaspace] %>
       <div class="alert alert-success alert-dismissible" role="alert">
         <%= $DOMAIN_CONFIG['welcome_message'].html_safe %>
         <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
       </div>
       <% end %>
+      <% if session[:ideaspace] %>
+        <div class="alert alert-warning alert-dismissible" role="alert">
+          To access Idea Space, please sign in to Annotation Studio.
+          <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        </div>
+      <% end %>
   </div>
 </div>
-<% if ENV["SHOW_DOMAIN_MESSAGE"] == "true" %>
-<div class="row"><div class="row">
+
+<% if session[:ideaspace] %>
+  <div class="row">
+    <div class="col-md-6 col-md-offset-4">
+      <%= render "/devise/sessions/sign_in" %>
+    </div>
+  </div>
+<% end %>
+
+<% if ENV["SHOW_DOMAIN_MESSAGE"] == "true" && !session[:ideaspace] %>
+<div class="row">
   <div class="col-md-8 col-md-offset-2">
     <div class="panel panel-default">
       <div class="panel-body">
-      <h1>NEW: <strong>Annotation Studio 3.0</strong> is around the corner</h1>
-        <h3>Next weekend (May 30/31, 2020), we will launch a major update to Annotation Studio.</h3>
-        <h3>PLEASE NOTE: Annotation Studio will be unavailable during these two days. Please contact us at <a href="mailto:annotationstudio-support@mit.edu">annotationstudio-support@mit.edu</a> if this creates a problem for you.</h3>
+      <h1>&#x1F4DD; Introducing <strong>Annotation Studio 3.0</strong></h1>
+        <h3>We have just released the latest version of Annotation Studio, featuring a new Groups system and several bugfixes.</h3>
         <hr />
-        <h4>Major changes include:</h4>
+        <h4>What are Groups?</h4>
         <ul>
-          <li>Completely reworked group structure with greatly enhanced flexibility in creating new groups. (The distinction between classes and groups is gone.) A guided tour will help you get familiar with the new functionality. All existing classes from previous versions will be transferred over to the new group structure.</li>
-          <li>Groups now keep track of their memberships, so you can easily add or remove people from your group.</li>
-          <li>Documents can now be reused by multiple groups.</li>
-          <li>Further improved functionality when creating and editing new documents.</li>
-          <li>New Privacy and Cookie Policies.</li>
-          <li>And many more small enhancements and fixes.</li>
+          <li>Groups replace the Classes from previous versions of Annotation Studio. All of your Classes have been migrated to Groups.</li>
+          <li>Groups now keep track of their memberships, so you can easily add or remove people from your Group.</li>
+          <li>Assigning documents to Groups is as easy as picking from a dropdown menu.</li>
         </ul>
-        Detailed instructions will be available on the <a href="http://support.annotationstudio.org/">support forum</a>.
+        Please let us know if you have questions or feedback at <a href="mailto:annotationstudio-support@mit.edu">annotationstudio-support@mit.edu</a> or on the <a href="http://support.annotationstudio.org/">support forum</a>.
+
 
         <br /><br />
         <h4>We need your support!</h4>

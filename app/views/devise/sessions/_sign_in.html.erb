@@ -1,4 +1,5 @@
 <div class="well devise">
+
     <h4>Log into <span style="color:<%= $DOMAIN_CONFIG['site_color'] %>;"><%= $DOMAIN_CONFIG['site_name'] %></span></h4>
     <%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :role => "form"}) do |f| %>
         <%= render "devise/shared/error_messages" %>
@@ -13,11 +14,19 @@
             <%= f.password_field :password, :class => "form-control" %>
         </div>
 
-        <div><%= f.submit "Log in", :class => "btn btn-default btn-default-primary" %></div>
+        <!-- Registering with a group invitation attached -->
+        <% if params[:invite_token] %>
+            <%= hidden_field_tag :invite_token, params[:invite_token] %>
+        <% end %>
+
+        <% if session[:ideaspace] %>
+            <% session[:return_to] ||= request.referer + '?loggedin=true' %>
+        <% end %>
+
+        <div><%= f.submit "Log in", :class => "btn btn-default btn-default-primary log-in-button" %></div>
 
     <% end %>
 </div><!--/well -->
-<%= render "/devise/links" %>
 <div class="well devise">
     <h4>Or find your domain</h4>
     <form name="domain-form">
@@ -36,6 +45,7 @@
       </div>
     </form>
 </div><!--/well -->
+<%= render "/devise/links" %>
 <script type="text/javascript">
 $("document").ready(function(){
     $("#login-chooser").change(function(){

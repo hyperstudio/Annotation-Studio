@@ -1,0 +1,29 @@
+.introjs-button {
+  color: #333;
+  font-size: 13px;
+  border-color: #cccccc;
+  padding: 6px 12px;
+  border-radius: 4px;
+  margin-left: 5px;
+  background-color: #fff;
+}
+
+.introjs-prevbutton {
+  border: 1px solid #cccccc;
+  color: #333;
+}
+
+.introjs-disabled {
+  border: 1px solid #cccccc;
+  color: #9a9a9a;
+}
+
+.introjs-skipbutton {
+  margin-right: 0px;
+  margin-left: 0px;
+  float: left;
+}
+
+.introjs-tooltip {
+  min-width: 230px;
+}

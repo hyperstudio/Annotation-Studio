@@ -4,7 +4,7 @@
 var document_slug = "<%= @document.slug %>";
 var default_state = <%= @document.default_state.present? ? (raw @document.default_state) : (raw "''") %>;
 var groups = [];
-var subgroups = [];
+var group_ids = [];
 var annotatorOptions = {'readOnly': 'true'};
 var filter_user = "<%= @document.user.email %>";
 var token = '<%= session["jwt"] %>';
@@ -25,8 +25,13 @@ var plugin_options = function() {
       prefix: api_url,
       annotationData: {
         'uri': doc_uri,
-        "groups": groups,
-        "subgroups": subgroups
+        'group_ids': group_ids,
+        'doc_title': '<%= @document.title %>',
+        'doc_author': '<%= @document.author %>',
+        'doc_date': '<%= @document.publication_date %>',
+        'doc_publisher': '<%= @document.publisher %>',
+        'doc_edition': '<%= @document.edition %>',
+        'doc_source': '<%= @document.source %>'
       },
       loadFromSearch: annotation_studio.loadOptions({ mode: default_state[0], limit: 100 })
     },

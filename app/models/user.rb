@@ -11,9 +11,13 @@ class User < ApplicationRecord
   friendly_id :username, use: [:slugged, :history]
 
   acts_as_role_user
-  acts_as_taggable_on :rep_group, :rep_privacy, :rep_subgroup
 
   has_many :documents
+
+  has_many :memberships, :foreign_key => "user_id"
+  has_many :groups, through: :memberships
+  accepts_nested_attributes_for :memberships
+
 
   # Doesn't handle missing values.
   def fullname
@@ -39,7 +43,7 @@ class User < ApplicationRecord
   end
 
   def self.all_tags()
-    tags = User.rep_group_counts.map{|t| t.name}
+    tags = User.groups.map{|t| t.name}
     return tags.sort!
   end
 

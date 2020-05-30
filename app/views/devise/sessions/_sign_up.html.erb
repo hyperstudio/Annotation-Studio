@@ -1,62 +1,69 @@
 <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :role => "form"}) do |f| %>
-<%= render "devise/shared/error_messages" %>
-<div class="well devise">
-    <h4>Register with <span style="color:<%= $DOMAIN_CONFIG['site_color'] %>;"><%= $DOMAIN_CONFIG['site_name'] %></span></h4>
-    <div class="form-group">
-        <%= f.label :firstname, "First Name"%>
-        <%= f.text_field :firstname, :class => "form-control" %>
+  <%= devise_error_messages! %>
+
+  <!-- Registering with a group invitation attached -->
+  <% if params[:invite_token] %>
+    <% invite = Invite.find_by(token: params[:invite_token]) %>
+    <% if !invite.nil? %>
+      <% groupName = invite.group.name %>
+    <% else%>
+      <% groupName = "[group not found!]" %>
+    <% end %>
+    <div class="alert alert-info alert-dismissible" role="alert" style="margin-top:-25px;">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    Welcome! You have been invited to join the group <b><%= groupName %></b> in Annotation Studio. <br /><br />If you are already registered, please use the link in the upper right corner to log in.
     </div>
-
-    <div class="form-group">
-        <%= f.label :lastname, "Last Name"%>
-        <%= f.text_field :lastname, :class => "form-control" %>
+    <%= hidden_field_tag :invite_token, params[:invite_token] %>
+  <% end %>
+  
+  <div class="panel panel-default devise">
+    <div class="panel-heading">
+      <h4>Register with Annotation Studio <span style="color:<%= $DOMAIN_CONFIG['site_color'] %>;"><%= $DOMAIN_CONFIG['site_name'] %></span></h4>
     </div>
-
-    <div class="form-group">
-        <%= f.label :email%>
-        <%= f.email_field :email, :class => "form-control" %>
+    <div class="panel-body">
+      <div class="col-md-6">
+        <div class="form-group">
+          <%= f.label :firstname, "First Name"%>
+          <%= f.text_field :firstname, :class => "form-control" %>
+        </div>
+        <div class="form-group">
+          <%= f.label :lastname, "Last Name"%>
+          <%= f.text_field :lastname, :class => "form-control" %>
+        </div>
+        <div class="form-group">
+          <%= f.label :email%>
+          <%= f.email_field :email, :class => "form-control" %>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <%= f.label :affiliation %>
+          <%= f.text_field :affiliation, :class => "form-control" %>
+        </div>
+        <div class="form-group">
+          <%= f.label :password %>
+          <%= f.password_field :password, :class => "form-control" %>
+        </div>
+        <div class="form-group">
+          <%= f.label :password_confirmation %>
+          <%= f.password_field :password_confirmation, :class => "form-control" %>
+        </div>
+        <div class="checkbox">
+          <label class='checkbox agreement'> <%= f.check_box :agreement %> I have read and accept the <%= link_to 'terms of service', page_path('terms') %></label>
+        </div>
+        <%= f.submit "Register", :class => "btn btn-primary" %>
+      </div>
     </div>
-
-    <div class="form-group">
-        <%= f.label :affiliation %>
-        <%= f.text_field :affiliation, :class => "form-control" %>
-    </div>
-
-    <div class="form-group">
-        <%= f.label :password %>
-        <%= f.password_field :password, :class => "form-control" %>
-    </div>
-
-    <div class="form-group">
-        <%= f.label :password_confirmation %>
-        <%= f.password_field :password_confirmation, :class => "form-control" %>
-    </div>
-
-    <div class="form-group">
-        <%= f.label :rep_group_list, "Class" %><br />
-        <% if Apartment::Tenant.current == 'demo' %>
-            <%= f.text_field :rep_group_list, 'data-role' => "tagsinput", 'placeholder' => "Enter class name(s)", :class => "form-control" %>
-        <% else %>
-            <%= f.text_field :rep_group_list, 'data-role' => "tagsinput", 'placeholder' => "Enter class name(s)", :class => "form-control" %>
-        <% end %>
-
-        <span class="help-block">Please enter the class(es) you would like to join. Press ENTER after each class.</span>
-
-    </div>
-
-    <div class="checkbox">
-        <label class='checkbox agreement'> <%= f.check_box :agreement %> I have read and accept the <%= link_to 'terms of service', page_path('terms') %></label>
-    </div>
-
-    <%= f.submit "Register", :class => "btn btn-primary" %>
-
-</div><!--/well -->
+  </div>
+  <!--/well -->
 <% end %>
-
-<div class="well devise">
+<div class="panel panel-default devise">
+  <div class="panel-heading">
     <h4>Or find your domain</h4>
-    <form>
-    <div class="form-group">
+  </div>
+  <form>
+    <div class="panel-body">
+      <div class="form-group">
         <select id="registration-chooser" class="form-control">
           <% if !Apartment::tenant_names.blank? %>
             <% for database in Apartment::tenant_names.map{|d| d.downcase}.sort! %>
@@ -68,14 +75,16 @@
             <% end %>
           <% end %>
         </select>
+      </div>
     </div>
-    </form>
-</div><!--/well -->
+  </form>
+</div>
+<!--/well -->
 <script type="text/javascript">
-$("document").ready(function(){
-    $("#registration-chooser").change(function(){
-        window.location = $(this).val();
-    });
-});
+  $("document").ready(function(){
+      $("#registration-chooser").change(function(){
+          window.location = $(this).val();
+      });
+  });
 </script>
 <%#= render "links" %>

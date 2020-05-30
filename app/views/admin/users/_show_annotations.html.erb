@@ -1,0 +1,49 @@
+<script type="text/javascript" charset="utf-8">
+jQuery(function ($) {
+    var endpoint = location.protocol+'//'+'<%= ENV["API_URL"] %>/search';
+    var token = '<%= session["jwt"] %>';
+    var loadOptions = {
+        'host': location.host,
+        'user': "<%= user.email %>",
+        'mode': 'user',
+        'context': 'dashboard'
+    };
+     $('#annotation-lister').on('click', function () {
+        $.ajax({ 
+            type : "GET", 
+            url : endpoint, 
+            data: loadOptions,
+            headers: {'x-annotator-auth-token': token},
+            success: function(result) { 
+                if(result && result.length > 0)
+                    print_annos(result);
+                else
+                    $("#annotation-list").html('No annotations found.');    
+            }, 
+            error: function(result) { 
+                console.log(error);
+            } 
+        }); 
+     });
+    function print_annos(data){
+        collected_annos = '';
+        for (const anno of data){
+            collected_annos += ("<div class='received-anno'><h4>Annotation created " + window.formatDateTime(anno.created) +"</h4><table class='annos-table'>")
+            if(anno.quote && anno.quote != '')
+                collected_annos += ("<tr><td><strong>Quote</strong></td><td> " + anno.quote + "</td></tr>");
+            if(anno.tags && anno.tags != [] && anno.tags != '')
+                collected_annos += ("<tr><td><strong>Tags</strong></td><td> " + anno.tags + "</td></tr>");
+            if(anno.text && anno.text != '')
+                collected_annos += ("<tr><td><strong>Comment</strong></td><td> " + anno.text+ "</td></tr>");
+            collected_annos += ("<tr><td><strong>Document</strong></td><td>  " + anno.uri+ "</td></tr>");
+            collected_annos += "</table></div><br />";
+        }
+        $("#annotation-list").html(collected_annos);
+
+    }
+});
+</script>
+
+<div id="annotation-list">
+    <a href="#" id="annotation-lister">Click here to fetch annotations.</a>
+</div>

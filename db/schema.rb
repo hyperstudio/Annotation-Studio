@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191125040751) do
+ActiveRecord::Schema.define(version: 20200529183409) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -127,10 +127,11 @@ ActiveRecord::Schema.define(version: 20191125040751) do
   end
 
   create_table "groups", force: :cascade do |t|
-    t.string  "name"
-    t.integer "owner_id"
-    t.boolean "ideaSpaceOn", default: false
-    t.index ["name"], name: "index_groups_on_name", unique: true, using: :btree
+    t.string   "name"
+    t.integer  "owner_id"
+    t.boolean  "ideaSpaceOn", default: false
+    t.datetime "created_at",  default: -> { "now()" }, null: false
+    t.datetime "updated_at",  default: -> { "now()" }, null: false
     t.index ["owner_id"], name: "index_groups_on_owner_id", using: :btree
   end
 
@@ -179,13 +180,14 @@ ActiveRecord::Schema.define(version: 20191125040751) do
   end
 
   create_table "oauth_applications", force: :cascade do |t|
-    t.string   "name",                      null: false
-    t.string   "uid",                       null: false
-    t.string   "secret",                    null: false
-    t.text     "redirect_uri",              null: false
-    t.string   "scopes",       default: "", null: false
+    t.string   "name",                        null: false
+    t.string   "uid",                         null: false
+    t.string   "secret",                      null: false
+    t.text     "redirect_uri",                null: false
+    t.string   "scopes",       default: "",   null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "confidential", default: true, null: false
     t.index ["uid"], name: "index_oauth_applications_on_uid", unique: true, using: :btree
   end
 
@@ -276,7 +278,7 @@ ActiveRecord::Schema.define(version: 20191125040751) do
     t.index ["slug"], name: "index_users_on_slug", using: :btree
   end
 
-  add_foreign_key "groups", "users", column: "owner_id"
-  add_foreign_key "memberships", "groups"
-  add_foreign_key "memberships", "users"
+  add_foreign_key "groups", "users", column: "owner_id", on_delete: :cascade
+  add_foreign_key "memberships", "groups", on_delete: :cascade
+  add_foreign_key "memberships", "users", on_delete: :cascade
 end

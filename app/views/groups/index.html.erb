@@ -2,26 +2,124 @@
 <%= content_for :body_id, 'groups' %>
 <%= content_for :body_class, 'index' %>
 <%= stylesheet_link_tag "groups" %>
-<div class="row">
-  <div class="col-md-12">
-    <div class="panel panel-default" id="dashboard-documents">
-      <div class="panel-heading">
-        <span class="panel-title"><%= ENV["CLASS_TERM_PLURAL"].capitalize %></span>
-        <ul class="nav nav-tabs nav-tabs-xs pull-right" id="group-tabs" role="tablist">
-          <li class="active"><a href="#groups" data-toggle="tab"><span class="badge"><%= current_user.rep_group_list.size %></span> <%= ENV["CLASS_TERM_PLURAL"].capitalize %></a></li>
-        </ul>
-      </div><!-- / .panel-heading -->
-        <div class="tab-content">
-          <div class="tab-pane no-padding fade active in" id="groups">
-            <table class="table table-striped table-bordered">
-            <% current_user.rep_group_list.each do |group| %>
-                <tr>
-                  <td><%= group %></td>
-                </tr>
+<div class="panel panel-default" id="groups-panel">
+  <div class="panel-heading">
+    <span class="panel-title">Groups</span>
+  </div>
+  <!-- / .panel-heading -->
+  <div class="tab-content">
+    <div class="tab-pane no-padding active" id="all">
+      <table class="table table-striped table-bordered">
+        <tr>
+          <th>Group Name</th>
+          <th>Role</th>
+          <th>Owner</th>
+          <th>Members</th>
+          <th id="button-column">Actions</th>
+        </tr>
+        <% @groups.each do |g| %>
+          <tr>
+            <td><%= link_to g.name, group_path(id: g.id) %> </td>
+            <% myRole = Membership.find_by(group_id: g.id, user_id: current_user.id).role %>
+            <td>
+              <% case myRole %>
+              <% when 'owner' %>
+              <% labelcolor = 'label-primary' %>
+              <% when 'manager' %>
+              <% labelcolor = 'label-warning' %>
+            <% else %>
+              <% labelcolor = 'label-default' %>
+            <% end %>
+            <span class="label <%= labelcolor %>"><%= myRole %> </span>
+          </td>
+          <td><%= User.find(g.owner_id).first_name_last_initial %> </td>
+          <% m = Membership.where(group_id: g.id) %>
+          <td><%= m.size %></td>
+          <td>
+            <% if myRole == "owner" or myRole == "manager" %>
+              <%= link_to edit_group_path(id: g.id) , :class => 'btn btn-default btn-sm' do %>
+                <i class="glyphicon glyphicon-pencil" title="Edit"></i> Manage
               <% end %>
-            </table>
-          </div>
-        </div>
-     </div><!--/panel -->
-	</div><!--/col-md-12 -->
-</div><!--/row -->
+            <%end%>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+<div class="panel-footer doc-set-footer">
+  <% if can? :create, Group %>
+    <%= link_to group_path('new'), class: 'btn btn-primary create-new-button' do %>
+      <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Create New Group
+    <% end %>
+  <% end %>
+</div>
+</div>
+<!--/.panel-->
+<%= render "groups/permissions" %>
+
+<script type="text/javascript">
+
+  function startGroupsIndexTour() {
+
+    <% managedGroupId = -1 %>
+    <% managedGroupNum = 0 %>
+    <% if !@groups.empty? %>
+      <% @groups.each do |g| %>
+        <% managedGroupNum += 1 %>
+        <% if g.owner_id == current_user.id or is_manager(g.id) %>
+          <% managedGroupId = g.id.to_i %>
+          <% break %>
+        <% end %>
+      <% end %>
+    <% end %>
+
+    var intro = introJs();
+    intro.setOptions({
+      doneLabel: 'OK',
+      skipLabel: 'Exit tour',
+      disableInteraction: true,
+      showBullets: false,
+      showStepNumbers: false,
+      scrollToElement: false,
+      exitOnOverlayClick: true,
+      steps: [
+        {
+          element: '#groups-panel',
+          intro: "This is the Groups overview page."
+        },
+        {
+          element: '#groups-panel .tab-content',
+          intro: "This overview tells you things about all of your Groups, including your role, the owner's name, and the number of members."
+        },
+        {
+          element: '#permissions-panel',
+          intro: "Below is a helpful cheatsheet to explain what each role means."
+        },
+        <% if managedGroupId == -1 %>
+          {
+            element: '#groups-panel .tab-content .tab-pane table tbody tr:nth-of-type(2) td:first-of-type',
+            intro: "Let's navigate to this Group's detail view."
+          }
+        <% else %>
+          {
+            element: '#groups-panel .tab-content .tab-pane table tbody tr:nth-of-type(<%= (managedGroupNum+1).to_s %>) td:first-of-type',
+            intro: "Let's navigate to this Group's detail view."
+          }
+        <% end %>
+      ]
+    });
+    intro.start().oncomplete(function() {
+      <% if !@groups.empty? %>
+        <% if managedGroupId == -1 %>
+          window.location.href = "<%= group_path(id: @groups[0].id, tour: 'true') %>";
+        <% else %>
+          window.location.href = "<%= group_path(id: managedGroupId, tour: 'true') %>";
+        <% end %>
+      <% end %>
+    });
+  }
+  if("<%= params[:tour] %>" == "true"){
+    startGroupsIndexTour();
+  }
+</script>

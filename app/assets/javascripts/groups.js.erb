@@ -6,8 +6,6 @@ jQuery(function ($) {
 
     var loadOptions = {
         'limit': 20,
-        // 'groups': "<%= current_user.rep_group_list %>".split(/, /),
-        // 'subgroups': "<%= current_user.rep_subgroup_list %>".split(/, /),
         'host': location.host,
         'user': "<%= current_user.email %>",
         'mode': 'user',

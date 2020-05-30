@@ -34,15 +34,12 @@
       "required": true
     },
     "FAVICON": {
-      "required": true
+      "required": false
     },
     "ALERT_LEVEL": {
       "required": true
     },
     "CLASS_TERM": {
-      "required": true
-    },
-    "CLASS_TERM_PLURAL": {
       "required": true
     },
     "SHOW_WELCOME_MESSAGE": {
@@ -55,12 +52,6 @@
       "required": true
     },
     "GLOBAL_ALERT": {
-      "required": true
-    },
-    "GROUP_TERM_PLURAL": {
-      "required": true
-    },
-    "ALT_DEFAULT_USER_GROUP": {
       "required": true
     },
     "ANNOTATOR_FILTER": {
@@ -99,28 +90,7 @@
     "CONFIRMATION_GRACE_PERIOD": {
       "required": true
     },
-    "DEFAULT_NEW_USER_GROUP": {
-      "required": true
-    },
-    "DEFAULT_USERS_CAN_CHOOSE_GROUPS": {
-      "required": true
-    },
-    "DEFAULT_USERS_CAN_CONTROL_PERMISSIONS": {
-      "required": true
-    },
-    "DEFAULT_USERS_CAN_CREATE_TEXTS": {
-      "required": true
-    },
-    "DEFAULT_USERS_CAN_SEE_OTHERS_WORK": {
-      "required": true
-    },
-    "DEFAULT_USER_GROUP": {
-      "required": true
-    },
     "EMAIL_DOMAIN": {
-      "required": true
-    },
-    "ENVIRONMENT_TAG": {
       "required": true
     },
     "EXCEPTION_PREFIX": {

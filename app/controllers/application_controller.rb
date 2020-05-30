@@ -31,6 +31,10 @@ class ApplicationController < ActionController::Base
     render action: 404, status: :not_found
   end
 
+  rescue_from Apartment::TenantNotFound do |exception|
+    render action: 404, status: :not_found
+  end
+
   def current_tenant
     Apartment::Tenant.current
   end
@@ -47,8 +51,8 @@ class ApplicationController < ActionController::Base
   protected
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:account_update, keys: [:firstname, :lastname, :rep_group_list, :rep_subgroup_list, :affiliation])
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:firstname, :lastname, :rep_group_list, :agreement, :affiliation])
+    devise_parameter_sanitizer.permit(:account_update, keys: [:firstname, :lastname, :affiliation])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:firstname, :lastname, :agreement, :affiliation])
   end
 
 end

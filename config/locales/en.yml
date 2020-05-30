@@ -19,7 +19,3 @@ en:
   helpers:
     submit:
       update: "Save changes"
-  active_admin:
-    batch_actions:
-      labels:
-        make_admin: "Create admins w/"

@@ -1,16 +1,80 @@
 .user-highlight {
-    font-style: italic;
+  font-style: italic;
 }
 
 #annotation-list li {
-    margin:0 8px;
-    padding: 8px;
-    border-bottom: 1px solid #ddd;
+  margin: 0 8px;
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
 }
 #annotation-list {
-    border: 1px solid #dddddd;
-    border-collapse: separate;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    border-radius: 4px;
+  border: 1px solid #dddddd;
+  border-collapse: separate;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+}
+
+#group-management-tour {
+  position: absolute;
+  right: 15px;
+  top: 5.5px;
+}
+
+.editable-title{
+  background-color: transparent;
+  min-width:0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  max-height: 20px !important;
+  border-top: none;
+  border-left: none;
+  border-right:none;
+  border-bottom: 1px dashed gray;
+  font-weight: 400 !important;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 60%;
+}
+
+
+#edit-title-btn{
+  cursor: pointer;
+}
+
+.form-control-inline {
+  display:inline;
+}
+.editing-title{
+  background-color: white;
+  font-weight: 400 !important;
+  white-space: nowrap;
+}
+
+.editing-title-btns {
+  display:inline;
+  margin-left: 5px;
+}
+.editing-group {
+  display:flex;
+  flex-direction: row;
+  max-width: 65%;
+}
+
+@media (min-width: 767px) {
+  .editable-title{
+  max-width: 70%;
+  }
+
+  .editing-group {
+  max-width: 75%;
+  } 
+}
+@media (min-width: 979px) {
+  .editable-title{
+  max-width: 80%;
+  }
+  .editing-group {
+  max-width: 85%;
+  } 
 }

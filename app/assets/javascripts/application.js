@@ -24,6 +24,7 @@
 //= require backbone
 //= require summernote
 //= require summernote-cleaner
+//= require summernote-en-US
 //= require showdown
 //= require gettext
 //= require xpath
@@ -46,9 +47,13 @@
 //= require_tree ./views
 //= require_tree ./routers
 //= require self_removing
-//= require remember_tabs
 //= require show_password_fields
 //= require format_date
-//= require dont_overflow_dropdown
 //= require unload_confirmation
 //= require sign-in
+//= require_tree ./typeahead
+//= require dashboard
+//= require intro.min
+//= require semantic-ui-transition.min
+//= require semantic-ui-dropdown
+//= require termly

@@ -1,15 +1,16 @@
   source 'https://rubygems.org'
 
-ruby '2.2.4'
+ruby '2.5.8'
 
-gem 'rails', '5.0.0'
+gem 'rails', '5.0.7.2'
 gem 'rack', '2.0.8'
-gem 'puma'
+gem 'puma', '4.3.1'
 
 gem 'pg'
 
 gem 'scout_apm'
 
+gem 'rails_serve_static_assets', '0.0.5'
 gem 'devise', '4.7.1'
 gem "switch_user"
 gem 'cancancan', '~> 1.10'
@@ -44,7 +45,7 @@ group :development do
 end
 
 group :assets do
-  gem "therubyracer", :platforms => :ruby
+  gem "therubyracer", '0.12.3', :platforms => :ruby
   gem 'coffee-rails', '4.2.2'
   gem 'uglifier'
   gem 'underscore-rails'
@@ -72,6 +73,8 @@ gem 'jquery-rails', '4.3.5'
 gem 'jquery-ui-rails'
 gem 'tinymce-rails'
 
+gem 'xmlrpc'
+gem "fog-xenserver", '0.3.0'
 gem "fog"
 gem "mini_magick"
 gem "carrierwave"
@@ -84,14 +87,16 @@ gem "nokogiri", '1.9.1'
 
 gem 'tilt', '1.1'
 gem 'sass-rails', '5.0.7'
-gem 'activeadmin', '1.0.0.pre5'
+gem 'activeadmin', '2.4.0'
 
 gem 'will_paginate', '3.1.7'
 gem 'will_paginate-bootstrap'
 
 gem 'exception_notification'
 
-gem "rest-client"
+gem "rest-client", "2.1.0"
 
-gem "doorkeeper", "5.0.0"
+gem "doorkeeper", "~>5.3.1"
 gem "octokit", "~> 4.0"
+
+gem 'rack-cors'

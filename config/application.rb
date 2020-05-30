@@ -36,7 +36,7 @@ module AnnotationStudio
     # parameters by using an attr_accessible or attr_protected declaration.
     # config.active_record.whitelist_attributes = true
 
-    config.assets.precompile += %w(active_admin.css active_admin.js)
+    config.assets.precompile += %w(active_admin.js active_admin.css)
 
     # Enable the asset pipeline
     config.assets.enabled = true
@@ -45,5 +45,23 @@ module AnnotationStudio
     config.assets.version = '2.0'
 
     config.assets.initialize_on_precompile = false
+
+    # sanitization allowed tags
+    config.action_view.sanitized_allowed_attributes = ["href", "src", "width", "height", "alt", "cite", "datetime", "title", "class", "name", "xml:lang", "abbr"]
+    config.action_view.sanitized_allowed_tags = ["strong", "em", "b", "i", "p", "code", "pre", "tt", "samp", "kbd", "var", "sub", "sup", "dfn", "cite", "big", "small", "address", "hr", "br", "div", "span", "h1", "h2", "h3", "h4", "h5", "h6", "ul", "ol", "li", "dl", "dt", "dd", "abbr", "acronym", "a", "img", "blockquote", "del", "ins", "table", "tr", "td"]
+
+    # force HTTPS on all environments
+    config.force_ssl = true
+
+    # add lib to eager load paths
+    config.eager_load_paths << "#{Rails.root}/lib"
+
+    config.middleware.insert_before 0, Rack::Cors do
+      allow do
+        origins '*'
+        resource '/api/*', headers: :any, methods: [:get, :post, :options]
+      end
+    end
+
   end
 end

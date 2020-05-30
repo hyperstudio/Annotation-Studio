@@ -1,0 +1,23 @@
+<%= content_for :page_title, 'New Group' %>
+<%= content_for :body_id, 'groups' %>
+<%= content_for :body_class, 'new' %>
+<div class="panel panel-default">
+  <div class="panel-heading"><span class="panel-title">Create a New Group</span></div>
+  <div class="panel-body" >
+    <div class="col-lg-6">
+      <%= form_for Group.new do |f| %>
+        <h4><%= f.label :group, 'Name' %></h4>
+        <div class="input-group input-group-lg">
+          <%= f.text_field :name, class: "form-control", placeholder: "Group name" %>
+          <%= f.hidden_field :owner_id, value: current_user.id %>
+          <span class="input-group-btn">
+            <%= f.submit 'Create', class: "btn btn-primary"%>
+          </span>
+        </div>
+      <% end %>
+    </div>
+    <div class="col-lg-6">
+      <p class="help-block">Choose a name for your Group. You can start adding members after you click Create.</p>
+    </div>
+  </div>
+</div>

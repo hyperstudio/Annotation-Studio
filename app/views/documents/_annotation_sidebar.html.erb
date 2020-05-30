@@ -3,8 +3,22 @@
 <script type="text/javascript" charset="utf-8">
 var document_slug = "<%= @document.slug %>";
 var default_state = <%= @document.default_state.present? ? (raw @document.default_state) : (raw "''") %>;
-var groups = "<%= current_user.rep_group_list %>".split(/, /);
-var subgroups = "<%= current_user.rep_subgroup_list %>".split(/, /);
+
+//testing per-group annotations
+var userGroupIds = [];
+var docGroupIds = [];
+
+<% current_user.groups.each do |g| %>
+  userGroupIds.push(<%=g.id %>);
+<% end %>
+
+<% @document.groups.each do |g| %>
+  docGroupIds.push(<%=g.id %>);
+<% end %>
+
+// get intersection of document's groups and user's groups
+var group_ids = userGroupIds.filter(value => docGroupIds.includes(value));
+
 var annotatorOptions = {'readOnly': <%= @document.archived? %>};
 var filter_user = "<%= current_user.email %>";
 var token = '<%= session["jwt"] %>';
@@ -27,10 +41,20 @@ var plugin_options = function() {
       prefix: api_url,
       annotationData: {
         'uri': doc_uri,
-        "groups": groups,
-        "subgroups": subgroups
+        'group_ids': group_ids,
+        'doc_title': '<%= @document.title %>',
+        'doc_author': '<%= @document.author %>',
+        'doc_date': '<%= @document.publication_date %>',
+        'doc_publisher': '<%= @document.publisher %>',
+        'doc_edition': '<%= @document.edition %>',
+        'doc_source': '<%= @document.source %>'
       },
-      loadFromSearch: annotation_studio.loadOptions({ limit: 100 })
+      // loadFromSearch: annotation_studio.loadOptions({ mode: default_state[0], limit: 100 })
+
+      //default_state is nil for all current documents so set to empty string by var @ line 5
+      // changed code for now to get mode=user as default.
+      loadFromSearch: annotation_studio.loadOptions({limit: 100 })
+
     },
     Markdown: false, // use RichText instead
     AnnotateItPermissions: false, // this is built into the kitchen sink, so cancel it

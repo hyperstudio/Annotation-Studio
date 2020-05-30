@@ -8,24 +8,26 @@ Doorkeeper.configure do
     # Put your resource owner authentication logic here.
     # Example implementation:
      # User.find_by_id(session[:user_id]) || redirect_to(new_user_session_url)
-
-    session[:user_return_to] = request.fullpath
-    current_user || redirect_to(new_user_session_url)
+     # session[:user_return_to] = request.fullpath
+     # current_user || redirect_to(new_user_session_url)
+    if request.params[:ideaspace]
+      session[:ideaspace] ||= request.params[:ideaspace]
+    end
+    current_user || warden.authenticate!(:scope => :user)
   end
 
-  # If you want to restrict access to the web interface for adding oauth authorized applications, you need to declare the block below.
-  # admin_authenticator do
-  #   # Put your admin authentication logic here.
-  #   # Example implementation:
-  #   Admin.find_by_id(session[:admin_id]) || redirect_to(new_admin_session_url)
-  # end
+  # # If you want to restrict access to the web interface for adding oauth authorized applications, you need to declare the block below.
+  admin_authenticator do
+    admin_key = session['warden.user.admin_user.key']
+    admin_key.nil? ? redirect_to(new_admin_user_session_url) : AdminUser.find_by_id(admin_key[0][0])
+  end
 
   # Authorization Code expiration time (default 10 minutes).
   # authorization_code_expires_in 10.minutes
 
   # Access token expiration time (default 2 hours).
   # If you want to disable expiration, set this to nil.
-  # access_token_expires_in 2.hours
+  access_token_expires_in 12.hours
 
   # Assign a custom TTL for implicit grants.
   # custom_access_token_expires_in do |oauth_client|
@@ -52,8 +54,8 @@ Doorkeeper.configure do
   # Define access token scopes for your provider
   # For more information go to
   # https://github.com/doorkeeper-gem/doorkeeper/wiki/Using-Scopes
-  # default_scopes  :public
-  # optional_scopes :write, :update
+   default_scopes  :public
+   optional_scopes :write, :update
 
   # Change the way client credentials are retrieved from the request object.
   # By default it retrieves first from the `HTTP_AUTHORIZATION` header, then
@@ -78,7 +80,7 @@ Doorkeeper.configure do
   # by default in non-development environments). OAuth2 delegates security in
   # communication to the HTTPS protocol so it is wise to keep this enabled.
   #
-  force_ssl_in_redirect_uri !Rails.env.development?
+  force_ssl_in_redirect_uri
 
   # Specify what grant flows are enabled in array of Strings. The valid
   # strings and the flows they enable are:

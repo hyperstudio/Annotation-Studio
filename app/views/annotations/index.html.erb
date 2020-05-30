@@ -14,25 +14,22 @@
     var loadOptions = JSON.parse('<%== @loadOptions %>');
 
     var myLoadOptions = {'mode': 'user'};
-        classLoadOptions = {'mode': 'class'};
-        groupLoadOptions = {'mode': 'group'};
+        classLoadOptions = {'mode': 'groupId'};
     for (var attrname in loadOptions) {
         myLoadOptions[attrname] = loadOptions[attrname];
         classLoadOptions[attrname] = loadOptions[attrname];
-        groupLoadOptions[attrname] = loadOptions[attrname];
     };
     widget.listAnnotations('my-annotation-list', myLoadOptions, endpoint, token);
     widget.listAnnotations('class-annotation-list', classLoadOptions, endpoint, token);
-    widget.listAnnotations('group-annotation-list', groupLoadOptions, endpoint, token);
   });
 </script>
 <script type="text/template" id="user-comment-template">
 	<span class="user-highlight"><span class="pull-right">{{formattedDate}}</span><div class="ellipsis">&raquo; <a href="{{uri}}#hl{{uuid}}">{{{quote}}}</a></div></span>
-  <span class="user-comment"><div class="ellipsis long">{{{text}}}</div><div class="secondary-text">{{title}} ({{username}}) <span class="label label-info">{{class}}</span></div></span>
+  <span class="user-comment"><div class="ellipsis long">{{{text}}}</div><div class="secondary-text">{{title}} ({{username}}) <span class="label label-info">{{groups}}</span></div></span>
 </script>
 <script type="text/template" id="user-highlight-template">
-	<span class="user-highlight"><div class="ellipsis long">&raquo; <a href="{{uri}}#hl{{uuid}}">{{{quote}}}</a></div></span>
-	<span class="user-comment"><div class="secondary-text">{{title}} ({{username}}) <span class="label label-info">{{class}}</span></div></span>
+	<span class="user-highlight"><span class="pull-right">{{formattedDate}}</span><div class="ellipsis long">&raquo; <a href="{{uri}}#hl{{uuid}}">{{{quote}}}</a></div></span>
+	<span class="user-comment"><div class="secondary-text">{{title}} ({{username}}) <span class="label label-info">{{groups}}</span></div></span>
 </script>
 <div class="row">
   <div class="col-md-12">

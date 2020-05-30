@@ -3,7 +3,7 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 body {
-  padding: 100px 0 100px 0;
+  padding: 120px 0 100px 0;
 }
 
 #document-text, #document-chapters {
@@ -18,9 +18,6 @@ body {
 	margin-top:10px;
 }
 
-#annotation-well {
-  // margin-top: 50px;
-}
 
 .nav > li {
   color: whitesmoke;
@@ -30,16 +27,16 @@ body {
 
   height: 80px;
 
-  .create-new-button {  
+  .create-new-button {
     margin-top: 10px;
   }
-  
+
   .pagination-controls {
     float: right;
     margin-right: 10px;
     margin-top: -10px;
-  }  
-  
+  }
+
 }
 
 #tool-sidebar {

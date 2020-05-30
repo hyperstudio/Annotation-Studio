@@ -61,7 +61,6 @@
 body .navbar #leftburger,body .navbar #rightburger {
 	display: none !important; /* don't show this until it has some functionality */
 }
-
 body#documents.show .navbar #leftburger,body#documents.show .navbar #rightburger {
 	display: block !important; /* show the nav on the document edit page, only. */
 }
@@ -88,7 +87,7 @@ body#documents.show .navbar #leftburger,body#documents.show .navbar #rightburger
   z-index: 5;
   padding: 40px;
   padding-top: 60px;
-	padding-bottom: 20px;
+  padding-bottom: 20px;
 }
 
 #mainmenu {
@@ -120,7 +119,7 @@ body#documents.show .navbar #leftburger,body#documents.show .navbar #rightburger
 .menu-button {
 	border: none;
 	background: transparent;
-	color: #9d9d9d;
+	color: #fff;
 	padding-top: 15px;
 	padding-bottom: 15px;
 }
@@ -136,7 +135,7 @@ body#documents.show .navbar #leftburger,body#documents.show .navbar #rightburger
 
 .well.devise, #omniauth-links {
 	width: 360px;
-	padding-top: 0;
+	margin-bottom:0;
 }
 
 .well.devise h4 {
@@ -145,15 +144,11 @@ body#documents.show .navbar #leftburger,body#documents.show .navbar #rightburger
 	text-align: center;
 	font-weight: bold;
 	font-size: 24px;
-	margin-top: 0;
+	margin-top: -10px;
 }
 
 #manual-login {
   display: none;
-}
-
-.dropdown-menu-right {
-	padding-top: 0;
 }
 
 #navbar {

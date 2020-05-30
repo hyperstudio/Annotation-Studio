@@ -66,6 +66,16 @@
         </div>
       </div>
     </nav>
+    <% elsif current_page?(page_path('terms')) || current_page?(page_path('privacypolicy')) || current_page?(page_path('cookiepolicy')) %>
+    <nav class="navbar navbar-default navbar-fixed-top hidden-xs" id="lower-navbar">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-8">
+            <%= render "shared/breadcrumbs" %>
+          </div>
+        </div>
+      </div>
+    </nav>
     <% end %>
 
 	<% if params[:controller] == 'devise/sessions' %>

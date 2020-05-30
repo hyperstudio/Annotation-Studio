@@ -1,53 +1,13 @@
 <%= content_for :page_title, "Annotation" %>
-<style type="text/css" media="screen">
-.user-highlight {
-    font-style: italic;
-}
-
-.nav-tabs > li.active a, .nav-tabs > li.active a:hover {
-    background-color: rgb(238, 238, 238);
-}
-.tab-pane {
-/*  border-right: 1px solid #ddd;
-    border-left: 1px solid #ddd;
-    border-bottom: 1px solid #ddd;
-*/}
-
-/*.nav-tabs {
-    border-bottom: 1px solid #eee;
-}
-.nav {
-    margin-bottom:0;
-}
-*/
-#annotation-list li {
-    margin:0 8px;
-    padding: 8px;
-    border-bottom: 1px solid #ddd;
-}
-#annotation-list {
-    border: 1px solid #dddddd;
-    border-collapse: separate;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    border-radius: 4px;
-}
-
-
-
-</style>
 <%= javascript_include_tag "widget" %>
 <script type="text/javascript" charset="utf-8">
 jQuery(function ($) {
     var widget = new Widget.App();
     var endpoint = location.protocol+'//'+'<%= ENV["API_URL"] %>';
     var token = '<%= session["jwt"] %>';
-    // Backbone.history.start({pushState: true, root: window.location})
 
     var loadOptions = {
         'limit': 20,
-        // 'groups': "<%= current_user.rep_group_list %>".split(/, /),
-        // 'subgroups': "<%= current_user.rep_subgroup_list %>".split(/, /),
         'host': location.host,
         'user': "<%= current_user.email %>",
         'mode': 'user',
@@ -81,20 +41,6 @@ jQuery(function ($) {
                         <span class="user-highlight"><a href="{{uri}}#hl{{uuid}}" target="_blank">{{{quote}}}</a></span>
                     </script>
                 </ul>
-            </div>
-            <div class="tab-pane" id="team">
-            <table class="table table-bordered">
-                <tr>
-                  <td>Coming soon...</td>
-                </tr>
-            </table>
-            </div>
-            <div class="tab-pane" id="group">
-            <table class="table table-bordered">
-                <tr>
-                  <td>Coming soon...</td>
-                </tr>
-            </table>
             </div>
         </div>
     </div><!--/col-md-4 -->

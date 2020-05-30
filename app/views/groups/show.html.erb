@@ -1,58 +1,105 @@
-<%= content_for :page_title, 'Groups' %>
+<%= content_for :page_title, "Group: #{@group.name}" %>
+<%= content_for :body_id, 'groups' %>
+<%= content_for :body_class, 'show' %>
 <%= stylesheet_link_tag "groups" %>
-<%= javascript_include_tag "widget" %>
-<script type="text/javascript">
-jQuery(function ($) {
-    var widget = new Widget.App();
-    var endpoint = location.protocol+'//'+'<%= ENV["API_URL"] %>';
-    var token = '<%= session["jwt"] %>';
-    // Backbone.history.start({pushState: true, root: window.location})
+<% if in_group(params[:id])%>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <span class="panel-title"> <%= @group.name %> </span>
+    </div>
+    <!-- / .panel-heading -->
+    <div class="panel-body">
+      <div class="col-md-9">
+        <table class="table table-striped table-bordered">
+          <tr>
+            <th> Name </th>
+            <th> Role </th>
+          </tr>
+          <% if !@memberships.empty? %>
+            <% @memberships.includes(:user).each do |m| %>
+              <tr>
+                <% @user = m.user %>
+                <td> <%= @user.firstname + " " + @user.lastname %></td>
+                <td>
+                  <% case m.role %>
+                  <% when 'owner' %>
+                    <% labelcolor = 'label-primary' %>
+                  <% when 'manager' %>
+                    <% labelcolor = 'label-warning' %>
+                  <% else %>
+                    <% labelcolor = 'label-default' %>
+                  <% end %>
+                  <span class="label <%= labelcolor %>"><%= m.role %> </span>
+                </td>
+              </tr>
+            <% end #.each %>
+          <% end #if%>
+        </table>
+      </div>
+      <div class="col-md-3">
+        <% if is_owner(params[:id]) or is_manager(params[:id]) %>
+          <%= link_to edit_group_path(id: @group.id) , :class => 'btn btn-primary' do %>
+            <i class="glyphicon glyphicon-pencil" title="Edit"></i> Manage
+          <% end %>
+        <% end %>
+        <% unless is_owner(params[:id]) %>
+          <%= link_to leave_path(:id => params[:id]), {:class=> 'btn btn-danger', data: {confirm: "Are you sure you want to leave this group?", toggle: 'tooltip', placement: 'top', original_title: 'Delete'}} do %>
+            <i class="glyphicon glyphicon-remove" title="Edit"></i> Leave
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <%= render "groups/permissions" %>
 
-    var loadOptions = {
-        'limit': 20,
-        // 'groups': "<%= current_user.rep_group_list %>".split(/, /),
-        // 'subgroups': "<%= current_user.rep_subgroup_list %>".split(/, /),
-        'host': location.host,
-        'user': "<%= current_user.email %>",
-        'mode': 'user',
-        'context': 'dashboard',
-    };
-    widget.listAnnotations(loadOptions, endpoint, token);
-});
-</script>
-<div class="row">
-    <div class="col-md-12">
-        <ul class="nav nav-tabs" id="document-tabs">
-          <li class="active"><a href="#mine" data-toggle="tab"><span class="badge"></span> Mine</a></li>
-          <li><a href="#group" data-toggle="tab"><span class="badge"></span> <%= ENV["GROUP_TERM_PLURAL"].capitalize %></a></li>
-          <li><a href="#class" data-toggle="tab"><span class="badge"></span> <%= ENV["CLASS_TERM_PLURAL"].capitalize %></a></li>
-        </ul>
+  <script type="text/javascript">
+    function startGroupDetailTour() {
 
-        <div class="tab-content">
-            <div class="tab-pane active" id="mine">
-                <ul id="annotation-list" class="unstyled">
-                    <script type="text/template" id="user-comment-template">
-                        <span class="user-comment"><a href="{{uri}}#hl{{uuid}}" target="_blank">{{{text}}}</a></span>
-                    </script>
-                    <script type="text/template" id="user-highlight-template">
-                        <span class="user-highlight"><a href="{{uri}}#hl{{uuid}}" target="_blank">{{{quote}}}</a></span>
-                    </script>
-                </ul>
-            </div>
-            <div class="tab-pane" id="group">
-            <table class="table table-bordered">
-                <tr>
-                  <td>Coming soon...</td>
-                </tr>
-            </table>
-            </div>
-            <div class="tab-pane" id="class">
-            <table class="table table-bordered">
-                <tr>
-                  <td>Coming soon...</td>
-                </tr>
-            </table>
-            </div>
-        </div>
-    </div><!--/col-md-4 -->
-</div><!--/row -->
+      var intro = introJs();
+      intro.setOptions({
+        doneLabel: 'OK',
+        skipLabel: 'Exit tour',
+        disableInteraction: true,
+        showBullets: false,
+        showStepNumbers: false,
+        scrollToElement: false,
+        exitOnOverlayClick: true,
+        steps: [
+          {
+            element: '.panel',
+            intro: "This is the detail page for the Group \"<%= @group.name %>\"."
+          },
+          {
+            element: '.panel-body .col-md-9',
+            intro: "The table on the left tells you each Group member's full name and role."
+          },
+          {
+            element: '.panel-body .col-md-3',
+            intro: "Owners and Managers will see a \"Manage\" button here to the right of the table, while Managers and Members will also see a button to \"Leave\" the Group."
+          },
+          <% if is_owner(params[:id]) or is_manager(params[:id]) %>
+            {
+              element: '.panel-body .col-md-3',
+              intro: "Looks like you are an Owner or Manager of this group. Let's navigate to this Group's Management page."
+            }
+          <% else %>
+            {
+              element: '.panel-body .col-md-3',
+              intro: "Looks like you are not an Owner or Manager of this group, so the tour will end here.<br /><br /> If you would like to learn about the Group Management page, please create a new Group (or ask a Group Owner to make you a Manager), then restart this tour from the dashboard."
+            }
+          <% end %>
+        ]
+      });
+      intro.start().oncomplete(function() {
+        <% if is_owner(params[:id]) or is_manager(params[:id]) %>
+          window.location.href = "<%= edit_group_path(id: params[:id], tour: 'true') %>";
+        <% end %>
+      });
+    }
+    if("<%= params[:tour] %>" == "true"){
+      startGroupDetailTour();
+    }
+  </script>
+<% else %>
+  You do not have permission to view this page.
+<% end %>

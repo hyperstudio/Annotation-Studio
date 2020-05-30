@@ -1,0 +1,287 @@
+<%= content_for :page_title, "Manage Group: #{@group.name}" %>
+<%= content_for :body_id, 'groups' %>
+<%= content_for :body_class, 'edit' %>
+<%= stylesheet_link_tag "groups" %>
+<% if is_owner(params[:id]) or is_manager(params[:id]) %>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <%= form_for @group do |f| %>
+        <%= f.hidden_field :group_id, :value => params[:id] %>
+        <%= f.label :name, {:class=>"panel-title"} do %>
+          <%= text_field_tag 'name', @group.name, size: @group.name.length+5, class: 'editable-title' %><a id="edit-title-btn"><i class="fa fa-pencil panel-title"></i> </a>
+        <% end %>
+        <%= f.submit :Save, {:class=>'btn btn-success btn-sm editing-title-btns'} %>
+        <%= f.submit 'Cancel', :type => "reset", :class=>'btn btn-default btn-sm editing-title-btns', :id=>"edit-title-cancel" %>
+      <% end %>
+      <a class="btn btn-default btn-sm" id="group-management-tour"><i class="fa fa-info-circle"></i> &nbsp;How to use this page</a>
+    </div>
+    <!-- / .panel-heading -->
+    <div class="panel-body">
+      <div class="col-md-6" id="table-col">
+        <div class="form-group">
+          <input id="first-name-search" placeholder="Search for a member by name" class="form-control" type="text">
+        </div>
+        <table id="names-table" class="table table-striped table-bordered">
+          <tr>
+            <th> Name </th>
+            <th> Role </th>
+            <% if is_owner(params[:id]) or is_manager(params[:id]) %>
+              <th> Actions </th>
+            <% end #if.is_owner %>
+          </tr>
+          <% if !@memberships.empty? %>
+            <% @memberships.each do |m| %>
+              <tr>
+                <% @user = User.find(m.user_id) %>
+                <td> <!-- doesn't error check for missing last name -->
+                  <%= @user.fullname %>
+                </td>
+                <td>
+                  <% case m.role %>
+                  <% when 'owner' %>
+                    <span class="label label-primary"><%= m.role %> </span>
+                  <% when 'member' %>
+                    <%= form_tag :controller=>'groups', :action => 'update_member_role', :method => :post, :m_id=>m.id,:username => @user.fullname do %>
+                      <%= select_tag :role, options_for_select([ "member", "manager" ], "member"), {onchange: "this.form.submit();"} %>
+                      <%= hidden_field_tag :group_id, params[:id] %>
+                    <% end %>
+                  <% when 'manager' %>
+                    <%= form_tag :controller=>'groups', :action => 'update_member_role', :method => :post, :m_id=>m.id,:username => @user.fullname do %>
+                      <%= select_tag :role, options_for_select([ "member", "manager" ], "manager"), {onchange: "this.form.submit();"} %>
+                      <%= hidden_field_tag :group_id, params[:id] %>
+                    <% end %>
+                  <% else %>
+                    <span class="label label-default"><%= m.role %> </span>
+                  <% end %>
+
+                </td>
+                <% if is_owner(params[:id]) or is_manager(params[:id]) %>
+                  <td>
+                    <% unless m.role == "owner" %>
+                      <%= link_to remove_member_path({:m_id => m.id, :username => @user.fullname}), {:class => 'btn btn-danger btn-sm', data: {confirm: "Are you sure you want to remove this member?", toggle: 'tooltip', placement: 'top', original_title: 'Remove'}} do %>
+                        <i class="glyphicon glyphicon-remove" title="Remove"></i> Remove
+                      <% end %>
+                    <% end %>
+                  </td>
+                <% end %> <!-- end if -->
+              </tr>
+            <% end %> <!-- end loop -->
+          <% end %> <!-- end if -->
+        </table>
+      </div>
+      <% optionsCol = is_owner(params[:id]) ? "3" : "6" %>
+      <div class="col-md-<%= optionsCol %>" id="options-col">
+        <% @i = Invite.find_by(group_id: params[:id]) %>
+        <% if @i && params[:destroy_invite] == "true" %>
+          <% if @i.destroy %>
+            <% flash[:notice] = "Invite link successfully removed." %>
+          <% else %>
+            <% flash[:notice] = "Invite link removal failed." %>
+          <% end %>
+        <% end %>
+        <% if @i && (@i.expiration_date.nil? || @i.expiration_date > Time.now) && params[:destroy_invite] != "true" %>
+          <h5><%= label_tag 'Invite Link' %></h5>
+          <p>Send this link to registered or new users. (If the link is not working, you can <a href="<%= edit_group_path(@group.id, :destroy_invite=>'true') %>">click here to remove it</a> and generate a new one. The old link will no longer work.)</p>
+          <div class="input-group">
+            <%= text_field_tag "Generate Invite Link:", request.base_url + new_user_registration_path(:invite_token => @i.token).to_s, {:size =>40, :class => 'form-control', :id=>"invite-link"} %>
+            <span class="input-group-btn">
+              <%= button_tag 'Copy', {:class=>'btn btn-default',:id=> 'copy-button'} %>
+            </span>
+          </div>
+        <% else %>
+          <% if @i %>
+            <% @i.destroy %>
+          <% end %>
+          <%= form_for Invite.new , :url => invites_path do |f| %>
+            <%= f.hidden_field :group_id, :value => params[:id] %>
+            <h5><%= f.label 'Invite Link' %></h5>
+            <p>Generate an invite link to send to registered or new users.</p>
+            <div class="input-group">
+              <%= f.submit 'Generate',:class=>'btn btn-default' %>
+            </div>
+          <% end #form_for %>
+        <% end #if @i %>
+        <h5><%= label_tag 'Add registered user' %></h5>
+        <p>Automatically add a registered user to this group by entering their email here.</p>
+        <%= form_for @group do |f| %>
+          <div class="input-group">
+            <%= email_field_tag :email, params['search'], :placeholder=> 'User\'s email', :class=>"form-control" %>
+            <span class="input-group-btn">
+              <%= f.submit :Add,:class=>'btn btn-default' %>
+            </span>
+          </div>
+        <% end %> <!-- form_for -->
+      </div>
+      <div class="col-md-3" id="delete-col">
+        <% if ENV["GLOBAL_IDEA_SPACE"] == "true"  && is_owner(params[:id]) %>
+          <%= form_tag :controller=>'groups', :action => 'toggleIS' do %>
+            <h5><%= label_tag :toggleIS, 'Idea Space: ' + @ISstatus %></h5>
+            <p>Enable or disable Idea Space for this group.</p>
+            <%= hidden_field_tag :ideaSpace, 'change' %>
+            <%= hidden_field_tag :group_id, params[:id] %>
+            <%= submit_tag @IStoggle, :class=>'btn btn-default' %>
+          <% end %>
+        <% end %>
+        <% if is_owner(params[:id]) %>
+          <h5><%= label_tag 'Delete Group' %></h5>
+          <p>Delete this group permanently. This action cannot be undone. <br />Documents assigned to this group will not be deleted, but may become inaccessible to group members.</p>
+          <%= link_to group_path(@group), data: {:confirm => "Are you sure?"}, :method => :delete, :class=>'btn btn-danger' do %>
+            <i class="glyphicon glyphicon-trash" title="Delete"></i> Delete Group
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+    <!-- forms -->
+  </div>
+  <%= render "groups/permissions" %>
+
+  <script type="text/javascript">
+    //for invite link copy to clipboard
+    //source: https://stackoverflow.com/questions/400212/how-do-i-copy-to-the-clipboard-in-javascript
+    var copyButton = document.getElementById('copy-button');
+    if (copyButton != undefined){
+    copyButton.addEventListener('click', function (event) {
+      var copyLink = document.querySelector('#invite-link');
+      copyLink.focus();
+      copyLink.select();
+      try {
+        var successful = document.execCommand('copy');
+        var msg = successful ? 'successful' : 'unsuccessful';
+        console.log(msg);
+      } catch (err) {
+        console.log('unable to copy')
+      }
+    });
+    }
+    
+    // Case-insensitive contains method, source: https://jsfiddle.net/bipen/dyfRa/
+    $.extend($.expr[":"], {
+    "containsIN": function(elem, i, match, array) {
+    return (elem.textContent || elem.innerText || "").toLowerCase().indexOf((match[3] || "").toLowerCase()) >= 0;
+    }
+    });
+    
+    // Jquery filter, source: https://stackoverflow.com/a/17075148/394067
+    $("#first-name-search").keyup(function () {
+    //split the current value of searchInput
+    var data = this.value.split(" ");
+    //create a jquery object of the rows
+    var nameTable = $("#names-table").find("tr:not(:first)");
+    if (this.value == "") {
+      nameTable.show();
+      return;
+    }
+    nameTable.hide();
+    nameTable.filter(function (i, v) {
+      var $t = $(this);
+      for (var d = 0; d < data.length; ++d) {
+        if (!$t.find("td:first-of-type").is(":containsIN('" + data[d] + "')") || $t.is("tr:first-of-type")) {
+          return false;
+        }
+      }
+      return true;
+    })
+      .show();
+    }).focus(function () {
+      this.value = "";
+      $(this).unbind('focus');
+    });
+    
+    // Copying and tooltip
+    var inviteLink = document.getElementById("invite-link");
+    if(inviteLink != undefined){
+      inviteLink.onclick = function() {
+        this.select();
+        document.execCommand('copy');
+      }
+    }
+    $('#invite-link').tooltip({'trigger':'focus', 'title': 'Link copied!' });
+   
+    function startGroupManagementTour() {
+      var intro = introJs();
+      intro.setOptions({
+        doneLabel: 'Done',
+        skipLabel: 'Exit tour',
+        disableInteraction: true,
+        showBullets: false,
+        showStepNumbers: false,
+        scrollToElement: false,
+        exitOnOverlayClick: true,
+        steps: [
+          {
+            element: '.panel',
+            intro: "This is the Management page for the Group \"<%= @group.name.truncate(50) %>\"."
+          },
+          {
+            element: '#name',
+            intro: "The Group can be renamed by clicking in the editable area here."
+          },
+          {
+            element: '#table-col',
+            intro: "On the left is a table showing all Group members and their roles. This table can be quickly filtered with the search box."
+          },
+          {
+            element: '#table-col',
+            intro: "Here, Managers and Owners can remove people from the Group, as well as make changes to their roles. (Owners cannot be removed or change roles.)"
+          },
+          <% if is_manager(params[:id]) %>
+          {
+            element: '#table-col',
+            intro: "If you are a Manager and not an Owner, be careful! It is possible to change your own role or remove yourself from the group."
+          },
+          <% end %>
+          {
+            element: '#options-col',
+            intro: "Here are two options for adding Members to your Group."
+          },
+          {
+            element: '#options-col',
+            intro: "The first option allows you to generate an invite link to send to anyone. If you give someone this link who has not signed up for Annotation Studio, they will automatically be added to the group on signup."
+          },
+          {
+            element: '#options-col',
+            intro: "The second option allows you to quickly add people to your Group who have already signed up for Annotation Studio. Just enter their email and they will be automatically added."
+          },
+          <% if is_owner(params[:id]) %>
+            {
+              element: '#delete-col',
+              intro: "Since you are an Owner, you can delete this group. (Managers cannot delete the Group.)"
+            },
+          <% end %>
+            {
+              intro: "This concludes the Annotation Studio Groups tour. If something is wrong or broken, or you need more help, please do not hesitate to contact us at <a href=\"mailto:annotationstudio-support@mit.edu\">annotationstudio-support@mit.edu</a>."
+            }
+        ]
+      });
+      intro.start();
+    }
+
+    if("<%= params[:tour] %>" == "true"){
+      startGroupManagementTour();
+    }
+
+    $('#group-management-tour').click(startGroupManagementTour);
+
+    function editTitle(){
+      $('#name').attr("class","form-control form-control-inline editing-title");
+      $('#name').focus();
+      $('.editing-title-btns').show();
+      $('#edit-title-btn').hide();
+      $('.edit_group').addClass("editing-group");
+    }
+
+    $('.editing-title-btns').hide();
+    $('#name').click(editTitle);
+    $('#edit-title-btn').click(editTitle);
+    $('#edit-title-cancel').click(function(){
+      $('.editing-title-btns').hide();
+      $('#edit-title-btn').show();
+      $('#name').attr("class", "editable-title");
+      $('#name').html("<%= @group.name %>");
+      $('.edit_group').removeClass("editing-group");
+    })
+
+  </script>
+<% else %>
+  <% bad_permissions %>
+<% end %>

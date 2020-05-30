@@ -3,7 +3,7 @@
     <th>Title</th>
     <th id="author-column">Author</th>
     <th>Created</th>
-    <th><%= ENV["CLASS_TERM_PLURAL"].capitalize %></th>
+    <th>Groups</th>
     <th>Status</th>
     <th id="button-column">Actions</th>
   </tr>
@@ -17,10 +17,10 @@
         <td>
           <%= document.created_at.strftime("%m/%d/%Y") %></td>
         <td>
-          <% document.rep_group_list.each do |group| %>
-          <span class="label label-info">
-            <%= link_to group, params.permit(:group).merge(:group => group) %>
-          </span>&nbsp;
+          <% document.groups.each do |group| %>
+          <a class="label label-info" href="<%= group_path(id: group.id) %>">
+            <%= group.name.truncate(50) %>
+          </a>&nbsp;
           <% end %>
         </td>
         <td>

@@ -60,11 +60,11 @@ var annotation_studio = {
 
     var settings = {
       'limit': 1000,
-      "groups": groups,
-      "subgroups": subgroups,
+      'group_ids': group_ids,
       'user': filter_user,
       'mode': annotation_studio.getMode(),
       'context': search_context,
+      'host': location.host,
       'uri': [location.protocol, '//', location.host, location.pathname].join(''),
       'annotation_categories': annotation_categories
     };
@@ -328,8 +328,7 @@ var inlineData = __bind(function(a) {
     a.highlights[0].id = "hl"+ a.uuid;
     a.highlights[0].title = a.username;
     a.highlights[0].dataset.tags = a.tags.join(",");
-    a.highlights[0].dataset.groups = a.groups.join(",");
-    a.highlights[0].dataset.subgroups = a.subgroups.join(",");
+    a.highlights[0].dataset.group_ids = a.group_ids.join(",");
     a.highlights[0].dataset.username = a.username;
     a.highlights[0].dataset.user = a.user;
 
@@ -341,3 +340,5 @@ var inlineData = __bind(function(a) {
     console.info("Annotation: " + a.uuid + "has no highlights.");
   }
 }, this);
+
+

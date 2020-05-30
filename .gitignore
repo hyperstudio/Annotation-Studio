@@ -53,6 +53,7 @@ groom.txt
 
 # Ignore application configuration
 /config/application.yml
+/config/database.yml
 
 deploy-checklist.txt
 flags.txt

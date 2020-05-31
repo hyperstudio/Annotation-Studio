@@ -3,10 +3,6 @@
 <%= content_for :page_title, 'Dashboard' %>
 <%= stylesheet_link_tag "users" %>
 <%= render "/shared/document_titles" %>
-
-<% if params["tagstogroups"] == "true" %>
-  <% annoTagsToGroups %>
-<% end %>
                              
 <div class="row">
   <div class="col-md-12" id="blurb">

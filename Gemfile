@@ -83,7 +83,7 @@ gem 'jbuilder', '2.7.0'
 gem "jwt"
 gem "rabl"
 gem "gon", '6.2.0'
-gem "nokogiri", '1.9.1'
+gem "nokogiri", '1.10.9'
 
 gem 'tilt', '1.1'
 gem 'sass-rails', '5.0.7'

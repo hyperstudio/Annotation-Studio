@@ -70,7 +70,7 @@ Widget.AnnotationView = Backbone.View.extend({
 		$(this.el).find(".highlight.comment img").addClass("thumbnail");
 		var txt = this.model.get("text");
 		var qt = this.model.get("quote");
-		var date = this.model.get("updated");
+		var date = this.model.get("created");
 		if (date)
 			this.model.set("formattedDate", window.formatDateTime(date));
 		var slug = this.model.get("uri");

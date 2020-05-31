@@ -4,6 +4,6 @@
 
 <p><%= link_to 'Confirm my account', multitenant_domain + confirmation_path(@resource, :confirmation_token => @token) %></p>
 
-<p>&ndash;The Annotation Studio Team at the <a href="https://aai.mit.edu">Active Archives Initiative at MIT</a></p>
+<p>&ndash; The Annotation Studio Team at the <a href="https://aai.mit.edu">Active Archives Initiative at MIT</a></p>
 
-<img src="<%= asset_path("aai-logo.png") %>" id="aai-logo">
+<img src="<%= multitenant_domain + asset_path("aai-logo.png") %>" id="aai-logo" />

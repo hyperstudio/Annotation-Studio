@@ -4,7 +4,7 @@ ruby '2.5.8'
 
 gem 'rails', '5.0.7.2'
 gem 'rack', '2.0.8'
-gem 'puma', '4.3.1'
+gem 'puma', '4.3.5'
 
 gem 'pg'
 
@@ -83,7 +83,7 @@ gem 'jbuilder', '2.7.0'
 gem "jwt"
 gem "rabl"
 gem "gon", '6.2.0'
-gem "nokogiri", '1.9.1'
+gem "nokogiri", '1.10.9'
 
 gem 'tilt', '1.1'
 gem 'sass-rails', '5.0.7'
@@ -96,7 +96,7 @@ gem 'exception_notification'
 
 gem "rest-client", "2.1.0"
 
-gem "doorkeeper", "~>5.3.1"
+gem "doorkeeper", "~>5.4.0"
 gem "octokit", "~> 4.0"
 
 gem 'rack-cors'

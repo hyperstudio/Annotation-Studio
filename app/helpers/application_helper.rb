@@ -127,7 +127,11 @@ module ApplicationHelper
         # find tagged docs' taggings
         docsTaggings = Tagging.where({tag_id: t.id, taggable_type:'Document'})
         # find owner user
-        owner = User.find(ownerTagging.taggable_id)
+        owner = User.find_by id: ownerTagging.taggable_id
+        if owner.nil?
+          puts 'nil owner with id = ' + ownerTagging.taggable_id.to_s
+          owner = User.find_by email: 'bsilverm@mit.edu'
+        end
 
         # ensure that group with this name does not already exist
         if (Group.find_by name: t.name).nil?
@@ -139,17 +143,19 @@ module ApplicationHelper
             Membership.find_by(group_id: group.id, user_id: owner.id).update_attribute("role", "owner")
             membersTaggings.each do |memberTagging|
               # find each other member
-              member = User.find(memberTagging.taggable_id)
-              if !group.users.include? member
+              member = User.find_by id: memberTagging.taggable_id
+              if !member.nil? && !group.users.include?(member)
                 # create membership (add user to group as member)
                 group.users << member
                 group.save
+              elsif member.nil?
+                puts "Error: member is nil with id= "+memberTagging.taggable_id.to_s
               end
             end #membersTaggings.each
             docsTaggings.each do |docTagging|
               # find each tagged doc
-              doc = Document.find(docTagging.taggable_id)
-              if !doc.groups.include? group
+              doc = Document.find_by id: docTagging.taggable_id
+              if !doc.nil? && !doc.groups.include?(group)
                 # create DocumentsGroup relation (add group to document)
                 doc.groups << group
                 doc.save
@@ -160,26 +166,37 @@ module ApplicationHelper
           end #if group.save
         end #if (group.find by name).nil?
       else
-        puts "Error: no user tagged with group id = " + t.id.to_s + " and name = " + t.name
+        puts "Warning: no user tagged with group id = " + t.id.to_s + " and name = " + t.name
       end #if ownerTagging.nil?
       current += 1
-      print "Progress: "+ current.to_s + "/" + total.to_s + " (" + ((current.to_f/total.to_f * 100).round(2)).to_s + "%) \r"
+      puts "Progress: "+ current.to_s + "/" + total.to_s + " (" + ((current.to_f/total.to_f * 100).round(2)).to_s + "%)"
     end #tags.each
     puts 'Finished convereting tags to groups.'
   end #tagsToGroups
 
   # convert annotation groups into groupIds —- needs to be done separately per tenant.
   def annoTagsToGroups
+
+    @now = DateTime.current().to_time.iso8601
+    tok = JWT.encode(
+      {
+          'consumerKey' => ENV["API_CONSUMER"],
+          'userId' => 'bsilverm@mit.edu',
+          'issuedAt' => @now,
+          'ttl' => 86400
+      },
+      ENV["API_SECRET"]
+    )
+    
     groups_list = Group.select(:id, :name)
     
-    groups_list.first(100).each do |g|
+    groups_list.each do |g|
       if g.name != 'public'
         opts = {	
           'groups[]' => g.name,
           :context => 'search',
           :mode => 'class'
         }
-        tok = session['jwt']
         results = ApiRequester.search(opts, tok)
         if(!results.blank?)
           puts '----------------------------------------------------'

@@ -23,32 +23,33 @@ class DocumentsController < ApplicationController
 
     per_page = 20
 
+    myvisible = shared | mine
+
     if document_set == "assigned"
       @documents = shared.where.not(state: "draft").paginate(:page => whitelisted[:page], :per_page => per_page).order("created_at DESC")
     elsif document_set == "created"
       @documents = mine.paginate(:page => whitelisted[:page], :per_page => per_page).order("created_at DESC")
+    elsif document_set == "all"
+      if current_user.admin?
+        @documents = Document.paginate(:page => whitelisted[:page], :per_page => per_page).order("created_at DESC")
+      else
+        @documents = shared.paginate(:page => whitelisted[:page], :per_page => per_page).order("created_at DESC")
+      end
     end
-
-    #this might cause problems when shared docs get REALLY BIG
-    all = shared | mine #array
 
     if params["search"] && params["search"] != ""
       q = params["search"].downcase
 
       case params["method"]
       when "title"
-        @documents = all.select { |d| d.title.downcase.include? q }
+        @documents = myvisible.select { |d| d.title.downcase.include? q }
         @title_text = "Title: '#{params["search"]}'"
       when "author"
-        @documents = all.select { |d| d.author.downcase.include? q }
+        @documents = myvisible.select { |d| d.author.downcase.include? q }
         @title_text = "Author: '#{params["search"]}'"
       when "status"
-        @documents = all.select { |d| d.state.downcase.include? q }
+        @documents = myvisible.select { |d| d.state.downcase.include? q }
         @title_text = "Status: '#{params["search"]}'"
-      when "group"
-        group = Group.find_by("LOWER(name)= ?", q)
-        @documents = group ? group.documents : []
-        @title_text = "Group: '#{params["search"]}'"
       end #end case
     end #end if
   end #end index

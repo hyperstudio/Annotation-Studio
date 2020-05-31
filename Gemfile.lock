@@ -347,7 +347,7 @@ GEM
     net-ssh (3.0.2)
     netrc (0.11.0)
     nio4r (2.5.2)
-    nokogiri (1.9.1)
+    nokogiri (1.10.9)
       mini_portile2 (~> 2.4.0)
     oauth2 (1.4.1)
       faraday (>= 0.8, < 0.16.0)
@@ -593,7 +593,7 @@ DEPENDENCIES
   mini_magick
   mustache
   net-ssh
-  nokogiri (= 1.9.1)
+  nokogiri (= 1.10.9)
   octokit (~> 4.0)
   omniauth-oauth2 (= 1.6.0)
   omniauth-wordpress_hosted!

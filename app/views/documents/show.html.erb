@@ -12,7 +12,11 @@
     <% end %>
     <div id="textcontent">
       <div id="snapshot">
-        <%= sanitize @document.text  %>
+        <% if @document.created_at < Time.parse("2020-05-30 00:00:00.000000 -04:00") %>
+          <%= @document.text.html_safe %>
+        <% else%>
+          <%= sanitize @document.text  %>
+        <% end %>
       </div>
     </div>
 

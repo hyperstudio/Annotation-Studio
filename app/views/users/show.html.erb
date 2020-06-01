@@ -184,7 +184,7 @@
     group_ids.push(<%=g.id %>);
   <% end %>
     var myLoadOptions = {
-      'limit': 100,
+      'limit': 10,
       'group_ids': group_ids,
       'host': location.host,
       'user': "<%= current_user.email %>",
@@ -192,7 +192,7 @@
       'context': 'dashboard',
     };
     var classLoadOptions = {
-      'limit': 100,
+      'limit': 10,
       'group_ids': group_ids,
       'host': location.host,
       'user': "<%= current_user.email %>",

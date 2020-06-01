@@ -123,15 +123,6 @@ Widget.AnnotationListView = Backbone.View.extend({
 	initialize: function (options) {
     this.el = $("ul#"+ options.container);
 	},
-	comparator: function(annotation) {
-		// sort first by document title, which we don't readily have in the object, so we add it if needed.
-		// then sort by time in reverse order. Since the sort rank is returned as a string, we can't just return a negative number,
-		// so we subtract the time from a really large number.
-		if(moment(annotation.get("created")) < moment("2020-05-30T00:00:00.970Z"))
-			return 5000000000000 - moment(annotation.get("created"));
-		else
-			return 5000000000000 - moment(annotation.get("updated"));
-	},
 	render: function () {
 		// Clear out existing annotations
     this.$el.empty();

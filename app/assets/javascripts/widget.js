@@ -126,7 +126,6 @@ Widget.AnnotationListView = Backbone.View.extend({
 	render: function () {
 		// Clear out existing annotations
 		if (this.collection.length == 0){
-			console.log(this.el.children('div')[0]);
 			var self = this;
 			this.el.children('div').html("No annotations to view.");
 		}

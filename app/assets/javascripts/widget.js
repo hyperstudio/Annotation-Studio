@@ -151,9 +151,7 @@ Widget.App = Backbone.Router.extend({
       "collection": Widget.annotations
     };
     var annotationsList = new Widget.AnnotationListView(listOptions);
-		Widget.annotations.deferred.done(function () {
-			console.log("Created: "+annotationsList.collection.pluck('created'));
-			console.log("Updated: "+annotationsList.collection.pluck('updated'));
+		Widget.annotations.deferred.done(function () {\
 			annotationsList.render();
 			// Put the annotation count on the tab.
 			var id = annotationsList.el[0].id;

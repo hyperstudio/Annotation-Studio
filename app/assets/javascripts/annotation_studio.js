@@ -148,9 +148,9 @@ var annotation_studio = {
   },
   handleHash: function(annotation) {
     var hash = window.location.hash
-    if (hash.length > 0 && $(hash).length > 0){
-      console.info(hash);
+    if (hash.length > 0){
       setTimeout(function(){
+        $('span[data-highlight="'+hash+'"]').click();
         $('html,body').animate({scrollTop: $(hash).offset().top - 150}, 500);
       },1000);
     }

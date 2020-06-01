@@ -50,3 +50,12 @@
 .nav-tabs > li.active a, .nav-tabs > li.active a:hover {
   background-color: rgb(238, 238, 238);
 }
+
+.loading {
+  background-color: white;
+  text-align: center;
+  .fa-spin{
+    font-size: 24px;
+    color: gray;
+  }
+}

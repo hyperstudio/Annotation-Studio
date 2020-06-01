@@ -125,14 +125,20 @@ Widget.AnnotationListView = Backbone.View.extend({
 	},
 	render: function () {
 		// Clear out existing annotations
-    this.$el.empty();
-		var self = this;
-    // Walk throught the list, and render markdown in the user comment first.
-		this.collection.each(function(ann) {
-			var annView = new Widget.AnnotationView({model: ann});
-      self.el.append(annView.render().el);
-		});
-
+		if (this.collection.length == 0){
+			console.log(this.el.children('div')[0]);
+			var self = this;
+			this.el.children('div').html("No annotations to view.");
+		}
+		else{
+			this.el.empty();
+			var self = this;
+			// Walk throught the list, and render markdown in the user comment first.
+			this.collection.each(function(ann) {
+				var annView = new Widget.AnnotationView({model: ann});
+				self.el.append(annView.render().el);
+			});
+		}
     return self;
 
 	}

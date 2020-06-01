@@ -31,7 +31,10 @@ Widget.RemoteAnnotationList = Backbone.Collection.extend({
 		// sort first by document title, which we don't readily have in the object, so we add it if needed.
 		// then sort by time in reverse order. Since the sort rank is returned as a string, we can't just return a negative number,
 		// so we subtract the time from a really large number.
-		return 5000000000000 - moment(annotation.get("updated"));
+		if(moment(annotation.get("created")) < moment("2020-05-30T00:00:00.970Z"))
+			return 5000000000000 - moment(annotation.get("created"));
+		else
+			return 5000000000000 - moment(annotation.get("updated"));
 	},
 	initialize: function (options, endpoint, token) {
 		this.url = endpoint + "/search";
@@ -149,7 +152,8 @@ Widget.App = Backbone.Router.extend({
     };
     var annotationsList = new Widget.AnnotationListView(listOptions);
 		Widget.annotations.deferred.done(function () {
-			console.log(annotationsList.collection.pluck('updated'));
+			console.log("Created: "+annotationsList.collection.pluck('created'));
+			console.log("Updated: "+annotationsList.collection.pluck('updated'));
 			annotationsList.render();
 			// Put the annotation count on the tab.
 			var id = annotationsList.el[0].id;

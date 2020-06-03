@@ -159,9 +159,9 @@ class DocumentsController < ApplicationController
           end
         end
       end
-    end
-    if @group_params.length == 1 and @group_params[0].empty?
-      @document.groups.destroy_all
+      if @group_params.length == 1 and @group_params[0].empty?
+        @document.groups.destroy_all
+      end
     end
 
     @document.update_attribute("updated_at", Time.now)

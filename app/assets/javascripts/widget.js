@@ -69,7 +69,11 @@ Widget.AnnotationView = Backbone.View.extend({
 		this.mdconverter = new Showdown.converter();
 		this.href="#full"+this.model.get("uuid");
 	},
-	render: function () {
+	render: function (container) {
+		if(container == 'my-annotation-list')
+			this.model.set("mine","true");
+		else if(container == 'class-annotation-list')
+			this.model.set("mine", "false");
 		$(this.el).find(".highlight.comment img").addClass("thumbnail");
 		var txt = this.model.get("text");
 		var qt = this.model.get("quote");
@@ -123,7 +127,7 @@ Widget.AnnotationListView = Backbone.View.extend({
 	initialize: function (options) {
     this.el = $("ul#"+ options.container);
 	},
-	render: function () {
+	render: function (container) {
 		// Clear out existing annotations
 		if (this.collection.length == 0){
 			var self = this;
@@ -135,7 +139,7 @@ Widget.AnnotationListView = Backbone.View.extend({
 			// Walk throught the list, and render markdown in the user comment first.
 			this.collection.each(function(ann) {
 				var annView = new Widget.AnnotationView({model: ann});
-				self.el.append(annView.render().el);
+				self.el.append(annView.render(container).el);
 			});
 		}
     return self;
@@ -157,7 +161,7 @@ Widget.App = Backbone.Router.extend({
     };
     var annotationsList = new Widget.AnnotationListView(listOptions);
 		Widget.annotations.deferred.done(function () {
-			annotationsList.render();
+			annotationsList.render(listOptions["container"]);
 			// Put the annotation count on the tab.
 			var id = annotationsList.el[0].id;
 			var el = $("#"+id);

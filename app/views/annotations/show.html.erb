@@ -35,10 +35,10 @@ jQuery(function ($) {
             <div class="tab-pane active" id="mine">
                 <ul id="annotation-list" class="unstyled">
                     <script type="text/template" id="user-comment-template">
-                        <span class="user-comment"><a href="{{uri}}#hl{{uuid}}" target="_blank">{{{text}}}</a></span>
+                        <span class="user-comment"><a href="{{uri}}?mine={{mine}}#hl{{uuid}}" target="_blank">{{{text}}}</a></span>
                     </script>
                     <script type="text/template" id="user-highlight-template">
-                        <span class="user-highlight"><a href="{{uri}}#hl{{uuid}}" target="_blank">{{{quote}}}</a></span>
+                        <span class="user-highlight"><a href="{{uri}}?mine={{mine}}#hl{{uuid}}" target="_blank">{{{quote}}}</a></span>
                     </script>
                 </ul>
             </div>

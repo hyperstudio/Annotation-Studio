@@ -3,12 +3,27 @@
 <div style="display: none;">
 
   <div class="btn-group btn-group-sm" data-toggle="buttons" id="view-chooser">
-    <label class="btn btn-default btn-sm viewchoice active" id="user">
-      <input type="radio" checked value="user">Me</input>
+    <label class="btn btn-default btn-sm viewchoice 
+      <% if params[:mine] == 'true' %>
+        active
+      <% end %>
+      " id="user">
+      <input type="radio" 
+      <% if params[:mine] == 'true' %>
+        checked 
+      <% end %>
+      value="user">Mine</input>
     </label>
 
-    <label class="btn btn-default btn-sm viewchoice" id="groupId">
-      <input type="radio" value="groupId">Groups</input>
+    <label class="btn btn-default btn-sm viewchoice
+      <% if params[:mine] == 'false' %>
+        active
+      <% end %>" id="groupId">
+      <input type="radio" 
+      <% if params[:mine] == 'false' %>
+        checked 
+      <% end %>
+      value="groupId">Groups</input>
     </label>
     <% if current_user.has_role?(:admin) %>
     <label class="btn btn-default btn-sm viewchoice" id="admin">

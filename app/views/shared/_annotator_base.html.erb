@@ -3,31 +3,44 @@
   <ul id="annotation-list" style="padding-left: 8px;">
 
     <div class="btn-group btn-group-sm" data-toggle="buttons" id="view-chooser" style="padding-top: 8px;">
-    <label class="btn btn-default btn-sm viewchoice active" id="user">
-      <input type="radio" checked value="user">Mine</input>
-    </label>
+      <label class="btn btn-default btn-sm viewchoice 
+        <% if params[:mine] == 'true' %>
+          active
+        <% end %>
+        " id="user">
+        <input type="radio" 
+        <% if params[:mine] == 'true' %>
+          checked 
+        <% end %>
+        value="user">Mine</input>
+      </label>
 
-    <label class="btn btn-default btn-sm viewchoice" id="groupId">
-      <input type="radio" value="groupId">Groups</input>
-    </label>
-    <% if current_user.has_role?(:admin) %>
-    <label class="btn btn-default btn-sm viewchoice" id="admin">
-      <input type="radio" value="admin">All</input>
-    </label>
-    <% end %>
-  </div>
+      <label class="btn btn-default btn-sm viewchoice
+        <% if params[:mine] == 'false' %>
+          active
+        <% end %>" id="groupId">
+        <input type="radio" 
+        <% if params[:mine] == 'false' %>
+          checked 
+        <% end %>
+        value="groupId">Groups</input>    
+      </label>
+      <% if current_user.has_role?(:admin) %>
+      <label class="btn btn-default btn-sm viewchoice" id="admin">
+        <input type="radio" value="admin">All</input>
+      </label>
+      <% end %>
+    </div>
 
-
-  <div class="btn-group btn-group-sm" data-toggle="buttons" id="filter-chooser" style="padding-top: 8px;">
-    <label class="btn btn-default btn-sm active" id="allannotations">
-      <input type="radio" class="btn btn-default btn-sm active" checked value="allannotations">Whole text</input>
-    </label>
-    <label class="btn btn-default btn-sm" id="visibleannotations">
-      <input type="radio" class="btn btn-default btn-sm" value="visibleannotations">Visible text</input>
-    </label>
-  </div>
-
-</ul>
+    <div class="btn-group btn-group-sm" data-toggle="buttons" id="filter-chooser" style="padding-top: 8px;">
+      <label class="btn btn-default btn-sm active" id="allannotations">
+        <input type="radio" class="btn btn-default btn-sm active" checked value="allannotations">Whole text</input>
+      </label>
+      <label class="btn btn-default btn-sm" id="visibleannotations">
+        <input type="radio" class="btn btn-default btn-sm" value="visibleannotations">Visible text</input>
+      </label>
+    </div>
+  </ul>
 
   <script type="text/template" id="comment-template">
 

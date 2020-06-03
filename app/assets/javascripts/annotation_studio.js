@@ -147,12 +147,13 @@ var annotation_studio = {
     return true;
   },
   handleHash: function(annotation) {
-    var hash = window.location.hash
+    var hash = window.location.hash;
+    function goToHighlight(){
+      $('span[data-highlight="'+hash+'"]').click();
+      $('html,body').animate({scrollTop: $(hash).offset().top - 150}, 500);
+    }
     if (hash.length > 0){
-      setTimeout(function(){
-        $('span[data-highlight="'+hash+'"]').click();
-        $('html,body').animate({scrollTop: $(hash).offset().top - 150}, 500);
-      },1000);
+      setTimeout(goToHighlight,1000);
     }
   },
   // Create a UUID for a given annotation if needed.

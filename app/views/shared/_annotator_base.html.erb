@@ -4,12 +4,12 @@
 
     <div class="btn-group btn-group-sm" data-toggle="buttons" id="view-chooser" style="padding-top: 8px;">
       <label class="btn btn-default btn-sm viewchoice 
-        <% if params[:mine] == 'true' %>
+        <% if !params[:mine] || params[:mine] == 'true' %>
           active
         <% end %>
         " id="user">
         <input type="radio" 
-        <% if params[:mine] == 'true' %>
+        <% if !params[:mine] || params[:mine] == 'true' %>
           checked 
         <% end %>
         value="user">Mine</input>

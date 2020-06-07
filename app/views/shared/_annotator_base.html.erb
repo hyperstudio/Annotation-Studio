@@ -2,13 +2,13 @@
 
   <ul id="annotation-list" style="padding-left: 8px;">
 
-    <div class="btn-group btn-group-sm" data-toggle="buttons" id="view-chooser" style="padding-top: 8px;">
+    <form class="btn-group btn-group-sm" data-toggle="buttons" id="view-chooser" style="padding-top: 8px;">
       <label class="btn btn-default btn-sm viewchoice 
         <% if !params[:mine] || params[:mine] == 'true' %>
           active
         <% end %>
         " id="user">
-        <input type="radio" 
+        <input name="viewchoice" type="radio" 
         <% if !params[:mine] || params[:mine] == 'true' %>
           checked 
         <% end %>
@@ -19,7 +19,7 @@
         <% if params[:mine] == 'false' %>
           active
         <% end %>" id="groupId">
-        <input type="radio" 
+        <input name="viewchoice" type="radio" 
         <% if params[:mine] == 'false' %>
           checked 
         <% end %>
@@ -27,10 +27,10 @@
       </label>
       <% if current_user.has_role?(:admin) %>
       <label class="btn btn-default btn-sm viewchoice" id="admin">
-        <input type="radio" value="admin">All</input>
+        <input name="viewchoice" type="radio" value="admin">All</input>
       </label>
       <% end %>
-    </div>
+    </form>
 
     <div class="btn-group btn-group-sm" data-toggle="buttons" id="filter-chooser" style="padding-top: 8px;">
       <label class="btn btn-default btn-sm active" id="allannotations">

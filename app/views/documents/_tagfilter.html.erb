@@ -1,14 +1,4 @@
 <script type="text/javascript">
-function getAnnotationTags() {
-  var annotations = subscriber.dumpAnnotations();
-  var tags = [];
-  for (var i=0; i<annotations.length; i++) {
-    for (var j=0; j<annotations[i].tags.length; j++) {
-      tags.push(annotations[i].tags[j]);
-    }
-  }
-  return $.unique(tags);
-}
 
 var substringMatcher = function(strs) {
   return function findMatches(q, cb) {
@@ -33,27 +23,6 @@ var substringMatcher = function(strs) {
   };
 };
 
-function activateAutocomplete() {
-  $('#tagsearchbox').typeahead(
-      {
-        minLength: 1,
-        highlight: true,
-      },
-      {
-        name: 'tags',
-        source: substringMatcher(getAnnotationTags()),
-      }
-  );
-}
-
-// $('#tagsearch').on('click', tagFilter);
-$('#tagsearchbox').keypress(function(e){
-  var code = e.keyCode || e.which;
-  if(code == 13) { //Enter keycode
-    // console.log(e);
-    tagFilter();
-  }
-});
 
 function tagFilter(event) {
   console.log(event);

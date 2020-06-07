@@ -2,36 +2,6 @@
   <!--hide-->
 <div style="display: none;">
 
-  <div class="btn-group btn-group-sm" data-toggle="buttons" id="view-chooser">
-    <label class="btn btn-default btn-sm viewchoice 
-      <% if !params[:mine] || params[:mine] == 'true' %>
-        active
-      <% end %>
-      " id="user">
-      <input type="radio" 
-      <% if !params[:mine] || params[:mine] == 'true' %>
-        checked 
-      <% end %>
-      value="user">Mine</input>
-    </label>
-
-    <label class="btn btn-default btn-sm viewchoice
-      <% if params[:mine] == 'false' %>
-        active
-      <% end %>" id="groupId">
-      <input type="radio" 
-      <% if params[:mine] == 'false' %>
-        checked 
-      <% end %>
-      value="groupId">Groups</input>
-    </label>
-    <% if current_user.has_role?(:admin) %>
-    <label class="btn btn-default btn-sm viewchoice" id="admin">
-      <input type="radio" value="admin">All</input>
-    </label>
-    <% end %>
-  </div>
-
   <div class="btn-group btn-group-sm" data-toggle="buttons" id="filter-chooser">
     <label class="btn btn-default btn-sm active" id="allannotations">
       <input type="radio" class="btn btn-default btn-sm active" checked value="allannotations">Whole text</input>
@@ -44,9 +14,20 @@
 <!--hide ends-->
 
 
-  <br><h4>Filter by Tags</h4>
-  <div class="input-group" id="tag-chooser">
-    <input type="text" id="tagsearchbox" placeholder="Enter tag(s) to filter on">
+  <div id="tag-chooser">
+    <br><h4>Filter by User(s)</h4>
+    <p>Show all annotations by any of the following users:</p>
+    <div class="input-group">
+      <select type="select" id="usersearchbox" multiple class="ui search scrolling dropdown">
+      </select>
+      <button id="userclear" type="button" class="btn btn-default">Clear</button>
+    </div>
+
+    <br /><br /><h4>Filter by Tag(s)</h4>
+    <p>Show all annotations tagged with any of the selected tags:</p>
+    <select type="select" id="tagsearchbox" multiple class="ui search scrolling dropdown">
+    </select>
+    <button id="tagclear" type="button" class="btn btn-default">Clear</button>
   </div><!-- /input-group -->
 
 <!--styling of the radio selection are in boot.docs.css.scss for class view-chooser; and in bootstrap.css.erb for class btn-groupsm-->

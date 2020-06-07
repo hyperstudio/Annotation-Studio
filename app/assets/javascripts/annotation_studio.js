@@ -4,6 +4,8 @@ var annotation_studio = {
   initialize_annotator: function() {
     sidebar = new Sidebar.App();
     sidebar.token = token;
+    sidebar.filterTags = [];
+    sidebar.filterUsers = [];
 
     var studio = $('#textcontent').annotator(annotatorOptions).annotator('setupPlugins', {}, plugin_options());
     var optionsRichText = {
@@ -33,6 +35,9 @@ var annotation_studio = {
     subscriber.subscribe('annotationsLoaded', __bind(function(annotations) {
       annotations.map(inlineData); // copies values from object fields to the highlight spans data attributes.
     }, this));
+
+    // When annotator loads remote data, start filters 
+    subscriber.subscribe('annotationsLoaded', annotation_studio.getFilterData);
 
     // Add the UUID to the local annotation object and to the highlight span before saving
     subscriber.subscribe('beforeAnnotationCreated', annotation_studio.createUuid); // creates, if need be, and adds, both to object, and to highlight.
@@ -69,8 +74,12 @@ var annotation_studio = {
       'annotation_categories': annotation_categories
     };
 
-    if($('#tagsearchbox').length && $('#tagsearchbox').val() != '') {
+    if($('#tagsearchbox').val() && $('#tagsearchbox').val() != '') {
       settings.tags = $('#tagsearchbox').val();
+    }
+
+    if($('#usersearchbox').val() && $('#usersearchbox').val() != '') {
+      settings.multiUser = $('#usersearchbox').val();
     }
 
     $.each(overrides, function(i, j) {
@@ -96,7 +105,6 @@ var annotation_studio = {
     annotation_studio.filterAnnotations(overrides);
   },
   tagFilter: function(event) {
-    $('*[data-role="remove"]').hide();
     var overrides = {};
     annotation_studio.filterAnnotations(overrides);
   },
@@ -251,6 +259,26 @@ var annotation_studio = {
       });
     });
   },
+
+  getFilterData: function() {
+    var tag;
+    var user;
+    var annotations = subscriber.dumpAnnotations();
+    for (var i=0; i<annotations.length; i++) {
+      for (var j=0; j<annotations[i].tags.length; j++) {
+        tag = annotations[i].tags[j];
+        if(!sidebar.filterTags.includes(tag)){
+          sidebar.filterTags.push(tag);
+          $('#tagsearchbox').append('<option value="'+tag+'">'+tag+'</option>');
+        }
+      }
+      user = annotations[i].user;
+      if(!sidebar.filterUsers.includes(user)){
+        sidebar.filterUsers.push(user);
+        $('#usersearchbox').append('<option value="'+user+'">'+annotations[i].username+'</option>');
+      }
+    }
+  }
 };
 
 jQuery(function($) {
@@ -260,7 +288,6 @@ jQuery(function($) {
 
   annotation_studio.initialize_default_state_behavior();
   if(annotation_studio.retrieve_document_state().length !== 0){
-    console.log(annotation_studio.retrieve_document_state());
     annotation_studio.initialize_annotator();
   }
 
@@ -284,12 +311,34 @@ jQuery(function($) {
 
   $('.viewchoice').on('click', annotation_studio.modeFilter);
 
-	var tagsElement = $("#annotation-tag-list");
-	$("body").on('click', '#annotation-tag-list input', annotation_studio.tagFilterCheck);
-
-  $('#tagsearchbox').tagsinput()
-  $('#tagsearchbox').on('itemAdded', annotation_studio.tagFilter);
-  $('#tagsearchbox').on('itemRemoved', annotation_studio.tagFilter);
+  
+  // Filter initialization
+  $('#usersearchbox').dropdown({
+    clearable: true,
+    placeholder: "Enter user(s) to filter on",
+    onChange: function(value, text, $selectedItem) {
+      annotation_studio.tagFilter();
+    }
+  });
+  $('button#userclear')
+  .on('click', function() {
+    $('#usersearchbox')
+      .dropdown('clear')
+    ;
+  });
+  $('#tagsearchbox').dropdown({
+    clearable: true,
+    placeholder: "Enter tag(s) to filter on",
+    onChange: function(value, text, $selectedItem) {
+      annotation_studio.tagFilter();
+    }
+  });
+  $('button#tagclear')
+  .on('click', function() {
+    $('#tagsearchbox')
+      .dropdown('clear')
+    ;
+  });
 
   if(sidebar)
     $(window).scroll(lazyShowAndHideAnnotations);

@@ -473,7 +473,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Jasny Bootstrap\'s JavaScr
 
   OffCanvas.prototype.autohide = function (e) {
     var $target = $(e.target)
-    var doHide = !$target.hasClass('dropdown-backdrop') && $target.closest(this.$element).length === 0
+    var doHide = !$target.hasClass('dropdown-backdrop') && $target.closest(this.$element).length === 0 && !$target.hasClass('delete')
 
     if (doHide) this.hide()
   }

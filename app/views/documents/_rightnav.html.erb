@@ -15,19 +15,19 @@
 
 
   <div id="tag-chooser">
+    <form>
     <br><h4>Filter by User(s)</h4>
     <p>Show all annotations by any of the following users:</p>
-    <div class="input-group">
-      <select type="select" id="usersearchbox" multiple class="ui search scrolling dropdown">
-      </select>
-      <button id="userclear" type="button" class="btn btn-default">Clear</button>
-    </div>
+    <select type="select" id="usersearchbox" multiple class="ui search scrolling dropdown">
+    </select>
+    <button id="userclear" type="button" class="btn btn-default">Clear</button>
 
     <br /><br /><h4>Filter by Tag(s)</h4>
     <p>Show all annotations tagged with any of the selected tags:</p>
     <select type="select" id="tagsearchbox" multiple class="ui search scrolling dropdown">
     </select>
     <button id="tagclear" type="button" class="btn btn-default">Clear</button>
+    </form>
   </div><!-- /input-group -->
 
 <!--styling of the radio selection are in boot.docs.css.scss for class view-chooser; and in bootstrap.css.erb for class btn-groupsm-->

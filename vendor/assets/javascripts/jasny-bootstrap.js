@@ -7,7 +7,7 @@
 if (typeof jQuery === 'undefined') { throw new Error('Jasny Bootstrap\'s JavaScript requires jQuery') }
 
 /* ========================================================================
- * Bootstrap: transition.js v3.1.3
+ * Bootstrap: transition.js v4.0.0
  * http://getbootstrap.com/javascript/#transitions
  * ========================================================================
  * Copyright 2011-2014 Twitter, Inc.
@@ -58,7 +58,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Jasny Bootstrap\'s JavaScr
 }(window.jQuery);
 
 /* ========================================================================
- * Bootstrap: offcanvas.js v3.1.3
+ * Bootstrap: offcanvas.js v4.0.0
  * http://jasny.github.io/bootstrap/javascript/#offcanvas
  * ========================================================================
  * Copyright 2013-2014 Arnold Daniels
@@ -76,7 +76,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Jasny Bootstrap\'s JavaScr
  * limitations under the License.
  * ======================================================================== */
 
-+function ($) { "use strict";
++function ($) { "use strict"
 
   // OFFCANVAS PUBLIC CLASS DEFINITION
   // =================================
@@ -231,7 +231,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Jasny Bootstrap\'s JavaScr
     $('body').css('overflow', 'hidden')
     //Fix iPhone scrolling
     if (isIphone) {
-      $('body').addClass('lockIphone');
+      $('body').addClass('lockIphone')
     }
 
     if ($('body').width() > bodyWidth) {
@@ -244,13 +244,13 @@ if (typeof jQuery === 'undefined') { throw new Error('Jasny Bootstrap\'s JavaScr
     //disable scrolling on mobiles (they ignore overflow:hidden)
     $('body').on('touchmove.bs', function(e) {
       if (!$(event.target).closest('.offcanvas').length)
-        e.preventDefault();
-    });
+        e.preventDefault()
+    })
   }
 
   OffCanvas.prototype.enableScrolling = function() {
-    $('body').off('touchmove.bs');
-    $('body').removeClass('lockIphone');
+    $('body').off('touchmove.bs')
+    $('body').removeClass('lockIphone')
   }
 
   OffCanvas.prototype.show = function () {
@@ -274,7 +274,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Jasny Bootstrap\'s JavaScr
       if (elements.index(this.$element) !== -1) {
         $(this.$element).data('offcanvas-style', $(this.$element).attr('style') || '')
         this.$element.css(placement, -1 * offset)
-        this.$element.css(placement); // Workaround: Need to get the CSS property for it to be applied before the next line of code
+        this.$element.css(placement) // Workaround: Need to get the CSS property for it to be applied before the next line of code
       }
 
       elements.addClass('canvas-sliding').each(function() {
@@ -303,7 +303,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Jasny Bootstrap\'s JavaScr
         this.$element.addClass('in')
         this.slide(elements, offset, $.proxy(complete, this))
       }, this), 1)
-    }, this));
+    }, this))
   }
 
   //Hide other opened offcanvas menus, and then open this one
@@ -378,13 +378,14 @@ if (typeof jQuery === 'undefined') { throw new Error('Jasny Bootstrap\'s JavaScr
     var time = 150
 
     if (this.state == 'slide-in') {
+      var $body = $('body')
       var doAnimate = $.support.transition
 
       this.$backdrop = $('<div class="modal-backdrop fade" />')
       if (this.options.backdrop) {
         this.$backdrop.addClass('allow-navbar')
 
-        if (this.options.canvas && $(this.options.canvas)[0] !== $('body')[0]) {
+        if (this.options.canvas && $(this.options.canvas)[0] !== $body[0]) {
           $(this.options.canvas).addClass('limit-backdrop')
           this.$backdrop.appendTo(this.options.canvas)
         } else {
@@ -396,7 +397,8 @@ if (typeof jQuery === 'undefined') { throw new Error('Jasny Bootstrap\'s JavaScr
 
       if (doAnimate) this.$backdrop[0].offsetWidth // force reflow
 
-      this.$backdrop.addClass('in')
+      $body.addClass('modal-open')
+      this.$backdrop.addClass('show').show()
       this.$backdrop.on('click.bs', $.proxy(this.autohide, this))
 
       doAnimate ?
@@ -405,21 +407,23 @@ if (typeof jQuery === 'undefined') { throw new Error('Jasny Bootstrap\'s JavaScr
         .emulateTransitionEnd(time) :
         callback()
     } else if (this.state == 'slide-out' && this.$backdrop) {
-      this.$backdrop.removeClass('in');
-      $('body').off('touchmove.bs');
-      var self = this;
+      var self = this
+
+      this.$backdrop.hide().removeClass('show')
+      $('body').removeClass('modal-open').off('touchmove.bs')
+
       if ($.support.transition) {
         this.$backdrop
           .one($.support.transition.end, function() {
-            self.$backdrop.remove();
+            self.$backdrop.remove()
             callback()
-            self.$backdrop = null;
+            self.$backdrop = null
           })
-        .emulateTransitionEnd(time);
+        .emulateTransitionEnd(time)
       } else {
-        this.$backdrop.remove();
-        this.$backdrop = null;
-        callback();
+        this.$backdrop.remove()
+        this.$backdrop = null
+        callback()
       }
 
       if (this.options.canvas && $(this.options.canvas)[0] !== $('body')[0]) {
@@ -468,8 +472,8 @@ if (typeof jQuery === 'undefined') { throw new Error('Jasny Bootstrap\'s JavaScr
   }
 
   OffCanvas.prototype.autohide = function (e) {
-    var $target = $(e.target);
-    var doHide = !$target.hasClass('dropdown-backdrop') && $target.closest(this.$element).length === 0;
+    var $target = $(e.target)
+    var doHide = !$target.hasClass('dropdown-backdrop') && $target.closest(this.$element).length === 0
 
     if (doHide) this.hide()
   }
@@ -517,17 +521,17 @@ if (typeof jQuery === 'undefined') { throw new Error('Jasny Bootstrap\'s JavaScr
     var data    = $canvas.data('bs.offcanvas')
     var option = data ? 'toggle' : $.extend($this.data(), $canvas.data())
 
-    e.preventDefault();
+    e.preventDefault()
     e.stopPropagation()
 
     if (data) data.toggle()
       else $canvas.offcanvas(option)
   })
 
-}(window.jQuery);
+}(window.jQuery)
 
 /* ============================================================
- * Bootstrap: rowlink.js v3.1.3
+ * Bootstrap: rowlink.js v4.0.0
  * http://jasny.github.io/bootstrap/javascript/#rowlink
  * ============================================================
  * Copyright 2012-2014 Arnold Daniels
@@ -624,371 +628,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Jasny Bootstrap\'s JavaScr
 }(window.jQuery);
 
 /* ===========================================================
- * Bootstrap: inputmask.js v3.1.0
- * http://jasny.github.io/bootstrap/javascript/#inputmask
- *
- * Based on Masked Input plugin by Josh Bush (digitalbush.com)
- * ===========================================================
- * Copyright 2012-2014 Arnold Daniels
- *
- * Licensed under the Apache License, Version 2.0 (the "License")
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * ========================================================== */
-
-+function ($) { "use strict";
-
-  var isIphone = (window.orientation !== undefined)
-  var isAndroid = navigator.userAgent.toLowerCase().indexOf("android") > -1
-  var isIE = window.navigator.appName == 'Microsoft Internet Explorer'
-
-  // INPUTMASK PUBLIC CLASS DEFINITION
-  // =================================
-
-  var Inputmask = function (element, options) {
-    if (isAndroid) return // No support because caret positioning doesn't work on Android
-
-    this.$element = $(element)
-    this.options = $.extend({}, Inputmask.DEFAULTS, options)
-    this.mask = String(this.options.mask)
-
-    this.init()
-    this.listen()
-
-    this.checkVal() //Perform initial check for existing values
-  }
-
-  Inputmask.DEFAULTS = {
-    mask: "",
-    placeholder: "_",
-    definitions: {
-      '9': "[0-9]",
-      'a': "[A-Za-z]",
-      'w': "[A-Za-z0-9]",
-      'h': "[A-Fa-f0-9]",
-      '*': "."
-    }
-  }
-
-  Inputmask.prototype.init = function() {
-    var defs = this.options.definitions
-    var len = this.mask.length
-
-    this.tests = []
-    this.partialPosition = this.mask.length
-    this.firstNonMaskPos = null
-
-    $.each(this.mask.split(""), $.proxy(function(i, c) {
-      if (c == '?') {
-        len--
-        this.partialPosition = i
-      } else if (defs[c]) {
-        this.tests.push(new RegExp(defs[c]))
-        if (this.firstNonMaskPos === null)
-          this.firstNonMaskPos =  this.tests.length - 1
-      } else {
-        this.tests.push(null)
-      }
-    }, this))
-
-    this.buffer = $.map(this.mask.split(""), $.proxy(function(c, i) {
-      if (c != '?') return defs[c] ? this.options.placeholder : c
-    }, this))
-
-    this.focusText = this.$element.val()
-
-    this.$element.data("rawMaskFn", $.proxy(function() {
-      return $.map(this.buffer, function(c, i) {
-        return this.tests[i] && c != this.options.placeholder ? c : null
-      }).join('')
-    }, this))
-  }
-
-  Inputmask.prototype.listen = function() {
-    if (this.$element.attr("readonly")) return
-
-    var pasteEventName = (isIE ? 'paste' : 'input') + ".bs.inputmask"
-
-    this.$element
-      .on("unmask.bs.inputmask", $.proxy(this.unmask, this))
-
-      .on("focus.bs.inputmask", $.proxy(this.focusEvent, this))
-      .on("blur.bs.inputmask", $.proxy(this.blurEvent, this))
-
-      .on("keydown.bs.inputmask", $.proxy(this.keydownEvent, this))
-      .on("keypress.bs.inputmask", $.proxy(this.keypressEvent, this))
-
-      .on(pasteEventName, $.proxy(this.pasteEvent, this))
-  }
-
-  //Helper Function for Caret positioning
-  Inputmask.prototype.caret = function(begin, end) {
-    if (this.$element.length === 0) return
-    if (typeof begin == 'number') {
-      end = (typeof end == 'number') ? end : begin
-      return this.$element.each(function() {
-        if (this.setSelectionRange) {
-          this.setSelectionRange(begin, end)
-        } else if (this.createTextRange) {
-          var range = this.createTextRange()
-          range.collapse(true)
-          range.moveEnd('character', end)
-          range.moveStart('character', begin)
-          range.select()
-        }
-      })
-    } else {
-      if (this.$element[0].setSelectionRange) {
-        begin = this.$element[0].selectionStart
-        end = this.$element[0].selectionEnd
-      } else if (document.selection && document.selection.createRange) {
-        var range = document.selection.createRange()
-        begin = 0 - range.duplicate().moveStart('character', -100000)
-        end = begin + range.text.length
-      }
-      return {
-        begin: begin,
-        end: end
-      }
-    }
-  }
-
-  Inputmask.prototype.seekNext = function(pos) {
-    var len = this.mask.length
-    while (++pos <= len && !this.tests[pos]);
-
-    return pos
-  }
-
-  Inputmask.prototype.seekPrev = function(pos) {
-    while (--pos >= 0 && !this.tests[pos]);
-
-    return pos
-  }
-
-  Inputmask.prototype.shiftL = function(begin,end) {
-    var len = this.mask.length
-
-    if (begin < 0) return
-
-    for (var i = begin, j = this.seekNext(end); i < len; i++) {
-      if (this.tests[i]) {
-        if (j < len && this.tests[i].test(this.buffer[j])) {
-          this.buffer[i] = this.buffer[j]
-          this.buffer[j] = this.options.placeholder
-        } else
-          break
-        j = this.seekNext(j)
-      }
-    }
-    this.writeBuffer()
-    this.caret(Math.max(this.firstNonMaskPos, begin))
-  }
-
-  Inputmask.prototype.shiftR = function(pos) {
-    var len = this.mask.length
-
-    for (var i = pos, c = this.options.placeholder; i < len; i++) {
-      if (this.tests[i]) {
-        var j = this.seekNext(i)
-        var t = this.buffer[i]
-        this.buffer[i] = c
-        if (j < len && this.tests[j].test(t))
-          c = t
-        else
-          break
-      }
-    }
-  },
-
-  Inputmask.prototype.unmask = function() {
-    this.$element
-      .unbind(".bs.inputmask")
-      .removeData("bs.inputmask")
-  }
-
-  Inputmask.prototype.focusEvent = function() {
-    this.focusText = this.$element.val()
-    var len = this.mask.length
-    var pos = this.checkVal()
-    this.writeBuffer()
-
-    var that = this
-    var moveCaret = function() {
-      if (pos == len)
-        that.caret(0, pos)
-      else
-        that.caret(pos)
-    }
-
-    moveCaret()
-    setTimeout(moveCaret, 50)
-  }
-
-  Inputmask.prototype.blurEvent = function() {
-    this.checkVal()
-    if (this.$element.val() !== this.focusText) {
-      this.$element.trigger('change')
-      this.$element.trigger('input')
-    }
-  }
-
-  Inputmask.prototype.keydownEvent = function(e) {
-    var k = e.which
-
-    //backspace, delete, and escape get special treatment
-    if (k == 8 || k == 46 || (isIphone && k == 127)) {
-      var pos = this.caret(),
-      begin = pos.begin,
-      end = pos.end
-
-      if (end - begin === 0) {
-        begin = k != 46 ? this.seekPrev(begin) : (end = this.seekNext(begin - 1))
-        end = k == 46 ? this.seekNext(end) : end
-      }
-      this.clearBuffer(begin, end)
-      this.shiftL(begin, end - 1)
-
-      return false
-    } else if (k == 27) {//escape
-      this.$element.val(this.focusText)
-      this.caret(0, this.checkVal())
-      return false
-    }
-  }
-
-  Inputmask.prototype.keypressEvent = function(e) {
-    var len = this.mask.length
-
-    var k = e.which,
-    pos = this.caret()
-
-    if (e.ctrlKey || e.altKey || e.metaKey || k < 32)  {//Ignore
-      return true
-    } else if (k) {
-      if (pos.end - pos.begin !== 0) {
-        this.clearBuffer(pos.begin, pos.end)
-        this.shiftL(pos.begin, pos.end - 1)
-      }
-
-      var p = this.seekNext(pos.begin - 1)
-      if (p < len) {
-        var c = String.fromCharCode(k)
-        if (this.tests[p].test(c)) {
-          this.shiftR(p)
-          this.buffer[p] = c
-          this.writeBuffer()
-          var next = this.seekNext(p)
-          this.caret(next)
-        }
-      }
-      return false
-    }
-  }
-
-  Inputmask.prototype.pasteEvent = function() {
-    var that = this
-
-    setTimeout(function() {
-      that.caret(that.checkVal(true))
-    }, 0)
-  }
-
-  Inputmask.prototype.clearBuffer = function(start, end) {
-    var len = this.mask.length
-
-    for (var i = start; i < end && i < len; i++) {
-      if (this.tests[i])
-        this.buffer[i] = this.options.placeholder
-    }
-  }
-
-  Inputmask.prototype.writeBuffer = function() {
-    return this.$element.val(this.buffer.join('')).val()
-  }
-
-  Inputmask.prototype.checkVal = function(allow) {
-    var len = this.mask.length
-    //try to place characters where they belong
-    var test = this.$element.val()
-    var lastMatch = -1
-
-    for (var i = 0, pos = 0; i < len; i++) {
-      if (this.tests[i]) {
-        this.buffer[i] = this.options.placeholder
-        while (pos++ < test.length) {
-          var c = test.charAt(pos - 1)
-          if (this.tests[i].test(c)) {
-            this.buffer[i] = c
-            lastMatch = i
-            break
-          }
-        }
-        if (pos > test.length)
-          break
-      } else if (this.buffer[i] == test.charAt(pos) && i != this.partialPosition) {
-        pos++
-        lastMatch = i
-      }
-    }
-    if (!allow && lastMatch + 1 < this.partialPosition) {
-      this.$element.val("")
-      this.clearBuffer(0, len)
-    } else if (allow || lastMatch + 1 >= this.partialPosition) {
-      this.writeBuffer()
-      if (!allow) this.$element.val(this.$element.val().substring(0, lastMatch + 1))
-    }
-    return (this.partialPosition ? i : this.firstNonMaskPos)
-  }
-
-
-  // INPUTMASK PLUGIN DEFINITION
-  // ===========================
-
-  var old = $.fn.inputmask
-
-  $.fn.inputmask = function (options) {
-    return this.each(function () {
-      var $this = $(this)
-      var data = $this.data('bs.inputmask')
-
-      if (!data) $this.data('bs.inputmask', (data = new Inputmask(this, options)))
-    })
-  }
-
-  $.fn.inputmask.Constructor = Inputmask
-
-
-  // INPUTMASK NO CONFLICT
-  // ====================
-
-  $.fn.inputmask.noConflict = function () {
-    $.fn.inputmask = old
-    return this
-  }
-
-
-  // INPUTMASK DATA-API
-  // ==================
-
-  $(document).on('focus.bs.inputmask.data-api', '[data-mask]', function (e) {
-    var $this = $(this)
-    if ($this.data('bs.inputmask')) return
-    $this.inputmask($this.data())
-  })
-
-}(window.jQuery);
-
-/* ===========================================================
- * Bootstrap: fileinput.js v3.1.3
+ * Bootstrap: fileinput.js v4.0.0
  * http://jasny.github.com/bootstrap/javascript/#fileinput
  * ===========================================================
  * Copyright 2012-2014 Arnold Daniels
@@ -1165,15 +805,15 @@ if (typeof jQuery === 'undefined') { throw new Error('Jasny Bootstrap\'s JavaScr
   }
 
   Fileinput.prototype.getImageExif = function(view) {
-    if (view.getUint16(0, false) != 0xFFD8) { 
+    if (view.getUint16(0, false) != 0xFFD8) {
       return -2;
-    }    
+    }
     var length = view.byteLength, offset = 2;
     while (offset < length) {
       var marker = view.getUint16(offset, false);
           offset += 2;
       if (marker == 0xFFE1) {
-        if (view.getUint32(offset += 2, false) != 0x45786966) { 
+        if (view.getUint32(offset += 2, false) != 0x45786966) {
           return -1;
         }
         var little = view.getUint16(offset += 6, false) == 0x4949;
@@ -1182,7 +822,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Jasny Bootstrap\'s JavaScr
             offset += 2;
         for (var i = 0; i < tags; i++)   {
           if (view.getUint16(offset + (i * 12), little) == 0x0112) {
-            return view.getUint16(offset + (i * 12) + 8, little); 
+            return view.getUint16(offset + (i * 12) + 8, little);
           }
         }
       }
@@ -1190,15 +830,15 @@ if (typeof jQuery === 'undefined') { throw new Error('Jasny Bootstrap\'s JavaScr
          break;
       } else {
         offset += view.getUint16(offset, false);
-      } 
+      }
     }
 
     return -1;
   }
 
   Fileinput.prototype.resetOrientation = function($img, transform) {
-  var img = new Image();    
-  
+  var img = new Image();
+
   img.onload = function() {
     var width = img.width,
         height = img.height,
@@ -1213,7 +853,7 @@ if (typeof jQuery === 'undefined') { throw new Error('Jasny Bootstrap\'s JavaScr
       canvas.width = width;
       canvas.height = height;
     }
-    
+
     // transform context before drawing image
     switch (transform) {
       case 2: ctx.transform(-1, 0, 0, 1, width, 0); break;

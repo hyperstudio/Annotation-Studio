@@ -318,6 +318,10 @@ jQuery(function($) {
     placeholder: "Enter user(s) to filter on",
     onChange: function(value, text, $selectedItem) {
       annotation_studio.tagFilter();
+      if(value.length>0)
+        $('.navbar-toggle .fa-circle').css('display','inline');
+      else
+        $('.navbar-toggle .fa-circle').css('display','none');
     }
   });
   $('button#userclear')
@@ -331,6 +335,10 @@ jQuery(function($) {
     placeholder: "Enter tag(s) to filter on",
     onChange: function(value, text, $selectedItem) {
       annotation_studio.tagFilter();
+      if(value.length>0)
+        $('.navbar-toggle .fa-circle').css('display','inline');
+      else
+        $('.navbar-toggle .fa-circle').css('display','none');
     }
   });
   $('button#tagclear')

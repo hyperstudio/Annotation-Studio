@@ -46,8 +46,13 @@ body {
   }
 }
 
-.navbar-toggle .fa-circle {
-  color:yellow;
-  text-shadow: 0px 0px 2px #333;
-  display:none;
+.navbar-toggle {
+  font-weight: normal;
+  .fa-circle {
+    color:gold;
+    text-shadow: 0px 0px 1  px #444;
+    display:none;
+    font-size:8px;
+    vertical-align: top;
+  }
 }

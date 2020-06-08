@@ -48,23 +48,39 @@ body {
 
 #rightburger.navbar-switch{
   margin-top:10px;
+  margin-right:-16px;
 }
 
 .navbar-toggle {
+  background-color: none;
+  border: none;
+  color: #337ab7;
   font-weight: normal;
+  padding: 5px 0 0 0;
+  &:hover{
+    color: #23527c;
+    cursor: pointer;
+    text-decoration: underline;
+  }
   .fa-circle {
     color:gold;
     text-shadow: 0px 0px 1  px #444;
-    display:none;
+    opacity: 0%;
     font-size:8px;
     vertical-align: top;
   }
   .bi-info-square{
     font-size: 24px;  
   }
-  padding: 5px 0 0 0;
-  border: none;
-  background-color: none;
+  .bi-filter{
+    margin-right: 3px;
+    font-size: 18px;
+    margin-top: -3px;
+  }
+}
+
+.navbutton-pushed{
+  color: #23527c;
 }
 .annotations-header{
   padding-top: 16px;

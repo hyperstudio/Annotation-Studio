@@ -319,9 +319,9 @@ jQuery(function($) {
     onChange: function(value, text, $selectedItem) {
       annotation_studio.tagFilter();
       if(value.length>0)
-        $('.navbar-toggle .fa-circle').css('display','inline');
+        $('.navbar-toggle .fa-circle').css('opacity','100%');
       else
-        $('.navbar-toggle .fa-circle').css('display','none');
+        $('.navbar-toggle .fa-circle').css('opacity','0%');
     }
   });
   $('button#userclear')
@@ -336,9 +336,9 @@ jQuery(function($) {
     onChange: function(value, text, $selectedItem) {
       annotation_studio.tagFilter();
       if(value.length>0)
-        $('.navbar-toggle .fa-circle').css('display','inline');
+        $('.navbar-toggle .fa-circle').css('opacity','100%');
       else
-        $('.navbar-toggle .fa-circle').css('display','none');
+        $('.navbar-toggle .fa-circle').css('opacity','0%');
     }
   });
   $('button#tagclear')

@@ -86,3 +86,17 @@ body {
   padding-top: 16px;
   padding-left: 8px;
 }
+
+.docmeta {
+  .meta-key{
+    font-weight: bold;
+  }
+  .meta-value{
+    margin-left: 1em;
+  }
+  .sourceurl {
+    max-width: 100%;
+    word-wrap: break-word;
+    display: inline-block;
+  }
+}

@@ -1,49 +1,74 @@
 <!-- documents/_leftnav.html.erb -->
-<% if params[:action] == 'show' %>
+<% if params[:action] == 'show' && !@document.nil? %>
   <h4>Document Info</h4>
-  <ul class="nav navmenu-nav">
+  <ul class="nav navmenu-nav docmeta">
     <% if ! @document.author.blank? %>
-      <li>Author: <%= sanitize @document.author %></li>
+      <li>
+        <span class="meta-key">Author</span> 
+        <br /> 
+        <span class="meta-value"><%= sanitize @document.author %></span>
+      </li>
     <% end %>
     <% if ! @document.publisher.blank? %>
-      <li>Publisher: <%= sanitize @document.publisher %></li>
+      <li>
+        <span class="meta-key">Publisher</span>
+        <br />
+        <span class="meta-value"><%= sanitize @document.publisher %></span>
+      </li>
     <% end %>
     <% if ! @document.publication_date.blank? %>
-      <li>Publication date: <%= sanitize @document.publication_date %></li>
+      <li><span class="meta-key">Publication date</span>
+        <br />
+        <span class="meta-value"><%= sanitize @document.publication_date %></span></li>
     <% end %>
     <% if ! @document.location.blank? %>
-      <li>Publication Location: <%= sanitize @document.location %></li>
+      <li><span class="meta-key">Publication Location</span>
+        <br />
+        <span class="meta-value"><%= sanitize @document.location %></span></li>
     <% end %>
     <% if ! @document.edition.blank? %>
-      <li>Edition/Volume: <%= sanitize @document.edition %></li>
+      <li><span class="meta-key">Edition/Volume</span>
+        <br />
+        <span class="meta-value"><%= sanitize @document.edition %></span></li>
     <% end %>
-    <li>Status:
-      <% if @document.state == "draft" %>
-        Draft <i class="glyphicon glyphicon-pencil"></i>
-      <% elsif @document.state == "published" %>
-        Published <i class="glyphicon glyphicon-comment"></i>
-      <% elsif @document.state == "archived" %>
-        Archived <i class="glyphicon glyphicon-folder-close"></i>
-      <% elsif @document.state == "public" %>
-        Public <i class="glyphicon glyphicon-globe"></i>
-      <% end %>
-    </li>
     <% source = (sanitize @document.source) %>
     <% if !source.blank? %>
-      <li>Source:
+      <li><span class="meta-key">Source</span>
+        <br />
         <% if valid_url?(source) %>
-          <a href="<%= source %>"><%= source %> </a>
+          <span class="meta-value"><a href="<%= source %>" class="sourceurl"><%= source %></a></span>
         <% else %>
-          <%= source %>
+          <span class="meta-value"><%= source %></span>
         <% end %>
       </li>
     <% end %>
     <% if ! @document.page_numbers.blank? %>
-      <li>Page Numbers: <%= sanitize @document.page_numbers %></li>
+      <li><span class="meta-key">Page Numbers</span>
+        <br />
+        <span class="meta-value"><%= sanitize @document.page_numbers %></span>
+      </li>
     <% end %>
     <% if ! @document.notes.blank? %>
-      <li> Additional Notes: <span id="metadata-notes"> <%= sanitize @document.notes %> </span></li>
+      <li>
+        <span class="meta-key">Additional Notes</span>
+        <br />
+        <span id="metadata-notes" class="meta-value"><%= sanitize @document.notes %></span>
+      </li>
     <% end %>
+    <li><span class="meta-key">Status</span>
+      <br />
+      <span class="meta-value">
+        <% if @document.state == "draft" %>
+          Draft <i class="glyphicon glyphicon-pencil"></i>
+        <% elsif @document.state == "published" %>
+          Published <i class="glyphicon glyphicon-comment"></i>
+        <% elsif @document.state == "archived" %>
+          Archived <i class="glyphicon glyphicon-folder-close"></i>
+        <% elsif @document.state == "public" %>
+          Public <i class="glyphicon glyphicon-globe"></i>
+        <% end %>
+      </span>
+    </li>
   </ul>
   <br>
   <% if ! @document.chapters.blank? %>

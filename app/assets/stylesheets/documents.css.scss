@@ -46,6 +46,10 @@ body {
   }
 }
 
+#rightburger.navbar-switch{
+  margin-top:10px;
+}
+
 .navbar-toggle {
   font-weight: normal;
   .fa-circle {
@@ -55,4 +59,14 @@ body {
     font-size:8px;
     vertical-align: top;
   }
+  .bi-info-square{
+    font-size: 24px;  
+  }
+  padding: 5px 0 0 0;
+  border: none;
+  background-color: none;
+}
+.annotations-header{
+  padding-top: 16px;
+  padding-left: 8px;
 }

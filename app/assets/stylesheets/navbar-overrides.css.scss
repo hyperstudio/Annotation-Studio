@@ -42,12 +42,6 @@ $dropDown       : false;
       > a, > a:hover, > a:focus {
         color: $colHighlight;
         background-color: $bgHighlight; }}}
-  .navbar-toggle {
-    border-color: $bgHighlight;
-    &:hover {
-      background-color: $bgHighlight; }
-    .icon-bar {
-      background-color: $colDefault; }}
   .navbar-collapse,
   .navbar-form {
     border-color: $colDefault; }
@@ -75,10 +69,6 @@ $dropDown       : false;
   display:none;
 }
 
-input:checked + .navbar-toggle {
-  background-color: #ddd;
-}
-
-.navbutton-pushed{
-  background-color: #ddd;
+.navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
+  background-color: transparent;
 }

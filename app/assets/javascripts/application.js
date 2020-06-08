@@ -19,7 +19,7 @@
 //= require jquery.xcolor
 //= require bootstrap
 //= require bootstrap-tagsinput
-//= require jasny-bootstrap
+//= require jasny-bootstrap-modded
 //= require underscore
 //= require backbone
 //= require summernote

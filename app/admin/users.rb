@@ -43,7 +43,9 @@ ActiveAdmin.register User, :as => "User" do
         end
         list[0..-3].html_safe
       end
-      row :documents
+      row :documents do
+        user.documents.sort_by {|d| d.title}
+      end
       row("Joined") { |u| u.created_at }
       row :updated_at
       row :current_sign_in_at

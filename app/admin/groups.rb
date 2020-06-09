@@ -18,7 +18,6 @@ ActiveAdmin.register Group do
       u = User.find_by_id(group.owner_id)
       u.fullname
     end
-    column "Idea Space On", :ideaSpaceOn
     column "Creation date", :created_at
     actions
   end
@@ -30,16 +29,6 @@ ActiveAdmin.register Group do
         u = User.find_by_id(group.owner_id)
         link_to (u.fullname + " (" + u.email + ")"), admin_user_path(u.id)
       end
-      row :ideaSpaceOn
-      row :members do
-        list = ''
-        group.memberships.each do |m|
-          u = User.find_by_id(m.user_id)
-          list += link_to u.fullname, admin_user_path(u.id) 
-          list += ' ('+ m.role + '), '
-        end
-        list[0..-3].html_safe
-      end
       row :managers do
         list = ''
         group.memberships.each do |m|
@@ -48,6 +37,15 @@ ActiveAdmin.register Group do
             list += link_to u.fullname, admin_user_path(u.id) 
             list += ', '
           end
+        end
+        list[0..-3].html_safe
+      end
+      row :members do
+        list = ''
+        group.memberships.each do |m|
+          u = User.find_by_id(m.user_id)
+          list += link_to u.fullname, admin_user_path(u.id) 
+          list += ' ('+ m.role + '), '
         end
         list[0..-3].html_safe
       end

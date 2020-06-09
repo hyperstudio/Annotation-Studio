@@ -1,18 +1,20 @@
+<!-- documents/_rightnav.html.erb -->
 <% if params[:action] == 'show' && ! @document.draft? %>
   <!--hide-->
-<div style="display: none;">
+  <div style="display: none;">
 
-  <div class="btn-group btn-group-sm" data-toggle="buttons" id="filter-chooser">
-    <label class="btn btn-default btn-sm active" id="allannotations">
-      <input type="radio" class="btn btn-default btn-sm active" checked value="allannotations">Whole text</input>
-    </label>
-    <label class="btn btn-default btn-sm" id="visibleannotations">
-      <input type="radio" class="btn btn-default btn-sm" value="visibleannotations">Visible text</input>
-    </label>
+    <div class="btn-group btn-group-sm" data-toggle="buttons" id="filter-chooser">
+      <label class="btn btn-default btn-sm active" id="allannotations">
+        <input type="radio" class="btn btn-default btn-sm active" checked value="allannotations">Whole text</input>
+      </label>
+      <label class="btn btn-default btn-sm" id="visibleannotations">
+        <input type="radio" class="btn btn-default btn-sm" value="visibleannotations">Visible text</input>
+      </label>
+    </div>
   </div>
-</div>
-<!--hide ends-->
+  <!--hide ends-->
 
+  <div class="close-offcanvas" data-toggle="offcanvas" data-target="#toolsmenu"><i class="glyphicon glyphicon-remove"></i></div>
 
   <div id="tag-chooser">
     <form>
@@ -30,7 +32,7 @@
     </form>
   </div><!-- /input-group -->
 
-<!--styling of the radio selection are in boot.docs.css.scss for class view-chooser; and in bootstrap.css.erb for class btn-groupsm-->
+  <!--styling of the radio selection are in boot.docs.css.scss for class view-chooser; and in bootstrap.css.erb for class btn-groupsm-->
 
   <% if Tenant.annotation_categories_enabled -%>
   <p><strong>How</strong> they are categorized:</p>

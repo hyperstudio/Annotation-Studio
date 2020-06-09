@@ -100,3 +100,19 @@ body {
     display: inline-block;
   }
 }
+
+.close-offcanvas{
+  &:hover{
+    color: white;
+    cursor: pointer;
+  }
+  color: #999;
+  font-size: 14px;
+  padding: 0px;
+  margin: 0px 0 -20px -26px;
+}
+
+.close-offcanvas-left{
+  float: right;
+  margin: 0px -26px -20px 0;
+}

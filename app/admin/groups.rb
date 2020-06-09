@@ -28,16 +28,27 @@ ActiveAdmin.register Group do
       row :name
       row :owner do 
         u = User.find_by_id(group.owner_id)
-        u.fullname + " (" + u.email + ")"  
+        link_to (u.fullname + " (" + u.email + ")"), admin_user_path(u.id)
       end
       row :ideaSpaceOn
       row :members do
         list = ''
         group.memberships.each do |m|
           u = User.find_by_id(m.user_id)
-          list += u.fullname + ', '
+          list += link_to u.fullname, admin_user_path(u.id) 
+          list += ' ('+ m.role + '), '
         end
-        list[0..-3]
+        list[0..-3].html_safe
+      end
+      row :managers do
+        list = ''
+        group.memberships.each do |m|
+          if m.role == 'manager'
+            u = User.find_by_id(m.user_id)
+            list += link_to u.fullname, admin_user_path(u.id) 
+          end
+        end
+        list[0..-3].html_safe
       end
     end
   end

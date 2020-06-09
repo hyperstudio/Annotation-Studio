@@ -35,8 +35,19 @@ ActiveAdmin.register User, :as => "User" do
       row :fullname
       row :affiliation
       row :email
-      row :groups
+      row :groups do 
+        list = ''
+        user.memberships.each do |m|
+          list += link_to Group.find_by_id(m.group_id).name, admin_group_path(m.group_id)
+          list += " (" + m.role.to_s + "), "
+        end
+        list[0..-3].html_safe
+      end
       row :documents
+      row("Joined") { |u| u.created_at }
+      row :updated_at
+      row :current_sign_in_at
+      row :last_sign_in_at
       row :annotations do 
         render 'show_annotations', { user: user }
       end

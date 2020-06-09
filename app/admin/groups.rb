@@ -46,6 +46,7 @@ ActiveAdmin.register Group do
           if m.role == 'manager'
             u = User.find_by_id(m.user_id)
             list += link_to u.fullname, admin_user_path(u.id) 
+            list += ', '
           end
         end
         list[0..-3].html_safe

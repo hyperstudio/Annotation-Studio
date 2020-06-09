@@ -20,6 +20,7 @@ ActiveAdmin.register_page "Dashboard" do
             li "If you are also responding to a deletion request, click \"Delete User\" in the top right."
           end
           h3 "Need to give someone access to ActiveAdmin?"
+          h5 "Please be aware that giving someone admin access will allow them to view, edit, and delete all users, documents, and groups. These permissions should be granted only to trusted administrators."
           ol do
             li ("Go to the " + link_to('Admin Users tab', admin_admin_users_path) +".").html_safe
             li "Click the \"New Admin User\" button in the top right."

@@ -391,7 +391,7 @@ GEM
       nio4r (~> 2.0)
     rabl (0.11.6)
       activesupport (>= 2.3.14)
-    rack (2.0.8)
+    rack (2.2.3)
     rack-contrib (2.1.0)
       rack (~> 2.0)
     rack-cors (1.1.1)
@@ -605,7 +605,7 @@ DEPENDENCIES
   public_suffix (= 3.0.3)
   puma (= 4.3.5)
   rabl
-  rack (= 2.0.8)
+  rack (= 2.2.3)
   rack-cors
   rails (= 5.0.7.2)
   rails_12factor

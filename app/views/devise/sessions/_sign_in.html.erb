@@ -19,7 +19,7 @@
             <%= hidden_field_tag :invite_token, params[:invite_token] %>
         <% end %>
 
-        <% if session[:ideaspace] %>
+        <% if session[:ideaspace] && request.referer %>
             <% session[:return_to] ||= request.referer + '?loggedin=true' %>
         <% end %>
 

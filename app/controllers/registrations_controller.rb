@@ -4,7 +4,7 @@ class RegistrationsController < Devise::RegistrationsController
 	#not sure if necessary
 	def new
 		@invitetoken = params[:invite_token]
-    if @invitetoken 
+    if @invitetoken && current_user
 
       #make sure token is valid 
       begin

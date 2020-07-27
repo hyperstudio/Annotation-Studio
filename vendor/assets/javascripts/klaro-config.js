@@ -130,14 +130,19 @@ var klaroConfig = {
                 // on a third-party domain! See the note at mdn:
                 // https://developer.mozilla.org/en-US/docs/Web/API/Document/cookie#new-cookie_domain
                 [/^__utma.*$/, '/', 'annotationstudio.org'], //for the production version
+                [/^__utma.*$/, '/', 'annotationstudio-next.herokuapp.com'], //for the staging version
                 [/^__utma.*$/, '/', 'localhost'], //for the local version
                 [/^__utmb.*$/, '/', 'annotationstudio.org'], 
+                [/^__utmb.*$/, '/', 'annotationstudio-next.herokuapp.com'], 
                 [/^__utmb.*$/, '/', 'localhost'],
                 [/^__utmc.*$/, '/', 'annotationstudio.org'],
+                [/^__utmc.*$/, '/', 'annotationstudio-next.herokuapp.com'],
                 [/^__utmc.*$/, '/', 'localhost'],
                 [/^__utmt.*$/, '/', 'annotationstudio.org'],
+                [/^__utmt.*$/, '/', 'annotationstudio-next.herokuapp.com'],
                 [/^__utmt.*$/, '/', 'localhost'],
                 [/^__utmz.*$/, '/', 'annotationstudio.org'], 
+                [/^__utmz.*$/, '/', 'annotationstudio-next.herokuapp.com'], 
                 [/^__utmz.*$/, '/', 'localhost'], 
             ],
 

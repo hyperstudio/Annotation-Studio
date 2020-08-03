@@ -73,19 +73,19 @@ var klaroConfig = {
                     'Here you can see and customize the information that we collect about you.',
             },
             'annotation-studio': {
-                description: 'Used to preserve visitors\' user configurations'
+                description: 'Used to preserve visitors\' user configurations. This allows us to save your settings for next time you log in.'
             },
             'google-analytics': {
-                description: 'Collection of visitor statistics',
+                description: 'Collection of visitor statistics. This helps us keep track of how many active users we have, where they are from, and how they got here.',
             },
             typekit: {
-                description: 'Web fonts hosted by Adobe',
+                description: 'Web fonts hosted by Adobe. This helps us display various fonts used throughout Annotation Studio.',
             },
             purposes: {
-                analytics: 'This helps us keep track of how many active users we have, where they are from, and how they got here.',
-                configuration: 'This allows us to save your settings for next time you log in.',
+                analytics: 'Statistics',
+                configuration: 'Settings',
                 security: 'Security',
-                styling: 'This helps us display various fonts used throughout Annotation Studio.',
+                styling: 'Styling',
             },
         },
     },

@@ -82,10 +82,10 @@ var klaroConfig = {
                 description: 'Web fonts hosted by Adobe',
             },
             purposes: {
-                analytics: 'Analytics',
-                configuration: 'Configuration',
+                analytics: 'This helps us keep track of how many active users we have, where they are from, and how they got here.',
+                configuration: 'This allows us to save your settings for next time you log in.',
                 security: 'Security',
-                styling: 'Styling',
+                styling: 'This helps us display various fonts used throughout Annotation Studio.',
             },
         },
     },

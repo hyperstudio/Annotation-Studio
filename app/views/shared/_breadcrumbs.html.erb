@@ -8,7 +8,7 @@
 
   <% if current_page?(documents_path) %>
     <li class="active">Documents</li>
-  <% elsif params[:controller] == 'documents' %>
+  <% elsif params[:controller] == 'documents' && !@document.nil? %>
     <li><%= link_to("Documents", "/documents", :id => "documents-link") %></li>
     <% if params[:action] == 'show' %>
       <li class="active"><%= @document.title %></li>
@@ -27,7 +27,7 @@
 
   <% if current_page?(groups_path) %>
     <li class="active">Groups</li>
-  <% elsif params[:controller] == 'groups' %>
+  <% elsif params[:controller] == 'groups' && !@group.nil? %>
     <li><%= link_to("Groups", "/groups", :id => "documents-link") %></li>
     <% if params[:action] == 'show' %>
       <li class="active"><%= @group.name %></li>

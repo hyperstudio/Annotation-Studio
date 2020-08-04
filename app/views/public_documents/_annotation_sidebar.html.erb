@@ -1,66 +1,68 @@
 <%= render :partial => "shared/annotator_base" %>
 
-<script type="text/javascript" charset="utf-8">
-var document_slug = "<%= @document.slug %>";
-var default_state = <%= @document.default_state.present? ? (raw @document.default_state) : (raw "''") %>;
-var groups = [];
-var group_ids = [];
-var annotatorOptions = {'readOnly': 'true'};
-var filter_user = "<%= @document.user.email %>";
-var token = '<%= session["jwt"] %>';
-var annotation_username = "<%= @document.user.first_name_last_initial %>";
-var sidebar_sort_editable = false;
-var mobile_device = <%= mobile_device? -%>;
-var search_context = 'public';
-var api_url = location.protocol+'//'+'<%= ENV["API_URL"] %>';
-var doc_uri = [location.protocol, '//', location.host, location.pathname].join('');
+<% if !@document.nil? %>
+  <script type="text/javascript" charset="utf-8">
+  var document_slug = "<%= @document.slug %>";
+  var default_state = <%= @document.default_state.present? ? (raw @document.default_state) : (raw "''") %>;
+  var groups = [];
+  var group_ids = [];
+  var annotatorOptions = {'readOnly': 'true'};
+  var filter_user = "<%= @document.user.email %>";
+  var token = '<%= session["jwt"] %>';
+  var annotation_username = "<%= @document.user.first_name_last_initial %>";
+  var sidebar_sort_editable = false;
+  var mobile_device = <%= mobile_device? -%>;
+  var search_context = 'public';
+  var api_url = location.protocol+'//'+'<%= ENV["API_URL"] %>';
+  var doc_uri = [location.protocol, '//', location.host, location.pathname].join('');
 
-var plugin_options = function() {
-  return {
-    Filter: false,
-    Auth: {
-      token: token
-    },
-    Store: {
-      prefix: api_url,
-      annotationData: {
-        'uri': doc_uri,
-        'group_ids': group_ids,
-        'doc_title': '<%= @document.title %>',
-        'doc_author': '<%= @document.author %>',
-        'doc_date': '<%= @document.publication_date %>',
-        'doc_publisher': '<%= @document.publisher %>',
-        'doc_edition': '<%= @document.edition %>',
-        'doc_source': '<%= @document.source %>'
+  var plugin_options = function() {
+    return {
+      Filter: false,
+      Auth: {
+        token: token
       },
-      loadFromSearch: annotation_studio.loadOptions({ mode: default_state[0], limit: 100 })
-    },
-    Markdown: false, // use RichText instead
-    AnnotateItPermissions: false, // this is built into the kitchen sink, so cancel it
-    Permissions: {
-      user: "<%= @document.user.email %>",
-      permissions: {
-        'read': [], // default: review mode; this is what users will need to control
-        'update': ['<%= @document.user.email %>'], // no one else can ever update
-        'delete': ['<%= @document.user.email %>'], // no one else can ever delete
-        'admin': ['<%= @document.user.email %>'] // no one else can ever admin
+      Store: {
+        prefix: api_url,
+        annotationData: {
+          'uri': doc_uri,
+          'group_ids': group_ids,
+          'doc_title': '<%= @document.title %>',
+          'doc_author': '<%= @document.author %>',
+          'doc_date': '<%= @document.publication_date %>',
+          'doc_publisher': '<%= @document.publisher %>',
+          'doc_edition': '<%= @document.edition %>',
+          'doc_source': '<%= @document.source %>'
+        },
+        loadFromSearch: annotation_studio.loadOptions({ mode: default_state[0], limit: 100 })
       },
-      userString: function (user) {
-        return user.split("@")[0]
-      },
-      // Permissions settings per-annotation
-      showViewPermissionsCheckbox: false,
-      showEditPermissionsCheckbox: false
-    }
-    <% if Tenant.current_tenant.annotation_categories_enabled -%>
-    , Categories: <%= raw AnnotationCategory.to_plugin_init %>
-    <% end -%>
+      Markdown: false, // use RichText instead
+      AnnotateItPermissions: false, // this is built into the kitchen sink, so cancel it
+      Permissions: {
+        user: "<%= @document.user.email %>",
+        permissions: {
+          'read': [], // default: review mode; this is what users will need to control
+          'update': ['<%= @document.user.email %>'], // no one else can ever update
+          'delete': ['<%= @document.user.email %>'], // no one else can ever delete
+          'admin': ['<%= @document.user.email %>'] // no one else can ever admin
+        },
+        userString: function (user) {
+          return user.split("@")[0]
+        },
+        // Permissions settings per-annotation
+        showViewPermissionsCheckbox: false,
+        showEditPermissionsCheckbox: false
+      }
+      <% if Tenant.current_tenant.annotation_categories_enabled -%>
+      , Categories: <%= raw AnnotationCategory.to_plugin_init %>
+      <% end -%>
+    };
   };
-};
 
-jQuery(function ($) {
-  <% if @document.user.has_role?(:admin) %>
-    $('#adminview').on('click', { mode: 'admin', id: 'adminview' }, annotation_studio.modeFilter);
-  <% end %>
-});
-</script>
+  jQuery(function ($) {
+    <% if @document.user.has_role?(:admin) %>
+      $('#adminview').on('click', { mode: 'admin', id: 'adminview' }, annotation_studio.modeFilter);
+    <% end %>
+  });
+  </script>
+<% end %>

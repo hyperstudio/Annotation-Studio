@@ -1,72 +1,75 @@
 <%= content_for :body_id, 'documents' %>
 <%= content_for :body_class, 'show' %>
-<%= content_for :page_title, @document.title %>
-<%= stylesheet_link_tag "documents" %>
-<div class="row">
-  <div class="col-md-8">
-    <% if ! @document.processed? %>
-      <%= render 'processed_message' %>
-    <% end %>
-    <% if @document.survey_link.present? %>
-      <%= render 'survey_button' %>
-    <% end %>
-    <div id="textcontent">
-      <div id="snapshot">
-        <% if @document.created_at < Time.parse("2020-05-30 00:00:00.000000 -04:00") %>
-          <%= @document.text.html_safe %>
-        <% else%>
-          <%= sanitize @document.text  %>
-        <% end %>
+
+<% if !@document.nil? %>
+  <%= content_for :page_title, @document.title %>
+  <%= stylesheet_link_tag "documents" %>
+  <div class="row">
+    <div class="col-md-8">
+      <% if ! @document.processed? %>
+        <%= render 'processed_message' %>
+      <% end %>
+      <% if @document.survey_link.present? %>
+        <%= render 'survey_button' %>
+      <% end %>
+      <div id="textcontent">
+        <div id="snapshot">
+          <% if @document.created_at < Time.parse("2020-05-30 00:00:00.000000 -04:00") %>
+            <%= @document.text.html_safe %>
+          <% else%>
+            <%= sanitize @document.text  %>
+          <% end %>
+        </div>
       </div>
-    </div>
 
-  </div><!--/col-md-8 -->
-  <div class="col-md-4">
+    </div><!--/col-md-8 -->
+    <div class="col-md-4">
 
 
-    <% if @document.processed? and !@document.draft? %>
-      <%= render "documents/annotation_sidebar" %>
-    <% end %>
-  </div><!--/col-md-3 -->
-</div><!--/row -->
-<%= render "documents/help" %>
-<%= render "documents/snapshot_progress" %>
-<%= render "documents/spinner_modal" %>
-<div id="snapshot-staging">
+      <% if @document.processed? and !@document.draft? %>
+        <%= render "documents/annotation_sidebar" %>
+      <% end %>
+    </div><!--/col-md-3 -->
+  </div><!--/row -->
+  <%= render "documents/help" %>
+  <%= render "documents/snapshot_progress" %>
+  <%= render "documents/spinner_modal" %>
+  <div id="snapshot-staging">
 
-</div>
+  </div>
 
-<%# render "documents/metadata" %>
+  <%# render "documents/metadata" %>
 
-<script type="text/javascript">
+  <script type="text/javascript">
 
-var annotationStudioConfig = {
-  enableRichTextEditor: '<%= @enable_rich_text_editor %>',
-  tinyMCEToolbar: '<%= @tiny_mce_toolbar %>',
-  apiURL: '<%= @api_url %>'
-};
+  var annotationStudioConfig = {
+    enableRichTextEditor: '<%= @enable_rich_text_editor %>',
+    tinyMCEToolbar: '<%= @tiny_mce_toolbar %>',
+    apiURL: '<%= @api_url %>'
+  };
 
-<% if !@document.processed? or @document.draft? %>
-  $("#rightburger input").prop("disabled", true);
+  <% if !@document.processed? or @document.draft? %>
+    $("#rightburger input").prop("disabled", true);
+  <% end %>
+
+  $('#annotation-list').slimScroll({
+    height: '99%',
+    width: '340px',
+    alwaysVisible: false,
+    allowPageScroll: true,
+    disableFadeOut: true
+  });
+
+  $('#chapternav').slimScroll({
+    height: '90%',
+    width: '250px',
+    size: '10px',
+    position: 'right',
+    color: '#ccc',
+    distance: '5px',
+    alwaysVisible: false,
+    allowPageScroll: true,
+    disableFadeOut: true
+  });
+  </script>
 <% end %>
-
-$('#annotation-list').slimScroll({
-  height: '99%',
-  width: '340px',
-  alwaysVisible: false,
-  allowPageScroll: true,
-  disableFadeOut: true
-});
-
-$('#chapternav').slimScroll({
-  height: '90%',
-  width: '250px',
-  size: '10px',
-  position: 'right',
-  color: '#ccc',
-  distance: '5px',
-  alwaysVisible: false,
-  allowPageScroll: true,
-  disableFadeOut: true
-});
-</script>

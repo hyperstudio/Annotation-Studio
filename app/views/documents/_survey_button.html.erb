@@ -1,3 +1,5 @@
+<% if !@document.nil? %>
 <div class="alert alert-info" id="survey_button_container">
   <a href="<%= @document.survey_link %>" class="btn btn-info" target="_blank">Take the survey</a>
 </div>
+<% end %>

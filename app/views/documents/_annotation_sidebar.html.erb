@@ -1,91 +1,92 @@
 <%= render :partial => "shared/annotator_base" %>
+<% if !@document.nil? %>
+  <script type="text/javascript" charset="utf-8">
+  var document_slug = "<%= @document.slug %>";
+  var default_state = <%= @document.default_state.present? ? (raw @document.default_state) : (raw "''") %>;
 
-<script type="text/javascript" charset="utf-8">
-var document_slug = "<%= @document.slug %>";
-var default_state = <%= @document.default_state.present? ? (raw @document.default_state) : (raw "''") %>;
+  //testing per-group annotations
+  var userGroupIds = [];
+  var docGroupIds = [];
 
-//testing per-group annotations
-var userGroupIds = [];
-var docGroupIds = [];
-
-<% current_user.groups.each do |g| %>
-  userGroupIds.push(<%=g.id %>);
-<% end %>
-
-<% @document.groups.each do |g| %>
-  docGroupIds.push(<%=g.id %>);
-<% end %>
-
-// get intersection of document's groups and user's groups
-var group_ids = userGroupIds.filter(value => docGroupIds.includes(value));
-
-var annotatorOptions = {'readOnly': <%= @document.archived? %>};
-var filter_user = "<%= current_user.email %>";
-var token = '<%= session["jwt"] %>';
-var annotation_username = "<%= current_user.first_name_last_initial %>";
-var sidebar_sort_editable = <%= current_user && current_user.has_document_permissions?(@document) %>;
-var mobile_device = <%= mobile_device? -%>;
-var search_context = 'document';
-var api_url = location.protocol+'//'+'<%= ENV["API_URL"] %>';
-var doc_uri = [location.protocol, '//', location.host, location.pathname].join('');
-
-var plugin_options = function() {
-  return {
-    <% unless current_user.has_role?(:admin) && ENV["ANNOTATOR_FILTER"] == 'true' %>
-    Filter: false,
-    <% end %>
-    Auth: {
-      token: token
-    },
-    Store: {
-      prefix: api_url,
-      annotationData: {
-        'uri': doc_uri,
-        'group_ids': group_ids,
-        'doc_title': '<%= @document.title %>',
-        'doc_author': '<%= @document.author %>',
-        'doc_date': '<%= @document.publication_date %>',
-        'doc_publisher': '<%= @document.publisher %>',
-        'doc_edition': '<%= @document.edition %>',
-        'doc_source': '<%= @document.source %>'
-      },
-      // loadFromSearch: annotation_studio.loadOptions({ mode: default_state[0], limit: 100 })
-
-      //default_state is nil for all current documents so set to empty string by var @ line 5
-      // changed code for now to get mode=user as default.
-      loadFromSearch: annotation_studio.loadOptions({limit: 100 })
-
-    },
-    Markdown: false, // use RichText instead
-    AnnotateItPermissions: false, // this is built into the kitchen sink, so cancel it
-    Permissions: {
-      user: "<%= current_user.email %>",
-      permissions: {
-        'read': ['<%= current_user.email %>'], // default: review mode; this is what users will need to control
-        'update': ['<%= current_user.email %>'], // no one else can ever update
-        'delete': ['<%= current_user.email %>'], // no one else can ever delete
-        'admin': ['<%= current_user.email %>'] // no one else can ever admin
-      },
-      userString: function (user) {
-        if(user && user.id){
-          return user.id;
-        }
-        return user;
-      },
-      // Permissions settings per-annotation
-      showViewPermissionsCheckbox: true,
-      showEditPermissionsCheckbox: false
-    }
-    <% if Tenant.annotation_categories_enabled -%>
-    , Categories: <%= raw AnnotationCategory.to_plugin_init %>
-    <% end -%>
-  }
-};
-
-jQuery(function ($) {
-  // Create username for a given annotation if needed.
-  <% if current_user.has_role?(:admin) %>
-    $('#adminview').on('click', { mode: 'admin', id: 'adminview' }, annotation_studio.modeFilter);
+  <% current_user.groups.each do |g| %>
+    userGroupIds.push(<%=g.id %>);
   <% end %>
-});
-</script>
+
+  <% @document.groups.each do |g| %>
+    docGroupIds.push(<%=g.id %>);
+  <% end %>
+
+  // get intersection of document's groups and user's groups
+  var group_ids = userGroupIds.filter(value => docGroupIds.includes(value));
+
+  var annotatorOptions = {'readOnly': <%= @document.archived? %>};
+  var filter_user = "<%= current_user.email %>";
+  var token = '<%= session["jwt"] %>';
+  var annotation_username = "<%= current_user.first_name_last_initial %>";
+  var sidebar_sort_editable = <%= current_user && current_user.has_document_permissions?(@document) %>;
+  var mobile_device = <%= mobile_device? -%>;
+  var search_context = 'document';
+  var api_url = location.protocol+'//'+'<%= ENV["API_URL"] %>';
+  var doc_uri = [location.protocol, '//', location.host, location.pathname].join('');
+
+  var plugin_options = function() {
+    return {
+      <% unless current_user.has_role?(:admin) && ENV["ANNOTATOR_FILTER"] == 'true' %>
+      Filter: false,
+      <% end %>
+      Auth: {
+        token: token
+      },
+      Store: {
+        prefix: api_url,
+        annotationData: {
+          'uri': doc_uri,
+          'group_ids': group_ids,
+          'doc_title': '<%= @document.title %>',
+          'doc_author': '<%= @document.author %>',
+          'doc_date': '<%= @document.publication_date %>',
+          'doc_publisher': '<%= @document.publisher %>',
+          'doc_edition': '<%= @document.edition %>',
+          'doc_source': '<%= @document.source %>'
+        },
+        // loadFromSearch: annotation_studio.loadOptions({ mode: default_state[0], limit: 100 })
+
+        //default_state is nil for all current documents so set to empty string by var @ line 5
+        // changed code for now to get mode=user as default.
+        loadFromSearch: annotation_studio.loadOptions({limit: 100 })
+
+      },
+      Markdown: false, // use RichText instead
+      AnnotateItPermissions: false, // this is built into the kitchen sink, so cancel it
+      Permissions: {
+        user: "<%= current_user.email %>",
+        permissions: {
+          'read': ['<%= current_user.email %>'], // default: review mode; this is what users will need to control
+          'update': ['<%= current_user.email %>'], // no one else can ever update
+          'delete': ['<%= current_user.email %>'], // no one else can ever delete
+          'admin': ['<%= current_user.email %>'] // no one else can ever admin
+        },
+        userString: function (user) {
+          if(user && user.id){
+            return user.id;
+          }
+          return user;
+        },
+        // Permissions settings per-annotation
+        showViewPermissionsCheckbox: true,
+        showEditPermissionsCheckbox: false
+      }
+      <% if Tenant.annotation_categories_enabled -%>
+      , Categories: <%= raw AnnotationCategory.to_plugin_init %>
+      <% end -%>
+    }
+  };
+
+  jQuery(function ($) {
+    // Create username for a given annotation if needed.
+    <% if current_user.has_role?(:admin) %>
+      $('#adminview').on('click', { mode: 'admin', id: 'adminview' }, annotation_studio.modeFilter);
+    <% end %>
+  });
+  </script>
+<% end %>

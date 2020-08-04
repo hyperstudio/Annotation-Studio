@@ -1,5 +1,5 @@
 <!-- documents/_rightnav.html.erb -->
-<% if params[:action] == 'show' && ! @document.draft? %>
+<% if params[:action] == 'show' && !@document.nil? && ! @document.draft? %>
   <!--hide-->
   <div style="display: none;">
 

@@ -58,3 +58,11 @@ groom.txt
 deploy-checklist.txt
 flags.txt
 rslt-db.txt
+
+# Webpacker
+/public/packs
+/public/packs-test
+/node_modules
+/yarn-error.log
+yarn-debug.log*
+.yarn-integrity

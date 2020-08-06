@@ -10,6 +10,8 @@ gem 'pg'
 
 gem 'scout_apm'
 
+gem 'webpacker', '~> 5.x'
+
 gem 'rails_serve_static_assets', '0.0.5'
 gem 'devise', '4.7.1'
 gem "switch_user"

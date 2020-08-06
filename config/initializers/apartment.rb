@@ -16,7 +16,7 @@ Apartment.configure do |config|
   config.tenant_names = lambda{ Tenant.pluck :database_name }
 end
 
-Rails.application.config.middleware.use 'Apartment::Elevators::Generic', lambda { |request|
+Rails.application.config.middleware.use Apartment::Elevators::Generic, lambda { |request|
   domain = request.host
   if tenant = Tenant.where(domain: domain).first
     tenant.database_name

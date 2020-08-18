@@ -1,6 +1,7 @@
 {
   "dependencies": {
-    "@rails/webpacker": "5.1.1"
+    "@rails/webpacker": "5.1.1",
+    "pdf-parse": "^1.1.1"
   },
   "devDependencies": {
     "webpack-dev-server": "^3.11.0"

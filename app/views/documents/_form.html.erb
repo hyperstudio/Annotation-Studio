@@ -1,5 +1,5 @@
-<%= form_for (@document), :html => { :role => 'form', class: "confirm-changes" } do |f| %>
-  <%= render 'document_content', f: f %>
+<%= form_for (@document), :html => { :role => "form", class: "confirm-changes" } do |f| %>
+  <%= render "document_content", f: f %>
   <div class="document-meta-wrapper">
     <div class = "panel panel-default"><!--column layout for metadata and status-->
       <div class="panel-heading">
@@ -13,60 +13,60 @@
           <div class="form-group">
             <%= label_tag "Type of Resource" %>
             <p class="help-block"> eg. Book, Website, etc...</p>
-            <%= select_tag "type", options_for_select([ "Book", "Website", "Journal", "Other" ], "Book"), {:class => 'form-control', :id => 'type', :onchange => "change(this.id)"} %>
+            <%= select_tag "type", options_for_select(["Book", "Website", "Journal", "Other"], "Book"), { :class => "form-control", :id => "type", :onchange => "change(this.id)" } %>
           </div>
         <% else %>
-          <%= label_tag "Type: " + (@document.resource_type == '' ? 'none' : @document.resource_type) %>
-          <%= hidden_field_tag 'type', @document.resource_type, onchange: "change(this.id)" %>
+          <%= label_tag "Type: " + (@document.resource_type == "" ? "none" : @document.resource_type) %>
+          <%= hidden_field_tag "type", @document.resource_type, onchange: "change(this.id)" %>
         <% end %>
         <div class="row">
           <div class="col-md-6">
             <div class="form-group">
               <%= f.label :author %>
-              <%= f.text_field :author, :class => 'form-control' %>
+              <%= f.text_field :author, :class => "form-control" %>
             </div>
             <div class="form-group">
               <%= f.label :publication_date %>
-              <%= f.text_field :publication_date, :class => 'form-control' %>
+              <%= f.text_field :publication_date, :class => "form-control" %>
             </div>
             <div class="form-group">
               <%= f.label :rights_status %>
-              <%= f.select :rights_status, [ 'Copyrighted', 'Public Domain', 'Creative Commons'], {}, {:class => 'form-control'} %>
+              <%= f.select :rights_status, ["Copyrighted", "Public Domain", "Creative Commons"], {}, { :class => "form-control" } %>
             </div>
             <div class="form-group optional" id="edition" style="display:none">
               <%= f.label :edition, "Edition/Volume" %>
-              <%= f.text_field :edition, :class => 'form-control' %>
+              <%= f.text_field :edition, :class => "form-control" %>
             </div>
             <div class="form-group optional" id="page_numbers" style="display:none">
               <%= f.label :page_numbers %>
-              <%= f.text_field :page_numbers, :class => 'form-control' %>
+              <%= f.text_field :page_numbers, :class => "form-control" %>
             </div>
           </div>
           <!-- end span 6 -->
           <div class="col-md-6">
             <div class="form-group">
               <%= f.label :title %>
-              <%= f.text_field :title, :class => 'form-control' %>
+              <%= f.text_field :title, :class => "form-control" %>
             </div>
             <div class="form-group">
               <%= f.label :publisher %>
-              <%= f.text_field :publisher, :class => 'form-control' %>
+              <%= f.text_field :publisher, :class => "form-control" %>
             </div>
             <div class="form-group optional" id="location" style="display:none">
-              <%= f.label :location, 'Publication Location' %>
-              <%= f.text_field :location, :class => 'form-control' %>
+              <%= f.label :location, "Publication Location" %>
+              <%= f.text_field :location, :class => "form-control" %>
             </div>
             <div class="form-group optional" id="series" style="display:none">
               <%= f.label :series %>
-              <%= f.text_field :series, :class => 'form-control' %>
+              <%= f.text_field :series, :class => "form-control" %>
             </div>
             <div class="form-group optional" id="journal_title" style="display:none">
               <%= f.label :journal_title %>
-              <%= f.text_field :journal_title, :class => 'form-control' %>
+              <%= f.text_field :journal_title, :class => "form-control" %>
             </div>
             <div class="form-group optional" id="source" >
               <%= f.label :source %>
-              <%= f.text_field :source, :class => 'form-control' %>
+              <%= f.text_field :source, :class => "form-control" %>
             </div>
           </div>
           <!-- end span 6 -->
@@ -77,7 +77,7 @@
             <div class="form-group optional" id="notes" style="display:none">
               <%= f.label :notes %>
               <p class="help-block"> Additional Metadata Information </p>
-              <%= f.text_area :notes, :class => 'form-control' %>
+              <%= f.text_area :notes, :class => "form-control" %>
             </div>
           </div>
           <!--ends row-->
@@ -98,7 +98,7 @@
         <div class="panel-body">
           <p class="greyText">Select the group(s) to which you wish to assign this document.</strong></p>
           <% if !current_user.groups.empty? %>
-            <%= f.select :groups, options_from_collection_for_select(current_user.groups, :id, :name, @document.groups.pluck(:id)), { include_blank: 'Groups' }, class:'ui fluid dropdown', multiple: true %>
+            <%= f.select :groups, options_from_collection_for_select(current_user.groups, :id, :name, @document.groups.pluck(:id)), { include_blank: "Groups" }, class: "ui fluid dropdown", multiple: true %>
           <% else %>
             You are not a member of any groups.
           <% end %>
@@ -181,13 +181,13 @@
       <!-- end span 6 -->
     </div>
     <div class="panel-body document-form-buttons">
-      <%= f.submit nil, :class => 'btn btn-default btn btn-default-primary btn-success' %>
+      <%= f.submit nil, :class => "btn btn-default btn btn-default-primary btn-success" %>
       <% if @document.state == "draft" %>
-        <%= link_to document_path(@document), method: :delete, class: 'btn btn-default btn btn-default-primary btn-danger', data: {confirm: "Are you sure? Delete cannot be undone.", toggle: 'tooltip', placement: 'top', original_title: 'Delete'} do %>
+        <%= link_to document_path(@document), method: :delete, class: "btn btn-default btn btn-default-primary btn-danger", data: { confirm: "Are you sure? Delete cannot be undone.", toggle: "tooltip", placement: "top", original_title: "Delete" } do %>
           Delete document
         <% end %>
       <% end %>
-      <%= link_to 'Cancel', dashboard_path(nav: "mydocuments"), :class => 'btn btn-default btn btn-default-primary btn-default' %>
+      <%= link_to "Cancel", dashboard_path(nav: "mydocuments"), :class => "btn btn-default btn btn-default-primary btn-default" %>
     </div>
     <!-- end row -->
   </div>
@@ -204,6 +204,7 @@
       height: 300,                 // set editor height
       minHeight: null,             // set minimum height of editor
       maxHeight: null,             // set maximum height of editor
+      maximumImageFileSize: 5242808, // 512KB,
       toolbar: [
         ['style', ['style']],
         ['font', ['bold', 'italic', 'underline']],

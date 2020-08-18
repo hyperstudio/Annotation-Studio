@@ -308,3 +308,7 @@ ul#account-management-links li.list-group-item {
 .fileinput-filename {
   margin-left: 20px;
 }
+
+.note-editor .modal {
+  z-index: 2100;
+}

@@ -1,5 +1,5 @@
 class CustomSessionsController < Devise::SessionsController
-  after_filter :after_login, :only => :create
+  after_action :after_login, :only => :create
 
   def after_login
     @now = DateTime.current().to_time.iso8601

@@ -121,7 +121,7 @@ class DocumentsController < ApplicationController
     respond_to do |format|
       if @document.save
         if params[:document][:upload].present?
-          Delayed::Job.enqueue DocumentProcessor.new(@document.id, @document.state, Apartment::Tenant.current)
+          DocumentProcessor.perform_later(@document.id, @document.state, Apartment::Tenant.current)
           @document.pending!
         end
 

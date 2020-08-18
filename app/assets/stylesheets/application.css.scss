@@ -296,3 +296,15 @@ ul#account-management-links li.list-group-item {
 .cookietable th:first-of-type{
   width: 130px;
 }
+
+.btn-file {
+  min-width: 80px;
+}
+
+.btn.fileinput-exists {
+  min-width: 80px !important;
+}
+
+.fileinput-filename {
+  margin-left: 20px;
+}

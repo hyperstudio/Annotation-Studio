@@ -99,7 +99,7 @@ module ApplicationHelper
   def getSharedDocs()
     joined = current_user.groups.pluck(:id)
     docIDs = DocumentsGroup.where(group_id: joined).pluck(:document_id).uniq
-    shared = Document.where(id: docIDs).where.not(state: "draft")
+    shared = Document.where(id: docIDs).where.not(state: "draft").where.not(state: "pending")
     # shared = Document.where.not(state: "draft").includes(:groups).where('groups.id': joined).references(:groups)
     return shared
   end

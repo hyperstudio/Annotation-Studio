@@ -1,4 +1,9 @@
 <%= form_for (@document), :html => { :role => "form", class: "confirm-changes" } do |f| %>
+  <% if !@document.errors.messages.empty? %>
+    <% if @document.errors.messages[:upload] %>
+      <% flash[:error] = @document.errors.messages[:upload][0] %>
+    <% end %>
+  <% end %>
   <%= render "document_content", f: f %>
   <div class="document-meta-wrapper">
     <div class = "panel panel-default"><!--column layout for metadata and status-->
@@ -182,7 +187,7 @@
     </div>
     <div class="panel-body document-form-buttons">
       <%= f.submit nil, :class => "btn btn-default btn btn-default-primary btn-success" %>
-      <% if @document.state == "draft" %>
+      <% if @document.state == "draft" && !@document.errors %>
         <%= link_to document_path(@document), method: :delete, class: "btn btn-default btn btn-default-primary btn-danger", data: { confirm: "Are you sure? Delete cannot be undone.", toggle: "tooltip", placement: "top", original_title: "Delete" } do %>
           Delete document
         <% end %>

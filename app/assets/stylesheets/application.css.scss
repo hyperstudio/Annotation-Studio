@@ -281,8 +281,6 @@ ul#account-management-links li.list-group-item {
   border-bottom: 1px solid #aaa;
 }
 
-
-
 .panel.devise h4 {
 	text-align: center;
 	font-weight: bold;
@@ -296,6 +294,8 @@ ul#account-management-links li.list-group-item {
 .cookietable th:first-of-type{
   width: 130px;
 }
+
+/* doc creation css */
 
 .btn-file {
   min-width: 80px;
@@ -312,3 +312,24 @@ ul#account-management-links li.list-group-item {
 .note-editor .modal {
   z-index: 2100;
 }
+
+.btn-file > div > input {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  font-size: 23px;
+  cursor: pointer;
+  filter: alpha(opacity=0);
+  opacity: 0;
+
+  direction: ltr;
+  }
+
+  .paste-or-upload{
+    width: 100%;
+    text-align:center;
+    padding: 10px;
+  }

@@ -4,9 +4,9 @@ class DocumentProcessorDispatcher
       return ProcessorFake
     end
 
-    if mime_type.in?(['application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'])
+    if mime_type.in?(["application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"])
       YomuProcessor
-    elsif mime_type == 'application/pdf'
+    elsif mime_type == "application/pdf"
       YomuProcessor
     else
       NullProcessor

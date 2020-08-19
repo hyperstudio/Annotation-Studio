@@ -96,7 +96,6 @@ class DocumentsController < ApplicationController
 
   # GET /documents/1/edit
   def edit
-    
   end
 
   # POST /documents
@@ -113,7 +112,7 @@ class DocumentsController < ApplicationController
     if !params[:document][:groups].nil?
       params[:document][:groups].each do |g|
         if !g.empty? and Group.find_by(id: g.to_i)
-          @document.groups << Group.find_by(id: g.to_i) 
+          @document.groups << Group.find_by(id: g.to_i)
         end
       end
     end
@@ -128,8 +127,9 @@ class DocumentsController < ApplicationController
         format.html { redirect_to documents_path(docs: "created"), notice: "Document was successfully created.", anchor: "created" }
         format.json { render json: @document, status: :created, location: @document }
       else
-        format.html { render action: "new" }
+        format.html { render action: "new", status: :unprocessable_entity }
         format.json { render json: @document.errors, status: :unprocessable_entity }
+        @document.delete
       end
     end
   end
@@ -149,7 +149,7 @@ class DocumentsController < ApplicationController
           @document.groups.destroy(g)
         end
       end
-      
+
       # add new groups
       @group_params.each do |g|
         if !g.empty?
@@ -268,9 +268,9 @@ class DocumentsController < ApplicationController
   end
 
   def documents_params
-    params.require(:document).permit(:title, :state, :chapters, :text, :snapshot, :user_id, :author, 
-                                     :edition, :publisher, :publication_date, :source, :rights_status, :upload, 
-                                     :survey_link, :location, :page_numbers, :series, :journal_title, :notes, 
+    params.require(:document).permit(:title, :state, :chapters, :text, :snapshot, :user_id, :author,
+                                     :edition, :publisher, :publication_date, :source, :rights_status, :upload,
+                                     :survey_link, :location, :page_numbers, :series, :journal_title, :notes,
                                      :resource_type, :groups)
   end
 end

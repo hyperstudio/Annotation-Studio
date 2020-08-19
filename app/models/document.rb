@@ -1,27 +1,27 @@
-    # t.string   "title",               limit: 255
-    # t.text     "text"
-    # t.datetime "created_at",                      null: false
-    # t.datetime "updated_at",                      null: false
-    # t.string   "author",              limit: 255
-    # t.datetime "year_published"
-    # t.string   "edition",             limit: 255
-    # t.string   "publisher",           limit: 255
-    # t.string   "source",              limit: 255
-    # t.string   "rights_status",       limit: 255
-    # t.string   "slug",                limit: 255
-    # t.integer  "user_id"
-    # t.text     "publication_date"
-    # t.text     "chapters"
-    # t.string   "state",               limit: 255
-    # t.string   "upload_file_name",    limit: 255
-    # t.string   "upload_content_type", limit: 255
-    # t.integer  "upload_file_size"
-    # t.datetime "upload_updated_at"
-    # t.datetime "processed_at"
-    # t.string   "survey_link",         limit: 255
-    # t.text     "default_state"
-    # t.text     "snapshot"
-    # t.string   "cove_uri"
+# t.string   "title",               limit: 255
+# t.text     "text"
+# t.datetime "created_at",                      null: false
+# t.datetime "updated_at",                      null: false
+# t.string   "author",              limit: 255
+# t.datetime "year_published"
+# t.string   "edition",             limit: 255
+# t.string   "publisher",           limit: 255
+# t.string   "source",              limit: 255
+# t.string   "rights_status",       limit: 255
+# t.string   "slug",                limit: 255
+# t.integer  "user_id"
+# t.text     "publication_date"
+# t.text     "chapters"
+# t.string   "state",               limit: 255
+# t.string   "upload_file_name",    limit: 255
+# t.string   "upload_content_type", limit: 255
+# t.integer  "upload_file_size"
+# t.datetime "upload_updated_at"
+# t.datetime "processed_at"
+# t.string   "survey_link",         limit: 255
+# t.text     "default_state"
+# t.text     "snapshot"
+# t.string   "cove_uri"
 
 require "babosa" # allows cyrillic, other characters in titles (transliterates titles for URL use)
 
@@ -30,10 +30,15 @@ class Document < ApplicationRecord
   before_validation :add_title, on: :create, unless: :title?
   before_create :add_processed_at, unless: :uploaded?
   ALLOWED_CONTENT_TYPES = %w|application/msword
-application/vnd.openxmlformats-officedocument.wordprocessingml.document
-text/plain
-application/pdf
+                             application/vnd.openxmlformats-officedocument.wordprocessingml.document
+                             text/plain
+                             application/pdf
   |
+
+  has_attached_file :upload
+  validates_attachment_content_type :upload,
+    content_type: ALLOWED_CONTENT_TYPES,
+    message: "Filetype is not allowed. Please copy and paste the text instead, or choose another file."
 
   extend FriendlyId
   friendly_id :title, use: [:slugged, :history, :finders]
@@ -41,15 +46,12 @@ application/pdf
   #new groups table structure:
   has_and_belongs_to_many :groups
 
-  has_attached_file :upload
-  validates_attachment_content_type :upload, content_type: ALLOWED_CONTENT_TYPES
-
   # #make title mandatory.
   # validates_presence_of :title --> not working?? document is still being created. problem possibly with
   #respond to do: format html
 
-  scope :publicly, -> { where(:state => 'public').order("id desc") }
-  scope :active, -> { where("state != ?", 'deleted').order("id desc") }
+  scope :publicly, -> { where(:state => "public").order("id desc") }
+  scope :active, -> { where("state != ?", "deleted").order("id desc") }
 
   STATES = %w{ pending draft published archived public }
 

@@ -26,6 +26,7 @@ development:
   PROTOCOL:                               "https:"
   GLOBAL_IDEA_SPACE:                      "false"
   RAILS_ENV:                              "development"
+  S3_BUCKET_NAME:                         "s3-bucket-name"
   SSL_KEY_PATH:                           "lib/local-only.key"
   SSL_CERT_PATH:                          "lib/local-only.cert"
 

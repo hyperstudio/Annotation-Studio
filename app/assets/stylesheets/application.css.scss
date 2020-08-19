@@ -333,3 +333,15 @@ ul#account-management-links li.list-group-item {
     text-align:center;
     padding: 10px;
   }
+
+  .progressContainer {
+    display: none;
+    margin:    0.2em 0 0.2em 0;
+  }
+  
+  .progressContainer .bar {
+    height:  2.2em;
+    padding: 0.5em;
+    color:   white;
+    display: none;
+  }

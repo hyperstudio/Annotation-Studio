@@ -58,3 +58,4 @@
 //= require semantic-ui-dropdown
 //= require klaro-config
 //= require klaro-no-css
+//= require jquery.fileupload

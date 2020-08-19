@@ -3,6 +3,7 @@ require "json"
 class DocumentsController < ApplicationController
   before_action :find_document, :only => [:show, :set_default_state, :preview, :archive, :publicize, :publish, :export, :snapshot, :destroy, :edit, :update]
   before_action :authenticate_user!
+  before_action :set_s3_direct_post, only: [:new, :edit, :create, :update]
 
   load_and_authorize_resource :except => :create
 
@@ -262,6 +263,10 @@ class DocumentsController < ApplicationController
   end
 
   private
+
+  def set_s3_direct_post
+    @s3_direct_post = S3_BUCKET.presigned_post(key: "images/#{SecureRandom.uuid}/${filename}", success_action_status: "201", acl: "public-read")
+  end
 
   def find_document
     @document = Document.friendly.find(params.has_key?(:document_id) ? params[:document_id] : params[:id])

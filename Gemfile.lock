@@ -370,6 +370,7 @@ GEM
     omniauth-oauth2 (1.6.0)
       oauth2 (~> 1.1)
       omniauth (~> 1.9)
+    openssl (2.2.0)
     orm_adapter (0.5.0)
     paperclip (6.1.0)
       activemodel (>= 4.2.0)
@@ -613,6 +614,7 @@ DEPENDENCIES
   octokit (~> 4.0)
   omniauth-oauth2 (= 1.6.0)
   omniauth-wordpress_hosted!
+  openssl
   paperclip
   pdf-reader
   pdf-reader-html

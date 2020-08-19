@@ -180,7 +180,7 @@ class DocumentsController < ApplicationController
   # DELETE /documents/1
   # DELETE /documents/1.json
   def destroy
-    flash[:alert] = @document.title + " deleted"
+    flash[:alert] = "Document " + @document.title + " was succesfully deleted."
     @document.destroy
 
     respond_to do |format|

@@ -31,7 +31,6 @@ class Document < ApplicationRecord
   before_create :add_processed_at, unless: :uploaded?
   ALLOWED_CONTENT_TYPES = %w|application/msword
                              application/vnd.openxmlformats-officedocument.wordprocessingml.document
-                             text/plain
                              application/pdf
   |
 

@@ -211,6 +211,10 @@
       maxHeight: null,             // set maximum height of editor
       maximumImageFileSize: 5242880,      // 5 MB
       callbacks: {
+        onInit: function() {
+          $(".note-group-select-from-files")
+            .append("<br /><small>Supported image formats: JPG, PNG, GIF, BMP, WEBP, TIF</small>");
+        },
         onImageUpload: function (files) {
           if(files[0].size > 5242880) {
             $('.progressContainer').css('display','block');

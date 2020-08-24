@@ -20,7 +20,7 @@
         <% end %>
 
         <% if session[:ideaspace] && !request.referer.nil? %>
-            <% session[:return_to] ||= request.referer + '?loggedin=true' %>
+            <% session[:return_to] ||= request.referer + '?loggedin=true&tenant=' + Apartment::Tenant.current %>
         <% end %>
 
         <div><%= f.submit "Log in", :class => "btn btn-default btn-default-primary log-in-button" %></div>

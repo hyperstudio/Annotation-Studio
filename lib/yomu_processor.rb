@@ -12,10 +12,7 @@ class YomuProcessor
     complete = Nokogiri::HTML(yomu.html)
     @document.text = complete.css("body").inner_html
     @document.processed_at = DateTime.now
-    pp @document.processed_at
     @document.state = @original_state
-    pp @original_state
-    pp @document.state
     @document.save
   end
 end

@@ -5,10 +5,9 @@ module Api::V1
 
     def docmeta
       json_params = JSON.parse(request.raw_post)
-      pp json_params
-      if !json_params[:slugs].nil?
+      if !json_params["slugs"].nil?
         @doc = Hash.new
-        for slug in json_params[:slugs]
+        for slug in json_params["slugs"]
           @doc[slug] = Document.where(:slug => slug).select(
             :id, :resource_type, :title, :author, :publication_date,
             :edition, :publisher, :source, :rights_status,

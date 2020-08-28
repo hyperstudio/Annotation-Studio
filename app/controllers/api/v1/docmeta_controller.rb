@@ -5,6 +5,7 @@ module Api::V1
 
     def docmeta
       json_params = JSON.parse(request.raw_post)
+      pp json_params
       if !json_params[:slugs].nil?
         @doc = Hash.new
         for slug in json_params[:slugs]

@@ -87,8 +87,6 @@ GEM
     arel (9.0.0)
     aws-eventstream (1.0.3)
     aws-partitions (1.254.0)
-    aws-sdk (1.67.0)
-      aws-sdk-v1 (= 1.67.0)
     aws-sdk-core (3.85.1)
       aws-eventstream (~> 1.0, >= 1.0.2)
       aws-partitions (~> 1, >= 1.239.0)
@@ -101,9 +99,6 @@ GEM
       aws-sdk-core (~> 3, >= 3.71.0)
       aws-sdk-kms (~> 1)
       aws-sigv4 (~> 1.1)
-    aws-sdk-v1 (1.67.0)
-      json (~> 1.4)
-      nokogiri (~> 1)
     aws-sigv4 (1.1.0)
       aws-eventstream (~> 1.0, >= 1.0.2)
     babel-source (5.8.35)
@@ -152,7 +147,7 @@ GEM
       responders
       warden (~> 1.2.3)
     diff-lcs (1.3)
-    docile (1.1.5)
+    docile (1.3.2)
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
     doorkeeper (5.4.0)
@@ -287,6 +282,9 @@ GEM
       actionpack (>= 4.1)
       activesupport (>= 4.1)
     hashie (3.6.0)
+    henkei (1.23.1)
+      json (>= 1.8, < 3)
+      mime-types (>= 1.23, < 4)
     high_voltage (3.1.0)
     highline (1.7.2)
     html_writer (0.2.0)
@@ -312,7 +310,7 @@ GEM
       thor (>= 0.14, < 2.0)
     jquery-ui-rails (6.0.1)
       railties (>= 3.2.16)
-    json (1.8.6)
+    json (2.3.1)
     jwt (1.5.2)
     kaminari (1.2.1)
       activesupport (>= 4.1.0)
@@ -523,11 +521,10 @@ GEM
       rails (>= 3.2)
     shoulda-matchers (2.8.0)
       activesupport (>= 3.0.0)
-    simplecov (0.10.0)
-      docile (~> 1.1.0)
-      json (~> 1.8)
-      simplecov-html (~> 0.10.0)
-    simplecov-html (0.10.0)
+    simplecov (0.19.0)
+      docile (~> 1.1)
+      simplecov-html (~> 0.11)
+    simplecov-html (0.12.2)
     slop (3.6.0)
     spring (1.7.2)
     sprockets (3.7.2)
@@ -575,9 +572,6 @@ GEM
     will_paginate-bootstrap (1.0.1)
       will_paginate (>= 3.0.3)
     xmlrpc (0.3.0)
-    yomu (0.2.3)
-      json (~> 1.8)
-      mime-types (~> 1.23)
 
 PLATFORMS
   ruby
@@ -586,7 +580,6 @@ DEPENDENCIES
   activeadmin (= 2.4.0)
   acts-as-taggable-on (= 4.0.0)
   apartment!
-  aws-sdk (< 2.0)
   aws-sdk-s3
   babosa
   backbone-on-rails
@@ -604,11 +597,13 @@ DEPENDENCIES
   fog-xenserver (= 0.3.0)
   friendly_id
   gon (= 6.2.0)
+  henkei
   high_voltage (= 3.1.0)
   highline
   jbuilder (= 2.7.0)
   jquery-rails (= 4.3.5)
   jquery-ui-rails
+  json (>= 2.3.0)
   jwt
   launchy
   lograge
@@ -643,7 +638,7 @@ DEPENDENCIES
   select2-rails (< 4.0)
   sextant
   shoulda-matchers
-  simplecov
+  simplecov (~> 0.19.0)
   spring
   switch_user
   therubyracer (= 0.12.3)
@@ -656,7 +651,6 @@ DEPENDENCIES
   will_paginate (= 3.1.7)
   will_paginate-bootstrap
   xmlrpc
-  yomu
 
 RUBY VERSION
    ruby 2.5.8p224

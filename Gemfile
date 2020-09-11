@@ -18,6 +18,8 @@ gem "lograge"
 
 gem "json", ">= 2.3.0"
 
+gem "omniauth-rails_csrf_protection", "~> 0.1"
+
 gem "rails_serve_static_assets", "0.0.5"
 gem "devise", "4.7.1"
 gem "switch_user"
@@ -33,7 +35,7 @@ gem "delayed_job_active_record", "4.1.3"
 gem "pdf-reader"
 gem "pdf-reader-html"
 gem "public_suffix", "3.0.3"
-gem "apartment", :git => "git://github.com/influitive/apartment.git", :branch => "development"
+gem "apartment", :git => "https://github.com/influitive/apartment.git", :branch => "development"
 gem "henkei"
 gem "net-ssh"
 gem "select2-rails", "< 4.0"

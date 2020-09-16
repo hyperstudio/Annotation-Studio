@@ -1,4 +1,4 @@
-require 'apartment/elevators/generic'
+require "apartment/elevators/generic"
 
 Apartment.configure do |config|
 
@@ -13,7 +13,7 @@ Apartment.configure do |config|
   # config.persistent_schemas = %w{ hstore }
 
   # supply list of database names for migrations to run on
-  config.tenant_names = lambda{ Tenant.pluck :database_name }
+  config.tenant_names = lambda { Tenant.pluck :database_name }
 end
 
 Rails.application.config.middleware.use Apartment::Elevators::Generic, lambda { |request|
@@ -21,8 +21,8 @@ Rails.application.config.middleware.use Apartment::Elevators::Generic, lambda { 
   if tenant = Tenant.where(domain: domain).first
     tenant.database_name
   else
-    'public'
+    "public"
   end
 }
 
-Rails.application.config.default_email_link_protocol = (ENV['DEFAULT_EMAIL_LINK_PROTOCOL'] || 'https')
+Rails.application.config.default_email_link_protocol = (ENV["DEFAULT_EMAIL_LINK_PROTOCOL"] || "https")

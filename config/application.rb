@@ -1,4 +1,4 @@
-require_relative 'boot'
+require_relative "boot"
 
 # Pick the frameworks you want:
 require "active_record/railtie"
@@ -41,7 +41,7 @@ module AnnotationStudio
     config.assets.enabled = true
 
     # Version of your assets, change this if you want to expire all your assets
-    config.assets.version = '2.0'
+    config.assets.version = "2.0"
 
     config.assets.initialize_on_precompile = false
 
@@ -57,10 +57,9 @@ module AnnotationStudio
 
     config.middleware.insert_before 0, Rack::Cors do
       allow do
-        origins '*'
-        resource '/api/*', headers: :any, methods: [:get, :post, :options]
+        origins "*"
+        resource "/api/*", headers: :any, methods: [:get, :post, :options]
       end
     end
-
   end
 end

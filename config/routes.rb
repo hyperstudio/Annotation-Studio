@@ -5,7 +5,7 @@ AnnotationStudio::Application.routes.draw do
   get "review/:id" => "public_documents#show"
 
   devise_for :users, controllers: { registrations: "registrations", omniauth_callbacks: "omniauth_callbacks",
-                           sessions: "sessions" }
+                                    sessions: "sessions" }
 
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)

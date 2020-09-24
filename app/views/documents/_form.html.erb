@@ -215,59 +215,61 @@
           $(".note-group-select-from-files")
             .append("<br /><small>Supported image formats: JPG, PNG, GIF, BMP, WEBP, TIF</small>");
         },
-        onImageUpload: function (files) {
-          if(files[0].size > 5242880) {
-            $('.progressContainer').css('display','block');
-            $('.progressContainer .bar').
-              css('background', '#d9534f').
-              css('display', 'block').
-              text('Error: File size too large. Please resize or choose a different image.');
-          } else {
-            $(".note-image-input").each(function(i, elem) {
-              var fileInput    = $(elem);
-              var progressBar  = $('.progressContainer .bar');
-              var form         = $(fileInput.parents('form:first'));
-              fileInput.fileupload({
-                fileInput:       fileInput,
-                maxFileSize:      5242880, // 5 MB
-                url:             <%= @s3_direct_post.url.to_json.html_safe %>,
-                type:            'POST',
-                autoUpload:       true,
-                formData:         <%= @s3_direct_post.fields.to_json.html_safe %>,
-                paramName:        'file', // S3 does not like nested name fields i.e. name="user[avatar_url]"
-                dataType:         'XML',  // S3 returns XML if success_action_status is set to 201
-                replaceFileInput: false,
-                progressall: function (e, data) {
-                  var progress = parseInt(data.loaded / data.total * 100, 10);
-                  progressBar.css('width', progress + '%')
-                },
-                start: function (e) {
-                  $('.progressContainer').css('display','block');
-                  progressBar.
-                    css('background', 'green').
-                    css('display', 'block').
-                    css('width', '0%').
-                    text("Loading...");
-                },
-                done: function(e, data) {
-                  progressBar.text("Uploading done");
+        <% if (not ENV["DISABLE_AWS"] or ENV["DISABLE_AWS"] != "true") %>
+          onImageUpload: function (files) {
+            if(files[0].size > 5242880) {
+              $('.progressContainer').css('display','block');
+              $('.progressContainer .bar').
+                css('background', '#d9534f').
+                css('display', 'block').
+                text('Error: File size too large. Please resize or choose a different image.');
+            } else {
+              $(".note-image-input").each(function(i, elem) {
+                var fileInput    = $(elem);
+                var progressBar  = $('.progressContainer .bar');
+                var form         = $(fileInput.parents('form:first'));
+                fileInput.fileupload({
+                  fileInput:       fileInput,
+                  maxFileSize:      5242880, // 5 MB
+                  url:             <%= @s3_direct_post.url.to_json.html_safe %>,
+                  type:            'POST',
+                  autoUpload:       true,
+                  formData:         <%= @s3_direct_post.fields.to_json.html_safe %>,
+                  paramName:        'file', // S3 does not like nested name fields i.e. name="user[avatar_url]"
+                  dataType:         'XML',  // S3 returns XML if success_action_status is set to 201
+                  replaceFileInput: false,
+                  progressall: function (e, data) {
+                    var progress = parseInt(data.loaded / data.total * 100, 10);
+                    progressBar.css('width', progress + '%')
+                  },
+                  start: function (e) {
+                    $('.progressContainer').css('display','block');
+                    progressBar.
+                      css('background', 'green').
+                      css('display', 'block').
+                      css('width', '0%').
+                      text("Loading...");
+                  },
+                  done: function(e, data) {
+                    progressBar.text("Uploading done");
 
-                  // extract key and generate URL from response
-                  console.log(data.jqXHR.responseXML);
-                  var url   = $(data.jqXHR.responseXML).find("Location").text();
-                  $('.text-area').summernote('insertImage', url);
-                  $('.progressContainer').css('display','none');
-                },
-                fail: function(e, data) {
-                  progressBar.
-                    css("background", "red").
-                    text("Failed");
-                }
+                    // extract key and generate URL from response
+                    console.log(data.jqXHR.responseXML);
+                    var url   = $(data.jqXHR.responseXML).find("Location").text();
+                    $('.text-area').summernote('insertImage', url);
+                    $('.progressContainer').css('display','none');
+                  },
+                  fail: function(e, data) {
+                    progressBar.
+                      css("background", "red").
+                      text("Failed");
+                  }
+                });
+                $(elem).fileupload('send', {files});
               });
-              $(elem).fileupload('send', {files});
-            });
-          }
-        },
+            }
+          },
+        <% end %>
       },
       toolbar: [
         ['style', ['style']],

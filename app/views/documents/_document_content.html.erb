@@ -18,31 +18,33 @@
 				</div>
 			</div>
 		</div>
-		<div class="paste-or-upload">or</div>
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<h4 class="panel-title">
-					<a data-toggle="collapse" data-parent="#accordion" href="#uploader">
-						Upload a file (Word or PDF)
-					</a>
-				</h4>
-			</div>
-			<div id="uploader" class="panel-collapse collapse">
-				<div class="panel-body">
-					<%= f.label :upload, "Select a file from your computer" %>
-					<div class="fileinput fileinput-new input-group" data-provides="fileinput">
-						<span class="input-group-addon btn btn-default btn-file"><span class="fileinput-new">Browse...</span><span class="fileinput-exists">Change</span><%= f.file_field :upload %></span>
-						<div class="form-control" data-trigger="fileinput">
-							<i class="glyphicon glyphicon-file fileinput-exists"></i>
-							<span class="fileinput-filename"></span></div>
-						<a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
+		<% if (not ENV["DISABLE_AWS"] or ENV["DISABLE_AWS"] != "true") %>
+			<div class="paste-or-upload">or</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" data-parent="#accordion" href="#uploader">
+							Upload a file (Word or PDF)
+						</a>
+					</h4>
+				</div>
+				<div id="uploader" class="panel-collapse collapse">
+					<div class="panel-body">
+						<%= f.label :upload, "Select a file from your computer" %>
+						<div class="fileinput fileinput-new input-group" data-provides="fileinput">
+							<span class="input-group-addon btn btn-default btn-file"><span class="fileinput-new">Browse...</span><span class="fileinput-exists">Change</span><%= f.file_field :upload %></span>
+							<div class="form-control" data-trigger="fileinput">
+								<i class="glyphicon glyphicon-file fileinput-exists"></i>
+								<span class="fileinput-filename"></span></div>
+							<a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
+						</div>
+						<p class="help-block">This feature converts your documents for use within Annotation Studio, and
+							strips out all formatting. Simple, single-column documents work best. We recommend copying and
+							pasting instead, but this option may be used as a last resort. Results may vary.</p>
 					</div>
-					<p class="help-block">This feature converts your documents for use within Annotation Studio, and
-						strips out all formatting. Simple, single-column documents work best. We recommend copying and
-						pasting instead, but this option may be used as a last resort. Results may vary.</p>
 				</div>
 			</div>
-		</div>
+		<% end %>
 	</div>
 <% end %>
 

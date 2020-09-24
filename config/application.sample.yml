@@ -9,6 +9,7 @@ development:
   ANNOTATOR_RICHTEXT:                     "true"
   ANNOTATOR_RICHTEXT_CONFIG:              "undo redo | styleselect | bold italic | link image media | code"
   CONFIRMATION_GRACE_PERIOD:              "2"
+  DISABLE_AWS:                            "false"
   GLOBAL_ALERT:                           "test alert"
   GMAIL_PASS:                             gmail_password
   GMAIL_USER:                             gmail_username

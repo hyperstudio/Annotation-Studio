@@ -20,7 +20,7 @@ default_tenants.each do |tenant|
   user = User.where(email: email).first_or_initialize
   user.password = user.password_confirmation = password
   user.agreement = true
-  user.set_roles = ["student"]
+  user.set_roles = ["student", "admin"]
   user.save
 
   puts "Created user: #{email}, password: #{password}"

@@ -4,7 +4,7 @@ end
 
 Paperclip::Attachment.default_options[:path] = ":class/:attachment/:tenant/:id_partition/:style/:filename"
 
-if ["production", "staging", "public"].include?(Rails.env)
+if ["production", "staging", "public"].include?(Rails.env) and (not ENV["DISABLE_AWS"] or ENV["DISABLE_AWS"] != "true")
   Paperclip::Attachment.default_options[:storage] = :s3
   Paperclip::Attachment.default_options[:s3_credentials] = {
     :bucket => ENV["S3_BUCKET_NAME"],

@@ -28,11 +28,11 @@
           <div class="col-md-6">
             <div class="form-group">
               <%= f.label :author %>
-              <%= f.text_field :author, :class => "form-control" %>
+              <%= f.text_field :author, :class => "form-control", :maxlength => 254 %>
             </div>
             <div class="form-group">
               <%= f.label :publication_date %>
-              <%= f.text_field :publication_date, :class => "form-control" %>
+              <%= f.text_field :publication_date, :class => "form-control", :maxlength => 254 %>
             </div>
             <div class="form-group">
               <%= f.label :rights_status %>
@@ -40,38 +40,38 @@
             </div>
             <div class="form-group optional" id="edition" style="display:none">
               <%= f.label :edition, "Edition/Volume" %>
-              <%= f.text_field :edition, :class => "form-control" %>
+              <%= f.text_field :edition, :class => "form-control", :maxlength => 254 %>
             </div>
             <div class="form-group optional" id="page_numbers" style="display:none">
               <%= f.label :page_numbers %>
-              <%= f.text_field :page_numbers, :class => "form-control" %>
+              <%= f.text_field :page_numbers, :class => "form-control", :maxlength => 254 %>
             </div>
           </div>
           <!-- end span 6 -->
           <div class="col-md-6">
             <div class="form-group">
               <%= f.label :title %>
-              <%= f.text_field :title, :class => "form-control" %>
+              <%= f.text_field :title, :class => "form-control", :maxlength => 254 %>
             </div>
             <div class="form-group">
               <%= f.label :publisher %>
-              <%= f.text_field :publisher, :class => "form-control" %>
+              <%= f.text_field :publisher, :class => "form-control", :maxlength => 254 %>
             </div>
             <div class="form-group optional" id="location" style="display:none">
               <%= f.label :location, "Publication Location" %>
-              <%= f.text_field :location, :class => "form-control" %>
+              <%= f.text_field :location, :class => "form-control", :maxlength => 254 %>
             </div>
             <div class="form-group optional" id="series" style="display:none">
               <%= f.label :series %>
-              <%= f.text_field :series, :class => "form-control" %>
+              <%= f.text_field :series, :class => "form-control", :maxlength => 254 %>
             </div>
             <div class="form-group optional" id="journal_title" style="display:none">
               <%= f.label :journal_title %>
-              <%= f.text_field :journal_title, :class => "form-control" %>
+              <%= f.text_field :journal_title, :class => "form-control", :maxlength => 254 %>
             </div>
             <div class="form-group optional" id="source" >
               <%= f.label :source %>
-              <%= f.text_field :source, :class => "form-control" %>
+              <%= f.text_field :source, :class => "form-control", :maxlength => 254 %>
             </div>
           </div>
           <!-- end span 6 -->

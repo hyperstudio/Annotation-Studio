@@ -49,8 +49,16 @@
                 <i class="glyphicon glyphicon-pencil" title="Edit"></i> Edit
               <% end %>
             <% end %>
-            <%= link_to document_path(document), method: :delete, data: {confirm: "Are you sure?", toggle: 'tooltip', placement: 'top', original_title: 'Delete'}, :class => 'btn btn-danger btn-sm' do %>
-              <i class="glyphicon glyphicon-trash" title="Delete"></i>
+            <% if document.draft? or current_user.has_role?(:admin) %>
+              <%= link_to document_path(document), method: :delete, data: {confirm: "Are you sure?", toggle: 'tooltip', placement: 'top', original_title: 'Delete'}, :class => 'btn btn-danger btn-sm' do %>
+                <i class="glyphicon glyphicon-trash" title="Delete"></i>
+              <% end %>
+            <% else %>
+              <span class="d-inline-block" tabindex="0" data-toggle="tooltip" data-placement="top" title="Published documents can only be Archived">
+                <button class="btn btn-danger btn-sm disabled">
+                  <i class="glyphicon glyphicon-trash" title="Delete"></i>
+                </button>
+              </span>
             <% end %>
           <% end %>
         </td>

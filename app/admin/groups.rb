@@ -7,7 +7,7 @@ ActiveAdmin.register Group do
 
   
   permit_params do
-    permitted = [:name, :ideaSpaceOn]
+    permitted = [:name]
   end
 
   index do |t|
@@ -20,6 +20,36 @@ ActiveAdmin.register Group do
     end
     column "Creation date", :created_at
     actions
+  end
+
+  member_action :manage, method: :get do
+    user = User.find_by(email: current_admin_user.email)
+    if !user 
+      flash[:alert] = "User not found. Is the admin user's email the same as the user's email?"
+    elsif (!user.groups.include? resource)
+      resource.users << user
+      if resource.save
+        Membership.find_by(group_id: resource.id, user_id: user.id).update_attribute("role", "manager")
+        flash[:notice] = user.fullname + " added as manager."
+      end
+    elsif (Membership.find_by(group_id: resource.id, user_id: user.id).role != 'member')
+      flash[:alert] = "User already owner or manager of group."
+    else 
+      Membership.find_by(group_id: resource.id, user_id: user.id).update_attribute("role", "manager")
+      flash[:notice] = user.fullname + " added as manager."
+    end
+    redirect_to admin_group_path(resource)
+  end
+
+  action_item :manage,
+              priority: 0,
+              only: :show,
+              if: proc{ 
+                  @u = User.find_by(email: current_admin_user.email)
+                  @m = Membership.find_by(group_id: resource.id, user_id: @u.id)
+                  @m.nil? || @m.role == 'member'
+                } do
+    link_to 'Manage', manage_admin_group_path
   end
   
   show do |group|
@@ -52,11 +82,9 @@ ActiveAdmin.register Group do
     end
   end
 
-
   form do |f|
     f.inputs "Details" do
       f.input :name, :as => :string
-      f.input :ideaSpaceOn, :label => "Enable Idea Space"
     end
     f.actions do
       f.action :submit

@@ -4,6 +4,8 @@
     "pdf-parse": "^1.1.1"
   },
   "devDependencies": {
-    "webpack-dev-server": "^3.11.0"
+    "webpack-dev-server": "^3.11.2",
+    "selfsigned": "^1.10.8",
+    "node-forge": "^0.10.0"
   }
 }

@@ -2,7 +2,8 @@ source "https://rubygems.org"
 
 ruby "2.5.8"
 
-gem "rails", "~> 5.1"
+gem "rails", "~> 5.2.4.4"
+gem 'bootsnap', require: false
 gem "rack", "2.2.3"
 gem "puma", "4.3.5"
 

@@ -3,7 +3,7 @@ source "https://rubygems.org"
 ruby "2.5.8"
 
 gem "rails", "~> 5.2.4.4"
-gem 'bootsnap', require: false
+gem "bootsnap", require: false
 gem "rack", "2.2.3"
 gem "puma", "4.3.5"
 
@@ -19,7 +19,7 @@ gem "lograge"
 
 gem "json", ">= 2.3.0"
 
-gem "omniauth-rails_csrf_protection", "~> 0.1"
+gem "omniauth-rails_csrf_protection"
 
 gem "rails_serve_static_assets", "0.0.5"
 gem "devise", "4.7.1"

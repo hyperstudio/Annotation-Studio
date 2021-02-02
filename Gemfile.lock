@@ -283,7 +283,7 @@ GEM
     has_scope (0.7.2)
       actionpack (>= 4.1)
       activesupport (>= 4.1)
-    hashie (3.6.0)
+    hashie (4.1.0)
     henkei (1.23.1)
       json (>= 1.8, < 3)
       mime-types (>= 1.23, < 4)
@@ -371,8 +371,8 @@ GEM
       rack (>= 1.2, < 3)
     octokit (4.3.0)
       sawyer (~> 0.7.0, >= 0.5.3)
-    omniauth (1.9.0)
-      hashie (>= 3.4.6, < 3.7.0)
+    omniauth (1.9.1)
+      hashie (>= 3.4.6)
       rack (>= 1.6.2, < 3)
     omniauth-oauth2 (1.6.0)
       oauth2 (~> 1.1)
@@ -623,7 +623,7 @@ DEPENDENCIES
   nokogiri (= 1.11.0)
   octokit (~> 4.0)
   omniauth-oauth2 (= 1.6.0)
-  omniauth-rails_csrf_protection (~> 0.1)
+  omniauth-rails_csrf_protection
   omniauth-wordpress_hosted!
   openssl
   paperclip

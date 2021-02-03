@@ -2,6 +2,14 @@
 
 <p>Please confirm your Annotation Studio account by clicking the link below:</p>
 
+<% protocol = Rails.application.config.default_email_link_protocol %>
+<% tenant = Tenant.where(database_name: Apartment::Tenant.current).first %>
+<% if tenant %>
+  <% multitenant_domain = protocol + "://" + tenant.domain %>
+<% else %>
+  <% multitenant_domain = protocol + "://" + ENV['EMAIL_DOMAIN'] %>
+<% end %>
+
 <p><%= link_to 'Confirm my account', multitenant_domain + confirmation_path(@resource, :confirmation_token => @token) %></p>
 
 <p>&ndash; The Annotation Studio Team at the <a href="https://aai.mit.edu">Active Archives Initiative at MIT</a></p>

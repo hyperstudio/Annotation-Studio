@@ -24,9 +24,9 @@ class GroupsController < ApplicationController
 
   def create
     @group = Group.new(group_params)
-    @group.users << current_user
 
     if @group.save
+      @group.users << current_user
 
       #set role to owner
       Membership.find_by(group_id: @group.id, user_id: current_user.id).update_attribute("role", "owner")

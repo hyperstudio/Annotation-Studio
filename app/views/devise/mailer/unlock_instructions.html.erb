@@ -4,4 +4,12 @@
 
 <p>Click the link below to unlock your account:</p>
 
+<% protocol = Rails.application.config.default_email_link_protocol %>
+<% tenant = Tenant.where(database_name: Apartment::Tenant.current).first %>
+<% if tenant %>
+  <% multitenant_domain = protocol + "://" + tenant.domain %>
+<% else %>
+  <% multitenant_domain = protocol + "://" + ENV['EMAIL_DOMAIN'] %>
+<% end %>
+
 <p><%= link_to 'Unlock my account', multitenant_domain + unlock_path(@resource, :unlock_token => @resource.unlock_token) %></p>

@@ -4,7 +4,7 @@
   <!-- Registering with a group invitation attached -->
   <% if params[:invite_token] %>
     <% invite = Invite.find_by(token: params[:invite_token]) %>
-    <% if !invite.nil? %>
+    <% if !invite.nil? and !invite.group.nil? %>
       <% groupName = invite.group.name %>
     <% else%>
       <% groupName = "[group not found!]" %>

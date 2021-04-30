@@ -92,7 +92,7 @@ gem "carrierwave"
 gem "jbuilder", "2.7.0"
 gem "jwt"
 gem "rabl"
-gem "gon", "6.2.0"
+gem "gon", "6.4.0"
 gem "nokogiri", "1.11.0"
 
 gem "tilt", "1.1"

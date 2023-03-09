@@ -4,7 +4,7 @@ ruby "2.5.8"
 
 gem "rails", "~> 5.2.4.6"
 gem "bootsnap", require: false
-gem "rack", "2.2.3"
+gem "rack", "2.2.6.2"
 gem "puma", "4.3.8"
 
 gem "pg"

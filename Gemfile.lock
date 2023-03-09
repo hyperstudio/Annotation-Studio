@@ -355,7 +355,7 @@ GEM
       rake
     mini_magick (4.9.5)
     mini_mime (1.1.0)
-    mini_portile2 (2.5.3)
+    mini_portile2 (2.6.1)
     minitest (5.15.0)
     msgpack (1.4.2)
     multi_json (1.15.0)
@@ -365,8 +365,8 @@ GEM
     net-ssh (3.0.2)
     netrc (0.11.0)
     nio4r (2.5.8)
-    nokogiri (1.11.4)
-      mini_portile2 (~> 2.5.0)
+    nokogiri (1.12.5)
+      mini_portile2 (~> 2.6.1)
       racc (~> 1.4)
     oauth2 (1.4.1)
       faraday (>= 0.8, < 0.16.0)
@@ -626,7 +626,7 @@ DEPENDENCIES
   mini_magick
   mustache
   net-ssh
-  nokogiri (= 1.11.4)
+  nokogiri (= 1.12.5)
   octokit (~> 4.0)
   omniauth-oauth2 (= 1.6.0)
   omniauth-rails_csrf_protection

@@ -79,7 +79,7 @@ group :production do
   gem "rails_12factor"
 end
 
-gem "jquery-rails", "4.3.5"
+gem "jquery-rails", "4.4.0"
 gem "jquery-ui-rails"
 gem "tinymce-rails"
 
